@@ -1,0 +1,29 @@
+[workspace]
+members = [
+    "compat/oracle",
+    "crates/cli",
+    "crates/model",
+    "crates/ops",
+    "crates/report",
+    "crates/tracefile",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "GPL-2.0-or-later"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.dependencies]
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+sha2 = "0.10.9"
+tempfile = "3.19.1"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"

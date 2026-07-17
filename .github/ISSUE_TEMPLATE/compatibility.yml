@@ -1,0 +1,54 @@
+name: Compatibility gap
+description: Report behavior that differs from the pinned LCOV 2.5 reference.
+title: "compat: "
+labels:
+  - compatibility
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ferricov is pre-alpha. Please include the exact upstream and candidate behavior so the difference can become a reproducible differential case.
+  - type: input
+    id: command
+    attributes:
+      label: Command or public surface
+      description: Name the command, option, configuration key, format, callback, or report behavior.
+      placeholder: genhtml --branch-coverage
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include commands, configuration, environment variables, and a minimal non-sensitive fixture.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: upstream
+    attributes:
+      label: LCOV 2.5 result
+      description: Include stdout, stderr, exit status, and relevant files or report behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: ferricov
+    attributes:
+      label: Ferricov result
+      description: Include the Ferricov revision, stdout, stderr, exit status, and relevant files or report behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, architecture, filesystem, locale, compiler/gcov or LLVM versions, and container details.
+    validations:
+      required: true
+  - type: checkboxes
+    id: sensitive
+    attributes:
+      label: Data safety
+      options:
+        - label: I removed credentials, private source, and sensitive filesystem paths from this report.
+          required: true

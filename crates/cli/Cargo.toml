@@ -1,0 +1,16 @@
+[package]
+name = "ferricov-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+ferricov-model = { path = "../model" }
+ferricov-ops = { path = "../ops" }
+ferricov-report = { path = "../report" }
+ferricov-tracefile = { path = "../tracefile" }
+
+[lints]
+workspace = true

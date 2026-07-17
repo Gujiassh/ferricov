@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/launcher-v1.json",
+  "title": "Ferricov implementation launcher",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "name",
+    "program",
+    "arguments",
+    "environment_variables",
+    "runtime",
+    "environment"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "program": { "type": "string", "minLength": 1 },
+    "arguments": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "environment_variables": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "runtime": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": { "const": "local" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "image"],
+          "properties": {
+            "kind": { "const": "docker_image" },
+            "image": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "image",
+        "operating_system",
+        "architecture",
+        "compiler",
+        "cpu"
+      ],
+      "properties": {
+        "image": { "type": "string", "minLength": 1 },
+        "operating_system": { "type": "string", "minLength": 1 },
+        "architecture": { "type": "string", "minLength": 1 },
+        "compiler": { "type": ["string", "null"] },
+        "cpu": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "program": { "pattern": "\\{command\\}" },
+        "arguments": {
+          "not": {
+            "contains": { "type": "string", "pattern": "\\{command\\}" }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "program": { "not": { "pattern": "\\{command\\}" } },
+        "arguments": {
+          "contains": { "type": "string", "pattern": "\\{command\\}" },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      }
+    }
+  ]
+}

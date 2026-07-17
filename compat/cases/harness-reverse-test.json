@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "suite_id": "harness-reverse-test",
+  "evidence_scope": "harness_self_test",
+  "cases": [
+    {
+      "id": "lcov-version-must-fail",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--version"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    }
+  ]
+}

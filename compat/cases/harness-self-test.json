@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "suite_id": "harness-self-test",
+  "evidence_scope": "harness_self_test",
+  "cases": [
+    {
+      "id": "lcov-version",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--version"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    },
+    {
+      "id": "lcov-help",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--help"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    },
+    {
+      "id": "lcov-unknown-option",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--ferricov-unknown-option"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    },
+    {
+      "id": "genhtml-version",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--version"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    },
+    {
+      "id": "geninfo-version",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": ["--version"],
+      "fixture": null,
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    },
+    {
+      "id": "oracle-workdir-mount",
+      "surface": "installation",
+      "command": "sh",
+      "arguments": ["-c", "printf 'generated output\\n' > generated.txt"],
+      "fixture": "compat/fixtures/harness-workdir",
+      "comparisons": [
+        { "dimension": "exit", "normalizer": "exact-v1" },
+        { "dimension": "stdout", "normalizer": "exact-v1" },
+        { "dimension": "stderr", "normalizer": "exact-v1" },
+        { "dimension": "filesystem", "normalizer": "exact-v1" }
+      ]
+    }
+  ]
+}

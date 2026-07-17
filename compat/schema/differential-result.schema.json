@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/differential-result-v1.json",
+  "title": "Ferricov differential result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "evidence_scope",
+    "upstream_commit",
+    "surface",
+    "command",
+    "arguments",
+    "fixture",
+    "environment",
+    "implementation_identities",
+    "runs",
+    "comparisons",
+    "overall_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "evidence_scope": {
+      "enum": ["harness_self_test", "compatibility"]
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "surface": {
+      "enum": [
+        "cli",
+        "config",
+        "tracefile",
+        "report",
+        "capture",
+        "converter",
+        "callback",
+        "installation"
+      ]
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "arguments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fixture": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "environment": {
+      "$ref": "#/$defs/environment"
+    },
+    "implementation_identities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "candidate"],
+      "properties": {
+        "reference": { "$ref": "#/$defs/implementation_identity" },
+        "candidate": { "$ref": "#/$defs/implementation_identity" }
+      }
+    },
+    "runs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "candidate"],
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/run"
+        },
+        "candidate": {
+          "$ref": "#/$defs/run"
+        }
+      }
+    },
+    "comparisons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/comparison"
+      }
+    },
+    "overall_status": {
+      "$ref": "#/$defs/status"
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": ["pass", "fail", "blocked", "not_applicable"]
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["image", "operating_system", "architecture"],
+      "properties": {
+        "image": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operating_system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compiler": {
+          "type": ["string", "null"]
+        },
+        "cpu": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "implementation_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "executable_sha256",
+        "container_image_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["local_executable", "docker_image"]
+        },
+        "executable_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "container_image_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exit_code",
+        "stdout_artifact",
+        "stderr_artifact",
+        "file_tree_artifact",
+        "metrics"
+      ],
+      "properties": {
+        "exit_code": {
+          "type": ["integer", "null"]
+        },
+        "signal": {
+          "type": ["integer", "null"]
+        },
+        "stdout_artifact": {
+          "type": "string"
+        },
+        "stderr_artifact": {
+          "type": "string"
+        },
+        "file_tree_artifact": {
+          "type": "string"
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wall_seconds", "user_cpu_seconds", "system_cpu_seconds", "peak_rss_bytes"],
+      "properties": {
+        "wall_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "user_cpu_seconds": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "system_cpu_seconds": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "peak_rss_bytes": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "output_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_files": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimension", "status", "evidence"],
+      "properties": {
+        "dimension": {
+          "enum": [
+            "exit",
+            "stdout",
+            "stderr",
+            "coverage_model",
+            "tracefile",
+            "dom",
+            "assets",
+            "filesystem",
+            "performance"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "normalizer": {
+          "type": ["string", "null"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "details": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

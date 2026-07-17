@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/suite-v1.json",
+  "title": "Ferricov differential suite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "suite_id", "evidence_scope", "cases"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "suite_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "evidence_scope": {
+      "enum": ["harness_self_test", "compatibility"]
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "surface",
+          "command",
+          "arguments",
+          "fixture",
+          "comparisons"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]+$"
+          },
+          "surface": {
+            "enum": [
+              "cli",
+              "config",
+              "tracefile",
+              "report",
+              "capture",
+              "converter",
+              "callback",
+              "installation"
+            ]
+          },
+          "command": { "type": "string", "minLength": 1 },
+          "arguments": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "fixture": {
+            "type": ["string", "null"],
+            "minLength": 1
+          },
+          "comparisons": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["dimension", "normalizer"],
+              "properties": {
+                "dimension": {
+                  "enum": ["exit", "stdout", "stderr", "filesystem"]
+                },
+                "normalizer": {
+                  "enum": ["exact-v1", "text-crlf-to-lf-v1"]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "dimension": { "enum": ["exit", "filesystem"] }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "normalizer": { "const": "exact-v1" }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+[package]
+name = "ferricov-ops"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+ferricov-model = { path = "../model" }
+ferricov-tracefile = { path = "../tracefile" }
+
+[lints]
+workspace = true
