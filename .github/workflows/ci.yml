@@ -53,6 +53,7 @@ jobs:
       - name: Run tests
         env:
           FERRICOV_SKIP_DOCKER_E2E: '1'
+          RUST_TEST_THREADS: '1'
           TOOLCHAIN: ${{ matrix.toolchain }}
         run: cargo +"$TOOLCHAIN" test --workspace --all-targets --locked
 
@@ -60,6 +61,32 @@ jobs:
         env:
           TOOLCHAIN: ${{ matrix.toolchain }}
         run: cargo +"$TOOLCHAIN" clippy --workspace --all-targets --locked -- -D warnings
+
+  behavior-contract:
+    name: Behavior Contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Install JSON Schema validator
+        run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
+
+      - name: Check generated behavior contract
+        run: python3 compat/behavior/generate.py --check
+
+      - name: Run behavior contract tests
+        run: python3 -m unittest compat/behavior/test_validate.py
+
+      - name: Validate current behavior contract
+        run: python3 compat/behavior/validate.py --mode current
 
   oracle-evidence:
     name: Oracle Evidence
@@ -71,7 +98,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Install Rust 1.85.0
-        run: rustup toolchain install 1.85.0 --profile minimal
+        run: rustup toolchain install 1.85.0 --profile minimal --component clippy,rustfmt
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6

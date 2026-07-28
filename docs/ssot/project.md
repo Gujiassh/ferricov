@@ -89,9 +89,10 @@ the M0 harness become the permanent integration boundary.
 - `compat/inventory/tests/upstream-test-map.json` covers all 205 pinned upstream
   test files, and every mapping is reviewed.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Twenty-three primary plans are reviewed; 508
-  primary reviews and 4 critical interaction domains remain open, for 512 M0
-  behavior-planning gaps in total.
+  531 public inventory entries. Twenty-three primary plans and all four
+  required critical interaction domains are reviewed. The callback,
+  error-control, option-config, and option-option groups have explicit members
+  and reciprocal planning cases; 508 public primary reviews remain open.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
@@ -100,5 +101,9 @@ the M0 harness become the permanent integration boundary.
   manifest. The portable verifier binds all post-build probes to the immutable
   image ID in that run's manifest; the `v2.5` tag is only a convenience alias.
   Compiler capture and release platform qualification remain open.
+- CI serializes namespace-sensitive Rust process-isolation tests, provisions
+  the complete pinned toolchain before Oracle verification, and independently
+  gates deterministic behavior-contract generation, mutation tests, and
+  current-mode validation.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

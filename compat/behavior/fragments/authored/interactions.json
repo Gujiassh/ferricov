@@ -1,92 +1,369 @@
 {
   "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
   "behavior_groups": [],
-  "case_groups": [],
-  "description": "Required critical interaction-domain placeholders; every unresolved member and case relationship remains explicit.",
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [
+          "A genhtml report requests source annotation through --annotate-script."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "interaction",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan the genhtml --annotate-script interaction with the CB-ANNOTATE protocol, including row parsing, fallback behavior, diagnostics, status, and report output; no differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.interaction.callback-annotation-script",
+      "interaction_groups": [
+        "interaction.callback.annotation-script"
+      ],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 182,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "### `CB-ANNOTATE-001`"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "callback",
+      "targets": [
+        {
+          "id": "CB-ANNOTATE",
+          "role": "primary"
+        },
+        {
+          "id": "command.genhtml.option.annotate-script",
+          "role": "context"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "A named lcov diagnostic is triggered while lcovrc stop_on_error controls continuation."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "case_class": "interaction",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan the named-error interaction with lcovrc stop_on_error, freezing continuation, diagnostic severity and channel, retained artifacts, and final status without claiming differential evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.interaction.error-control-stop-policy",
+      "interaction_groups": [
+        "interaction.error-control.named-error-stop-policy"
+      ],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 314,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
+          "repository": "ferricov",
+          "text": "| `stop_on_error=0` or `--keep-going`, no explicit ignore | Continue | stderr `ERROR` | `error` | `lcov`, `geninfo`, and `genhtml` force final `1` through `saw_error()` |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "ERR-NAMED-CONTROL",
+          "role": "primary"
+        },
+        {
+          "id": "lcovrc.stop-on-error",
+          "role": "context"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/errs/errs.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "A named lcov diagnostic is triggered after both lcovrc ignore_errors and CLI --ignore-errors are available."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "case_class": "interaction",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan CLI --ignore-errors precedence over lcovrc ignore_errors as complete-list replacement, including repeated class counts, messages, continuation, output, and final status; no evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.interaction.option-config-ignore-precedence",
+      "interaction_groups": [
+        "interaction.option-config.ignore-errors-precedence"
+      ],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 301,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
+          "repository": "ferricov",
+          "text": "If the CLI supplies no `--ignore-errors`, configuration `ignore_errors` values"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "ERR-NAMED-CONTROL",
+          "role": "primary"
+        },
+        {
+          "id": "command.lcov.option.ignore-errors",
+          "role": "context"
+        },
+        {
+          "id": "lcovrc.ignore-errors",
+          "role": "context"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/errs/errs.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "A named lcov diagnostic is triggered while both --ignore-errors and --keep-going are active."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "case_class": "interaction",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan the --ignore-errors and --keep-going interaction across zero, one, and repeated ignore counts, preserving severity, continuation, output artifacts, message accounting, and final status without evidence claims.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.interaction.option-ignore-keep-going",
+      "interaction_groups": [
+        "interaction.option-option.ignore-keep-going"
+      ],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 314,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
+          "repository": "ferricov",
+          "text": "| `stop_on_error=0` or `--keep-going`, no explicit ignore | Continue | stderr `ERROR` | `error` | `lcov`, `geninfo`, and `genhtml` force final `1` through `saw_error()` |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "ERR-NAMED-CONTROL",
+          "role": "primary"
+        },
+        {
+          "id": "command.lcov.option.ignore-errors",
+          "role": "context"
+        },
+        {
+          "id": "command.lcov.option.keep-going",
+          "role": "context"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/errs/errs.sh"
+      ]
+    }
+  ],
+  "description": "Reviewed M0 planning for the four required critical interaction domains, with explicit members, reciprocal cases, applicability, and no product evidence claim.",
   "fragment_id": "authored.interactions",
   "fragment_type": "authored",
   "interaction_groups": [
     {
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
       "critical": true,
-      "description": "Unreviewed callback interaction placeholder; callback protocol, controlling surface, and cases require manual adjudication.",
+      "description": "The genhtml --annotate-script option selects the CB-ANNOTATE protocol whose parsing, fallback, diagnostics, exit, and report effects require one end-to-end interaction case.",
       "domain": "callback",
-      "id": "interaction.callback.draft",
-      "members": [],
-      "origin": "generated_skeleton",
-      "planned_cases": [],
-      "review_status": "unreviewed",
+      "id": "interaction.callback.annotation-script",
+      "members": [
+        {
+          "id": "CB-ANNOTATE"
+        },
+        {
+          "id": "command.genhtml.option.annotate-script"
+        }
+      ],
+      "origin": "manually_curated",
+      "planned_cases": [
+        "case.interaction.callback-annotation-script"
+      ],
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "plan_requirement",
-          "line": 326,
-          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "kind": "audit_contract",
+          "line": 182,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
           "repository": "ferricov",
-          "text": "- interaction: operation, filter, callback, parallel, and output combinations"
+          "text": "### `CB-ANNOTATE-001`"
         }
       ]
     },
     {
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
       "critical": true,
-      "description": "Unreviewed error-control interaction placeholder; error class, controlling surface, and cases require manual adjudication.",
+      "description": "Named diagnostic errors are controlled by stop_on_error, which changes continuation while preserving severity, artifact, message-accounting, and final-status semantics.",
       "domain": "error_control",
-      "id": "interaction.error-control.draft",
-      "members": [],
-      "origin": "generated_skeleton",
-      "planned_cases": [],
-      "review_status": "unreviewed",
+      "id": "interaction.error-control.named-error-stop-policy",
+      "members": [
+        {
+          "id": "ERR-NAMED-CONTROL"
+        },
+        {
+          "id": "lcovrc.stop-on-error"
+        }
+      ],
+      "origin": "manually_curated",
+      "planned_cases": [
+        "case.interaction.error-control-stop-policy"
+      ],
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "plan_requirement",
-          "line": 330,
-          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "kind": "audit_contract",
+          "line": 314,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
           "repository": "ferricov",
-          "text": "- failure: exit status, signal, stdout/stderr channel, message class, ignore and"
+          "text": "| `stop_on_error=0` or `--keep-going`, no explicit ignore | Continue | stderr `ERROR` | `error` | `lcov`, `geninfo`, and `genhtml` force final `1` through `saw_error()` |"
         }
       ]
     },
     {
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
       "critical": true,
-      "description": "Unreviewed option-config interaction placeholder; option, lcovrc member, precedence, and cases require manual adjudication.",
+      "description": "CLI --ignore-errors replaces the complete lcovrc ignore_errors list instead of merging it, so repeated class counts and downstream diagnostic outcomes require explicit precedence coverage.",
       "domain": "option_config",
-      "id": "interaction.option-config.draft",
-      "members": [],
-      "origin": "generated_skeleton",
-      "planned_cases": [],
-      "review_status": "unreviewed",
+      "id": "interaction.option-config.ignore-errors-precedence",
+      "members": [
+        {
+          "id": "command.lcov.option.ignore-errors"
+        },
+        {
+          "id": "lcovrc.ignore-errors"
+        }
+      ],
+      "origin": "manually_curated",
+      "planned_cases": [
+        "case.interaction.option-config-ignore-precedence"
+      ],
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "plan_requirement",
-          "line": 325,
-          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "kind": "audit_contract",
+          "line": 301,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
           "repository": "ferricov",
-          "text": "- equivalence: CLI form versus corresponding `lcovrc` form"
+          "text": "If the CLI supplies no `--ignore-errors`, configuration `ignore_errors` values"
         }
       ]
     },
     {
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
       "critical": true,
-      "description": "Unreviewed option-option interaction placeholder; participating options, ordering, and cases require manual adjudication.",
+      "description": "The --ignore-errors count ladder and --keep-going continuation rule jointly determine severity, console output, artifact retention, message accounting, and final status.",
       "domain": "option_option",
-      "id": "interaction.option-option.draft",
-      "members": [],
-      "origin": "generated_skeleton",
-      "planned_cases": [],
-      "review_status": "unreviewed",
+      "id": "interaction.option-option.ignore-keep-going",
+      "members": [
+        {
+          "id": "command.lcov.option.ignore-errors"
+        },
+        {
+          "id": "command.lcov.option.keep-going"
+        }
+      ],
+      "origin": "manually_curated",
+      "planned_cases": [
+        "case.interaction.option-ignore-keep-going"
+      ],
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "plan_requirement",
-          "line": 382,
-          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "kind": "audit_contract",
+          "line": 314,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
           "repository": "ferricov",
-          "text": "| Hidden option interactions | False compatibility claim | Test-to-inventory mapping and interaction groups | M0 |"
+          "text": "| `stop_on_error=0` or `--keep-going`, no explicit ignore | Continue | stderr `ERROR` | `error` | `lcov`, `geninfo`, and `genhtml` force final `1` through `saw_error()` |"
         }
       ]
     }
   ],
   "schema_version": 1,
-  "subjects": []
+  "subjects": [
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "description": "Named ignorable diagnostic errors whose count and continuation controls determine severity, stream output, retained work, message accounting, and final status.",
+      "id": "ERR-NAMED-CONTROL",
+      "kind": "error_class",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 307,
+          "path": "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md",
+          "repository": "ferricov",
+          "text": "For `ignorable_error(class, message)`, the observable ladder is:"
+        }
+      ]
+    }
+  ]
 }

@@ -728,6 +728,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 item for item in contract["interaction_groups"]
                 if item["domain"] == "callback"
             )
+            for existing_case in contract["case_groups"]:
+                if group["id"] in existing_case["interaction_groups"]:
+                    existing_case["interaction_groups"].remove(group["id"])
             planned_case = next(
                 item
                 for item in contract["case_groups"]
@@ -759,11 +762,59 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 if item["domain"] == "option_option"
             )
             group["origin"] = "manually_curated"
+            group["review_status"] = "unreviewed"
             group["planned_cases"] = [case["id"]]
             case["interaction_groups"] = [group["id"]]
 
         error = self.mutate(change, recompute_totals=True)
         self.assertIn("reviewed case cannot reference an unreviewed interaction", str(error))
+
+    def test_current_critical_interactions_are_reviewed_and_semantic(self) -> None:
+        groups = {
+            group["domain"]: group for group in self.base["interaction_groups"]
+        }
+        self.assertEqual(
+            set(groups),
+            {"callback", "error_control", "option_config", "option_option"},
+        )
+        expected_members = {
+            "callback": {
+                "CB-ANNOTATE",
+                "command.genhtml.option.annotate-script",
+            },
+            "error_control": {"ERR-NAMED-CONTROL", "lcovrc.stop-on-error"},
+            "option_config": {
+                "command.lcov.option.ignore-errors",
+                "lcovrc.ignore-errors",
+            },
+            "option_option": {
+                "command.lcov.option.ignore-errors",
+                "command.lcov.option.keep-going",
+            },
+        }
+        cases = {case["id"]: case for case in self.base["case_groups"]}
+        for domain, group in groups.items():
+            with self.subTest(domain=domain):
+                self.assertTrue(group["critical"])
+                self.assertEqual(group["origin"], "manually_curated")
+                self.assertEqual(group["review_status"], "reviewed")
+                self.assertEqual(
+                    {member["id"] for member in group["members"]},
+                    expected_members[domain],
+                )
+                self.assertEqual(len(group["planned_cases"]), 1)
+                case = cases[group["planned_cases"][0]]
+                self.assertEqual(case["case_class"], "interaction")
+                self.assertEqual(case["review_status"], "reviewed")
+                self.assertEqual(case["evidence_status"], "none")
+                self.assertLessEqual(
+                    expected_members[domain],
+                    {target["id"] for target in case["targets"]},
+                )
+
+        report = self.validate_path(self.contract_path)
+        self.assertEqual(len(report.readiness_gaps), 508)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 23)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:

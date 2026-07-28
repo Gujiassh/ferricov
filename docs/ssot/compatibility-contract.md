@@ -47,7 +47,7 @@ relationships where supported.
 | tracefile formats | pending | not started | none |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary skeletons cover all 531 public entries | not started | 23 reviewed primary plans; 508 primary reviews and 4 critical interaction domains open |
+| behavior planning | primary skeletons cover all 531 public entries | not started | 23 reviewed primary plans; all 4 critical interaction domains reviewed; 508 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry installed tree pinned and reproduced across two no-cache builds | not started | environment evidence only |
 

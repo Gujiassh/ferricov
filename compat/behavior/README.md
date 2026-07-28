@@ -95,8 +95,11 @@ inventory entry and a reviewed critical group for every interaction domain:
 - `error_control`: an error-class subject and a controlling option, config, or
   callback-protocol subject
 
-The placeholders intentionally have no members. `current` accepts and reports
-that explicit debt; `m0-ready` rejects it.
+The four required domains now have reviewed members and reciprocal planning
+cases in `interactions.json`. Their cases retain `evidence_status=none`: this
+closes interaction planning only, not differential evidence or product
+compatibility. `m0-ready` still rejects the 508 public entries without reviewed
+primary case groups.
 
 ## Evidence Rules
 

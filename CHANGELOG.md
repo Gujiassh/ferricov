@@ -16,7 +16,8 @@ compatibility releases.
   observations.
 - A complete reviewed map of all 205 pinned upstream test files.
 - Behavior-planning contracts for all 531 public inventory entries, including
-  explicit critical interaction domains and fail-closed M0 readiness checks.
+  reviewed critical option-option, option-config, callback, and error-control
+  interaction groups with reciprocal cases and fail-closed M0 readiness checks.
 - Reproducible Oracle build inputs, package and installed-tree locks, an
   execution-manifest schema, and a retained runtime-validated Oracle manifest.
 - Oracle-only startup, tracefile, operation, and report benchmark contracts,
@@ -42,7 +43,12 @@ compatibility releases.
   mutable tag; successful standalone builds also refresh the documented
   `ferricov/lcov-oracle:v2.5` convenience alias.
 - Installed `bubblewrap` in the Rust CI matrix and isolated its unit/process
-  tests from the prebuilt-image Docker E2E that is covered by the Oracle job.
+  tests from the prebuilt-image Docker E2E that is covered by the Oracle job;
+  CI now serializes those namespace-sensitive tests.
+- Provisioned the complete pinned Rust toolchain before Oracle verification so
+  later Cargo probes do not trigger conflicting component installation.
+- Added a dedicated CI gate for deterministic behavior-contract generation,
+  its mutation suite, and current-mode validation.
 - Passed the review-overlay directory during byte-stable inventory
   regeneration.
 - Removed workstation-specific upstream paths from the full verifier; it now
@@ -59,9 +65,9 @@ compatibility releases.
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
 - The workspace passes formatting, compilation, 100 Rust unit tests, clippy
-  with warnings denied, Python mutation suites, schema validators, and retained
-  evidence validation.
-- M0 remains open with 512 explicit behavior-planning gaps; no compatibility or
+  with warnings denied, 38 behavior-contract tests, Python mutation suites,
+  schema validators, and retained evidence validation.
+- M0 remains open with 508 explicit behavior-planning gaps; no compatibility or
   candidate performance claim is made.
 
 [Unreleased]: https://github.com/Gujiassh/ferricov/commits/main

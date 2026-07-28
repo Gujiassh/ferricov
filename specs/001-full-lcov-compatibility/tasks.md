@@ -39,7 +39,7 @@
 - [x] Review all 23 installed support scripts and callback planning subjects.
 - [ ] Complete installation-layout and asset behavior planning.
 - [x] Map all 205 upstream test files to public behaviors or internal coverage.
-- [ ] Define high-risk option and configuration interaction groups.
+- [x] Define the four required critical interaction groups with reciprocal cases.
 - [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
 - [x] Write the callback/runtime ADR.
 - [x] Write the initial compiler/platform matrix ADR.
@@ -54,9 +54,9 @@ profile rejects all 41 as unknown. These are pinned-Oracle observations and do
 not count as product evidence.
 
 Behavior planning covers all 531 public entries with primary case skeletons,
-but only 23 are reviewed. The current M0 gate reports 512 gaps: 508 public
-entries without reviewed primary cases and 4 unreviewed critical interaction
-domains.
+but only 23 public primary plans are reviewed. All four required critical
+interaction domains now have reviewed members and reciprocal cases. The current
+M0 gate reports 508 gaps, all public entries without reviewed primary cases.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 

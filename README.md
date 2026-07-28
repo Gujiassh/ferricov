@@ -27,10 +27,10 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
 | Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
 | Upstream test map | All 205 files mapped and reviewed |
-| Differential harness | 100 Rust unit tests, Python mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
-| M0 behavior planning | 531 public entries have primary case skeletons; 23 are reviewed, with 508 primary reviews and 4 critical interaction domains still open |
+| Differential harness | 100 Rust unit tests, 38 behavior-contract tests, Python mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
+| M0 behavior planning | 531 public entries have primary case skeletons; 23 are reviewed, all 4 critical interaction domains are reviewed, and 508 primary reviews remain open |
 | Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
-| Current milestone | M0: executable compatibility contract and reproducible baselines; 512 behavior-planning gaps remain |
+| Current milestone | M0: executable compatibility contract and reproducible baselines; 508 behavior-planning gaps remain |
 
 Self-tests prove that the harness captures differences and fails correctly.
 They do not count as Ferricov product compatibility. See the
@@ -130,8 +130,10 @@ The workspace declares Rust `1.85.0` as its minimum supported version.
 `bubblewrap` is required on Linux for the local process-isolation tests. Docker
 is required only for the pinned LCOV Oracle and environment-equivalent
 differential tests. The ordinary CI Rust matrix sets
-`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test; the separate
-Oracle job builds the image and exercises the real Docker paths.
+`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test and serializes
+process-isolation tests. A dedicated Python job checks deterministic
+behavior-contract generation, mutation tests, and the current contract gate.
+The separate Oracle job builds the image and exercises the real Docker paths.
 
 ```bash
 cargo fmt --all --check
