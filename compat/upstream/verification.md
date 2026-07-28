@@ -34,8 +34,9 @@ flow. The immutable source target remains the GitHub `v2.5` release tag and
 commit below; Ferricov does not rewrite the installed upstream version string.
 
 The build checked that `/opt/lcov` resolved to commit
-`74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5` before creating image
-`ferricov/lcov-oracle:v2.5`.
+`74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5`, recorded the verified immutable
+image ID in its execution manifest, and then refreshed the local
+`ferricov/lcov-oracle:v2.5` convenience alias.
 
 The image installs all 10 commands under `/usr/local/bin` with mode `0755`,
 including `xml2lcovutil.py`. That helper accepts `--help` with an empty output;

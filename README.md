@@ -126,9 +126,12 @@ a compatibility release.
 
 ## Development
 
-The workspace declares Rust `1.85.0` as its minimum supported version. Docker
+The workspace declares Rust `1.85.0` as its minimum supported version.
+`bubblewrap` is required on Linux for the local process-isolation tests. Docker
 is required only for the pinned LCOV Oracle and environment-equivalent
-differential tests.
+differential tests. The ordinary CI Rust matrix sets
+`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test; the separate
+Oracle job builds the image and exercises the real Docker paths.
 
 ```bash
 cargo fmt --all --check

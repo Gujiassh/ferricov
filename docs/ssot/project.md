@@ -97,6 +97,8 @@ the M0 harness become the permanent integration boundary.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
   The Oracle lane now has a two-build no-cache reproducibility check, locked
   package and installed-tree closures, and a runtime-validated execution
-  manifest. Compiler capture and release platform qualification remain open.
+  manifest. The portable verifier binds all post-build probes to the immutable
+  image ID in that run's manifest; the `v2.5` tag is only a convenience alias.
+  Compiler capture and release platform qualification remain open.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

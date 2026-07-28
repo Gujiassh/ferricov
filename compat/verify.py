@@ -494,7 +494,7 @@ def validate_inventory_sources(root: Path, upstream_root: Path) -> None:
     )
 
 
-def run_oracle_parser_probes() -> None:
+def run_oracle_parser_probes(oracle_image: str) -> None:
     probes = [
         (
             "getopt_unique_abbrev",
@@ -541,7 +541,7 @@ def run_oracle_parser_probes() -> None:
                 "--rm",
                 "--network",
                 "none",
-                "ferricov/lcov-oracle:v2.5",
+                oracle_image,
                 *arguments,
             ],
             check=False,
@@ -558,7 +558,9 @@ def run_oracle_parser_probes() -> None:
     print(f"ORACLE_PARSER_POLICIES_OK probes={len(probes)} network=none")
 
 
-def run_profile_parser_resolution_probes(inventory_path: Path) -> None:
+def run_profile_parser_resolution_probes(
+    inventory_path: Path, oracle_image: str
+) -> None:
     inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
     options_by_id = {
         option["id"]: option
@@ -643,7 +645,7 @@ print(json.dumps(results, sort_keys=True))
             "--rm",
             "--network",
             "none",
-            "ferricov/lcov-oracle:v2.5",
+            oracle_image,
             "python3",
             "-c",
             container_script,
@@ -756,9 +758,29 @@ def run(
 
 
 def oracle_build_environment(
-    base: dict[str, str], upstream_root: Path
+    base: dict[str, str], upstream_root: Path, manifest_path: Path
 ) -> dict[str, str]:
-    return {**base, "LCOV_SOURCE_ROOT": str(upstream_root)}
+    return {
+        **base,
+        "LCOV_SOURCE_ROOT": str(upstream_root),
+        "ORACLE_MANIFEST": str(manifest_path),
+    }
+
+
+def load_oracle_image_id(manifest_path: Path) -> str:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    image = manifest.get("image", {})
+    image_id = image.get("docker_image_id")
+    if (
+        not isinstance(image_id, str)
+        or len(image_id) != 71
+        or not image_id.startswith("sha256:")
+        or any(character not in "0123456789abcdef" for character in image_id[7:])
+    ):
+        raise RuntimeError(f"invalid Oracle image ID in manifest: {manifest_path}")
+    if image.get("reference") != image_id:
+        raise RuntimeError(f"Oracle manifest image reference mismatch: {manifest_path}")
+    return image_id
 
 
 def inventory_regeneration_command(
@@ -821,6 +843,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="ferricov-help-") as directory:
         generated_help = Path(directory)
         upstream_root = generated_help / "upstream"
+        oracle_manifest = generated_help / "oracle-manifest.json"
         run(
             [
                 "git",
@@ -847,10 +870,15 @@ def main() -> int:
         run(
             [str(root / "compat/upstream/build.sh")],
             root,
-            environment=oracle_build_environment(dict(os.environ), upstream_root),
+            environment=oracle_build_environment(
+                dict(os.environ), upstream_root, oracle_manifest
+            ),
         )
-        run_oracle_parser_probes()
-        run_profile_parser_resolution_probes(root / "compat/inventory/v2.5.json")
+        oracle_image = load_oracle_image_id(oracle_manifest)
+        run_oracle_parser_probes(oracle_image)
+        run_profile_parser_resolution_probes(
+            root / "compat/inventory/v2.5.json", oracle_image
+        )
 
         commands = json.loads((root / "compat/inventory/v2.5.json").read_text())["commands"]
         for command in commands:
@@ -861,7 +889,7 @@ def main() -> int:
                     "--rm",
                     "--network",
                     "none",
-                    "ferricov/lcov-oracle:v2.5",
+                    oracle_image,
                     command["name"],
                     "--help",
                 ],

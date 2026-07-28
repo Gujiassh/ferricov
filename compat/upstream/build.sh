@@ -240,6 +240,7 @@ python3 "${upstream_dir}/record-manifest.py" \
   --output "${manifest}"
 python3 "${root_dir}/compat/manifests/validate.py" \
   --verify-runtime "${manifest}"
+docker image tag "${image_id_a}" ferricov/lcov-oracle:v2.5
 
-printf 'ORACLE_BUILD_OK image_a=%s image_b=%s manifest=%s\n' \
-  "${image_id_a}" "${image_id_b}" "${manifest}"
+printf 'ORACLE_BUILD_OK image_a=%s image_b=%s alias=%s manifest=%s\n' \
+  "${image_id_a}" "${image_id_b}" "ferricov/lcov-oracle:v2.5" "${manifest}"

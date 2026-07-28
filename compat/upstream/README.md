@@ -32,15 +32,17 @@ If the local Docker installation requires an isolated configuration, set
 `DOCKER_CONFIG` for the command. The release benchmark runner will execute the
 Perl and Rust binaries inside the same environment.
 
-`build.sh` always performs a clean package/source build and writes a run-specific
-manifest under `/tmp`. Set `ORACLE_MANIFEST` explicitly when recording reviewed
-evidence at another path. The build never overwrites the committed observed
-record by default; CI must not validate evidence that it just replaced. The
-manifest records the image, source, installed packages, installed tree,
-executables, toolchain, platform, launcher environment, command, mounts,
-fixtures, and output identities. Its `environment_smoke` scope proves only the
-Oracle environment and installation; it is not Ferricov compatibility
-evidence.
+`build.sh` always performs a clean package/source build, writes a run-specific
+manifest under `/tmp`, and refreshes `ferricov/lcov-oracle:v2.5` as a local
+convenience alias for the first verified image. Set `ORACLE_MANIFEST` explicitly
+when recording reviewed evidence at another path. The build never overwrites
+the committed observed record by default; CI must not validate evidence that it
+just replaced. The manifest records the image, source, installed packages,
+installed tree, executables, toolchain, platform, launcher environment,
+command, mounts, fixtures, and output identities. The portable verifier reads
+the immutable image ID back from this manifest for every later probe rather
+than trusting the alias. Its `environment_smoke` scope proves only the Oracle
+environment and installation; it is not Ferricov compatibility evidence.
 
 The build uses Docker's default build network. Set `ORACLE_BUILD_NETWORK` when
 another build network is required. Network access is disabled for every

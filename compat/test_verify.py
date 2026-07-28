@@ -86,11 +86,61 @@ class InventoryRegenerationCommandTests(unittest.TestCase):
     def test_oracle_build_environment_sets_portable_checkout(self) -> None:
         base = {"PATH": "/usr/bin", "LCOV_SOURCE_ROOT": "/stale"}
 
-        environment = verify.oracle_build_environment(base, Path("/tmp/upstream"))
+        environment = verify.oracle_build_environment(
+            base,
+            Path("/tmp/upstream"),
+            Path("/tmp/oracle-manifest.json"),
+        )
 
         self.assertEqual(environment["PATH"], "/usr/bin")
         self.assertEqual(environment["LCOV_SOURCE_ROOT"], "/tmp/upstream")
+        self.assertEqual(
+            environment["ORACLE_MANIFEST"], "/tmp/oracle-manifest.json"
+        )
         self.assertEqual(base["LCOV_SOURCE_ROOT"], "/stale")
+
+    def test_oracle_image_id_is_loaded_from_manifest(self) -> None:
+        image_id = "sha256:" + "a" * 64
+        with tempfile.TemporaryDirectory(prefix="ferricov-manifest-test-") as directory:
+            manifest = Path(directory) / "manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "image": {
+                            "docker_image_id": image_id,
+                            "reference": image_id,
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            self.assertEqual(verify.load_oracle_image_id(manifest), image_id)
+
+    def test_oracle_image_id_rejects_mutable_or_mismatched_reference(self) -> None:
+        image_id = "sha256:" + "a" * 64
+        invalid_images = (
+            {
+                "docker_image_id": "ferricov/lcov-oracle:v2.5",
+                "reference": "ferricov/lcov-oracle:v2.5",
+            },
+            {
+                "docker_image_id": image_id,
+                "reference": "sha256:" + "b" * 64,
+            },
+        )
+        for image in invalid_images:
+            with self.subTest(image=image):
+                with tempfile.TemporaryDirectory(
+                    prefix="ferricov-manifest-test-"
+                ) as directory:
+                    manifest = Path(directory) / "manifest.json"
+                    manifest.write_text(
+                        json.dumps({"image": image}),
+                        encoding="utf-8",
+                    )
+                    with self.assertRaisesRegex(RuntimeError, "Oracle"):
+                        verify.load_oracle_image_id(manifest)
 
 
 if __name__ == "__main__":
