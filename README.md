@@ -130,9 +130,10 @@ The workspace declares Rust `1.85.0` as its minimum supported version.
 `bubblewrap` is required on Linux for the local process-isolation tests. Docker
 is required only for the pinned LCOV Oracle and environment-equivalent
 differential tests. The ordinary CI Rust matrix sets
-`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test and serializes
-process-isolation tests. A dedicated Python job checks deterministic
-behavior-contract generation, mutation tests, and the current contract gate.
+`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test and
+smoke-tests the bubblewrap PID namespace used by process-isolation tests. A
+dedicated Python job checks deterministic behavior-contract generation,
+mutation tests, and the current contract gate against the pinned LCOV source.
 The separate Oracle job builds the image and exercises the real Docker paths.
 
 ```bash

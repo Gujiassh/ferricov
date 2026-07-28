@@ -42,13 +42,15 @@ compatibility releases.
   its newly generated execution manifest instead of assuming a pre-existing
   mutable tag; successful standalone builds also refresh the documented
   `ferricov/lcov-oracle:v2.5` convenience alias.
-- Installed `bubblewrap` in the Rust CI matrix and isolated its unit/process
-  tests from the prebuilt-image Docker E2E that is covered by the Oracle job;
-  CI now serializes those namespace-sensitive tests.
+- Installed `bubblewrap` in the Rust CI matrix, enabled its user namespace
+  under hosted-runner AppArmor policy, smoke-tested the exact PID-namespace
+  invocation, and isolated unit/process tests from the prebuilt-image Docker
+  E2E covered by the Oracle job.
 - Provisioned the complete pinned Rust toolchain before Oracle verification so
   later Cargo probes do not trigger conflicting component installation.
 - Added a dedicated CI gate for deterministic behavior-contract generation,
-  its mutation suite, and current-mode validation.
+  its mutation suite, and current-mode validation against a commit-verified
+  pinned LCOV checkout.
 - Passed the review-overlay directory during byte-stable inventory
   regeneration.
 - Removed workstation-specific upstream paths from the full verifier; it now

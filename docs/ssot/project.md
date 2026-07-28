@@ -101,9 +101,10 @@ the M0 harness become the permanent integration boundary.
   manifest. The portable verifier binds all post-build probes to the immutable
   image ID in that run's manifest; the `v2.5` tag is only a convenience alias.
   Compiler capture and release platform qualification remain open.
-- CI serializes namespace-sensitive Rust process-isolation tests, provisions
-  the complete pinned toolchain before Oracle verification, and independently
-  gates deterministic behavior-contract generation, mutation tests, and
-  current-mode validation.
+- CI enables and smoke-tests the bubblewrap PID namespace required by Rust
+  process-isolation tests, provisions the complete pinned toolchain before
+  Oracle verification, and independently gates deterministic behavior-contract
+  generation, mutation tests, and current-mode validation against the pinned
+  LCOV checkout.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

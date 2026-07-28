@@ -34,6 +34,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends bubblewrap
+          if sysctl -n kernel.apparmor_restrict_unprivileged_userns >/dev/null 2>&1; then
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          fi
+          setsid -w bwrap --unshare-pid --as-pid-1 --die-with-parent \
+            --bind / / --dev-bind /dev /dev --proc /proc -- /bin/true
 
       - name: Install Rust toolchain
         env:
@@ -53,7 +58,6 @@ jobs:
       - name: Run tests
         env:
           FERRICOV_SKIP_DOCKER_E2E: '1'
-          RUST_TEST_THREADS: '1'
           TOOLCHAIN: ${{ matrix.toolchain }}
         run: cargo +"$TOOLCHAIN" test --workspace --all-targets --locked
 
@@ -66,10 +70,15 @@ jobs:
     name: Behavior Contract
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      LCOV_SOURCE_ROOT: /tmp/lcov-upstream-reference
 
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Check out pinned LCOV source
+        run: git clone --depth 1 --branch v2.5 https://github.com/linux-test-project/lcov.git "$LCOV_SOURCE_ROOT"
 
       - name: Set up Python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
