@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 30,
+  "shard_count": 31,
+  "content_hash": "sha256:610afbd12003d8fa56161704a126821e399b72888f312d0a6b75edcd2eb62d90",
+  "reviewed_entries": [
+    {
+      "id": "command.xml2lcov.option.output",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.output",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 11
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 69
+        }
+      ],
+      "generated_canonical_name_assertion": "--output",
+      "aliases": [
+        "-o"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.test-name",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.test-name",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 14
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 71
+        }
+      ],
+      "generated_canonical_name_assertion": "--test-name",
+      "aliases": [
+        "--testname",
+        "-t"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 19
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 75
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 20
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 77
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

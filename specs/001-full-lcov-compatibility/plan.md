@@ -12,15 +12,28 @@ are not substitutes for compatible behavior.
 
 ## 2. Planning Baseline
 
-The current upstream audit found:
+The initial v1 extraction baseline found:
 
 - 10 installed commands
-- 156 distinct long-option candidates
-- 130 `lcovrc` key candidates
+- 156 distinct long-option candidates from the original document-oriented
+  extraction
+- 130 `lcovrc` key candidates in the initial extraction
 - 23 installed support scripts
 - 205 upstream test files
 - approximately 30,600 lines across `lcov`, `genhtml`, `geninfo`, and
   `lcovutil.pm`
+
+The current v2 executable-contract inventory supersedes the original 156-option
+candidate count with:
+
+- 353 exact parser-backed option definitions
+- 41 additional documentation-derived candidates
+- 9 positional forms
+- 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
+- 23 installed support scripts
+- all 205 upstream test files mapped and reviewed
+- 531 public behavior-plan skeletons, with 23 reviewed primary plans and 512
+  M0 gaps: 508 primary reviews plus 4 critical interaction domains
 
 The option and configuration counts are omission-detection inputs, not progress
 percentages. One option may require multiple positive, negative, configuration,
@@ -122,11 +135,21 @@ starts.
 - Every public entry has at least one planned differential case.
 - High-risk interactions have explicit case groups.
 - The Oracle suite and baseline benchmark can run from a clean checkout.
+- Callback/runtime and compiler/platform decisions are accepted for the scope
+  needed by M1.
+- The Oracle is retained as a content-addressed artifact or has a reproducible
+  build definition, and the required execution-manifest format is recorded.
 - No unresolved licensing or callback-compatibility decision blocks the core
   model.
 
-**Current status:** in progress. The pinned Oracle, candidate inventory,
-differential harness, schemas, and harness verification are complete.
+**Current status:** in progress. The schema-aware v2 inventory, all command,
+configuration, positional, and support-script reviews, the exhaustive 205-file
+upstream test map, the callback/runtime and compiler/platform ADRs, and the
+reproducible Oracle build and execution-manifest lane are established. M0 is
+not complete: 512 behavior-planning gaps, correctness baselines, compiler
+capture qualification, and release platform evidence remain.
+M1 must not start until the M0 exit gate and the Week 2 parser gate are
+satisfied.
 
 ### M1 / v0.1: Tracefile Core
 

@@ -1,10 +1,25 @@
 # Oracle Verification
 
-Verified on 2026-07-17 with:
+Initially verified on 2026-07-17 with:
 
 ```bash
 DOCKER_CONFIG=/tmp/ferricov-docker-config compat/upstream/build.sh
 ```
+
+Reverified on 2026-07-28 through `python3 compat/verify.py`. The formal run
+performed two independent no-cache builds and matched their package closure,
+321-entry installed tree, 18 key files, and 10-command help smoke output. It
+also matched the committed package and installed-tree locks. The retained
+environment record is
+`compat/manifests/oracle-lcov-v2.5-smoke.json` and passes both static and Docker
+runtime validation.
+
+The reproducibility identities from that run are:
+
+- package closure: `sha256:e41c5a77487657a65e03309ac262a25088e8c020c20a630ed8ae5a3f1e0946b6`
+- installed tree: `sha256:75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24`
+- key files: `sha256:0f7579cbdcf10ee522eb76cc69a315cf4a083565c62b6ed6e0941b68054a5eb3`
+- smoke output: `sha256:26778dbb6876544d5fa4cadeccf7a77cfa0e9e7424e68acdeb14e69f457a2a0a`
 
 Observed version output:
 

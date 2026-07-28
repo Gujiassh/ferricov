@@ -1,0 +1,92 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [],
+  "description": "Required critical interaction-domain placeholders; every unresolved member and case relationship remains explicit.",
+  "fragment_id": "authored.interactions",
+  "fragment_type": "authored",
+  "interaction_groups": [
+    {
+      "behavior_groups": [],
+      "critical": true,
+      "description": "Unreviewed callback interaction placeholder; callback protocol, controlling surface, and cases require manual adjudication.",
+      "domain": "callback",
+      "id": "interaction.callback.draft",
+      "members": [],
+      "origin": "generated_skeleton",
+      "planned_cases": [],
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "plan_requirement",
+          "line": 326,
+          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "repository": "ferricov",
+          "text": "- interaction: operation, filter, callback, parallel, and output combinations"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "critical": true,
+      "description": "Unreviewed error-control interaction placeholder; error class, controlling surface, and cases require manual adjudication.",
+      "domain": "error_control",
+      "id": "interaction.error-control.draft",
+      "members": [],
+      "origin": "generated_skeleton",
+      "planned_cases": [],
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "plan_requirement",
+          "line": 330,
+          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "repository": "ferricov",
+          "text": "- failure: exit status, signal, stdout/stderr channel, message class, ignore and"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "critical": true,
+      "description": "Unreviewed option-config interaction placeholder; option, lcovrc member, precedence, and cases require manual adjudication.",
+      "domain": "option_config",
+      "id": "interaction.option-config.draft",
+      "members": [],
+      "origin": "generated_skeleton",
+      "planned_cases": [],
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "plan_requirement",
+          "line": 325,
+          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "repository": "ferricov",
+          "text": "- equivalence: CLI form versus corresponding `lcovrc` form"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "critical": true,
+      "description": "Unreviewed option-option interaction placeholder; participating options, ordering, and cases require manual adjudication.",
+      "domain": "option_option",
+      "id": "interaction.option-option.draft",
+      "members": [],
+      "origin": "generated_skeleton",
+      "planned_cases": [],
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "plan_requirement",
+          "line": 382,
+          "path": "specs/001-full-lcov-compatibility/plan.md",
+          "repository": "ferricov",
+          "text": "| Hidden option interactions | False compatibility claim | Test-to-inventory mapping and interaction groups | M0 |"
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "subjects": []
+}

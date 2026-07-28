@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 20,
+  "shard_count": 31,
+  "content_hash": "sha256:07337211b0e629b8d26e1ac77d273f0cf917d8efa4c0c0b1ee60095ed923f4a0",
+  "reviewed_entries": [
+    {
+      "id": "command.lcov.option.tempdir",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.tempdir",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 19
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 168
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1477
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1237
+        }
+      ],
+      "generated_canonical_name_assertion": "--tempdir",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.test-name",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.test-name",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 42
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 23
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1428
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/lcov",
+          "line": 204
+        }
+      ],
+      "generated_canonical_name_assertion": "--test-name",
+      "aliases": [
+        "-t"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.to-package",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.to-package",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 59
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 44
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 912
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1438
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1449
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1458
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/lcov",
+          "line": 216
+        }
+      ],
+      "generated_canonical_name_assertion": "--to-package",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.toolname",
+      "review_status": "reviewed",
+      "classification": "internal",
+      "generated_id_assertion": "command.lcov.option.toolname",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1250
+        }
+      ],
+      "generated_canonical_name_assertion": "--toolname",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.unreachable-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.unreachable-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 55
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 825
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1266
+        }
+      ],
+      "generated_canonical_name_assertion": "--unreachable-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 10
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 163
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1320
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1245
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.version",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 9
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 154
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1462
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1248
+        }
+      ],
+      "generated_canonical_name_assertion": "--version",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 74
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 54
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 368
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 608
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 816
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1238
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.lcov.option.zerocounters",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.option.zerocounters",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/lcov.txt",
+          "line": 23
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 63
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/lcov.rst",
+          "line": 1467
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/lcov",
+          "line": 205
+        }
+      ],
+      "generated_canonical_name_assertion": "--zerocounters",
+      "aliases": [
+        "-z"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.branch-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.branch-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/llvm2lcov.txt",
+          "line": 18
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 58
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 91
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 113
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1253
+        }
+      ],
+      "generated_canonical_name_assertion": "--branch-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.build-directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.build-directory",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1262
+        }
+      ],
+      "generated_canonical_name_assertion": "--build-directory",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.capture",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.llvm2lcov.option.capture",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 113
+        }
+      ],
+      "generated_canonical_name_assertion": "--capture",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1242
+        }
+      ],
+      "generated_canonical_name_assertion": "--checksum",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

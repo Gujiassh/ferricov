@@ -1,0 +1,4018 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "inventory": {
+    "path": "compat/inventory/v2.5.json",
+    "sha256": "567f6ab8c7a13442350cc6b1831c2c7d9206625e6b54bb85bb0458cdf3890444"
+  },
+  "suite_schema": {
+    "path": "compat/schema/suite.schema.json",
+    "sha256": "0f0778f8a39f524714d43bf735f396dd2d932cbce991dba7d9953afe9d9a950b"
+  },
+  "reviewed_parser_overlay": {
+    "explicit_aliases": {
+      "lcov": {
+        "-h": "--help",
+        "-?": "--help",
+        "-q": "--quiet",
+        "-v": "--verbose"
+      },
+      "genhtml": {
+        "-h": "--help",
+        "-?": "--help",
+        "-q": "--quiet",
+        "-v": "--verbose"
+      },
+      "geninfo": {
+        "-h": "--help",
+        "-?": "--help",
+        "-q": "--quiet",
+        "-v": "--verbose"
+      },
+      "genpng": {},
+      "gendesc": {
+        "-?": "--help"
+      },
+      "perl2lcov": {
+        "-h": "--help",
+        "-?": "--help",
+        "-q": "--quiet",
+        "-v": "--verbose"
+      },
+      "py2lcov": {
+        "-h": "--help",
+        "-v": "--verbose",
+        "-k": "--keep-going"
+      },
+      "xml2lcov": {
+        "-h": "--help",
+        "-v": "--verbose",
+        "-k": "--keep-going"
+      },
+      "xml2lcovutil.py": {},
+      "llvm2lcov": {
+        "-h": "--help",
+        "-?": "--help",
+        "-q": "--quiet",
+        "-v": "--verbose"
+      }
+    },
+    "probe_value_options": [
+      "--config-file",
+      "--rc",
+      "--version-script"
+    ],
+    "sha256": "3bb009b2b8ae98fdb4f3adce181e32a6d12c0553ed195dcd0d1da95c0074fe74"
+  },
+  "clean_environment": {
+    "inherit_parent": false,
+    "allowlist": {
+      "HOME": "{workdir}",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    }
+  },
+  "suites": [
+    {
+      "suite_id": "m0-cli-contract-core",
+      "path": "compat/cases/m0-cli-contract-core.json",
+      "sha256": "023a6d1138ef0743ce3d3f6e50f61c86633791e51a80af11e5b6272ef9f5e76c",
+      "case_count": 40,
+      "environment_overrides": {}
+    },
+    {
+      "suite_id": "m0-cli-contract-policy",
+      "path": "compat/cases/m0-cli-contract-policy.json",
+      "sha256": "bc33812753b3862f8cc43fd12a3e4994c128815918461891091b23d635702e3f",
+      "case_count": 52,
+      "environment_overrides": {}
+    },
+    {
+      "suite_id": "m0-cli-contract-posix",
+      "path": "compat/cases/m0-cli-contract-posix.json",
+      "sha256": "37b16ae6d9fd528b335d413e1a1f0dc3c72ee4832c1f2f36c12f1080d76029de",
+      "case_count": 34,
+      "environment_overrides": {
+        "POSIXLY_CORRECT": "1"
+      }
+    }
+  ],
+  "family_equivalence": [
+    {
+      "id": "parser-policy.shared-getopt-long",
+      "family": "shared_getopt_long",
+      "commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "policy_sha256": "26ac25c7dac0359084cb11f3a0a3dd10db46a2d49107c3edfb4f318c9ba627ee",
+      "policy": {
+        "family": "shared_getopt_long",
+        "auto_abbrev": "unique_prefix",
+        "case_sensitive": false,
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ],
+        "plus_prefix_behavior": "option",
+        "option_ordering": "permute",
+        "bundling": "disabled",
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order",
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      }
+    },
+    {
+      "id": "parser-policy.direct-getopt-long",
+      "family": "direct_getopt_long",
+      "commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "policy_sha256": "dd9e1edc2b323ec3b0d25c90f61f9622c8a582ea4dfdfb4bbd9dd28a9ecc47eb",
+      "policy": {
+        "family": "direct_getopt_long",
+        "auto_abbrev": "unique_prefix",
+        "case_sensitive": false,
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ],
+        "plus_prefix_behavior": "option",
+        "option_ordering": "permute",
+        "bundling": "disabled",
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order",
+        "exact_only_options": []
+      }
+    },
+    {
+      "id": "parser-policy.argparse",
+      "family": "argparse",
+      "commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "policy_sha256": "4ccaf6b0ed51445bbb2aeed9e43b04043c9ef14a360473d7036327b1222b5a2f",
+      "policy": {
+        "family": "argparse",
+        "auto_abbrev": "unique_prefix",
+        "case_sensitive": true,
+        "accepted_long_prefixes": [
+          "--"
+        ],
+        "plus_prefix_behavior": "positional",
+        "option_ordering": "argparse_parse_args",
+        "bundling": "argparse_short_clusters",
+        "posixly_correct_effect": "none",
+        "exact_only_options": []
+      }
+    },
+    {
+      "id": "parser-policy.none",
+      "family": "none",
+      "commands": [
+        "xml2lcovutil.py"
+      ],
+      "policy_sha256": "62760830e20084142626efd1584533a402d45c638332d093ced35f0248c3d712",
+      "policy": {
+        "family": "none",
+        "auto_abbrev": "not_applicable",
+        "case_sensitive": null,
+        "accepted_long_prefixes": [],
+        "plus_prefix_behavior": "ignored",
+        "option_ordering": "ignored",
+        "bundling": "not_applicable",
+        "posixly_correct_effect": "not_applicable",
+        "exact_only_options": []
+      }
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "m0-core-lcov-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-lcov-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-lcov-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-lcov-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-genhtml-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genhtml",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-genhtml-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-genhtml-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-genhtml-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genhtml",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-geninfo-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "geninfo",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-geninfo-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-geninfo-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-geninfo-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "geninfo",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-genpng-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genpng",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-genpng-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genpng",
+      "inventory_entries": [
+        "command.genpng.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-genpng-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genpng",
+      "inventory_entries": [
+        "command.genpng.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-genpng-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "genpng",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-gendesc-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "gendesc",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-gendesc-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-gendesc-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-gendesc-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "gendesc",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-perl2lcov-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "perl2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-perl2lcov-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-perl2lcov-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-perl2lcov-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "perl2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-py2lcov-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "py2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-py2lcov-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-py2lcov-version-script-abbreviation",
+      "suite_id": "m0-cli-contract-core",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.version-script"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--version",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--version-script"
+          ],
+          "missing_value": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-py2lcov-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "py2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-xml2lcov-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-xml2lcov-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-xml2lcov-version-script-abbreviation",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.option.version-script"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--version",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--version-script"
+          ],
+          "missing_value": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-xml2lcov-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-xml2lcovutil-py-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-xml2lcovutil-py-help-argv-ignored-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--help",
+          "resolution": "ignored"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-xml2lcovutil-py-version-argv-ignored-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--version",
+          "resolution": "ignored"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-xml2lcovutil-py-invalid-argv-ignored-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "ignored"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-core-llvm2lcov-startup-control",
+      "suite_id": "m0-cli-contract-core",
+      "command": "llvm2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": []
+    },
+    {
+      "case_id": "m0-core-llvm2lcov-help",
+      "suite_id": "m0-cli-contract-core",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-llvm2lcov-version",
+      "suite_id": "m0-cli-contract-core",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.version"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-core-llvm2lcov-invalid-option",
+      "suite_id": "m0-cli-contract-core",
+      "command": "llvm2lcov",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ferricov-invalid-option",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-unique-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--hel",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-ambiguous-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.verbose",
+        "command.lcov.option.version",
+        "command.lcov.option.version-script"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ver",
+          "resolution": "ambiguous_prefix",
+          "targets": [
+            "--verbose",
+            "--version",
+            "--version-script"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-case-insensitive",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "case_sensitive"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--HELP",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-single-dash-long",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "accepted_long_prefixes"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-plus-prefix",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "plus_prefix_behavior": "option"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "plus_prefix_behavior"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-no-bundling",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.quiet",
+        "command.lcov.option.verbose"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "bundling": "disabled"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "bundling"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-qv",
+          "resolution": "unknown",
+          "targets": [],
+          "bundling_reverse_targets": [
+            "--quiet",
+            "--verbose"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-permute",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.positional.operation-operands",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "option_ordering": "permute"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "option_ordering"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "operand",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-converter-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--hel",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-unique-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--hel",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-version-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genpng",
+      "inventory_entries": [
+        "command.genpng.option.version"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ver",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--version"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-case-insensitive",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "case_sensitive"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--HELP",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-single-dash-long",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "accepted_long_prefixes"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-plus-prefix",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "plus_prefix_behavior": "option"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "plus_prefix_behavior"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-no-bundling",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "bundling": "disabled"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "bundling"
+      ],
+      "covered_commands": [
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-??",
+          "resolution": "unknown",
+          "targets": [],
+          "bundling_reverse_targets": [
+            "--help",
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-direct-permute",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.positional.inputfile",
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "option_ordering": "permute"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "option_ordering"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "operand",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-unique-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--verb",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--verbose"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-ambiguous-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.option.version-script",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ver",
+          "resolution": "ambiguous_prefix",
+          "targets": [
+            "--verbose",
+            "--version-script"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-case-sensitive",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "case_sensitive": true
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "case_sensitive"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--VERB",
+          "resolution": "unknown",
+          "targets": []
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-rejects-single-dash-long",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.checksum",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "accepted_long_prefixes"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-checksum",
+          "resolution": "unknown"
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-plus-is-positional",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "plus_prefix_behavior": "positional"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "plus_prefix_behavior"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-short-option-cluster",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.option.keep-going",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "bundling": "argparse_short_clusters"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "bundling"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-vk",
+          "resolution": "short_cluster",
+          "targets": [
+            "--verbose",
+            "--keep-going"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-parse-args-boundary",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.no-functions",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "option_ordering": "argparse_parse_args"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "option_ordering"
+      ],
+      "covered_commands": [
+        "py2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "first.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--no",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--no-functions"
+          ]
+        },
+        {
+          "token": "later.xml",
+          "resolution": "rejected_after_option_boundary"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-argparse-xml-unique-abbreviation",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.option.verbose",
+        "command.xml2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix"
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "auto_abbrev"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--verb",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--verbose"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-no-parser-mixed-argv-ignored-control",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "default",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "ignored"
+        },
+        {
+          "token": "-help",
+          "resolution": "ignored"
+        },
+        {
+          "token": "--HELP",
+          "resolution": "ignored"
+        },
+        {
+          "token": "operand",
+          "resolution": "ignored"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-lcov-rc-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.rc",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-genhtml-config-file-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.config-file",
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-genhtml-rc-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.rc",
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-geninfo-config-file-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.config-file",
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-geninfo-rc-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.rc",
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-perl2lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.config-file",
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-perl2lcov-rc-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.rc",
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-llvm2lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.config-file",
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-llvm2lcov-rc-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.rc",
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-config-file-single-dash-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-config-file-abbreviation-rejected",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-f",
+          "resolution": "exact_only_prefix_rejected",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-shared-rc-case-insensitive-exact",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.rc",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false,
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ]
+      },
+      "equivalence_profile": "default",
+      "equivalence_claims": [
+        "case_sensitive",
+        "exact_only_options"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--RC",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-policy-help-alias-lcov-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-lcov-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-genhtml-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-genhtml-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-geninfo-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-geninfo-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-genpng-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "genpng",
+      "inventory_entries": [
+        "command.genpng.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-gendesc-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-gendesc-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-perl2lcov-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-perl2lcov-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-py2lcov-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-xml2lcov-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-llvm2lcov-h",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-policy-help-alias-llvm2lcov-question",
+      "suite_id": "m0-cli-contract-policy",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": null,
+      "policy_expectations": {},
+      "equivalence_profile": null,
+      "equivalence_claims": [],
+      "covered_commands": [],
+      "inference_scope": null,
+      "probe_resolution": null
+    },
+    {
+      "case_id": "m0-posix-shared-abbreviation-disabled",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--hel",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-case-folding-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false,
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "case_sensitive",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--HELP",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-single-dash-long-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "accepted_long_prefixes",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-plus-prefix-disabled",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-require-order",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.positional.operation-operands",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "operand",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--help",
+          "resolution": "unparsed_after_require_order"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-no-bundling-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.quiet",
+        "command.lcov.option.verbose"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "bundling": "disabled",
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "bundling",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-qv",
+          "resolution": "unknown",
+          "targets": [],
+          "bundling_reverse_targets": [
+            "--quiet",
+            "--verbose"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-abbreviation-disabled",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--hel",
+          "resolution": "unknown",
+          "targets": []
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-case-folding-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false,
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "case_sensitive",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--HELP",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-single-dash-long-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--",
+          "-"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "accepted_long_prefixes",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-plus-prefix-disabled",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-no-bundling-preserved",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "bundling": "disabled",
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "bundling",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-??",
+          "resolution": "unknown",
+          "targets": [],
+          "bundling_reverse_targets": [
+            "--help",
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-direct-require-order",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "gendesc",
+      "inventory_entries": [
+        "command.gendesc.positional.inputfile",
+        "command.gendesc.option.help"
+      ],
+      "family_equivalence": "parser-policy.direct-getopt-long",
+      "policy_expectations": {
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "genpng",
+        "gendesc"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "operand",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--help",
+          "resolution": "unparsed_after_require_order"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-unique-abbreviation-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "auto_abbrev",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--verb",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--verbose"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-ambiguous-abbreviation-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.option.version-script",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "auto_abbrev",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--ver",
+          "resolution": "ambiguous_prefix",
+          "targets": [
+            "--verbose",
+            "--version-script"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-case-sensitivity-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "case_sensitive": true,
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "case_sensitive",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--VERB",
+          "resolution": "unknown",
+          "targets": []
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-single-dash-long-rejection-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.checksum",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "accepted_long_prefixes": [
+          "--"
+        ],
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "accepted_long_prefixes",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-checksum",
+          "resolution": "unknown"
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-plus-positional-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "plus_prefix_behavior": "positional",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "plus_prefix_behavior",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-short-cluster-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.verbose",
+        "command.py2lcov.option.keep-going",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "bundling": "argparse_short_clusters",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "bundling",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-vk",
+          "resolution": "short_cluster",
+          "targets": [
+            "--verbose",
+            "--keep-going"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-order-boundary-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "py2lcov",
+      "inventory_entries": [
+        "command.py2lcov.option.no-functions",
+        "command.py2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "option_ordering": "argparse_parse_args",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "option_ordering",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "first.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--no",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--no-functions"
+          ]
+        },
+        {
+          "token": "later.xml",
+          "resolution": "rejected_after_option_boundary"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-argparse-xml-unique-abbreviation-unchanged",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "xml2lcov",
+      "inventory_entries": [
+        "command.xml2lcov.option.verbose",
+        "command.xml2lcov.positional.inputs"
+      ],
+      "family_equivalence": "parser-policy.argparse",
+      "policy_expectations": {
+        "auto_abbrev": "unique_prefix",
+        "posixly_correct_effect": "none"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "auto_abbrev",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "py2lcov",
+        "xml2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--verb",
+          "resolution": "unique_prefix",
+          "targets": [
+            "--verbose"
+          ]
+        },
+        {
+          "token": "input.xml",
+          "resolution": "positional",
+          "positionals_defined": true
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-no-parser-mixed-argv-ignored-control",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "xml2lcovutil.py",
+      "inventory_entries": [],
+      "family_equivalence": "parser-policy.none",
+      "policy_expectations": {},
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [],
+      "covered_commands": [
+        "xml2lcovutil.py"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "+help",
+          "resolution": "ignored"
+        },
+        {
+          "token": "--hel",
+          "resolution": "ignored"
+        },
+        {
+          "token": "operand",
+          "resolution": "ignored"
+        },
+        {
+          "token": "--help",
+          "resolution": "ignored"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-lcov-rc-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.rc",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-genhtml-config-file-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.config-file",
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-genhtml-rc-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "genhtml",
+      "inventory_entries": [
+        "command.genhtml.option.rc",
+        "command.genhtml.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-geninfo-config-file-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.config-file",
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-geninfo-rc-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "geninfo",
+      "inventory_entries": [
+        "command.geninfo.option.rc",
+        "command.geninfo.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-perl2lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.config-file",
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-perl2lcov-rc-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "perl2lcov",
+      "inventory_entries": [
+        "command.perl2lcov.option.rc",
+        "command.perl2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-llvm2lcov-config-file-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.config-file",
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-llvm2lcov-rc-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "llvm2lcov",
+      "inventory_entries": [
+        "command.llvm2lcov.option.rc",
+        "command.llvm2lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--rc",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-config-file-single-dash-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "-config-file",
+          "resolution": "exact",
+          "targets": [
+            "--config-file"
+          ]
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "option_value",
+          "option": "--config-file"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-config-file-abbreviation-rejected",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--config-f",
+          "resolution": "unknown",
+          "targets": []
+        },
+        {
+          "token": "empty.lcovrc",
+          "resolution": "positional",
+          "positionals_defined": true
+        },
+        {
+          "token": "--help",
+          "resolution": "unparsed_after_require_order"
+        }
+      ]
+    },
+    {
+      "case_id": "m0-posix-shared-rc-case-insensitive-exact",
+      "suite_id": "m0-cli-contract-posix",
+      "command": "lcov",
+      "inventory_entries": [
+        "command.lcov.option.rc",
+        "command.lcov.option.help"
+      ],
+      "family_equivalence": "parser-policy.shared-getopt-long",
+      "policy_expectations": {
+        "case_sensitive": false,
+        "exact_only_options": [
+          "--config-file",
+          "--rc"
+        ],
+        "posixly_correct_effect": "disable_auto_abbrev_and_plus_require_order"
+      },
+      "equivalence_profile": "posixly_correct",
+      "equivalence_claims": [
+        "case_sensitive",
+        "exact_only_options",
+        "posixly_correct_effect"
+      ],
+      "covered_commands": [
+        "lcov",
+        "genhtml",
+        "geninfo",
+        "perl2lcov",
+        "llvm2lcov"
+      ],
+      "inference_scope": "parser_resolution",
+      "probe_resolution": [
+        {
+          "token": "--RC",
+          "resolution": "exact",
+          "targets": [
+            "--rc"
+          ]
+        },
+        {
+          "token": "branch_coverage=0",
+          "resolution": "option_value",
+          "option": "--rc"
+        },
+        {
+          "token": "--help",
+          "resolution": "exact",
+          "targets": [
+            "--help"
+          ]
+        }
+      ]
+    }
+  ]
+}

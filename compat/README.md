@@ -11,11 +11,50 @@ snapshots with:
 
 ```bash
 cargo run -p ferricov-oracle --bin inventory -- \
-  /path/to/lcov-v2.5 compat/upstream/help compat/inventory/v2.5.json
+  /path/to/lcov-v2.5 compat/upstream/help compat/inventory/review \
+  compat/inventory/v2.5.json
 ```
 
-The generated list is an omission-detection input. Each entry still requires
-manual classification and behavioral differential cases.
+The v2 inventory treats the pinned parser definitions as canonical candidates,
+then adds help and manual references without promoting documentation-only text
+to accepted behavior. It records exact source lines, explicit aliases,
+positionals, classification, applicability, review status, and runtime
+dependencies. Each command also records its parser family, abbreviation, case,
+prefix, ordering, short-option cluster, POSIX, and exact-only behavior with
+pinned source references. Review output comes from identity-bound shards under
+`inventory/review`; generated extraction cannot silently overwrite it.
+
+All 584 entries are reviewed. The 394 command candidates comprise 346 public
+options, 41 generated tokens, and 7 internal definitions. The generated tokens
+are observed under both parser profiles: the default profile resolves 9 unique
+abbreviations, rejects 2 ambiguous forms, and rejects 30 unknown forms; the
+POSIX profile rejects all 41 as unknown. Generation rejects a dirty upstream
+checkout.
+
+The generated list is still an omission-detection input. `public` means that a
+reviewed parser or installed surface is in scope; it does not mean Ferricov
+implements the behavior. `generated_token` entries preserve rejected or
+abbreviated documentation spellings without promoting them to public options.
+Implementation, behavior planning, and evidence live in `behavior/contract.json`.
+
+`python3 compat/verify.py --skip-oracle` validates the schema and semantic
+contract without Docker or network access. Full verification additionally
+checks every referenced upstream/help file and line, runs six parser-policy
+probes plus all 82 generated-token/profile probes in network-disabled Oracle
+containers, and requires byte-stable inventory regeneration from the pinned
+checkout and review overlay. These are Oracle contract checks, not Ferricov
+product evidence.
+
+The pinned upstream test map is generated and validated separately:
+
+```bash
+python3 compat/inventory/tests/validate.py \
+  --upstream-root /path/to/lcov-v2.5
+```
+
+It covers and reviews all 205 files under upstream `tests/`, retains content
+hashes and the tests-tree identity, and distinguishes behavior drivers, harness
+infrastructure, fixtures, and internal coverage.
 
 ## Differential Runner
 

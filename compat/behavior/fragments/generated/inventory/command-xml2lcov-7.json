@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.xml2lcov.option.version-script; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.xml2lcov.option.version-script",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 77,
+          "path": "bin/xml2lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/xml2lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.xml2lcov.option.version-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Deterministic unreviewed public inventory skeleton bucket 7 for the command-xml2lcov responsibility domain.",
+  "fragment_id": "generated.inventory.command-xml2lcov.7",
+  "fragment_type": "generated",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

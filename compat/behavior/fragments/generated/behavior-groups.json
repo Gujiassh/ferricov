@@ -1,0 +1,396 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [
+    {
+      "description": "LLVM coverage JSON conversion, filtering, counters, and CLI failures.",
+      "id": "converter.llvm",
+      "registry_source": {
+        "id": "converter.llvm",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Devel::Cover conversion, exclusions, checksums, and CLI failures.",
+      "id": "converter.perl",
+      "registry_source": {
+        "id": "converter.perl",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Coverage.py conversion, legacy input, exclusions, checksums, and CLI failures.",
+      "id": "converter.python",
+      "registry_source": {
+        "id": "converter.python",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Cobertura XML conversion, version callbacks, aggregation, and CLI failures.",
+      "id": "converter.xml",
+      "registry_source": {
+        "id": "converter.xml",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "GCC and LLVM MC/DC capture, conversion, filtering, merge, and report behavior.",
+      "id": "coverage.mcdc",
+      "registry_source": {
+        "id": "coverage.mcdc",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "HTML reports for synthetic zero, partial, target, and full coverage rates.",
+      "id": "genhtml.coverage-rates",
+      "registry_source": {
+        "id": "genhtml.coverage-rates",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "C++ demangler command and argument behavior during report generation.",
+      "id": "genhtml.demangling",
+      "registry_source": {
+        "id": "genhtml.demangling",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Shared CLI diagnostics, config inclusion, ignore handling, and callback failures.",
+      "id": "genhtml.diagnostics-and-config",
+      "registry_source": {
+        "id": "genhtml.diagnostics-and-config",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Exception coverage and baseline/current differential report behavior.",
+      "id": "genhtml.exception-differential",
+      "registry_source": {
+        "id": "genhtml.exception-differential",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Function extents, aliases, versions, and baseline/current categorization.",
+      "id": "genhtml.function-differential",
+      "registry_source": {
+        "id": "genhtml.function-differential",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Lambda function extents and display in HTML reports.",
+      "id": "genhtml.lambda-display",
+      "registry_source": {
+        "id": "genhtml.lambda-display",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Case-insensitive source paths, annotations, versions, and merge behavior.",
+      "id": "genhtml.path-case",
+      "registry_source": {
+        "id": "genhtml.path-case",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Relative source paths and report output path resolution.",
+      "id": "genhtml.relative-paths",
+      "registry_source": {
+        "id": "genhtml.relative-paths",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "General HTML layout, callbacks, navigation, thresholds, and report options.",
+      "id": "genhtml.report-options",
+      "registry_source": {
+        "id": "genhtml.report-options",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Synthesis and rejection of missing or inconsistent tracefile coverpoints.",
+      "id": "genhtml.tracefile-synthesis",
+      "registry_source": {
+        "id": "genhtml.tracefile-synthesis",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Capture CLI help, errors, compatibility modes, recursion, temp paths, and initial capture.",
+      "id": "geninfo.capture-cli",
+      "registry_source": {
+        "id": "geninfo.capture-cli",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Tracefile addition, input ordering, pruning, and function mapping.",
+      "id": "lcov.add-and-prune",
+      "registry_source": {
+        "id": "lcov.add-and-prune",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "GCC branch capture, filtering, merging, and source-level branch identities.",
+      "id": "lcov.branch-coverage",
+      "registry_source": {
+        "id": "lcov.branch-coverage",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Capture paths, markers, callbacks, substitutions, checksums, and source filtering.",
+      "id": "lcov.capture-and-filter",
+      "registry_source": {
+        "id": "lcov.capture-and-filter",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Demangling, simplification callbacks, exclusions, and function end lines.",
+      "id": "lcov.demangling",
+      "registry_source": {
+        "id": "lcov.demangling",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Malformed tracefile, consistency, ignore, keep-going, and message-count behavior.",
+      "id": "lcov.diagnostics",
+      "registry_source": {
+        "id": "lcov.diagnostics",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Exception branch capture and coverage filtering.",
+      "id": "lcov.exception-branches",
+      "registry_source": {
+        "id": "lcov.exception-branches",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Follow and no-follow source-directory traversal behavior.",
+      "id": "lcov.follow-symlinks",
+      "registry_source": {
+        "id": "lcov.follow-symlinks",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Tracefile record parsing, ordering, duplicate handling, and malformed input.",
+      "id": "lcov.format",
+      "registry_source": {
+        "id": "lcov.format",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Absolute, relative, missing, and default gcov tool resolution.",
+      "id": "lcov.gcov-tool",
+      "registry_source": {
+        "id": "lcov.gcov-tool",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "C++ initializer-list coverage filtering during capture.",
+      "id": "lcov.initializer-filter",
+      "registry_source": {
+        "id": "lcov.initializer-filter",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Lambda function coalescing and derived function extents.",
+      "id": "lcov.lambda-filter",
+      "registry_source": {
+        "id": "lcov.lambda-filter",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Initial capture across multiple directories and case-insensitive paths.",
+      "id": "lcov.multi-directory",
+      "registry_source": {
+        "id": "lcov.multi-directory",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "List, remove, intersect, subtract, package, and kernel-capture paths.",
+      "id": "lcov.operations-and-packages",
+      "registry_source": {
+        "id": "lcov.operations-and-packages",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Tracefile union, intersection, subtraction, and generated coverpoints.",
+      "id": "lcov.set-operations",
+      "registry_source": {
+        "id": "lcov.set-operations",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Help, version, option parsing, and startup output.",
+      "id": "lcov.startup",
+      "registry_source": {
+        "id": "lcov.startup",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Text summaries for synthetic and concatenated coverage inputs.",
+      "id": "lcov.summary",
+      "registry_source": {
+        "id": "lcov.summary",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Source-driven line, branch, directive, brace, and trivial-function filters.",
+      "id": "shared.coverage-filter",
+      "registry_source": {
+        "id": "shared.coverage-filter",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Batch Git blob-version callback behavior.",
+      "id": "support-script.batch-git-version",
+      "registry_source": {
+        "id": "support-script.batch-git-version",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Git source annotation callback behavior.",
+      "id": "support-script.git-annotation",
+      "registry_source": {
+        "id": "support-script.git-annotation",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Git revision-diff generation and filtering behavior.",
+      "id": "support-script.git-diff",
+      "registry_source": {
+        "id": "support-script.git-diff",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Git source-version callback behavior.",
+      "id": "support-script.git-version",
+      "registry_source": {
+        "id": "support-script.git-version",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Perforce source annotation callback behavior.",
+      "id": "support-script.p4-annotation",
+      "registry_source": {
+        "id": "support-script.p4-annotation",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Perforce revision-diff generation and filtering behavior.",
+      "id": "support-script.p4-diff",
+      "registry_source": {
+        "id": "support-script.p4-diff",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Perforce source-version callback behavior.",
+      "id": "support-script.p4-version",
+      "registry_source": {
+        "id": "support-script.p4-version",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Test cleanup discovery and execution.",
+      "id": "test-harness.cleanup",
+      "registry_source": {
+        "id": "test-harness.cleanup",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Stable test command, environment, and configuration setup.",
+      "id": "test-harness.configuration",
+      "registry_source": {
+        "id": "test-harness.configuration",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Test prerequisite discovery and validation.",
+      "id": "test-harness.dependencies",
+      "registry_source": {
+        "id": "test-harness.dependencies",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Upstream test-suite documentation.",
+      "id": "test-harness.documentation",
+      "registry_source": {
+        "id": "test-harness.documentation",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Test process execution, isolation, and coverage wrapping.",
+      "id": "test-harness.execution",
+      "registry_source": {
+        "id": "test-harness.execution",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Make-based test discovery and orchestration.",
+      "id": "test-harness.orchestration",
+      "registry_source": {
+        "id": "test-harness.orchestration",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Test logging, result accounting, skips, and resource reporting.",
+      "id": "test-harness.results",
+      "registry_source": {
+        "id": "test-harness.results",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    },
+    {
+      "description": "Generation and validation of synthetic tracefile inputs.",
+      "id": "test-harness.synthetic-tracefiles",
+      "registry_source": {
+        "id": "test-harness.synthetic-tracefiles",
+        "path": "compat/inventory/tests/upstream-test-map.json"
+      }
+    }
+  ],
+  "case_groups": [],
+  "description": "Exact generated import of the stable upstream test-map behavior-group registry.",
+  "fragment_id": "generated.behavior-groups",
+  "fragment_type": "generated",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

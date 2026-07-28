@@ -1,0 +1,827 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "config_entries",
+  "shard_index": 0,
+  "shard_count": 4,
+  "content_hash": "sha256:f6d443172a91edda67def3d88a8b439c852435f779981a0a86133a16f7d6a735",
+  "reviewed_entries": [
+    {
+      "id": "lcovrc.branch-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.branch-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 317
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1123
+        }
+      ],
+      "generated_canonical_name_assertion": "branch_coverage",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.build-directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.build-directory",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1167
+        }
+      ],
+      "generated_canonical_name_assertion": "build_directory",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.c-file-extensions",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.c-file-extensions",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 97
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1150
+        }
+      ],
+      "generated_canonical_name_assertion": "c_file_extensions",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.case-insensitive",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.case-insensitive",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 480
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1188
+        }
+      ],
+      "generated_canonical_name_assertion": "case_insensitive",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.check-data-consistency",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.check-data-consistency",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1148
+        }
+      ],
+      "generated_canonical_name_assertion": "check_data_consistency",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.check-existence-before-callback",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.check-existence-before-callback",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 430
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1192
+        }
+      ],
+      "generated_canonical_name_assertion": "check_existence_before_callback",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 251
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1186
+        }
+      ],
+      "generated_canonical_name_assertion": "checksum",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.compact-summary-tables",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.compact-summary-tables",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7211
+        }
+      ],
+      "generated_canonical_name_assertion": "compact_summary_tables",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.compute-file-version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.compute-file-version",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 437
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1187
+        }
+      ],
+      "generated_canonical_name_assertion": "compute_file_version",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.config-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.config-file",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 12
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 14
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 16
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1400
+        }
+      ],
+      "generated_canonical_name_assertion": "config_file",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.context-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.context-script",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1176
+        }
+      ],
+      "generated_canonical_name_assertion": "context_script",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.criteria-callback-data",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.criteria-callback-data",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 354
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1179
+        }
+      ],
+      "generated_canonical_name_assertion": "criteria_callback_data",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.criteria-callback-levels",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.criteria-callback-levels",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 357
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1181
+        }
+      ],
+      "generated_canonical_name_assertion": "criteria_callback_levels",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.criteria-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.criteria-script",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 350
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1183
+        }
+      ],
+      "generated_canonical_name_assertion": "criteria_script",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.demangle-cpp",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.demangle-cpp",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 238
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1195
+        }
+      ],
+      "generated_canonical_name_assertion": "demangle_cpp",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.derive-end-line-all-files",
+      "review_status": "reviewed",
+      "classification": "not_applicable",
+      "generated_id_assertion": "lcovrc.derive-end-line-all-files",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 226
+        }
+      ],
+      "generated_canonical_name_assertion": "derive_end_line_all_files",
+      "note": "template typo; no active registration",
+      "applicability": "not_applicable",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.derive-function-end-line",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.derive-function-end-line",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 222
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1117
+        }
+      ],
+      "generated_canonical_name_assertion": "derive_function_end_line",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.derive-function-end-line-all-files",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.derive-function-end-line-all-files",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1118
+        }
+      ],
+      "generated_canonical_name_assertion": "derive_function_end_line_all_files",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.erase-functions",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.erase-functions",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 422
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 425
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1175
+        }
+      ],
+      "generated_canonical_name_assertion": "erase_functions",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.excessive-count-threshold",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.excessive-count-threshold",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 233
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1196
+        }
+      ],
+      "generated_canonical_name_assertion": "excessive_count_threshold",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.exclude",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.exclude",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 402
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 403
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1171
+        }
+      ],
+      "generated_canonical_name_assertion": "exclude",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.expected-message-count",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.expected-message-count",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1144
+        }
+      ],
+      "generated_canonical_name_assertion": "expected_message_count",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.fail-under-branches",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.fail-under-branches",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 325
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1201
+        }
+      ],
+      "generated_canonical_name_assertion": "fail_under_branches",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.fail-under-lines",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.fail-under-lines",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 330
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1200
+        }
+      ],
+      "generated_canonical_name_assertion": "fail_under_lines",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.filter",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.filter",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1170
+        }
+      ],
+      "generated_canonical_name_assertion": "filter",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.filter-bitwise-conditional",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.filter-bitwise-conditional",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 112
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1156
+        }
+      ],
+      "generated_canonical_name_assertion": "filter_bitwise_conditional",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.filter-blank-aggressive",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.filter-blank-aggressive",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 116
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1158
+        }
+      ],
+      "generated_canonical_name_assertion": "filter_blank_aggressive",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.filter-lookahead",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.filter-lookahead",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 109
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1155
+        }
+      ],
+      "generated_canonical_name_assertion": "filter_lookahead",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.forget-testcase-names",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.forget-testcase-names",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 247
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1189
+        }
+      ],
+      "generated_canonical_name_assertion": "forget_testcase_names",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.fork-fail-timeout",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.fork-fail-timeout",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 463
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1165
+        }
+      ],
+      "generated_canonical_name_assertion": "fork_fail_timeout",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.function-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.function-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 314
+        },
+        {
+          "kind": "config_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1125
+        }
+      ],
+      "generated_canonical_name_assertion": "function_coverage",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-age-field-width",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-age-field-width",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7188
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 131
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_age_field_width",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-annotate-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-annotate-script",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7202
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 333
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_annotate_script",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-annotate-tooltip",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-annotate-tooltip",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7203
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 347
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_annotate_tooltip",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-branch-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-branch-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7174
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_branch_coverage",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-branch-field-width",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-branch-field-width",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7185
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 122
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_branch_field_width",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-branch-hi-limit",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-branch-hi-limit",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7181
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 58
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_branch_hi_limit",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-branch-med-limit",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-branch-med-limit",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7182
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 59
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_branch_med_limit",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-charset",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-charset",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7190
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 204
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_charset",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "lcovrc.genhtml-css-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "lcovrc.genhtml-css-file",
+      "generated_source_assertions": [
+        {
+          "kind": "config_definition",
+          "path": "bin/genhtml",
+          "line": 7155
+        },
+        {
+          "kind": "config_definition",
+          "path": "lcovrc",
+          "line": 19
+        }
+      ],
+      "generated_canonical_name_assertion": "genhtml_css_file",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

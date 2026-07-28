@@ -72,3 +72,31 @@ the M0 harness become the permanent integration boundary.
 - requirements and acceptance: `specs/001-full-lcov-compatibility/`
 - upstream behavior: pinned LCOV executable and its fixtures
 - implementation status: generated compatibility inventory and evidence
+
+## Current M0 Decisions
+
+- `compat/inventory/v2.5.json` is a generated v2 contract with 584 reviewed
+  entries: 394 command candidates, 9 parser-backed positional forms, 158
+  configuration entries, and 23 support scripts. Command review classifies 346
+  options as public, 41 as generated tokens, and 7 as internal. Configuration
+  review classifies 153 entries as public and 5 as not applicable; all 23
+  support scripts are public.
+- Every generated token has an identity-bound observation for both the default
+  and POSIX parser profiles. The default profile accepts 9 unique
+  abbreviations, rejects 2 ambiguous forms, and rejects 30 unknown forms. The
+  POSIX profile rejects all 41 as unknown. These observations describe the
+  pinned Oracle, not Ferricov compatibility.
+- `compat/inventory/tests/upstream-test-map.json` covers all 205 pinned upstream
+  test files, and every mapping is reviewed.
+- `compat/behavior/contract.json` creates a primary plan for every one of the
+  531 public inventory entries. Twenty-three primary plans are reviewed; 508
+  primary reviews and 4 critical interaction domains remain open, for 512 M0
+  behavior-planning gaps in total.
+- ADR 0002 accepts native external callback execution and a qualified
+  `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
+- ADR 0003 separates Oracle, compiler capture, and release platform matrices.
+  The Oracle lane now has a two-build no-cache reproducibility check, locked
+  package and installed-tree closures, and a runtime-validated execution
+  manifest. Compiler capture and release platform qualification remain open.
+- M1 parser/model implementation remains gated on completion of M0 review,
+  interaction groups, baselines, and the model/grammar specification.

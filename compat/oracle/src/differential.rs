@@ -1,15 +1,23 @@
+//! Differential execution, comparison, and evidence collection.
+
+mod evidence;
+mod process;
+
 use crate::UPSTREAM_COMMIT;
 use crate::normalizer::{NormalizerId, normalize};
-use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
+use evidence::{
+    CleanupEvidence, RunResult, exit_parts, persist_run, sha256_hex, write_json_new, write_new,
+};
+use process::CaptureOutcome;
+use serde::de::{self, MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::error::Error;
-use std::ffi::{OsStr, OsString};
+use std::fmt;
 use std::fs;
-use std::path::{Path, PathBuf};
-use std::process::{Command, ExitStatus};
-use std::time::Instant;
-use tempfile::TempDir;
+use std::path::{Component, Path, PathBuf};
+
+// ── Public types ─────────────────────────────────────────────────────────
 
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Ord, PartialEq, PartialOrd, Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -82,8 +90,10 @@ pub struct Launcher {
     pub name: String,
     pub program: String,
     pub arguments: Vec<String>,
-    #[serde(default)]
+    #[serde(deserialize_with = "deserialize_environment_variables")]
     pub environment_variables: BTreeMap<String, String>,
+    #[serde(default)]
+    pub timeout_seconds: Option<u64>,
     pub runtime: Runtime,
     pub environment: Environment,
 }
@@ -105,9 +115,26 @@ pub struct Environment {
     pub cpu: Option<String>,
 }
 
+#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
+pub struct ImplementationIdentity {
+    pub kind: IdentityKind,
+    pub executable_sha256: String,
+    pub container_image_sha256: Option<String>,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum IdentityKind {
+    LocalExecutable,
+    DockerImage,
+}
+
+// ── Internal types ───────────────────────────────────────────────────────
+
 #[derive(Debug, Serialize)]
 struct DifferentialResult<'a> {
     schema_version: u32,
+    suite_id: &'a str,
     case_id: &'a str,
     evidence_scope: EvidenceScope,
     upstream_commit: &'static str,
@@ -116,24 +143,11 @@ struct DifferentialResult<'a> {
     arguments: &'a [String],
     fixture: Option<&'a str>,
     environment: &'a Environment,
+    effective_environment_variables: &'a BTreeMap<String, String>,
     implementation_identities: ImplementationIdentities,
     runs: Runs,
     comparisons: Vec<ComparisonResult>,
     overall_status: Status,
-}
-
-#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
-struct ImplementationIdentity {
-    kind: IdentityKind,
-    executable_sha256: String,
-    container_image_sha256: Option<String>,
-}
-
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize)]
-#[serde(rename_all = "snake_case")]
-enum IdentityKind {
-    LocalExecutable,
-    DockerImage,
 }
 
 #[derive(Debug, Serialize)]
@@ -149,87 +163,36 @@ struct Runs {
 }
 
 #[derive(Debug, Serialize)]
-struct RunResult {
-    exit_code: Option<i32>,
-    signal: Option<i32>,
-    stdout_artifact: String,
-    stderr_artifact: String,
-    file_tree_artifact: String,
-    metrics: Metrics,
-}
-
-#[derive(Debug, Serialize)]
-struct Metrics {
-    wall_seconds: f64,
-    user_cpu_seconds: Option<f64>,
-    system_cpu_seconds: Option<f64>,
-    peak_rss_bytes: Option<u64>,
-    output_bytes: u64,
-    output_files: u64,
-}
-
-#[derive(Debug, Serialize)]
 struct ComparisonResult {
     dimension: Dimension,
     status: Status,
     normalizer: String,
     evidence: Vec<String>,
+    artifacts: Vec<ArtifactReference>,
     details: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+struct ArtifactReference {
+    path: String,
+    sha256: String,
+    bytes: u64,
 }
 
 struct ComparedArtifacts {
     matches: bool,
     details: Option<String>,
     evidence: Vec<String>,
+    artifacts: Vec<ArtifactReference>,
 }
 
-#[derive(Debug, Serialize, Eq, PartialEq)]
-struct FileEntry {
-    path: String,
-    path_bytes_hex: String,
-    kind: FileKind,
-    bytes: u64,
-    sha256: Option<String>,
-    mode: Option<u32>,
-    uid: Option<u32>,
-    gid: Option<u32>,
-    hardlink_count: Option<u64>,
-    hardlink_group: Option<String>,
-}
-
-struct SnapshotEntry {
-    file: FileEntry,
-    hardlink_identity: Option<(u64, u64)>,
-}
-
-struct EntryMetadata {
-    mode: Option<u32>,
-    uid: Option<u32>,
-    gid: Option<u32>,
-    hardlink_count: Option<u64>,
-    hardlink_identity: Option<(u64, u64)>,
-}
-
-#[derive(Debug, Serialize, Eq, PartialEq)]
-#[serde(rename_all = "snake_case")]
-enum FileKind {
-    File,
-    Directory,
-    Symlink,
-}
-
-struct CapturedRun {
-    exit_status: ExitStatus,
-    stdout: Vec<u8>,
-    stderr: Vec<u8>,
-    file_tree: Vec<FileEntry>,
-    wall_seconds: f64,
-}
+// ── Runner ───────────────────────────────────────────────────────────────
 
 pub struct DifferentialRunner {
     repository_root: PathBuf,
     reference: Launcher,
     candidate: Launcher,
+    image_id_cache: BTreeMap<String, String>,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -250,12 +213,21 @@ impl DifferentialRunner {
             repository_root,
             reference,
             candidate,
+            image_id_cache: BTreeMap::new(),
         })
     }
 
-    pub fn run(&self, suite: &Suite, output_root: &Path) -> Result<SuiteOutcome, Box<dyn Error>> {
+    pub fn verify_result_artifacts(case_root: &Path) -> Result<(), Box<dyn Error>> {
+        validate_result_artifacts(case_root)
+    }
+
+    pub fn run(
+        &mut self,
+        suite: &Suite,
+        output_root: &Path,
+    ) -> Result<SuiteOutcome, Box<dyn Error>> {
         validate_suite(suite, &self.reference, &self.candidate)?;
-        fs::create_dir_all(output_root)?;
+        prepare_output_root(output_root)?;
 
         let mut summary = BTreeMap::new();
         for case in &suite.cases {
@@ -266,27 +238,42 @@ impl DifferentialRunner {
                 "suite validation enforces unique case IDs"
             );
         }
-        write_json(&output_root.join("summary.json"), &summary)?;
+        write_json_new(&output_root.join("summary.json"), &summary)?;
         Ok(SuiteOutcome {
-            passed: summary
-                .values()
-                .filter(|status| **status == Status::Pass)
-                .count(),
-            failed: summary
-                .values()
-                .filter(|status| **status == Status::Fail)
-                .count(),
+            passed: summary.values().filter(|s| **s == Status::Pass).count(),
+            failed: summary.values().filter(|s| **s == Status::Fail).count(),
         })
     }
 
     fn run_case(
-        &self,
+        &mut self,
         suite: &Suite,
         case: &Case,
         output_root: &Path,
     ) -> Result<Status, Box<dyn Error>> {
-        let reference_identity = self.resolve_identity(&self.reference, case)?;
-        let candidate_identity = self.resolve_identity(&self.candidate, case)?;
+        let case_root = output_root.join(&case.id);
+        if fs::symlink_metadata(&case_root).is_ok() {
+            return Err(format!(
+                "case output path already exists; refusing to overwrite: {}",
+                case_root.display()
+            )
+            .into());
+        }
+        let reference_prepared = process::prepare(
+            &self.repository_root,
+            &self.reference,
+            case,
+            &mut self.image_id_cache,
+        )?;
+        let reference_identity = reference_prepared.identity().clone();
+        let candidate_prepared = process::prepare(
+            &self.repository_root,
+            &self.candidate,
+            case,
+            &mut self.image_id_cache,
+        )?;
+        let candidate_identity = candidate_prepared.identity().clone();
+
         if suite.evidence_scope == EvidenceScope::Compatibility
             && reference_identity.executable_sha256 == candidate_identity.executable_sha256
         {
@@ -297,21 +284,44 @@ impl DifferentialRunner {
             .into());
         }
 
-        let case_root = output_root.join(&case.id);
-        if case_root.exists() {
-            fs::remove_dir_all(&case_root)?;
-        }
-        fs::create_dir_all(&case_root)?;
+        fs::create_dir(&case_root)?;
 
-        let reference = self.capture(&self.reference, case)?;
-        let candidate = self.capture(&self.candidate, case)?;
-        let reference_result = persist_run(&case_root, "reference", &reference)?;
-        let candidate_result = persist_run(&case_root, "candidate", &candidate)?;
+        let CaptureOutcome {
+            captured: reference_captured,
+            timeout: reference_timeout,
+            cleanup: reference_cleanup,
+        } = process::capture(reference_prepared, &self.reference, case)?;
+        let CaptureOutcome {
+            captured: candidate_captured,
+            timeout: candidate_timeout,
+            cleanup: candidate_cleanup,
+        } = process::capture(candidate_prepared, &self.candidate, case)?;
 
-        let comparisons = compare_runs(case, &case_root, &reference, &candidate)?;
-        let overall_status = if comparisons
-            .iter()
-            .all(|comparison| comparison.status == Status::Pass)
+        let reference_timed_out = reference_timeout.expired;
+        let candidate_timed_out = candidate_timeout.expired;
+        let reference_cleanup_confirmed = cleanup_confirmed(&reference_cleanup);
+        let candidate_cleanup_confirmed = cleanup_confirmed(&candidate_cleanup);
+        let reference_result = persist_run(
+            &case_root,
+            "reference",
+            &reference_captured,
+            reference_timeout,
+            reference_cleanup,
+        )?;
+        let candidate_result = persist_run(
+            &case_root,
+            "candidate",
+            &candidate_captured,
+            candidate_timeout,
+            candidate_cleanup,
+        )?;
+
+        let comparisons = compare_runs(case, &case_root, &reference_captured, &candidate_captured)?;
+        let overall_status = if !reference_timed_out
+            && !candidate_timed_out
+            && reference_cleanup_confirmed
+            && candidate_cleanup_confirmed
+            && comparisons.iter().all(|c| c.status == Status::Pass)
         {
             Status::Pass
         } else {
@@ -320,6 +330,7 @@ impl DifferentialRunner {
 
         let result = DifferentialResult {
             schema_version: 1,
+            suite_id: &suite.suite_id,
             case_id: &case.id,
             evidence_scope: suite.evidence_scope,
             upstream_commit: UPSTREAM_COMMIT,
@@ -328,6 +339,7 @@ impl DifferentialRunner {
             arguments: &case.arguments,
             fixture: case.fixture.as_deref(),
             environment: &self.reference.environment,
+            effective_environment_variables: &self.reference.environment_variables,
             implementation_identities: ImplementationIdentities {
                 reference: reference_identity,
                 candidate: candidate_identity,
@@ -339,132 +351,256 @@ impl DifferentialRunner {
             comparisons,
             overall_status,
         };
-        write_json(&case_root.join("result.json"), &result)?;
+        write_json_new(&case_root.join("result.json"), &result)?;
+
+        validate_result_artifacts(&case_root).map_err(|e| {
+            format!(
+                "result artifact integrity check failed for case {}: {e}",
+                case.id
+            )
+        })?;
+
         Ok(overall_status)
     }
+}
 
-    fn capture(&self, launcher: &Launcher, case: &Case) -> Result<CapturedRun, Box<dyn Error>> {
-        let working_directory = TempDir::new()?;
-        if let Some(fixture) = &case.fixture {
-            let fixture_root = self.repository_root.join(fixture);
-            if !fixture_root.is_dir() {
+fn cleanup_confirmed(cleanup: &CleanupEvidence) -> bool {
+    cleanup.direct_child_reaped
+        && matches!(
+            (cleanup.process_group_empty, cleanup.container_absent),
+            (Some(true), None) | (None, Some(true))
+        )
+}
+
+fn prepare_output_root(output_root: &Path) -> Result<(), Box<dyn Error>> {
+    match fs::symlink_metadata(output_root) {
+        Ok(metadata) => {
+            if metadata.file_type().is_symlink() || !metadata.is_dir() {
                 return Err(format!(
-                    "case {} fixture is not a directory: {}",
-                    case.id,
-                    fixture_root.display()
+                    "output root must be a real directory: {}",
+                    output_root.display()
                 )
                 .into());
             }
-            copy_directory_contents(&fixture_root, working_directory.path())?;
-        }
-        let program = substitute(&launcher.program, case);
-        let arguments = launcher
-            .arguments
-            .iter()
-            .map(|argument| substitute(argument, case))
-            .collect::<Vec<_>>();
-
-        let started = Instant::now();
-        let output = match &launcher.runtime {
-            Runtime::Local => Command::new(resolve_program(&self.repository_root, &program))
-                .args(arguments)
-                .args(&case.arguments)
-                .envs(&launcher.environment_variables)
-                .current_dir(working_directory.path())
-                .output()?,
-            Runtime::DockerImage { image } => {
-                let mut command = Command::new("docker");
-                command.args(["run", "--rm", "--network", "none"]);
-                add_docker_user(&mut command);
-                command
-                    .arg("--volume")
-                    .arg(format!("{}:/work", working_directory.path().display()))
-                    .args(["--workdir", "/work"])
-                    .args(["--entrypoint", &program])
-                    .arg(image)
-                    .args(arguments)
-                    .args(&case.arguments)
-                    .envs(&launcher.environment_variables)
-                    .output()?
-            }
-        };
-        let wall_seconds = started.elapsed().as_secs_f64();
-        let file_tree = snapshot_tree(working_directory.path())?;
-
-        Ok(CapturedRun {
-            exit_status: output.status,
-            stdout: output.stdout,
-            stderr: output.stderr,
-            file_tree,
-            wall_seconds,
-        })
-    }
-
-    fn resolve_identity(
-        &self,
-        launcher: &Launcher,
-        case: &Case,
-    ) -> Result<ImplementationIdentity, Box<dyn Error>> {
-        match &launcher.runtime {
-            Runtime::Local => {
-                let program = substitute(&launcher.program, case);
-                let executable = resolve_executable(&self.repository_root, &program)?;
-                let content = fs::read(executable)?;
-                Ok(ImplementationIdentity {
-                    kind: IdentityKind::LocalExecutable,
-                    executable_sha256: format!("sha256:{:x}", Sha256::digest(content)),
-                    container_image_sha256: None,
-                })
-            }
-            Runtime::DockerImage { image } => {
-                if launcher.environment.image != *image {
-                    return Err(format!(
-                        "launcher {} runtime image must match its declared environment image",
-                        launcher.name
-                    )
-                    .into());
-                }
-                let output = Command::new("docker")
-                    .args(["image", "inspect", "--format", "{{.Id}}", image])
-                    .output()?;
-                if !output.status.success() {
-                    return Err(format!("failed to inspect Docker image {image}").into());
-                }
-                let image_identity = String::from_utf8(output.stdout)?.trim().to_owned();
-                validate_sha256_identity(&image_identity)?;
-                let program = substitute(&launcher.program, case);
-                let output = Command::new("docker")
-                    .args(["run", "--rm", "--network", "none", "--entrypoint", "sh"])
-                    .arg(image)
-                    .args([
-                        "-c",
-                        "p=$(command -v -- \"$1\") && test -n \"$p\" && sha256sum \"$p\"",
-                        "sh",
-                        &program,
-                    ])
-                    .output()?;
-                if !output.status.success() {
-                    return Err(format!(
-                        "failed to identify executable {program} in Docker image {image}"
-                    )
-                    .into());
-                }
-                let executable_hash = String::from_utf8(output.stdout)?
-                    .split_ascii_whitespace()
-                    .next()
-                    .ok_or("Docker executable identity is empty")?
-                    .to_owned();
-                let executable_identity = format!("sha256:{executable_hash}");
-                validate_sha256_identity(&executable_identity)?;
-                Ok(ImplementationIdentity {
-                    kind: IdentityKind::DockerImage,
-                    executable_sha256: executable_identity,
-                    container_image_sha256: Some(image_identity),
-                })
+            if fs::symlink_metadata(output_root.join("summary.json")).is_ok() {
+                return Err(format!(
+                    "summary output already exists; refusing to overwrite: {}",
+                    output_root.join("summary.json").display()
+                )
+                .into());
             }
         }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            fs::create_dir_all(output_root)?;
+        }
+        Err(error) => return Err(error.into()),
     }
+    Ok(())
 }
+
+// ── Result validation ────────────────────────────────────────────────────
+
+/// Validate that every retained artifact in a case result directory matches
+/// its recorded SHA-256 hash and that artifact paths are safe (no escape,
+/// no symlinks outside case_root).
+pub fn validate_result_artifacts(case_root: &Path) -> Result<(), Box<dyn Error>> {
+    let result_path = case_root.join("result.json");
+    reject_symlink_components(case_root, Path::new("result.json"))?;
+    let result_json = fs::read_to_string(&result_path)?;
+    let result: serde_json::Value = serde_json::from_str(&result_json)
+        .map_err(|e| format!("failed to parse result.json: {e}"))?;
+
+    let runs = result.get("runs").ok_or("result.json missing 'runs'")?;
+    for role in ["reference", "candidate"] {
+        let run = runs
+            .get(role)
+            .ok_or_else(|| format!("result.json missing runs.{role}"))?;
+        validate_run_artifacts(case_root, role, run)?;
+    }
+    let comparisons = result
+        .get("comparisons")
+        .and_then(serde_json::Value::as_array)
+        .ok_or("result.json missing 'comparisons'")?;
+    for comparison in comparisons {
+        validate_comparison_artifacts(case_root, comparison)?;
+    }
+    Ok(())
+}
+
+fn validate_run_artifacts(
+    case_root: &Path,
+    role: &str,
+    run: &serde_json::Value,
+) -> Result<(), Box<dyn Error>> {
+    for artifact in ["stdout", "stderr", "file_tree"] {
+        let artifact_key = format!("{artifact}_artifact");
+        let sha256_key = format!("{artifact}_sha256");
+        let bytes_key = format!("{artifact}_bytes");
+
+        let artifact_path = run
+            .get(&artifact_key)
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| format!("{role} missing {artifact_key}"))?;
+
+        let expected_path = format!(
+            "{role}/{}",
+            match artifact {
+                "stdout" => "stdout.bin",
+                "stderr" => "stderr.bin",
+                "file_tree" => "file-tree.json",
+                _ => unreachable!(),
+            }
+        );
+        if artifact_path != expected_path {
+            return Err(format!(
+                "{role} {artifact}_artifact must be {expected_path}, got {artifact_path}"
+            )
+            .into());
+        }
+
+        let expected_sha256 = run
+            .get(&sha256_key)
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| format!("{role} missing {sha256_key}"))?;
+        let expected_bytes = run
+            .get(&bytes_key)
+            .and_then(|v| v.as_u64())
+            .ok_or_else(|| format!("{role} missing {bytes_key}"))?;
+
+        validate_artifact_file(case_root, artifact_path, expected_sha256, expected_bytes)?;
+    }
+    Ok(())
+}
+
+fn validate_comparison_artifacts(
+    case_root: &Path,
+    comparison: &serde_json::Value,
+) -> Result<(), Box<dyn Error>> {
+    let dimension = comparison
+        .get("dimension")
+        .and_then(serde_json::Value::as_str)
+        .ok_or("comparison missing dimension")?;
+    let artifacts = comparison
+        .get("artifacts")
+        .and_then(serde_json::Value::as_array)
+        .ok_or_else(|| format!("{dimension} comparison missing artifacts"))?;
+    let expected_paths: &[&str] = match dimension {
+        "exit" => &[],
+        "stdout" => &[
+            "normalized/reference-stdout.bin",
+            "normalized/candidate-stdout.bin",
+        ],
+        "stderr" => &[
+            "normalized/reference-stderr.bin",
+            "normalized/candidate-stderr.bin",
+        ],
+        "filesystem" => &["reference/file-tree.json", "candidate/file-tree.json"],
+        other => return Err(format!("unsupported comparison dimension: {other}").into()),
+    };
+    if artifacts.len() != expected_paths.len() {
+        return Err(format!(
+            "{dimension} comparison must retain {} artifacts, got {}",
+            expected_paths.len(),
+            artifacts.len()
+        )
+        .into());
+    }
+    for (artifact, expected_path) in artifacts.iter().zip(expected_paths) {
+        let path = artifact
+            .get("path")
+            .and_then(serde_json::Value::as_str)
+            .ok_or_else(|| format!("{dimension} comparison artifact missing path"))?;
+        if path != *expected_path {
+            return Err(format!(
+                "{dimension} comparison artifact must be {expected_path}, got {path}"
+            )
+            .into());
+        }
+        let sha256 = artifact
+            .get("sha256")
+            .and_then(serde_json::Value::as_str)
+            .ok_or_else(|| format!("{dimension} comparison artifact missing sha256"))?;
+        let bytes = artifact
+            .get("bytes")
+            .and_then(serde_json::Value::as_u64)
+            .ok_or_else(|| format!("{dimension} comparison artifact missing bytes"))?;
+        validate_artifact_file(case_root, path, sha256, bytes)?;
+    }
+    Ok(())
+}
+
+fn validate_artifact_file(
+    case_root: &Path,
+    artifact_path: &str,
+    expected_sha256: &str,
+    expected_bytes: u64,
+) -> Result<(), Box<dyn Error>> {
+    let relative = Path::new(artifact_path);
+    reject_symlink_components(case_root, relative)?;
+    let full_path = case_root.join(relative);
+    let metadata = fs::symlink_metadata(&full_path)?;
+    if !metadata.is_file() {
+        return Err(format!("artifact is not a regular file: {artifact_path}").into());
+    }
+    let content = fs::read(&full_path)?;
+    let actual_sha256 = sha256_hex(&content);
+    if actual_sha256 != expected_sha256 {
+        return Err(format!(
+            "artifact {artifact_path} hash mismatch: expected {expected_sha256}, got {actual_sha256}"
+        )
+        .into());
+    }
+    let actual_bytes = content.len() as u64;
+    if actual_bytes != expected_bytes {
+        return Err(format!(
+            "artifact {artifact_path} size mismatch: expected {expected_bytes}, got {actual_bytes}"
+        )
+        .into());
+    }
+    Ok(())
+}
+
+fn reject_symlink_components(case_root: &Path, relative: &Path) -> Result<(), Box<dyn Error>> {
+    if relative.as_os_str().is_empty()
+        || relative
+            .components()
+            .any(|component| !matches!(component, Component::Normal(_) | Component::CurDir))
+    {
+        return Err(format!(
+            "artifact path must stay relative to case_root: {}",
+            relative.display()
+        )
+        .into());
+    }
+    let root_metadata = fs::symlink_metadata(case_root)?;
+    if root_metadata.file_type().is_symlink() || !root_metadata.is_dir() {
+        return Err(format!(
+            "case_root must be a real directory: {}",
+            case_root.display()
+        )
+        .into());
+    }
+    let mut current = case_root.to_path_buf();
+    for component in relative.components() {
+        if let Component::Normal(segment) = component {
+            current.push(segment);
+            let metadata = fs::symlink_metadata(&current).map_err(|error| {
+                format!(
+                    "cannot inspect artifact component {}: {error}",
+                    current.display()
+                )
+            })?;
+            if metadata.file_type().is_symlink() {
+                return Err(
+                    format!("artifact path contains a symlink: {}", current.display()).into(),
+                );
+            }
+        }
+    }
+    Ok(())
+}
+
+// ── Launcher validation ──────────────────────────────────────────────────
 
 fn validate_launcher(launcher: &Launcher) -> Result<(), Box<dyn Error>> {
     if launcher.schema_version != 1 {
@@ -476,14 +612,25 @@ fn validate_launcher(launcher: &Launcher) -> Result<(), Box<dyn Error>> {
     }
     let command_placeholders = std::iter::once(&launcher.program)
         .chain(launcher.arguments.iter())
-        .filter(|argument| argument.contains("{command}"))
-        .count();
+        .map(|argument| argument.matches("{command}").count())
+        .sum::<usize>();
     if command_placeholders != 1 {
         return Err(format!(
             "launcher {} must contain exactly one {{command}} placeholder",
             launcher.name
         )
         .into());
+    }
+    validate_environment_variables(&launcher.environment_variables)?;
+    if let Some(timeout) = launcher.timeout_seconds {
+        if !(1..=process::MAX_TIMEOUT_SECONDS).contains(&timeout) {
+            return Err(format!(
+                "launcher {} timeout_seconds must be between 1 and {}",
+                launcher.name,
+                process::MAX_TIMEOUT_SECONDS
+            )
+            .into());
+        }
     }
     if let Runtime::DockerImage { image } = &launcher.runtime {
         if launcher.environment.image != *image {
@@ -497,6 +644,54 @@ fn validate_launcher(launcher: &Launcher) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+fn deserialize_environment_variables<'de, D>(
+    deserializer: D,
+) -> Result<BTreeMap<String, String>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct EnvironmentVariablesVisitor;
+    impl<'de> Visitor<'de> for EnvironmentVariablesVisitor {
+        type Value = BTreeMap<String, String>;
+        fn expecting(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            f.write_str("an object with unique environment variable keys")
+        }
+        fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+        where
+            M: MapAccess<'de>,
+        {
+            let mut vars = BTreeMap::new();
+            while let Some((k, v)) = map.next_entry::<String, String>()? {
+                if vars.insert(k.clone(), v).is_some() {
+                    return Err(de::Error::custom(format!(
+                        "duplicate environment variable key: {k}"
+                    )));
+                }
+            }
+            Ok(vars)
+        }
+    }
+    deserializer.deserialize_map(EnvironmentVariablesVisitor)
+}
+
+fn validate_environment_variables(vars: &BTreeMap<String, String>) -> Result<(), Box<dyn Error>> {
+    for (key, value) in vars {
+        let mut bytes = key.bytes();
+        let valid_first = bytes
+            .next()
+            .is_some_and(|b| b.is_ascii_alphabetic() || b == b'_');
+        if !valid_first || !bytes.all(|b| b.is_ascii_alphanumeric() || b == b'_') {
+            return Err(format!("invalid environment variable key: {key:?}").into());
+        }
+        if value.contains('\0') {
+            return Err(format!("environment variable {key} contains a NUL byte").into());
+        }
+    }
+    Ok(())
+}
+
+// ── Suite validation ─────────────────────────────────────────────────────
+
 fn validate_suite(
     suite: &Suite,
     reference: &Launcher,
@@ -505,11 +700,17 @@ fn validate_suite(
     if suite.schema_version != 1 {
         return Err(format!("unsupported suite schema version: {}", suite.schema_version).into());
     }
+    validate_identifier("suite", &suite.suite_id)?;
     if suite.cases.is_empty() {
         return Err("suite must contain at least one case".into());
     }
     if reference.environment != candidate.environment {
         return Err("reference and candidate launchers must declare the same environment".into());
+    }
+    if reference.environment_variables != candidate.environment_variables {
+        return Err(
+            "reference and candidate launchers must declare the same environment variables".into(),
+        );
     }
     let mut case_ids = BTreeSet::new();
     for case in &suite.cases {
@@ -550,9 +751,9 @@ fn validate_identifier(kind: &str, value: &str) -> Result<(), Box<dyn Error>> {
         && value
             .bytes()
             .next()
-            .is_some_and(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
-        && value.bytes().all(|byte| {
-            byte.is_ascii_lowercase() || byte.is_ascii_digit() || matches!(byte, b'.' | b'_' | b'-')
+            .is_some_and(|b| b.is_ascii_lowercase() || b.is_ascii_digit())
+        && value.bytes().all(|b| {
+            b.is_ascii_lowercase() || b.is_ascii_digit() || matches!(b, b'.' | b'_' | b'-')
         });
     if valid {
         Ok(())
@@ -561,151 +762,21 @@ fn validate_identifier(kind: &str, value: &str) -> Result<(), Box<dyn Error>> {
     }
 }
 
-fn resolve_program(repository_root: &Path, program: &str) -> OsString {
-    let path = Path::new(program);
-    if path.components().count() > 1 && path.is_relative() {
-        repository_root.join(path).into_os_string()
-    } else {
-        program.into()
-    }
-}
-
-fn resolve_executable(repository_root: &Path, program: &str) -> Result<PathBuf, Box<dyn Error>> {
-    let path = Path::new(program);
-    if path.components().count() > 1 {
-        let resolved = if path.is_relative() {
-            repository_root.join(path)
-        } else {
-            path.to_owned()
-        };
-        return Ok(fs::canonicalize(resolved)?);
-    }
-
-    let search_path = std::env::var_os("PATH").ok_or("PATH is not defined")?;
-    for directory in std::env::split_paths(&search_path) {
-        let candidate = directory.join(program);
-        if candidate.is_file() {
-            return Ok(fs::canonicalize(candidate)?);
-        }
-    }
-    Err(format!("executable not found in PATH: {program}").into())
-}
-
-fn validate_sha256_identity(identity: &str) -> Result<(), Box<dyn Error>> {
-    let Some(hex) = identity.strip_prefix("sha256:") else {
-        return Err(format!("runtime identity is not SHA-256: {identity}").into());
-    };
-    if hex.len() != 64 || !hex.bytes().all(|byte| byte.is_ascii_hexdigit()) {
-        return Err(format!("runtime identity is not SHA-256: {identity}").into());
-    }
-    Ok(())
-}
-
-#[cfg(unix)]
-fn add_docker_user(command: &mut Command) {
-    use std::os::unix::fs::MetadataExt;
-    if let Ok(metadata) = fs::metadata(".") {
-        command.args(["--user", &format!("{}:{}", metadata.uid(), metadata.gid())]);
-    }
-}
-
-#[cfg(not(unix))]
-fn add_docker_user(_command: &mut Command) {}
-
-fn substitute(template: &str, case: &Case) -> String {
-    template
-        .replace("{command}", &case.command)
-        .replace("{fixture}", ".")
-}
-
-fn copy_directory_contents(source: &Path, destination: &Path) -> Result<(), Box<dyn Error>> {
-    for entry in fs::read_dir(source)? {
-        let entry = entry?;
-        copy_entry(&entry.path(), &destination.join(entry.file_name()))?;
-    }
-    Ok(())
-}
-
-fn copy_entry(source: &Path, destination: &Path) -> Result<(), Box<dyn Error>> {
-    let metadata = fs::symlink_metadata(source)?;
-    let file_type = metadata.file_type();
-    if file_type.is_file() {
-        fs::copy(source, destination)?;
-    } else if file_type.is_dir() {
-        fs::create_dir(destination)?;
-        copy_directory_contents(source, destination)?;
-    } else if file_type.is_symlink() {
-        copy_symlink(source, destination)?;
-    } else {
-        return Err(format!("unsupported fixture entry: {}", source.display()).into());
-    }
-    Ok(())
-}
-
-#[cfg(unix)]
-fn copy_symlink(source: &Path, destination: &Path) -> Result<(), Box<dyn Error>> {
-    std::os::unix::fs::symlink(fs::read_link(source)?, destination)?;
-    Ok(())
-}
-
-#[cfg(windows)]
-fn copy_symlink(source: &Path, destination: &Path) -> Result<(), Box<dyn Error>> {
-    let target = fs::read_link(source)?;
-    if source.is_dir() {
-        std::os::windows::fs::symlink_dir(target, destination)?;
-    } else {
-        std::os::windows::fs::symlink_file(target, destination)?;
-    }
-    Ok(())
-}
-
-fn persist_run(
-    case_root: &Path,
-    role: &str,
-    captured: &CapturedRun,
-) -> Result<RunResult, Box<dyn Error>> {
-    let role_root = case_root.join(role);
-    fs::create_dir_all(&role_root)?;
-    fs::write(role_root.join("stdout.bin"), &captured.stdout)?;
-    fs::write(role_root.join("stderr.bin"), &captured.stderr)?;
-    write_json(&role_root.join("file-tree.json"), &captured.file_tree)?;
-
-    let (exit_code, signal) = exit_parts(&captured.exit_status);
-    let output_bytes = captured
-        .file_tree
-        .iter()
-        .filter(|entry| entry.kind == FileKind::File)
-        .map(|entry| entry.bytes)
-        .sum();
-    let output_files = captured
-        .file_tree
-        .iter()
-        .filter(|entry| entry.kind == FileKind::File)
-        .count() as u64;
-
-    Ok(RunResult {
-        exit_code,
-        signal,
-        stdout_artifact: format!("{role}/stdout.bin"),
-        stderr_artifact: format!("{role}/stderr.bin"),
-        file_tree_artifact: format!("{role}/file-tree.json"),
-        metrics: Metrics {
-            wall_seconds: captured.wall_seconds,
-            user_cpu_seconds: None,
-            system_cpu_seconds: None,
-            peak_rss_bytes: None,
-            output_bytes,
-            output_files,
-        },
-    })
-}
+// ── Comparison logic ─────────────────────────────────────────────────────
 
 fn compare_runs(
     case: &Case,
     case_root: &Path,
-    reference: &CapturedRun,
-    candidate: &CapturedRun,
+    reference: &evidence::CapturedRun,
+    candidate: &evidence::CapturedRun,
 ) -> Result<Vec<ComparisonResult>, Box<dyn Error>> {
+    if case
+        .comparisons
+        .iter()
+        .any(|request| matches!(request.dimension, Dimension::Stdout | Dimension::Stderr))
+    {
+        fs::create_dir(case_root.join("normalized"))?;
+    }
     let mut results = Vec::with_capacity(case.comparisons.len());
     for request in &case.comparisons {
         let compared = match request.dimension {
@@ -716,6 +787,7 @@ fn compare_runs(
                     "reference exit status".to_owned(),
                     "candidate exit status".to_owned(),
                 ],
+                artifacts: Vec::new(),
             },
             Dimension::Stdout => compare_bytes(
                 case_root,
@@ -740,6 +812,16 @@ fn compare_runs(
                         "reference/file-tree.json".to_owned(),
                         "candidate/file-tree.json".to_owned(),
                     ],
+                    artifacts: vec![
+                        artifact_reference(
+                            "reference/file-tree.json".to_owned(),
+                            &serde_json::to_vec_pretty(&reference.file_tree)?,
+                        ),
+                        artifact_reference(
+                            "candidate/file-tree.json".to_owned(),
+                            &serde_json::to_vec_pretty(&candidate.file_tree)?,
+                        ),
+                    ],
                 }
             }
         };
@@ -752,6 +834,7 @@ fn compare_runs(
             },
             normalizer: request.normalizer.to_string(),
             evidence: compared.evidence,
+            artifacts: compared.artifacts,
             details: compared.details,
         });
     }
@@ -768,11 +851,10 @@ fn compare_bytes(
     let reference_normalized = normalize(normalizer, reference);
     let candidate_normalized = normalize(normalizer, candidate);
     let normalized_root = case_root.join("normalized");
-    fs::create_dir_all(&normalized_root)?;
     let reference_path = normalized_root.join(format!("reference-{name}.bin"));
     let candidate_path = normalized_root.join(format!("candidate-{name}.bin"));
-    fs::write(&reference_path, &reference_normalized)?;
-    fs::write(&candidate_path, &candidate_normalized)?;
+    write_new(&reference_path, &reference_normalized)?;
+    write_new(&candidate_path, &candidate_normalized)?;
     let matches = reference_normalized == candidate_normalized;
     Ok(ComparedArtifacts {
         matches,
@@ -787,138 +869,25 @@ fn compare_bytes(
             relative_path(case_root, &reference_path),
             relative_path(case_root, &candidate_path),
         ],
+        artifacts: vec![
+            artifact_reference(
+                relative_path(case_root, &reference_path),
+                &reference_normalized,
+            ),
+            artifact_reference(
+                relative_path(case_root, &candidate_path),
+                &candidate_normalized,
+            ),
+        ],
     })
 }
 
-fn snapshot_tree(root: &Path) -> Result<Vec<FileEntry>, Box<dyn Error>> {
-    let mut snapshots = Vec::new();
-    snapshot_directory(root, root, &mut snapshots)?;
-    snapshots.sort_by(|left, right| left.file.path_bytes_hex.cmp(&right.file.path_bytes_hex));
-
-    let mut hardlink_groups = BTreeMap::new();
-    for snapshot in &snapshots {
-        if let Some(identity) = snapshot.hardlink_identity {
-            hardlink_groups
-                .entry(identity)
-                .or_insert_with(|| snapshot.file.path_bytes_hex.clone());
-        }
+fn artifact_reference(path: String, bytes: &[u8]) -> ArtifactReference {
+    ArtifactReference {
+        path,
+        sha256: sha256_hex(bytes),
+        bytes: bytes.len() as u64,
     }
-    Ok(snapshots
-        .into_iter()
-        .map(|mut snapshot| {
-            snapshot.file.hardlink_group = snapshot
-                .hardlink_identity
-                .and_then(|identity| hardlink_groups.get(&identity).cloned());
-            snapshot.file
-        })
-        .collect())
-}
-
-fn snapshot_directory(
-    root: &Path,
-    directory: &Path,
-    entries: &mut Vec<SnapshotEntry>,
-) -> Result<(), Box<dyn Error>> {
-    for entry in fs::read_dir(directory)? {
-        let entry = entry?;
-        let path = entry.path();
-        let metadata = fs::symlink_metadata(&path)?;
-        let file_type = metadata.file_type();
-        let (kind, bytes, sha256) = if file_type.is_file() {
-            let content = fs::read(&path)?;
-            (
-                FileKind::File,
-                content.len() as u64,
-                Some(format!("{:x}", Sha256::digest(&content))),
-            )
-        } else if file_type.is_dir() {
-            snapshot_directory(root, &path, entries)?;
-            (FileKind::Directory, 0, None)
-        } else if file_type.is_symlink() {
-            let target = fs::read_link(&path)?;
-            let encoded = os_bytes(target.as_os_str());
-            (
-                FileKind::Symlink,
-                encoded.len() as u64,
-                Some(format!("{:x}", Sha256::digest(&encoded))),
-            )
-        } else {
-            return Err(format!("unsupported filesystem entry: {}", path.display()).into());
-        };
-        let relative = path.strip_prefix(root).unwrap_or(&path);
-        let entry_metadata = file_metadata(&metadata);
-        entries.push(SnapshotEntry {
-            file: FileEntry {
-                path: relative_path(root, &path),
-                path_bytes_hex: hex_bytes(&os_bytes(relative.as_os_str())),
-                kind,
-                bytes,
-                sha256,
-                mode: entry_metadata.mode,
-                uid: entry_metadata.uid,
-                gid: entry_metadata.gid,
-                hardlink_count: entry_metadata.hardlink_count,
-                hardlink_group: None,
-            },
-            hardlink_identity: entry_metadata.hardlink_identity,
-        });
-    }
-    Ok(())
-}
-
-#[cfg(unix)]
-fn file_metadata(metadata: &fs::Metadata) -> EntryMetadata {
-    use std::os::unix::fs::MetadataExt;
-    let hardlink_count = metadata.nlink();
-    EntryMetadata {
-        mode: Some(metadata.mode() & 0o7777),
-        uid: Some(metadata.uid()),
-        gid: Some(metadata.gid()),
-        hardlink_count: Some(hardlink_count),
-        hardlink_identity: (metadata.is_file() && hardlink_count > 1)
-            .then(|| (metadata.dev(), metadata.ino())),
-    }
-}
-
-#[cfg(not(unix))]
-fn file_metadata(_metadata: &fs::Metadata) -> EntryMetadata {
-    EntryMetadata {
-        mode: None,
-        uid: None,
-        gid: None,
-        hardlink_count: None,
-        hardlink_identity: None,
-    }
-}
-
-#[cfg(unix)]
-fn os_bytes(value: &OsStr) -> Vec<u8> {
-    use std::os::unix::ffi::OsStrExt;
-    value.as_bytes().to_vec()
-}
-
-#[cfg(not(unix))]
-fn os_bytes(value: &OsStr) -> Vec<u8> {
-    #[cfg(windows)]
-    {
-        use std::os::windows::ffi::OsStrExt;
-        return value
-            .encode_wide()
-            .flat_map(u16::to_le_bytes)
-            .collect::<Vec<_>>();
-    }
-    #[cfg(not(windows))]
-    value.to_string_lossy().as_bytes().to_vec()
-}
-
-fn hex_bytes(bytes: &[u8]) -> String {
-    const HEX: &[u8; 16] = b"0123456789abcdef";
-    let mut output = String::with_capacity(bytes.len() * 2);
-    for byte in bytes {
-        output.push(HEX[(byte >> 4) as usize] as char);
-        output.push(HEX[(byte & 0x0f) as usize] as char);
-    }
-    output
 }
 
 fn relative_path(root: &Path, path: &Path) -> String {
@@ -928,27 +897,12 @@ fn relative_path(root: &Path, path: &Path) -> String {
         .replace('\\', "/")
 }
 
-#[cfg(unix)]
-fn exit_parts(status: &ExitStatus) -> (Option<i32>, Option<i32>) {
-    use std::os::unix::process::ExitStatusExt;
-    (status.code(), status.signal())
-}
-
-#[cfg(not(unix))]
-fn exit_parts(status: &ExitStatus) -> (Option<i32>, Option<i32>) {
-    (status.code(), None)
-}
-
-fn write_json(path: &Path, value: &impl Serialize) -> Result<(), Box<dyn Error>> {
-    let mut encoded = serde_json::to_vec_pretty(value)?;
-    encoded.push(b'\n');
-    fs::write(path, encoded)?;
-    Ok(())
-}
+// ── Tests ────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use tempfile::TempDir;
 
     fn environment() -> Environment {
         Environment {
@@ -964,18 +918,122 @@ mod tests {
         Launcher {
             schema_version: 1,
             name: name.to_owned(),
-            program: "printf".to_owned(),
-            arguments: vec!["{command}".to_owned()],
+            program: "{command}".to_owned(),
+            arguments: vec![],
             environment_variables: BTreeMap::new(),
+            timeout_seconds: None,
             runtime: Runtime::Local,
             environment: environment(),
         }
     }
 
+    // ── Environment evidence tests ─────────────────────────────────────
+
+    fn run_env_evidence_case(env_vars: BTreeMap<String, String>) -> serde_json::Value {
+        let mut ref_l = launcher("reference");
+        ref_l.environment_variables = env_vars.clone();
+        let mut cand_l = launcher("candidate");
+        cand_l.environment_variables = env_vars;
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "env-evidence".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "effective-env".to_owned(),
+                surface: Surface::Cli,
+                command: "printf".to_owned(),
+                arguments: vec!["env-ok".to_owned()],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Stdout,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        let output = TempDir::new().unwrap();
+        let mut runner =
+            DifferentialRunner::new(std::env::current_dir().unwrap(), ref_l, cand_l).unwrap();
+        let outcome = runner.run(&suite, output.path()).unwrap();
+        assert_eq!(outcome.failed, 0);
+        serde_json::from_slice(&fs::read(output.path().join("effective-env/result.json")).unwrap())
+            .unwrap()
+    }
+
+    #[test]
+    fn result_evidence_records_default_empty_environment_variables() {
+        let result = run_env_evidence_case(BTreeMap::new());
+        assert_eq!(result["suite_id"], "env-evidence");
+        assert_eq!(
+            result["effective_environment_variables"],
+            serde_json::json!({})
+        );
+    }
+
+    #[test]
+    fn result_evidence_records_effective_posix_environment_variables() {
+        let result = run_env_evidence_case(BTreeMap::from([(
+            "POSIXLY_CORRECT".to_owned(),
+            "1".to_owned(),
+        )]));
+        assert_eq!(result["suite_id"], "env-evidence");
+        assert_eq!(
+            result["effective_environment_variables"],
+            serde_json::json!({"POSIXLY_CORRECT": "1"})
+        );
+    }
+
+    // ── Validation tests ───────────────────────────────────────────────
+
+    #[test]
+    fn rejects_invalid_environment_variable_keys_and_nul_values() {
+        for key in [
+            "",
+            "9INVALID",
+            "INVALID-NAME",
+            "INVALID=NAME",
+            "NON_ASCII_\u{e9}",
+        ] {
+            let mut inv = launcher("inv");
+            inv.environment_variables
+                .insert(key.to_owned(), "v".to_owned());
+            assert!(
+                validate_launcher(&inv)
+                    .unwrap_err()
+                    .to_string()
+                    .contains("invalid environment variable key")
+            );
+        }
+        let mut inv = launcher("inv");
+        inv.environment_variables
+            .insert("OK".to_owned(), "before\0after".to_owned());
+        assert!(
+            validate_launcher(&inv)
+                .unwrap_err()
+                .to_string()
+                .contains("contains a NUL byte")
+        );
+    }
+
+    #[test]
+    fn rejects_duplicate_environment_variable_keys_during_deserialization() {
+        let doc = r#"{
+            "schema_version":1,"name":"dup","program":"{command}","arguments":[],
+            "environment_variables":{"POSIXLY_CORRECT":"1","POSIXLY_CORRECT":"0"},
+            "runtime":{"kind":"local"},
+            "environment":{"image":"t","operating_system":"t","architecture":"t","compiler":null,"cpu":null}
+        }"#;
+        assert!(
+            serde_json::from_str::<Launcher>(doc)
+                .unwrap_err()
+                .to_string()
+                .contains("duplicate environment variable key: POSIXLY_CORRECT")
+        );
+    }
+
     #[test]
     fn rejects_renamed_compatibility_self_comparison() {
-        let reference = launcher("reference");
-        let candidate = launcher("renamed-reference");
+        let ref_l = launcher("reference");
+        let cand_l = launcher("renamed-reference");
         let suite = Suite {
             schema_version: 1,
             suite_id: "self-test".to_owned(),
@@ -983,8 +1041,8 @@ mod tests {
             cases: vec![Case {
                 id: "lcov-version".to_owned(),
                 surface: Surface::Cli,
-                command: "lcov".to_owned(),
-                arguments: vec!["--version".to_owned()],
+                command: "printf".to_owned(),
+                arguments: vec!["v".to_owned()],
                 fixture: None,
                 comparisons: vec![ComparisonRequest {
                     dimension: Dimension::Exit,
@@ -992,45 +1050,41 @@ mod tests {
                 }],
             }],
         };
-
         let output = TempDir::new().unwrap();
-        let runner =
-            DifferentialRunner::new(std::env::current_dir().unwrap(), reference, candidate)
-                .unwrap();
-        let error = runner.run(&suite, output.path()).unwrap_err();
+        let mut runner =
+            DifferentialRunner::new(std::env::current_dir().unwrap(), ref_l, cand_l).unwrap();
+        let err = runner.run(&suite, output.path()).unwrap_err();
         assert!(
-            error
-                .to_string()
+            err.to_string()
                 .contains("cannot compare identical runtime identity")
         );
     }
 
     #[test]
     fn rejects_duplicate_case_ids_before_execution() {
-        let reference = launcher("reference");
-        let candidate = launcher("candidate");
-        let case = Case {
-            id: "duplicate-case".to_owned(),
-            surface: Surface::Cli,
-            command: "lcov".to_owned(),
-            arguments: Vec::new(),
-            fixture: None,
-            comparisons: vec![ComparisonRequest {
-                dimension: Dimension::Exit,
-                normalizer: NormalizerId::ExactV1,
-            }],
-        };
+        let ref_l = launcher("ref");
+        let cand_l = launcher("cand");
         let suite = Suite {
             schema_version: 1,
-            suite_id: "duplicate-cases".to_owned(),
+            suite_id: "dup".to_owned(),
             evidence_scope: EvidenceScope::HarnessSelfTest,
             cases: vec![
-                case,
                 Case {
-                    id: "duplicate-case".to_owned(),
+                    id: "dup-case".to_owned(),
                     surface: Surface::Cli,
-                    command: "lcov".to_owned(),
-                    arguments: Vec::new(),
+                    command: "printf".to_owned(),
+                    arguments: vec!["x".to_owned()],
+                    fixture: None,
+                    comparisons: vec![ComparisonRequest {
+                        dimension: Dimension::Exit,
+                        normalizer: NormalizerId::ExactV1,
+                    }],
+                },
+                Case {
+                    id: "dup-case".to_owned(),
+                    surface: Surface::Cli,
+                    command: "printf".to_owned(),
+                    arguments: vec!["x".to_owned()],
                     fixture: None,
                     comparisons: vec![ComparisonRequest {
                         dimension: Dimension::Exit,
@@ -1039,24 +1093,27 @@ mod tests {
                 },
             ],
         };
-
-        let error = validate_suite(&suite, &reference, &candidate).unwrap_err();
-        assert!(error.to_string().contains("duplicate case ID"));
+        assert!(
+            validate_suite(&suite, &ref_l, &cand_l)
+                .unwrap_err()
+                .to_string()
+                .contains("duplicate case ID")
+        );
     }
 
     #[test]
     fn rejects_duplicate_comparison_dimensions() {
-        let reference = launcher("reference");
-        let candidate = launcher("candidate");
+        let ref_l = launcher("ref");
+        let cand_l = launcher("cand");
         let suite = Suite {
             schema_version: 1,
-            suite_id: "duplicate-comparisons".to_owned(),
+            suite_id: "dup-comp".to_owned(),
             evidence_scope: EvidenceScope::HarnessSelfTest,
             cases: vec![Case {
-                id: "duplicate-comparison".to_owned(),
+                id: "dup-comp".to_owned(),
                 surface: Surface::Cli,
-                command: "lcov".to_owned(),
-                arguments: Vec::new(),
+                command: "printf".to_owned(),
+                arguments: vec!["x".to_owned()],
                 fixture: None,
                 comparisons: vec![
                     ComparisonRequest {
@@ -1070,46 +1127,27 @@ mod tests {
                 ],
             }],
         };
-
-        let error = validate_suite(&suite, &reference, &candidate).unwrap_err();
-        assert!(error.to_string().contains("duplicate Exit comparison"));
-    }
-
-    #[test]
-    fn snapshots_file_content_and_empty_directory() {
-        let directory = TempDir::new().unwrap();
-        fs::write(directory.path().join("file.txt"), b"content").unwrap();
-        fs::create_dir(directory.path().join("empty")).unwrap();
-
-        let snapshot = snapshot_tree(directory.path()).unwrap();
-
-        assert_eq!(snapshot.len(), 2);
-        assert_eq!(snapshot[0].path, "empty");
-        assert_eq!(snapshot[0].path_bytes_hex, "656d707479");
-        assert_eq!(snapshot[0].kind, FileKind::Directory);
-        assert_eq!(snapshot[1].path, "file.txt");
-        assert_eq!(snapshot[1].bytes, 7);
-        assert_eq!(
-            snapshot[1].sha256.as_deref(),
-            Some("ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73")
+        assert!(
+            validate_suite(&suite, &ref_l, &cand_l)
+                .unwrap_err()
+                .to_string()
+                .contains("duplicate Exit")
         );
-        #[cfg(unix)]
-        assert!(snapshot[1].mode.is_some());
     }
 
     #[test]
     fn rejects_meaningless_exit_normalizer() {
-        let reference = launcher("reference");
-        let candidate = launcher("candidate");
+        let ref_l = launcher("ref");
+        let cand_l = launcher("cand");
         let suite = Suite {
             schema_version: 1,
-            suite_id: "invalid-normalizer".to_owned(),
+            suite_id: "bad-norm".to_owned(),
             evidence_scope: EvidenceScope::HarnessSelfTest,
             cases: vec![Case {
-                id: "lcov-version".to_owned(),
+                id: "bad-norm".to_owned(),
                 surface: Surface::Cli,
-                command: "lcov".to_owned(),
-                arguments: vec!["--version".to_owned()],
+                command: "printf".to_owned(),
+                arguments: vec!["x".to_owned()],
                 fixture: None,
                 comparisons: vec![ComparisonRequest {
                     dimension: Dimension::Exit,
@@ -1117,25 +1155,381 @@ mod tests {
                 }],
             }],
         };
-
-        let error = validate_suite(&suite, &reference, &candidate).unwrap_err();
-        assert!(error.to_string().contains("must use exact-v1"));
+        assert!(
+            validate_suite(&suite, &ref_l, &cand_l)
+                .unwrap_err()
+                .to_string()
+                .contains("must use exact-v1")
+        );
     }
 
     #[test]
     fn rejects_different_execution_environments() {
-        let reference = launcher("reference");
-        let mut candidate = launcher("candidate");
-        candidate.environment.architecture = "different".to_owned();
+        let ref_l = launcher("ref");
+        let mut cand_l = launcher("cand");
+        cand_l.environment.architecture = "different".to_owned();
         let suite = Suite {
             schema_version: 1,
-            suite_id: "environment-check".to_owned(),
+            suite_id: "env".to_owned(),
             evidence_scope: EvidenceScope::HarnessSelfTest,
             cases: vec![Case {
-                id: "lcov-version".to_owned(),
+                id: "e".to_owned(),
                 surface: Surface::Cli,
-                command: "lcov".to_owned(),
-                arguments: vec!["--version".to_owned()],
+                command: "printf".to_owned(),
+                arguments: vec!["x".to_owned()],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Exit,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        assert!(
+            validate_suite(&suite, &ref_l, &cand_l)
+                .unwrap_err()
+                .to_string()
+                .contains("same environment")
+        );
+    }
+
+    #[test]
+    fn rejects_different_launcher_environment_variables() {
+        let ref_l = launcher("ref");
+        let mut cand_l = launcher("cand");
+        cand_l
+            .environment_variables
+            .insert("POSIXLY_CORRECT".to_owned(), "1".to_owned());
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "env-var".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "e".to_owned(),
+                surface: Surface::Cli,
+                command: "printf".to_owned(),
+                arguments: vec!["x".to_owned()],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Exit,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        assert!(
+            validate_suite(&suite, &ref_l, &cand_l)
+                .unwrap_err()
+                .to_string()
+                .contains("same environment variables")
+        );
+    }
+
+    #[test]
+    fn rejects_invalid_suite_id() {
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "../invalid".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "valid-case".to_owned(),
+                surface: Surface::Cli,
+                command: "true".to_owned(),
+                arguments: Vec::new(),
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Exit,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        let error = validate_suite(&suite, &launcher("ref"), &launcher("candidate")).unwrap_err();
+        assert!(error.to_string().contains("invalid suite identifier"));
+    }
+
+    #[test]
+    fn local_execution_does_not_inherit_ambient_environment() {
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "hermetic-env".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "ambient-home".to_owned(),
+                surface: Surface::Cli,
+                command: "sh".to_owned(),
+                arguments: vec!["-c".to_owned(), "printf '%s' \"${HOME-unset}\"".to_owned()],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Stdout,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        let output = TempDir::new().unwrap();
+        let mut runner = DifferentialRunner::new(
+            std::env::current_dir().unwrap(),
+            launcher("ref"),
+            launcher("candidate"),
+        )
+        .unwrap();
+        assert_eq!(runner.run(&suite, output.path()).unwrap().failed, 0);
+        assert_eq!(
+            fs::read(output.path().join("ambient-home/reference/stdout.bin")).unwrap(),
+            b"unset"
+        );
+    }
+
+    // ── Artifact validation tests ──────────────────────────────────────
+
+    fn make_artifact_result(
+        case_root: &Path,
+        stdout_bytes: &[u8],
+        declared_stdout_bytes: u64,
+        stdout_hash_override: Option<&str>,
+    ) {
+        fs::create_dir_all(case_root.join("reference")).unwrap();
+        fs::create_dir_all(case_root.join("candidate")).unwrap();
+        fs::create_dir_all(case_root.join("normalized")).unwrap();
+        fs::write(case_root.join("reference/stdout.bin"), stdout_bytes).unwrap();
+        fs::write(case_root.join("candidate/stdout.bin"), stdout_bytes).unwrap();
+        fs::write(case_root.join("reference/stderr.bin"), b"").unwrap();
+        fs::write(case_root.join("candidate/stderr.bin"), b"").unwrap();
+        let tree: Vec<serde_json::Value> = vec![];
+        let tree_json = serde_json::to_vec_pretty(&tree).unwrap();
+        let tree_hash = sha256_hex(&tree_json);
+        fs::write(case_root.join("reference/file-tree.json"), &tree_json).unwrap();
+        fs::write(case_root.join("candidate/file-tree.json"), &tree_json).unwrap();
+        fs::write(
+            case_root.join("normalized/reference-stdout.bin"),
+            stdout_bytes,
+        )
+        .unwrap();
+        fs::write(
+            case_root.join("normalized/candidate-stdout.bin"),
+            stdout_bytes,
+        )
+        .unwrap();
+
+        let actual_stdout_hash = sha256_hex(stdout_bytes);
+        let used_hash = stdout_hash_override.unwrap_or(&actual_stdout_hash);
+
+        let result = serde_json::json!({
+            "schema_version":1,"suite_id":"vt","case_id":"vt",
+            "evidence_scope":"harness_self_test",
+            "upstream_commit":"74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+            "surface":"cli","command":"true","arguments":[],"fixture":null,
+            "environment":{"image":"t","operating_system":"t","architecture":"t","compiler":null,"cpu":null},
+            "effective_environment_variables":{},
+            "implementation_identities":{
+                "reference":{"kind":"local_executable","executable_sha256":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","container_image_sha256":null},
+                "candidate":{"kind":"local_executable","executable_sha256":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","container_image_sha256":null}
+            },
+            "runs":{
+                "reference":{"exit_code":0,"signal":null,
+                    "stdout_artifact":"reference/stdout.bin","stderr_artifact":"reference/stderr.bin","file_tree_artifact":"reference/file-tree.json",
+                    "stdout_sha256":used_hash,"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","file_tree_sha256":tree_hash,
+                    "stdout_bytes":declared_stdout_bytes,"stderr_bytes":0,"file_tree_bytes":tree_json.len() as u64,
+                    "timeout":{"applied_seconds":20,"expired":false,"termination_signal_sent":null,"escalation_signal_sent":null},
+                    "cleanup":{"direct_child_reaped":true,"process_group_empty":true,"container_absent":null},
+                    "metrics":{"wall_seconds":0.0,"user_cpu_seconds":null,"system_cpu_seconds":null,"peak_rss_bytes":null,"output_bytes":0,"output_files":0}},
+                "candidate":{"exit_code":0,"signal":null,
+                    "stdout_artifact":"candidate/stdout.bin","stderr_artifact":"candidate/stderr.bin","file_tree_artifact":"candidate/file-tree.json",
+                    "stdout_sha256":used_hash,"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","file_tree_sha256":tree_hash,
+                    "stdout_bytes":declared_stdout_bytes,"stderr_bytes":0,"file_tree_bytes":tree_json.len() as u64,
+                    "timeout":{"applied_seconds":20,"expired":false,"termination_signal_sent":null,"escalation_signal_sent":null},
+                    "cleanup":{"direct_child_reaped":true,"process_group_empty":true,"container_absent":null},
+                    "metrics":{"wall_seconds":0.0,"user_cpu_seconds":null,"system_cpu_seconds":null,"peak_rss_bytes":null,"output_bytes":0,"output_files":0}}
+            },
+            "comparisons":[{"dimension":"stdout","status":"pass","normalizer":"exact-v1","evidence":["a","b"],
+                "artifacts":[
+                    {"path":"normalized/reference-stdout.bin","sha256":actual_stdout_hash,"bytes":stdout_bytes.len() as u64},
+                    {"path":"normalized/candidate-stdout.bin","sha256":actual_stdout_hash,"bytes":stdout_bytes.len() as u64}
+                ],"details":null}],
+            "overall_status":"pass"
+        });
+        evidence::write_json(&case_root.join("result.json"), &result).unwrap();
+    }
+
+    #[test]
+    fn validates_artifact_hashes_rejects_mutation() {
+        let dir = TempDir::new().unwrap();
+        make_artifact_result(dir.path(), b"original", 8, None);
+        let bad_hash = "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+        make_artifact_result(dir.path(), b"original", 8, Some(bad_hash));
+        assert!(
+            validate_result_artifacts(dir.path())
+                .unwrap_err()
+                .to_string()
+                .contains("hash mismatch")
+        );
+    }
+
+    #[test]
+    fn validates_artifact_sizes_reject_truncation() {
+        let dir = TempDir::new().unwrap();
+        make_artifact_result(dir.path(), b"ten bytes!", 999, None);
+        assert!(
+            validate_result_artifacts(dir.path())
+                .unwrap_err()
+                .to_string()
+                .contains("size mismatch")
+        );
+    }
+
+    #[test]
+    fn rejects_artifact_path_outside_fixed_role_location() {
+        let dir = TempDir::new().unwrap();
+        fs::create_dir_all(dir.path().join("reference")).unwrap();
+        fs::create_dir_all(dir.path().join("candidate")).unwrap();
+        fs::write(dir.path().join("reference/stdout.bin"), b"ok").unwrap();
+        fs::write(dir.path().join("candidate/stdout.bin"), b"ok").unwrap();
+        fs::write(dir.path().join("reference/stderr.bin"), b"").unwrap();
+        fs::write(dir.path().join("candidate/stderr.bin"), b"").unwrap();
+        let tree: Vec<serde_json::Value> = vec![];
+        let tj = serde_json::to_vec_pretty(&tree).unwrap();
+        let th = sha256_hex(&tj);
+        fs::write(dir.path().join("reference/file-tree.json"), &tj).unwrap();
+        fs::write(dir.path().join("candidate/file-tree.json"), &tj).unwrap();
+        let h = sha256_hex(b"ok");
+        let result = serde_json::json!({
+            "schema_version":1,"suite_id":"s","case_id":"c",
+            "evidence_scope":"harness_self_test",
+            "upstream_commit":"74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+            "surface":"cli","command":"true","arguments":[],"fixture":null,
+            "environment":{"image":"t","operating_system":"t","architecture":"t","compiler":null,"cpu":null},
+            "effective_environment_variables":{},
+            "implementation_identities":{
+                "reference":{"kind":"local_executable","executable_sha256":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","container_image_sha256":null},
+                "candidate":{"kind":"local_executable","executable_sha256":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","container_image_sha256":null}
+            },
+            "runs":{
+                "reference":{"exit_code":0,"signal":null,
+                    "stdout_artifact":"../etc/passwd","stderr_artifact":"reference/stderr.bin","file_tree_artifact":"reference/file-tree.json",
+                    "stdout_sha256":h,"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","file_tree_sha256":th,
+                    "stdout_bytes":2,"stderr_bytes":0,"file_tree_bytes":tj.len() as u64,
+                    "timeout":null,"cleanup":null,
+                    "metrics":{"wall_seconds":0.0,"user_cpu_seconds":null,"system_cpu_seconds":null,"peak_rss_bytes":null}},
+                "candidate":{"exit_code":0,"signal":null,
+                    "stdout_artifact":"candidate/stdout.bin","stderr_artifact":"candidate/stderr.bin","file_tree_artifact":"candidate/file-tree.json",
+                    "stdout_sha256":h,"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","file_tree_sha256":th,
+                    "stdout_bytes":2,"stderr_bytes":0,"file_tree_bytes":tj.len() as u64,
+                    "timeout":null,"cleanup":null,
+                    "metrics":{"wall_seconds":0.0,"user_cpu_seconds":null,"system_cpu_seconds":null,"peak_rss_bytes":null}}
+            },
+            "comparisons":[{"dimension":"stdout","status":"pass","normalizer":"exact-v1","evidence":["a","b"],"details":null}],
+            "overall_status":"pass"
+        });
+        evidence::write_json(&dir.path().join("result.json"), &result).unwrap();
+        assert!(
+            validate_result_artifacts(dir.path())
+                .unwrap_err()
+                .to_string()
+                .contains("must be reference/stdout.bin")
+        );
+    }
+
+    #[test]
+    fn rejects_mutated_normalized_artifact() {
+        let dir = TempDir::new().unwrap();
+        make_artifact_result(dir.path(), b"original", 8, None);
+        fs::write(
+            dir.path().join("normalized/reference-stdout.bin"),
+            b"mutated",
+        )
+        .unwrap();
+        assert!(
+            validate_result_artifacts(dir.path())
+                .unwrap_err()
+                .to_string()
+                .contains("normalized/reference-stdout.bin hash mismatch")
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn rejects_intermediate_and_final_artifact_symlinks() {
+        let intermediate = TempDir::new().unwrap();
+        make_artifact_result(intermediate.path(), b"original", 8, None);
+        fs::rename(
+            intermediate.path().join("normalized"),
+            intermediate.path().join("normalized-real"),
+        )
+        .unwrap();
+        std::os::unix::fs::symlink("normalized-real", intermediate.path().join("normalized"))
+            .unwrap();
+        assert!(
+            validate_result_artifacts(intermediate.path())
+                .unwrap_err()
+                .to_string()
+                .contains("contains a symlink")
+        );
+
+        let final_link = TempDir::new().unwrap();
+        make_artifact_result(final_link.path(), b"original", 8, None);
+        fs::remove_file(final_link.path().join("reference/stdout.bin")).unwrap();
+        std::os::unix::fs::symlink(
+            "../candidate/stdout.bin",
+            final_link.path().join("reference/stdout.bin"),
+        )
+        .unwrap();
+        assert!(
+            validate_result_artifacts(final_link.path())
+                .unwrap_err()
+                .to_string()
+                .contains("contains a symlink")
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn refuses_preexisting_summary_symlink() {
+        let output = TempDir::new().unwrap();
+        let outside = output.path().join("outside.json");
+        fs::write(&outside, b"unchanged").unwrap();
+        std::os::unix::fs::symlink(&outside, output.path().join("summary.json")).unwrap();
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "summary-link".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "summary-case".to_owned(),
+                surface: Surface::Cli,
+                command: "true".to_owned(),
+                arguments: Vec::new(),
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Exit,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+        let mut runner = DifferentialRunner::new(
+            std::env::current_dir().unwrap(),
+            launcher("ref"),
+            launcher("candidate"),
+        )
+        .unwrap();
+        let error = runner.run(&suite, output.path()).unwrap_err();
+        assert!(error.to_string().contains("summary output already exists"));
+        assert_eq!(fs::read(outside).unwrap(), b"unchanged");
+    }
+
+    // ── Timeout tests ──────────────────────────────────────────────────
+
+    #[test]
+    fn timeout_with_child_descendant_is_reaped() {
+        let mut reference = launcher("reference");
+        reference.timeout_seconds = Some(2);
+        let mut candidate = launcher("candidate");
+        candidate.timeout_seconds = Some(2);
+
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "timeout-test".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "timeout-cleanup".to_owned(),
+                surface: Surface::Cli,
+                command: "sh".to_owned(),
+                arguments: vec!["-c".to_owned(), "(sleep 8 &); sleep 10".to_owned()],
                 fixture: None,
                 comparisons: vec![ComparisonRequest {
                     dimension: Dimension::Exit,
@@ -1144,46 +1538,269 @@ mod tests {
             }],
         };
 
-        let error = validate_suite(&suite, &reference, &candidate).unwrap_err();
-        assert!(error.to_string().contains("same environment"));
+        let output = TempDir::new().unwrap();
+        let mut runner =
+            DifferentialRunner::new(std::env::current_dir().unwrap(), reference, candidate)
+                .unwrap();
+        let started = std::time::Instant::now();
+        let outcome = runner.run(&suite, output.path()).unwrap();
+        assert!(started.elapsed() < std::time::Duration::from_secs(7));
+        assert_eq!(outcome.failed, 1);
+
+        let result: serde_json::Value = serde_json::from_slice(
+            &fs::read(output.path().join("timeout-cleanup/result.json")).unwrap(),
+        )
+        .unwrap();
+
+        let ref_to = &result["runs"]["reference"]["timeout"];
+        assert!(ref_to["expired"].as_bool().unwrap());
+        assert_eq!(ref_to["applied_seconds"].as_u64().unwrap(), 2);
+
+        let ref_cl = &result["runs"]["reference"]["cleanup"];
+        assert!(ref_cl["direct_child_reaped"].as_bool().unwrap());
+        assert!(ref_cl["process_group_empty"].as_bool().unwrap());
+        assert_eq!(result["overall_status"], "fail");
     }
 
     #[test]
-    fn substitutes_case_placeholders_without_shell_interpolation() {
-        let case = Case {
-            id: "test-case".to_owned(),
-            surface: Surface::Cli,
-            command: "lcov; echo unsafe".to_owned(),
-            arguments: Vec::new(),
-            fixture: Some("fixture path".to_owned()),
-            comparisons: Vec::new(),
+    fn timeout_results_include_artifact_hashes() {
+        let mut reference = launcher("reference");
+        reference.timeout_seconds = Some(5);
+        let mut candidate = launcher("candidate");
+        candidate.timeout_seconds = Some(5);
+
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "ta".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "th".to_owned(),
+                surface: Surface::Cli,
+                command: "printf".to_owned(),
+                arguments: vec!["hello".to_owned()],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Stdout,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
         };
 
-        assert_eq!(
-            substitute("tool={command} fixture={fixture}", &case),
-            "tool=lcov; echo unsafe fixture=."
+        let output = TempDir::new().unwrap();
+        let mut runner =
+            DifferentialRunner::new(std::env::current_dir().unwrap(), reference, candidate)
+                .unwrap();
+        assert_eq!(runner.run(&suite, output.path()).unwrap().failed, 0);
+
+        let result: serde_json::Value =
+            serde_json::from_slice(&fs::read(output.path().join("th/result.json")).unwrap())
+                .unwrap();
+        let ref_run = &result["runs"]["reference"];
+        assert_eq!(ref_run["stdout_sha256"].as_str().unwrap().len(), 64);
+        assert_eq!(ref_run["stdout_bytes"].as_u64().unwrap(), 5);
+        assert!(!ref_run["timeout"]["expired"].as_bool().unwrap());
+    }
+
+    #[test]
+    fn timeout_large_output_no_deadlock() {
+        let mut reference = launcher("reference");
+        reference.timeout_seconds = Some(10);
+        let mut candidate = launcher("candidate");
+        candidate.timeout_seconds = Some(10);
+
+        let suite = Suite {
+            schema_version: 1,
+            suite_id: "large".to_owned(),
+            evidence_scope: EvidenceScope::HarnessSelfTest,
+            cases: vec![Case {
+                id: "large-out".to_owned(),
+                surface: Surface::Cli,
+                command: "sh".to_owned(),
+                arguments: vec![
+                    "-c".to_owned(),
+                    "head -c 2000000 /dev/zero | tr '\\0' 'x'; echo DONE".to_owned(),
+                ],
+                fixture: None,
+                comparisons: vec![ComparisonRequest {
+                    dimension: Dimension::Stdout,
+                    normalizer: NormalizerId::ExactV1,
+                }],
+            }],
+        };
+
+        let output = TempDir::new().unwrap();
+        let mut runner =
+            DifferentialRunner::new(std::env::current_dir().unwrap(), reference, candidate)
+                .unwrap();
+        assert_eq!(runner.run(&suite, output.path()).unwrap().failed, 0);
+
+        let stdout = fs::read(output.path().join("large-out/reference/stdout.bin")).unwrap();
+        assert!(stdout.len() > 1_000_000);
+        assert!(stdout.ends_with(b"DONE\n"));
+    }
+
+    // ── Launcher timeout validation ────────────────────────────────────
+
+    #[test]
+    fn rejects_zero_timeout() {
+        let mut inv = launcher("z");
+        inv.timeout_seconds = Some(0);
+        assert!(
+            validate_launcher(&inv)
+                .unwrap_err()
+                .to_string()
+                .contains("timeout_seconds must be between 1 and 3600")
         );
     }
 
     #[test]
-    fn copies_fixture_tree_without_following_symlinks() {
-        let source = TempDir::new().unwrap();
-        let destination = TempDir::new().unwrap();
-        fs::create_dir(source.path().join("nested")).unwrap();
-        fs::write(source.path().join("nested/file.txt"), b"fixture").unwrap();
-        #[cfg(unix)]
-        std::os::unix::fs::symlink("nested/file.txt", source.path().join("link.txt")).unwrap();
+    fn accepts_reasonable_timeout() {
+        let mut v = launcher("v");
+        v.timeout_seconds = Some(30);
+        assert!(validate_launcher(&v).is_ok());
+    }
 
-        copy_directory_contents(source.path(), destination.path()).unwrap();
+    #[test]
+    fn timeout_not_required_for_valid_launcher() {
+        assert!(validate_launcher(&launcher("no-timeout")).is_ok());
+    }
 
-        assert_eq!(
-            fs::read(destination.path().join("nested/file.txt")).unwrap(),
-            b"fixture"
+    // ── Docker E2E test ────────────────────────────────────────────────
+
+    /// This test requires the Oracle Docker image and Docker daemon.
+    /// When either is unavailable, the test fails rather than skipping
+    /// silently — M0 verification demands that the environment switch
+    /// surfaces the absence.
+    ///
+    /// Set `FERRICOV_SKIP_DOCKER_E2E=1` to skip explicitly in CI without
+    /// Docker.
+    #[test]
+    fn docker_posixly_correct_reaches_command_and_changes_behavior() {
+        if std::env::var("FERRICOV_SKIP_DOCKER_E2E").is_ok() {
+            eprintln!("FERRICOV_SKIP_DOCKER_E2E set — skipping Docker E2E");
+            return;
+        }
+
+        let image = "ferricov/lcov-oracle:v2.5";
+        let mut image_cache = BTreeMap::new();
+        process::resolve_image_id(image, &mut image_cache).unwrap_or_else(|error| {
+            panic!(
+                "Docker E2E test requires image {image}. Build with: \
+                 docker build -t {image} compat/upstream; error={error}"
+            )
+        });
+
+        let run_parser_case =
+            |suite_id: &str, case_id: &str, environment_variables: BTreeMap<String, String>| {
+                let make_launcher = |name: &str| Launcher {
+                    schema_version: 1,
+                    name: name.to_owned(),
+                    program: "{command}".to_owned(),
+                    arguments: Vec::new(),
+                    environment_variables: environment_variables.clone(),
+                    timeout_seconds: Some(30),
+                    runtime: Runtime::DockerImage {
+                        image: image.to_owned(),
+                    },
+                    environment: Environment {
+                        image: image.to_owned(),
+                        operating_system: "Debian 12".to_owned(),
+                        architecture: "x86_64".to_owned(),
+                        compiler: Some("GCC 12.2.0".to_owned()),
+                        cpu: None,
+                    },
+                };
+                let suite = Suite {
+                    schema_version: 1,
+                    suite_id: suite_id.to_owned(),
+                    evidence_scope: EvidenceScope::HarnessSelfTest,
+                    cases: vec![Case {
+                        id: case_id.to_owned(),
+                        surface: Surface::Cli,
+                        command: "lcov".to_owned(),
+                        arguments: vec!["--hel".to_owned()],
+                        fixture: None,
+                        comparisons: vec![
+                            ComparisonRequest {
+                                dimension: Dimension::Exit,
+                                normalizer: NormalizerId::ExactV1,
+                            },
+                            ComparisonRequest {
+                                dimension: Dimension::Stdout,
+                                normalizer: NormalizerId::ExactV1,
+                            },
+                            ComparisonRequest {
+                                dimension: Dimension::Stderr,
+                                normalizer: NormalizerId::ExactV1,
+                            },
+                            ComparisonRequest {
+                                dimension: Dimension::Filesystem,
+                                normalizer: NormalizerId::ExactV1,
+                            },
+                        ],
+                    }],
+                };
+                let output = TempDir::new().unwrap();
+                let mut runner = DifferentialRunner::new(
+                    std::env::current_dir().unwrap(),
+                    make_launcher("docker-reference"),
+                    make_launcher("docker-candidate"),
+                )
+                .unwrap();
+                let outcome = runner.run(&suite, output.path()).unwrap();
+                assert_eq!(outcome.failed, 0);
+                let case_root = output.path().join(case_id);
+                let result: serde_json::Value =
+                    serde_json::from_slice(&fs::read(case_root.join("result.json")).unwrap())
+                        .unwrap();
+                validate_result_artifacts(&case_root).unwrap();
+                let stdout = fs::read(case_root.join("reference/stdout.bin")).unwrap();
+                let stderr = fs::read(case_root.join("reference/stderr.bin")).unwrap();
+                (output, result, stdout, stderr)
+            };
+
+        let (_default_output, default, default_stdout, default_stderr) =
+            run_parser_case("docker-parser-default", "lcov-help-prefix", BTreeMap::new());
+        let (_posix_output, posix, posix_stdout, posix_stderr) = run_parser_case(
+            "docker-parser-posix",
+            "lcov-help-prefix-posix",
+            BTreeMap::from([("POSIXLY_CORRECT".to_owned(), "1".to_owned())]),
         );
-        #[cfg(unix)]
+
+        assert_eq!(default["runs"]["reference"]["exit_code"], 0);
+        assert!(default_stdout.starts_with(b"Usage: lcov [OPTIONS]"));
+        assert!(default_stderr.is_empty());
         assert_eq!(
-            fs::read_link(destination.path().join("link.txt")).unwrap(),
-            PathBuf::from("nested/file.txt")
+            default["effective_environment_variables"],
+            serde_json::json!({})
+        );
+
+        assert_eq!(posix["runs"]["reference"]["exit_code"], 1);
+        assert!(posix_stdout.is_empty());
+        assert!(posix_stderr.starts_with(b"lcov: WARNING: Unknown option: hel"));
+        assert_eq!(
+            posix["effective_environment_variables"],
+            serde_json::json!({"POSIXLY_CORRECT": "1"})
+        );
+
+        for result in [&default, &posix] {
+            assert_eq!(
+                result["implementation_identities"]["reference"],
+                result["implementation_identities"]["candidate"]
+            );
+            assert_eq!(result["runs"]["reference"]["timeout"]["expired"], false);
+            assert_eq!(
+                result["runs"]["reference"]["cleanup"]["container_absent"],
+                true
+            );
+        }
+        assert_eq!(
+            default["implementation_identities"]["reference"],
+            posix["implementation_identities"]["reference"]
+        );
+        assert_eq!(
+            default["implementation_identities"]["reference"]["container_image_sha256"],
+            "sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e"
         );
     }
 }

@@ -1,0 +1,1067 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-cli-contract-core",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-core-lcov-startup-control",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-lcov-help",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-lcov-version",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-lcov-invalid-option",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genhtml-startup-control",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genhtml-help",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genhtml-version",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genhtml-invalid-option",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-geninfo-startup-control",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-geninfo-help",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-geninfo-version",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-geninfo-invalid-option",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genpng-startup-control",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genpng-help",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genpng-version",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-genpng-invalid-option",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-gendesc-startup-control",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-gendesc-help",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-gendesc-version",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-gendesc-invalid-option",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-perl2lcov-startup-control",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-perl2lcov-help",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-perl2lcov-version",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-perl2lcov-invalid-option",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-py2lcov-startup-control",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-py2lcov-help",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-py2lcov-version-script-abbreviation",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-py2lcov-invalid-option",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcov-startup-control",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcov-help",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcov-version-script-abbreviation",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcov-invalid-option",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcovutil-py-startup-control",
+      "surface": "cli",
+      "command": "xml2lcovutil.py",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcovutil-py-help-argv-ignored-control",
+      "surface": "cli",
+      "command": "xml2lcovutil.py",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcovutil-py-version-argv-ignored-control",
+      "surface": "cli",
+      "command": "xml2lcovutil.py",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-xml2lcovutil-py-invalid-argv-ignored-control",
+      "surface": "cli",
+      "command": "xml2lcovutil.py",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-llvm2lcov-startup-control",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-llvm2lcov-help",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-llvm2lcov-version",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--version"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-core-llvm2lcov-invalid-option",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--ferricov-invalid-option"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

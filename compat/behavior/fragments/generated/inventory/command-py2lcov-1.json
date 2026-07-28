@@ -1,0 +1,168 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.py2lcov.option.cmd; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.py2lcov.option.cmd",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 150,
+          "path": "bin/py2lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 45,
+          "path": "docs/man/py2lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 109,
+          "path": "docs/man/py2lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 29,
+          "path": "help/py2lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.py2lcov.option.cmd",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.py2lcov.option.exclude; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.py2lcov.option.exclude",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 134,
+          "path": "bin/py2lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 88,
+          "path": "docs/man/py2lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/py2lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.py2lcov.option.exclude",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.py2lcov.option.verbose; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.py2lcov.option.verbose",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 136,
+          "path": "bin/py2lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 91,
+          "path": "docs/man/py2lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 22,
+          "path": "help/py2lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.py2lcov.option.verbose",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Deterministic unreviewed public inventory skeleton bucket 1 for the command-py2lcov responsibility domain.",
+  "fragment_id": "generated.inventory.command-py2lcov.1",
+  "fragment_type": "generated",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

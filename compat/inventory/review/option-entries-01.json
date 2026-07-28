@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 1,
+  "shard_count": 31,
+  "content_hash": "sha256:00d4fa8710848c726dc6afcd21111198500e7f5ec4d41e90fb700ab045f12d1e",
+  "reviewed_entries": [
+    {
+      "id": "command.genhtml.option.comment",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.comment",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1249
+        }
+      ],
+      "generated_canonical_name_assertion": "--comment",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.compare",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.genhtml.option.compare",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 854
+        }
+      ],
+      "generated_canonical_name_assertion": "--compare",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.config-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.config-file",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 13
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 45
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1537
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1274
+        }
+      ],
+      "generated_canonical_name_assertion": "--config-file",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.context-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.context-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 59
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 197
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1265
+        }
+      ],
+      "generated_canonical_name_assertion": "--context-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.criteria-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.criteria-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 27
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 60
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 198
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 462
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 470
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 710
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1654
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1657
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1666
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1239
+        }
+      ],
+      "generated_canonical_name_assertion": "--criteria-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.css-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.css-file",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 65
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 29
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 480
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1156
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7226
+        }
+      ],
+      "generated_canonical_name_assertion": "--css-file",
+      "aliases": [
+        "-c"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.current-date",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.current-date",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 63
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 56
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 599
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7230
+        }
+      ],
+      "generated_canonical_name_assertion": "--current-date",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.dark-mode",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.dark-mode",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 82
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 53
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1602
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7268
+        }
+      ],
+      "generated_canonical_name_assertion": "--dark-mode",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.date-bins",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.date-bins",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 37
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 72
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 186
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 943
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 944
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7245
+        }
+      ],
+      "generated_canonical_name_assertion": "--date-bins",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.date-labels",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.date-labels",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 73
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 948
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 949
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7246
+        }
+      ],
+      "generated_canonical_name_assertion": "--date-labels",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.debug",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.debug",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 12
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 519
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1246
+        }
+      ],
+      "generated_canonical_name_assertion": "--debug",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.demangle-cpp",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.demangle-cpp",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 79
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 41
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1014
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1355
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1362
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1269
+        }
+      ],
+      "generated_canonical_name_assertion": "--demangle-cpp",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.description-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.description-file",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 23
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 28
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1135
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7224
+        }
+      ],
+      "generated_canonical_name_assertion": "--description-file",
+      "aliases": [
+        "-d"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

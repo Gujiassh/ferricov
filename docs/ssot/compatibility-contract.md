@@ -40,19 +40,27 @@ relationships where supported.
 
 | Surface | Inventory | Implementation | Differential evidence |
 | --- | --- | --- | --- |
-| `lcov` | candidate generated | not started | none; harness self-test only |
-| `genhtml` | candidate generated | not started | none; harness self-test only |
-| `geninfo` | candidate generated | not started | none; harness self-test only |
-| `lcovrc` | 130 candidates generated | not started | none |
+| command-line parsers | 353 definitions and explicit parser policies across 10 commands; 41 generated tokens observed under 2 profiles | not started | 6 Oracle policy probes and 82 profile-resolution probes; no product evidence |
+| command option review | all 394 reviewed: 346 public, 41 generated tokens, 7 internal | not started | default profile: 9 unique abbreviations, 2 ambiguous, 30 unknown; POSIX profile: 41 unknown |
+| positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
+| `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | none |
 | tracefile formats | pending | not started | none |
-| auxiliary commands | 7 candidates generated | not started | none |
-| support scripts/callbacks | 23 scripts found | not started | none |
-| GCC/LLVM matrix | pending | not started | none |
-| installation layout | command/script manifest found | not started | none |
+| upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
+| support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
+| behavior planning | primary skeletons cover all 531 public entries | not started | 23 reviewed primary plans; 508 primary reviews and 4 critical interaction domains open |
+| GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
+| installation layout | 321-entry installed tree pinned and reproduced across two no-cache builds | not started | environment evidence only |
 
-The inventory will be generated from upstream manuals, help output,
-configuration templates, installation manifests, and tests, then reviewed for
-surfaces that static extraction cannot find.
+The inventory is generated from pinned parser definitions, manuals, help output,
+configuration templates, installation manifests, and tests. Schema and semantic
+validation enforce exact parser counts and policies, unique entry identities,
+totals, source classification invariants, generated-token resolution counts,
+source file/line integrity, and byte-stable regeneration. Six focused Oracle
+probes pin unique and ambiguous abbreviation plus the argparse ordering
+boundary. Another 82 Oracle probes verify every committed generated-token and
+profile resolution, including the accepted abbreviation targets. Complete option behavior,
+configuration precedence, interactions, and converter shared-option
+reachability still require differential cases before M0 can close.
 
 The differential harness has passed six Oracle self-test cases and one
 intentional reverse failure. These results verify evidence collection only;

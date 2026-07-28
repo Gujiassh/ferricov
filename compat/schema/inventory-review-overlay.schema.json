@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/inventory-review-overlay-v1.json",
+  "title": "Ferricov inventory review overlay shard",
+  "description": "A bounded, content-hashed shard of inventory-owned review facts. Behavior groups, interactions, cases, implementation state, and product evidence belong to the behavior contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "domain",
+    "shard_index",
+    "shard_count",
+    "content_hash",
+    "reviewed_entries"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "upstream_release": { "const": "v2.5" },
+    "upstream_commit": { "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5" },
+    "domain": {
+      "enum": ["option_entries", "config_entries", "support_script_entries", "positional_argument_entries"]
+    },
+    "shard_index": { "type": "integer", "minimum": 0 },
+    "shard_count": { "type": "integer", "minimum": 1 },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "reviewed_entries": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/reviewed_entry" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "domain": { "const": "option_entries" } },
+        "required": ["domain"]
+      },
+      "then": {
+        "properties": {
+          "reviewed_entries": {
+            "items": { "required": ["aliases"] }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "reviewed_entries": {
+            "items": {
+              "not": {
+                "anyOf": [
+                  { "required": ["aliases"] },
+                  { "required": ["profile_parser_resolution"] }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "source_assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "line"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "parser_definition",
+            "parser_policy",
+            "command_implementation",
+            "help_definition",
+            "help_usage",
+            "manual_candidate",
+            "config_definition",
+            "support_script",
+            "install_manifest"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+        },
+        "line": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "profile_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acceptance"],
+      "properties": {
+        "acceptance": {
+          "enum": [
+            "accepted_exact",
+            "accepted_unique_abbreviation",
+            "rejected_ambiguous",
+            "rejected_unknown"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^command\\.[a-z0-9.-]+\\.option\\.[a-z0-9-]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "acceptance": {
+                "enum": ["accepted_exact", "accepted_unique_abbreviation"]
+              }
+            },
+            "required": ["acceptance"]
+          },
+          "then": { "required": ["target"] },
+          "else": { "not": { "required": ["target"] } }
+        }
+      ]
+    },
+    "profile_parser_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_profile", "posix_profile"],
+      "properties": {
+        "default_profile": { "$ref": "#/$defs/profile_resolution" },
+        "posix_profile": { "$ref": "#/$defs/profile_resolution" }
+      }
+    },
+    "reviewed_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "review_status",
+        "classification",
+        "applicability",
+        "dependencies",
+        "generated_id_assertion",
+        "generated_source_assertions",
+        "generated_canonical_name_assertion"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/non_empty_string" },
+        "review_status": {
+          "enum": ["reviewed", "unreviewed"]
+        },
+        "classification": {
+          "enum": ["public", "internal", "duplicate_alias", "generated_token", "not_applicable"]
+        },
+        "applicability": {
+          "enum": ["unreviewed", "all_supported_environments", "conditional", "not_applicable"]
+        },
+        "dependencies": { "$ref": "#/$defs/string_set" },
+        "generated_id_assertion": { "$ref": "#/$defs/non_empty_string" },
+        "generated_source_assertions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/source_assertion" }
+        },
+        "generated_canonical_name_assertion": { "$ref": "#/$defs/non_empty_string" },
+        "aliases": { "$ref": "#/$defs/string_set" },
+        "profile_parser_resolution": { "$ref": "#/$defs/profile_parser_resolution" },
+        "note": { "$ref": "#/$defs/non_empty_string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "review_status": { "const": "reviewed" } },
+            "required": ["review_status"]
+          },
+          "then": {
+            "properties": {
+              "applicability": { "not": { "const": "unreviewed" } }
+            }
+          },
+          "else": {
+            "properties": {
+              "applicability": { "const": "unreviewed" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "classification": { "const": "not_applicable" } },
+            "required": ["classification"]
+          },
+          "then": {
+            "properties": { "applicability": { "const": "not_applicable" } },
+            "required": ["note"]
+          },
+          "else": {
+            "properties": {
+              "applicability": { "not": { "const": "not_applicable" } }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "classification": { "const": "generated_token" } },
+            "required": ["classification"]
+          },
+          "then": { "required": ["profile_parser_resolution"] },
+          "else": { "not": { "required": ["profile_parser_resolution"] } }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": { "classification": { "const": "duplicate_alias" } },
+                "required": ["classification"]
+              },
+              {
+                "properties": { "applicability": { "const": "conditional" } },
+                "required": ["applicability"]
+              }
+            ]
+          },
+          "then": { "required": ["note"] }
+        }
+      ]
+    }
+  }
+}

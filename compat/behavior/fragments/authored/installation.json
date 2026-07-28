@@ -1,0 +1,737 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-ASSETS from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-ASSETS",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 401,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-REPORT-ASSET-001` | `bin/genhtml:8822-9829` | Report execution generates `gcov.css` and ruby, amber, emerald, snow, glass, and optional updown PNG files in report output. These are runtime report assets, not static install payload. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-ASSETS",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-BIN from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-BIN",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 394,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-BIN-001` | `Makefile:74-77`, `Makefile:134-143` | Ten mode-0755 commands: `lcov`, `genhtml`, `geninfo`, `genpng`, `gendesc`, `perl2lcov`, `py2lcov`, `xml2lcov`, `xml2lcovutil.py`, and `llvm2lcov`. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-BIN",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-CFG from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-CFG",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 400,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-CONFIG-001` | `Makefile:188-190` | `lcovrc` installed mode 0644 under `PREFIX/etc/lcovrc`. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-CFG",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-CONFIG from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-CONFIG",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 424,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-CONFIG-DISCOVERY-001` | `lib/lcovutil.pm:1448-1460` | Runtime checks `$HOME/.lcovrc`, then `$LCOV_HOME/etc/lcovrc`, and stops after the first readable file. The compiled prefix alone does not select the installed system file. | Fresh-install cases MUST cover empty HOME, `LCOV_HOME`, both files, and explicit config. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-CONFIG",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-DOC from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-DOC",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 397,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-MAN-001` | `Makefile:82-84`, `Makefile:163-174`, `docs/conf.py:83-153` | Ten generated man pages: nine section-1 pages, including `spreadsheet.py(1)`, plus `lcovrc(5)`. There is no `xml2lcov` man source. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 429,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-DOC-FAIL-001` | `Makefile:125-134`, `docs/Makefile:4-22`, `docs/conf.py:34-63` | Missing Sphinx or theme fails before payload install. Install also cleans source-tree example/test content. | Cases MUST verify pre-payload failure and source-tree effects in an isolated Oracle checkout. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-DOC",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-FIXUP from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-FIXUP",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 423,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-INTERP-001` | `Makefile:38-41`, `Makefile:134-161`, `bin/fix.pl:89-139` | Install does not pass `--fixinterp`; exact `/usr/bin/env` shebangs are also excluded from rewrite. The advertised Perl/Python override is therefore ineffective. | Differential evidence MUST pin the Oracle. Ferricov MUST document and review any intentional corrected behavior before claiming install parity. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-FIXUP",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-LIB from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-LIB",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 396,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-LIB-001` | `Makefile:81`, `Makefile:154-162` | `lcovutil.pm` installed mode 0644 under `lib/lcov`. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-LIB",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-LICENSE from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-LICENSE",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 432,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-LICENSE-001` | `Makefile:71-72`, `Makefile:134-190` | `COPYING` enters the source archive but not `make install` payload. | Ferricov distribution MUST include or provide complete corresponding source, GPL text, retained notices, and dependency license metadata. Upstream omission is not permission to omit them. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-LICENSE",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-PATHS from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-PATHS",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 393,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-PATHS-001` | `Makefile:43-64` | Default prefix `/usr/local`; config `etc`; commands `bin`; library `lib/lcov`; man pages `share/man`; shared root `share/lcov`; support scripts `share/lcov/support-scripts`. `DESTDIR+PREFIX` must be absolute. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-PATHS",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-SCRIPTS from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-SCRIPTS",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 395,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-SCRIPT-001` | `Makefile:78-80`, `Makefile:144-153` | Every dynamically enumerated file in `scripts/`, currently the 23 stable entries above, installed mode 0755, including `.pm` files. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-SCRIPTS",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-SHARE from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-SHARE",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 398,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-HTML-001` | `Makefile:175-179` | Entire generated Sphinx HTML tree under `share/lcov/html`. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 399,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-EXAMPLE-001` | `Makefile:181-187` | Current cleaned `example/` and `tests/` trees under `share/lcov`, including executable modes restored for test runners and script files. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-SHARE",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for INST-UNINSTALL from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.INST-UNINSTALL",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 425,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-UNINSTALL-001` | `Makefile:163-174`, `Makefile:194-223` | Uninstall enumerates `man/*` rather than installed build output, so man pages can remain. It recursively removes whole `lib/lcov` and `share/lcov` directories, including foreign sentinels. | Ferricov MUST NOT claim uninstall parity without an explicit reviewed safety decision and evidence. Tests MUST use isolated temporary roots. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "INST-UNINSTALL",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed installation layout, payload, discovery, fixup, uninstall, and license planning subjects.",
+  "fragment_id": "authored.installation",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": [
+    {
+      "behavior_groups": [],
+      "description": "Runtime report asset generation and its distinction from installation payload.",
+      "id": "INST-ASSETS",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 401,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-REPORT-ASSET-001` | `bin/genhtml:8822-9829` | Report execution generates `gcov.css` and ruby, amber, emerald, snow, glass, and optional updown PNG files in report output. These are runtime report assets, not static install payload. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed command manifest, paths, executable modes, and command identities.",
+      "id": "INST-BIN",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 394,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-BIN-001` | `Makefile:74-77`, `Makefile:134-143` | Ten mode-0755 commands: `lcov`, `genhtml`, `geninfo`, `genpng`, `gendesc`, `perl2lcov`, `py2lcov`, `xml2lcov`, `xml2lcovutil.py`, and `llvm2lcov`. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed lcovrc payload location, mode, and prefix behavior.",
+      "id": "INST-CFG",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 400,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-CONFIG-001` | `Makefile:188-190` | `lcovrc` installed mode 0644 under `PREFIX/etc/lcovrc`. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed configuration discovery order, readability, and explicit override behavior.",
+      "id": "INST-CONFIG",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 424,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-CONFIG-DISCOVERY-001` | `lib/lcovutil.pm:1448-1460` | Runtime checks `$HOME/.lcovrc`, then `$LCOV_HOME/etc/lcovrc`, and stops after the first readable file. The compiled prefix alone does not select the installed system file. | Fresh-install cases MUST cover empty HOME, `LCOV_HOME`, both files, and explicit config. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed documentation manifest and pre-payload documentation build failures.",
+      "id": "INST-DOC",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 397,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-MAN-001` | `Makefile:82-84`, `Makefile:163-174`, `docs/conf.py:83-153` | Ten generated man pages: nine section-1 pages, including `spreadsheet.py(1)`, plus `lcovrc(5)`. There is no `xml2lcov` man source. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 429,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-DOC-FAIL-001` | `Makefile:125-134`, `docs/Makefile:4-22`, `docs/conf.py:34-63` | Missing Sphinx or theme fails before payload install. Install also cleans source-tree example/test content. | Cases MUST verify pre-payload failure and source-tree effects in an isolated Oracle checkout. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed interpreter fixup behavior and observed override divergence.",
+      "id": "INST-FIXUP",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 423,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-INTERP-001` | `Makefile:38-41`, `Makefile:134-161`, `bin/fix.pl:89-139` | Install does not pass `--fixinterp`; exact `/usr/bin/env` shebangs are also excluded from rewrite. The advertised Perl/Python override is therefore ineffective. | Differential evidence MUST pin the Oracle. Ferricov MUST document and review any intentional corrected behavior before claiming install parity. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed lcovutil library path, content role, and file mode.",
+      "id": "INST-LIB",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 396,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-LIB-001` | `Makefile:81`, `Makefile:154-162` | `lcovutil.pm` installed mode 0644 under `lib/lcov`. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed and distributed license payload requirements and upstream omission.",
+      "id": "INST-LICENSE",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 432,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-LICENSE-001` | `Makefile:71-72`, `Makefile:134-190` | `COPYING` enters the source archive but not `make install` payload. | Ferricov distribution MUST include or provide complete corresponding source, GPL text, retained notices, and dependency license metadata. Upstream omission is not permission to omit them. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installation prefix, staging, destination path, and absolute-root behavior.",
+      "id": "INST-PATHS",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 393,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-PATHS-001` | `Makefile:43-64` | Default prefix `/usr/local`; config `etc`; commands `bin`; library `lib/lcov`; man pages `share/man`; shared root `share/lcov`; support scripts `share/lcov/support-scripts`. `DESTDIR+PREFIX` must be absolute. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed support-script manifest, dynamic enumeration, and executable modes.",
+      "id": "INST-SCRIPTS",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 395,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-SCRIPT-001` | `Makefile:78-80`, `Makefile:144-153` | Every dynamically enumerated file in `scripts/`, currently the 23 stable entries above, installed mode 0755, including `.pm` files. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Installed shared HTML, example, and upstream test payload trees.",
+      "id": "INST-SHARE",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 398,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-HTML-001` | `Makefile:175-179` | Entire generated Sphinx HTML tree under `share/lcov/html`. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 399,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-EXAMPLE-001` | `Makefile:181-187` | Current cleaned `example/` and `tests/` trees under `share/lcov`, including executable modes restored for test runners and script files. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Uninstall residue, recursive removal, foreign-file safety, and isolated-root behavior.",
+      "id": "INST-UNINSTALL",
+      "kind": "installation_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 425,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `INST-UNINSTALL-001` | `Makefile:163-174`, `Makefile:194-223` | Uninstall enumerates `man/*` rather than installed build output, so man pages can remain. It recursively removes whole `lib/lcov` and `share/lcov` directories, including foreign sentinels. | Ferricov MUST NOT claim uninstall parity without an explicit reviewed safety decision and evidence. Tests MUST use isolated temporary roots. |"
+        }
+      ]
+    }
+  ]
+}

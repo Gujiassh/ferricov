@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.gendesc.option.help; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.gendesc.option.help",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 72,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 18,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 51,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 6,
+          "path": "help/gendesc.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.gendesc.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Deterministic unreviewed public inventory skeleton bucket 4 for the command-gendesc responsibility domain.",
+  "fragment_id": "generated.inventory.command-gendesc.4",
+  "fragment_type": "generated",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

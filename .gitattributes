@@ -1,2 +1,5 @@
 # Help snapshots preserve upstream bytes, including trailing whitespace.
 compat/upstream/help/*.txt whitespace=-blank-at-eol,-blank-at-eof
+
+# Byte-boundary fixtures must not be decoded or line-ending normalized.
+compat/fixtures/m0-tracefiles/fixtures/bytes/* binary

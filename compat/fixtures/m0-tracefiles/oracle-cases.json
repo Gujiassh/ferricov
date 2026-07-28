@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization and ignored-error recovery cases.",
+  "execution": {
+    "working_directory": "/work",
+    "input_name": "input.info",
+    "locale": "C.UTF-8",
+    "network": "none"
+  },
+  "cases": [
+    {
+      "id": "current-all-records.summary",
+      "fixture": "fixtures/current-all-records.info",
+      "requirement": "M1-TF-040",
+      "description": "Default summary observation for current-all-records.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "legacy.summary",
+      "fixture": "fixtures/legacy.info",
+      "requirement": "M1-TF-010",
+      "description": "Default summary observation for legacy.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "permissive-prefix.summary",
+      "fixture": "fixtures/permissive-prefix.info",
+      "requirement": "M1-TF-004/006/008/012/015",
+      "description": "Default summary observation for permissive-prefix.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-tn.summary",
+      "fixture": "fixtures/malformed/tn.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-tn.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-sf.summary",
+      "fixture": "fixtures/malformed/sf.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-sf.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-kf.summary",
+      "fixture": "fixtures/malformed/kf.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-kf.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-ver.summary",
+      "fixture": "fixtures/malformed/ver.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-ver.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-da.summary",
+      "fixture": "fixtures/malformed/da.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-da.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-fn.summary",
+      "fixture": "fixtures/malformed/fn.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fn.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-fnda.summary",
+      "fixture": "fixtures/malformed/fnda.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fnda.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-fnl.summary",
+      "fixture": "fixtures/malformed/fnl.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fnl.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-fna.summary",
+      "fixture": "fixtures/malformed/fna.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fna.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-brda.summary",
+      "fixture": "fixtures/malformed/brda.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-brda.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-mcdc.summary",
+      "fixture": "fixtures/malformed/mcdc.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-mcdc.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-terminator.summary",
+      "fixture": "fixtures/malformed/end_of_record.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-terminator.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-unknown.summary",
+      "fixture": "fixtures/malformed/unknown.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-unknown.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "malformed-fnf-accepted.summary",
+      "fixture": "fixtures/malformed/fnf-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fnf-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-fnh-accepted.summary",
+      "fixture": "fixtures/malformed/fnh-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-fnh-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-brf-accepted.summary",
+      "fixture": "fixtures/malformed/brf-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-brf-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-brh-accepted.summary",
+      "fixture": "fixtures/malformed/brh-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-brh-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-mcf-accepted.summary",
+      "fixture": "fixtures/malformed/mcf-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-mcf-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-mch-accepted.summary",
+      "fixture": "fixtures/malformed/mch-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-mch-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-lf-accepted.summary",
+      "fixture": "fixtures/malformed/lf-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-lf-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-lh-accepted.summary",
+      "fixture": "fixtures/malformed/lh-accepted.info",
+      "requirement": "M1-TF-012/016",
+      "description": "Default summary observation for malformed-lh-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-crlf.summary",
+      "fixture": "fixtures/bytes/crlf.info",
+      "requirement": "M1-TF-001/061",
+      "description": "Default summary observation for bytes-crlf.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-no-final-newline.summary",
+      "fixture": "fixtures/bytes/no-final-newline.info",
+      "requirement": "M1-TF-001/061",
+      "description": "Default summary observation for bytes-no-final-newline.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-non-utf8.summary",
+      "fixture": "fixtures/bytes/non-utf8.info",
+      "requirement": "M1-TF-001/061",
+      "description": "Default summary observation for bytes-non-utf8.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-nul-accepted.summary",
+      "fixture": "fixtures/bytes/nul-accepted.info",
+      "requirement": "M1-TF-001/061",
+      "description": "Default summary observation for bytes-nul-accepted.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-boundary.summary",
+      "fixture": "fixtures/numeric-boundary.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-boundary.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-negative.summary",
+      "fixture": "fixtures/numeric/negative.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-negative.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-nonnumeric.summary",
+      "fixture": "fixtures/numeric/nonnumeric.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-nonnumeric.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-malformed-exponent.summary",
+      "fixture": "fixtures/numeric/malformed-exponent.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-malformed-exponent.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-excessive.summary",
+      "fixture": "fixtures/numeric/excessive.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-excessive.",
+      "argv": [
+        "lcov",
+        "--rc",
+        "excessive_count_threshold=100",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-zero-line.summary",
+      "fixture": "fixtures/numeric/zero-line.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-zero-line.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "scale-medium.summary",
+      "fixture": "generated/medium.info",
+      "requirement": "M1-TF-062",
+      "description": "Default summary observation for scale-medium.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "scale-large.summary",
+      "fixture": "generated/large.info",
+      "requirement": "M1-TF-062",
+      "description": "Default summary observation for scale-large.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "current-all-records.canonical",
+      "fixture": "fixtures/current-all-records.info",
+      "requirement": "M1-TF-040/042",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "legacy.canonical",
+      "fixture": "fixtures/legacy.info",
+      "requirement": "M1-TF-010/044",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "permissive-prefix.canonical",
+      "fixture": "fixtures/permissive-prefix.info",
+      "requirement": "M1-TF-004/006/008/012/015/044",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-crlf.canonical",
+      "fixture": "fixtures/bytes/crlf.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-no-final-newline.canonical",
+      "fixture": "fixtures/bytes/no-final-newline.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-non-utf8.canonical",
+      "fixture": "fixtures/bytes/non-utf8.info",
+      "requirement": "M1-TF-061",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "bytes-nul-accepted.canonical",
+      "fixture": "fixtures/bytes/nul-accepted.info",
+      "requirement": "M1-TF-061",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-boundary.canonical",
+      "fixture": "fixtures/numeric-boundary.info",
+      "requirement": "M1-TF-030",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-tn.ignore-format",
+      "fixture": "fixtures/malformed/tn.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-da.ignore-format",
+      "fixture": "fixtures/malformed/da.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "malformed-ver.ignore-format",
+      "fixture": "fixtures/malformed/ver.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-negative.ignore-negative",
+      "fixture": "fixtures/numeric/negative.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the negative category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-nonnumeric.ignore-format",
+      "fixture": "fixtures/numeric/nonnumeric.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-malformed-exponent.ignore-format",
+      "fixture": "fixtures/numeric/malformed-exponent.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-excessive.ignore-excessive",
+      "fixture": "fixtures/numeric/excessive.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the excessive category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--rc",
+        "excessive_count_threshold=100",
+        "--ignore-errors",
+        "excessive",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-zero-line.ignore-format",
+      "fixture": "fixtures/numeric/zero-line.info",
+      "requirement": "M1-TF-031/032/033/034/036",
+      "description": "Canonical output after ignoring the format category.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    }
+  ]
+}

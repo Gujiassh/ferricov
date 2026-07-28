@@ -1,0 +1,718 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.compat; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.compat",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 225,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 49,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 371,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 375,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 65,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.compat",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.compat-libtool; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.compat-libtool",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 208,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 38,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 406,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 430,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 435,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 53,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.compat-libtool",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.directory; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.directory",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 196,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 20,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 64,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 306,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 498,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 692,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 702,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1471,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 44,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.follow; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.follow",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 206,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 36,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 66,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 707,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 892,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 45,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.follow",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.function-coverage; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.function-coverage",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 50,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1252,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.function-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.help; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.help",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 153,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 341,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 931,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.ignore-errors; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.ignore-errors",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 41,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 952,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 961,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 971,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1030,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 16,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1270,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.ignore-errors",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.keep-going; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.keep-going",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 160,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1172,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 18,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1273,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.keep-going",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.no-function-coverage; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.no-function-coverage",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 50,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1255,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.no-function-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.rc; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.rc",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 172,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 330,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 336,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1369,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 15,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unreviewed acceptance skeleton for command.lcov.option.substitute; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.lcov.option.substitute",
+      "interaction_groups": [],
+      "origin": "generated_skeleton",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 177,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 544,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 635,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 655,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 807,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 68,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1282,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.substitute",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Deterministic unreviewed public inventory skeleton bucket 4 for the command-lcov responsibility domain.",
+  "fragment_id": "generated.inventory.command-lcov.4",
+  "fragment_type": "generated",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 28,
+  "shard_count": 31,
+  "content_hash": "sha256:d69124531044b7738b44810331559cb18301ea993d942c33099bba63664e7387",
+  "reviewed_entries": [
+    {
+      "id": "command.perl2lcov.option.toolname",
+      "review_status": "reviewed",
+      "classification": "internal",
+      "generated_id_assertion": "command.perl2lcov.option.toolname",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1250
+        }
+      ],
+      "generated_canonical_name_assertion": "--toolname",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.unreachable-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.unreachable-script",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1266
+        }
+      ],
+      "generated_canonical_name_assertion": "--unreachable-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1245
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.version",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1248
+        }
+      ],
+      "generated_canonical_name_assertion": "--version",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/perl2lcov.rst",
+          "line": 33
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1238
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.py2lcov.option.append",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.py2lcov.option.append",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 130
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 134
+        }
+      ],
+      "generated_canonical_name_assertion": "--append",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.baseline-file",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.py2lcov.option.baseline-file",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 150
+        }
+      ],
+      "generated_canonical_name_assertion": "--baseline-file",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.branch",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.py2lcov.option.branch",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 130
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 134
+        }
+      ],
+      "generated_canonical_name_assertion": "--branch",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 25
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 97
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 140
+        }
+      ],
+      "generated_canonical_name_assertion": "--checksum",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.cmd",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.cmd",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 29
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 45
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 109
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 150
+        }
+      ],
+      "generated_canonical_name_assertion": "--cmd",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.data-file",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.py2lcov.option.data-file",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 129
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 130
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 133
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 157
+        }
+      ],
+      "generated_canonical_name_assertion": "--data-file",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.exclude",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.exclude",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 88
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 134
+        }
+      ],
+      "generated_canonical_name_assertion": "--exclude",
+      "aliases": [
+        "-e"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.filter",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.py2lcov.option.filter",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 141
+        }
+      ],
+      "generated_canonical_name_assertion": "--filter",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

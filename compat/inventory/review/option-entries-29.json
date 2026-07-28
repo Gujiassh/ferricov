@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 29,
+  "shard_count": 31,
+  "content_hash": "sha256:9cd96acc833ec5890e83d6c95d59896e020231115be6b5bfbee9235c4d21ace0",
+  "reviewed_entries": [
+    {
+      "id": "command.py2lcov.option.help",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.help",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 11
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 124
+        }
+      ],
+      "generated_canonical_name_assertion": "--help",
+      "aliases": [
+        "-h"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.input",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.input",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 12
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 79
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 128
+        }
+      ],
+      "generated_canonical_name_assertion": "--input",
+      "aliases": [
+        "-i"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.keep-going",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.keep-going",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 28
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 106
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 148
+        }
+      ],
+      "generated_canonical_name_assertion": "--keep-going",
+      "aliases": [
+        "-k"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.no-functions",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.no-functions",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 26
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 30
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 39
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 40
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 100
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 143
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-functions",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.output",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.output",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 15
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 21
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 82
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 130
+        }
+      ],
+      "generated_canonical_name_assertion": "--output",
+      "aliases": [
+        "-o"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.tabwidth",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.tabwidth",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 27
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 103
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 146
+        }
+      ],
+      "generated_canonical_name_assertion": "--tabwidth",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.test-name",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.test-name",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 17
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 21
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 85
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 132
+        }
+      ],
+      "generated_canonical_name_assertion": "--test-name",
+      "aliases": [
+        "--testname",
+        "-t"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 22
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 91
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 136
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.py2lcov.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/py2lcov.txt",
+          "line": 23
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 94
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/py2lcov.rst",
+          "line": 160
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 138
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 22
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 79
+        }
+      ],
+      "generated_canonical_name_assertion": "--checksum",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.exclude",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.exclude",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 17
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 73
+        }
+      ],
+      "generated_canonical_name_assertion": "--exclude",
+      "aliases": [
+        "-e"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.help",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.help",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 10
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 65
+        }
+      ],
+      "generated_canonical_name_assertion": "--help",
+      "aliases": [
+        "-h"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.option.keep-going",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.option.keep-going",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/xml2lcov.txt",
+          "line": 23
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 82
+        }
+      ],
+      "generated_canonical_name_assertion": "--keep-going",
+      "aliases": [
+        "-k"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

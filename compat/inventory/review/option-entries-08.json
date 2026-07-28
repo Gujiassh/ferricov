@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 8,
+  "shard_count": 31,
+  "content_hash": "sha256:7179783b7156b2e18bcad855413890d21a542c3dd46d301fbfa61bcf9f51a62f",
+  "reviewed_entries": [
+    {
+      "id": "command.genhtml.option.toolname",
+      "review_status": "reviewed",
+      "classification": "internal",
+      "generated_id_assertion": "command.genhtml.option.toolname",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1250
+        }
+      ],
+      "generated_canonical_name_assertion": "--toolname",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.unreachable-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.unreachable-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 65
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 203
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 327
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 884
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 889
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1266
+        }
+      ],
+      "generated_canonical_name_assertion": "--unreachable-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.validate",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.validate",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 522
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7273
+        }
+      ],
+      "generated_canonical_name_assertion": "--validate",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 9
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 19
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 511
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1245
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.version",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 8
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 17
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 508
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1248
+        }
+      ],
+      "generated_canonical_name_assertion": "--version",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genhtml.txt",
+          "line": 28
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 61
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 204
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 464
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 470
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 472
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 609
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 817
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 898
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1049
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1417
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1495
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1673
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1676
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1682
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genhtml.rst",
+          "line": 1685
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1238
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.add-tracefile",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.geninfo.option.add-tracefile",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 694
+        }
+      ],
+      "generated_canonical_name_assertion": "--add-tracefile",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.all",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.all",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 24
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 24
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 547
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 551
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 558
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 256
+        }
+      ],
+      "generated_canonical_name_assertion": "--all",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.annotate-script",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.geninfo.option.annotate-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 585
+        }
+      ],
+      "generated_canonical_name_assertion": "--annotate-script",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "rejected_unknown"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.base-directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.base-directory",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 28
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 28
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 190
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 334
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 250
+        }
+      ],
+      "generated_canonical_name_assertion": "--base-directory",
+      "aliases": [
+        "-b"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.branch-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.branch-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 32
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 30
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 84
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 239
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1253
+        }
+      ],
+      "generated_canonical_name_assertion": "--branch-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.build-directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.build-directory",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 29
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 29
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 205
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 214
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 490
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 588
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1262
+        }
+      ],
+      "generated_canonical_name_assertion": "--build-directory",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.call-from-lcov",
+      "review_status": "reviewed",
+      "classification": "internal",
+      "generated_id_assertion": "command.geninfo.option.call-from-lcov",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 248
+        }
+      ],
+      "generated_canonical_name_assertion": "--call-from-lcov",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

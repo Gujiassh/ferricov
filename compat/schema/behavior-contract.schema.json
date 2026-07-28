@@ -1,0 +1,998 @@
+{
+  "$comment": "Ownership is one-way: the reviewed inventory supplies target identity, classification, review, applicability, runtime-dependency, and source facts; the behavior contract owns behavior groups, interaction groups, planned cases, and product evidence. Inventory relationship arrays are not behavior-contract inputs.",
+  "$defs": {
+    "applicability": {
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "$ref": "#/$defs/string_set"
+        },
+        "status": {
+          "enum": [
+            "all_supported_environments",
+            "conditional",
+            "not_applicable",
+            "unreviewed"
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "conditions"
+      ],
+      "type": "object"
+    },
+    "behavior_group": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/lower_id"
+        },
+        "registry_source": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/lower_id"
+            },
+            "path": {
+              "const": "compat/inventory/tests/upstream-test-map.json"
+            }
+          },
+          "required": [
+            "path",
+            "id"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "registry_source"
+      ],
+      "type": "object"
+    },
+    "case_class_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance": {
+          "$ref": "#/$defs/count"
+        },
+        "data": {
+          "$ref": "#/$defs/count"
+        },
+        "equivalence": {
+          "$ref": "#/$defs/count"
+        },
+        "failure": {
+          "$ref": "#/$defs/count"
+        },
+        "filesystem": {
+          "$ref": "#/$defs/count"
+        },
+        "interaction": {
+          "$ref": "#/$defs/count"
+        },
+        "rejection": {
+          "$ref": "#/$defs/count"
+        },
+        "scale": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "required": [
+        "acceptance",
+        "data",
+        "equivalence",
+        "failure",
+        "filesystem",
+        "interaction",
+        "rejection",
+        "scale"
+      ],
+      "type": "object"
+    },
+    "case_evidence_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "fail": {
+          "$ref": "#/$defs/count"
+        },
+        "none": {
+          "$ref": "#/$defs/count"
+        },
+        "pass": {
+          "$ref": "#/$defs/count"
+        },
+        "planned": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "required": [
+        "fail",
+        "none",
+        "pass",
+        "planned"
+      ],
+      "type": "object"
+    },
+    "case_group": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "generated_skeleton"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "behavior_groups": {
+                "maxItems": 0
+              },
+              "case_class": {
+                "const": "acceptance"
+              },
+              "evidence": {
+                "maxItems": 0
+              },
+              "evidence_status": {
+                "const": "none"
+              },
+              "interaction_groups": {
+                "maxItems": 0
+              },
+              "review_status": {
+                "const": "unreviewed"
+              },
+              "suite_cases": {
+                "maxItems": 0
+              },
+              "upstream_tests": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "review_status": {
+                "const": "reviewed"
+              }
+            },
+            "required": [
+              "review_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "applicability": {
+                "properties": {
+                  "status": {
+                    "enum": [
+                      "all_supported_environments",
+                      "conditional",
+                      "not_applicable"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "review_status": {
+                "const": "unreviewed"
+              }
+            },
+            "required": [
+              "review_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_status": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_status": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "evidence_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "maxItems": 0
+              },
+              "suite_cases": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_status": {
+                "const": "planned"
+              }
+            },
+            "required": [
+              "evidence_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "maxItems": 0
+              },
+              "suite_cases": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_status": {
+                "enum": [
+                  "pass",
+                  "fail"
+                ]
+              }
+            },
+            "required": [
+              "evidence_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "minItems": 1
+              },
+              "suite_cases": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "applicability": {
+          "$ref": "#/$defs/applicability"
+        },
+        "behavior_groups": {
+          "$ref": "#/$defs/lower_id_set"
+        },
+        "case_class": {
+          "enum": [
+            "acceptance",
+            "data",
+            "equivalence",
+            "failure",
+            "filesystem",
+            "interaction",
+            "rejection",
+            "scale"
+          ]
+        },
+        "comparison_dimensions": {
+          "items": {
+            "enum": [
+              "exit",
+              "filesystem",
+              "stderr",
+              "stdout"
+            ]
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "description": {
+          "minLength": 60,
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "evidence_status": {
+          "enum": [
+            "fail",
+            "none",
+            "pass",
+            "planned"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "interaction_groups": {
+          "$ref": "#/$defs/lower_id_set"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "review_status": {
+          "$ref": "#/$defs/review_status"
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        },
+        "suite_cases": {
+          "items": {
+            "$ref": "#/$defs/suite_case"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "surface": {
+          "enum": [
+            "callback",
+            "capture",
+            "cli",
+            "config",
+            "converter",
+            "installation",
+            "report",
+            "tracefile"
+          ]
+        },
+        "targets": {
+          "contains": {
+            "properties": {
+              "role": {
+                "const": "primary"
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "items": {
+            "$ref": "#/$defs/target"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "upstream_tests": {
+          "items": {
+            "pattern": "^tests/(?!.*(?:^/)\\.\\.(?:/|$))(?!.*//)[A-Za-z0-9._/-]+$",
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "case_class",
+        "surface",
+        "description",
+        "targets",
+        "behavior_groups",
+        "interaction_groups",
+        "comparison_dimensions",
+        "applicability",
+        "review_status",
+        "evidence_status",
+        "source_references",
+        "upstream_tests",
+        "suite_cases",
+        "evidence"
+      ],
+      "type": "object"
+    },
+    "count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "evidence": {
+      "$comment": "Pass/fail evidence is qualified by the behavior validator, which binds suite/case and execution identity, rejects identical reference/candidate executable identities, and verifies retained artifact paths, byte counts, SHA-256 digests, comparison evidence, normalizers, and outcomes.",
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/lower_id"
+        },
+        "outcome": {
+          "enum": [
+            "fail",
+            "pass"
+          ]
+        },
+        "result_path": {
+          "pattern": "^compat/results/(?!.*(?:^/)\\.\\.(?:/|$))(?!.*//)[A-Za-z0-9._/-]+\\.json$",
+          "type": "string"
+        },
+        "suite_id": {
+          "$ref": "#/$defs/lower_id"
+        }
+      },
+      "required": [
+        "suite_id",
+        "case_id",
+        "result_path",
+        "outcome"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$",
+      "type": "string"
+    },
+    "id_set": {
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "inputs": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_contract": {
+          "const": "specs/001-full-lcov-compatibility/callback-installation-contract.md"
+        },
+        "fragment_schema": {
+          "const": "compat/schema/behavior-contract-fragment.schema.json"
+        },
+        "fragments": {
+          "const": "compat/behavior/fragments"
+        },
+        "inventory": {
+          "const": "compat/inventory/v2.5.json"
+        },
+        "suites": {
+          "const": "compat/cases"
+        },
+        "test_map": {
+          "const": "compat/inventory/tests/upstream-test-map.json"
+        }
+      },
+      "required": [
+        "audit_contract",
+        "fragment_schema",
+        "fragments",
+        "inventory",
+        "suites",
+        "test_map"
+      ],
+      "type": "object"
+    },
+    "interaction_group": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "generated_skeleton"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "behavior_groups": {
+                "maxItems": 0
+              },
+              "members": {
+                "maxItems": 0
+              },
+              "planned_cases": {
+                "maxItems": 0
+              },
+              "review_status": {
+                "const": "unreviewed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "review_status": {
+                "const": "reviewed"
+              }
+            },
+            "required": [
+              "review_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "behavior_groups": {
+                "minItems": 1
+              },
+              "members": {
+                "minItems": 2
+              },
+              "origin": {
+                "const": "manually_curated"
+              },
+              "planned_cases": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "behavior_groups": {
+          "$ref": "#/$defs/lower_id_set"
+        },
+        "critical": {
+          "type": "boolean"
+        },
+        "description": {
+          "minLength": 60,
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "callback",
+            "error_control",
+            "option_config",
+            "option_option"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/lower_id"
+        },
+        "members": {
+          "items": {
+            "$ref": "#/$defs/interaction_member"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "origin": {
+          "enum": [
+            "generated_skeleton",
+            "manually_curated"
+          ]
+        },
+        "planned_cases": {
+          "$ref": "#/$defs/id_set"
+        },
+        "review_status": {
+          "$ref": "#/$defs/review_status"
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "domain",
+        "critical",
+        "description",
+        "review_status",
+        "members",
+        "behavior_groups",
+        "planned_cases",
+        "source_references"
+      ],
+      "type": "object"
+    },
+    "interaction_member": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "lower_id": {
+      "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+      "type": "string"
+    },
+    "lower_id_set": {
+      "items": {
+        "$ref": "#/$defs/lower_id"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "origin": {
+      "enum": [
+        "generated_skeleton",
+        "manually_curated",
+        "reviewed_import"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "reviewed",
+        "unreviewed"
+      ]
+    },
+    "review_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "reviewed": {
+          "$ref": "#/$defs/count"
+        },
+        "unreviewed": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "required": [
+        "reviewed",
+        "unreviewed"
+      ],
+      "type": "object"
+    },
+    "source_reference": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "enum": [
+                "command_implementation",
+                "config_definition",
+                "help_definition",
+                "help_usage",
+                "install_manifest",
+                "manual_candidate",
+                "parser_definition",
+                "parser_policy",
+                "support_script"
+              ]
+            },
+            "line": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "path": {
+              "pattern": "^(?!/)(?!.*(?:^/)\\.\\.(?:/|$))(?!.*//)[A-Za-z0-9._/-]+$",
+              "type": "string"
+            },
+            "repository": {
+              "const": "lcov-v2.5"
+            },
+            "text": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "kind",
+            "path",
+            "line"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "enum": [
+                "audit_contract",
+                "plan_requirement"
+              ]
+            },
+            "line": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "path": {
+              "pattern": "^(?!/)(?!.*(?:^/)\\.\\.(?:/|$))(?!.*//)[A-Za-z0-9._/-]+$",
+              "type": "string"
+            },
+            "repository": {
+              "const": "ferricov"
+            },
+            "text": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "repository",
+            "kind",
+            "path",
+            "line",
+            "text"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "source_references": {
+      "items": {
+        "$ref": "#/$defs/source_reference"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "string_set": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior_groups": {
+          "$ref": "#/$defs/lower_id_set"
+        },
+        "description": {
+          "minLength": 40,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "callback_protocol",
+            "config_rule",
+            "environment_rule",
+            "error_class",
+            "installation_behavior",
+            "perl2lcov_behavior"
+          ]
+        },
+        "origin": {
+          "enum": [
+            "manually_curated",
+            "reviewed_import"
+          ]
+        },
+        "review_status": {
+          "$ref": "#/$defs/review_status"
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "kind",
+        "description",
+        "review_status",
+        "behavior_groups",
+        "source_references"
+      ],
+      "type": "object"
+    },
+    "suite_case": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/lower_id"
+        },
+        "suite_id": {
+          "$ref": "#/$defs/lower_id"
+        }
+      },
+      "required": [
+        "suite_id",
+        "case_id"
+      ],
+      "type": "object"
+    },
+    "target": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "context",
+            "primary"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "role"
+      ],
+      "type": "object"
+    },
+    "totals": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior_groups": {
+          "$ref": "#/$defs/count"
+        },
+        "case_class": {
+          "$ref": "#/$defs/case_class_totals"
+        },
+        "case_evidence_status": {
+          "$ref": "#/$defs/case_evidence_totals"
+        },
+        "case_groups": {
+          "$ref": "#/$defs/count"
+        },
+        "case_review_status": {
+          "$ref": "#/$defs/review_totals"
+        },
+        "interaction_groups": {
+          "$ref": "#/$defs/count"
+        },
+        "interaction_review_status": {
+          "$ref": "#/$defs/review_totals"
+        },
+        "primary_case_coverage": {
+          "$ref": "#/$defs/count"
+        },
+        "public_inventory_entries": {
+          "$ref": "#/$defs/count"
+        },
+        "required_interaction_domains": {
+          "$ref": "#/$defs/count"
+        },
+        "reviewed_interaction_domains": {
+          "$ref": "#/$defs/count"
+        },
+        "reviewed_primary_coverage": {
+          "$ref": "#/$defs/count"
+        },
+        "subjects": {
+          "$ref": "#/$defs/count"
+        },
+        "uncovered_public_entries": {
+          "$ref": "#/$defs/count"
+        }
+      },
+      "required": [
+        "subjects",
+        "behavior_groups",
+        "interaction_groups",
+        "case_groups",
+        "public_inventory_entries",
+        "primary_case_coverage",
+        "reviewed_primary_coverage",
+        "uncovered_public_entries",
+        "required_interaction_domains",
+        "reviewed_interaction_domains",
+        "case_class",
+        "case_review_status",
+        "case_evidence_status",
+        "interaction_review_status"
+      ],
+      "type": "object"
+    },
+    "upstream": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+        },
+        "release": {
+          "const": "v2.5"
+        }
+      },
+      "required": [
+        "release",
+        "commit"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://ferricov.dev/schema/behavior-contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "../schema/behavior-contract.schema.json"
+    },
+    "behavior_groups": {
+      "items": {
+        "$ref": "#/$defs/behavior_group"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "case_groups": {
+      "items": {
+        "$ref": "#/$defs/case_group"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "inputs": {
+      "$ref": "#/$defs/inputs"
+    },
+    "interaction_groups": {
+      "items": {
+        "$ref": "#/$defs/interaction_group"
+      },
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "required_interaction_domains": {
+      "const": [
+        "callback",
+        "error_control",
+        "option_config",
+        "option_option"
+      ]
+    },
+    "review_policy": {
+      "minLength": 80,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "subjects": {
+      "items": {
+        "$ref": "#/$defs/subject"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "totals": {
+      "$ref": "#/$defs/totals"
+    },
+    "upstream": {
+      "$ref": "#/$defs/upstream"
+    }
+  },
+  "required": [
+    "$schema",
+    "schema_version",
+    "upstream",
+    "inputs",
+    "review_policy",
+    "required_interaction_domains",
+    "subjects",
+    "behavior_groups",
+    "interaction_groups",
+    "case_groups",
+    "totals"
+  ],
+  "title": "Ferricov LCOV v2.5 behavior planning contract",
+  "type": "object"
+}

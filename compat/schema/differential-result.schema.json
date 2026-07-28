@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": [
     "schema_version",
+    "suite_id",
     "case_id",
     "evidence_scope",
     "upstream_commit",
@@ -14,6 +15,7 @@
     "arguments",
     "fixture",
     "environment",
+    "effective_environment_variables",
     "implementation_identities",
     "runs",
     "comparisons",
@@ -22,6 +24,10 @@
   "properties": {
     "schema_version": {
       "const": 1
+    },
+    "suite_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
     },
     "case_id": {
       "type": "string",
@@ -61,6 +67,16 @@
     },
     "environment": {
       "$ref": "#/$defs/environment"
+    },
+    "effective_environment_variables": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "not": { "pattern": "\\u0000" }
+      }
     },
     "implementation_identities": {
       "type": "object",
@@ -144,16 +160,42 @@
           "type": ["string", "null"],
           "pattern": "^sha256:[0-9a-f]{64}$"
         }
-      }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "kind": { "const": "local_executable" },
+            "container_image_sha256": { "const": null }
+          }
+        },
+        {
+          "properties": {
+            "kind": { "const": "docker_image" },
+            "container_image_sha256": {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            }
+          }
+        }
+      ]
     },
     "run": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "exit_code",
+        "signal",
         "stdout_artifact",
         "stderr_artifact",
         "file_tree_artifact",
+        "stdout_sha256",
+        "stderr_sha256",
+        "file_tree_sha256",
+        "stdout_bytes",
+        "stderr_bytes",
+        "file_tree_bytes",
+        "timeout",
+        "cleanup",
         "metrics"
       ],
       "properties": {
@@ -164,23 +206,132 @@
           "type": ["integer", "null"]
         },
         "stdout_artifact": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^(reference|candidate)/stdout\\.bin$"
         },
         "stderr_artifact": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^(reference|candidate)/stderr\\.bin$"
         },
         "file_tree_artifact": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^(reference|candidate)/file-tree\\.json$"
+        },
+        "stdout_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stderr_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "file_tree_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stdout_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stderr_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file_tree_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeout": {
+          "$ref": "#/$defs/timeout_evidence"
+        },
+        "cleanup": {
+          "$ref": "#/$defs/cleanup_evidence"
         },
         "metrics": {
           "$ref": "#/$defs/metrics"
         }
       }
     },
+    "timeout_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "applied_seconds",
+        "expired",
+        "termination_signal_sent",
+        "escalation_signal_sent"
+      ],
+      "properties": {
+        "applied_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "expired": {
+          "type": "boolean"
+        },
+        "termination_signal_sent": {
+          "type": ["integer", "null"]
+        },
+        "escalation_signal_sent": {
+          "type": ["integer", "null"]
+        }
+      }
+    },
+    "cleanup_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "direct_child_reaped",
+        "process_group_empty",
+        "container_absent"
+      ],
+      "properties": {
+        "direct_child_reaped": {
+          "type": "boolean"
+        },
+        "process_group_empty": {
+          "type": ["boolean", "null"]
+        },
+        "container_absent": {
+          "type": ["boolean", "null"]
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "direct_child_reaped": { "const": true }
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "process_group_empty": { "const": true },
+                "container_absent": { "const": null }
+              }
+            },
+            {
+              "properties": {
+                "process_group_empty": { "const": null },
+                "container_absent": { "const": true }
+              }
+            }
+          ]
+        }
+      ]
+    },
     "metrics": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["wall_seconds", "user_cpu_seconds", "system_cpu_seconds", "peak_rss_bytes"],
+      "required": [
+        "wall_seconds",
+        "user_cpu_seconds",
+        "system_cpu_seconds",
+        "peak_rss_bytes",
+        "output_bytes",
+        "output_files"
+      ],
       "properties": {
         "wall_seconds": {
           "type": "number",
@@ -211,7 +362,14 @@
     "comparison": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["dimension", "status", "evidence"],
+      "required": [
+        "dimension",
+        "status",
+        "normalizer",
+        "evidence",
+        "artifacts",
+        "details"
+      ],
       "properties": {
         "dimension": {
           "enum": [
@@ -239,8 +397,33 @@
             "minLength": 1
           }
         },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact_reference"
+          }
+        },
         "details": {
           "type": ["string", "null"]
+        }
+      }
+    },
+    "artifact_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(reference|candidate|normalized)/[A-Za-z0-9._-]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
         }
       }
     }

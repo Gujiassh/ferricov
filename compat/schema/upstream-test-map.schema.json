@@ -1,0 +1,491 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/upstream-test-map.schema.json",
+  "title": "Ferricov LCOV v2.5 upstream test map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upstream",
+    "review_policy",
+    "owners",
+    "behavior_groups",
+    "totals",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release",
+        "commit",
+        "tests_tree",
+        "test_root"
+      ],
+      "properties": {
+        "release": {
+          "const": "v2.5"
+        },
+        "commit": {
+          "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+        },
+        "tests_tree": {
+          "$ref": "#/$defs/gitObjectId"
+        },
+        "test_root": {
+          "const": "tests"
+        }
+      }
+    },
+    "review_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owners": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/owner"
+      }
+    },
+    "behavior_groups": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/behaviorGroup"
+      }
+    },
+    "totals": {
+      "$ref": "#/$defs/totals"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 205,
+      "maxItems": 205,
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "gitObjectId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 205
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(command|support-script):[^:]+$"
+        },
+        "kind": {
+          "enum": [
+            "command",
+            "support_script"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "behaviorGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_source_files",
+        "mapped_source_files",
+        "unmapped_source_files",
+        "classification",
+        "review_status",
+        "evidence_scope",
+        "upstream_execution",
+        "owner_coverage"
+      ],
+      "properties": {
+        "expected_source_files": {
+          "const": 205
+        },
+        "mapped_source_files": {
+          "const": 205
+        },
+        "unmapped_source_files": {
+          "const": 0
+        },
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fixture",
+            "internal_test_infrastructure",
+            "public_behavior"
+          ],
+          "properties": {
+            "fixture": {
+              "$ref": "#/$defs/count"
+            },
+            "internal_test_infrastructure": {
+              "$ref": "#/$defs/count"
+            },
+            "public_behavior": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        },
+        "review_status": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reviewed",
+            "unreviewed"
+          ],
+          "properties": {
+            "reviewed": {
+              "const": 205
+            },
+            "unreviewed": {
+              "const": 0
+            }
+          }
+        },
+        "evidence_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "direct_public_behavior",
+            "fixture_support",
+            "indirect_public_behavior",
+            "internal_only"
+          ],
+          "properties": {
+            "direct_public_behavior": {
+              "$ref": "#/$defs/count"
+            },
+            "fixture_support": {
+              "$ref": "#/$defs/count"
+            },
+            "indirect_public_behavior": {
+              "$ref": "#/$defs/count"
+            },
+            "internal_only": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        },
+        "upstream_execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "active",
+            "disabled",
+            "not_applicable",
+            "supporting"
+          ],
+          "properties": {
+            "active": {
+              "$ref": "#/$defs/count"
+            },
+            "disabled": {
+              "$ref": "#/$defs/count"
+            },
+            "not_applicable": {
+              "$ref": "#/$defs/count"
+            },
+            "supporting": {
+              "$ref": "#/$defs/count"
+            }
+          }
+        },
+        "owner_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assigned",
+            "not_applicable_internal",
+            "unresolved"
+          ],
+          "properties": {
+            "assigned": {
+              "$ref": "#/$defs/count"
+            },
+            "not_applicable_internal": {
+              "$ref": "#/$defs/count"
+            },
+            "unresolved": {
+              "const": 0
+            }
+          }
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "sha256",
+        "classification",
+        "review_status",
+        "evidence_scope",
+        "upstream_execution",
+        "owners",
+        "behavior_groups",
+        "rationale"
+      ],
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^tests/(?!\\.{1,2}(?:/|$))(?!.*//)(?!.*(?:/)\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "classification": {
+          "enum": [
+            "public_behavior",
+            "internal_test_infrastructure",
+            "fixture"
+          ]
+        },
+        "review_status": {
+          "enum": [
+            "reviewed",
+            "unreviewed"
+          ]
+        },
+        "evidence_scope": {
+          "enum": [
+            "direct_public_behavior",
+            "indirect_public_behavior",
+            "internal_only",
+            "fixture_support"
+          ]
+        },
+        "upstream_execution": {
+          "enum": [
+            "active",
+            "disabled",
+            "supporting",
+            "not_applicable"
+          ]
+        },
+        "owners": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(command|support-script):[^:]+$"
+          }
+        },
+        "behavior_groups": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$"
+          }
+        },
+        "consumer_evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^tests/(?!\\.{1,2}(?:/|$))(?!.*//)(?!.*(?:/)\\.{1,2}(?:/|$))[^/:]+(?:/[^/:]+)*:[1-9][0-9]*$"
+          }
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 40
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "public_behavior"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_scope": {
+                "enum": [
+                  "direct_public_behavior",
+                  "indirect_public_behavior"
+                ]
+              },
+              "upstream_execution": {
+                "enum": [
+                  "active",
+                  "disabled"
+                ]
+              },
+              "owners": {
+                "minItems": 1
+              },
+              "consumer_evidence": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "fixture"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_scope": {
+                "const": "fixture_support"
+              },
+              "upstream_execution": {
+                "const": "supporting"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "fixture"
+              },
+              "review_status": {
+                "const": "reviewed"
+              }
+            },
+            "required": [
+              "classification",
+              "review_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "consumer_evidence"
+            ],
+            "properties": {
+              "owners": {
+                "minItems": 1
+              },
+              "consumer_evidence": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "fixture"
+              },
+              "review_status": {
+                "const": "unreviewed"
+              }
+            },
+            "required": [
+              "classification",
+              "review_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "consumer_evidence"
+            ],
+            "properties": {
+              "owners": {
+                "maxItems": 0
+              },
+              "consumer_evidence": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "internal_test_infrastructure"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_scope": {
+                "const": "internal_only"
+              },
+              "upstream_execution": {
+                "const": "not_applicable"
+              },
+              "owners": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

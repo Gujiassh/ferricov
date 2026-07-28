@@ -1,0 +1,3870 @@
+{
+  "behavior_groups": [
+    {
+      "description": "LLVM coverage JSON conversion, filtering, counters, and CLI failures.",
+      "id": "converter.llvm"
+    },
+    {
+      "description": "Devel::Cover conversion, exclusions, checksums, and CLI failures.",
+      "id": "converter.perl"
+    },
+    {
+      "description": "Coverage.py conversion, legacy input, exclusions, checksums, and CLI failures.",
+      "id": "converter.python"
+    },
+    {
+      "description": "Cobertura XML conversion, version callbacks, aggregation, and CLI failures.",
+      "id": "converter.xml"
+    },
+    {
+      "description": "GCC and LLVM MC/DC capture, conversion, filtering, merge, and report behavior.",
+      "id": "coverage.mcdc"
+    },
+    {
+      "description": "HTML reports for synthetic zero, partial, target, and full coverage rates.",
+      "id": "genhtml.coverage-rates"
+    },
+    {
+      "description": "C++ demangler command and argument behavior during report generation.",
+      "id": "genhtml.demangling"
+    },
+    {
+      "description": "Shared CLI diagnostics, config inclusion, ignore handling, and callback failures.",
+      "id": "genhtml.diagnostics-and-config"
+    },
+    {
+      "description": "Exception coverage and baseline/current differential report behavior.",
+      "id": "genhtml.exception-differential"
+    },
+    {
+      "description": "Function extents, aliases, versions, and baseline/current categorization.",
+      "id": "genhtml.function-differential"
+    },
+    {
+      "description": "Lambda function extents and display in HTML reports.",
+      "id": "genhtml.lambda-display"
+    },
+    {
+      "description": "Case-insensitive source paths, annotations, versions, and merge behavior.",
+      "id": "genhtml.path-case"
+    },
+    {
+      "description": "Relative source paths and report output path resolution.",
+      "id": "genhtml.relative-paths"
+    },
+    {
+      "description": "General HTML layout, callbacks, navigation, thresholds, and report options.",
+      "id": "genhtml.report-options"
+    },
+    {
+      "description": "Synthesis and rejection of missing or inconsistent tracefile coverpoints.",
+      "id": "genhtml.tracefile-synthesis"
+    },
+    {
+      "description": "Capture CLI help, errors, compatibility modes, recursion, temp paths, and initial capture.",
+      "id": "geninfo.capture-cli"
+    },
+    {
+      "description": "Tracefile addition, input ordering, pruning, and function mapping.",
+      "id": "lcov.add-and-prune"
+    },
+    {
+      "description": "GCC branch capture, filtering, merging, and source-level branch identities.",
+      "id": "lcov.branch-coverage"
+    },
+    {
+      "description": "Capture paths, markers, callbacks, substitutions, checksums, and source filtering.",
+      "id": "lcov.capture-and-filter"
+    },
+    {
+      "description": "Demangling, simplification callbacks, exclusions, and function end lines.",
+      "id": "lcov.demangling"
+    },
+    {
+      "description": "Malformed tracefile, consistency, ignore, keep-going, and message-count behavior.",
+      "id": "lcov.diagnostics"
+    },
+    {
+      "description": "Exception branch capture and coverage filtering.",
+      "id": "lcov.exception-branches"
+    },
+    {
+      "description": "Follow and no-follow source-directory traversal behavior.",
+      "id": "lcov.follow-symlinks"
+    },
+    {
+      "description": "Tracefile record parsing, ordering, duplicate handling, and malformed input.",
+      "id": "lcov.format"
+    },
+    {
+      "description": "Absolute, relative, missing, and default gcov tool resolution.",
+      "id": "lcov.gcov-tool"
+    },
+    {
+      "description": "C++ initializer-list coverage filtering during capture.",
+      "id": "lcov.initializer-filter"
+    },
+    {
+      "description": "Lambda function coalescing and derived function extents.",
+      "id": "lcov.lambda-filter"
+    },
+    {
+      "description": "Initial capture across multiple directories and case-insensitive paths.",
+      "id": "lcov.multi-directory"
+    },
+    {
+      "description": "List, remove, intersect, subtract, package, and kernel-capture paths.",
+      "id": "lcov.operations-and-packages"
+    },
+    {
+      "description": "Tracefile union, intersection, subtraction, and generated coverpoints.",
+      "id": "lcov.set-operations"
+    },
+    {
+      "description": "Help, version, option parsing, and startup output.",
+      "id": "lcov.startup"
+    },
+    {
+      "description": "Text summaries for synthetic and concatenated coverage inputs.",
+      "id": "lcov.summary"
+    },
+    {
+      "description": "Source-driven line, branch, directive, brace, and trivial-function filters.",
+      "id": "shared.coverage-filter"
+    },
+    {
+      "description": "Batch Git blob-version callback behavior.",
+      "id": "support-script.batch-git-version"
+    },
+    {
+      "description": "Git source annotation callback behavior.",
+      "id": "support-script.git-annotation"
+    },
+    {
+      "description": "Git revision-diff generation and filtering behavior.",
+      "id": "support-script.git-diff"
+    },
+    {
+      "description": "Git source-version callback behavior.",
+      "id": "support-script.git-version"
+    },
+    {
+      "description": "Perforce source annotation callback behavior.",
+      "id": "support-script.p4-annotation"
+    },
+    {
+      "description": "Perforce revision-diff generation and filtering behavior.",
+      "id": "support-script.p4-diff"
+    },
+    {
+      "description": "Perforce source-version callback behavior.",
+      "id": "support-script.p4-version"
+    },
+    {
+      "description": "Test cleanup discovery and execution.",
+      "id": "test-harness.cleanup"
+    },
+    {
+      "description": "Stable test command, environment, and configuration setup.",
+      "id": "test-harness.configuration"
+    },
+    {
+      "description": "Test prerequisite discovery and validation.",
+      "id": "test-harness.dependencies"
+    },
+    {
+      "description": "Upstream test-suite documentation.",
+      "id": "test-harness.documentation"
+    },
+    {
+      "description": "Test process execution, isolation, and coverage wrapping.",
+      "id": "test-harness.execution"
+    },
+    {
+      "description": "Make-based test discovery and orchestration.",
+      "id": "test-harness.orchestration"
+    },
+    {
+      "description": "Test logging, result accounting, skips, and resource reporting.",
+      "id": "test-harness.results"
+    },
+    {
+      "description": "Generation and validation of synthetic tracefile inputs.",
+      "id": "test-harness.synthetic-tracefiles"
+    }
+  ],
+  "entries": [
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "9777e704535e01d169f23d4bf194d0076c6385ab29a4320534aa43e08f3684c8",
+      "source": "tests/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.documentation"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream test-suite documentation; it describes the harness rather than an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "2cd454cdb7c6fc37d4eab06260699effc46890ee93ceff835268c5edc242831a",
+      "source": "tests/README.md",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.synthetic-tracefiles"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that validates generated synthetic tracefile counts; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c7664799aab3940710e748add474d7817b0afe745eb8a62df607f5b2be054cbc",
+      "source": "tests/bin/check_counts",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.dependencies"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that checks test executable prerequisites; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "d159082f63449ff32b5e459cce3eb26b63bfc5978c5d7459f893f62a9f401688",
+      "source": "tests/bin/checkdeps",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.cleanup"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that discovers and cleans test targets; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "21c78660130010e94f627d016ae5572455838efe48d8cfaa6b5871ead5d2bf22",
+      "source": "tests/bin/cleantests.py",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.results"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that provides shared shell logging and result functions; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "d682cd38ac02135832fc8d5da2d01d0df72b8cd268814e3bc3445d59769b05a8",
+      "source": "tests/bin/common",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.results"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that provides shared Python logging and result functions; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "d2bf405c5974cfa557f68f1d232040cf5d0e8594b8704c36d0a70a02395faf23",
+      "source": "tests/bin/common.py",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.synthetic-tracefiles"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that generates synthetic tracefile inputs; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "cdb91f473fe82f6e53b00c17c1f75a6fa26391a56105602f52d4619d9e833072",
+      "source": "tests/bin/mkinfo",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.execution"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that discovers and schedules test drivers; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "fcc8980f407a4517e541fb11417f9d47621d7272879027c5c858bcd014c968a2",
+      "source": "tests/bin/runtests.py",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.execution"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that executes and measures a test driver; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "1fbd7639912563e43d0ddbadaa2d51a83e19bc6d7989b56867624a777f5399b1",
+      "source": "tests/bin/test_run",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.results"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that records an explicit test skip; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "870a93c5b5a8c0d8733e25e37a8b829d98574d2894c397ea46d440d64fe1c31f",
+      "source": "tests/bin/test_skip",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.execution"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that runs an isolated test worker; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "85f7d6bdb1c48b4f5974c58079f25cb6822420a46ebd76ccdbe142a88d33501b",
+      "source": "tests/bin/test_worker.py",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.results"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that aggregates final test results; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "69c54aa3e7893e2ccbe00b89a2e1766c13cced9666850f02d59d1f9aad91726b",
+      "source": "tests/bin/testsuite_exit",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.results"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream harness utility that initializes logs and environment evidence; it does not exercise an installed LCOV surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7063b0e5b049bb2a1c63c78246f6bf91c16f4b9973713890895738078282428b",
+      "source": "tests/bin/testsuite_init",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.configuration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Shared Make variables and test command setup; this is harness configuration.",
+      "review_status": "reviewed",
+      "sha256": "a7d9b926336cf51651fa45d4d3e0d502778a5017b51d00f2f5db2d65e5c978ba",
+      "source": "tests/common.mak",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.configuration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Shared shell argument and environment setup sourced by test drivers; this is harness configuration.",
+      "review_status": "reviewed",
+      "sha256": "4f0d8af17f6710a9200997e6934ead342611828205e312a6215b536fe08e28b2",
+      "source": "tests/common.tst",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "51ce0de2f633c88afc62493516712786fb24694720bf27c93403610728b3d190",
+      "source": "tests/genhtml/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.demangling"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for report-time C++ demangling. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "f85d18a119e57ddd029b5546ccbe0de8d0b78ee63126ba4051f25521dcc9c088",
+      "source": "tests/genhtml/demangle.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "228417ef4f5c7d426589bbdd5bfbebb0fe8ebad4b7b6a9b3b7ac0ffe804d4614",
+      "source": "tests/genhtml/errs/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:1001"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream callback or injected-failure module fixture used in genhtml context-callback failure and expected-message diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "0082e9c61fed780388e0f6e14a21cea2bbdbb50e1c16bf490bd46c2422625da2",
+      "source": "tests/genhtml/errs/MsgContext.pm",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:726",
+        "tests/genhtml/errs/msgtest.sh:743",
+        "tests/genhtml/errs/msgtest.sh:762",
+        "tests/genhtml/errs/msgtest.sh:780"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream callback or injected-failure module fixture used in lcov and genhtml injected callback-failure diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "30d7bce1d2f01edf406b3e2ae4250d35ae73b8470bf4e43ea76a7a310c699c6f",
+      "source": "tests/genhtml/errs/genError.pm",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:1161"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in lcov diagnostics and ignore handling for inconsistent MC/DC records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "29b7123915ee6e081d5a1710237dcef99732793af7aebf1356ffec1bbd827ff5",
+      "source": "tests/genhtml/errs/mcdc_errs.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:839"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream callback or injected-failure module fixture used in genhtml parallel callback packages missing restore lifecycle support; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "29906c32802e3d30b99b1e849ef85604e3b8c2832a8c00a0d99efc1e3ca1a6a5",
+      "source": "tests/genhtml/errs/missingRestore.pm",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for diagnostic, configuration, and callback failure cases. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "6dce28154e2b817e4004b619b62ca13a608d4418bba7864da99d8643e9256a20",
+      "source": "tests/genhtml/errs/msgtest.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:800"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream callback or injected-failure module fixture used in genhtml parallel callback lifecycle failure diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c4bb661b601d703a0435be85708af6aee127d452db8fe6231fed862f5846de68",
+      "source": "tests/genhtml/errs/parallelFail.pm",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:530"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise selection-callback failure behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "34154c1d5502597eb387db2637df2df7339fce731ab2377409d16781eee0e2d8",
+      "source": "tests/genhtml/errs/select.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "ee6a9000d9763dcf239fe065908362ff41b0da8d37be9f2a6fd540a390b4bde6",
+      "source": "tests/genhtml/exception/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.exception-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/exception/exception.sh:100",
+        "tests/genhtml/exception/exception.sh:169",
+        "tests/genhtml/exception/exception.sh:207",
+        "tests/genhtml/exception/exception.sh:53",
+        "tests/genhtml/exception/exception.sh:69"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov",
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in GCC and LLVM exception coverage capture, merge, and differential reports; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "407e4bb31008b6d40ae7a94f34e1d23961255fd787dd7755dd2144fccf1037f2",
+      "source": "tests/genhtml/exception/exception.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.exception-differential"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov",
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream behavior driver for exception coverage differential reports. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "b903a2084f751d3af05b775f1bd134c37f29b09d45ee7508ebf54dd87fe8c6be",
+      "source": "tests/genhtml/exception/exception.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "e68a1d08f17aae1511d9880b8ed1da8c810d2227d6dac231cdded447552498e2",
+      "source": "tests/genhtml/filter/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:72",
+        "tests/genhtml/filter/filter.pl:84"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal brace and directive source-filter behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "f38a46c236f150811758822ee40124ab9706f3bc8193d55894b8a545099710a2",
+      "source": "tests/genhtml/filter/brace.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:74",
+        "tests/genhtml/filter/filter.pl:90"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in internal brace and directive tracefile-filter totals; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "9f279ee892d52417040b28533376cf870e4cd7dbe8f691d829ee4fef4164506c",
+      "source": "tests/genhtml/filter/brace.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:16",
+        "tests/genhtml/filter/filter.pl:25"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver conditional detection and configuration behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "b6c76c973fa8787064cbcff7249d41b099f678d7901a825b2f9d4fdff38e2703",
+      "source": "tests/genhtml/filter/expr1.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:16"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver conditional rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "4142d7b04ef4d77832ef541f2be5665ff80e724e10f43a6bc5c9d505d3e30f38",
+      "source": "tests/genhtml/filter/expr2.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:16"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver conditional rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "91f9afad11b102d041953b746dbc8d0d31c6384c9dc173ba9f4098303e70ff94",
+      "source": "tests/genhtml/filter/expr3.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:16"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver conditional rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "9e1974b290f77b5fb06f893c17cf4ff436c27907ea394109d49d2ec46aa8d316",
+      "source": "tests/genhtml/filter/expr4.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "indirect_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for source-driven coverage filters. It calls the internal lcovutil API, so it is indirect evidence for public filtering semantics and not standalone CLI proof.",
+      "review_status": "reviewed",
+      "sha256": "1abecf10ccf48a72b5bf7e30f8b4954508075cc72b6923af4ecf25ff341d0245",
+      "source": "tests/genhtml/filter/filter.pl",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "384b732573c26741ef827d4b8354b0503702c8d5287d4d4192e1fb481b00cdae",
+      "source": "tests/genhtml/filter/multilineTrivial.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c160797c7bdb93866177e2f1c74c7f6993ddb5f03b729c1493467aff924a82f2",
+      "source": "tests/genhtml/filter/multilineTrivial2.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver non-trivial-function rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c74251ca88da3cf9b70a62041521ee62643117926059bfcdb23c34bf3d5a6336",
+      "source": "tests/genhtml/filter/notTrivial1.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver non-trivial-function rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "b30af7e77dfe64b0f28aef5abb58fb2affa9e9414aa9125ee2d1cf1b5e2e4bdb",
+      "source": "tests/genhtml/filter/notTrivial2.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver non-trivial-function rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "50dc78e7ebd624e28253a22b583de561313da466a95cbdd71a8c34f1d25ff33c",
+      "source": "tests/genhtml/filter/notTrivial3.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver non-trivial-function rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a83359f6cc566702d7d4f988968bb6f78671b1e803e8783f2d3a2b029878bba1",
+      "source": "tests/genhtml/filter/notTrivial_init.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver non-trivial-function rejection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "5c9a9de5442e7dddcd6e3b9bd9c3801ab7fba79dca8bdd5520d9cfe7fc0a9cfa",
+      "source": "tests/genhtml/filter/notTrivial_multiline.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c953ee8a46ae8b588c8d32d4db6ef70da2f0f582171d2417a443a50ee950d98c",
+      "source": "tests/genhtml/filter/trivial1.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "1d1081c14898e1988755f2090a5b54c5e6279077f635d13babc73e815f9fe3ba",
+      "source": "tests/genhtml/filter/trivial2.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a8bf4ea7f27b796c10b1f9bc72eed83e10307f150be501769838a5349a9aca60",
+      "source": "tests/genhtml/filter/trivial3.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "shared.coverage-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/filter/filter.pl:43"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in internal filter-driver trivial-function detection behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7bd4c9e28f3c3b85ab25b3773e0d1854cf734ca5993557bd96d25b6b1bd48446",
+      "source": "tests/genhtml/filter/trivialMethod.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.coverage-rates"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for full-coverage HTML output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "085abad376a527dca0fc0f99bc4f2e2e5b3b93ec476059a2b657972a0afb8b1e",
+      "source": "tests/genhtml/full.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "d85cad2f62eee5814a98c06a8d6b271cbb280b93d9a2b2e7a8b15e3160d57f39",
+      "source": "tests/genhtml/function/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows without function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a79080e7477c8bb5d546cf643b3ee247f47325c09f492229c432bd9cca7693b2",
+      "source": "tests/genhtml/function/baseline_call_current_call.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:150",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows with function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "215e69a77e3cd393e1e5963a51cb447e90af11517265abbeb4b69e5a8176a1c5",
+      "source": "tests/genhtml/function/baseline_call_current_call_region.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows without function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "217739e88af1f87792371fe00885c47e3e6a6f96031f88c70a107e2002cd4679",
+      "source": "tests/genhtml/function/baseline_call_current_nocall.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:150",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows with function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "41e66f114410f19c4004dba5b364c46ac31eb30282198d40b62a91fa63b39d7c",
+      "source": "tests/genhtml/function/baseline_call_current_nocall_region.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows without function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7ee59c69bb0b4af80ef97d1eacaeacbb51f5e93f16bc879b7dbdd759406f67c4",
+      "source": "tests/genhtml/function/baseline_nocall_current_call.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:150",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows with function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "2ac7e00e85d92001198039511543354297a8d79b790d2a071b657b1ee02dffb1",
+      "source": "tests/genhtml/function/baseline_nocall_current_call_region.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows without function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "8b5120555b4a1e0ce426771ca32419b2e49e439c9d518030519d96d81859fae7",
+      "source": "tests/genhtml/function/baseline_nocall_current_nocall.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:147",
+        "tests/genhtml/function/function.sh:150",
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:172",
+        "tests/genhtml/function/function.sh:174"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream expected-output fixture used in genhtml expected function rows with function end-line records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "59dcd70fb9ff3bd7663e84008eb0f1473fa4a7cb287a88e0c8f15d1311df7b23",
+      "source": "tests/genhtml/function/baseline_nocall_current_nocall_region.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:110",
+        "tests/genhtml/function/function.sh:114",
+        "tests/genhtml/function/function.sh:165"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in current function capture and changed-function differential categorization; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "937cfad1205e3768d6953896c77342fb52b15825ca0da06dfe1ddd33b7153010",
+      "source": "tests/genhtml/function/current.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for function differential reports. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "d492a9ddf199c86732a26b2c1495732fee63085cb8207878800804b8c3d8f188",
+      "source": "tests/genhtml/function/function.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:165",
+        "tests/genhtml/function/function.sh:42",
+        "tests/genhtml/function/function.sh:48",
+        "tests/genhtml/function/function.sh:97"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in baseline function capture, version, and differential categorization; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "26a061927de6f33fc11ab6ad3185268ec4a74f9d0fe55bb21c32e30a17f83c46",
+      "source": "tests/genhtml/function/initial.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/function/function.sh:194",
+        "tests/genhtml/function/function.sh:197",
+        "tests/genhtml/function/function.sh:215"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in function alias capture and genhtml alias suppression; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "6eefe08d209bdebb1e8052d70bd0fd1fd2b68a2ffee248b9607d1f15ca3ee454",
+      "source": "tests/genhtml/function/template.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "86f4a8e8ffe180c4f4fd10b53ee9a91960e4bd1b8d5536a0244e68a5d689ba34",
+      "source": "tests/genhtml/insensitive/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.path-case"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/insensitive/insensitive.sh:133"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise case-insensitive annotation callback lookup; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "7dfd71885f56f7f54015188ab7267bd97be0d5f8809e2c5b96e04948d2907e5f",
+      "source": "tests/genhtml/insensitive/annotate.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.path-case"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for case-insensitive path handling. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "2698024af3acd728fb9178092aee363300cbb1a9baf1ebc0f42f92fa646e6083",
+      "source": "tests/genhtml/insensitive/insensitive.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.path-case"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/insensitive/insensitive.sh:30"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise case-insensitive version callback lookup; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "a98a258ac89d1b2b66899d6d52c7080c5e3345c892cde727dad2cb4d696dba57",
+      "source": "tests/genhtml/insensitive/version.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "e40416bd53bf75bc60305f5b4230d574937af9e1def96f5f1669f7f264bc1ef1",
+      "source": "tests/genhtml/lambda/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.lambda-display"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/lambda/lambda.sh:36",
+        "tests/genhtml/lambda/lambda.sh:46",
+        "tests/genhtml/lambda/lambda.sh:55"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in lambda function capture, extents, and HTML display; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "0382b41bdf4196738f9909eea9bb1dbd7488b59269d56e1f8a794ea669c62047",
+      "source": "tests/genhtml/lambda/lambda.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.lambda-display"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for lambda function report rendering. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "dcf6be54d6a03260e6e02f80f71f8ee5722ca7ee6c875eb90ee587fe48dbd30e",
+      "source": "tests/genhtml/lambda/lambda.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.demangling"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/demangle.sh:129",
+        "tests/genhtml/demangle.sh:42"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise report-time C++ demangler callback behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "d78ded40f03034900498ade1f07d63c8a90c1a754be1cdb11091baf577a98359",
+      "source": "tests/genhtml/mycppfilt.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.coverage-rates"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for partial-coverage HTML output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "6e5f48550d4334abc4a9d7a7b4392b925122aa9197777e0812112fb0f65f251b",
+      "source": "tests/genhtml/part1.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.coverage-rates"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for partial-coverage HTML output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "b8880fd1ee09d9298d1bf6c751562e9102be39e1d29f24ab1bcc2308a078b5e0",
+      "source": "tests/genhtml/part2.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "1eff781157ef3518fffff4a092e813b3597dbae2ae539db7fbdb9fbc699d387b",
+      "source": "tests/genhtml/relative/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.relative-paths"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/relative/relative.sh:30",
+        "tests/genhtml/relative/relative.sh:38"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream coverage-input fixture used in genhtml relative source paths and synthesized report pages; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "cd147dfe604081ec7ea17a3e66347afd6e90235b6cc25e1091a6ca38acb67f6b",
+      "source": "tests/genhtml/relative/relative.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.relative-paths"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for relative source paths. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "4155b84fca0d0a2f24a782f466f38aa9307a348f710eb97e56308b7d17d501f8",
+      "source": "tests/genhtml/relative/relative.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "43261b94bd13f98cad79e33467eb41683011eed09c4cd176b51f59d0aecdaf27",
+      "source": "tests/genhtml/simple/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/simple/script.sh:439",
+        "tests/genhtml/synthesize/synthesize.sh:32"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise annotation callbacks for report and synthesis behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "8fc203c748b7ffffe28c244247eda63c965afd0b8aa9e4a7010e67918ddd7d56",
+      "source": "tests/genhtml/simple/annotate.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for general HTML report options and callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "c38c3700d14bc5c94b2bf16473b86c9ea2f9f65a5545ea54f543c661b657ba5a",
+      "source": "tests/genhtml/simple/script.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.path-case",
+        "genhtml.report-options"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/errs/msgtest.sh:72",
+        "tests/genhtml/insensitive/insensitive.sh:37",
+        "tests/genhtml/simple/script.sh:71"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in baseline source for report options, path-case, and diagnostics drivers; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c31074fbfb9492568b0aaffc486f070e170397e1e4947887ef97a179bfd4be6f",
+      "source": "tests/genhtml/simple/simple.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.path-case",
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/insensitive/insensitive.sh:110",
+        "tests/genhtml/simple/script.sh:317",
+        "tests/genhtml/synthesize/synthesize.sh:30"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in current source for report, path-case, and tracefile-synthesis drivers; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c1067ac273fdaf482de89d2cca462898ad3af6739c1a9e048336ddcadc2c9e04",
+      "source": "tests/genhtml/simple/simple2.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.path-case",
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/insensitive/insensitive.sh:127",
+        "tests/genhtml/simple/script.sh:1586",
+        "tests/genhtml/synthesize/synthesize.sh:31"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream annotation-data fixture used in source annotation rows for report, path-case, and synthesis callbacks; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a8cebbb679127971538aae44aef0bc75a1502b452d4310c19eb5d3d0295800d4",
+      "source": "tests/genhtml/simple/simple2.cpp.annotated",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/simple/script.sh:1585",
+        "tests/genhtml/simple/script.sh:1589",
+        "tests/genhtml/simple/script.sh:1610"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream source-program fixture used in genhtml unreachable branch and MC/DC exclusion reporting; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "0d6a62d6ca00ea19c4bd3537bcada9ae7290d56a2c59551148790938eaae4b1c",
+      "source": "tests/genhtml/simple/unreach.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "6a67c7a2dce773fd6f3511cd2d0fb7db0edfd07d2f0b8f2d8563a851e47bb769",
+      "source": "tests/genhtml/synthesize/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/synthesize/synthesize.sh:177",
+        "tests/genhtml/synthesize/synthesize.sh:56",
+        "tests/genhtml/synthesize/synthesize.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in out-of-range coverpoint mutation for genhtml and lcov diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "24ed002584644614c5e78b36eb7d04c92ab9c645bd73f13e806a4a1fbbfe918d",
+      "source": "tests/genhtml/synthesize/munge.pl",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/genhtml/synthesize/synthesize.sh:143",
+        "tests/genhtml/synthesize/synthesize.sh:59"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream source-program fixture used in branch-without-line-coverpoint mutation for genhtml diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "0238f5cbe3d920d281100759b9b6c621033c774a03282b9a38db5cdf959bb0a4",
+      "source": "tests/genhtml/synthesize/munge2.pl",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.tracefile-synthesis"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for tracefile coverpoint synthesis. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "e4fcddb0c82a504f4692d5268e1018261c3e457c3edb445af0f74b18ea32b8ad",
+      "source": "tests/genhtml/synthesize/synthesize.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.coverage-rates"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for target-rate HTML output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "f1ec388e833eb31e10a7f14ab6aaafaf635a935549d7c77ec703226c1d5c5e65",
+      "source": "tests/genhtml/target.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "genhtml.coverage-rates"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream behavior driver for zero-coverage HTML output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "a823d60f44188840aebb7e0d62788a8379fabb4af782ea5e868b094760747e61",
+      "source": "tests/genhtml/zero.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "41b4ded363e79cca3c8f5eee36d712109b5f4a1e66febccc1fcbc6851fdd82c3",
+      "source": "tests/lcov/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "526920d2f66316ab74ee4353d6a849eea6716744aef3779a9e592ea350191479",
+      "source": "tests/lcov/add/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.add-and-prune"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for tracefile addition, pruning, and function mapping. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "e024bf05f5df7e7ba1e0589ed8b12074913d6df2329f39e4bcbda5dff41240eb",
+      "source": "tests/lcov/add/prune.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.add-and-prune"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for tracefile addition, pruning, and function mapping. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "2115abc2e2045413f76a45bf43c02207522ad2961b71f48d1291cb658504dbad",
+      "source": "tests/lcov/add/track.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "c87247aaafebfb60bd25c0788ee9380c36715ec7441b643dc8cd53c05e5607d5",
+      "source": "tests/lcov/branch/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.branch-coverage"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/branch/branch.sh:100",
+        "tests/lcov/branch/branch.sh:144",
+        "tests/lcov/branch/branch.sh:41",
+        "tests/lcov/branch/branch.sh:53"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in normal and macro GCC branch capture, merge, and report categories; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "70e54a6577fb77b3490fc176901846842a3b5db4f937be794304670e1243b236",
+      "source": "tests/lcov/branch/branch.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.branch-coverage"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for branch capture and merge behavior. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "71e8edf559ac528ed5f28fe3bd2c96b04759a367e669a4637ddbd0f238653028",
+      "source": "tests/lcov/branch/branch.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "4a91e2ffa1654854020beb2ce39435a97cf90a57ce93c168d9f72316834a5b07",
+      "source": "tests/lcov/coverage/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.operations-and-packages"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for less common operation, package, capture, and CLI paths. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "74ae90c833feab8a24c0aeabd2483cbd089cffc59e19ce6164672cf4930fd840",
+      "source": "tests/lcov/coverage/coverage.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "geninfo.capture-cli"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Upstream behavior driver for capture CLI and compatibility-mode paths. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "3d27d18409776e58b0bf82b97c048dc573e1d590e0debfbfa9e4e232bc3c86aa",
+      "source": "tests/lcov/coverage/geninfo.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "c892151cb9a4c50998e3adabc8da7f7edcdb856b7a3be3edb2794bb058ccb996",
+      "source": "tests/lcov/demangle/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.demangling"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/demangle/demangle.sh:35",
+        "tests/lcov/demangle/demangle.sh:38",
+        "tests/lcov/demangle/demangle.sh:75"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in capture-time demangling, function filtering, extents, and HTML simplification; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a0a3227a2ee0d8000453ee6c2d04d88f96ea46c015bcec38557508d3edfc65cf",
+      "source": "tests/lcov/demangle/demangle.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.demangling"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for demangling and simplification callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "9128cdbd5cf43cd881303499897143aa00901963ad4cc03dcec5976990175281",
+      "source": "tests/lcov/demangle/demangle.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.demangling"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/demangle/demangle.sh:73",
+        "tests/lcov/demangle/demangle.sh:75"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream configuration or callback-input fixture used in genhtml chained function-name simplification rules; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "09c28a7837f8317660c916110b21f8eddeaf1dbbcd479ed2a858f836c99a1457",
+      "source": "tests/lcov/demangle/simplify.cmd",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.demangling"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/demangle/demangle.sh:73",
+        "tests/lcov/demangle/demangle.sh:75"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml"
+      ],
+      "rationale": "Upstream source-program fixture used in genhtml chained function-name simplification rules; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "b51e4576e7c30e7181e2ff714dba0e7cc6ecd1fd0cbebdf5eadcba26f3ea6450",
+      "source": "tests/lcov/demangle/simplify.pl",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "5c587b86f98f3db4b7ae3ca37c0c7de460fbc0af1ed7a21f786d4c313f1e0caa",
+      "source": "tests/lcov/errs/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:31",
+        "tests/lcov/errs/errs.sh:33",
+        "tests/lcov/errs/errs.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in zero branch and line location diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "9abe95d00d07abeb8a54f6696c38a30cb749ad1d98a7848865e37b272bbf7442",
+      "source": "tests/lcov/errs/badBranchLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:31",
+        "tests/lcov/errs/errs.sh:33",
+        "tests/lcov/errs/errs.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in zero function-end and line record diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "6718c47b2b03f74740d31f6d2fbf939cb0aa2ecad99bbc1bf17108c0321ab479",
+      "source": "tests/lcov/errs/badFncEndLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:31",
+        "tests/lcov/errs/errs.sh:33",
+        "tests/lcov/errs/errs.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in zero function-start and line record diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "04b97c2a04441682ff2b4cd22f89cc89b0d3db36364d64a9c0693e8300bc7162",
+      "source": "tests/lcov/errs/badFncLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:31",
+        "tests/lcov/errs/errs.sh:33",
+        "tests/lcov/errs/errs.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in zero line record diagnostics and rewrite behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "b51132a6184f6b25f770f74e9db09fbfbb6b0bbe769abc6c2b42489147a261e5",
+      "source": "tests/lcov/errs/badLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:214",
+        "tests/lcov/errs/errs.sh:216",
+        "tests/lcov/errs/errs.sh:224"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in evaluated branch on an unhit line consistency diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "39d39503d02babcb89c446265e533f1752248f3764c35b10c8b9da78e0bfc9e6",
+      "source": "tests/lcov/errs/branchNoLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:102",
+        "tests/lcov/errs/errs.sh:104",
+        "tests/lcov/errs/errs.sh:122"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in empty source-file record format failure and ignore recovery; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "4edae945c2269f2fd006584b6904b9dea9c759269c13cffc1805118edb860773",
+      "source": "tests/lcov/errs/emptyFileRecord.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for diagnostic and malformed tracefile behavior. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "2a1565976960aaf6a845baa6743340ab13ddb6f731cde6a64cf81a58ba7fb043",
+      "source": "tests/lcov/errs/errs.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:133",
+        "tests/lcov/errs/errs.sh:137",
+        "tests/lcov/errs/errs.sh:159"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in exception and condition branch merge identities plus input diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c3b1a664bb77f7ff045bdeafefaff323ade84864cbcd4fa78491241aa8b45417",
+      "source": "tests/lcov/errs/exceptionBranch1.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:133",
+        "tests/lcov/errs/errs.sh:137"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in exception-marker and condition-expression branch merge identities; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "16398e468e7e5c179735aaf72bdfc73ddad622cf16b9d9ce9f8184111ac9d041",
+      "source": "tests/lcov/errs/exceptionBranch2.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:31",
+        "tests/lcov/errs/errs.sh:33",
+        "tests/lcov/errs/errs.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in conflicting function end-line diagnostics and rewrite behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "a7a5dd13efb64b184dbb184b048e3a81ec4eb660e7a290f938685a055fc1fa6c",
+      "source": "tests/lcov/errs/fncMismatch.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:214",
+        "tests/lcov/errs/errs.sh:216",
+        "tests/lcov/errs/errs.sh:224"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in hit function without a hit contained line consistency diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "70ca6ba0d650ec1c2dcbf7b63d4ee1ede59b802ea67be76e9a6ce4689b7cd366",
+      "source": "tests/lcov/errs/funcNoLine.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:214",
+        "tests/lcov/errs/errs.sh:216",
+        "tests/lcov/errs/errs.sh:224"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in hit line with unevaluated branches consistency diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "83e00560bc4b68a60a168c46d717f9d9a6077a911fe22713842def6dfd52a922",
+      "source": "tests/lcov/errs/lineNoBranch.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:214",
+        "tests/lcov/errs/errs.sh:216",
+        "tests/lcov/errs/errs.sh:224"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in unhit function containing hit lines consistency diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7f7e2e0a1ba068dc8af50b044e5779b18173c093814d57a12bfe06b342d4a4a4",
+      "source": "tests/lcov/errs/lineNoFunc.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.diagnostics"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/errs/errs.sh:72",
+        "tests/lcov/errs/errs.sh:74",
+        "tests/lcov/errs/errs.sh:92"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in undefined function-data record mismatch and ignore recovery; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "582766e65c6285951ee5b435d68bc9127389dba4878609d16b1de277d4f4c810",
+      "source": "tests/lcov/errs/noFunc.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "ee6a9000d9763dcf239fe065908362ff41b0da8d37be9f2a6fd540a390b4bde6",
+      "source": "tests/lcov/exception/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.exception-branches"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/exception/exception.sh:232",
+        "tests/lcov/exception/exception.sh:250",
+        "tests/lcov/exception/exception.sh:257"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in exception-only, orphan-only, and combined branch filtering; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "c89c2a2ffca97f289f57f9c743869ebee7389740642b38ede040610d2a83ba7d",
+      "source": "tests/lcov/exception/example.data",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.exception-branches"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/exception/exception.sh:43",
+        "tests/lcov/exception/exception.sh:52",
+        "tests/lcov/exception/exception.sh:84"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in initial exception-branch capture and exclusion-marker filtering; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "401568f5135438a0787e2b208bd4d6ab101ff77a2de3bee6763e5da7b979812b",
+      "source": "tests/lcov/exception/exception.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.exception-branches"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for exception branch capture and filtering. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "a2b8228514c2d22b6556ca91e10294d770346e089af1c57a5d6fc77def06c8be",
+      "source": "tests/lcov/exception/exception.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "7a66ab5b61e0bed3aa8846fc7972517823e620c070934f301c05bf37e2e78edb",
+      "source": "tests/lcov/extract/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:1057",
+        "tests/lcov/extract/extract.sh:1072",
+        "tests/lcov/extract/extract.sh:1087"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream callback or injected-failure module fixture used in lcov missing-source resolution callback error and ignore behavior; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "6c5811d23a8952761239aa873106060af1ce954ca7a2beb9853b56fe814e8490",
+      "source": "tests/lcov/extract/brokenCallback.pm",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:500",
+        "tests/lcov/extract/extract.sh:509"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream configuration or callback-input fixture used in lcov malformed ignore_errors configuration and format recovery; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "0e3aa534f443b952fc4737338c38307b283b14322bccdfa2666036f69aed4665",
+      "source": "tests/lcov/extract/envErr.rc",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:472",
+        "tests/lcov/extract/extract.sh:481",
+        "tests/lcov/extract/extract.sh:491"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream configuration or callback-input fixture used in lcov environment expansion and repeated ignore_errors configuration; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "e01986aac2d231a6871be1097fc4a0d441737ca3eda81d9d8e80730ec93288dc",
+      "source": "tests/lcov/extract/envVar.rc",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:143",
+        "tests/lcov/extract/extract.sh:405",
+        "tests/lcov/extract/extract.sh:415",
+        "tests/lcov/extract/extract.sh:55",
+        "tests/lcov/extract/extract.sh:984"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in instrumented capture markers, callbacks, checksums, paths, and source filtering; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "9e63ef123a01f09a393acfbb8713dda05dbb1c51e8bec8335f8e0914bb19cf11",
+      "source": "tests/lcov/extract/extract.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for capture, extraction, callbacks, markers, and filtering. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "642e11ee7c359662356fc09fabb66a79c3d542c03e039a4fb30375a5637525c3",
+      "source": "tests/lcov/extract/extract.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:984"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise geninfo source-resolution callback behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "9d813741b43868a4b7de132aa20c5707b6fca6b32bfa5dd5625127cd36b755e9",
+      "source": "tests/lcov/extract/fakeResolve.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:143"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise geninfo history callback behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "90ab9c416b1c26c914dcf4d4634f35330fbe53cdd04dda2e2ca8bfed8ff09deb",
+      "source": "tests/lcov/extract/history.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:415",
+        "tests/lcov/extract/extract.sh:422",
+        "tests/lcov/extract/extract.sh:423"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream expected-output fixture used in normalized non-MC/DC lcov list layout and totals; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "126381fe59000dcda5126cc2f7f96ce8a67c7d321d90a8268c770b166a84b69e",
+      "source": "tests/lcov/extract/list.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "coverage.mcdc",
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:415",
+        "tests/lcov/extract/extract.sh:417",
+        "tests/lcov/extract/extract.sh:418"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream expected-output fixture used in exact GCC MC/DC lcov list layout and totals; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "b0fc2df8b5447d02c2490fec9cbece2a3cad4cccefc633e606f7a4abba512435",
+      "source": "tests/lcov/extract/list_mcdc.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:374",
+        "tests/lcov/extract/extract.sh:384"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise geninfo context callback success and failure behavior; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "c7e8fa14567ba92a43d19e41adaec48d43c413e76e85e9005e93f5d442bc85eb",
+      "source": "tests/lcov/extract/testContext.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/extract/extract.sh:103",
+        "tests/lcov/extract/extract.sh:117",
+        "tests/lcov/extract/extract.sh:440"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Upstream source-program fixture used in geninfo --all initial and regular capture of unlinked metadata; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "8facc564e49e4800b05f45282372f6b188674048aef213e834eb031a9906e04a",
+      "source": "tests/lcov/extract/unused.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "38da619d8e397e1d0a5af8746863d3b2b9763401d72b5f5d114c51617f01ac2d",
+      "source": "tests/lcov/follow/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.follow-symlinks"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for symbolic-link traversal. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "4d4a3073c867b5f1034eb9d2c2d196f3dfbddb64f6df33fef1c79a8936adb6f5",
+      "source": "tests/lcov/follow/follow.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "f89e43d5a37ce21bcac615fec0ae4e007be1d07b26fd2a40ffdfa89f42446a42",
+      "source": "tests/lcov/format/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.format"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/format/format.sh:119",
+        "tests/lcov/format/format.sh:30",
+        "tests/lcov/format/format.sh:45",
+        "tests/lcov/format/format.sh:60"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in malformed tracefile counts, branches, keep-going, and cleaned serialization; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "e42a8bd718d8d9aa90e952b99ab78044227b4d511ef13e1d3de78a8c75dd0041",
+      "source": "tests/lcov/format/format.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.format"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for tracefile parsing and formatting. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "3a8b09799b6733200cafea59ee3646c5bd6800748a52413e11ada7c55c508199",
+      "source": "tests/lcov/format/format.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "5a4a1b9fe38e4df466c48a84b638141215c77cafbb1f9c151bd18cf22aec9d4a",
+      "source": "tests/lcov/gcov-tool/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.gcov-tool"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/gcov-tool/path.sh:80",
+        "tests/lcov/gcov-tool/path.sh:92"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Executable test double or callback fixture used to exercise absolute and relative gcov command-wrapper resolution; it is not itself the asserted public surface.",
+      "review_status": "reviewed",
+      "sha256": "ec0e18dedbafb1bd2f6c6ec85de26f4bb5727931e8159da3d5ca9caa581b0cad",
+      "source": "tests/lcov/gcov-tool/mygcov.sh",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.gcov-tool"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for gcov tool resolution. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "ea72b38026689f734fe18f7579c8e57eb4a8f3a7c7bfd65cc562ad614ecc52bd",
+      "source": "tests/lcov/gcov-tool/path.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.gcov-tool"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/gcov-tool/path.sh:37",
+        "tests/lcov/gcov-tool/path.sh:51",
+        "tests/lcov/gcov-tool/path.sh:80"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in default, named, absolute, relative, and missing gcov tool resolution; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "14a0350acd16217b1213dcd00dae8693d8d8217481cc7c9d4981284d7750fed7",
+      "source": "tests/lcov/gcov-tool/test.c",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "3bc70ee528afae5b650acdfa9cb2760eef8ffed1347f1c0d57654df516568fc1",
+      "source": "tests/lcov/initializer/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.initializer-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/initializer/initializer.sh:44",
+        "tests/lcov/initializer/initializer.sh:54",
+        "tests/lcov/initializer/initializer.sh:64"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Upstream source-program fixture used in C++ initializer-list coverage filtering and line-count changes; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7cbacfaf346c91e31ddbde957c5632ba0a95deeeda9b56a703a49854326e275e",
+      "source": "tests/lcov/initializer/initializer.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.initializer-filter"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo"
+      ],
+      "rationale": "Upstream behavior driver for initializer-list filtering. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "eddbddda14f775619a3c6c82f3da1b5843eb7e6fcd07ae7aae90eb4eccdc859d",
+      "source": "tests/lcov/initializer/initializer.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "e40416bd53bf75bc60305f5b4230d574937af9e1def96f5f1669f7f264bc1ef1",
+      "source": "tests/lcov/lambda/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.lambda-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/lambda/lambda.sh:19",
+        "tests/lcov/lambda/lambda.sh:28"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in Java same-line lambda coalescing and enclosing function extents; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "07be7449e4c0e7d81cb68469b06b2fe6d67582f49a28dc4a9644f42d3b141dac",
+      "source": "tests/lcov/lambda/lambda.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.lambda-filter"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for lambda function coalescing. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "e5b9741cfa134548982651a297db3f8b83359fc38add97abe074a927097e38b8",
+      "source": "tests/lcov/lambda/lambda.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.lambda-filter"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/lambda/lambda.sh:19",
+        "tests/lcov/lambda/lambda.sh:28"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in Java same-line lambda coalescing and enclosing function extents; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "e486f42df9c494663adb6eea7c39bcf8d313e70437820b890d4b7652c3ee284c",
+      "source": "tests/lcov/lambda/lambda2.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "3913c0986c7ca081293dac3eed8a8e5848c90007ee984b0596343da2c4cd208a",
+      "source": "tests/lcov/mcdc/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "coverage.mcdc"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/mcdc/mcdc.sh:39",
+        "tests/lcov/mcdc/mcdc.sh:44",
+        "tests/lcov/mcdc/mcdc.sh:55",
+        "tests/lcov/mcdc/mcdc.sh:60",
+        "tests/lcov/mcdc/mcdc.sh:87",
+        "tests/lcov/mcdc/mcdc.sh:92",
+        "tests/lcov/mcdc/mcdc.sh:94",
+        "tests/lcov/mcdc/mcdc.sh:99"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in GCC and LLVM MC/DC decision variants, conversion, filtering, and reports; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "f7dd7dfd12ab2dde6634f4d7329a045b53fc36a0e494a55efff23f656d458ae9",
+      "source": "tests/lcov/mcdc/main.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "coverage.mcdc"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream behavior driver for MC/DC coverage across GCC and LLVM. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "81553d520219394384a3691da76eb58db0fcabedb60a7c60f828ceae1219dc11",
+      "source": "tests/lcov/mcdc/mcdc.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "coverage.mcdc"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/mcdc/mcdc.sh:39",
+        "tests/lcov/mcdc/mcdc.sh:44",
+        "tests/lcov/mcdc/mcdc.sh:55",
+        "tests/lcov/mcdc/mcdc.sh:60",
+        "tests/lcov/mcdc/mcdc.sh:87",
+        "tests/lcov/mcdc/mcdc.sh:92",
+        "tests/lcov/mcdc/mcdc.sh:94",
+        "tests/lcov/mcdc/mcdc.sh:99"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:geninfo",
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in GCC and LLVM MC/DC decision variants, conversion, filtering, and reports; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "03dd7d356156dfe263df0a76eb3868abd7965aff2b3b333d49be2f3d8c0ce6d4",
+      "source": "tests/lcov/mcdc/test.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "714715b11bd1af4855eb4e56710c14baa67ec0dbdf4d0d20f82fcf72896b40ed",
+      "source": "tests/lcov/merge/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:166",
+        "tests/lcov/merge/merge.sh:175"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in inconsistent duplicate function-location merge diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7b020ceb156047d89d97903f68efe77b847f1a3daa73ba000fc6d812839031da",
+      "source": "tests/lcov/merge/a.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:33",
+        "tests/lcov/merge/merge.sh:41",
+        "tests/lcov/merge/merge.sh:69",
+        "tests/lcov/merge/merge.sh:86"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in intersection and subtraction semantics across coverage record types; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "41c4efb61e679e386c0eb38d438773a21bffef49e227ace5376068e1c335cb49",
+      "source": "tests/lcov/merge/a.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:77"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream expected-output fixture used in exact a-minus-b subtraction output; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "fb011285a7a6d8296ce81233877c3d807108a9c920f05109b9e98230217ffba9",
+      "source": "tests/lcov/merge/a_subtract_b.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:166",
+        "tests/lcov/merge/merge.sh:175"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in inconsistent duplicate function-location merge diagnostics; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "6a7e9cef4a676ac88f34c2bf59567e4f4ca875a77a7274094ad4ca57a8abaadf",
+      "source": "tests/lcov/merge/b.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:33",
+        "tests/lcov/merge/merge.sh:41",
+        "tests/lcov/merge/merge.sh:69",
+        "tests/lcov/merge/merge.sh:86"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in intersection and subtraction semantics across coverage record types; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "bb38f3be5c3d53a039af543a4bcbfaea9adbd81a4e5340a1aeca760e04d83444",
+      "source": "tests/lcov/merge/b.info",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:94"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream expected-output fixture used in exact b-minus-a subtraction output; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "bbc914e4a78dae1fff908139d075f65c4ac8b40680da7c6915e859fd07f9adcd",
+      "source": "tests/lcov/merge/b_subtract_a.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:145",
+        "tests/lcov/merge/merge.sh:155"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in cross-library function spelling and extent merge regression; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "5655a0c4934f173cf1ce6398fda745046c053540692ec79a55edda9e42d16b17",
+      "source": "tests/lcov/merge/functionBug_1.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:145",
+        "tests/lcov/merge/merge.sh:155"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in cross-library function spelling and extent merge regression; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "2f05df1a192dffa0fac74ea90ed44de0f562ade4f43a28c3d38e5297e07c74e4",
+      "source": "tests/lcov/merge/functionBug_2.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:33",
+        "tests/lcov/merge/merge.sh:59"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream expected-output fixture used in exact commutative intersection output; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "ac344b4132281982fc4f8b7690956c872f3b5b4949295e1909880cf6ba186bad",
+      "source": "tests/lcov/merge/intersect.gold",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "coverage.mcdc",
+        "lcov.set-operations"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/lcov/merge/merge.sh:123",
+        "tests/lcov/merge/merge.sh:133"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in line-coverpoint synthesis for orphan MC/DC records; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7a984aeb889f170327dbdba6424674303d6b8da5aa610e7f40e4990bb56570b0",
+      "source": "tests/lcov/merge/mcdc.dat",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for tracefile set operations. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "828ea77b815149b119bf23c7ef7edf6e81102e283e458413dccaf3a68de10957",
+      "source": "tests/lcov/merge/merge.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "9e0f99e86cc1c628db5231c8ae46f5eae86bc0e7d6668738437ce58f228d22da",
+      "source": "tests/lcov/misc/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.startup"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for startup help and version output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "6f7170ec4ed84e6212c942f968ebd7dd3db9312aa45ce266409bbf26244cf639",
+      "source": "tests/lcov/misc/help.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.startup"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for startup help and version output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "bafc16975b741ff2fdcc1403ac4dcd66ac7cf271b09272ed07682211b0059078",
+      "source": "tests/lcov/misc/version.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "b927faaa483fd9d388836f9e23aca906916f417d219b89efb6d85c54d84a4621",
+      "source": "tests/lcov/multiple/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.multi-directory"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:geninfo",
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for multi-directory initial capture. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "120ebd79c00eddb112858b93de55dba17b08c024f5c1c3c018814ff20c3f159a",
+      "source": "tests/lcov/multiple/multiple.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "e6e81eba3287d7ff7679496ba5ea3ca0965a992745cc69d21c1e6d9b8c90a6c1",
+      "source": "tests/lcov/summary/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "11cec94ebf6034c213e68d99798792ace3a11d4cf84688791253943ae2d702e9",
+      "source": "tests/lcov/summary/concatenated.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "3c1fdf50c1ec48ffc435c4131ccb1c7af5679b4f4196f3ba3195db12f51cf545",
+      "source": "tests/lcov/summary/concatenated2.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "c4467b9d30b65bbd028f2206c76fe2e3feeefa6dbd34dfb6c59387b3c169c932",
+      "source": "tests/lcov/summary/full.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "1c03fa86c6efb8be6a58c05bd02fb2e19f87206eb09e8aee8e9871954a1aae29",
+      "source": "tests/lcov/summary/part1.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "d654ae57459f9457ade0609c728c0104aeec705d987fc3d0044c52451d0fa3fa",
+      "source": "tests/lcov/summary/part2.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "af649d73eec222ec1ef7102ac5f3b87bf61b179997d90b4d6bf12c4d75d8aa28",
+      "source": "tests/lcov/summary/target.sh",
+      "upstream_execution": "disabled"
+    },
+    {
+      "behavior_groups": [
+        "lcov.summary"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:lcov"
+      ],
+      "rationale": "Upstream behavior driver for coverage summary output. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "7719ef171a5fff302dc7cf31a510526645deab0299d98fc5f97975b6b2fc7f1f",
+      "source": "tests/lcov/summary/zero.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.configuration"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/common.mak:69",
+        "tests/common.mak:87",
+        "tests/common.mak:88"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:genhtml",
+        "command:lcov"
+      ],
+      "rationale": "Upstream configuration fixture used in the shared lcov and genhtml test configuration; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "1226afcb7b5cc978c1db090a8212ebc9ccf6b41af17e12ddcdc1bea0e1489082",
+      "source": "tests/lcovrc",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "4e1a07c280e7c54f26c840721240574e8683142afb6a4eb85f88743ed1b1b513",
+      "source": "tests/llvm2lcov/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "converter.llvm"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream behavior driver for LLVM JSON conversion. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "83d7a6b0ec08b6dbc9678f6cdc5b1b0ee91f474bf3ef47540d18d9a0ba6ce51e",
+      "source": "tests/llvm2lcov/llvm2lcov.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "converter.llvm"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/llvm2lcov/llvm2lcov.sh:43",
+        "tests/llvm2lcov/llvm2lcov.sh:54",
+        "tests/llvm2lcov/llvm2lcov.sh:61"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in LLVM JSON function, line, branch, MC/DC, macro, and exclusion conversion; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "7c4c4a2111606c10e30d3053e214320896adfa96d9050a2e47bbea285585aa75",
+      "source": "tests/llvm2lcov/main.cpp",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "converter.llvm"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/llvm2lcov/llvm2lcov.sh:119",
+        "tests/llvm2lcov/llvm2lcov.sh:43",
+        "tests/llvm2lcov/main.cpp:1"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:llvm2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in LLVM header function and coverage-bearing macro conversion; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "ab6e9ce47f5cf466ff0a0e08abf19a36680646c66bbd0ac2e1e8e19b1696c958",
+      "source": "tests/llvm2lcov/test.h",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "4e3c021e8479c3f951366e875ee1288560b42110675249758e9820153c3e9bcb",
+      "source": "tests/perl2lcov/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "converter.perl"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/perl2lcov/perltest1.sh:119",
+        "tests/perl2lcov/perltest1.sh:22",
+        "tests/perl2lcov/perltest1.sh:29"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:perl2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in Devel::Cover functions, exclusions, checksums, filters, and conversion errors; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "66c67896d9e82210f98c53da44398287f20e82046b0a2593a3afa1bbdcfde1dc",
+      "source": "tests/perl2lcov/example.pl",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "converter.perl"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:perl2lcov"
+      ],
+      "rationale": "Upstream behavior driver for Devel::Cover conversion. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "234f6d0df9710fe91cbacdfaec4178129993464140de2c31be1b093ee8e42973",
+      "source": "tests/perl2lcov/perltest1.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.synthetic-tracefiles"
+      ],
+      "classification": "internal_test_infrastructure",
+      "consumer_evidence": [
+        "tests/common.mak:137"
+      ],
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Synthetic size profile consumed only by the internal mkinfo harness at tests/common.mak:137; public commands consume the generated tracefiles, not this profile file, so no command owner applies.",
+      "review_status": "reviewed",
+      "sha256": "a2492d637ad84e28315ef58d70961432bedd16b56df59a7b8d7fc2110143d8e6",
+      "source": "tests/profiles/large",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.synthetic-tracefiles"
+      ],
+      "classification": "internal_test_infrastructure",
+      "consumer_evidence": [
+        "tests/common.mak:137"
+      ],
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Synthetic size profile consumed only by the internal mkinfo harness at tests/common.mak:137; public commands consume the generated tracefiles, not this profile file, so no command owner applies.",
+      "review_status": "reviewed",
+      "sha256": "cecbf0ad0652c23788263bbae1ee9f1bf461e78b083c53aa8a24bc2672f4b71f",
+      "source": "tests/profiles/medium",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.synthetic-tracefiles"
+      ],
+      "classification": "internal_test_infrastructure",
+      "consumer_evidence": [
+        "tests/common.mak:137"
+      ],
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Synthetic size profile consumed only by the internal mkinfo harness at tests/common.mak:137; public commands consume the generated tracefiles, not this profile file, so no command owner applies.",
+      "review_status": "reviewed",
+      "sha256": "adc07d08956aa9c0300e7294d0252991bc5673f96b4d80a171d17bbbfcd08b11",
+      "source": "tests/profiles/small",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "2beb474c0353857363073ed0b57669ac4c1dae10ebdee36cd5819e92c2e3b5aa",
+      "source": "tests/py2lcov/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "converter.python"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/py2lcov/py2lcov.sh:67",
+        "tests/py2lcov/test.py:3"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:py2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in Coverage.py imported function extents and branch-exclusion markers; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "40a3867c5818ab2466321893137bda71c198f5ab4f8d7684c8f31dae9830e153",
+      "source": "tests/py2lcov/localmodule.py",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "converter.python"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:py2lcov"
+      ],
+      "rationale": "Upstream behavior driver for Coverage.py conversion. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "fc00bcd2e851859777ffcbe9e9e87f51417cb55baee279e35240ddbe94a0bc60",
+      "source": "tests/py2lcov/py2lcov.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "converter.python"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/py2lcov/py2lcov.sh:127",
+        "tests/py2lcov/py2lcov.sh:67",
+        "tests/py2lcov/py2lcov.sh:74"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:py2lcov"
+      ],
+      "rationale": "Upstream source-program fixture used in Coverage.py direct and XML conversion, checksums, modes, and exclusions; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "e4660b9ede1067209fc0003b6c58083237bfcfb337e8c24d5c0559d655ae25c2",
+      "source": "tests/py2lcov/test.py",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "6e07a4847677f19a0fd3076bd91cb6249472de6dcac75280f31d129842b90278",
+      "source": "tests/scripts/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "support-script.batch-git-version"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:batchGitVersion.pm"
+      ],
+      "rationale": "Upstream behavior driver for batch Git version callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "aed8aef5f93d01764547713e39ab616d0b49b450332c5a2899690dae15f0eeb3",
+      "source": "tests/scripts/batchgitversion_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.git-annotation"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:gitblame",
+        "support-script:gitblame.pm"
+      ],
+      "rationale": "Upstream behavior driver for Git annotation callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "2b86063c17009d18319b3cfe75955d5481ceaf57da7132c6e1e98f11e36e532e",
+      "source": "tests/scripts/gitblame_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.git-diff"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:gitdiff"
+      ],
+      "rationale": "Upstream behavior driver for Git revision diffs. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "7c0103d31e0fd5e42e607412a184c9dad7b6b8a32aada8461e0f773f0661d967",
+      "source": "tests/scripts/gitdiff_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.git-version"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:gitversion",
+        "support-script:gitversion.pm"
+      ],
+      "rationale": "Upstream behavior driver for Git version callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "c5b6ffa1b0962679dbe3543b05c6cda5b5a460498288ec5cdb29b8ca8dc0ea24",
+      "source": "tests/scripts/gitversion_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.p4-annotation"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:p4annotate",
+        "support-script:p4annotate.pm"
+      ],
+      "rationale": "Upstream behavior driver for Perforce annotation callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "93ee66e88aeefa817bebf77022447cb1ceb8b54fa7fa9f63a990ee6dca1929e6",
+      "source": "tests/scripts/p4annotate_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.p4-diff"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:p4udiff"
+      ],
+      "rationale": "Upstream behavior driver for Perforce revision diffs. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "002d290937f9429400ceb2ccde573956ac763308e14d8f0d1a1222d21d2da78a",
+      "source": "tests/scripts/p4udiff_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "support-script.p4-version"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "support-script:P4version.pm",
+        "support-script:getp4version"
+      ],
+      "rationale": "Upstream behavior driver for Perforce version callbacks. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "fc892e5ccf22e487fc05fad58526e4d390ee4278779a93d28e774c26ba4ebd72",
+      "source": "tests/scripts/p4version_test.sh",
+      "upstream_execution": "active"
+    },
+    {
+      "behavior_groups": [
+        "test-harness.orchestration"
+      ],
+      "classification": "internal_test_infrastructure",
+      "evidence_scope": "internal_only",
+      "owners": [],
+      "rationale": "Upstream Makefile that selects or launches tests; it is harness orchestration, not an installed LCOV behavior.",
+      "review_status": "reviewed",
+      "sha256": "a6c28f9ff7188f4185cade078450ec3dd6c3077adcbdaf640bcefc5ab71a0d24",
+      "source": "tests/xml2lcov/Makefile",
+      "upstream_execution": "not_applicable"
+    },
+    {
+      "behavior_groups": [
+        "converter.xml"
+      ],
+      "classification": "fixture",
+      "consumer_evidence": [
+        "tests/xml2lcov/xml2lcov.sh:50",
+        "tests/xml2lcov/xml2lcov.sh:59",
+        "tests/xml2lcov/xml2lcov.sh:68",
+        "tests/xml2lcov/xml2lcov.sh:93"
+      ],
+      "evidence_scope": "fixture_support",
+      "owners": [
+        "command:xml2lcov"
+      ],
+      "rationale": "Upstream coverage-input fixture used in Cobertura normal, verbose, version-callback, and CLI-error conversion; it supports evidence but does not execute a public surface by itself.",
+      "review_status": "reviewed",
+      "sha256": "ef597d581c33572faf5f315349d981acfefec436436eca319c48eab923a9ad72",
+      "source": "tests/xml2lcov/coverage.xml",
+      "upstream_execution": "supporting"
+    },
+    {
+      "behavior_groups": [
+        "converter.xml"
+      ],
+      "classification": "public_behavior",
+      "evidence_scope": "direct_public_behavior",
+      "owners": [
+        "command:xml2lcov"
+      ],
+      "rationale": "Upstream behavior driver for Cobertura XML conversion. It invokes the assigned installed command or support script and asserts observable results.",
+      "review_status": "reviewed",
+      "sha256": "99cba3ad0c5a09356bb3805df648be442884d36f33bf69d837f74384b11c124c",
+      "source": "tests/xml2lcov/xml2lcov.sh",
+      "upstream_execution": "active"
+    }
+  ],
+  "owners": [
+    {
+      "description": "HTML report generator",
+      "id": "command:genhtml",
+      "kind": "command",
+      "name": "genhtml"
+    },
+    {
+      "description": "GCC coverage capture command",
+      "id": "command:geninfo",
+      "kind": "command",
+      "name": "geninfo"
+    },
+    {
+      "description": "Coverage capture and tracefile operations command",
+      "id": "command:lcov",
+      "kind": "command",
+      "name": "lcov"
+    },
+    {
+      "description": "LLVM export converter",
+      "id": "command:llvm2lcov",
+      "kind": "command",
+      "name": "llvm2lcov"
+    },
+    {
+      "description": "Devel::Cover database converter",
+      "id": "command:perl2lcov",
+      "kind": "command",
+      "name": "perl2lcov"
+    },
+    {
+      "description": "Coverage.py database converter",
+      "id": "command:py2lcov",
+      "kind": "command",
+      "name": "py2lcov"
+    },
+    {
+      "description": "Cobertura XML converter",
+      "id": "command:xml2lcov",
+      "kind": "command",
+      "name": "xml2lcov"
+    },
+    {
+      "description": "Perforce version callback module",
+      "id": "support-script:P4version.pm",
+      "kind": "support_script",
+      "name": "P4version.pm"
+    },
+    {
+      "description": "Batch Git version callback module",
+      "id": "support-script:batchGitVersion.pm",
+      "kind": "support_script",
+      "name": "batchGitVersion.pm"
+    },
+    {
+      "description": "Perforce version callback executable",
+      "id": "support-script:getp4version",
+      "kind": "support_script",
+      "name": "getp4version"
+    },
+    {
+      "description": "Git annotation callback executable",
+      "id": "support-script:gitblame",
+      "kind": "support_script",
+      "name": "gitblame"
+    },
+    {
+      "description": "Git annotation callback module",
+      "id": "support-script:gitblame.pm",
+      "kind": "support_script",
+      "name": "gitblame.pm"
+    },
+    {
+      "description": "Git revision-diff helper",
+      "id": "support-script:gitdiff",
+      "kind": "support_script",
+      "name": "gitdiff"
+    },
+    {
+      "description": "Git version callback executable",
+      "id": "support-script:gitversion",
+      "kind": "support_script",
+      "name": "gitversion"
+    },
+    {
+      "description": "Git version callback module",
+      "id": "support-script:gitversion.pm",
+      "kind": "support_script",
+      "name": "gitversion.pm"
+    },
+    {
+      "description": "Perforce annotation callback executable",
+      "id": "support-script:p4annotate",
+      "kind": "support_script",
+      "name": "p4annotate"
+    },
+    {
+      "description": "Perforce annotation callback module",
+      "id": "support-script:p4annotate.pm",
+      "kind": "support_script",
+      "name": "p4annotate.pm"
+    },
+    {
+      "description": "Perforce revision-diff helper",
+      "id": "support-script:p4udiff",
+      "kind": "support_script",
+      "name": "p4udiff"
+    }
+  ],
+  "review_policy": "Reviewed mappings come only from explicit driver, infrastructure, helper, and file rules. Other recognized fixtures retain a provisional directory-level behavior group with review_status unreviewed and no owner; generation must not infer a command or support-script owner from a similar filename.",
+  "schema_version": 1,
+  "totals": {
+    "classification": {
+      "fixture": 101,
+      "internal_test_infrastructure": 52,
+      "public_behavior": 52
+    },
+    "evidence_scope": {
+      "direct_public_behavior": 51,
+      "fixture_support": 101,
+      "indirect_public_behavior": 1,
+      "internal_only": 52
+    },
+    "expected_source_files": 205,
+    "mapped_source_files": 205,
+    "owner_coverage": {
+      "assigned": 153,
+      "not_applicable_internal": 52,
+      "unresolved": 0
+    },
+    "review_status": {
+      "reviewed": 205,
+      "unreviewed": 0
+    },
+    "unmapped_source_files": 0,
+    "upstream_execution": {
+      "active": 44,
+      "disabled": 8,
+      "not_applicable": 52,
+      "supporting": 101
+    }
+  },
+  "upstream": {
+    "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "release": "v2.5",
+    "test_root": "tests",
+    "tests_tree": "5359e39af058f1fb0d14f711055afea1d0bf33f7"
+  }
+}

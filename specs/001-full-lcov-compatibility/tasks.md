@@ -27,18 +27,36 @@
 
 ## M0 Current: Week 1 Contract Completion
 
-- [ ] Add classification and source-reference fields to inventory entries.
-- [ ] Review every command option and remove extraction false positives.
-- [ ] Inventory short options and positional argument forms.
-- [ ] Review all 130 `lcovrc` candidates and configuration precedence rules.
+- [x] Add classification and source-reference fields to inventory entries.
+- [x] Review every command option and remove extraction false positives.
+- [x] Inventory explicit short aliases and parser-backed positional argument forms.
+- [x] Record parser policies and observed generated-token resolution for all commands.
+- [x] Review all 158 `lcovrc` candidates.
+- [ ] Plan configuration discovery and precedence behavior.
 - [ ] Inventory environment variables and configuration discovery paths.
 - [ ] Inventory every tracefile record and malformed-input behavior.
 - [ ] Inventory error/warning classes, exit status, ignore, and keep-going rules.
-- [ ] Inventory callbacks, support scripts, installation layout, and assets.
-- [ ] Map all 205 upstream test files to public behaviors or internal coverage.
+- [x] Review all 23 installed support scripts and callback planning subjects.
+- [ ] Complete installation-layout and asset behavior planning.
+- [x] Map all 205 upstream test files to public behaviors or internal coverage.
 - [ ] Define high-risk option and configuration interaction groups.
-- [ ] Write the callback/runtime ADR.
-- [ ] Write the initial compiler/platform matrix ADR.
+- [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
+- [x] Write the callback/runtime ADR.
+- [x] Write the initial compiler/platform matrix ADR.
+
+Current contract metrics: all 584 inventory entries and all 205 upstream test
+mappings are reviewed. The inventory contains 394 command candidates, 9
+positional forms, 158 configuration entries, and 23 support scripts. Command
+review classifies 346 options as public, 41 as generated tokens, and 7 as
+internal. The default profile resolves 9 generated tokens as unique
+abbreviations, rejects 2 as ambiguous, and rejects 30 as unknown; the POSIX
+profile rejects all 41 as unknown. These are pinned-Oracle observations and do
+not count as product evidence.
+
+Behavior planning covers all 531 public entries with primary case skeletons,
+but only 23 are reviewed. The current M0 gate reports 512 gaps: 508 public
+entries without reviewed primary cases and 4 unreviewed critical interaction
+domains.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 
@@ -47,7 +65,7 @@
 - [ ] Build representative tracefile fixtures from upstream and real projects.
 - [ ] Add user CPU, system CPU, and peak RSS measurement.
 - [ ] Capture upstream correctness baselines.
-- [ ] Capture startup, tracefile, operation, and report performance baselines.
+- [x] Capture and retain startup, tracefile, operation, and report Oracle performance baselines.
 - [ ] Specify the byte-preserving coverage model.
 - [ ] Specify the complete LCOV 2.5 tracefile grammar.
 - [ ] Define parse/write algebra and property tests.
@@ -57,7 +75,7 @@
 
 ## M1 Ready When
 
-- [ ] No candidate inventory entry remains unclassified.
+- [x] No candidate inventory entry remains unclassified.
 - [ ] Every public behavior has a planned case group.
 - [ ] Callback/runtime and compiler-matrix decisions are accepted.
 - [ ] Upstream baselines are reproducible from a clean checkout.

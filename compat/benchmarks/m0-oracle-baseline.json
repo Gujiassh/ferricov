@@ -1,0 +1,128 @@
+{
+  "cases": [
+    {
+      "approval": {
+        "basis": "owner-directed-m0-oracle-baseline",
+        "representative": true,
+        "status": "approved"
+      },
+      "arguments": [
+        "--version"
+      ],
+      "command": "lcov",
+      "correctness_requirement": {
+        "required_evidence_scope": "compatibility",
+        "required_status": "pass"
+      },
+      "expected_exit_code": 0,
+      "family": "startup",
+      "fixture": null,
+      "id": "startup-lcov-version",
+      "inventory_entries": [
+        "command.lcov.option.version"
+      ],
+      "measured_runs": 3,
+      "warmup_runs": 1
+    },
+    {
+      "approval": {
+        "basis": "owner-directed-m0-oracle-baseline",
+        "representative": true,
+        "status": "approved"
+      },
+      "arguments": [
+        "--summary",
+        "input.info"
+      ],
+      "command": "lcov",
+      "correctness_requirement": {
+        "required_evidence_scope": "compatibility",
+        "required_status": "pass"
+      },
+      "expected_exit_code": 0,
+      "family": "tracefile",
+      "fixture": {
+        "path": "compat/benchmarks/fixtures/tracefile",
+        "tree_sha256": "sha256:4ba8d3519f5369a0c4ffcc5b6a5c0d0dd1075d014fc6b098c05f9b68eccbdc31"
+      },
+      "id": "tracefile-lcov-summary",
+      "inventory_entries": [
+        "command.lcov.option.summary"
+      ],
+      "measured_runs": 3,
+      "warmup_runs": 1
+    },
+    {
+      "approval": {
+        "basis": "owner-directed-m0-oracle-baseline",
+        "representative": true,
+        "status": "approved"
+      },
+      "arguments": [
+        "--add-tracefile",
+        "input-*.info",
+        "--output-file",
+        "merged.info"
+      ],
+      "command": "lcov",
+      "correctness_requirement": {
+        "required_evidence_scope": "compatibility",
+        "required_status": "pass"
+      },
+      "expected_exit_code": 0,
+      "family": "operation",
+      "fixture": {
+        "path": "compat/benchmarks/fixtures/operation",
+        "tree_sha256": "sha256:175ef5d6a5fcc9533519137128394af9b347bcbc1d0198609d037b43d1bb6fde"
+      },
+      "id": "operation-lcov-merge",
+      "inventory_entries": [
+        "command.lcov.option.add-tracefile",
+        "command.lcov.option.output-file"
+      ],
+      "measured_runs": 3,
+      "warmup_runs": 1
+    },
+    {
+      "approval": {
+        "basis": "owner-directed-m0-oracle-baseline",
+        "representative": true,
+        "status": "approved"
+      },
+      "arguments": [
+        "--output-directory",
+        "html",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "correctness_requirement": {
+        "required_evidence_scope": "compatibility",
+        "required_status": "pass"
+      },
+      "expected_exit_code": 0,
+      "family": "report",
+      "fixture": {
+        "path": "compat/benchmarks/fixtures/report",
+        "tree_sha256": "sha256:13885aec01ea29c3a11cc7ffa257c74f67abe31b3f405b02c3780008944be879"
+      },
+      "id": "report-genhtml-default",
+      "inventory_entries": [
+        "command.genhtml.option.output-directory"
+      ],
+      "measured_runs": 3,
+      "warmup_runs": 1
+    }
+  ],
+  "environment_variables": {
+    "LC_ALL": "C",
+    "TZ": "UTC"
+  },
+  "evidence_scope": "oracle_baseline",
+  "image_reference": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "measurement_tool": {
+    "path": "compat/benchmarks/measure.py",
+    "sha256": "sha256:0d19be022b27b886862290148770dea10d2c7ac9b62dbd75a1cc1e4b230a4687"
+  },
+  "schema_version": 1,
+  "suite_id": "m0-oracle-baseline"
+}

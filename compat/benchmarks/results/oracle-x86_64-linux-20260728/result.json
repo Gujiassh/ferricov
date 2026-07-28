@@ -1,0 +1,239 @@
+{
+  "cases": [
+    {
+      "case_id": "startup-lcov-version",
+      "family": "startup",
+      "measured_samples": 3,
+      "summary": {
+        "measured_samples": 3,
+        "output_bytes": 0,
+        "output_files": 0,
+        "peak_rss_bytes": {
+          "maximum": 34897920,
+          "median": 34570240,
+          "minimum": 34570240
+        },
+        "system_cpu_time_ns": {
+          "maximum": 31481000,
+          "median": 27572000,
+          "minimum": 12271000
+        },
+        "user_cpu_time_ns": {
+          "maximum": 110443000,
+          "median": 90594000,
+          "minimum": 82640000
+        },
+        "wall_time_ns": {
+          "maximum": 123250627,
+          "median": 118653456,
+          "minimum": 114554004
+        }
+      },
+      "warmup_samples": 1
+    },
+    {
+      "case_id": "tracefile-lcov-summary",
+      "family": "tracefile",
+      "measured_samples": 3,
+      "summary": {
+        "measured_samples": 3,
+        "output_bytes": 0,
+        "output_files": 0,
+        "peak_rss_bytes": {
+          "maximum": 34897920,
+          "median": 34734080,
+          "minimum": 34734080
+        },
+        "system_cpu_time_ns": {
+          "maximum": 31317000,
+          "median": 27560000,
+          "minimum": 4107000
+        },
+        "user_cpu_time_ns": {
+          "maximum": 102679000,
+          "median": 90554000,
+          "minimum": 82209000
+        },
+        "wall_time_ns": {
+          "maximum": 118526381,
+          "median": 113890250,
+          "minimum": 107163997
+        }
+      },
+      "warmup_samples": 1
+    },
+    {
+      "case_id": "operation-lcov-merge",
+      "family": "operation",
+      "measured_samples": 3,
+      "summary": {
+        "measured_samples": 3,
+        "output_bytes": 225,
+        "output_files": 1,
+        "peak_rss_bytes": {
+          "maximum": 34897920,
+          "median": 34734080,
+          "minimum": 34734080
+        },
+        "system_cpu_time_ns": {
+          "maximum": 23406000,
+          "median": 12316000,
+          "minimum": 3989000
+        },
+        "user_cpu_time_ns": {
+          "maximum": 107722000,
+          "median": 98528000,
+          "minimum": 93627000
+        },
+        "wall_time_ns": {
+          "maximum": 117407675,
+          "median": 112174909,
+          "minimum": 111394681
+        }
+      },
+      "warmup_samples": 1
+    },
+    {
+      "case_id": "report-genhtml-default",
+      "family": "report",
+      "measured_samples": 3,
+      "summary": {
+        "measured_samples": 3,
+        "output_bytes": 46057,
+        "output_files": 13,
+        "peak_rss_bytes": {
+          "maximum": 41779200,
+          "median": 41615360,
+          "minimum": 41615360
+        },
+        "system_cpu_time_ns": {
+          "maximum": 55492000,
+          "median": 31564000,
+          "minimum": 20024000
+        },
+        "user_cpu_time_ns": {
+          "maximum": 117252000,
+          "median": 110474000,
+          "minimum": 96069000
+        },
+        "wall_time_ns": {
+          "maximum": 151785086,
+          "median": 143148760,
+          "minimum": 137359743
+        }
+      },
+      "warmup_samples": 1
+    }
+  ],
+  "correctness_gate": {
+    "evidence": null,
+    "reason": "candidate_not_available",
+    "required_evidence_scope": "compatibility",
+    "status": "not_evaluated"
+  },
+  "execution_manifest": {
+    "bytes": 8931,
+    "path": "compat/manifests/oracle-lcov-v2.5-smoke.json",
+    "sha256": "sha256:a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981"
+  },
+  "measurement_tool": {
+    "bytes": 3029,
+    "path": "compat/benchmarks/measure.py",
+    "sha256": "sha256:0d19be022b27b886862290148770dea10d2c7ac9b62dbd75a1cc1e4b230a4687"
+  },
+  "performance_gate": {
+    "reason": "candidate_not_available",
+    "status": "not_evaluated"
+  },
+  "raw_samples": [
+    {
+      "bytes": 1753,
+      "path": "samples/startup-lcov-version-warmup-000/sample.json",
+      "sha256": "sha256:9dd30a8e75af25ac5d8d25edc7aba0c226fe7f512906d551680a360ad3770477"
+    },
+    {
+      "bytes": 1764,
+      "path": "samples/startup-lcov-version-measured-000/sample.json",
+      "sha256": "sha256:e271728c6b7255e98120be184f9fb6bdc3c100192b5bbd716c2f20d9d07a070b"
+    },
+    {
+      "bytes": 1763,
+      "path": "samples/startup-lcov-version-measured-001/sample.json",
+      "sha256": "sha256:45c624cbd40f88084c02d639c61d52f8be925fb25b754a3ecad5f4db6e9fdf66"
+    },
+    {
+      "bytes": 1763,
+      "path": "samples/startup-lcov-version-measured-002/sample.json",
+      "sha256": "sha256:91ea207696bc0f5984f44044fec37067ee56166de4bddeab1fe4d8b2fc6c90b1"
+    },
+    {
+      "bytes": 1835,
+      "path": "samples/tracefile-lcov-summary-warmup-000/sample.json",
+      "sha256": "sha256:c8b05a8afa825d7959a56a9cc2c5d2e02e66bd95f7fb5e60409a30082baad782"
+    },
+    {
+      "bytes": 1845,
+      "path": "samples/tracefile-lcov-summary-measured-000/sample.json",
+      "sha256": "sha256:131bd5c1d7841552bf2899c35a794d80af39213b840bca6fa31816b2307c4c52"
+    },
+    {
+      "bytes": 1845,
+      "path": "samples/tracefile-lcov-summary-measured-001/sample.json",
+      "sha256": "sha256:0c5abf1a5d229d222125d766326955d8503d54cb3db59476f8b9629f34d02bc7"
+    },
+    {
+      "bytes": 1845,
+      "path": "samples/tracefile-lcov-summary-measured-002/sample.json",
+      "sha256": "sha256:f43f6af0328061bfabfa5f65a2455f22b7e2d3447d6a708d52fee521673f754b"
+    },
+    {
+      "bytes": 1829,
+      "path": "samples/operation-lcov-merge-warmup-000/sample.json",
+      "sha256": "sha256:64712a488fd5eb5b3a281793969fee9787393bae99529950d309c85ab564d9c8"
+    },
+    {
+      "bytes": 1839,
+      "path": "samples/operation-lcov-merge-measured-000/sample.json",
+      "sha256": "sha256:c6e5095ccff72f814ba3f75e73807ab3517fbb4c2694ea6795c0a1f866298208"
+    },
+    {
+      "bytes": 1840,
+      "path": "samples/operation-lcov-merge-measured-001/sample.json",
+      "sha256": "sha256:85073b737d7dc6f360d93974feadef6eff7af7473e82c43a782eeff7d3bd7de5"
+    },
+    {
+      "bytes": 1840,
+      "path": "samples/operation-lcov-merge-measured-002/sample.json",
+      "sha256": "sha256:68be4dee269ec7bbe7d8b2f87a6af978f4711eba0fe4193f0999d593305176f3"
+    },
+    {
+      "bytes": 1842,
+      "path": "samples/report-genhtml-default-warmup-000/sample.json",
+      "sha256": "sha256:f86f9774eba770f04da0c94f19caa24ef3730091040950bb811d20cee0d1b847"
+    },
+    {
+      "bytes": 1851,
+      "path": "samples/report-genhtml-default-measured-000/sample.json",
+      "sha256": "sha256:2ff8dcf8efc631462f8a9a97cead439449bcc8367fc1433942d0d37d25558aa5"
+    },
+    {
+      "bytes": 1852,
+      "path": "samples/report-genhtml-default-measured-001/sample.json",
+      "sha256": "sha256:0feefe681ad1f21aeb8c352adee36746e2d97f6b911b6477b920a876a8724b5c"
+    },
+    {
+      "bytes": 1852,
+      "path": "samples/report-genhtml-default-measured-002/sample.json",
+      "sha256": "sha256:c65aed31ba534877c10ec17a60ca8a92f926e501e19ece9626b55a4f8d008cc4"
+    }
+  ],
+  "recorded_at": "2026-07-27T16:51:37Z",
+  "result_id": "m0-oracle-baseline-oracle",
+  "schema_version": 1,
+  "status": "baseline_only",
+  "suite": {
+    "bytes": 3549,
+    "path": "compat/benchmarks/m0-oracle-baseline.json",
+    "sha256": "sha256:2dc1a3ad5028a22e0ab6b1c6315bcf7f9d0d02212cff5fadbf29cca5cf298e48"
+  }
+}

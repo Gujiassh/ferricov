@@ -23,7 +23,18 @@
     },
     "environment_variables": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "not": { "pattern": "\\u0000" }
+      }
+    },
+    "timeout_seconds": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 3600
     },
     "runtime": {
       "oneOf": [
@@ -68,7 +79,10 @@
   "oneOf": [
     {
       "properties": {
-        "program": { "pattern": "\\{command\\}" },
+        "program": {
+          "pattern": "\\{command\\}",
+          "not": { "pattern": "\\{command\\}.*\\{command\\}" }
+        },
         "arguments": {
           "not": {
             "contains": { "type": "string", "pattern": "\\{command\\}" }
@@ -80,7 +94,11 @@
       "properties": {
         "program": { "not": { "pattern": "\\{command\\}" } },
         "arguments": {
-          "contains": { "type": "string", "pattern": "\\{command\\}" },
+          "contains": {
+            "type": "string",
+            "pattern": "\\{command\\}",
+            "not": { "pattern": "\\{command\\}.*\\{command\\}" }
+          },
           "minContains": 1,
           "maxContains": 1
         }

@@ -1,0 +1,1450 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-cli-contract-policy",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-policy-shared-unique-abbreviation",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--hel"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-ambiguous-abbreviation",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--ver"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-case-insensitive",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--HELP"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-single-dash-long",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "-help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-plus-prefix",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "+help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-no-bundling",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "-qv"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-permute",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "operand",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-converter-abbreviation",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--hel"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-unique-abbreviation",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "--hel"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-version-abbreviation",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [
+        "--ver"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-case-insensitive",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "--HELP"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-single-dash-long",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "-help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-plus-prefix",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "+help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-no-bundling",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "-??"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-direct-permute",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "operand",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-unique-abbreviation",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--verb",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-ambiguous-abbreviation",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--ver",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-case-sensitive",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "--VERB",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-rejects-single-dash-long",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "-checksum",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-plus-is-positional",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "+help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/plus-positional",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-short-option-cluster",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "-vk",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-parse-args-boundary",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "first.xml",
+        "--no",
+        "later.xml"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-argparse-xml-unique-abbreviation",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "--verb",
+        "input.xml"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-no-parser-mixed-argv-ignored-control",
+      "surface": "cli",
+      "command": "xml2lcovutil.py",
+      "arguments": [
+        "+help",
+        "-help",
+        "--HELP",
+        "operand"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-lcov-config-file-exact",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-lcov-rc-exact",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--rc",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-genhtml-config-file-exact",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-genhtml-rc-exact",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--rc",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-geninfo-config-file-exact",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "--config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-geninfo-rc-exact",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "--rc",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-perl2lcov-config-file-exact",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-perl2lcov-rc-exact",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--rc",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-llvm2lcov-config-file-exact",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-llvm2lcov-rc-exact",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "--rc",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-config-file-single-dash-exact",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "-config-file",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-config-file-abbreviation-rejected",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--config-f",
+        "empty.lcovrc",
+        "--help"
+      ],
+      "fixture": "compat/fixtures/m0-cli-contract/config",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-shared-rc-case-insensitive-exact",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "--RC",
+        "branch_coverage=0",
+        "--help"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-lcov-h",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-lcov-question",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-genhtml-h",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-genhtml-question",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-geninfo-h",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-geninfo-question",
+      "surface": "cli",
+      "command": "geninfo",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-genpng-h",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-gendesc-question",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-gendesc-h",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-perl2lcov-h",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-perl2lcov-question",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-py2lcov-h",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-xml2lcov-h",
+      "surface": "cli",
+      "command": "xml2lcov",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-llvm2lcov-h",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "-h"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-policy-help-alias-llvm2lcov-question",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": [
+        "-?"
+      ],
+      "fixture": null,
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

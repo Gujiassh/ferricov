@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 13,
+  "shard_count": 31,
+  "content_hash": "sha256:0c5efc912bced61e31511927d716a836c0e73182ccea589cdc4712a0720c4427",
+  "reviewed_entries": [
+    {
+      "id": "command.geninfo.option.substitute",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.substitute",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 46
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 60
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 388
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 588
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1282
+        }
+      ],
+      "generated_canonical_name_assertion": "--substitute",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.tempdir",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.tempdir",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 19
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 70
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 660
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1237
+        }
+      ],
+      "generated_canonical_name_assertion": "--tempdir",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.test-name",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.test-name",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 25
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 25
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 652
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 247
+        }
+      ],
+      "generated_canonical_name_assertion": "--test-name",
+      "aliases": [
+        "-t"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.toolname",
+      "review_status": "reviewed",
+      "classification": "internal",
+      "generated_id_assertion": "command.geninfo.option.toolname",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1250
+        }
+      ],
+      "generated_canonical_name_assertion": "--toolname",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.unreachable-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.unreachable-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 69
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 146
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 599
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 763
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 851
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1266
+        }
+      ],
+      "generated_canonical_name_assertion": "--unreachable-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.verbose",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.verbose",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 10
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 606
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1245
+        }
+      ],
+      "generated_canonical_name_assertion": "--verbose",
+      "aliases": [
+        "-v"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.version",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 9
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 18
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 657
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1248
+        }
+      ],
+      "generated_canonical_name_assertion": "--version",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.version-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.version-script",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 50
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 68
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 262
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 594
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 694
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 926
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 929
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1238
+        }
+      ],
+      "generated_canonical_name_assertion": "--version-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genpng.option.dark-mode",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.option.dark-mode",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genpng.txt",
+          "line": 11
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 24
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 62
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 85
+        }
+      ],
+      "generated_canonical_name_assertion": "--dark-mode",
+      "aliases": [
+        "-d"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    },
+    {
+      "id": "command.genpng.option.help",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.option.help",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genpng.txt",
+          "line": 7
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 43
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 86
+        }
+      ],
+      "generated_canonical_name_assertion": "--help",
+      "aliases": [
+        "-h"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    },
+    {
+      "id": "command.genpng.option.output-filename",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.option.output-filename",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genpng.txt",
+          "line": 12
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 25
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 66
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 84
+        }
+      ],
+      "generated_canonical_name_assertion": "--output-filename",
+      "aliases": [
+        "-o"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    },
+    {
+      "id": "command.genpng.option.tab-size",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.option.tab-size",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genpng.txt",
+          "line": 9
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 22
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 49
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 82
+        }
+      ],
+      "generated_canonical_name_assertion": "--tab-size",
+      "aliases": [
+        "-t"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    },
+    {
+      "id": "command.genpng.option.version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.option.version",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/genpng.txt",
+          "line": 8
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 21
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/genpng.rst",
+          "line": 46
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 87
+        }
+      ],
+      "generated_canonical_name_assertion": "--version",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    }
+  ]
+}

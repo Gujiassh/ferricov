@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/benchmark-sample-v1.json",
+  "title": "Ferricov raw benchmark sample",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "suite_id",
+    "case_id",
+    "family",
+    "sequence",
+    "phase",
+    "suite_sha256",
+    "execution_manifest_sha256",
+    "fixture_tree_sha256",
+    "observed_image_sha256",
+    "observed_executable_sha256",
+    "measurement_tool_sha256",
+    "measurement_backend",
+    "clock",
+    "outcome",
+    "outcome_matches_expected",
+    "metrics",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "sample_id": { "$ref": "#/$defs/identifier" },
+    "suite_id": { "$ref": "#/$defs/identifier" },
+    "case_id": { "$ref": "#/$defs/identifier" },
+    "family": { "enum": ["startup", "tracefile", "operation", "report"] },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "phase": { "enum": ["warmup", "measured"] },
+    "suite_sha256": { "$ref": "#/$defs/sha256" },
+    "execution_manifest_sha256": { "$ref": "#/$defs/sha256" },
+    "fixture_tree_sha256": {
+      "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/sha256" }]
+    },
+    "observed_image_sha256": { "$ref": "#/$defs/sha256" },
+    "observed_executable_sha256": { "$ref": "#/$defs/sha256" },
+    "measurement_tool_sha256": { "$ref": "#/$defs/sha256" },
+    "measurement_backend": { "const": "linux-rusage-children-v1" },
+    "clock": { "const": "monotonic" },
+    "outcome": { "$ref": "#/$defs/outcome" },
+    "outcome_matches_expected": { "type": "boolean" },
+    "metrics": { "$ref": "#/$defs/metrics" },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stdout", "stderr", "output_tree"],
+      "properties": {
+        "stdout": { "$ref": "#/$defs/artifact" },
+        "stderr": { "$ref": "#/$defs/artifact" },
+        "output_tree": { "$ref": "#/$defs/artifact" }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "pattern": "^[^/]+(/[^/]+)*$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relative_path" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "outcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["exit_code", "signal"],
+          "properties": {
+            "exit_code": { "type": "integer", "minimum": 0, "maximum": 255 },
+            "signal": { "type": "null" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["exit_code", "signal"],
+          "properties": {
+            "exit_code": { "type": "null" },
+            "signal": { "type": "integer", "minimum": 1 }
+          }
+        }
+      ]
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wall_time_ns",
+        "user_cpu_time_ns",
+        "system_cpu_time_ns",
+        "peak_rss_bytes",
+        "output_bytes",
+        "output_files"
+      ],
+      "properties": {
+        "wall_time_ns": { "type": "integer", "minimum": 1 },
+        "user_cpu_time_ns": { "type": "integer", "minimum": 0 },
+        "system_cpu_time_ns": { "type": "integer", "minimum": 0 },
+        "peak_rss_bytes": { "type": "integer", "minimum": 1 },
+        "output_bytes": { "type": "integer", "minimum": 0 },
+        "output_files": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/execution-manifest-v1.json",
+  "title": "Ferricov execution manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "recorded_at",
+    "status",
+    "evidence",
+    "oracle_source",
+    "image",
+    "platform",
+    "packages",
+    "installed_tree",
+    "reproducibility",
+    "toolchain",
+    "executables",
+    "launcher",
+    "execution",
+    "fixtures",
+    "outputs"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "manifest_id": { "$ref": "#/$defs/identifier" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "status": { "const": "observed" },
+    "evidence": { "$ref": "#/$defs/evidence" },
+    "oracle_source": { "$ref": "#/$defs/oracle_source" },
+    "image": { "$ref": "#/$defs/image" },
+    "platform": { "$ref": "#/$defs/platform" },
+    "packages": { "$ref": "#/$defs/packages" },
+    "installed_tree": { "$ref": "#/$defs/installed_tree" },
+    "reproducibility": { "$ref": "#/$defs/reproducibility" },
+    "toolchain": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/tool" }
+    },
+    "executables": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/executable" }
+    },
+    "launcher": { "$ref": "#/$defs/launcher" },
+    "execution": { "$ref": "#/$defs/execution" },
+    "fixtures": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fixture" }
+    },
+    "outputs": { "$ref": "#/$defs/outputs" }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "absolute_path": {
+      "type": "string",
+      "pattern": "^/([^/]+(/[^/]+)*)?$"
+    },
+    "relative_path": {
+      "type": "string",
+      "pattern": "^[^/]+(/[^/]+)*$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "inventory_entries"],
+      "properties": {
+        "scope": {
+          "enum": [
+            "environment_smoke",
+            "differential_behavior",
+            "capture_qualification",
+            "platform_qualification"
+          ]
+        },
+        "inventory_entries": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "scope": { "const": "environment_smoke" } },
+            "required": ["scope"]
+          },
+          "then": {
+            "properties": { "inventory_entries": { "maxItems": 0 } }
+          },
+          "else": {
+            "properties": { "inventory_entries": { "minItems": 1 } }
+          }
+        }
+      ]
+    },
+    "oracle_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "ref", "commit"],
+      "properties": {
+        "repository": {
+          "const": "https://github.com/linux-test-project/lcov.git"
+        },
+        "ref": { "const": "v2.5" },
+        "commit": {
+          "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "docker_image_id",
+        "base_image_digest",
+        "debian_snapshot",
+        "build_inputs_lock",
+        "build_inputs_lock_sha256",
+        "source_archive",
+        "source_archive_sha256",
+        "intersphinx_inventory",
+        "intersphinx_inventory_sha256",
+        "intersphinx_patch",
+        "intersphinx_patch_sha256",
+        "snapshot_ca_bundle",
+        "snapshot_ca_bundle_sha256",
+        "dockerfile",
+        "dockerfile_sha256",
+        "package_lock",
+        "package_lock_sha256",
+        "package_closure_lock",
+        "package_closure_lock_sha256",
+        "installed_tree_lock",
+        "installed_tree_lock_sha256",
+        "installed_tree_script",
+        "installed_tree_script_sha256",
+        "labels"
+      ],
+      "properties": {
+        "reference": { "type": "string", "minLength": 1 },
+        "docker_image_id": { "$ref": "#/$defs/sha256" },
+        "oci_manifest_digest": { "$ref": "#/$defs/sha256" },
+        "base_image_digest": { "$ref": "#/$defs/sha256" },
+        "debian_snapshot": {
+          "type": "string",
+          "pattern": "^[0-9]{8}T[0-9]{6}Z$"
+        },
+        "build_inputs_lock": { "$ref": "#/$defs/relative_path" },
+        "build_inputs_lock_sha256": { "$ref": "#/$defs/sha256" },
+        "source_archive": { "$ref": "#/$defs/relative_path" },
+        "source_archive_sha256": { "$ref": "#/$defs/sha256" },
+        "intersphinx_inventory": { "$ref": "#/$defs/relative_path" },
+        "intersphinx_inventory_sha256": { "$ref": "#/$defs/sha256" },
+        "intersphinx_patch": { "$ref": "#/$defs/relative_path" },
+        "intersphinx_patch_sha256": { "$ref": "#/$defs/sha256" },
+        "snapshot_ca_bundle": { "$ref": "#/$defs/relative_path" },
+        "snapshot_ca_bundle_sha256": { "$ref": "#/$defs/sha256" },
+        "dockerfile": { "$ref": "#/$defs/relative_path" },
+        "dockerfile_sha256": { "$ref": "#/$defs/sha256" },
+        "package_lock": { "$ref": "#/$defs/relative_path" },
+        "package_lock_sha256": { "$ref": "#/$defs/sha256" },
+        "package_closure_lock": { "$ref": "#/$defs/relative_path" },
+        "package_closure_lock_sha256": { "$ref": "#/$defs/sha256" },
+        "installed_tree_lock": { "$ref": "#/$defs/relative_path" },
+        "installed_tree_lock_sha256": { "$ref": "#/$defs/sha256" },
+        "installed_tree_script": { "$ref": "#/$defs/relative_path" },
+        "installed_tree_script_sha256": { "$ref": "#/$defs/sha256" },
+        "labels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "org.opencontainers.image.source",
+            "org.opencontainers.image.version",
+            "org.opencontainers.image.revision",
+            "dev.ferricov.base-image-digest",
+            "dev.ferricov.build-date",
+            "dev.ferricov.build-inputs-lock-sha256",
+            "dev.ferricov.debian-snapshot",
+            "dev.ferricov.intersphinx-inventory-sha256",
+            "dev.ferricov.snapshot-ca-bundle-sha256",
+            "dev.ferricov.source-archive-sha256",
+            "dev.ferricov.source-date-epoch"
+          ],
+          "properties": {
+            "org.opencontainers.image.source": { "type": "string", "minLength": 1 },
+            "org.opencontainers.image.version": { "type": "string", "minLength": 1 },
+            "org.opencontainers.image.revision": { "type": "string", "minLength": 1 },
+            "dev.ferricov.base-image-digest": { "$ref": "#/$defs/sha256" },
+            "dev.ferricov.build-date": { "type": "string", "format": "date" },
+            "dev.ferricov.build-inputs-lock-sha256": { "$ref": "#/$defs/sha256" },
+            "dev.ferricov.debian-snapshot": { "type": "string", "pattern": "^[0-9]{8}T[0-9]{6}Z$" },
+            "dev.ferricov.intersphinx-inventory-sha256": { "$ref": "#/$defs/sha256" },
+            "dev.ferricov.snapshot-ca-bundle-sha256": { "$ref": "#/$defs/sha256" },
+            "dev.ferricov.source-archive-sha256": { "$ref": "#/$defs/sha256" },
+            "dev.ferricov.source-date-epoch": { "type": "string", "pattern": "^[0-9]+$" }
+          }
+        }
+      }
+    },
+    "platform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operating_system",
+        "architecture",
+        "kernel",
+        "libc",
+        "target_triple",
+        "filesystem"
+      ],
+      "properties": {
+        "operating_system": { "type": "string", "minLength": 1 },
+        "architecture": { "type": "string", "minLength": 1 },
+        "kernel": { "type": "string", "minLength": 1 },
+        "libc": { "type": "string", "minLength": 1 },
+        "target_triple": { "type": "string", "minLength": 1 },
+        "filesystem": { "type": "string", "minLength": 1 }
+      }
+    },
+    "packages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "manifest_sha256"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 1 },
+        "manifest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "installed_tree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entries", "manifest_sha256"],
+      "properties": {
+        "entries": { "type": "integer", "minimum": 1 },
+        "manifest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "docker_image_ids",
+        "package_closure_sha256",
+        "installed_tree_sha256",
+        "key_files_sha256",
+        "smoke_sha256"
+      ],
+      "properties": {
+        "docker_image_ids": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/sha256" }
+        },
+        "package_closure_sha256": { "$ref": "#/$defs/sha256" },
+        "installed_tree_sha256": { "$ref": "#/$defs/sha256" },
+        "key_files_sha256": { "$ref": "#/$defs/sha256" },
+        "smoke_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "path", "sha256"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "version": { "type": "string", "minLength": 1 },
+        "path": { "$ref": "#/$defs/absolute_path" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "executable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "sha256"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "path": { "$ref": "#/$defs/absolute_path" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "launcher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "profile",
+        "configuration_sha256",
+        "environment_variables"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "profile": { "enum": ["default", "posixly_correct"] },
+        "configuration_sha256": { "$ref": "#/$defs/sha256" },
+        "environment_variables": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "profile": { "const": "posixly_correct" } },
+            "required": ["profile"]
+          },
+          "then": {
+            "properties": {
+              "environment_variables": {
+                "required": ["POSIXLY_CORRECT"],
+                "properties": { "POSIXLY_CORRECT": { "const": "1" } }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "environment_variables": {
+                "not": { "required": ["POSIXLY_CORRECT"] }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "working_directory", "user", "network", "mounts"],
+      "properties": {
+        "command": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "working_directory": { "$ref": "#/$defs/absolute_path" },
+        "user": { "type": "string", "minLength": 1 },
+        "network": { "const": "none" },
+        "mounts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/mount" }
+        }
+      }
+    },
+    "mount": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "type", "source", "destination", "read_only"],
+          "properties": {
+            "id": { "$ref": "#/$defs/identifier" },
+            "type": { "const": "bind" },
+            "source": { "type": "string", "minLength": 1 },
+            "destination": { "$ref": "#/$defs/absolute_path" },
+            "read_only": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "type", "destination", "read_only"],
+          "properties": {
+            "id": { "$ref": "#/$defs/identifier" },
+            "type": { "const": "tmpfs" },
+            "destination": { "$ref": "#/$defs/absolute_path" },
+            "read_only": { "const": false }
+          }
+        }
+      ]
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "kind", "sha256"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "path": { "$ref": "#/$defs/relative_path" },
+        "kind": { "enum": ["file", "tree"] },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exit_code", "stdout", "stderr", "filesystem"],
+      "properties": {
+        "exit_code": { "type": "integer" },
+        "stdout": { "$ref": "#/$defs/stream" },
+        "stderr": { "$ref": "#/$defs/stream" },
+        "filesystem": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["entries", "snapshot_sha256", "snapshot_base64"],
+          "properties": {
+            "entries": { "type": "integer", "minimum": 0 },
+            "snapshot_sha256": { "$ref": "#/$defs/sha256" },
+            "snapshot_base64": { "type": "string" }
+          }
+        }
+      }
+    },
+    "stream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bytes", "sha256", "content_base64"],
+      "properties": {
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "content_base64": { "type": "string" }
+      }
+    }
+  }
+}

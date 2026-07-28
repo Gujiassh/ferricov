@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 10,
+  "shard_count": 31,
+  "content_hash": "sha256:f48ee6731cf204c4d12742aebac545bf977ef5132cbb251f8e4e09e2738e0b38",
+  "reviewed_entries": [
+    {
+      "id": "command.geninfo.option.exclude",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.exclude",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 45
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 58
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 336
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 374
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 377
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1278
+        }
+      ],
+      "generated_canonical_name_assertion": "--exclude",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.expect-message-count",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.expect-message-count",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 42
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 520
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1271
+        }
+      ],
+      "generated_canonical_name_assertion": "--expect-message-count",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.external",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.external",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 42
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 48
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 331
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 334
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 259
+        }
+      ],
+      "generated_canonical_name_assertion": "--external",
+      "aliases": [
+        "-e"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.fail-under-branches",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.fail-under-branches",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 62
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1259
+        }
+      ],
+      "generated_canonical_name_assertion": "--fail-under-branches",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.fail-under-lines",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.fail-under-lines",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 63
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 530
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1258
+        }
+      ],
+      "generated_canonical_name_assertion": "--fail-under-lines",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.filter",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.filter",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 37
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 45
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 538
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 565
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 567
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1268
+        }
+      ],
+      "generated_canonical_name_assertion": "--filter",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.follow",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.follow",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 27
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 27
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 334
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 340
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 341
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 251
+        }
+      ],
+      "generated_canonical_name_assertion": "--follow",
+      "aliases": [
+        "-f"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.forget-test-names",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.forget-test-names",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 49
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 64
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 396
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1285
+        }
+      ],
+      "generated_canonical_name_assertion": "--forget-test-names",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.function-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.function-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 31
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1252
+        }
+      ],
+      "generated_canonical_name_assertion": "--function-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.gcov-tool",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.gcov-tool",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 36
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 36
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 76
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 95
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 346
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 349
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 351
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 357
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 358
+        },
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 254
+        }
+      ],
+      "generated_canonical_name_assertion": "--gcov-tool",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.help",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.help",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 8
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 17
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 249
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 364
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1247
+        }
+      ],
+      "generated_canonical_name_assertion": "--help",
+      "aliases": [
+        "-?",
+        "-h"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.history-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.history-script",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 54
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 320
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 322
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 629
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1277
+        }
+      ],
+      "generated_canonical_name_assertion": "--history-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.option.ignore-errors",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.option.ignore-errors",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/geninfo.txt",
+          "line": 16
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 41
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 404
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 411
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 443
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/geninfo.rst",
+          "line": 516
+        },
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1270
+        }
+      ],
+      "generated_canonical_name_assertion": "--ignore-errors",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

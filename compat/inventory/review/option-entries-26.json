@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 26,
+  "shard_count": 31,
+  "content_hash": "sha256:b3f7b29f4f0876580577e98ed501d89cda9d8a1de3e87aa769b7f8535ae28eb3",
+  "reviewed_entries": [
+    {
+      "id": "command.perl2lcov.option.function-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.function-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1252
+        }
+      ],
+      "generated_canonical_name_assertion": "--function-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.help",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.help",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1247
+        }
+      ],
+      "generated_canonical_name_assertion": "--help",
+      "aliases": [
+        "-?",
+        "-h"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.history-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.history-script",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1277
+        }
+      ],
+      "generated_canonical_name_assertion": "--history-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.ignore-error",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.perl2lcov.option.ignore-error",
+      "generated_source_assertions": [
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/perl2lcov.rst",
+          "line": 33
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/perl2lcov.rst",
+          "line": 94
+        }
+      ],
+      "generated_canonical_name_assertion": "--ignore-error",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "accepted_unique_abbreviation",
+          "target": "command.perl2lcov.option.ignore-errors"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.ignore-errors",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.ignore-errors",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1270
+        }
+      ],
+      "generated_canonical_name_assertion": "--ignore-errors",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.include",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.include",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1279
+        }
+      ],
+      "generated_canonical_name_assertion": "--include",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.keep-going",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.keep-going",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1273
+        }
+      ],
+      "generated_canonical_name_assertion": "--keep-going",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.mcdc-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.mcdc-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1254
+        }
+      ],
+      "generated_canonical_name_assertion": "--mcdc-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.memory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.memory",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1284
+        }
+      ],
+      "generated_canonical_name_assertion": "--memory",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.msg-log",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.msg-log",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1272
+        }
+      ],
+      "generated_canonical_name_assertion": "--msg-log",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.no-branch-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.no-branch-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1256
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-branch-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.no-checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.no-checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1243
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-checksum",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.perl2lcov.option.no-function-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.option.no-function-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1255
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-function-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    }
+  ]
+}

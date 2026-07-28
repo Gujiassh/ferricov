@@ -23,10 +23,14 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | --- | --- |
 | Compatibility target | LCOV `v2.5` at [`74c8eab`](https://github.com/linux-test-project/lcov/commit/74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5) |
 | Product compatibility | **0 verified commands**; implementation has not started |
-| Candidate inventory | 10 installed commands, 156 long options, 130 `lcovrc` keys, 23 support scripts |
-| Differential harness | 15 Rust unit tests, 6 Oracle self-tests, 1 intentional reverse failure, and 2 false-pass guards verified |
-| Performance | Contract defined; no candidate benchmark results exist yet |
-| Current milestone | M0: executable compatibility contract and reproducible baselines |
+| Candidate inventory | 584 reviewed entries: 394 command candidates, 9 positional forms, 158 `lcovrc` keys, and 23 support scripts |
+| Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
+| Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
+| Upstream test map | All 205 files mapped and reviewed |
+| Differential harness | 100 Rust unit tests, Python mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
+| M0 behavior planning | 531 public entries have primary case skeletons; 23 are reviewed, with 508 primary reviews and 4 critical interaction domains still open |
+| Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
+| Current milestone | M0: executable compatibility contract and reproducible baselines; 512 behavior-planning gaps remain |
 
 Self-tests prove that the harness captures differences and fails correctly.
 They do not count as Ferricov product compatibility. See the
@@ -116,7 +120,9 @@ without translating the upstream Perl architecture line by line.
 The current engineering estimate is 28-36 full-time weeks for one technical
 owner using AI assistance. It is an estimate, not a release promise. The
 [execution plan](specs/001-full-lcov-compatibility/plan.md) contains the
-dependencies, risks, go/no-go gates, and current tasks.
+dependencies, risks, go/no-go gates, and current tasks. The
+[changelog](CHANGELOG.md) records completed engineering slices without implying
+a compatibility release.
 
 ## Development
 

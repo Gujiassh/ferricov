@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "positional_argument_entries",
+  "shard_index": 0,
+  "shard_count": 1,
+  "content_hash": "sha256:61e54642a98e6aad0844541db3b4e4bed5ef70bbf04437b5a933015e4e7626fe",
+  "reviewed_entries": [
+    {
+      "id": "command.gendesc.positional.inputfile",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.gendesc.positional.inputfile",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/gendesc",
+          "line": 78
+        }
+      ],
+      "generated_canonical_name_assertion": "inputfile",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genhtml.positional.tracefile-pattern",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genhtml.positional.tracefile-pattern",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/genhtml",
+          "line": 7456
+        }
+      ],
+      "generated_canonical_name_assertion": "tracefile_pattern",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.geninfo.positional.directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.geninfo.positional.directory",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/geninfo",
+          "line": 307
+        }
+      ],
+      "generated_canonical_name_assertion": "directory",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.genpng.positional.sourcefile",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.genpng.positional.sourcefile",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/genpng",
+          "line": 93
+        }
+      ],
+      "generated_canonical_name_assertion": "sourcefile",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:GD"
+      ]
+    },
+    {
+      "id": "command.lcov.positional.operation-operands",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.lcov.positional.operation-operands",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/lcov",
+          "line": 299
+        }
+      ],
+      "generated_canonical_name_assertion": "operation_operands",
+      "applicability": "conditional",
+      "note": "Operands are consumed only by the selected lcov operation.",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.positional.json-file",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.positional.json-file",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/llvm2lcov",
+          "line": 553
+        }
+      ],
+      "generated_canonical_name_assertion": "json_file",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.perl2lcov.positional.cover-db",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.perl2lcov.positional.cover-db",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/perl2lcov",
+          "line": 168
+        }
+      ],
+      "generated_canonical_name_assertion": "cover_db",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "perl-module:Devel::Cover::DB",
+        "perl-module:Devel::Cover::Truth_Table"
+      ]
+    },
+    {
+      "id": "command.py2lcov.positional.inputs",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.py2lcov.positional.inputs",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/py2lcov",
+          "line": 152
+        }
+      ],
+      "generated_canonical_name_assertion": "inputs",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.xml2lcov.positional.inputs",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.xml2lcov.positional.inputs",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/xml2lcov",
+          "line": 84
+        }
+      ],
+      "generated_canonical_name_assertion": "inputs",
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

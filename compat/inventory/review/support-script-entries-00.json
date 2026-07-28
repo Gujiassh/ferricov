@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "support_script_entries",
+  "shard_index": 0,
+  "shard_count": 1,
+  "content_hash": "sha256:aa56e0b407493ec9a10977c54a5db0b829c46738246977524e9635ea944b256e",
+  "reviewed_entries": [
+    {
+      "id": "support-script.analyzeinfofiles",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.analyzeinfofiles",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/analyzeInfoFiles",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "analyzeInfoFiles",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "installed-library:lcovutil.pm",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.annotateutil-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.annotateutil-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/annotateutil.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "annotateutil.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.batchgitversion-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.batchgitversion-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/batchGitVersion.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "batchGitVersion.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.context-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.context-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/context.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "context.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:which",
+        "executable:whoami",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.criteria",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.criteria",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/criteria",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "criteria",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl",
+        "support-script:criteria.pm"
+      ]
+    },
+    {
+      "id": "support-script.criteria-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.criteria-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/criteria.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "criteria.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.get-signature",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.get-signature",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/get_signature",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "get_signature",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:md5sum",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.getp4version",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.getp4version",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/getp4version",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "getp4version",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:p4",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.gitblame",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.gitblame",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/gitblame",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "gitblame",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.gitblame-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.gitblame-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/gitblame.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "gitblame.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.gitdiff",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.gitdiff",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/gitdiff",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "gitdiff",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.gitversion",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.gitversion",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/gitversion",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "gitversion",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.gitversion-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.gitversion-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/gitversion.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "gitversion.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:git",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.history-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.history-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/history.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "history.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.p4annotate",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.p4annotate",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/p4annotate",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "p4annotate",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:p4",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.p4annotate-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.p4annotate-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/p4annotate.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "p4annotate.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:p4",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.p4udiff",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.p4udiff",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/p4udiff",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "p4udiff",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:p4",
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.p4version-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.p4version-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/P4version.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "P4version.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "executable:p4",
+        "runtime:perl",
+        "support-script:annotateutil.pm"
+      ]
+    },
+    {
+      "id": "support-script.select-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.select-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/select.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "select.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.simplify-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.simplify-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/simplify.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "simplify.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.spreadsheet-py",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.spreadsheet-py",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/spreadsheet.py",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "spreadsheet.py",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "python-module:xlsxwriter",
+        "runtime:python3"
+      ]
+    },
+    {
+      "id": "support-script.threshold-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.threshold-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/threshold.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "threshold.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    },
+    {
+      "id": "support-script.unreach-pm",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "support-script.unreach-pm",
+      "generated_source_assertions": [
+        {
+          "kind": "install_manifest",
+          "path": "Makefile",
+          "line": 80
+        },
+        {
+          "kind": "support_script",
+          "path": "scripts/unreach.pm",
+          "line": 1
+        }
+      ],
+      "generated_canonical_name_assertion": "unreach.pm",
+      "applicability": "all_supported_environments",
+      "dependencies": [
+        "runtime:perl"
+      ]
+    }
+  ]
+}

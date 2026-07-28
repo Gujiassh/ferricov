@@ -1,0 +1,575 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-CLI from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-CLI",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 463,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CLI-001` | `bin/perl2lcov:154-164`, `lib/lcovutil.pm:1433-1525` | Default output is `perlcov.info`; default test name is empty; `--output/-o` and `--testname` extend shared parsing. | Invalid option exits one with usage hint; help/version require dependencies and otherwise exit zero. No-DB behavior is governed by empty output, not an explicit positional-count check. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-CLI",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "data",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-DB from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-DB",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 465,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DB-001` | `bin/perl2lcov:168-181` | Each argument opens a Devel::Cover DB and traverses `cover->items`. A raw or unprocessed DB can appear empty and should direct the user to run `cover`. | Constructor and object-shape exceptions are raw Perl failures. Empty is an LCOV `empty` error that can be ignored before continuing to another DB. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 466,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DB-002` | `bin/perl2lcov:182-207` | Files from multiple DBs merge into the same LCOV model by original file and test identity; substitution affects initial filtering/logging but the stored key remains original. | DB order, duplicate file, duplicate test, and object-method mismatch MUST be differential cases. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-DB",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-FS from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-FS",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 467,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-PATH-001` | `bin/perl2lcov:183-195`, `bin/perl2lcov:243-249` | Substitution, initial include/exclude, stored path, source existence, checksum/version, later filters, resolve, and serialization occur at different stages. | These stages MUST NOT be collapsed into one path normalization. Existence before and after substitution requires inverse cases. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-FS",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "failure",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-LOAD from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-LOAD",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 461,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-LOAD-001` | `bin/perl2lcov:42-50` | `Devel::Cover::DB` and `Devel::Cover::Truth_Table` load at compile time before option parsing. | Missing either module fails even help/version through raw Perl load failure; it is not an ignorable LCOV `package` error. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-LOAD",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "data",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-MATRIX from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-MATRIX",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 454,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "Perl 5.36.0 with Devel::Cover 1.38; every other combination requires an"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 462,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DEP-001` | `README.rst:159-174`, `.github/workflows/run_test_suite.yml:56-87` | Upstream names dependencies but does not content-pin the installed package. | Runtime/package drift is a matrix change, not implicit compatibility. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-MATRIX",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "data",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-MODEL from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-MODEL",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 474,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-MODEL-001` | `bin/perl2lcov:266-427` | Lines, functions, and branches accumulate into per-test and summary maps; function end lines are written back to testcase objects. | Duplicate DB/file/line/function/branch behavior belongs to the LCOV model contract and MUST NOT be implemented as unverified last-write-wins. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-MODEL",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "data",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-TYPES from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-TYPES",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 468,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CRIT-001` | `bin/perl2lcov:204-240` | `statement`, `branch`, `condition`, and `subroutine` are recognized; `pod`, `time`, and `path` are ignored; unknown categories enter the category error path; statement is mandatory. | Ignored unknown category is dropped. Missing statement uses `unsupported` and skips the file. Bad object shape is raw Perl failure. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 469,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CONSIST-001` | `bin/perl2lcov:251-264` | Every branch, condition, and subroutine location must also have statement location. | Missing line location is `inconsistent`; ignore may continue. Hit-count consistency is a separate downstream concern. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 470,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-STMT-001` | `bin/perl2lcov:266-269` | Statement location supplies line count and drives the conversion loop. | Negative, string, undef, very large, and malformed nested values require exact behavior cases. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 471,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-SUB-001` | `bin/perl2lcov:200-228`, `bin/perl2lcov:271-283`, `bin/perl2lcov:378-427` | Subroutine data defines functions; names containing `BEGIN` or `__ANON__` are skipped; source `grep` supplies package/sub extents and end-line correction. | Process creation and malformed grep output can die. Pipe close status is not checked. Package/global/nested/same-line functions and partial grep output MUST be tested. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 472,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-COND-001` | `bin/perl2lcov:285-353` | Condition truth-table blocks take precedence over raw branch data on the same line. Inputs map to expression parts; `X` is omitted and zero adds negation. Arity mismatch falls back to the original expression. | Truth-table order and expression reconstruction are runtime-version-sensitive and require exact fixture output, not logical-equivalence normalization. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 473,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-BR-001` | `bin/perl2lcov:355-370` | Without condition data, branch data produces true/false elements in one block. A zero statement count forces taken values to `-`. | Nested object shape, nonnumeric count, and coexistence with condition data MUST be tested. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-TYPES",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "Apply exactly when the referenced normative contract marks this subject applicable."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "filesystem",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed planning group for P2L-WRITE from the normative callback and installation contract; differential evidence remains pending.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.audit.P2L-WRITE",
+      "interaction_groups": [],
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 476,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-OUT-001` | `bin/perl2lcov:433-434`, `lib/lcovutil.pm:9455-9682` | Comments are added before sorted tracefile output. Function and branch coverage start enabled but shared `--no-*` settings may override serialization. Ignored empty can create a zero-byte output. | Ordinary paths truncate; stdout and gzip use shared output paths. Open failure is fatal; late close/gzip/disk failure may not affect exit and requires dedicated fixtures. |"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "converter",
+      "targets": [
+        {
+          "id": "P2L-WRITE",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed perl2lcov runtime, database, model, filesystem, writer, and matrix planning subjects.",
+  "fragment_id": "authored.perl2lcov",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": [
+    {
+      "behavior_groups": [],
+      "description": "perl2lcov shared and command-specific CLI defaults, options, and startup failures.",
+      "id": "P2L-CLI",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 463,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CLI-001` | `bin/perl2lcov:154-164`, `lib/lcovutil.pm:1433-1525` | Default output is `perlcov.info`; default test name is empty; `--output/-o` and `--testname` extend shared parsing. | Invalid option exits one with usage hint; help/version require dependencies and otherwise exit zero. No-DB behavior is governed by empty output, not an explicit positional-count check. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Devel::Cover database loading, empty handling, traversal, ordering, and merge behavior.",
+      "id": "P2L-DB",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 465,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DB-001` | `bin/perl2lcov:168-181` | Each argument opens a Devel::Cover DB and traverses `cover->items`. A raw or unprocessed DB can appear empty and should direct the user to run `cover`. | Constructor and object-shape exceptions are raw Perl failures. Empty is an LCOV `empty` error that can be ignored before continuing to another DB. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 466,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DB-002` | `bin/perl2lcov:182-207` | Files from multiple DBs merge into the same LCOV model by original file and test identity; substitution affects initial filtering/logging but the stored key remains original. | DB order, duplicate file, duplicate test, and object-method mismatch MUST be differential cases. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "perl2lcov substitution, filtering, source existence, stored path, and output path phases.",
+      "id": "P2L-FS",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 467,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-PATH-001` | `bin/perl2lcov:183-195`, `bin/perl2lcov:243-249` | Substitution, initial include/exclude, stored path, source existence, checksum/version, later filters, resolve, and serialization occur at different stages. | These stages MUST NOT be collapsed into one path normalization. Existence before and after substitution requires inverse cases. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Compile-time Devel::Cover dependency loading before help, version, and conversion.",
+      "id": "P2L-LOAD",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 461,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-LOAD-001` | `bin/perl2lcov:42-50` | `Devel::Cover::DB` and `Devel::Cover::Truth_Table` load at compile time before option parsing. | Missing either module fails even help/version through raw Perl load failure; it is not an ignorable LCOV `package` error. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Published Perl and Devel::Cover runtime identity and differential matrix behavior.",
+      "id": "P2L-MATRIX",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 454,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "Perl 5.36.0 with Devel::Cover 1.38; every other combination requires an"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 462,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-DEP-001` | `README.rst:159-174`, `.github/workflows/run_test_suite.yml:56-87` | Upstream names dependencies but does not content-pin the installed package. | Runtime/package drift is a matrix change, not implicit compatibility. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "LCOV line, function, branch, test, and summary model accumulation behavior.",
+      "id": "P2L-MODEL",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 474,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-MODEL-001` | `bin/perl2lcov:266-427` | Lines, functions, and branches accumulate into per-test and summary maps; function end lines are written back to testcase objects. | Duplicate DB/file/line/function/branch behavior belongs to the LCOV model contract and MUST NOT be implemented as unverified last-write-wins. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "Devel::Cover criterion, nested value, consistency, function, condition, and branch conversion behavior.",
+      "id": "P2L-TYPES",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 468,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CRIT-001` | `bin/perl2lcov:204-240` | `statement`, `branch`, `condition`, and `subroutine` are recognized; `pod`, `time`, and `path` are ignored; unknown categories enter the category error path; statement is mandatory. | Ignored unknown category is dropped. Missing statement uses `unsupported` and skips the file. Bad object shape is raw Perl failure. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 469,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-CONSIST-001` | `bin/perl2lcov:251-264` | Every branch, condition, and subroutine location must also have statement location. | Missing line location is `inconsistent`; ignore may continue. Hit-count consistency is a separate downstream concern. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 470,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-STMT-001` | `bin/perl2lcov:266-269` | Statement location supplies line count and drives the conversion loop. | Negative, string, undef, very large, and malformed nested values require exact behavior cases. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 471,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-SUB-001` | `bin/perl2lcov:200-228`, `bin/perl2lcov:271-283`, `bin/perl2lcov:378-427` | Subroutine data defines functions; names containing `BEGIN` or `__ANON__` are skipped; source `grep` supplies package/sub extents and end-line correction. | Process creation and malformed grep output can die. Pipe close status is not checked. Package/global/nested/same-line functions and partial grep output MUST be tested. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 472,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-COND-001` | `bin/perl2lcov:285-353` | Condition truth-table blocks take precedence over raw branch data on the same line. Inputs map to expression parts; `X` is omitted and zero adds negation. Arity mismatch falls back to the original expression. | Truth-table order and expression reconstruction are runtime-version-sensitive and require exact fixture output, not logical-equivalence normalization. |"
+        },
+        {
+          "kind": "audit_contract",
+          "line": 473,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-BR-001` | `bin/perl2lcov:355-370` | Without condition data, branch data produces true/false elements in one block. A zero statement count forces taken values to `-`. | Nested object shape, nonnumeric count, and coexistence with condition data MUST be tested. |"
+        }
+      ]
+    },
+    {
+      "behavior_groups": [],
+      "description": "perl2lcov comments, sorted tracefile serialization, output streams, gzip, and late failures.",
+      "id": "P2L-WRITE",
+      "kind": "perl2lcov_behavior",
+      "origin": "reviewed_import",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 476,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `P2L-OUT-001` | `bin/perl2lcov:433-434`, `lib/lcovutil.pm:9455-9682` | Comments are added before sorted tracefile output. Function and branch coverage start enabled but shared `--no-*` settings may override serialization. Ignored empty can create a zero-byte output. | Ordinary paths truncate; stdout and gzip use shared output paths. Open failure is fatal; late close/gzip/disk failure may not affect exit and requires dedicated fixtures. |"
+        }
+      ]
+    }
+  ]
+}

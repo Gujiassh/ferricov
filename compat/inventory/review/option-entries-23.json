@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "upstream_release": "v2.5",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "domain": "option_entries",
+  "shard_index": 23,
+  "shard_count": 31,
+  "content_hash": "sha256:54f9078aa205f26fb8712a13c8ff75950d46c6eeb8ccbd4e1fb23f6160c0b2bb",
+  "reviewed_entries": [
+    {
+      "id": "command.llvm2lcov.option.no-checksum",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.no-checksum",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1243
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-checksum",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.no-function-coverage",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.no-function-coverage",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1255
+        }
+      ],
+      "generated_canonical_name_assertion": "--no-function-coverage",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.omit-lines",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.omit-lines",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1281
+        }
+      ],
+      "generated_canonical_name_assertion": "--omit-lines",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.output",
+      "review_status": "reviewed",
+      "classification": "generated_token",
+      "generated_id_assertion": "command.llvm2lcov.option.output",
+      "generated_source_assertions": [
+        {
+          "kind": "help_definition",
+          "path": "help/llvm2lcov.txt",
+          "line": 9
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 20
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 50
+        },
+        {
+          "kind": "manual_candidate",
+          "path": "docs/man/llvm2lcov.rst",
+          "line": 90
+        }
+      ],
+      "generated_canonical_name_assertion": "--output",
+      "aliases": [],
+      "profile_parser_resolution": {
+        "default_profile": {
+          "acceptance": "accepted_unique_abbreviation",
+          "target": "command.llvm2lcov.option.output-filename"
+        },
+        "posix_profile": {
+          "acceptance": "rejected_unknown"
+        }
+      },
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.output-filename",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.output-filename",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "bin/llvm2lcov",
+          "line": 546
+        }
+      ],
+      "generated_canonical_name_assertion": "--output-filename",
+      "aliases": [
+        "-o"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.parallel",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.parallel",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1283
+        }
+      ],
+      "generated_canonical_name_assertion": "--parallel",
+      "aliases": [
+        "-j"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.preserve",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.preserve",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1286
+        }
+      ],
+      "generated_canonical_name_assertion": "--preserve",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.profile",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.profile",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1276
+        }
+      ],
+      "generated_canonical_name_assertion": "--profile",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.quiet",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.quiet",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1244
+        }
+      ],
+      "generated_canonical_name_assertion": "--quiet",
+      "aliases": [
+        "-q"
+      ],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.rc",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.rc",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1275
+        }
+      ],
+      "generated_canonical_name_assertion": "--rc",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.resolve-script",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.resolve-script",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1264
+        }
+      ],
+      "generated_canonical_name_assertion": "--resolve-script",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.sort-input",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.sort-input",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1287
+        }
+      ],
+      "generated_canonical_name_assertion": "--sort-input",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    },
+    {
+      "id": "command.llvm2lcov.option.source-directory",
+      "review_status": "reviewed",
+      "classification": "public",
+      "generated_id_assertion": "command.llvm2lcov.option.source-directory",
+      "generated_source_assertions": [
+        {
+          "kind": "parser_definition",
+          "path": "lib/lcovutil.pm",
+          "line": 1260
+        }
+      ],
+      "generated_canonical_name_assertion": "--source-directory",
+      "aliases": [],
+      "applicability": "all_supported_environments",
+      "dependencies": []
+    }
+  ]
+}

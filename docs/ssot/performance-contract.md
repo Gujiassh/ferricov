@@ -54,3 +54,13 @@ a known regression. A failed gate blocks the compatibility release.
   warm caches explicitly, and retain raw samples.
 - Use enough repetitions to report median, dispersion, and outliers.
 - Keep local exploratory results separate from committed release evidence.
+
+## Current Evidence
+
+`compat/benchmarks/results/oracle-x86_64-linux-20260728/result.json` retains the
+M0 Oracle-only baseline for one approved startup, tracefile, operation, and
+report workload. Each case has one warmup and three measured samples with raw
+stdout, stderr, output-tree, timing, CPU, RSS, and output-size evidence. The
+result validates as `baseline_only`; correctness and performance gates remain
+`not_evaluated` until a distinct Ferricov candidate passes compatibility on the
+same fixtures.

@@ -1,0 +1,532 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/inventory-v2.json",
+  "title": "Ferricov reviewed compatibility inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "commands",
+    "config_keys",
+    "support_scripts",
+    "totals"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/command"
+      }
+    },
+    "config_keys": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/named_entry"
+      }
+    },
+    "support_scripts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/named_entry"
+      }
+    },
+    "totals": {
+      "$ref": "#/$defs/totals"
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "classification": {
+      "enum": [
+        "public",
+        "internal",
+        "duplicate_alias",
+        "generated_token",
+        "not_applicable",
+        "unreviewed"
+      ]
+    },
+    "applicability": {
+      "enum": [
+        "unreviewed",
+        "all_supported_environments",
+        "conditional",
+        "not_applicable"
+      ]
+    },
+    "source_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "line"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "help_definition",
+            "help_usage",
+            "parser_definition",
+            "parser_policy",
+            "command_implementation",
+            "manual_candidate",
+            "config_definition",
+            "support_script",
+            "install_manifest"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "parser_definition"}}},
+          "then": {"properties": {"path": {"pattern": "^(?:bin/[A-Za-z0-9._-]+|lib/lcovutil\\.pm)$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "parser_policy"}}},
+          "then": {"properties": {"path": {"pattern": "^(?:bin/[A-Za-z0-9._-]+|lib/lcovutil\\.pm)$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "command_implementation"}}},
+          "then": {"properties": {"path": {"pattern": "^bin/[A-Za-z0-9._-]+$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"enum": ["help_definition", "help_usage"]}}},
+          "then": {"properties": {"path": {"pattern": "^help/[A-Za-z0-9._-]+\\.txt$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "manual_candidate"}}},
+          "then": {"properties": {"path": {"pattern": "^docs/man/[A-Za-z0-9._-]+\\.rst$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "config_definition"}}},
+          "then": {"properties": {"path": {"pattern": "^(?:lcovrc|lib/lcovutil\\.pm|bin/(?:genhtml|lcov))$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "support_script"}}},
+          "then": {"properties": {"path": {"pattern": "^scripts/[A-Za-z0-9._-]+$"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "install_manifest"}}},
+          "then": {"properties": {"path": {"const": "Makefile"}}}
+        }
+      ]
+    },
+    "source_references": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/source_reference"
+      }
+    },
+    "review_metadata": {
+      "type": "object",
+      "required": [
+        "review_status",
+        "classification",
+        "source_references",
+        "dependencies",
+        "applicability"
+      ],
+      "properties": {
+        "review_status": {
+          "enum": ["reviewed", "unreviewed"]
+        },
+        "classification": {
+          "$ref": "#/$defs/classification"
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/string_set"
+        },
+        "applicability": {
+          "$ref": "#/$defs/applicability"
+        },
+        "note": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"review_status": {"const": "reviewed"}},
+            "required": ["review_status"]
+          },
+          "then": {
+            "properties": {"applicability": {"not": {"const": "unreviewed"}}}
+          },
+          "else": {
+            "properties": {"applicability": {"const": "unreviewed"}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"classification": {"const": "not_applicable"}},
+            "required": ["classification"]
+          },
+          "then": {
+            "properties": {"applicability": {"const": "not_applicable"}},
+            "required": ["note"]
+          },
+          "else": {
+            "properties": {"applicability": {"not": {"const": "not_applicable"}}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"applicability": {"const": "conditional"}},
+            "required": ["applicability"]
+          },
+          "then": {"required": ["note"]}
+        }
+      ]
+    },
+    "profile_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acceptance"],
+      "properties": {
+        "acceptance": {
+          "enum": [
+            "accepted_exact",
+            "accepted_unique_abbreviation",
+            "rejected_ambiguous",
+            "rejected_unknown"
+          ]
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^command\\.[a-z0-9.-]+\\.option\\.[a-z0-9-]+$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"acceptance": {"enum": ["accepted_exact", "accepted_unique_abbreviation"]}},
+            "required": ["acceptance"]
+          },
+          "then": {"required": ["target"]},
+          "else": {"not": {"required": ["target"]}}
+        }
+      ]
+    },
+    "profile_parser_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_profile", "posix_profile"],
+      "properties": {
+        "default_profile": {"$ref": "#/$defs/profile_resolution"},
+        "posix_profile": {"$ref": "#/$defs/profile_resolution"}
+      }
+    },
+    "parser_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "auto_abbrev",
+        "case_sensitive",
+        "accepted_long_prefixes",
+        "plus_prefix_behavior",
+        "option_ordering",
+        "bundling",
+        "posixly_correct_effect",
+        "exact_only_options",
+        "source_references"
+      ],
+      "properties": {
+        "family": {
+          "enum": ["shared_getopt_long", "direct_getopt_long", "argparse", "none"]
+        },
+        "auto_abbrev": {
+          "enum": ["unique_prefix", "not_applicable"]
+        },
+        "case_sensitive": {
+          "type": ["boolean", "null"]
+        },
+        "accepted_long_prefixes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["--", "-"]}
+        },
+        "plus_prefix_behavior": {
+          "enum": ["option", "positional", "ignored"]
+        },
+        "option_ordering": {
+          "enum": ["permute", "argparse_parse_args", "ignored"]
+        },
+        "bundling": {
+          "enum": ["disabled", "argparse_short_clusters", "not_applicable"]
+        },
+        "posixly_correct_effect": {
+          "enum": [
+            "disable_auto_abbrev_and_plus_require_order",
+            "none",
+            "not_applicable"
+          ]
+        },
+        "exact_only_options": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^--[a-z0-9][a-z0-9-]*$"}
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "family": {"const": "shared_getopt_long"},
+            "auto_abbrev": {"const": "unique_prefix"},
+            "case_sensitive": {"const": false},
+            "accepted_long_prefixes": {"const": ["--", "-"]},
+            "plus_prefix_behavior": {"const": "option"},
+            "option_ordering": {"const": "permute"},
+            "bundling": {"const": "disabled"},
+            "posixly_correct_effect": {"const": "disable_auto_abbrev_and_plus_require_order"},
+            "exact_only_options": {"const": ["--config-file", "--rc"]},
+            "source_references": {
+              "allOf": [
+                {"contains": {"properties": {"kind": {"const": "parser_policy"}, "path": {"pattern": "^bin/"}}, "required": ["kind", "path"]}},
+                {"contains": {"properties": {"kind": {"const": "parser_policy"}, "path": {"const": "lib/lcovutil.pm"}}, "required": ["kind", "path"]}},
+                {"items": {"properties": {"kind": {"const": "parser_policy"}}, "required": ["kind"]}}
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "family": {"const": "direct_getopt_long"},
+            "auto_abbrev": {"const": "unique_prefix"},
+            "case_sensitive": {"const": false},
+            "accepted_long_prefixes": {"const": ["--", "-"]},
+            "plus_prefix_behavior": {"const": "option"},
+            "option_ordering": {"const": "permute"},
+            "bundling": {"const": "disabled"},
+            "posixly_correct_effect": {"const": "disable_auto_abbrev_and_plus_require_order"},
+            "exact_only_options": {"const": []},
+            "source_references": {
+              "items": {"properties": {"kind": {"const": "parser_policy"}, "path": {"pattern": "^bin/"}}, "required": ["kind", "path"]}
+            }
+          }
+        },
+        {
+          "properties": {
+            "family": {"const": "argparse"},
+            "auto_abbrev": {"const": "unique_prefix"},
+            "case_sensitive": {"const": true},
+            "accepted_long_prefixes": {"const": ["--"]},
+            "plus_prefix_behavior": {"const": "positional"},
+            "option_ordering": {"const": "argparse_parse_args"},
+            "bundling": {"const": "argparse_short_clusters"},
+            "posixly_correct_effect": {"const": "none"},
+            "exact_only_options": {"const": []},
+            "source_references": {
+              "items": {"properties": {"kind": {"const": "parser_policy"}, "path": {"pattern": "^bin/"}}, "required": ["kind", "path"]}
+            }
+          }
+        },
+        {
+          "properties": {
+            "family": {"const": "none"},
+            "auto_abbrev": {"const": "not_applicable"},
+            "case_sensitive": {"const": null},
+            "accepted_long_prefixes": {"const": []},
+            "plus_prefix_behavior": {"const": "ignored"},
+            "option_ordering": {"const": "ignored"},
+            "bundling": {"const": "not_applicable"},
+            "posixly_correct_effect": {"const": "not_applicable"},
+            "exact_only_options": {"const": []},
+            "source_references": {
+              "minItems": 1,
+              "maxItems": 1,
+              "items": {"properties": {"kind": {"const": "command_implementation"}, "path": {"pattern": "^bin/"}}, "required": ["kind", "path"]}
+            }
+          }
+        }
+      ]
+    },
+    "option_entry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/review_metadata"
+        },
+        {
+          "type": "object",
+          "required": ["id", "canonical_name", "aliases"],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "canonical_name": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "aliases": {
+              "$ref": "#/$defs/string_set"
+            },
+            "profile_parser_resolution": {
+              "$ref": "#/$defs/profile_parser_resolution"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {"classification": {"const": "generated_token"}},
+                "required": ["classification"]
+              },
+              "then": {"required": ["profile_parser_resolution"]},
+              "else": {"not": {"required": ["profile_parser_resolution"]}}
+            }
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "named_entry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/review_metadata"
+        },
+        {
+          "type": "object",
+          "required": ["id", "name"],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            "name": {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "help_snapshot",
+        "manual",
+        "parser_policy",
+        "options",
+        "positional_arguments"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "help_snapshot": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "manual": {
+          "type": ["string", "null"],
+          "minLength": 1
+        },
+        "parser_policy": {
+          "$ref": "#/$defs/parser_policy"
+        },
+        "options": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/option_entry"
+          }
+        },
+        "positional_arguments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/named_entry"
+          }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "installed_commands",
+        "command_options",
+        "parser_command_options",
+        "public_command_options",
+        "unreviewed_command_options",
+        "positional_arguments",
+        "config_keys",
+        "support_scripts"
+      ],
+      "properties": {
+        "installed_commands": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "command_options": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parser_command_options": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "public_command_options": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unreviewed_command_options": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "positional_arguments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "config_keys": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "support_scripts": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

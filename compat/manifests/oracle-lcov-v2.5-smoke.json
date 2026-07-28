@@ -1,0 +1,222 @@
+{
+  "evidence": {
+    "inventory_entries": [],
+    "scope": "environment_smoke"
+  },
+  "executables": [
+    {
+      "name": "lcov",
+      "path": "/usr/local/bin/lcov",
+      "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+    },
+    {
+      "name": "genhtml",
+      "path": "/usr/local/bin/genhtml",
+      "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+    },
+    {
+      "name": "geninfo",
+      "path": "/usr/local/bin/geninfo",
+      "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+    },
+    {
+      "name": "genpng",
+      "path": "/usr/local/bin/genpng",
+      "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+    },
+    {
+      "name": "gendesc",
+      "path": "/usr/local/bin/gendesc",
+      "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+    },
+    {
+      "name": "perl2lcov",
+      "path": "/usr/local/bin/perl2lcov",
+      "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+    },
+    {
+      "name": "py2lcov",
+      "path": "/usr/local/bin/py2lcov",
+      "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+    },
+    {
+      "name": "xml2lcov",
+      "path": "/usr/local/bin/xml2lcov",
+      "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+    },
+    {
+      "name": "xml2lcovutil.py",
+      "path": "/usr/local/bin/xml2lcovutil.py",
+      "sha256": "sha256:70d7fb5dccc63b7369416ddb46be5c7bae86ff1a46018e78b3ddab1c0550cac9"
+    },
+    {
+      "name": "llvm2lcov",
+      "path": "/usr/local/bin/llvm2lcov",
+      "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+    }
+  ],
+  "execution": {
+    "command": [
+      "/usr/local/bin/lcov",
+      "--version"
+    ],
+    "mounts": [
+      {
+        "destination": "/work",
+        "id": "work-output",
+        "read_only": false,
+        "source": "runtime-output",
+        "type": "bind"
+      }
+    ],
+    "network": "none",
+    "user": "root",
+    "working_directory": "/work"
+  },
+  "fixtures": [],
+  "image": {
+    "base_image_digest": "sha256:7b140f374b289a7c2befc338f42ebe6441b7ea838a042bbd5acbfca6ec875818",
+    "build_inputs_lock": "compat/upstream/build-inputs.lock",
+    "build_inputs_lock_sha256": "sha256:fa289d84c9f66e526960c0ae8f17faf4bfa01a93cbb781ea5d5d390bd73e6a4d",
+    "debian_snapshot": "20260713T000000Z",
+    "docker_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "dockerfile": "compat/upstream/Dockerfile",
+    "dockerfile_sha256": "sha256:bba1d3e071857cf50883da01795b9378f8a8a8e3ab098d4d25a21b256237b5b7",
+    "installed_tree_lock": "compat/upstream/installed-tree.lock",
+    "installed_tree_lock_sha256": "sha256:75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24",
+    "installed_tree_script": "compat/upstream/installed-tree.sh",
+    "installed_tree_script_sha256": "sha256:bf6187ae6086dbff40d0769b821956e75d4f2b790407033c21e1adfb7a6484db",
+    "intersphinx_inventory": "compat/upstream/python-objects.inv",
+    "intersphinx_inventory_sha256": "sha256:fca4a9b72cf08f39c5bd42509ca21f031389ee68faf4cb13c31f71a1fa60a3dc",
+    "intersphinx_patch": "compat/upstream/pin-intersphinx.py",
+    "intersphinx_patch_sha256": "sha256:421d0befd1d081284a8fd1ab9e4ad5378f823816fef0f69f8c5c49d15f9f79f0",
+    "labels": {
+      "dev.ferricov.base-image-digest": "sha256:7b140f374b289a7c2befc338f42ebe6441b7ea838a042bbd5acbfca6ec875818",
+      "dev.ferricov.build-date": "2026-07-06",
+      "dev.ferricov.build-inputs-lock-sha256": "sha256:fa289d84c9f66e526960c0ae8f17faf4bfa01a93cbb781ea5d5d390bd73e6a4d",
+      "dev.ferricov.debian-snapshot": "20260713T000000Z",
+      "dev.ferricov.intersphinx-inventory-sha256": "sha256:fca4a9b72cf08f39c5bd42509ca21f031389ee68faf4cb13c31f71a1fa60a3dc",
+      "dev.ferricov.snapshot-ca-bundle-sha256": "sha256:a3413a37a8e09cc21b2c11c9ffb23d92d2fc9d1933c9e7617f5c4fba4f72d37d",
+      "dev.ferricov.source-archive-sha256": "sha256:5738cedcfffac5c8826f5f044b80d9b401c6af3ce375cd4d09e666026d2207fa",
+      "dev.ferricov.source-date-epoch": "1783375223",
+      "org.opencontainers.image.revision": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+      "org.opencontainers.image.source": "https://github.com/linux-test-project/lcov",
+      "org.opencontainers.image.version": "v2.5"
+    },
+    "package_closure_lock": "compat/upstream/packages.full.lock",
+    "package_closure_lock_sha256": "sha256:e41c5a77487657a65e03309ac262a25088e8c020c20a630ed8ae5a3f1e0946b6",
+    "package_lock": "compat/upstream/packages.lock",
+    "package_lock_sha256": "sha256:b93cc7792a7e197c4ee81d1e7c6256d2b8b8f3097a71e266755d421f598ad89e",
+    "reference": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "snapshot_ca_bundle": "compat/upstream/snapshot-ca-certificates.crt",
+    "snapshot_ca_bundle_sha256": "sha256:a3413a37a8e09cc21b2c11c9ffb23d92d2fc9d1933c9e7617f5c4fba4f72d37d",
+    "source_archive": "compat/upstream/lcov-v2.5.tar.gz",
+    "source_archive_sha256": "sha256:5738cedcfffac5c8826f5f044b80d9b401c6af3ce375cd4d09e666026d2207fa"
+  },
+  "installed_tree": {
+    "entries": 321,
+    "manifest_sha256": "sha256:75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24"
+  },
+  "launcher": {
+    "configuration_sha256": "sha256:c22efc470aee238b60f5a71fc0d2a5a01b847a1e89658b3757d1408521d00380",
+    "environment_variables": {
+      "LC_ALL": "C",
+      "TZ": "UTC"
+    },
+    "id": "oracle-image-smoke",
+    "profile": "default"
+  },
+  "manifest_id": "oracle-lcov-v2.5-image-smoke",
+  "oracle_source": {
+    "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "ref": "v2.5",
+    "repository": "https://github.com/linux-test-project/lcov.git"
+  },
+  "outputs": {
+    "exit_code": 0,
+    "filesystem": {
+      "entries": 0,
+      "snapshot_base64": "W10K",
+      "snapshot_sha256": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "stderr": {
+      "bytes": 0,
+      "content_base64": "",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 28,
+      "content_base64": "bGNvdjogTENPViB2ZXJzaW9uIDIuNS1iZXRhCg==",
+      "sha256": "sha256:553f99eb62b6dac64b08057e128411879b9f10b294517d82b8ef42c8796310c9"
+    }
+  },
+  "packages": {
+    "count": 284,
+    "manifest_sha256": "sha256:e41c5a77487657a65e03309ac262a25088e8c020c20a630ed8ae5a3f1e0946b6"
+  },
+  "platform": {
+    "architecture": "x86_64",
+    "filesystem": "overlayfs",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "libc": "ldd (Debian GLIBC 2.36-9+deb12u14) 2.36",
+    "operating_system": "Debian GNU/Linux 12 (bookworm)",
+    "target_triple": "x86_64-linux-gnu"
+  },
+  "recorded_at": "2026-07-27T16:29:45.779034Z",
+  "reproducibility": {
+    "docker_image_ids": [
+      "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "sha256:3c337e58d3ee139b99b63fb4513bbde628924078d5e4d1775619842a092049f5"
+    ],
+    "installed_tree_sha256": "sha256:75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24",
+    "key_files_sha256": "sha256:0f7579cbdcf10ee522eb76cc69a315cf4a083565c62b6ed6e0941b68054a5eb3",
+    "package_closure_sha256": "sha256:e41c5a77487657a65e03309ac262a25088e8c020c20a630ed8ae5a3f1e0946b6",
+    "smoke_sha256": "sha256:26778dbb6876544d5fa4cadeccf7a77cfa0e9e7424e68acdeb14e69f457a2a0a"
+  },
+  "schema_version": 1,
+  "status": "observed",
+  "toolchain": [
+    {
+      "name": "gcc",
+      "path": "/usr/bin/gcc",
+      "sha256": "sha256:75e997ec62297a6484f491bae28ab0ccb489daba23e398fd10fe68e9e6f0def8",
+      "version": "12.2.0"
+    },
+    {
+      "name": "gxx",
+      "path": "/usr/bin/g++",
+      "sha256": "sha256:dd91977c184e327710578363ad93ebb175c3a457b6236b874fd3911b7c055c65",
+      "version": "12.2.0"
+    },
+    {
+      "name": "gcov",
+      "path": "/usr/bin/gcov",
+      "sha256": "sha256:64279c63fac173e6b78d219cffbaa657b20afd7907f7e020a6a73580f5d70ed6",
+      "version": "gcov (Debian 12.2.0-14+deb12u1) 12.2.0"
+    },
+    {
+      "name": "git",
+      "path": "/usr/bin/git",
+      "sha256": "sha256:2540879925a6881e3877ff7e3330746ba3027b04edf16a3a12dccd1644c4f32d",
+      "version": "git version 2.39.5"
+    },
+    {
+      "name": "make",
+      "path": "/usr/bin/make",
+      "sha256": "sha256:00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+      "version": "GNU Make 4.3"
+    },
+    {
+      "name": "perl",
+      "path": "/usr/bin/perl",
+      "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574",
+      "version": "v5.36.0"
+    },
+    {
+      "name": "python3",
+      "path": "/usr/bin/python3",
+      "sha256": "sha256:6d972cf21be56fe3c947ab6ba257ff8d08c342dd2714442986791bd9a6dfabfe",
+      "version": "Python 3.11.2"
+    }
+  ]
+}

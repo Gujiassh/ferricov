@@ -1,0 +1,1275 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed analyzeInfoFiles, a standalone utility that compares coverpoint sets and counts across LCOV tracefiles. Applicability is all supported environments; users invoke it directly against readable info files; it calls the installed lcovutil.pm library and external wc. Runtime dependencies are installed-library:lcovutil.pm, runtime:perl. Required failure coverage includes tracefile format/version/count mismatches, unreadable input, the last-line boundary, wc failure, and --drop exit behavior. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.analyzeinfofiles",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 338,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.analyzeinfofiles` | `scripts/analyzeInfoFiles:1`; compare coverpoints across info files | Standalone tracefile analysis utility | Perl, `lcovutil.pm`, readable tracefiles; format/version/count mismatch | `SCRIPT-UTILITY-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/analyzeInfoFiles",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.analyzeinfofiles",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed annotateutil.pm, the shared AnnotateBase, cache, version, and local-edit helper used by Git and Perforce annotation/version modules. Applicability is all supported environments; gitblame, p4annotate, P4version, and gitversion integrations load it rather than exposing it as a primary callback. Runtime dependencies are runtime:perl. Required failure coverage includes stale or malformed cache data, unlocked concurrent cache access, traversal-shaped cache keys, local-edit merge errors, and filesystem I/O failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.annotateutil-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 339,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.annotateutil-pm` | `scripts/annotateutil.pm:1`; annotation/version helper and `AnnotateBase` | Used by Git/P4 annotate and version scripts; cache and local-edit merge | Files, locks, cache, version callback; stale/malformed cache and I/O failure | `SCRIPT-ANNOTATE-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/annotateutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.annotateutil-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.batch-git-version"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed batchGitVersion.pm, a batched Git source-version callback module that scans repositories and submodules and derives prefixed blob or MD5 tokens. Applicability is all supported environments; LCOV front ends load it through --version-script for bulk source identity lookup. Runtime dependencies are executable:git, runtime:perl. Required failure coverage includes repository discovery failure, malformed Git output, missing files, incomplete databases after warnings, subprocess failure, and shared token state. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.batchgitversion-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 340,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.batchgitversion-pm` | `scripts/batchGitVersion.pm:1`, `docs/scripts.rst:144-177`; batched Git version module | `--version-script`; repository scan, submodules, prefix/prepend/token, MD5 | Perl, Git, filesystem; malformed Git output, missing file, subprocess failure | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/batchGitVersion.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.batchgitversion-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/batchgitversion_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed context.pm, a context callback module and standalone probe that records execution context and can append configured comments. Applicability is all supported environments; LCOV front ends load it through --context-script and sample its result during cleanup. Runtime dependencies are executable:which, executable:whoami, runtime:perl. Required failure coverage includes invalid options, whoami/which output or execution failure, environment differences, constructor mutation, and cleanup/lifecycle errors. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.context-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 341,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.context-pm` | `scripts/context.pm:1`; context module and standalone probe | `--context-script`; optional `--comment` mutates tool comments | Perl, `whoami`, `which perl`, environment; option and command-output failure | `SCRIPT-CONTEXT-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/context.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.context-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed criteria, the executable criteria callback wrapper that decodes JSON and delegates coverage checks to criteria.pm. Applicability is all supported environments; LCOV front ends execute it through --criteria-script as the external counterpart of the module callback. Runtime dependencies are runtime:perl, support-script:criteria.pm. Required failure coverage includes JSON and option errors, missing module paths, wrapper/module option divergence, message newline differences, raw status propagation, and semantic rejection. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.criteria",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 342,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.criteria` | `scripts/criteria:1`, `docs/scripts.rst:282-309`; executable criteria wrapper | `--criteria-script`; external pair for `criteria.pm` | Perl and module path; JSON/options/status | `SCRIPT-CRITERIA-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/criteria",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.criteria",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed criteria.pm, a criteria callback module that checks uncovered differential categories and configured coverage families. Applicability is all supported environments; LCOV front ends load it through --criteria-script and pass coverage hashes for file, directory, or top-level checks. Runtime dependencies are runtime:perl. Required failure coverage includes malformed hashes or totals, invalid options, absent coverage families, suppress/signoff divergence, and semantic nonzero results. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.criteria-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 343,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.criteria-pm` | `scripts/criteria.pm:1`, `docs/scripts.rst:282-309`; criteria module | Checks uncovered differential categories and optional coverage families | Perl; malformed hash/totals/options; semantic reject versus signoff | `SCRIPT-CRITERIA-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/criteria.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.criteria-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed get_signature, an executable MD5 source-version callback that extracts and compares file signatures. Applicability is all supported environments; LCOV front ends execute it through --version-script for external version extraction and comparison. Runtime dependencies are executable:md5sum, runtime:perl. Required failure coverage includes argument errors, unreadable files, md5sum execution or status failure, directories yielding empty output, and raw wait-status exit truncation. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.get-signature",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 344,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.get-signature` | `scripts/get_signature:1`, `docs/scripts.rst:560-621`; executable MD5 version callback | `--version-script` extract/compare | Perl, `md5sum`, readable source; argument, command, and file failure | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/get_signature",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.get-signature",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.p4-version"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed getp4version, the executable Perforce source-version callback paired with P4version.pm. Applicability is all supported environments; LCOV front ends execute it through --version-script for external extraction and comparison using P4 state and optional MD5 data. Runtime dependencies are executable:p4, runtime:perl. Required failure coverage includes argument-order differences, failed P4 pipelines becoming not-in-P4 fallback, missing files, dirty workspace state, and compare status behavior. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.getp4version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 345,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.getp4version` | `scripts/getp4version:1`, `docs/scripts.rst:178-207`; executable P4 version callback | External pair for `P4version.pm`; MD5, local state, allow-missing | Perl, P4, filesystem; compare argument order and P4 status | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/getp4version",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.getp4version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/p4version_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.git-annotation"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed gitblame, the executable Git annotation callback wrapper paired with gitblame.pm. Applicability is all supported environments; genhtml executes it through --annotate-script to obtain source text, author, date, and commit rows. Runtime dependencies are executable:git, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes missing repositories or files, blame parse errors, helper/cache failure, no-argument self-path behavior, pipe creation failure, and nonzero close status. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.gitblame",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 346,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.gitblame` | `scripts/gitblame:1`, `docs/scripts.rst:20-67`; executable annotation wrapper | External pair for `gitblame.pm` | Perl, Git, `annotateutil.pm`; missing repo/file, parse and pipe failure | `SCRIPT-ANNOTATE-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/gitblame",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.gitblame",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/gitblame_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.git-annotation"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed gitblame.pm, a Git annotation callback module with cache, verification, domain, P4-ID, and version integration. Applicability is all supported environments; genhtml loads it through --annotate-script and calls its annotation lifecycle for each source file. Runtime dependencies are executable:git, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes stale or malformed blame/cache data, local edits, missing repositories or files, Git subprocess errors, cache/log I/O, and module lifecycle failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.gitblame-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 347,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.gitblame-pm` | `scripts/gitblame.pm:1`, `docs/scripts.rst:28-67`; Git annotation module | `--annotate-script`; cache, verify, domain, P4 IDs, version callback | Perl, Git, cache/log/filesystem; stale cache, local edits, malformed blame | `SCRIPT-ANNOTATE-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/gitblame.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.gitblame-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/gitblame_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.git-diff"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed gitdiff, a standalone Git revision-diff generator whose unified output feeds report differential coverage. Applicability is all supported environments; users invoke it to produce a file consumed by genhtml --diff-file. Runtime dependencies are executable:git, runtime:perl. Required failure coverage includes bad revisions, partial output before child failure, signals, insufficient shell quoting, special filenames, malformed paths, and include/exclude/prefix mapping drift. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.gitdiff",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 348,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.gitdiff` | `scripts/gitdiff:1`, `docs/scripts.rst:243-275`; Git unified-diff generator | Produces data consumed by `--diff-file`; include/exclude/prefix/blank | Perl, Git; bad revision, partial output, signal, malformed path | `SCRIPT-DIFF-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/gitdiff",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.gitdiff",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/gitdiff_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.git-version"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed gitversion, the executable Git source-version callback paired with gitversion.pm. Applicability is all supported environments; LCOV front ends execute it through --version-script, with a wrapper option surface narrower than the module. Runtime dependencies are executable:git, runtime:perl. Required failure coverage includes missing repositories or files, dirty state, discovery fallback to mtime, later content lookup failure, ignored diff status, and compare status behavior. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.gitversion",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 349,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.gitversion` | `scripts/gitversion:1`, `docs/scripts.rst:110-141`; executable Git version callback | External pair for `gitversion.pm`; wrapper option surface differs | Perl, Git, filesystem; missing repo/file, dirty state, compare status | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/gitversion",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.gitversion",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/gitversion_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.git-version"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed gitversion.pm, a Git source-version callback module supporting P4-derived IDs, MD5, local-change detection, and prefixes. Applicability is all supported environments; LCOV front ends load it through --version-script and share annotateutil.pm cache/version helpers. Runtime dependencies are executable:git, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes constructor versus wrapper divergence, repository discovery or content lookup failure, missing files, dirty state, ignored diff status, and cache/filesystem errors. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.gitversion-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 350,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.gitversion-pm` | `scripts/gitversion.pm:1`, `docs/scripts.rst:110-141`; Git version module | `--version-script`; P4-derived IDs, MD5, local change, prefix | Perl, Git, `annotateutil.pm`; constructor versus standalone failure | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/gitversion.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.gitversion-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/gitversion_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed history.pm, a history callback module that reads tool-specific JSON profiles and predicts work-item duration for scheduling. Applicability is all supported environments; genhtml and parallel geninfo load it through --history-script; lcov capture reaches it inside the geninfo process. Runtime dependencies are runtime:perl. Required failure coverage includes missing or malformed profiles, bad schema, regex-like profile keys, unknown items, invalid numeric values, tool-global differences, and lifecycle errors. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.history-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 351,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.history-pm` | `scripts/history.pm:1`; profile history module | `--history-script`; tool-specific profile schema and scheduling | Perl, JSON profile/glob, tool globals; bad schema, item, number, or file | `SCRIPT-HISTORY-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/history.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.history-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.p4-annotation"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed p4annotate, the executable Perforce annotation callback wrapper paired with p4annotate.pm. Applicability is all supported environments; genhtml executes it through --annotate-script to obtain source text, author, date, and changelist rows. Runtime dependencies are executable:p4, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes missing workspace or files, P4 parse errors, helper/cache failure, no-argument self-path behavior, pipe creation failure, and nonzero close status. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.p4annotate",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 352,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.p4annotate` | `scripts/p4annotate:1`, `docs/scripts.rst:70-97`; executable annotation wrapper | External pair for `p4annotate.pm` | Perl, P4, `annotateutil.pm`; workspace/file/parse/pipe failure | `SCRIPT-ANNOTATE-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/p4annotate",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.p4annotate",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/p4annotate_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.p4-annotation"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed p4annotate.pm, a Perforce annotation callback module with cache, verification, log, and version integration. Applicability is all supported environments; genhtml loads it through --annotate-script and calls its annotation lifecycle for each source file. Runtime dependencies are executable:p4, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes stale or malformed cache/output, local edits, missing workspace or files, P4 subprocess errors, cache/log I/O, and module lifecycle failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.p4annotate-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 353,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.p4annotate-pm` | `scripts/p4annotate.pm:1`, `docs/scripts.rst:70-97`; P4 annotation module | `--annotate-script`; cache, verify, log, version callback | Perl, P4, cache/log/filesystem; stale cache, local edits, malformed output | `SCRIPT-ANNOTATE-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/p4annotate.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.p4annotate-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/p4annotate_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.p4-diff"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed p4udiff, a standalone Perforce unified-diff generator for depot and sandbox revisions. Applicability is all supported environments; users invoke it to produce a file consumed by genhtml --diff-file. Runtime dependencies are executable:p4, runtime:perl. Required failure coverage includes startup dependency failure, multi-stage fstat/opened/diff/print errors, partial output, option/parser mismatch, special paths, and nonstandard add/delete or filtered-file output. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.p4udiff",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 354,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.p4udiff` | `scripts/p4udiff:1`, `docs/scripts.rst:215-242`; P4 unified-diff generator | Produces data consumed by `--diff-file`; depot/sandbox/include/exclude | Perl, P4; multi-stage fstat/opened/diff/print failure and partial output | `SCRIPT-DIFF-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/p4udiff",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.p4udiff",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/p4udiff_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "support-script.p4-version"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed P4version.pm, a Perforce-backed source-version callback module that computes prefixed P4/MD5 identities and handles local edits or missing files. Applicability is all supported environments; LCOV front ends load it through --version-script and annotate/version helpers call it for source identity. Runtime dependencies are executable:p4, runtime:perl, support-script:annotateutil.pm. Required failure coverage includes empty inventories, P4 command or parse failures, missing files, local edits, and compare mismatches. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.p4version-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 337,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.p4version-pm` | `scripts/P4version.pm:1`, `docs/scripts.rst:178-207`; Perforce version module | `--version-script`; local edit, prefix, MD5, allow-missing | Perl, P4, filesystem, `annotateutil.pm`; command/parse/missing/edit failure | `SCRIPT-VERSION-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/P4version.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.p4version-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/scripts/p4version_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed select.pm, a report selection callback module that filters coverpoints using TLA, age, owner, SHA, or changelist criteria. Applicability is all supported environments; genhtml loads it through --select-script and passes LCOV line/source objects plus annotation, baseline, and diff globals. Runtime dependencies are runtime:perl. Required failure coverage includes invalid criteria, absent or malformed globals, regex errors, object-shape errors, save/restore length mismatch, partial state mutation, and lifecycle failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.select-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 355,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.select-pm` | `scripts/select.pm:1`, `docs/scripts.rst:337-375`; selection module | `--select-script`; TLA, age, owner, SHA/CL; annotate/base/diff globals | Perl and LCOV objects/globals; invalid criteria and lifecycle state | `SCRIPT-SELECT-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/select.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.select-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed simplify.pm, a report callback module that simplifies displayed function names without changing stored function identity. Applicability is all supported environments; genhtml loads it through the simplify callback setting and applies regex or pattern-file rules while rendering function detail. Runtime dependencies are runtime:perl. Required failure coverage includes missing or unreadable pattern files, invalid regex or pattern shape, empty callback results, save/restore length mismatch, counters, and lifecycle failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.simplify-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 356,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.simplify-pm` | `scripts/simplify.pm:1`; function display simplifier | `--simplify-script`; regex or pattern file, lifecycle counters | Perl, readable pattern file, regex; option/file/regex/lifecycle failure | `SCRIPT-SIMPLIFY-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/simplify.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.simplify-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed spreadsheet.py, a standalone utility that converts lcov, geninfo, and genhtml JSON profiles into XLSX workbooks. Applicability is all supported environments; users invoke it directly on profile files after the corresponding tools produce JSON data. Runtime dependencies are python-module:xlsxwriter, runtime:python3. Required failure coverage includes missing xlsxwriter even for help, unreadable or malformed JSON, silently skipped bad inputs, all-bad input failure, ineffective threshold CLI values, schema errors, and workbook write failure. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.spreadsheet-py",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 357,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.spreadsheet-py` | `scripts/spreadsheet.py:1`, `docs/man/spreadsheet.rst:20-90`; profile JSON to XLSX | Standalone analysis of `lcov`, `geninfo`, and `genhtml` profiles | Python, `xlsxwriter`, JSON/filesystem; missing module, bad schema, write failure | `SCRIPT-UTILITY-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/spreadsheet.py",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env python3"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.spreadsheet-py",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed threshold.pm, a criteria callback module that applies line, function, and branch thresholds with signoff behavior. Applicability is all supported environments; LCOV front ends load it through --criteria-script as a specialized criteria.pm implementation. Runtime dependencies are runtime:perl. Required failure coverage includes invalid or out-of-range thresholds, absent coverage families, malformed totals, documented suppress versus implemented signoff differences, and semantic rejection. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.threshold-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 358,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.threshold-pm` | `scripts/threshold.pm:1`, `docs/scripts.rst:312-335`; threshold criteria module | `--criteria-script`; line/function/branch thresholds and signoff | Perl; invalid thresholds, absent coverage family, semantic rejection | `SCRIPT-CRITERIA-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/threshold.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.threshold-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed primary behavior plan for installed unreach.pm, an unreachable callback module that marks branch or MC/DC coverpoints from annotated source and mutates live per-test and summary maps. Applicability is all supported environments; compatible LCOV front ends load it through --unreachable-script and call its module-only exclude ABI. Runtime dependencies are runtime:perl. Required failure coverage includes unreadable annotated source, malformed directives, invalid group or index, object-shape and lifecycle errors, false or exception after partial mutation, and unreverted totals. No differential evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.unreach-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "audit_contract",
+          "line": 359,
+          "path": "specs/001-full-lcov-compatibility/callback-installation-contract.md",
+          "repository": "ferricov",
+          "text": "| `support-script.unreach-pm` | `scripts/unreach.pm:1`; unreachable branch/MC/DC module | `--unreachable-script`; annotated source and live mutable maps | Perl, LCOV objects, readable annotated source; parse and lifecycle failure | `SCRIPT-UNREACH-001` |"
+        },
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5",
+          "text": "SCRIPTS = $(shell ls scripts | grep -v -E '([\\#\\~]|\\.orig|\\.bak|\\.BAK)' )"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/unreach.pm",
+          "repository": "lcov-v2.5",
+          "text": "#!/usr/bin/env perl"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.unreach-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed primary behavior plans for all 23 installed LCOV v2.5 support scripts, including real callers, runtime dependencies, applicability, and failure surfaces without claiming differential evidence.",
+  "fragment_id": "support-scripts",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}
