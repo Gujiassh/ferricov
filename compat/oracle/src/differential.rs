@@ -1672,10 +1672,10 @@ mod tests {
     /// silently — M0 verification demands that the environment switch
     /// surfaces the absence.
     ///
-    /// Set `FERRICOV_SKIP_DOCKER_E2E=1` to skip explicitly in CI without
-    /// Docker.
+    /// Set `FERRICOV_SKIP_DOCKER_E2E=1` to skip explicitly in ordinary CI
+    /// jobs that do not build the Oracle image.
     #[test]
-    fn docker_posixly_correct_reaches_command_and_changes_behavior() {
+    fn docker_clean_environment_and_posixly_correct_change_behavior() {
         if std::env::var("FERRICOV_SKIP_DOCKER_E2E").is_ok() {
             eprintln!("FERRICOV_SKIP_DOCKER_E2E set — skipping Docker E2E");
             return;
@@ -1683,12 +1683,74 @@ mod tests {
 
         let image = "ferricov/lcov-oracle:v2.5";
         let mut image_cache = BTreeMap::new();
-        process::resolve_image_id(image, &mut image_cache).unwrap_or_else(|error| {
-            panic!(
-                "Docker E2E test requires image {image}. Build with: \
-                 docker build -t {image} compat/upstream; error={error}"
-            )
-        });
+        let resolved_image =
+            process::resolve_image_id(image, &mut image_cache).unwrap_or_else(|error| {
+                panic!(
+                    "Docker E2E test requires image {image}; build it from compat/upstream; error={error}"
+                )
+            });
+        let clean_environment = BTreeMap::from([
+            ("HOME".to_owned(), "/work".to_owned()),
+            ("LANG".to_owned(), "C".to_owned()),
+            ("LC_ALL".to_owned(), "C".to_owned()),
+            (
+                "PATH".to_owned(),
+                "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin".to_owned(),
+            ),
+            ("TZ".to_owned(), "UTC".to_owned()),
+        ]);
+
+        let environment_launcher = Launcher {
+            schema_version: 1,
+            name: "docker-clean-environment".to_owned(),
+            program: "{command}".to_owned(),
+            arguments: Vec::new(),
+            environment_variables: clean_environment.clone(),
+            timeout_seconds: Some(30),
+            runtime: Runtime::DockerImage {
+                image: image.to_owned(),
+            },
+            environment: Environment {
+                image: image.to_owned(),
+                operating_system: "Debian 12".to_owned(),
+                architecture: "x86_64".to_owned(),
+                compiler: Some("GCC 12.2.0".to_owned()),
+                cpu: None,
+            },
+        };
+        let environment_case = Case {
+            id: "docker-clean-environment".to_owned(),
+            surface: Surface::Cli,
+            command: "env".to_owned(),
+            arguments: Vec::new(),
+            fixture: None,
+            comparisons: vec![ComparisonRequest {
+                dimension: Dimension::Stdout,
+                normalizer: NormalizerId::ExactV1,
+            }],
+        };
+        let prepared = process::prepare(
+            &std::env::current_dir().unwrap(),
+            &environment_launcher,
+            &environment_case,
+            &mut image_cache,
+        )
+        .unwrap();
+        let captured =
+            process::capture(prepared, &environment_launcher, &environment_case).unwrap();
+        assert_eq!(exit_parts(&captured.captured.exit_status), (Some(0), None));
+        assert_eq!(
+            captured.captured.stdout,
+            b"HOME=/work
+LANG=C
+LC_ALL=C
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+TZ=UTC
+"
+        );
+        assert!(captured.captured.stderr.is_empty());
+        assert!(!captured.timeout.expired);
+        assert_eq!(captured.cleanup.container_absent, Some(true));
 
         let run_parser_case =
             |suite_id: &str, case_id: &str, environment_variables: BTreeMap<String, String>| {
@@ -1759,12 +1821,17 @@ mod tests {
                 (output, result, stdout, stderr)
             };
 
-        let (_default_output, default, default_stdout, default_stderr) =
-            run_parser_case("docker-parser-default", "lcov-help-prefix", BTreeMap::new());
+        let (_default_output, default, default_stdout, default_stderr) = run_parser_case(
+            "docker-parser-default",
+            "lcov-help-prefix",
+            clean_environment.clone(),
+        );
+        let mut posix_environment = clean_environment.clone();
+        posix_environment.insert("POSIXLY_CORRECT".to_owned(), "1".to_owned());
         let (_posix_output, posix, posix_stdout, posix_stderr) = run_parser_case(
             "docker-parser-posix",
             "lcov-help-prefix-posix",
-            BTreeMap::from([("POSIXLY_CORRECT".to_owned(), "1".to_owned())]),
+            posix_environment.clone(),
         );
 
         assert_eq!(default["runs"]["reference"]["exit_code"], 0);
@@ -1772,7 +1839,7 @@ mod tests {
         assert!(default_stderr.is_empty());
         assert_eq!(
             default["effective_environment_variables"],
-            serde_json::json!({})
+            serde_json::to_value(&clean_environment).unwrap()
         );
 
         assert_eq!(posix["runs"]["reference"]["exit_code"], 1);
@@ -1780,7 +1847,7 @@ mod tests {
         assert!(posix_stderr.starts_with(b"lcov: WARNING: Unknown option: hel"));
         assert_eq!(
             posix["effective_environment_variables"],
-            serde_json::json!({"POSIXLY_CORRECT": "1"})
+            serde_json::to_value(&posix_environment).unwrap()
         );
 
         for result in [&default, &posix] {
@@ -1800,7 +1867,7 @@ mod tests {
         );
         assert_eq!(
             default["implementation_identities"]["reference"]["container_image_sha256"],
-            "sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e"
+            resolved_image
         );
     }
 }

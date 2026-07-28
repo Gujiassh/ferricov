@@ -135,6 +135,10 @@ smoke-tests the bubblewrap PID namespace used by process-isolation tests. A
 dedicated Python job checks deterministic behavior-contract generation,
 mutation tests, and the current contract gate against the pinned LCOV source.
 The separate Oracle job builds the image and exercises the real Docker paths.
+Docker differential runs clear the image environment before supplying the
+reviewed `HOME`, locale, `PATH`, and timezone allowlist recorded by the launcher.
+The Oracle CI job verifies that clean environment in a real container before
+running the differential harness self-tests.
 
 ```bash
 cargo fmt --all --check

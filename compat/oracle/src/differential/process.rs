@@ -879,15 +879,15 @@ pub(crate) fn resolve_executable_in_context(
 
 // ── Docker argument construction ─────────────────────────────────────────
 
-fn append_docker_environment_arguments(
+fn append_clean_environment(
     arguments: &mut Vec<OsString>,
     variables: &BTreeMap<String, String>,
 ) -> Result<(), Box<dyn Error>> {
+    arguments.push("-i".into());
     for (key, value) in variables {
         if value.contains('\0') {
             return Err(format!("environment variable {key} contains a NUL byte").into());
         }
-        arguments.push("--env".into());
         arguments.push(format!("{key}={value}").into());
     }
     Ok(())
@@ -907,16 +907,17 @@ fn docker_capture_arguments(cfg: &DockerRunConfig<'_>) -> Result<Vec<OsString>, 
         arguments.push("--user".into());
         arguments.push(user.into());
     }
-    append_docker_environment_arguments(&mut arguments, cfg.environment_variables)?;
     arguments.push("--volume".into());
     arguments.push(format!("{}:/work", cfg.working_directory.display()).into());
     arguments.extend([
         "--workdir".into(),
         "/work".into(),
         "--entrypoint".into(),
-        cfg.program.into(),
+        "/usr/bin/env".into(),
         cfg.image_id.into(),
     ]);
+    append_clean_environment(&mut arguments, cfg.environment_variables)?;
+    arguments.push(cfg.program.into());
     arguments.extend(cfg.launcher_arguments.iter().map(OsString::from));
     arguments.extend(cfg.case_arguments.iter().map(OsString::from));
     Ok(arguments)
@@ -943,15 +944,18 @@ fn docker_identity_arguments(
         arguments.push("--user".into());
         arguments.push(user.into());
     }
-    append_docker_environment_arguments(&mut arguments, environment_variables)?;
     arguments.push("--volume".into());
     arguments.push(format!("{}:/work", working_directory.display()).into());
     arguments.extend([
         "--workdir".into(),
         "/work".into(),
         "--entrypoint".into(),
-        "/bin/sh".into(),
+        "/usr/bin/env".into(),
         image_id.into(),
+    ]);
+    append_clean_environment(&mut arguments, environment_variables)?;
+    arguments.extend([
+        "/bin/sh".into(),
         "-c".into(),
         "p=$(command -v -- \"$1\") && test -n \"$p\" && /usr/bin/sha256sum \"$p\"".into(),
         "/bin/sh".into(),
@@ -1095,10 +1099,15 @@ mod tests {
         assert!(args.contains(&"--read-only".to_owned()));
         assert!(args.windows(2).any(|pair| pair == ["--user", "1000:1001"]));
         let img_pos = args.iter().position(|v| v == "--entrypoint").unwrap() + 2;
+        assert_eq!(args[img_pos - 1], "/usr/bin/env");
         assert_eq!(
             args[img_pos],
             "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         );
+        assert_eq!(args[img_pos + 1], "-i");
+        assert_eq!(args[img_pos + 2], "POSIXLY_CORRECT=1");
+        assert_eq!(args[img_pos + 3], "lcov");
+        assert!(!args.contains(&"--env".to_owned()));
     }
 
     #[test]
@@ -1121,6 +1130,14 @@ mod tests {
         assert!(args.contains(&"--volume".to_owned()));
         assert!(args.contains(&"--workdir".to_owned()));
         assert!(args.contains(&"--read-only".to_owned()));
+        let entrypoint = args
+            .iter()
+            .position(|value| value == "--entrypoint")
+            .unwrap();
+        assert_eq!(args[entrypoint + 1], "/usr/bin/env");
+        assert_eq!(args[entrypoint + 3], "-i");
+        assert_eq!(args[entrypoint + 4], "/bin/sh");
+        assert!(!args.contains(&"--env".to_owned()));
     }
 
     #[test]

@@ -120,6 +120,12 @@ jobs:
       - name: Build and verify pinned Oracle
         run: python3 compat/verify.py
 
+      - name: Verify clean Docker execution
+        run: >-
+          cargo +1.85.0 test --locked -p ferricov-oracle
+          differential::tests::docker_clean_environment_and_posixly_correct_change_behavior
+          -- --exact
+
       - name: Run positive harness self-test
         run: |
           cargo +1.85.0 run --locked -p ferricov-oracle --bin differential -- \

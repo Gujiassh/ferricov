@@ -51,6 +51,10 @@ compatibility releases.
 - Added a dedicated CI gate for deterministic behavior-contract generation,
   its mutation suite, and current-mode validation against a commit-verified
   pinned LCOV checkout.
+- Made Docker differential execution clear the image environment before
+  applying the reviewed launcher allowlist, so retained evidence no longer
+  omits ambient `HOSTNAME`, `HOME`, or `PATH` values; Oracle CI now executes a
+  real-container allowlist and parser-policy self-test.
 - Passed the review-overlay directory during byte-stable inventory
   regeneration.
 - Removed workstation-specific upstream paths from the full verifier; it now

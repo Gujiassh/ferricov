@@ -106,5 +106,12 @@ the M0 harness become the permanent integration boundary.
   Oracle verification, and independently gates deterministic behavior-contract
   generation, mutation tests, and current-mode validation against the pinned
   LCOV checkout.
+- Docker differential execution uses `/usr/bin/env -i` and then applies only the
+  launcher-declared `HOME`, locale, `PATH`, and timezone values. Retained
+  `effective_environment_variables` now describes the actual command
+  environment
+  rather than omitting image defaults. Oracle CI directly verifies the
+  five-variable environment and default/POSIX parser behavior in a real
+  container.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

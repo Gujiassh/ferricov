@@ -3,7 +3,13 @@
   "name": "lcov-v2.5-oracle",
   "program": "{command}",
   "arguments": [],
-  "environment_variables": {},
+  "environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
   "runtime": {
     "kind": "docker_image",
     "image": "ferricov/lcov-oracle:v2.5"
