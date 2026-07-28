@@ -40,6 +40,8 @@
 - [ ] Complete installation-layout and asset behavior planning.
 - [x] Map all 205 upstream test files to public behaviors or internal coverage.
 - [x] Define the four required critical interaction groups with reciprocal cases.
+- [x] Review the 40 public CLI primary entries exercised by the retained M0
+  contract and bind their 154 exact suite cases without claiming product evidence.
 - [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
 - [x] Write the callback/runtime ADR.
 - [x] Write the initial compiler/platform matrix ADR.
@@ -53,10 +55,11 @@ abbreviations, rejects 2 as ambiguous, and rejects 30 as unknown; the POSIX
 profile rejects all 41 as unknown. These are pinned-Oracle observations and do
 not count as product evidence.
 
-Behavior planning covers all 531 public entries with primary case skeletons,
-but only 23 public primary plans are reviewed. All four required critical
-interaction domains now have reviewed members and reciprocal cases. The current
-M0 gate reports 508 gaps, all public entries without reviewed primary cases.
+Behavior planning covers all 531 public entries with primary plans. Sixty-three
+public primary plans are reviewed, including 40 CLI entries bound to 154 exact
+suite cases while retaining planning-only evidence status. All four required
+critical interaction domains now have reviewed members and reciprocal cases. The current
+M0 gate reports 468 gaps, all public entries without reviewed primary cases.
 The raw Oracle correctness baseline is complete and replayed, but it remains
 reference-only evidence and does not unlock product parity.
 

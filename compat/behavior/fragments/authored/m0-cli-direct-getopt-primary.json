@@ -1,0 +1,367 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review gendesc help as observable direct Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.gendesc.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 72,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 18,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 51,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 6,
+          "path": "help/gendesc.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-gendesc-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-direct-case-insensitive",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-direct-no-bundling",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-direct-permute",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-direct-plus-prefix",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-direct-single-dash-long",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-direct-unique-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-gendesc-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-gendesc-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-direct-abbreviation-disabled",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-direct-case-folding-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-direct-no-bundling-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-direct-plus-prefix-disabled",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-direct-require-order",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-direct-single-dash-long-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.gendesc.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review gendesc version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.gendesc.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 71,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 18,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 54,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 7,
+          "path": "help/gendesc.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-gendesc-version",
+          "suite_id": "m0-cli-contract-core"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.gendesc.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review the gendesc input-file positional at the direct Getopt ordering boundary. Default parsing permits option permutation while POSIX require-order preserves later tokens as operands. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.gendesc.positional.inputfile",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 78,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-direct-permute",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-direct-require-order",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.gendesc.positional.inputfile",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genpng help as observable direct Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 86,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 20,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 43,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 7,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-genpng-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-genpng-h",
+          "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genpng version output and exit behavior through the canonical spelling and its exercised unique abbreviation. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 87,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 21,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 46,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-genpng-version",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-direct-version-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed primary behavior plans for 5 public direct-getopt CLI entries exercised by the 126-case M0 default/POSIX Oracle contract, with planned suites but no product evidence.",
+  "fragment_id": "authored.m0-cli-direct-getopt-primary",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

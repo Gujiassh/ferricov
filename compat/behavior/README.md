@@ -17,6 +17,8 @@ Human-reviewed decisions live under `fragments/authored/`:
 - `installation.json`: reviewed install, payload, discovery, and safety subjects
 - `perl2lcov.json`: reviewed converter runtime, model, and matrix subjects
 - `interactions.json`: the required critical interaction domains
+- `m0-cli-*-primary.json`: reviewed argparse, direct Getopt, and shared Getopt
+  primary plans already exercised by the retained M0 CLI Oracle contract
 
 Machine-generated imports and inventory skeletons live under
 `fragments/generated/`. The generator places inventory entries into eight stable
@@ -24,7 +26,7 @@ hash buckets per command/config/support responsibility domain. Generated files
 are not authoring surfaces and are rewritten from the current inventory.
 Every fragment is canonical JSON, validates against
 `behavior-contract-fragment.schema.json`, and is limited to 2,000 lines. The
-current largest fragment is well below that limit.
+current largest authored fragment is 1,666 lines, below that limit.
 
 The baseline imports the stable test-map behavior registry, imports reviewed
 callback/install/converter planning from the normative contract, and creates one
@@ -98,8 +100,14 @@ inventory entry and a reviewed critical group for every interaction domain:
 The four required domains now have reviewed members and reciprocal planning
 cases in `interactions.json`. Their cases retain `evidence_status=none`: this
 closes interaction planning only, not differential evidence or product
-compatibility. `m0-ready` still rejects the 508 public entries without reviewed
-primary case groups.
+compatibility.
+
+The three M0 CLI primary fragments review 40 public entries and bind them to
+154 exact cases in the core, default parser-policy, and POSIX parser-policy
+suites. These cases use `evidence_status=planned` and retain empty evidence
+arrays because the retained Oracle observations are reference baselines, not
+Ferricov differential results. `m0-ready` now rejects the remaining 468 public
+entries without reviewed primary case groups.
 
 ## Evidence Rules
 

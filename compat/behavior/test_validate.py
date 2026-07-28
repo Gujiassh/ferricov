@@ -282,6 +282,27 @@ class BehaviorContractValidationTests(unittest.TestCase):
             - self.base["totals"]["reviewed_interaction_domains"],
         )
 
+    def test_m0_cli_primary_reviews_remain_planning_only(self) -> None:
+        fragment_ids = {
+            "authored.m0-cli-argparse-primary",
+            "authored.m0-cli-direct-getopt-primary",
+            "authored.m0-cli-shared-getopt-primary",
+        }
+        cases = [
+            case
+            for _, fragment in self.authored_fragments
+            if fragment["fragment_id"] in fragment_ids
+            for case in fragment["case_groups"]
+        ]
+        self.assertEqual(len(cases), 40)
+        self.assertEqual(sum(len(case["suite_cases"]) for case in cases), 154)
+        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
+        self.assertTrue(all(case["evidence_status"] == "planned" for case in cases))
+        self.assertTrue(all(case["evidence"] == [] for case in cases))
+
+        aggregate = {case["id"]: case for case in self.base["case_groups"]}
+        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+
     def test_m0_ready_cli_rejects_honest_debt(self) -> None:
         completed = subprocess.run(
             [
@@ -717,12 +738,6 @@ class BehaviorContractValidationTests(unittest.TestCase):
         )
 
     def test_reviewed_interaction_case_must_target_every_member(self) -> None:
-        option = next(
-            item["entry"]["id"]
-            for item in inventory_entries(self.inventory)
-            if item["kind"] == "option"
-        )
-
         def change(contract: dict[str, Any]) -> None:
             group = next(
                 item for item in contract["interaction_groups"]
@@ -735,8 +750,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 item
                 for item in contract["case_groups"]
                 if item["origin"] == "generated_skeleton"
-                and item["targets"][0]["id"] == option
+                and ".option." in item["targets"][0]["id"]
             )
+            option = planned_case["targets"][0]["id"]
             group["origin"] = "manually_curated"
             group["review_status"] = "reviewed"
             group["members"] = [
@@ -813,8 +829,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 )
 
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 508)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 23)
+        self.assertEqual(len(report.readiness_gaps), 468)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 63)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:

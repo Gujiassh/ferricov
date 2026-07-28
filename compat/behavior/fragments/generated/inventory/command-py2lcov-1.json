@@ -107,56 +107,6 @@
         }
       ],
       "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for command.py2lcov.option.verbose; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.py2lcov.option.verbose",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 136,
-          "path": "bin/py2lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 91,
-          "path": "docs/man/py2lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 22,
-          "path": "help/py2lcov.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.py2lcov.option.verbose",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
     }
   ],
   "description": "Deterministic unreviewed public inventory skeleton bucket 1 for the command-py2lcov responsibility domain.",

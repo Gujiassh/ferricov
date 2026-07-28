@@ -47,7 +47,7 @@ relationships where supported.
 | tracefile formats | pending | not started | none |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary skeletons cover all 531 public entries | not started | 23 reviewed primary plans; all 4 critical interaction domains reviewed; 508 primary reviews open |
+| behavior planning | primary plans cover all 531 public entries | not started | 63 reviewed primary plans, including 40 CLI entries bound to 154 suite cases; all 4 critical interaction domains reviewed; 468 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry installed tree pinned and reproduced across two no-cache builds | not started | environment evidence only |
 
@@ -75,6 +75,12 @@ the random `geninfo` tempfile token; raw diagnostics are retained verbatim.
 This is Oracle qualification evidence only. It does not provide Ferricov
 product compatibility evidence, and the baseline status explicitly keeps
 `product_compatibility_evidence=false`.
+
+Forty public CLI primary entries already exercised by that 126-case contract
+now have reviewed authored plans across argparse, direct Getopt, and shared
+Getopt parser families. Their 154 exact suite-case bindings are planning links
+only: every entry remains `evidence_status=planned`, every evidence array is
+empty, and no product compatibility status changes.
 
 ## Release Claims
 

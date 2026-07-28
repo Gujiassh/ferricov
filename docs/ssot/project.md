@@ -89,10 +89,10 @@ the M0 harness become the permanent integration boundary.
 - `compat/inventory/tests/upstream-test-map.json` covers all 205 pinned upstream
   test files, and every mapping is reviewed.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Twenty-three primary plans and all four
-  required critical interaction domains are reviewed. The callback,
+  531 public inventory entries. Sixty-three primary plans and all four required
+  critical interaction domains are reviewed. The callback,
   error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 508 public primary reviews remain open.
+  and reciprocal planning cases; 468 public primary reviews remain open.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
@@ -122,5 +122,9 @@ the M0 harness become the permanent integration boundary.
 - Correctness baseline schemas, status binding, artifact validation, replay
   comparison, and mutation tests live under `compat/correctness/`; the static
   CLI contract generator no longer owns baseline status.
+- Three authored CLI fragments review 40 public argparse, direct Getopt, and
+  shared Getopt primary entries already exercised by the retained M0 contract.
+  They bind 154 exact suite cases but remain `evidence_status=planned` with no
+  product evidence until a distinct Ferricov candidate executes them.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

@@ -27,11 +27,11 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
 | Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
 | Upstream test map | All 205 files mapped and reviewed |
-| Differential harness | 105 Rust unit tests, 38 behavior-contract tests, correctness-baseline mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
-| M0 behavior planning | 531 public entries have primary case skeletons; 23 are reviewed, all 4 critical interaction domains are reviewed, and 508 primary reviews remain open |
+| Differential harness | 105 Rust unit tests, 39 behavior-contract tests, correctness-baseline mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
+| M0 behavior planning | 531 public entries have primary plans; 63 are reviewed, including 40 CLI entries bound to 154 exact suite cases; all 4 critical interaction domains are reviewed, and 468 primary reviews remain open |
 | Oracle correctness baseline | 126 raw M0 CLI observations retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
 | Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
-| Current milestone | M0: executable compatibility contract and reproducible baselines; 508 behavior-planning gaps remain |
+| Current milestone | M0: executable compatibility contract and reproducible baselines; 468 behavior-planning gaps remain |
 
 Self-tests prove that the harness captures differences and fails correctly.
 They do not count as Ferricov product compatibility. See the

@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior-plan skeletons, with 23 reviewed primary plans, all 4
-  required critical interaction domains reviewed, and 508 primary-review gaps
+- 531 public behavior plans, with 63 reviewed primary plans, all 4 required
+  critical interaction domains reviewed, and 468 primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
 percentages. One option may require multiple positive, negative, configuration,
@@ -146,10 +146,12 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. M0 is
-not complete: 508 behavior-planning gaps, compiler capture qualification, and
+not complete: 468 behavior-planning gaps, compiler capture qualification, and
 release platform evidence remain. The 126-case M0 CLI correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
-product compatibility.
+product compatibility. Forty public CLI primary entries covered by that
+contract now have reviewed planning bindings to 154 exact suite cases; they
+remain planning-only without candidate evidence.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 

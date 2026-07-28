@@ -15,50 +15,6 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for command.xml2lcov.option.help; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.xml2lcov.option.help",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 65,
-          "path": "bin/xml2lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 10,
-          "path": "help/xml2lcov.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.xml2lcov.option.help",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
       "description": "Unreviewed acceptance skeleton for command.xml2lcov.option.output; observable semantics, fixtures, and expected outcomes require manual adjudication.",
       "evidence": [],
       "evidence_status": "none",
@@ -129,44 +85,6 @@
       "targets": [
         {
           "id": "command.xml2lcov.option.test-name",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for command.xml2lcov.positional.inputs; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.xml2lcov.positional.inputs",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 84,
-          "path": "bin/xml2lcov",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.xml2lcov.positional.inputs",
           "role": "primary"
         }
       ],

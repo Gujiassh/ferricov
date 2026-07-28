@@ -27,6 +27,9 @@ compatibility releases.
 - A retained, immutable-image LCOV 2.5 CLI baseline with raw streams,
   filesystem snapshots, timeout/cleanup evidence, and a passing independent
   semantic replay.
+- Reviewed primary plans for 40 public CLI entries across argparse, direct
+  Getopt, and shared Getopt parsers, bound to 154 exact M0 suite cases while
+  retaining planning-only evidence status.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -81,11 +84,11 @@ compatibility releases.
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
 - The workspace passes formatting, compilation, 105 Rust unit tests, clippy
-  with warnings denied, 38 behavior-contract tests, correctness-baseline
+  with warnings denied, 39 behavior-contract tests, correctness-baseline
   mutation tests, Python mutation suites, schema validators, and retained
   evidence validation. Two independent 126-case Oracle captures pass semantic
   replay comparison.
-- M0 remains open with 508 explicit behavior-planning gaps; no compatibility or
+- M0 remains open with 468 explicit behavior-planning gaps; no compatibility or
   candidate performance claim is made.
 
 [Unreleased]: https://github.com/Gujiassh/ferricov/commits/main

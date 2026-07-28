@@ -1,0 +1,1666 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genhtml --config-file as an exact shared Getopt::Long option using the empty fixture. The bound cases cover default/POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 45,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1537,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 13,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-genhtml-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-genhtml-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genhtml help as observable shared Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 17,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 505,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1313,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 7,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-genhtml-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-genhtml-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-genhtml-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-genhtml-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-genhtml-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-genhtml-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-genhtml-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genhtml --rc as an exact shared Getopt::Long configuration assignment using the empty configuration fixture in default and POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 48,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 729,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 737,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1556,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 14,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-genhtml-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-genhtml-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review genhtml version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 17,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 508,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1248,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-genhtml-version",
+          "suite_id": "m0-cli-contract-core"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review geninfo --config-file as an exact shared Getopt::Long option using the empty fixture. The bound cases cover default/POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 51,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 188,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 308,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 14,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-geninfo-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-geninfo-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review geninfo help as observable shared Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 17,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 249,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 364,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-geninfo-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-geninfo-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-geninfo-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-geninfo-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-geninfo-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-geninfo-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-geninfo-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review geninfo --rc as an exact shared Getopt::Long configuration assignment using the empty configuration fixture in default and POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 56,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 242,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 247,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 647,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 15,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-geninfo-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-geninfo-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review geninfo version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 18,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 657,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 9,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1248,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-geninfo-version",
+          "suite_id": "m0-cli-contract-core"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --config-file as an exact shared Getopt::Long option using the empty fixture. The bound cases cover default/POSIX profiles, accepted single-dash exact spelling, and rejected unique-prefix abbreviation. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 171,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 447,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 14,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-config-file-abbreviation-rejected",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-config-file-single-dash-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-config-file-abbreviation-rejected",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-config-file-single-dash-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov help as observable shared Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 153,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 341,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 931,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-lcov-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-lcov-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-lcov-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-case-insensitive",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-config-file-abbreviation-rejected",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-config-file-single-dash-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-permute",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-plus-prefix",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-rc-case-insensitive-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-single-dash-long",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-unique-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-abbreviation-disabled",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-case-folding-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-config-file-abbreviation-rejected",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-config-file-single-dash-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-plus-prefix-disabled",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-rc-case-insensitive-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-require-order",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-single-dash-long-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review the lcov quiet short form inside the shared no-bundling boundary. The cases distinguish an accepted standalone -q spelling from a rejected combined -qv token in default and POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.quiet",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 162,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1323,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1328,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 11,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1244,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-no-bundling",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-no-bundling-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.quiet",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --rc as an exact shared Getopt::Long configuration assignment using the empty configuration fixture in default and POSIX profiles, including case-insensitive exact spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 172,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 330,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 336,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1369,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 15,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-rc-case-insensitive-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-rc-case-insensitive-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov verbose parsing across the explicit -v spelling, the rejected combined -qv no-bundling case, and the ambiguous --ver prefix shared with --version and --version-script. Default and POSIX parser effects remain explicit. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.verbose",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 163,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1320,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 10,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1245,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-ambiguous-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-no-bundling",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-no-bundling-preserved",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.verbose",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 154,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1462,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 9,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1248,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-lcov-version",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-shared-ambiguous-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --version-script as one target of the ambiguous --ver prefix. The plan requires rejection rather than guessing between --verbose, --version, and --version-script. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.version-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 54,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 368,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 608,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 816,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 74,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1238,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-ambiguous-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.version-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [
+          "An lcov operation that accepts one or more positional input or pattern operands is selected."
+        ],
+        "status": "conditional"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov operation operands at the Getopt ordering boundary. Default parsing permits option permutation while POSIX require-order stops option parsing after the first positional operand. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.positional.operation-operands",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 299,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-permute",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-require-order",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.positional.operation-operands",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review llvm2lcov --config-file as an exact shared Getopt::Long option using the empty fixture. The bound cases cover default/POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.llvm2lcov.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-llvm2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-llvm2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.llvm2lcov.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review llvm2lcov help as observable shared Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.llvm2lcov.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-llvm2lcov-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-llvm2lcov-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-llvm2lcov-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-converter-abbreviation",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-llvm2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-llvm2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-llvm2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-llvm2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.llvm2lcov.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review llvm2lcov --rc as an exact shared Getopt::Long configuration assignment using the empty configuration fixture in default and POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.llvm2lcov.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-llvm2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-llvm2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.llvm2lcov.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review llvm2lcov version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.llvm2lcov.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1248,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-llvm2lcov-version",
+          "suite_id": "m0-cli-contract-core"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.llvm2lcov.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review perl2lcov --config-file as an exact shared Getopt::Long option using the empty fixture. The bound cases cover default/POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.perl2lcov.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-perl2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-perl2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.perl2lcov.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review perl2lcov help as observable shared Getopt::Long behavior: canonical --help, the exercised short or question-mark forms, parser-prefix policy, output channel, exit status, and default/POSIX differences where applicable. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.perl2lcov.option.help",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1247,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-perl2lcov-help",
+          "suite_id": "m0-cli-contract-core"
+        },
+        {
+          "case_id": "m0-policy-help-alias-perl2lcov-h",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-help-alias-perl2lcov-question",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-perl2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-policy-shared-perl2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-perl2lcov-config-file-exact",
+          "suite_id": "m0-cli-contract-posix"
+        },
+        {
+          "case_id": "m0-posix-shared-perl2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.perl2lcov.option.help",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review perl2lcov --rc as an exact shared Getopt::Long configuration assignment using the empty configuration fixture in default and POSIX profiles. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.perl2lcov.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-policy-shared-perl2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-policy"
+        },
+        {
+          "case_id": "m0-posix-shared-perl2lcov-rc-exact",
+          "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.perl2lcov.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review perl2lcov version output and exit behavior through the canonical spelling. Every linked compatibility-suite case compares exit status, stdout, stderr, and filesystem effects. These are reviewed Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.perl2lcov.option.version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1248,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-core-perl2lcov-version",
+          "suite_id": "m0-cli-contract-core"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.perl2lcov.option.version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed primary behavior plans for 24 public shared-getopt CLI entries exercised by the 126-case M0 default/POSIX Oracle contract, with planned suites but no product evidence.",
+  "fragment_id": "authored.m0-cli-shared-getopt-primary",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}
