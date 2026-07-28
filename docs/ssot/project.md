@@ -89,10 +89,10 @@ the M0 harness become the permanent integration boundary.
 - `compat/inventory/tests/upstream-test-map.json` covers all 205 pinned upstream
   test files, and every mapping is reviewed.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Sixty-three primary plans and all four required
+  531 public inventory entries. Sixty-nine primary plans and all four required
   critical interaction domains are reviewed. The callback,
   error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 468 public primary reviews remain open.
+  and reciprocal planning cases; 462 public primary reviews remain open.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
@@ -113,8 +113,9 @@ the M0 harness become the permanent integration boundary.
   rather than omitting image defaults. Oracle CI directly verifies the
   five-variable environment and default/POSIX parser behavior in a real
   container.
-- `compat/correctness/baselines/m0-cli-oracle-v2.5/` retains 126 raw CLI
-  observations from the immutable execution-manifest image. An independent
+- `compat/correctness/baselines/m0-cli-oracle-v2.5/` retains 148 raw
+  observations from the immutable execution-manifest image: 126 CLI cases and
+  22 configuration cases. An independent
   replay has matching semantic exit, stream, and filesystem outcomes; timing,
   image identity, and the random `geninfo` tempfile token are excluded only by
   the correctness replay comparator. Raw artifacts remain unchanged, and
@@ -126,5 +127,9 @@ the M0 harness become the permanent integration boundary.
   shared Getopt primary entries already exercised by the retained M0 contract.
   They bind 154 exact suite cases but remain `evidence_status=planned` with no
   product evidence until a distinct Ferricov candidate executes them.
+- The authored configuration fragment adds eight config-semantic planning
+  slices with 67 exact suite bindings and reviews six additional public primary
+  targets. Exit, branch-summary, and diagnostic expectations are validated
+  against raw Oracle artifacts, but all product evidence remains empty.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

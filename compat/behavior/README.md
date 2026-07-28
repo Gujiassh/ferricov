@@ -19,6 +19,8 @@ Human-reviewed decisions live under `fragments/authored/`:
 - `interactions.json`: the required critical interaction domains
 - `m0-cli-*-primary.json`: reviewed argparse, direct Getopt, and shared Getopt
   primary plans already exercised by the retained M0 CLI Oracle contract
+- `m0-config-primary.json`: reviewed configuration discovery, precedence,
+  override, and diagnostic ownership plans
 
 Machine-generated imports and inventory skeletons live under
 `fragments/generated/`. The generator places inventory entries into eight stable
@@ -106,8 +108,10 @@ The three M0 CLI primary fragments review 40 public entries and bind them to
 154 exact cases in the core, default parser-policy, and POSIX parser-policy
 suites. These cases use `evidence_status=planned` and retain empty evidence
 arrays because the retained Oracle observations are reference baselines, not
-Ferricov differential results. `m0-ready` now rejects the remaining 468 public
-entries without reviewed primary case groups.
+Ferricov differential results. The configuration fragment adds eight semantic
+slices with 67 exact bindings and reviews six additional primary targets. It
+also retains `planned` status and empty evidence arrays. `m0-ready` now rejects
+the remaining 462 public entries without reviewed primary case groups.
 
 ## Evidence Rules
 

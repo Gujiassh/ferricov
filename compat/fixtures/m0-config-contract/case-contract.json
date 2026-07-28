@@ -1,0 +1,410 @@
+{
+  "cases": [
+    {
+      "case_id": "m0-config-base-duplicate-explicit-file",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-explicit-bypasses-home",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-explicit-on",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-explicit-order-off-on",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-explicit-order-on-off",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-flag-disables-file-on",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.no-branch-coverage",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-flag-enables-file-off",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.branch-coverage",
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-home-discovery",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-include-loop",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 25,
+        "stderr_contains": [
+          "config file inclusion loop detected"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage",
+        "lcovrc.config-file"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-inline-include-stops-parent",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [
+          "readline() on closed filehandle HANDLE"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage",
+        "lcovrc.config-file"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-missing-env",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 255,
+        "stderr_contains": [
+          "uses environment variable 'FERRICOV_MISSING'"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-missing-env-ignored",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [
+          "uses environment variable 'FERRICOV_MISSING'"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.ignore-errors",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-missing-explicit-is-early",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 2,
+        "stderr_contains": [
+          "cannot read configuration file 'missing.lcovrc'"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.ignore-errors",
+        "command.lcov.option.summary"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-no-discovery-control",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-rc-overrides-file",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.rc",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-relative-include",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [
+          "readline() on closed filehandle HANDLE"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage",
+        "lcovrc.config-file"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-unknown-file-key-is-silent",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-base-unknown-rc-key",
+      "expected": {
+        "branch_summary": "absent",
+        "exit_code": 2,
+        "stderr_contains": [
+          "unknown/unsupported key 'ferricov_unknown_key'"
+        ],
+        "stderr_empty": false
+      },
+      "inventory_entries": [
+        "command.lcov.option.rc",
+        "command.lcov.option.summary"
+      ],
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_id": "m0-config-env-multiple-expansion",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-env"
+    },
+    {
+      "case_id": "m0-config-env-single-expansion",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.config-file",
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-env"
+    },
+    {
+      "case_id": "m0-config-home-first-wins-over-lcov-home",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-home-first"
+    },
+    {
+      "case_id": "m0-config-lcov-home-fallback",
+      "expected": {
+        "branch_summary": "present",
+        "exit_code": 0,
+        "stderr_contains": [],
+        "stderr_empty": true
+      },
+      "inventory_entries": [
+        "command.lcov.option.summary",
+        "lcovrc.branch-coverage"
+      ],
+      "suite_id": "m0-config-contract-lcov-home"
+    }
+  ],
+  "clean_environment": {
+    "allowlist": {
+      "HOME": "{workdir}",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "inherit_parent": false
+  },
+  "inventory": {
+    "path": "compat/inventory/v2.5.json",
+    "sha256": "567f6ab8c7a13442350cc6b1831c2c7d9206625e6b54bb85bb0458cdf3890444"
+  },
+  "schema_version": 1,
+  "semantic_oracle": "Exact exit status plus presence or absence of the branches summary line; required stderr fragments bind failure category or the pinned include warning.",
+  "suite_schema": {
+    "path": "compat/schema/suite.schema.json",
+    "sha256": "0f0778f8a39f524714d43bf735f396dd2d932cbce991dba7d9953afe9d9a950b"
+  },
+  "suites": [
+    {
+      "case_count": 18,
+      "environment_overrides": {},
+      "path": "compat/cases/m0-config-contract-base.json",
+      "sha256": "350281ebcae95484f4d71f95fa1ffe59c402d693e9ed1ee475128433c1ff1eb2",
+      "suite_id": "m0-config-contract-base"
+    },
+    {
+      "case_count": 2,
+      "environment_overrides": {
+        "FERRICOV_RC_BRANCH": "1",
+        "FERRICOV_RC_LEFT": "",
+        "FERRICOV_RC_RIGHT": "1"
+      },
+      "path": "compat/cases/m0-config-contract-env.json",
+      "sha256": "3c2b2b0fc58e712dd923e5400a53ef437f818ef84f7ca6ca0401b59dddb31983",
+      "suite_id": "m0-config-contract-env"
+    },
+    {
+      "case_count": 1,
+      "environment_overrides": {
+        "HOME": "{workdir}/home",
+        "LCOV_HOME": "{workdir}/lcov-home"
+      },
+      "path": "compat/cases/m0-config-contract-home-first.json",
+      "sha256": "d0ded9b147901b4814b46bd5ca75c6de58db5497a2b90c8fea79993eb718982e",
+      "suite_id": "m0-config-contract-home-first"
+    },
+    {
+      "case_count": 1,
+      "environment_overrides": {
+        "HOME": "{workdir}/missing-home",
+        "LCOV_HOME": "{workdir}/lcov-home"
+      },
+      "path": "compat/cases/m0-config-contract-lcov-home.json",
+      "sha256": "c9211b9595d45452acd15b6f8a459bcf58ec6f44c0168ee87da4d9743dbaf8db",
+      "suite_id": "m0-config-contract-lcov-home"
+    }
+  ],
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

@@ -27,11 +27,11 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
 | Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
 | Upstream test map | All 205 files mapped and reviewed |
-| Differential harness | 105 Rust unit tests, 39 behavior-contract tests, correctness-baseline mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
-| M0 behavior planning | 531 public entries have primary plans; 63 are reviewed, including 40 CLI entries bound to 154 exact suite cases; all 4 critical interaction domains are reviewed, and 468 primary reviews remain open |
-| Oracle correctness baseline | 126 raw M0 CLI observations retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
+| Differential harness | 106 Rust unit tests, 40 behavior-contract tests, 6 configuration-contract tests, 16 correctness tests, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
+| M0 behavior planning | 531 public entries have primary plans; 69 are reviewed, including 40 CLI parser entries and 8 configuration-semantic slices with 67 exact bindings; all 4 critical interaction domains are reviewed, and 462 primary reviews remain open |
+| Oracle correctness baseline | 148 raw M0 observations, comprising 126 CLI and 22 configuration cases, retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
 | Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
-| Current milestone | M0: executable compatibility contract and reproducible baselines; 468 behavior-planning gaps remain |
+| Current milestone | M0: executable compatibility contract and reproducible baselines; 462 behavior-planning gaps remain |
 
 Self-tests prove that the harness captures differences and fails correctly.
 They do not count as Ferricov product compatibility. See the
@@ -149,7 +149,8 @@ cargo check --workspace --all-targets
 cargo test --workspace --all-targets
 cargo clippy --workspace --all-targets -- -D warnings
 python3 compat/correctness/validate.py
-python3 -m unittest compat/correctness/test_validate.py
+python3 -m unittest discover -s compat/cases -p 'test_*.py'
+python3 -m unittest discover -s compat/correctness -p 'test_*.py'
 ```
 
 Build and smoke-test the immutable LCOV 2.5 Oracle:

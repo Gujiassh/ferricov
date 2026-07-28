@@ -47,9 +47,16 @@ class CorrectnessValidationTests(unittest.TestCase):
         self,
         baseline_path: Path,
         mutate: Callable[[dict[str, Any], Path], None],
+        *,
+        case_id: str | None = None,
     ) -> None:
         baseline = load(baseline_path)
-        reference = baseline["cases"][0]
+        reference = next(
+            reference
+            for reference in baseline["cases"]
+            if case_id is None
+            or load(baseline_path.parent / reference["path"])["case_id"] == case_id
+        )
         observation_path = baseline_path.parent / reference["path"]
         observation = load(observation_path)
         mutate(observation, observation_path.parent)
@@ -60,7 +67,7 @@ class CorrectnessValidationTests(unittest.TestCase):
 
     def test_accepts_retained_baseline_without_product_claim(self) -> None:
         document = validator.validate_baseline(BASELINE)
-        self.assertEqual(document["case_count"], 126)
+        self.assertEqual(document["case_count"], 148)
         self.assertFalse(document["product_compatibility_evidence"])
 
     def test_accepts_status_bound_to_retained_baseline(self) -> None:
@@ -192,6 +199,73 @@ class CorrectnessValidationTests(unittest.TestCase):
                 "replay mismatch",
             ):
                 validator.compare_baselines(BASELINE, replay_path)
+
+    def test_rejects_configuration_exit_semantic_drift(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="ferricov-correctness-test-") as directory:
+            baseline_path = self.copied_baseline(directory)
+
+            def mutate(observation: dict[str, Any], _case_root: Path) -> None:
+                observation["reference_run"]["exit_code"] = 1
+
+            self.mutate_observation(
+                baseline_path,
+                mutate,
+                case_id="m0-config-base-explicit-on",
+            )
+            with self.assertRaisesRegex(
+                validator.CorrectnessValidationError,
+                "configuration exit semantic mismatch",
+            ):
+                validator.validate_baseline(baseline_path)
+
+    def test_rejects_configuration_branch_summary_semantic_drift(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="ferricov-correctness-test-") as directory:
+            baseline_path = self.copied_baseline(directory)
+
+            def mutate(observation: dict[str, Any], case_root: Path) -> None:
+                run = observation["reference_run"]
+                stdout_path = case_root / run["stdout_artifact"]
+                content = b"".join(
+                    line
+                    for line in stdout_path.read_bytes().splitlines(keepends=True)
+                    if not line.startswith(b"  branches....:")
+                )
+                stdout_path.write_bytes(content)
+                run["stdout_bytes"] = len(content)
+                run["stdout_sha256"] = artifact_sha256(stdout_path).removeprefix("sha256:")
+
+            self.mutate_observation(
+                baseline_path,
+                mutate,
+                case_id="m0-config-base-explicit-on",
+            )
+            with self.assertRaisesRegex(
+                validator.CorrectnessValidationError,
+                "configuration branch summary semantic mismatch",
+            ):
+                validator.validate_baseline(baseline_path)
+
+    def test_rejects_configuration_stderr_semantic_drift(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="ferricov-correctness-test-") as directory:
+            baseline_path = self.copied_baseline(directory)
+
+            def mutate(observation: dict[str, Any], case_root: Path) -> None:
+                run = observation["reference_run"]
+                stderr_path = case_root / run["stderr_artifact"]
+                stderr_path.write_bytes(b"")
+                run["stderr_bytes"] = 0
+                run["stderr_sha256"] = artifact_sha256(stderr_path).removeprefix("sha256:")
+
+            self.mutate_observation(
+                baseline_path,
+                mutate,
+                case_id="m0-config-base-relative-include",
+            )
+            with self.assertRaisesRegex(
+                validator.CorrectnessValidationError,
+                "configuration stderr semantic mismatch",
+            ):
+                validator.validate_baseline(baseline_path)
 
 
 if __name__ == "__main__":

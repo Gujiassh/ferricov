@@ -94,8 +94,11 @@ jobs:
       - name: Run behavior contract tests
         run: python3 -m unittest compat/behavior/test_validate.py
 
+      - name: Run M0 case contract tests
+        run: python3 -m unittest discover -s compat/cases -p 'test_*.py'
+
       - name: Run correctness baseline mutation tests
-        run: python3 -m unittest compat/correctness/test_validate.py
+        run: python3 -m unittest discover -s compat/correctness -p 'test_*.py'
 
       - name: Validate current behavior contract
         run: python3 compat/behavior/validate.py --mode current

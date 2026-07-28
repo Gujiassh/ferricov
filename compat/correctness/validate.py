@@ -26,7 +26,8 @@ DEFAULT_BASELINE = (
 )
 DEFAULT_STATUS = REPOSITORY_ROOT / "compat/fixtures/m0-cli-contract/oracle-baseline-status.json"
 UPSTREAM_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
-EXPECTED_CASES = 126
+EXPECTED_CASES = 148
+EXPECTED_CONFIG_CASES = 22
 TEMP_PATH_PATTERN = re.compile(rb"/tmp/[A-Za-z0-9_-]{10}(?![A-Za-z0-9_-])")
 TEMP_PATH_CASE = "m0-core-geninfo-startup-control"
 
@@ -182,12 +183,16 @@ def resolve_clean_environment(case_contract: dict[str, Any]) -> dict[str, str]:
         raise CorrectnessValidationError("baseline environment cannot inherit parent")
     resolved: dict[str, str] = {}
     for key, value in clean["allowlist"].items():
-        value = value.replace("{workdir}", "/work")
-        if "{" in value or "}" in value:
-            raise CorrectnessValidationError(
-                f"unresolved clean-environment placeholder: {key}"
-            )
-        resolved[key] = value
+        resolved[key] = resolve_environment_value(key, value)
+    return resolved
+
+
+def resolve_environment_value(key: str, value: str) -> str:
+    resolved = value.replace("{workdir}", "/work")
+    if "{" in resolved or "}" in resolved:
+        raise CorrectnessValidationError(
+            f"unresolved environment placeholder: {key}"
+        )
     return resolved
 
 
@@ -279,6 +284,73 @@ def validate_run(case_root: Path, run: dict[str, Any]) -> None:
         raise CorrectnessValidationError("Oracle observation wall time must be positive")
 
 
+def configuration_expectations(
+    case_contract: dict[str, Any],
+    expected_cases: list[tuple[dict[str, Any], dict[str, Any], dict[str, str]]],
+) -> dict[str, dict[str, Any]]:
+    expectations = {
+        record["case_id"]: record["expected"]
+        for record in case_contract["cases"]
+        if "expected" in record
+    }
+    config_case_ids = {
+        case["id"]
+        for _, case, _ in expected_cases
+        if case["surface"] == "config"
+    }
+    if len(expectations) != EXPECTED_CONFIG_CASES or set(expectations) != config_case_ids:
+        raise CorrectnessValidationError(
+            "configuration semantic expectation set differs from config suites"
+        )
+    for case_id, expected in expectations.items():
+        if expected.get("branch_summary") not in {"present", "absent"}:
+            raise CorrectnessValidationError(
+                f"configuration branch expectation is invalid: {case_id}"
+            )
+        fragments = expected.get("stderr_contains")
+        if (
+            not isinstance(expected.get("exit_code"), int)
+            or not isinstance(expected.get("stderr_empty"), bool)
+            or not isinstance(fragments, list)
+            or any(not isinstance(fragment, str) or not fragment for fragment in fragments)
+            or expected["stderr_empty"] != (not fragments)
+        ):
+            raise CorrectnessValidationError(
+                f"configuration stderr or exit expectation is invalid: {case_id}"
+            )
+    return expectations
+
+
+def validate_configuration_semantics(
+    case_id: str,
+    case_root: Path,
+    run: dict[str, Any],
+    expected: dict[str, Any],
+) -> None:
+    if run["signal"] is not None or run["exit_code"] != expected["exit_code"]:
+        raise CorrectnessValidationError(
+            f"configuration exit semantic mismatch: {case_id}"
+        )
+    stdout = (case_root / run["stdout_artifact"]).read_bytes()
+    stderr = (case_root / run["stderr_artifact"]).read_bytes()
+    branch_present = any(
+        line.startswith(b"  branches....:") for line in stdout.splitlines()
+    )
+    if branch_present != (expected["branch_summary"] == "present"):
+        raise CorrectnessValidationError(
+            f"configuration branch summary semantic mismatch: {case_id}"
+        )
+    if expected["stderr_empty"] and stderr:
+        raise CorrectnessValidationError(
+            f"configuration stderr should be empty: {case_id}"
+        )
+    for fragment in expected["stderr_contains"]:
+        if fragment.encode("utf-8") not in stderr:
+            raise CorrectnessValidationError(
+                f"configuration stderr semantic mismatch: {case_id}: {fragment}"
+            )
+
+
 def expected_environment(
     launcher: dict[str, Any],
     image_id: str,
@@ -361,7 +433,12 @@ def validate_baseline(path: Path) -> dict[str, Any]:
     for suite_input in suite_inputs:
         suite = suite_documents[suite_input["suite_id"]]
         environment = dict(base_environment)
-        environment.update(suite_input["environment_overrides"])
+        environment.update(
+            {
+                key: resolve_environment_value(key, value)
+                for key, value in suite_input["environment_overrides"].items()
+            }
+        )
         for case in suite["cases"]:
             expected_cases.append((suite, case, environment))
 
@@ -373,6 +450,7 @@ def validate_baseline(path: Path) -> dict[str, Any]:
         raise CorrectnessValidationError("baseline case_count mismatch")
     if len(document["cases"]) != len(expected_cases):
         raise CorrectnessValidationError("baseline case artifact count mismatch")
+    config_expectations = configuration_expectations(case_contract, expected_cases)
 
     observation_schema = schema("oracle-observation.schema.json")
     registry = observation_registry()
@@ -435,6 +513,13 @@ def validate_baseline(path: Path) -> dict[str, Any]:
             )
         observed_users.add(observation["execution"]["user"])
         validate_run(observation_path.parent, observation["reference_run"])
+        if case_id in config_expectations:
+            validate_configuration_semantics(
+                case_id,
+                observation_path.parent,
+                observation["reference_run"],
+                config_expectations[case_id],
+            )
 
     if len(case_ids) != EXPECTED_CASES:
         raise CorrectnessValidationError("baseline case IDs are not globally unique")

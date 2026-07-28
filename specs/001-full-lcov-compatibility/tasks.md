@@ -32,7 +32,7 @@
 - [x] Inventory explicit short aliases and parser-backed positional argument forms.
 - [x] Record parser policies and observed generated-token resolution for all commands.
 - [x] Review all 158 `lcovrc` candidates.
-- [ ] Plan configuration discovery and precedence behavior.
+- [x] Plan configuration discovery and precedence behavior.
 - [ ] Inventory environment variables and configuration discovery paths.
 - [ ] Inventory every tracefile record and malformed-input behavior.
 - [ ] Inventory error/warning classes, exit status, ignore, and keep-going rules.
@@ -55,21 +55,23 @@ abbreviations, rejects 2 as ambiguous, and rejects 30 as unknown; the POSIX
 profile rejects all 41 as unknown. These are pinned-Oracle observations and do
 not count as product evidence.
 
-Behavior planning covers all 531 public entries with primary plans. Sixty-three
+Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact
 suite cases while retaining planning-only evidence status. All four required
-critical interaction domains now have reviewed members and reciprocal cases. The current
-M0 gate reports 468 gaps, all public entries without reviewed primary cases.
+critical interaction domains now have reviewed members and reciprocal cases.
+Eight configuration-semantic slices bind 67 exact cases and review six more
+primary targets. The current M0 gate reports 462 gaps, all public entries
+without reviewed primary cases.
 The raw Oracle correctness baseline is complete and replayed, but it remains
 reference-only evidence and does not unlock product parity.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 
 - [x] Generate formal startup/help/version/invalid-option suites.
-- [ ] Generate configuration precedence suites.
+- [x] Generate configuration precedence suites.
 - [ ] Build representative tracefile fixtures from upstream and real projects.
 - [ ] Add user CPU, system CPU, and peak RSS measurement.
-- [x] Capture and retain the 126-case upstream CLI correctness baseline with
+- [x] Capture and retain the 148-case upstream CLI/configuration correctness baseline with
   immutable image/executable identities and raw artifact validation.
 - [x] Capture and retain startup, tracefile, operation, and report Oracle performance baselines.
 - [ ] Specify the byte-preserving coverage model.
@@ -85,7 +87,7 @@ reference-only evidence and does not unlock product parity.
 - [ ] Every public behavior has a planned case group.
 - [ ] Callback/runtime and compiler-matrix decisions are accepted.
 - [x] Upstream correctness and performance baselines are reproducible from a
-  clean checkout; the independent 126-case correctness replay passes semantic
+  clean checkout; the independent 148-case correctness replay passes semantic
   comparison.
 - [ ] The coverage model specification represents every inventoried record.
 

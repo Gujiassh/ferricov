@@ -303,6 +303,38 @@ class BehaviorContractValidationTests(unittest.TestCase):
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
 
+    def test_m0_config_primary_reviews_remain_planning_only(self) -> None:
+        fragment = next(
+            fragment
+            for _, fragment in self.authored_fragments
+            if fragment["fragment_id"] == "authored.m0-config-primary"
+        )
+        cases = fragment["case_groups"]
+        self.assertEqual(len(cases), 8)
+        self.assertEqual(sum(len(case["suite_cases"]) for case in cases), 67)
+        self.assertEqual(
+            {case["targets"][0]["id"] for case in cases},
+            {
+                "command.lcov.option.branch-coverage",
+                "command.lcov.option.config-file",
+                "command.lcov.option.ignore-errors",
+                "command.lcov.option.no-branch-coverage",
+                "command.lcov.option.rc",
+                "command.lcov.option.summary",
+                "lcovrc.branch-coverage",
+                "lcovrc.config-file",
+            },
+        )
+        self.assertTrue(all(case["surface"] == "config" for case in cases))
+        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
+        self.assertTrue(all(case["evidence_status"] == "planned" for case in cases))
+        self.assertTrue(all(case["evidence"] == [] for case in cases))
+
+        aggregate = {case["id"]: case for case in self.base["case_groups"]}
+        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 69)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 462)
+
     def test_m0_ready_cli_rejects_honest_debt(self) -> None:
         completed = subprocess.run(
             [
@@ -829,8 +861,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 )
 
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 468)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 63)
+        self.assertEqual(len(report.readiness_gaps), 462)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 69)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:

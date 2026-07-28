@@ -66,7 +66,7 @@ pub fn run_baseline(
     let base_launcher: Launcher = read_json(&launcher_path)?;
     validate_launcher(&base_launcher)?;
     if base_launcher.environment_variables != base_environment {
-        return Err("Oracle launcher environment does not match the CLI case contract".into());
+        return Err("Oracle launcher environment does not match the M0 case contract".into());
     }
     if !matches!(base_launcher.runtime, Runtime::DockerImage { .. }) {
         return Err("Oracle correctness baseline requires a Docker launcher".into());
@@ -118,7 +118,7 @@ pub fn run_baseline(
         for (key, value) in &suite_input.environment_overrides {
             launcher
                 .environment_variables
-                .insert(key.clone(), value.clone());
+                .insert(key.clone(), resolved_environment_value(key, value)?);
         }
         match &mut launcher.runtime {
             Runtime::DockerImage { image } => *image = manifest_identity.image_id.clone(),
@@ -234,6 +234,16 @@ fn validate_inputs(repository_root: &Path, manifest_path: &Path) -> Result<(), B
     )?;
     run_checked(
         Command::new("python3")
+            .env("PYTHONDONTWRITEBYTECODE", "1")
+            .arg(repository_root.join("compat/cases/m0_config_contract.py")),
+    )?;
+    run_checked(
+        Command::new("python3")
+            .env("PYTHONDONTWRITEBYTECODE", "1")
+            .arg(repository_root.join("compat/correctness/m0_contract.py")),
+    )?;
+    run_checked(
+        Command::new("python3")
             .arg(repository_root.join("compat/manifests/validate.py"))
             .arg(manifest_path),
     )?;
@@ -252,13 +262,13 @@ fn validate_output(repository_root: &Path, result_path: &Path) -> Result<(), Box
 
 fn validate_case_contract(contract: &CaseContract) -> Result<(), Box<dyn Error>> {
     if contract.upstream_commit != UPSTREAM_COMMIT {
-        return Err("CLI case contract upstream commit mismatch".into());
+        return Err("M0 case contract upstream commit mismatch".into());
     }
     if contract.clean_environment.inherit_parent {
-        return Err("CLI correctness baseline cannot inherit the parent environment".into());
+        return Err("M0 correctness baseline cannot inherit the parent environment".into());
     }
     if contract.suites.is_empty() {
-        return Err("CLI case contract does not contain suites".into());
+        return Err("M0 case contract does not contain suites".into());
     }
     let ids = contract
         .suites
@@ -266,7 +276,7 @@ fn validate_case_contract(contract: &CaseContract) -> Result<(), Box<dyn Error>>
         .map(|suite| suite.suite_id.as_str())
         .collect::<BTreeSet<_>>();
     if ids.len() != contract.suites.len() {
-        return Err("CLI case contract contains duplicate suite IDs".into());
+        return Err("M0 case contract contains duplicate suite IDs".into());
     }
     Ok(())
 }
@@ -280,14 +290,16 @@ fn resolved_environment(
     clean_environment
         .allowlist
         .iter()
-        .map(|(key, value)| {
-            let resolved = value.replace("{workdir}", WORKING_DIRECTORY);
-            if resolved.contains('{') || resolved.contains('}') {
-                return Err(format!("unresolved environment placeholder for {key}").into());
-            }
-            Ok((key.clone(), resolved))
-        })
+        .map(|(key, value)| Ok((key.clone(), resolved_environment_value(key, value)?)))
         .collect()
+}
+
+fn resolved_environment_value(key: &str, value: &str) -> Result<String, Box<dyn Error>> {
+    let resolved = value.replace("{workdir}", WORKING_DIRECTORY);
+    if resolved.contains('{') || resolved.contains('}') {
+        return Err(format!("unresolved environment placeholder for {key}").into());
+    }
+    Ok(resolved)
 }
 
 fn validate_suite_input(
@@ -538,6 +550,15 @@ mod tests {
             allowlist: BTreeMap::from([("HOME".to_owned(), "{unknown}".to_owned())]),
         };
         assert!(resolved_environment(&unresolved).is_err());
+    }
+
+    #[test]
+    fn suite_environment_resolves_workdir_and_rejects_unknown_placeholders() {
+        assert_eq!(
+            resolved_environment_value("HOME", "{workdir}/home").unwrap(),
+            "/work/home"
+        );
+        assert!(resolved_environment_value("HOME", "{unknown}/home").is_err());
     }
 
     #[test]

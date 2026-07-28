@@ -4,11 +4,12 @@ This directory retains raw observations from the pinned LCOV 2.5 Oracle. An
 Oracle correctness baseline records what the reference implementation did; it
 does not compare Ferricov and cannot provide product compatibility evidence.
 
-Record the M0 CLI baseline from the repository root with:
+Record the aggregate M0 CLI/configuration baseline from the repository root
+with:
 
 ```bash
 cargo run -p ferricov-oracle --bin oracle-correctness-baseline --locked -- \
-  compat/fixtures/m0-cli-contract/case-contract.json \
+  compat/correctness/m0-case-contract.json \
   compat/manifests/oracle-lcov-v2.5-smoke.json \
   compat/launchers/lcov-v2.5-oracle.json \
   compat/correctness/baselines/m0-cli-oracle-v2.5
@@ -43,6 +44,12 @@ normalization is replacing Perl's random `/tmp/<tempfile>` token in `geninfo`
 failure diagnostics; raw stderr remains unchanged on disk. Both inputs must
 first pass their complete schema, artifact-integrity, execution-identity,
 environment, timeout, and cleanup validation.
+
+The 22 configuration cases additionally require the exact expected exit code,
+the declared presence or absence of the `branches....:` summary line, empty
+stderr where declared, and every required diagnostic fragment. Suite-level
+`{workdir}` environment placeholders are resolved before execution and again
+during validation.
 
 The retained documents deliberately set `product_compatibility_evidence` to
 `false`. Only a later differential run against a distinct Ferricov executable

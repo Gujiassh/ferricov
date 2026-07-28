@@ -1,0 +1,96 @@
+{
+  "arguments": [
+    "--config-file",
+    "off.lcovrc",
+    "--config-file",
+    "on.lcovrc",
+    "--summary",
+    "trace.info"
+  ],
+  "case_id": "m0-config-base-explicit-order-off-on",
+  "command": "lcov",
+  "comparison_contract": [
+    {
+      "dimension": "exit",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "stdout",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "stderr",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "filesystem",
+      "normalizer": "exact-v1"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
+  "environment": {
+    "architecture": "x86_64",
+    "compiler": "GCC 12.2.0",
+    "cpu": null,
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "operating_system": "Debian 12"
+  },
+  "evidence_scope": "compatibility",
+  "execution": {
+    "network": "none",
+    "read_only": true,
+    "user": "1000:1000",
+    "working_directory": "/work"
+  },
+  "execution_manifest_sha256": "sha256:a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+  "fixture": "compat/fixtures/m0-config-contract/common",
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "executable_sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "reference_run": {
+    "cleanup": {
+      "container_absent": true,
+      "direct_child_reaped": true,
+      "process_group_empty": null
+    },
+    "exit_code": 0,
+    "file_tree_artifact": "reference/file-tree.json",
+    "file_tree_bytes": 3171,
+    "file_tree_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+    "metrics": {
+      "output_bytes": 649,
+      "output_files": 10,
+      "peak_rss_bytes": null,
+      "system_cpu_seconds": null,
+      "user_cpu_seconds": null,
+      "wall_seconds": 1.809964028
+    },
+    "signal": null,
+    "stderr_artifact": "reference/stderr.bin",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_artifact": "reference/stdout.bin",
+    "stdout_bytes": 234,
+    "stdout_sha256": "ad1032504a351aec790d1f129830ef628d1c550bf3e2577e27a1da780dfeb54c",
+    "timeout": {
+      "applied_seconds": 20,
+      "escalation_signal_sent": null,
+      "expired": false,
+      "termination_signal_sent": null
+    }
+  },
+  "schema_version": 1,
+  "status": "observed",
+  "suite_id": "m0-config-contract-base",
+  "surface": "config",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

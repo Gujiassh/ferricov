@@ -47,7 +47,8 @@ product evidence.
 
 ## Oracle Correctness Baseline
 
-The M0 CLI contract has a retained raw Oracle baseline with 126 cases under
+The aggregate M0 contract has a retained raw Oracle baseline with 148 cases
+(126 CLI and 22 configuration cases) under
 [`correctness/baselines/m0-cli-oracle-v2.5/`](correctness/baselines/m0-cli-oracle-v2.5/).
 It records immutable image and executable identities, the exact clean
 environment, execution user, raw streams, filesystem snapshots, timeout and
@@ -55,14 +56,16 @@ cleanup evidence. The baseline is validated by:
 
 ```bash
 python3 compat/correctness/validate.py
-python3 -m unittest compat/correctness/test_validate.py
+python3 -m unittest discover -s compat/correctness -p 'test_*.py'
 ```
 
 An independently recorded replay passed semantic comparison. Timing and image
 identity are excluded from that replay comparison, and the random Perl
 `geninfo` tempfile token is normalized only for replay semantics; the retained
-raw stderr remains unchanged. This is Oracle qualification evidence, not
-Ferricov product compatibility evidence.
+raw stderr remains unchanged. Configuration cases add no normalization: their
+exit code, branch-summary presence, required diagnostics, raw streams, and
+filesystem evidence are validated directly. This is Oracle qualification
+evidence, not Ferricov product compatibility evidence.
 
 The pinned upstream test map is generated and validated separately:
 

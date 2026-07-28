@@ -123,7 +123,10 @@ Configuration discovery and include processing at
 4. The compiled installation prefix alone does not select the installed
    `etc/lcovrc`.
 5. A `config_file = ...` statement is processed inline. A relative include is
-   resolved from process CWD, and include loops are `usage`.
+   resolved from process CWD. In the pinned implementation, opening that
+   include closes the parent handle: the next parent read emits
+   `readline() on closed filehandle HANDLE`, and remaining parent assignments
+   are not applied. Include loops are `usage`.
 6. An unreadable explicit/include file and an include loop fail before CLI
    ignore parsing and cannot be rescued by that invocation's
    `--ignore-errors`. Malformed statements and missing environment references

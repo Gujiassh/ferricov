@@ -23,13 +23,17 @@ compatibility releases.
 - Oracle-only startup, tracefile, operation, and report benchmark contracts,
   measurement tooling, raw samples, and a retained four-family baseline.
 - An independent raw Oracle correctness-baseline runner, schemas, validator,
-  and mutation tests for all 126 M0 CLI contract cases.
-- A retained, immutable-image LCOV 2.5 CLI baseline with raw streams,
+  and mutation tests for the aggregate 148-case M0 contract: 126 CLI cases and
+  22 configuration discovery, precedence, expansion, and diagnostic cases.
+- A retained, immutable-image LCOV 2.5 CLI/configuration baseline with raw streams,
   filesystem snapshots, timeout/cleanup evidence, and a passing independent
   semantic replay.
 - Reviewed primary plans for 40 public CLI entries across argparse, direct
   Getopt, and shared Getopt parsers, bound to 154 exact M0 suite cases while
   retaining planning-only evidence status.
+- Eight reviewed configuration-semantic planning slices with 67 exact suite
+  bindings, raising reviewed primary coverage to 69 public entries while
+  retaining empty product-evidence arrays.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -45,6 +49,8 @@ compatibility releases.
   distinguish reviewed Oracle facts from Ferricov product evidence.
 - Moved Oracle baseline status ownership out of the generated CLI contract
   builder and into the correctness evidence validator.
+- Aggregated the CLI and configuration suites through one deterministic
+  seven-suite correctness contract without changing the Suite schema.
 
 ### Fixed
 
@@ -78,17 +84,20 @@ compatibility releases.
 - Made baseline replay comparison explicit about timing, image identity, and
   random `geninfo` tempfile normalization while retaining unmodified raw
   diagnostics.
+- Resolved `{workdir}` placeholders in suite-level correctness environments as
+  well as the base allowlist, so HOME and LCOV_HOME discovery cases execute the
+  paths recorded by their contracts.
 
 ### Validation
 
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
-- The workspace passes formatting, compilation, 105 Rust unit tests, clippy
-  with warnings denied, 39 behavior-contract tests, correctness-baseline
-  mutation tests, Python mutation suites, schema validators, and retained
-  evidence validation. Two independent 126-case Oracle captures pass semantic
-  replay comparison.
-- M0 remains open with 468 explicit behavior-planning gaps; no compatibility or
+- The workspace passes formatting, compilation, 106 Rust unit tests, clippy
+  with warnings denied, 40 behavior-contract tests, 6 configuration-contract
+  tests, 16 correctness tests, schema validators, and retained evidence
+  validation. Two independent 148-case Oracle captures pass semantic replay
+  comparison.
+- M0 remains open with 462 explicit behavior-planning gaps; no compatibility or
   candidate performance claim is made.
 
 [Unreleased]: https://github.com/Gujiassh/ferricov/commits/main

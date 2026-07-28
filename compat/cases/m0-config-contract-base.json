@@ -1,0 +1,557 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "on.lcovrc",
+        "--config-file",
+        "on.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-duplicate-explicit-file",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "explicit-off.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/home-auto",
+      "id": "m0-config-base-explicit-bypasses-home",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "on.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-explicit-on",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "off.lcovrc",
+        "--config-file",
+        "on.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-explicit-order-off-on",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "on.lcovrc",
+        "--config-file",
+        "off.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-explicit-order-on-off",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "on.lcovrc",
+        "--no-branch-coverage",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-flag-disables-file-on",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "off.lcovrc",
+        "--branch-coverage",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-flag-enables-file-off",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/home-auto",
+      "id": "m0-config-base-home-discovery",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "loop-a.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-include-loop",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "inline-order.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-inline-include-stops-parent",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "missing-env.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-missing-env",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "missing-env.lcovrc",
+        "--ignore-errors",
+        "usage",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-missing-env-ignored",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "missing.lcovrc",
+        "--ignore-errors",
+        "usage",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-missing-explicit-is-early",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-no-discovery-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "off.lcovrc",
+        "--rc",
+        "branch_coverage=1",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-rc-overrides-file",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "include-on.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-relative-include",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "unknown-file.lcovrc",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-unknown-file-key-is-silent",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--rc",
+        "ferricov_unknown_key=1",
+        "--summary",
+        "trace.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-config-contract/common",
+      "id": "m0-config-base-unknown-rc-key",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-config-contract-base"
+}

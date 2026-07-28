@@ -7,6 +7,10 @@ entries already exercised by the retained 126-case LCOV 2.5 Oracle contract. It
 does not add Ferricov execution results, product compatibility evidence, or a
 reason to start M1.
 
+This document is the Stage 2 review snapshot. The later configuration-contract
+review raises the live aggregate to 148 Oracle cases, 69 reviewed primary
+targets, and 462 remaining gaps without changing this slice's 40/154 result.
+
 ## Semantic Oracle
 
 Each reviewed entry must satisfy all of these invariants:
@@ -57,7 +61,7 @@ Oracle artifact is linked through the product-evidence field.
 | Architecture and ownership | pass | Human decisions live in three authored fragments; deterministic inventory fragments and the aggregate contract remain generated outputs. |
 | Data and evidence contracts | pass | 40 unique primary targets, 154 resolving suite bindings, `planned` status, and zero evidence items are mutation-tested. |
 | Implementation quality | pass | Each authored fragment remains below the 2,000-line authoring limit. |
-| Verification and evolution | pass | Generation, byte-stability, current validation, and 39 behavior tests pass; M0 still reports 468 gaps. |
+| Verification and evolution | pass | At this review point, generation, byte-stability, current validation, and 39 behavior tests passed; M0 reported 468 gaps. |
 
 ## Verification
 
@@ -69,7 +73,7 @@ python3 compat/behavior/validate.py --mode current \
 python3 -m unittest compat/behavior/test_validate.py
 ```
 
-Observed result: 531 public entries, 531 primary plans, 63 reviewed primary
+Observed Stage 2 result: 531 public entries, 531 primary plans, 63 reviewed primary
 plans, 468 remaining primary-review gaps, 40 new planning-only cases, 154 exact
 suite bindings, and zero product evidence items.
 

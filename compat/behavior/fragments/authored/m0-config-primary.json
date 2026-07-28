@@ -1,0 +1,814 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --branch-coverage as the command-line override that enables branch summary semantics after configuration files are applied. The bound configuration case compares the exact exit, stdout, stderr, and filesystem observations. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.branch-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 30,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 85,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 169,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 217,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 326,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 51,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1253,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-flag-enables-file-off",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.branch-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --ignore-errors across deferred missing-environment usage diagnostics and the early unreadable explicit-file failure that the same invocation cannot rescue. The bound cases compare exact exit, stdout, stderr, and filesystem observations. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.ignore-errors",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 41,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 952,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 961,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 971,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1030,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 16,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1270,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-missing-env-ignored",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-explicit-is-early",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.ignore-errors",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --no-branch-coverage as the command-line override that disables branch summary semantics after an enabling configuration file is applied. The bound configuration case compares the exact exit, stdout, stderr, and filesystem observations. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.no-branch-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 51,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1256,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-flag-disables-file-on",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.no-branch-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --summary as the observable consumer for configuration discovery, file order, includes, environment expansion, command-line overrides, and configuration failures. All 22 bound cases compare exact exit, stdout, stderr, and filesystem observations. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.summary",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 224,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 147,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 244,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 323,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 494,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 858,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 888,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1282,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1403,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1406,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1412,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1474,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 29,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-duplicate-explicit-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-bypasses-home",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-off-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-on-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-disables-file-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-enables-file-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-home-discovery",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-include-loop",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-inline-include-stops-parent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env-ignored",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-explicit-is-early",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-no-discovery-control",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-rc-overrides-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-relative-include",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-unknown-file-key-is-silent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-unknown-rc-key",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-env-multiple-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-env-single-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        },
+        {
+          "case_id": "m0-config-lcov-home-fallback",
+          "suite_id": "m0-config-contract-lcov-home"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.summary",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --config-file configuration semantics across explicit-file order, automatic-discovery bypass, include behavior, environment expansion, missing files, and silent unknown file keys. The parser-only plan remains separate. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.config.command.lcov.option.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 171,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 447,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 14,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1274,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-duplicate-explicit-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-bypasses-home",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-off-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-on-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-disables-file-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-enables-file-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-include-loop",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-inline-include-stops-parent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env-ignored",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-explicit-is-early",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-rc-overrides-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-relative-include",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-unknown-file-key-is-silent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-env-multiple-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-env-single-expansion",
+          "suite_id": "m0-config-contract-env"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcov --rc configuration semantics for scalar precedence over explicit files and unknown-key failure. The parser-only exact and case-insensitive spelling plan remains separate. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.config.command.lcov.option.rc",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 172,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 330,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 336,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1369,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 15,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1275,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-rc-overrides-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-unknown-rc-key",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "command.lcov.option.rc",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review branch_coverage configuration behavior across automatic discovery, explicit files, file order, includes, environment expansion, --rc precedence, and command-line enable/disable overrides. The bound cases compare exact exit, stdout, stderr, and filesystem observations. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.branch-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 317,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1123,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-duplicate-explicit-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-bypasses-home",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-off-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-on-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-disables-file-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-flag-enables-file-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-home-discovery",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-include-loop",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-inline-include-stops-parent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env-ignored",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-no-discovery-control",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-rc-overrides-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-relative-include",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-env-multiple-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-env-single-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        },
+        {
+          "case_id": "m0-config-lcov-home-fallback",
+          "suite_id": "m0-config-contract-lcov-home"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.branch-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review config_file include behavior for relative paths, parent-file termination after include, and inclusion-loop failure. The bound cases compare exact exit, stdout, stderr, and filesystem observations, including the pinned closed-filehandle warning. These are Oracle planning bindings only; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.config-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 12,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 14,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 16,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1400,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-config-base-include-loop",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-inline-include-stops-parent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-relative-include",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.config-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed primary behavior plans for eight configuration discovery, precedence, override, and diagnostic ownership slices exercised by the 22-case M0 configuration Oracle contract, with planning bindings but no product evidence.",
+  "fragment_id": "authored.m0-config-primary",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

@@ -43,11 +43,11 @@ relationships where supported.
 | command-line parsers | 353 definitions and explicit parser policies across 10 commands; 41 generated tokens observed under 2 profiles | not started | 6 Oracle policy probes and 82 profile-resolution probes; no product evidence |
 | command option review | all 394 reviewed: 346 public, 41 generated tokens, 7 internal | not started | default profile: 9 unique abbreviations, 2 ambiguous, 30 unknown; POSIX profile: 41 unknown |
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
-| `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | none |
+| `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | tracefile formats | pending | not started | none |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary plans cover all 531 public entries | not started | 63 reviewed primary plans, including 40 CLI entries bound to 154 suite cases; all 4 critical interaction domains reviewed; 468 primary reviews open |
+| behavior planning | primary plans cover all 531 public entries | not started | 69 reviewed primary plans, including 40 CLI parser entries plus 8 configuration-semantic slices with 67 bindings; all 4 critical interaction domains reviewed; 462 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry installed tree pinned and reproduced across two no-cache builds | not started | environment evidence only |
 
@@ -66,21 +66,28 @@ The differential harness has passed six Oracle self-test cases and one
 intentional reverse failure. These results verify evidence collection only;
 they do not increase Ferricov compatibility status.
 
-The M0 CLI correctness baseline retains 126 raw observations from the pinned
-LCOV 2.5 Oracle in
+The aggregate M0 correctness baseline retains 148 raw observations from the
+pinned LCOV 2.5 Oracle in
 `compat/correctness/baselines/m0-cli-oracle-v2.5/`. A second independent capture
 passed semantic replay comparison for exit status, stdout, stderr, and the
-filesystem tree. Replay ignores timing and image identity and normalizes only
+filesystem tree. The total comprises 126 CLI cases and 22 configuration cases.
+Replay ignores timing and image identity and normalizes only
 the random `geninfo` tempfile token; raw diagnostics are retained verbatim.
 This is Oracle qualification evidence only. It does not provide Ferricov
 product compatibility evidence, and the baseline status explicitly keeps
 `product_compatibility_evidence=false`.
 
-Forty public CLI primary entries already exercised by that 126-case contract
+Forty public CLI primary entries already exercised by that contract
 now have reviewed authored plans across argparse, direct Getopt, and shared
 Getopt parser families. Their 154 exact suite-case bindings are planning links
 only: every entry remains `evidence_status=planned`, every evidence array is
 empty, and no product compatibility status changes.
+
+Eight additional configuration-semantic plans bind 67 exact suite cases and
+review six previously open primary targets. These plans separate CLI parser
+ownership from configuration discovery and precedence ownership. Their Oracle
+observations remain reference-only; all eight plans stay `planned` with empty
+evidence arrays.
 
 ## Release Claims
 

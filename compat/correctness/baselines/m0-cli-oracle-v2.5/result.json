@@ -1,11 +1,11 @@
 {
   "baseline_id": "m0-cli-oracle-correctness-v1",
   "case_contract": {
-    "bytes": 106485,
+    "bytes": 117603,
     "path": "inputs/case-contract.json",
-    "sha256": "sha256:fd9bebac70ba8a5947750ab05d92fe6522b7878c4832a0fdc5a5444039351cdc"
+    "sha256": "sha256:050386c28094da1023e751ed95969c49ecbd53a7985e3a6481feded154dfff06"
   },
-  "case_count": 126,
+  "case_count": 148,
   "cases": [
     {
       "bytes": 2631,
@@ -636,6 +636,116 @@
       "bytes": 2727,
       "path": "cases/m0-posix-shared-rc-case-insensitive-exact/result.json",
       "sha256": "sha256:acac97d40bd19a820ff5633ffb5e6c4b2a0a4b11eb3b842b2156536e76745358"
+    },
+    {
+      "bytes": 2812,
+      "path": "cases/m0-config-base-duplicate-explicit-file/result.json",
+      "sha256": "sha256:d4e1d6ba9a3b14ba6b3a711621ef73a6222c11cf2026e512e7df4d6f8a6c6abc"
+    },
+    {
+      "bytes": 2777,
+      "path": "cases/m0-config-base-explicit-bypasses-home/result.json",
+      "sha256": "sha256:072d9b41841dafaa1424fdcc25985a077ca6c05cef8df291fe92509895eada01"
+    },
+    {
+      "bytes": 2755,
+      "path": "cases/m0-config-base-explicit-on/result.json",
+      "sha256": "sha256:829d279f7c9734e0e1c03a2b0d40f9cda0b05e7fecdef8ee5b57f734ca1ffce2"
+    },
+    {
+      "bytes": 2804,
+      "path": "cases/m0-config-base-explicit-order-off-on/result.json",
+      "sha256": "sha256:0affb5fe1ca60c39e5c954ae5805b1865e654b225b2d9c101104b9f961e2e7bf"
+    },
+    {
+      "bytes": 2804,
+      "path": "cases/m0-config-base-explicit-order-on-off/result.json",
+      "sha256": "sha256:23c8c49b168d29fca8d2f267b7f773acfa8ad4e002bf7244b8f38bfd9419ad1d"
+    },
+    {
+      "bytes": 2793,
+      "path": "cases/m0-config-base-flag-disables-file-on/result.json",
+      "sha256": "sha256:abdec80caf219e6e338b59efd6431b1239a13f94560960540376617d496d74c4"
+    },
+    {
+      "bytes": 2791,
+      "path": "cases/m0-config-base-flag-enables-file-off/result.json",
+      "sha256": "sha256:8c1314d941ae71888aad190665b46bdf75a533802bf37d019ae389e2b995d401"
+    },
+    {
+      "bytes": 2721,
+      "path": "cases/m0-config-base-home-discovery/result.json",
+      "sha256": "sha256:813f6d8fbde47be9e06712913fddf560da53c5e43b81eaf58ce8aff113f427c2"
+    },
+    {
+      "bytes": 2761,
+      "path": "cases/m0-config-base-include-loop/result.json",
+      "sha256": "sha256:c10387052e18338830377d285088c5d6047283919f2bf60670cd8ed2fc481642"
+    },
+    {
+      "bytes": 2782,
+      "path": "cases/m0-config-base-inline-include-stops-parent/result.json",
+      "sha256": "sha256:df2186350a661eba00cfa0fe89407ff24ba37a1eec417e0eb3d471b7b3a4d508"
+    },
+    {
+      "bytes": 2766,
+      "path": "cases/m0-config-base-missing-env/result.json",
+      "sha256": "sha256:848809d0e4ed64b4f71aaaf1821bf758c18f3680edc8d04136d19997425d31d3"
+    },
+    {
+      "bytes": 2810,
+      "path": "cases/m0-config-base-missing-env-ignored/result.json",
+      "sha256": "sha256:8267cf4fbea54710bee2460b12884645556c04bee9e5f73d6d00e78b8b29badb"
+    },
+    {
+      "bytes": 2817,
+      "path": "cases/m0-config-base-missing-explicit-is-early/result.json",
+      "sha256": "sha256:617a9dc00f5d16ae3924c91da7b516e933294a412c487a6932c11b46f95146bd"
+    },
+    {
+      "bytes": 2726,
+      "path": "cases/m0-config-base-no-discovery-control/result.json",
+      "sha256": "sha256:b47764ad81069059e9a009a554319177c0db549a7f911d213de962a882ad5a91"
+    },
+    {
+      "bytes": 2798,
+      "path": "cases/m0-config-base-rc-overrides-file/result.json",
+      "sha256": "sha256:7f1bd55a1dd3c69bbf1e28fef6a9ba38c1178065ee7458fea5ceecc2d4649ecd"
+    },
+    {
+      "bytes": 2769,
+      "path": "cases/m0-config-base-relative-include/result.json",
+      "sha256": "sha256:3ba23279154e1e1b1efbd7757070343f8d1dc2435fb38d006ba846078092f533"
+    },
+    {
+      "bytes": 2780,
+      "path": "cases/m0-config-base-unknown-file-key-is-silent/result.json",
+      "sha256": "sha256:2e69d23b0e21f91754ca72f0a1743943bd287b4d4493387df2f7964f7f79d3a5"
+    },
+    {
+      "bytes": 2762,
+      "path": "cases/m0-config-base-unknown-rc-key/result.json",
+      "sha256": "sha256:24b42852a71f51d74ea5b5c1a12d941013a71c27fb3bbc9a98be8e4b667efe38"
+    },
+    {
+      "bytes": 2854,
+      "path": "cases/m0-config-env-multiple-expansion/result.json",
+      "sha256": "sha256:060900c6c3371ee8e1d38dc3049361bdd861bc85a809eb2391b0f45eb4792fb2"
+    },
+    {
+      "bytes": 2847,
+      "path": "cases/m0-config-env-single-expansion/result.json",
+      "sha256": "sha256:b7e4ffa7ac31197dd39945ca26f09b2fa29551920110025d4329866add6fa8f2"
+    },
+    {
+      "bytes": 2780,
+      "path": "cases/m0-config-home-first-wins-over-lcov-home/result.json",
+      "sha256": "sha256:5392a2399f719fc5d83b2f33b62c07a7cc56820f649387254b1122bc543d1a78"
+    },
+    {
+      "bytes": 2782,
+      "path": "cases/m0-config-lcov-home-fallback/result.json",
+      "sha256": "sha256:e338bf6ae353da8d348a9596348edcea37d6ff4d1f6157705b7fc5c7a6d3560f"
     }
   ],
   "evidence_scope": "oracle_baseline",
@@ -668,6 +778,26 @@
       "bytes": 21212,
       "path": "inputs/suites/m0-cli-contract-posix.json",
       "sha256": "sha256:37b16ae6d9fd528b335d413e1a1f0dc3c72ee4832c1f2f36c12f1080d76029de"
+    },
+    {
+      "bytes": 12733,
+      "path": "inputs/suites/m0-config-contract-base.json",
+      "sha256": "sha256:350281ebcae95484f4d71f95fa1ffe59c402d693e9ed1ee475128433c1ff1eb2"
+    },
+    {
+      "bytes": 1489,
+      "path": "inputs/suites/m0-config-contract-env.json",
+      "sha256": "sha256:3c2b2b0fc58e712dd923e5400a53ef437f818ef84f7ca6ca0401b59dddb31983"
+    },
+    {
+      "bytes": 774,
+      "path": "inputs/suites/m0-config-contract-home-first.json",
+      "sha256": "sha256:d0ded9b147901b4814b46bd5ca75c6de58db5497a2b90c8fea79993eb718982e"
+    },
+    {
+      "bytes": 760,
+      "path": "inputs/suites/m0-config-contract-lcov-home.json",
+      "sha256": "sha256:c9211b9595d45452acd15b6f8a459bcf58ec6f44c0168ee87da4d9743dbaf8db"
     }
   ],
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

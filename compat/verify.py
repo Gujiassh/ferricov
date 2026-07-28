@@ -809,6 +809,18 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
+    run(
+        [sys.executable, str(root / "compat/cases/m0-cli-contract.py")],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/cases/m0_config_contract.py")],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/correctness/m0_contract.py")],
+        root,
+    )
     validate_documents(
         root / "compat/schema/inventory.schema.json",
         [root / "compat/inventory/v2.5.json"],
