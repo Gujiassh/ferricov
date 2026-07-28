@@ -22,12 +22,8 @@ INVENTORY_PATH = ROOT / "compat/inventory/v2.5.json"
 SUITE_SCHEMA_PATH = ROOT / "compat/schema/suite.schema.json"
 CASE_CONTRACT_PATH = FIXTURE_ROOT / "case-contract.json"
 POLICY_EQUIVALENCE_PATH = FIXTURE_ROOT / "policy-equivalence.md"
-BASELINE_STATUS_PATH = FIXTURE_ROOT / "oracle-baseline-status.json"
 
 ORACLE_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
-RETIRED_IMAGE_IDENTITY = (
-    "sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e"
-)
 RETIRED_BASELINE_PATHS = (
     FIXTURE_ROOT / "oracle-baseline-manifest.json",
     FIXTURE_ROOT / "oracle-baseline-core.json",
@@ -1191,22 +1187,6 @@ def build_case_contract(
     }
 
 
-def build_baseline_status() -> dict[str, object]:
-    return {
-        "schema_version": 1,
-        "status": "pending_reproducible_oracle",
-        "qualification_evidence": False,
-        "retired_image_identity": RETIRED_IMAGE_IDENTITY,
-        "raw_baseline_files": [],
-        "required_before_recording": [
-            "a validated execution manifest for the reproducible Oracle image",
-            "an image identity different from the retired development image",
-            "execution from the clean environment allowlist in case-contract.json",
-            "all suite, case-contract, schema, and reverse-mutation checks passing",
-        ],
-    }
-
-
 def build_policy_equivalence_markdown(contract: dict[str, object]) -> str:
     lines = [
         "# CLI Parser Policy Equivalence",
@@ -1233,10 +1213,10 @@ def build_policy_equivalence_markdown(contract: dict[str, object]) -> str:
         [
             "## Evidence Boundary",
             "",
-            "The suites and links are a static executable contract. Raw Oracle",
-            "observations remain pending until the reproducible image and matching",
-            "execution manifest are available. No retired development-image output is",
-            "qualification evidence.",
+            "The suites and links are a static executable contract. The raw Oracle",
+            "correctness observations are retained under `compat/correctness/` and",
+            "validated separately. They describe the pinned reference only and do not",
+            "provide Ferricov product compatibility evidence.",
             "",
         ]
     )
@@ -1255,7 +1235,6 @@ def build_artifacts() -> dict[Path, bytes]:
     artifacts[POLICY_EQUIVALENCE_PATH] = build_policy_equivalence_markdown(contract).encode(
         "ascii"
     )
-    artifacts[BASELINE_STATUS_PATH] = canonical_json(build_baseline_status()).encode("ascii")
     return artifacts
 
 
@@ -1906,10 +1885,6 @@ def validate_all(expected: dict[Path, bytes]) -> None:
         f"suites={len(suites)} cases={sum(counts.values())} counts={counts} "
         f"linked_inventory_entries={len(linked_entries)} "
         f"family_equivalence_cases={equivalence_cases} global_ids=unique"
-    )
-    print(
-        "M0_CLI_ORACLE_BASELINE_PENDING "
-        f"retired_image={RETIRED_IMAGE_IDENTITY} qualification=false"
     )
 
 

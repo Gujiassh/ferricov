@@ -57,14 +57,17 @@ Behavior planning covers all 531 public entries with primary case skeletons,
 but only 23 public primary plans are reviewed. All four required critical
 interaction domains now have reviewed members and reciprocal cases. The current
 M0 gate reports 508 gaps, all public entries without reviewed primary cases.
+The raw Oracle correctness baseline is complete and replayed, but it remains
+reference-only evidence and does not unlock product parity.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 
-- [ ] Generate formal startup/help/version/invalid-option suites.
+- [x] Generate formal startup/help/version/invalid-option suites.
 - [ ] Generate configuration precedence suites.
 - [ ] Build representative tracefile fixtures from upstream and real projects.
 - [ ] Add user CPU, system CPU, and peak RSS measurement.
-- [ ] Capture upstream correctness baselines.
+- [x] Capture and retain the 126-case upstream CLI correctness baseline with
+  immutable image/executable identities and raw artifact validation.
 - [x] Capture and retain startup, tracefile, operation, and report Oracle performance baselines.
 - [ ] Specify the byte-preserving coverage model.
 - [ ] Specify the complete LCOV 2.5 tracefile grammar.
@@ -78,7 +81,9 @@ M0 gate reports 508 gaps, all public entries without reviewed primary cases.
 - [x] No candidate inventory entry remains unclassified.
 - [ ] Every public behavior has a planned case group.
 - [ ] Callback/runtime and compiler-matrix decisions are accepted.
-- [ ] Upstream baselines are reproducible from a clean checkout.
+- [x] Upstream correctness and performance baselines are reproducible from a
+  clean checkout; the independent 126-case correctness replay passes semantic
+  comparison.
 - [ ] The coverage model specification represents every inventoried record.
 
 Later milestone task breakdowns are opened before their milestone starts. The

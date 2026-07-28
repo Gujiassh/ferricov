@@ -31,7 +31,7 @@ mechanics only; they do not claim command-behavior or Ferricov parity.
 
 ## Evidence Boundary
 
-The suites and links are a static executable contract. Raw Oracle
-observations remain pending until the reproducible image and matching
-execution manifest are available. No retired development-image output is
-qualification evidence.
+The suites and links are a static executable contract. The raw Oracle
+correctness observations are retained under `compat/correctness/` and
+validated separately. They describe the pinned reference only and do not
+provide Ferricov product compatibility evidence.

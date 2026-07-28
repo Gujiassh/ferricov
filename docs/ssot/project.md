@@ -113,5 +113,14 @@ the M0 harness become the permanent integration boundary.
   rather than omitting image defaults. Oracle CI directly verifies the
   five-variable environment and default/POSIX parser behavior in a real
   container.
+- `compat/correctness/baselines/m0-cli-oracle-v2.5/` retains 126 raw CLI
+  observations from the immutable execution-manifest image. An independent
+  replay has matching semantic exit, stream, and filesystem outcomes; timing,
+  image identity, and the random `geninfo` tempfile token are excluded only by
+  the correctness replay comparator. Raw artifacts remain unchanged, and
+  `product_compatibility_evidence` is false.
+- Correctness baseline schemas, status binding, artifact validation, replay
+  comparison, and mutation tests live under `compat/correctness/`; the static
+  CLI contract generator no longer owns baseline status.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

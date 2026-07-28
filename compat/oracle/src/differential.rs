@@ -1,7 +1,7 @@
 //! Differential execution, comparison, and evidence collection.
 
-mod evidence;
-mod process;
+pub(crate) mod evidence;
+pub(crate) mod process;
 
 use crate::UPSTREAM_COMMIT;
 use crate::normalizer::{NormalizerId, normalize};
@@ -76,14 +76,14 @@ pub struct Case {
     pub comparisons: Vec<ComparisonRequest>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct ComparisonRequest {
     pub dimension: Dimension,
     pub normalizer: NormalizerId,
 }
 
-#[derive(Debug, Deserialize, Eq, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Launcher {
     pub schema_version: u32,
@@ -98,7 +98,7 @@ pub struct Launcher {
     pub environment: Environment,
 }
 
-#[derive(Debug, Deserialize, Eq, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Runtime {
     Local,
@@ -602,7 +602,7 @@ fn reject_symlink_components(case_root: &Path, relative: &Path) -> Result<(), Bo
 
 // ── Launcher validation ──────────────────────────────────────────────────
 
-fn validate_launcher(launcher: &Launcher) -> Result<(), Box<dyn Error>> {
+pub(crate) fn validate_launcher(launcher: &Launcher) -> Result<(), Box<dyn Error>> {
     if launcher.schema_version != 1 {
         return Err(format!(
             "launcher {} uses unsupported schema version {}",

@@ -1,6 +1,7 @@
 //! Differential execution and compatibility comparison support.
 
 pub mod benchmark;
+pub mod correctness;
 mod differential;
 pub mod inventory;
 mod normalizer;

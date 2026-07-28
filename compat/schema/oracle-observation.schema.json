@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/oracle-observation-v1.json",
+  "title": "Ferricov raw Oracle observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_id",
+    "case_id",
+    "evidence_scope",
+    "upstream_commit",
+    "surface",
+    "command",
+    "arguments",
+    "fixture",
+    "environment",
+    "effective_environment_variables",
+    "execution_manifest_sha256",
+    "oracle_identity",
+    "execution",
+    "comparison_contract",
+    "reference_run",
+    "status",
+    "product_compatibility_evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "suite_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]+$"
+    },
+    "evidence_scope": {
+      "const": "compatibility"
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "surface": {
+      "enum": [
+        "cli",
+        "config",
+        "tracefile",
+        "report",
+        "capture",
+        "converter",
+        "callback",
+        "installation"
+      ]
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "arguments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fixture": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "environment": {
+      "$ref": "https://ferricov.dev/schema/differential-result-v1.json#/$defs/environment"
+    },
+    "effective_environment_variables": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "not": {
+          "pattern": "\\u0000"
+        }
+      }
+    },
+    "execution_manifest_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "oracle_identity": {
+      "$ref": "https://ferricov.dev/schema/differential-result-v1.json#/$defs/implementation_identity"
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network",
+        "read_only",
+        "user",
+        "working_directory"
+      ],
+      "properties": {
+        "network": {
+          "const": "none"
+        },
+        "read_only": {
+          "const": true
+        },
+        "user": {
+          "type": "string",
+          "pattern": "^[0-9]+:[0-9]+$"
+        },
+        "working_directory": {
+          "const": "/work"
+        }
+      }
+    },
+    "comparison_contract": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "normalizer"
+        ],
+        "properties": {
+          "dimension": {
+            "enum": [
+              "exit",
+              "stdout",
+              "stderr",
+              "filesystem"
+            ]
+          },
+          "normalizer": {
+            "enum": [
+              "exact-v1",
+              "text-crlf-to-lf-v1"
+            ]
+          }
+        }
+      }
+    },
+    "reference_run": {
+      "$ref": "https://ferricov.dev/schema/differential-result-v1.json#/$defs/run"
+    },
+    "status": {
+      "const": "observed"
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    }
+  }
+}

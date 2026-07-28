@@ -836,6 +836,10 @@ def main() -> int:
         root / "compat/schema/differential-result.schema.json",
         sorted(result_documents),
     )
+    run(
+        [sys.executable, str(root / "compat/correctness/validate.py")],
+        root,
+    )
 
     if args.skip_oracle:
         return 0

@@ -146,8 +146,10 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. M0 is
-not complete: 508 behavior-planning gaps, correctness baselines, compiler
-capture qualification, and release platform evidence remain.
+not complete: 508 behavior-planning gaps, compiler capture qualification, and
+release platform evidence remain. The 126-case M0 CLI correctness baseline is
+retained and passes independent semantic replay, without claiming Ferricov
+product compatibility.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 
@@ -421,7 +423,9 @@ candidate and a list of unresolved contract decisions.
 - Generate formal differential suites for startup, help, version, invalid
   options, configuration precedence, and a representative tracefile corpus.
 - Add CPU and peak-RSS collection to the evidence runner.
-- Capture reproducible upstream correctness and performance baselines.
+- Capture reproducible upstream correctness and performance baselines. The M0
+  CLI correctness baseline is retained under `compat/correctness/` and remains
+  distinct from Ferricov compatibility evidence.
 - Specify the byte-preserving coverage model and tracefile grammar.
 - Define M1 acceptance fixtures, property invariants, fuzz targets, and
   benchmarks.

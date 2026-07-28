@@ -52,6 +52,13 @@ impl PreparedRun {
     pub(crate) fn identity(&self) -> &ImplementationIdentity {
         &self.identity
     }
+
+    pub(crate) fn execution_user(&self) -> Option<&str> {
+        match &self.runtime {
+            PreparedRuntime::Docker { user, .. } => user.as_deref(),
+            PreparedRuntime::Local { .. } => None,
+        }
+    }
 }
 
 // ── Identity resolution ──────────────────────────────────────────────────

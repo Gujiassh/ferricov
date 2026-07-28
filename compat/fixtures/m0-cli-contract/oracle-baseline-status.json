@@ -1,13 +1,18 @@
 {
+  "baseline": {
+    "bytes": 25979,
+    "path": "compat/correctness/baselines/m0-cli-oracle-v2.5/result.json",
+    "sha256": "sha256:d10b68744991313e97cf47386f5f5809d73281713864d653afde97827ae3cafe"
+  },
+  "case_count": 126,
+  "execution_manifest_sha256": "sha256:a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+  "oracle_image_identity": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "oracle_qualification_evidence": true,
+  "product_compatibility_evidence": false,
+  "reproducibility": {
+    "semantic_replay": "passed",
+    "timing_compared": false
+  },
   "schema_version": 1,
-  "status": "pending_reproducible_oracle",
-  "qualification_evidence": false,
-  "retired_image_identity": "sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e",
-  "raw_baseline_files": [],
-  "required_before_recording": [
-    "a validated execution manifest for the reproducible Oracle image",
-    "an image identity different from the retired development image",
-    "execution from the clean environment allowlist in case-contract.json",
-    "all suite, case-contract, schema, and reverse-mutation checks passing"
-  ]
+  "status": "complete"
 }

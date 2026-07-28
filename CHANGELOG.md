@@ -22,6 +22,11 @@ compatibility releases.
   execution-manifest schema, and a retained runtime-validated Oracle manifest.
 - Oracle-only startup, tracefile, operation, and report benchmark contracts,
   measurement tooling, raw samples, and a retained four-family baseline.
+- An independent raw Oracle correctness-baseline runner, schemas, validator,
+  and mutation tests for all 126 M0 CLI contract cases.
+- A retained, immutable-image LCOV 2.5 CLI baseline with raw streams,
+  filesystem snapshots, timeout/cleanup evidence, and a passing independent
+  semantic replay.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -35,6 +40,8 @@ compatibility releases.
   filesystem metadata.
 - Expanded project status, compatibility, performance, and execution SSoT to
   distinguish reviewed Oracle facts from Ferricov product evidence.
+- Moved Oracle baseline status ownership out of the generated CLI contract
+  builder and into the correctness evidence validator.
 
 ### Fixed
 
@@ -65,14 +72,19 @@ compatibility releases.
 - Prevented benchmark suites from executing a mutable image tag after identity
   validation; samples now run the immutable manifest image ID.
 - Separated benchmark smoke output paths from scratch directories.
+- Made baseline replay comparison explicit about timing, image identity, and
+  random `geninfo` tempfile normalization while retaining unmodified raw
+  diagnostics.
 
 ### Validation
 
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
-- The workspace passes formatting, compilation, 100 Rust unit tests, clippy
-  with warnings denied, 38 behavior-contract tests, Python mutation suites,
-  schema validators, and retained evidence validation.
+- The workspace passes formatting, compilation, 105 Rust unit tests, clippy
+  with warnings denied, 38 behavior-contract tests, correctness-baseline
+  mutation tests, Python mutation suites, schema validators, and retained
+  evidence validation. Two independent 126-case Oracle captures pass semantic
+  replay comparison.
 - M0 remains open with 508 explicit behavior-planning gaps; no compatibility or
   candidate performance claim is made.
 

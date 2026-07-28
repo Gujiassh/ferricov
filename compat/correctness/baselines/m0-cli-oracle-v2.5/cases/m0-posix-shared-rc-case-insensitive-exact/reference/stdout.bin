@@ -1,0 +1,82 @@
+Usage: lcov [OPTIONS]
+
+Use lcov to collect coverage data from either the currently running Linux
+kernel or from a user space application. Specify the --directory option to
+get coverage data for a user space program.
+
+COMMON OPTIONS
+  -h, --help                      Print this help, then exit
+      --version                   Print version number, then exit
+  -v, --verbose                   Increase verbosity level
+  -q, --quiet                     Decrease verbosity level (e.g. to turn off
+                                  progress messages)
+      --debug                     Increase debug verbosity level
+      --config-file FILENAME      Specify configuration file location
+      --rc SETTING=VALUE          Override configuration file setting
+      --ignore-errors ERRORS      Continue after ERRORS (see man page for
+                                  full list of errors and their meaning)
+      --keep-going                Do not stop if an error occurs
+      --tempdir DIRNAME           Write temporary and intermediate data here
+      --preserve                  Keep intermediate files for debugging
+
+OPERATION
+  -z, --zerocounters              Reset all execution counts to zero
+  -c, --capture                   Capture coverage data
+  -a, --add-tracefile PATTERN     Add contents of tracefiles matching glob PATTERN
+  -e, --extract FILE PATTERN      Extract files matching PATTERN from FILE
+  -r, --remove FILE PATTERN       Remove files matching PATTERN from FILE
+  -l, --list FILE                 List contents of tracefile FILE
+      --summary FILE              Show summary coverage data for tracefiles
+      --prune-tests               List tracefiles contributing unique coverage
+                                  data (requires --add-tracefile)
+      --map-functions             List tracefiles with non-zero coverage for
+                                  each function (requires --add-tracefile)
+     --intersect PATTERN          Set intersection with tracefiles matching
+                                  glob PATTERN
+     --subtract PATTERN           Set difference with tracefiles matching
+                                  glob PATTERN
+
+OPTIONS
+  -i, --initial                   Capture initial zero coverage data
+  --all                           Capture from both .gcda and lone .gcno files
+  -t, --test-name NAME            Specify test name to be stored with data
+  -o, --output-file FILENAME      Write data to FILENAME instead of stdout
+  -d, --directory DIR             Use .da files in DIR instead of kernel
+  -f, --follow                    Follow links when searching .da files
+  -k, --kernel-directory KDIR     Capture kernel coverage data only from KDIR
+  -b, --base-directory DIR        Use DIR as base directory for relative paths
+      --build-directory DIR       Search DIR for .gcno files (during capture)
+      --path PATH                 Strip PATH from tracefile when applying diff
+      --(no-)function-coverage    Enable (disable) function coverage collection
+      --(no-)branch-coverage      Enable (disable) branch coverage collection
+      --(no-)checksum             Enable (disable) line checksumming
+      --(no-)compat-libtool       Enable (disable) libtool compatibility mode
+      --gcov-tool TOOL            Specify gcov tool location
+      --filter TYPE               Apply FILTERS to input data (see man page
+                                  for full list of filters and their effects)
+      --demangle-cpp              Demangle C++ function names
+      --no-recursion              Exclude subdirectories from processing
+      --to-package FILENAME       Store unprocessed coverage data in FILENAME
+      --from-package FILENAME     Capture from unprocessed data in FILENAME
+      --no-markers                Ignore exclusion markers in source code
+      --derive-func-data          Generate function data from line data
+      --list-full-path            Print full path during a list operation
+      --(no-)external             Include (ignore) data for external files
+      --compat MODE=on|off|auto   Set compat MODE (libtool, hammer, split_crc)
+      --include PATTERN           Include files matching PATTERN
+      --exclude PATTERN           Exclude files matching PATTERN
+      --substitute REGEXP         Change source file names according to REGEXP
+      --erase-functions REGEXP    Exclude data for functions matching REGEXP
+      --omit-lines REGEXP         Ignore data in lines matching REGEXP
+      --forget-test-names         Merge data for all tests names
+      --fail-under-lines MIN      Exit with a status of 1 if the total line
+                                  coverage is less than MIN (summary option)
+      --version-script SCRIPTNAME Call script to find revision control version
+                                  ID of source file
+      --resolve-script SCRIPTNAME Call script to find source file from path
+  -j, --parallel [NUM]            Use parallel processing with at most NUM jobs
+      --memory MB                 Use at most MB memory in parallel processing
+      --profile [FILENAME]        Write performance statistics to FILENAME
+                                  (default: OUTPUT_FILENAME.json)
+
+For more information see the lcov man page.

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/oracle-correctness-baseline-v1.json",
+  "title": "Ferricov Oracle correctness baseline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "baseline_id",
+    "status",
+    "evidence_scope",
+    "upstream_release",
+    "upstream_commit",
+    "oracle_qualification_evidence",
+    "product_compatibility_evidence",
+    "case_contract",
+    "execution_manifest",
+    "launcher",
+    "suites",
+    "case_count",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "baseline_id": {
+      "const": "m0-cli-oracle-correctness-v1"
+    },
+    "status": {
+      "const": "complete"
+    },
+    "evidence_scope": {
+      "const": "oracle_baseline"
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "oracle_qualification_evidence": {
+      "const": true
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    },
+    "case_contract": {
+      "$ref": "#/$defs/artifact"
+    },
+    "execution_manifest": {
+      "$ref": "#/$defs/artifact"
+    },
+    "launcher": {
+      "$ref": "#/$defs/artifact"
+    },
+    "suites": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

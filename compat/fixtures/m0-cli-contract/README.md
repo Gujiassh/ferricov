@@ -59,10 +59,11 @@ profiles.
 
 ## Evidence Boundary
 
-`oracle-baseline-status.json` is deliberately `pending_reproducible_oracle`.
+`oracle-baseline-status.json` records the completed, independently validated
+Oracle correctness baseline under
+`compat/correctness/baselines/m0-cli-oracle-v2.5/`. It binds the retained result
+to the execution-manifest hash, immutable image identity, and all 126 cases.
 The former raw shards from development image
 `sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e`
-were removed and are not qualification evidence. Raw observations must be
-recorded only after a reproducible Oracle image and matching validated execution
-manifest are available. These suites remain a planned executable contract, not
-Ferricov product compatibility evidence.
+were removed and are not qualification evidence. The baseline describes the
+pinned reference only; it is not Ferricov product compatibility evidence.

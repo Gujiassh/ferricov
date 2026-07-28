@@ -1,0 +1,93 @@
+{
+  "arguments": [
+    "--ver",
+    "input.xml"
+  ],
+  "case_id": "m0-posix-argparse-ambiguous-abbreviation-unchanged",
+  "command": "py2lcov",
+  "comparison_contract": [
+    {
+      "dimension": "exit",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "stdout",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "stderr",
+      "normalizer": "exact-v1"
+    },
+    {
+      "dimension": "filesystem",
+      "normalizer": "exact-v1"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "POSIXLY_CORRECT": "1",
+    "TZ": "UTC"
+  },
+  "environment": {
+    "architecture": "x86_64",
+    "compiler": "GCC 12.2.0",
+    "cpu": null,
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "operating_system": "Debian 12"
+  },
+  "evidence_scope": "compatibility",
+  "execution": {
+    "network": "none",
+    "read_only": true,
+    "user": "1000:1000",
+    "working_directory": "/work"
+  },
+  "execution_manifest_sha256": "sha256:a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+  "fixture": "compat/fixtures/m0-cli-contract/argparse-cluster",
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "executable_sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "reference_run": {
+    "cleanup": {
+      "container_absent": true,
+      "direct_child_reaped": true,
+      "process_group_empty": null
+    },
+    "exit_code": 2,
+    "file_tree_artifact": "reference/file-tree.json",
+    "file_tree_bytes": 302,
+    "file_tree_sha256": "b44ec06e07b05453d23d21fc7e4e6a88aac8bb0b99baa380f1a412f2019a2b1f",
+    "metrics": {
+      "output_bytes": 91,
+      "output_files": 1,
+      "peak_rss_bytes": null,
+      "system_cpu_seconds": null,
+      "user_cpu_seconds": null,
+      "wall_seconds": 1.734028888
+    },
+    "signal": null,
+    "stderr_artifact": "reference/stderr.bin",
+    "stderr_bytes": 323,
+    "stderr_sha256": "a6c11bf3c50dfe2090ffd5f218040871f82b940ef1f6cb84aaddcd4fa67e6fac",
+    "stdout_artifact": "reference/stdout.bin",
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timeout": {
+      "applied_seconds": 20,
+      "escalation_signal_sent": null,
+      "expired": false,
+      "termination_signal_sent": null
+    }
+  },
+  "schema_version": 1,
+  "status": "observed",
+  "suite_id": "m0-cli-contract-posix",
+  "surface": "cli",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

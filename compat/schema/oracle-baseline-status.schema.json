@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/oracle-baseline-status-v1.json",
+  "title": "Ferricov Oracle baseline status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "oracle_qualification_evidence",
+    "product_compatibility_evidence",
+    "baseline",
+    "execution_manifest_sha256",
+    "oracle_image_identity",
+    "case_count",
+    "reproducibility"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "complete"
+    },
+    "oracle_qualification_evidence": {
+      "const": true
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    },
+    "baseline": {
+      "$ref": "#/$defs/artifact"
+    },
+    "execution_manifest_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "oracle_image_identity": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case_count": {
+      "const": 126
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "semantic_replay",
+        "timing_compared"
+      ],
+      "properties": {
+        "semantic_replay": {
+          "const": "passed"
+        },
+        "timing_compared": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "const": "compat/correctness/baselines/m0-cli-oracle-v2.5/result.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

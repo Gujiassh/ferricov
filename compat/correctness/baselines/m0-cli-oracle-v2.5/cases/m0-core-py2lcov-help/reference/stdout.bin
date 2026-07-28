@@ -1,0 +1,124 @@
+usage: py2lcov [-h] [-i INPUT] [-o OUTPUT] [-t TESTNAME] [-e EXCLUDEPATTERNS]
+               [-v] [--version-script VERSION] [--checksum] [--no-functions]
+               [--tabwidth TABWIDTH] [-k] [--cmd COVER_CMD]
+               [inputs ...]
+
+positional arguments:
+  inputs                list of python coverage data input files - expected to
+                        be XML or Python .dat format
+
+options:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        DEPRECATED: specify the input xml file from
+                        coverage.py
+  -o OUTPUT, --output OUTPUT
+                        specify the out LCOV .info file, default: py2lcov.info
+  -t TESTNAME, --test-name TESTNAME, --testname TESTNAME
+                        specify the test name for the TN: entry in LCOV .info
+                        file
+  -e EXCLUDEPATTERNS, --exclude EXCLUDEPATTERNS
+                        specify the exclude file patterns separated by ','
+  -v, --verbose         print debug messages
+  --version-script VERSION
+                        version extract callback
+  --checksum            compute line checksum - see 'man lcov'
+  --no-functions        do not derive function coverpoints
+  --tabwidth TABWIDTH   tabsize when computing indent
+  -k, --keep-going      ignore errors
+  --cmd COVER_CMD       executable used to extract python data - e.g.,
+                        "python3-coverage". Default is "coverage".
+
+py2lcov: Translate Python coverage data to LCOV .info format.
+Please also see https://coverage.readthedocs.io
+
+Note that the '--no-functions' argument may result in subtly inconsistent coverage
+data if a 'no-functions' coverage DB is merged with one which contains derived
+function data because the 'def myFunc(...)' line will acquire a 'hit' count
+of 1 because the python interpreter considers the 'def' to have been executed
+when the line is interpreted (i.e., when the function is defined).
+This will generate an 'inconsistent' error if the function is not executed in
+your tests because the (derived) function will have a zero hit count but the
+first line of the function has a non-zero count.
+Best practice is to either always specify '--no-functions' or never specify
+'--no-functions'.
+
+py2lcov uses Coverage.py to extract coverage data.
+Note that the name of the Coverage.py executable my differ on your platform.
+By default, py2lcov uses 'coverage' (which it expects to be in your path).
+You can use a different executable, either:
+  - through your COVERAGE_COMMAND environment variable, or
+  - via the 'py2lcov --cmd exename ..' command line option.
+
+py2lcov does not implement the full suite of LCOV features (e.g., filtering,
+substitutions, etc.).
+Please generate the translated LCOV format file and then read the data
+back in to lcov to use any of those features.
+
+Note that the XML coverage data format does not contain enough information
+to deduce exactly which branch expressions have been taken or not taken.
+
+It reports the total number of branch expressions associated with a particular
+line, and the number of those which have been taken. There is no way to know
+(except, possibly by inspection of surrounding code and/or some understanding
+of your implementation) exactly which ones.
+
+This is a problem in at least 2 ways:
+
+  - It is not straightforward to use the result to improve your regression
+    suite because you don't really know what was exercised/not exercised.
+
+  - Coverage data merge is problematic.
+
+      o For example: you have two testcase XML files, each of which hit
+        4 of 8 branches on some line.
+
+      o  Does that mean you hit 4 of them (both tests exercised the same
+         code), all 8 (tests exercised disjoint subsets), or some number
+         between?
+
+    This implementation assumes that the first M branches are the ones
+    which are hit and the remaining N-M were not hit, in each testcase.
+    Thus, the combined result in the above example would claim 4 of 8
+    branches hit.
+    This definition turns out to be a lower bound.
+
+Example:
+   $ export PYCOV_DATA=path/to/pydata
+
+     For 'coverage' versions 6.6.1 and higher (which support "--data-file"):
+   $ coverage run --data-file=${PYCOV_DATA} --append --branch \
+       `which myPythonScript.py` args_to_my_python_script
+
+     For older versions which don't support "--data-files":
+        use COVERAGE_FILE environment variable to specify data file
+   $ COVERAGE_FILE=${PYCOV_DATA} coverage run --append --branch \
+       `which myPythonScript.py` args_to_my_python_script
+
+     # now use py2lcov to translate the XML to INFO file format -
+     # also include version information in the generated coverage data.
+   $ py2lcov -o pydata.info ${PYCOV_DATA}
+
+    # apply some filtering
+   $ lcov -a pydata.info -o filtered.info --filter branch,blank
+
+     # and use genhtml to produce an HTML coverage report:
+   $ genhtml -o html_report pydata.info ....
+     # the filtered result.
+   $ genhtml -o html_filtered filtered.info ....
+     # use differential coverage to see exactly what filtering did
+   $ genhtml -o html_differential --baseline-file mydata.info filtered.info ...
+
+   Deprecated feature:
+   For backward compatibility, py2lcov also supports translation to LCOV
+   format from intermediate XML:
+
+       # first translate from Python coverage data to XML:
+     $ coverage xml --data-file=${PYCOV_DATA} -o pydata.xml |& tee pydata.log
+       # or - if your Coverage.py module is too old to support '--data-file':
+     $ COVERAGE_FILE=${PYCOV_DATA} coverage xml -o pydata.xml |& tee pydata.log
+
+       # then translate XML to LCOV format:
+     $ py2lcov -i pydata.xml -o pydata.info --version-script myCovScript
+
+   

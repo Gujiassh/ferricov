@@ -1,0 +1,103 @@
+Usage: genhtml [OPTIONS] TRACEFILE_PATTERN(S)
+
+Create HTML output for coverage data found in TRACEFILE. Note that TRACEFILE
+may also be a list of filenames.
+
+COMMON OPTIONS
+  -h, --help                        Print this help, then exit
+      --version                     Print version number, then exit
+  -v, --verbose                     Increase verbosity level
+  -q, --quiet                       Decrease verbosity level (e.g. to turn off
+                                    progress messages)
+      --debug                       Increase debug verbosity level
+      --config-file FILENAME        Specify configuration file location
+      --rc SETTING=VALUE            Override configuration file setting
+      --ignore-errors ERRORS        Continue after ERRORS (see man page for
+                                    full list of errors and their meaning)
+      --keep-going                  Do not stop if an error occurs
+      --tempdir DIRNAME             Write temporary and intermediate data here
+      --preserve                    Keep intermediate files for debugging
+
+OPERATION
+  -o, --output-directory OUTDIR     Write HTML output to OUTDIR
+  -d, --description-file DESCFILE   Read test case descriptions from DESCFILE
+  -k, --keep-descriptions           Do not remove unused test descriptions
+  -b, --baseline-file BASEFILE      Use BASEFILE as baseline file glob match pattern
+      --annotate-script SCRIPT      Use SCRIPT to get revision control data
+      --criteria-script SCRIPT      Use SCRIPT to check for acceptance criteria
+      --version-script SCRIPT       Use SCRIPT to check for compatibility of
+                                    source code and coverage data
+      --resolve-script SCRIPT       Call script to find source file frpm path
+      --(no-)checksum               Compare (ignore) source line checksum
+      --diff-file UDIFF             Unified diff file UDIFF describes source
+                                    code changes between baseline and current
+      --new-file-as-baseline        Classify new files as baseline data
+      --elide-path-mismatch         Identify matching files if their basename
+                                    matches even though dirname does not
+      --date-bins day[,day,...]     Use DAY number of days as upper age limit
+                                    for the corresponding date bin
+  -p, --prefix PREFIX               Remove PREFIX from all directory names
+      --no-prefix                   Do not remove prefix from directory names
+      --(no-)function-coverage      Enable (disable) function coverage display
+      --(no-)branch-coverage        Enable (disable) branch coverage display
+      --filter FILTERS              Apply FILTERS to input data (see man page
+                                    for full list of filters and their effects)
+      --include PATTERN             Only show output for files matching PATTERN
+      --exclude PATTERN             Skip output for files matching PATTERN
+      --source-directory DIR        Search DIR for source files
+      --substitute REGEXP           Change source file names according to REGEXP
+      --erase-functions REGEXP      Exclude data for functions matching REGEXP
+      --omit-lines REGEXP           Ignore data in lines matching REGEXP
+      --forget-test-names           Merge data for all tests names
+      --synthesize-missing          Generate fake source for missing files
+  -j, --parallel [N]                Use parallel processing with at most N jobs
+      --memory MB                   Use at most MB memory in parallel processing
+      --profile [FILENAME]          Write performance statistics to FILENAME
+                                    (default: OUTDIR/genhtml.json)
+      --save                        Write copy of input files to OUTDIR
+
+HTML OUTPUT
+  -f, --frames                      Use HTML frames for source code view
+  -t, --title TITLE                 Use TITLE as label for current data
+      --baseline-title TITLE        Use TITLE as label for baseline data
+      --current-date DATE           Use DATE as date label for current data
+      --baseline-date DATE          Use DATE as date label for baseline data
+  -c, --css-file CSSFILE            Use external style sheet file CSSFILE
+      --header-title BANNER         Banner at top of each HTML page
+      --footer FOOTER               Footer at bottom of each HTML page
+      --no-sourceview               Do not create source code view
+      --num-spaces NUM              change appearance of tabs in source view
+                                    NUM == 0 will not touch tabs
+                                    NUM > 0 will replace them with NUM spaces
+                                    NUM < 0 will only change their appearance
+      --legend                      Include color legend in HTML output
+      --html-prolog FILE            Use FILE as HTML prolog for generated pages
+      --html-epilog FILE            Use FILE as HTML epilog for generated pages
+      --html-extension EXT          Use EXT as filename extension for pages
+      --html-gzip                   Use gzip to compress HTML
+      --(no-)sort                   Enable (disable) sorted coverage views
+      --demangle-cpp [OPT]          Demangle C++ function names
+      --precision NUM               Set precision of coverage rate
+      --missed                      Show miss counts as negative numbers
+      --dark-mode                   Use the dark-mode CSS
+      --simplified-colors           Use reduced color scheme for categories
+      --hierarchical                Generate multilevel HTML report,
+                                    matching source code directory structure
+      --flat                        Generate flat HTML report, with all files
+                                    listed on top-level page
+  -s, --show-details                Generate detailed directory view
+      --show-owners [all]           Show owner summary table. If optional
+                                    value provided, show all the owners,
+                                    regardless of whether they have uncovered
+                                    code or not
+      --show-noncode                Show author in summary table even if none
+                                    of their lines are recognized as code
+      --show-zero-columns           Keep summary columns for categories with
+                                    no entries (default: remove)
+      --show-navigation             Include 'goto first hit/not hit' and
+                                    'goto next hit/not hit' hyperlinks in
+                                    non-differential source code detail page
+      --show-proportion             Show function coverage rates
+      --suppress-aliases            Merge data for function aliases
+
+For more information see the genhtml man page.

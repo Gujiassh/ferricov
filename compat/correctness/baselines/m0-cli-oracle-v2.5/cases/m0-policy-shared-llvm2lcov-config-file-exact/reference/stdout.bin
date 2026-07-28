@@ -1,0 +1,46 @@
+Usage: llvm2lcov [OPTIONS] json_file [json_file ...]
+Translate LLVM's 'llvm-cov' JSON coverage data file to LCOV .info
+file format.
+
+In addition to common options supported by other tools in the LCOV
+suite (e.g., --comment, --version-script, --ignore-error, --substitute,
+--exclude, etc.), the tool options are:
+
+  --output filename:
+      The lcov data will be written to the specified file - or to
+      the file called 'llvm2lcov.info' in the current run directory
+      if this option is not used.
+
+  --testname name:
+      Coverage info will be associated with the testcase name provided.
+      It is not necessary to provide a name.
+
+  --branch-coverage:
+      Include branch coverage data in the output.
+
+  --mcdc-coverage:
+      Include MC/DC data in the output.
+      Note that you must be using LLVM/18 or higher, and must have instrumented
+      your code for MC/DC collection.  See the LLVM documentation for details.
+
+See LLVM documentation for directions on how to generate coverage data
+in JSON format.
+
+For example:
+
+    # compile your example, instrumenting for MC/DC coverage
+  $ clang++ -o myExe -fprofile-inst-generate -fcoverage-mapping \
+       -fcoverage-mcdc myCode.cpp
+    # run your testcases
+  $ ./myExe ...
+    # convert profile data
+  $ llvm-profdata merge -o myExe.profdata --sparse *.profraw
+    # export coverage data in JSON format
+  $ llvm-cov export -format=text -instr-profile=myExe.profdata \
+       ./myExe > myExe.json
+    # use this script to convert to LCOV format
+  $ llvm2lcov --output myExe.info --test-name myTestcase \
+       --mcdc-coverage --branch-coverage myExe.json
+    # and generate a genhtml-format coverage report:
+  $ genhtml -o html_report myExe.info ...
+

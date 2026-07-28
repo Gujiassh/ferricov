@@ -66,6 +66,16 @@ The differential harness has passed six Oracle self-test cases and one
 intentional reverse failure. These results verify evidence collection only;
 they do not increase Ferricov compatibility status.
 
+The M0 CLI correctness baseline retains 126 raw observations from the pinned
+LCOV 2.5 Oracle in
+`compat/correctness/baselines/m0-cli-oracle-v2.5/`. A second independent capture
+passed semantic replay comparison for exit status, stdout, stderr, and the
+filesystem tree. Replay ignores timing and image identity and normalizes only
+the random `geninfo` tempfile token; raw diagnostics are retained verbatim.
+This is Oracle qualification evidence only. It does not provide Ferricov
+product compatibility evidence, and the baseline status explicitly keeps
+`product_compatibility_evidence=false`.
+
 ## Release Claims
 
 - Pre-alpha and alpha releases publish exact matrix status and make no drop-in

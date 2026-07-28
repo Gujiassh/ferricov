@@ -27,8 +27,9 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
 | Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
 | Upstream test map | All 205 files mapped and reviewed |
-| Differential harness | 100 Rust unit tests, 38 behavior-contract tests, Python mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
+| Differential harness | 105 Rust unit tests, 38 behavior-contract tests, correctness-baseline mutation guards, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
 | M0 behavior planning | 531 public entries have primary case skeletons; 23 are reviewed, all 4 critical interaction domains are reviewed, and 508 primary reviews remain open |
+| Oracle correctness baseline | 126 raw M0 CLI observations retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
 | Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
 | Current milestone | M0: executable compatibility contract and reproducible baselines; 508 behavior-planning gaps remain |
 
@@ -73,9 +74,10 @@ contracts.
 ## Evidence Model
 
 Ferricov runs the pinned upstream LCOV release and the Rust candidate in fresh,
-equivalent environments. The differential harness records actual container
-image and executable SHA-256 identities, then retains raw stdout, stderr, exit
-status, timings, and file-tree snapshots before applying a small, reviewed
+equivalent environments. The correctness baseline first retains the pinned
+Oracle's raw reference observations; the differential harness then records
+actual container image and executable SHA-256 identities, raw stdout, stderr,
+exit status, timings, and file-tree snapshots before applying a small, reviewed
 [normalizer registry](compat/normalizers.md). Filesystem evidence includes
 content, raw path bytes, Unix mode and ownership, symlink targets, and hardlink
 relationships where the platform exposes them.
@@ -138,13 +140,16 @@ The separate Oracle job builds the image and exercises the real Docker paths.
 Docker differential runs clear the image environment before supplying the
 reviewed `HOME`, locale, `PATH`, and timezone allowlist recorded by the launcher.
 The Oracle CI job verifies that clean environment in a real container before
-running the differential harness self-tests.
+running the differential harness self-tests and retained correctness-baseline
+validator.
 
 ```bash
 cargo fmt --all --check
 cargo check --workspace --all-targets
 cargo test --workspace --all-targets
 cargo clippy --workspace --all-targets -- -D warnings
+python3 compat/correctness/validate.py
+python3 -m unittest compat/correctness/test_validate.py
 ```
 
 Build and smoke-test the immutable LCOV 2.5 Oracle:
