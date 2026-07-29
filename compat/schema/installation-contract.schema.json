@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Gujiassh/ferricov/compat/schema/installation-contract.schema.json",
+  "title": "Ferricov LCOV 2.5 Installation Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "scope",
+    "artifact_bindings",
+    "oracle_manifest",
+    "benchmark_result",
+    "source_closures",
+    "installed_tree",
+    "layout_contract_ids",
+    "failure_contract_ids",
+    "planned_case_ids",
+    "planned_case_evidence_status",
+    "planned_case_product_evidence",
+    "runtime_assets",
+    "runtime_asset_observations",
+    "oracle_observation_evidence_status",
+    "oracle_observation_product_evidence",
+    "known_evidence_gaps",
+    "totals",
+    "product_compatibility_evidence"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "upstream_release": { "const": "v2.5" },
+    "upstream_commit": { "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5" },
+    "scope": { "type": "string", "minLength": 1 },
+    "artifact_bindings": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": { "$ref": "#/$defs/artifactBinding" }
+    },
+    "oracle_manifest": { "$ref": "#/$defs/oracleManifest" },
+    "benchmark_result": { "$ref": "#/$defs/benchmarkResult" },
+    "source_closures": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 15,
+      "items": { "$ref": "#/$defs/sourceClosure" }
+    },
+    "installed_tree": { "$ref": "#/$defs/installedTree" },
+    "layout_contract_ids": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "type": "string", "pattern": "^INST-[A-Z0-9-]+$" }
+    },
+    "failure_contract_ids": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": { "type": "string", "pattern": "^INST-[A-Z0-9-]+$" }
+    },
+    "planned_case_ids": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": { "type": "string", "pattern": "^INST-[A-Z0-9-]+$" }
+    },
+    "planned_case_evidence_status": { "const": "planned" },
+    "planned_case_product_evidence": { "$ref": "#/$defs/productEvidence" },
+    "runtime_assets": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/runtimeAsset" }
+    },
+    "runtime_asset_observations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/assetObservation" }
+    },
+    "oracle_observation_evidence_status": { "const": "oracle_reference" },
+    "oracle_observation_product_evidence": { "$ref": "#/$defs/productEvidence" },
+    "known_evidence_gaps": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "totals": { "$ref": "#/$defs/totals" },
+    "product_compatibility_evidence": { "const": false }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "productEvidence": { "type": "array", "maxItems": 0 },
+    "artifactBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "oracleManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_id", "status", "evidence_scope", "product_compatibility_evidence"],
+      "properties": {
+        "manifest_id": { "const": "oracle-lcov-v2.5-image-smoke" },
+        "status": { "const": "observed" },
+        "evidence_scope": { "const": "environment_smoke" },
+        "product_compatibility_evidence": { "const": false }
+      }
+    },
+    "benchmarkResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_id",
+        "status",
+        "correctness_gate_status",
+        "performance_gate_status",
+        "product_compatibility_evidence"
+      ],
+      "properties": {
+        "result_id": { "const": "m0-oracle-baseline-oracle" },
+        "status": { "const": "baseline_only" },
+        "correctness_gate_status": { "const": "not_evaluated" },
+        "performance_gate_status": { "const": "not_evaluated" },
+        "product_compatibility_evidence": { "const": false }
+      }
+    },
+    "sourceClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "line_start", "line_end", "line_count", "role", "sha256"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^installation\\." },
+        "path": { "type": "string", "minLength": 1 },
+        "line_start": { "type": "integer", "minimum": 1 },
+        "line_end": { "type": "integer", "minimum": 1 },
+        "line_count": { "type": "integer", "minimum": 1 },
+        "role": {
+          "enum": [
+            "install_variables",
+            "install_recipe",
+            "uninstall_recipe",
+            "interpreter_fixup",
+            "documentation_build",
+            "documentation_config",
+            "man_page_generation",
+            "config_discovery",
+            "installed_test_runtime",
+            "installed_test_paths",
+            "installed_test_docs",
+            "documented_paths",
+            "report_asset_names",
+            "report_asset_generation",
+            "report_asset_writers"
+          ]
+        },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "treeGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "path_prefix", "entry_count", "kinds", "modes", "entries_sha256"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^installation\\.tree\\." },
+        "name": { "type": "string", "pattern": "^[a-z_]+$" },
+        "path_prefix": { "type": "string", "pattern": "^/usr/local" },
+        "entry_count": { "type": "integer", "minimum": 1 },
+        "kinds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": { "enum": ["file", "symlink"] }
+        },
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": { "enum": ["644", "755", "777"] }
+        },
+        "entries_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "installedTree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_path",
+        "manifest_sha256",
+        "path_root",
+        "path_order",
+        "file_identity_algorithm",
+        "legacy_symlink",
+        "entry_count",
+        "file_count",
+        "symlink_count",
+        "mode_counts",
+        "directory_entries_retained",
+        "groups"
+      ],
+      "properties": {
+        "manifest_path": { "const": "compat/upstream/installed-tree.lock" },
+        "manifest_sha256": { "$ref": "#/$defs/sha256" },
+        "path_root": { "const": "/usr/local" },
+        "path_order": { "const": "lexicographic" },
+        "file_identity_algorithm": { "const": "sha256" },
+        "legacy_symlink": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "target", "mode"],
+          "properties": {
+            "path": { "const": "/usr/local/man" },
+            "target": { "const": "share/man" },
+            "mode": { "const": "777" }
+          }
+        },
+        "entry_count": { "const": 321 },
+        "file_count": { "const": 320 },
+        "symlink_count": { "const": 1 },
+        "mode_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["644", "755", "777"],
+          "properties": {
+            "644": { "const": 210 },
+            "755": { "const": 110 },
+            "777": { "const": 1 }
+          }
+        },
+        "directory_entries_retained": { "const": false },
+        "groups": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": { "$ref": "#/$defs/treeGroup" }
+        }
+      }
+    },
+    "runtimeAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind", "bytes", "sha256"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "name": { "type": "string", "pattern": "^[a-z]+(?:[.-][a-z]+)*$" },
+        "kind": { "enum": ["css", "png"] },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "assetObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "artifact_path",
+        "artifact_sha256",
+        "sample_metadata_path",
+        "sample_metadata_sha256",
+        "asset_set_sha256",
+        "asset_count"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^installation\\.asset-observation\\." },
+        "artifact_path": { "type": "string", "minLength": 1 },
+        "artifact_sha256": { "$ref": "#/$defs/sha256" },
+        "sample_metadata_path": { "type": "string", "pattern": "/sample\\.json$" },
+        "sample_metadata_sha256": { "$ref": "#/$defs/sha256" },
+        "asset_set_sha256": { "$ref": "#/$defs/sha256" },
+        "asset_count": { "const": 7 }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_bindings",
+        "source_closures",
+        "source_lines",
+        "installed_tree_entries",
+        "installed_tree_groups",
+        "layout_contract_ids",
+        "failure_contract_ids",
+        "planned_cases",
+        "runtime_assets",
+        "runtime_asset_observations"
+      ],
+      "properties": {
+        "artifact_bindings": { "const": 11 },
+        "source_closures": { "const": 15 },
+        "source_lines": { "const": 600 },
+        "installed_tree_entries": { "const": 321 },
+        "installed_tree_groups": { "const": 9 },
+        "layout_contract_ids": { "const": 9 },
+        "failure_contract_ids": { "const": 10 },
+        "planned_cases": { "const": 13 },
+        "runtime_assets": { "const": 7 },
+        "runtime_asset_observations": { "const": 4 }
+      }
+    }
+  }
+}

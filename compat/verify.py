@@ -839,6 +839,10 @@ def main() -> int:
         [root / "compat/diagnostics/v2.5.json"],
     )
     validate_documents(
+        root / "compat/schema/installation-contract.schema.json",
+        [root / "compat/installation/v2.5.json"],
+    )
+    validate_documents(
         root / "compat/schema/upstream-test-map.schema.json",
         [root / "compat/inventory/tests/upstream-test-map.json"],
     )
@@ -912,6 +916,15 @@ def main() -> int:
             [
                 sys.executable,
                 str(root / "compat/diagnostics/contract.py"),
+                "--upstream-root",
+                str(upstream_root),
+            ],
+            root,
+        )
+        run(
+            [
+                sys.executable,
+                str(root / "compat/installation/contract.py"),
                 "--upstream-root",
                 str(upstream_root),
             ],

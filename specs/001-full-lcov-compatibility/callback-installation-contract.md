@@ -541,8 +541,8 @@ explicit matrix row and differential evidence.
 - `INST-PATH-001`: relative, empty, staged, absolute, and space-containing roots.
 - `INST-DIRTY-ASSET-001`: untracked sentinels and dirty-Oracle rejection.
 - `INST-TEST-RUN-001`: installed tests with unset and explicit `LCOV_HOME`.
-- `INST-LICENSE-001`: source archive and binary/install distribution license
-  manifests.
+- `INST-DOC-PATH-001`, `INST-REPORT-ASSET-001`, and `INST-LICENSE-001`: README
+  path mismatches, exact report assets, and distribution license manifests.
 
 ### `perl2lcov` Cases
 
@@ -617,3 +617,16 @@ Correctness evidence for a fixture MUST pass before its performance result is
 valid. Host startup, serialization, fork scaling, callback ordering, RSS, and
 converter performance MUST NOT weaken state, data, failure, or installation
 semantics.
+
+## M0 Installation Inventory Binding
+
+`compat/installation/v2.5.json` is the executable M0 source and retained-
+evidence inventory for installation layout and report assets. It binds the
+complete 321-entry installed-tree lock to nine exhaustive payload groups and 15
+source closures, while retaining all 13 installation cases above as `planned`.
+It requires canonical ordered `/usr/local` paths, SHA-256 file identities, and
+the exact legacy man symlink. Its four report observations bind output trees
+through sample metadata, contain the same seven runtime assets, and remain
+Oracle references only. The contract records that directory entries are absent
+from the installed-tree lock and does not authorize a packaging, report, M5, or
+product-compatibility claim.

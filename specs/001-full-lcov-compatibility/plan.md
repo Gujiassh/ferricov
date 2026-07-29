@@ -166,6 +166,13 @@ references, nine control rules, four unclassified failure surfaces, and ten
 command exit policies. Its 51 retained observations remain reference-only,
 including a `geninfo` startup case intercepted by read-only temporary storage;
 all 71 diagnostic and parallel case identities remain planned.
+The separate installation contract binds the 321-entry installed tree to nine
+exhaustive payload groups and 15 source closures. Canonical paths, SHA-256
+file identities, and the legacy man symlink fail closed. All 13 installation
+cases remain planned. Four retained report samples bind output trees through
+sample metadata and contain the same seven runtime assets without providing
+product evidence; directory layout remains an explicit gap because the tree
+recorder retains only files and symlinks.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 
@@ -449,6 +456,8 @@ candidate and a list of unresolved contract decisions.
   independently of the public inventory schema and M1 product evidence.
 - Retain a source-complete diagnostic registry, error-control, and exit-policy
   contract independently of command implementation and product evidence.
+- Retain a source-complete installation and report-asset contract independently
+  of packaging implementation and product evidence.
 - Specify the byte-preserving coverage model and tracefile grammar.
 - Define M1 acceptance fixtures, property invariants, fuzz targets, and
   benchmarks.

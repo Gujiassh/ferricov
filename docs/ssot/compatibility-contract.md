@@ -51,7 +51,7 @@ relationships where supported.
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
 | behavior planning | primary plans cover all 531 public entries | not started | 69 reviewed primary plans, including 40 CLI parser entries plus 8 configuration-semantic slices with 67 bindings; all 4 critical interaction domains reviewed; 462 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
-| installation layout | 321-entry installed tree pinned and reproduced across two no-cache builds | not started | environment evidence only |
+| installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | two-build tree reproduction plus 4 reference-only samples of 7 runtime assets; no product evidence |
 
 The inventory is generated from pinned parser definitions, manuals, help output,
 configuration templates, installation manifests, and tests. Schema and semantic
@@ -113,6 +113,15 @@ Oracle references only. The retained `geninfo` startup case is marked as a
 read-only temporary-directory intercept rather than evidence for the true
 no-argument case. All 71 diagnostic and parallel acceptance identities remain
 planned and provide no Ferricov product evidence.
+
+The standalone installation contract binds the complete 321-entry installed
+tree to nine exhaustive payload groups and 15 pinned source closures. It
+requires canonical, lexicographically ordered paths under `/usr/local`, SHA-256
+file identities, and the exact legacy manpage symlink, but records no
+directories. Its 13 installation identities remain planned. Four retained
+`genhtml` samples bind each output tree through sample metadata and contain the
+same seven runtime report assets, but those samples are Oracle references only
+and provide no Ferricov product evidence.
 
 ## Release Claims
 

@@ -90,6 +90,23 @@ parallel case identities remain planned. See
 [`diagnostics/README.md`](diagnostics/README.md) for regeneration and mutation
 test commands.
 
+## Installation Layout And Report Assets
+
+The standalone [`installation/v2.5.json`](installation/v2.5.json) contract
+binds the complete 321-entry Oracle installed-tree lock to nine exhaustive
+payload groups and 15 pinned source closures. It requires canonical,
+lexicographically ordered absolute paths under `/usr/local`, SHA-256 file
+identities, the exact `/usr/local/man -> share/man` symlink, and 13 planned
+installation case identities. Directory entries are not retained by the tree
+recorder and remain an explicit gap.
+
+Four retained `genhtml` benchmark samples contain the same seven generated CSS
+and PNG assets with exact byte counts and hashes. Each output tree is bound
+through its retained sample metadata, and duplicate runtime asset paths are
+rejected. These observations remain `oracle_reference`; they do not prove report
+rendering or Ferricov product compatibility. See [`installation/README.md`](installation/README.md) for
+regeneration and mutation test commands.
+
 ## Oracle Correctness Baseline
 
 The aggregate M0 contract has a retained raw Oracle baseline with 148 cases

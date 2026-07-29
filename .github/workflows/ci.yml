@@ -121,6 +121,12 @@ jobs:
       - name: Run diagnostics contract mutation tests
         run: python3 -m unittest compat/diagnostics/test_contract.py
 
+      - name: Check generated installation contract
+        run: python3 compat/installation/contract.py --upstream-root "$LCOV_SOURCE_ROOT"
+
+      - name: Run installation contract mutation tests
+        run: python3 -m unittest compat/installation/test_contract.py
+
       - name: Validate current behavior contract
         run: python3 compat/behavior/validate.py --mode current
 

@@ -43,7 +43,9 @@
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
 - [x] Review all 23 installed support scripts and callback planning subjects.
-- [ ] Complete installation-layout and asset behavior planning.
+- [x] Bind the complete 321-entry installed tree to nine payload groups and 15
+  source closures, and retain 13 planned installation cases plus four
+  seven-asset Oracle observations in a standalone fail-closed contract.
 - [x] Map all 205 upstream test files to public behaviors or internal coverage.
 - [x] Define the four required critical interaction groups with reciprocal cases.
 - [x] Review the 40 public CLI primary entries exercised by the retained M0
@@ -81,6 +83,15 @@ reference-only; the `geninfo` startup observation is explicitly classified as
 a read-only temporary-directory intercept. All 71 diagnostic and parallel
 case IDs remain planned, so ignore-two, warning promotion, converter traps,
 parallel behavior, and product compatibility remain open.
+
+The separate installation contract binds all 321 retained tree entries to nine
+exhaustive groups and 15 pinned source closures. It preserves 320
+SHA-256-identified files, the exact legacy manpage symlink, canonical ordered
+paths, and exact mode counts while recording that directory entries are absent
+from the retained tree. All 13 installation cases remain planned. Four report
+samples bind their output trees through sample metadata and retain the same
+seven runtime assets as reference-only Oracle evidence; packaging and product
+compatibility remain open.
 
 Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact

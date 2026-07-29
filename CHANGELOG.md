@@ -46,6 +46,10 @@ compatibility releases.
   message classes, 399 symbol references, nine error-control rules, four
   unclassified failure surfaces, ten command exit policies, 71 planned case
   identities, and 51 reference-only Oracle observations.
+- A standalone fail-closed LCOV 2.5 installation contract covering the complete
+  321-entry installed-tree lock, nine exhaustive payload groups, 15 source
+  closures, 13 planned installation cases, seven runtime report assets, and four
+  metadata-bound, reference-only Oracle asset observations.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -64,9 +68,9 @@ compatibility releases.
 - Aggregated the CLI and configuration suites through one deterministic
   seven-suite correctness contract without changing the Suite schema.
 - Extended the repository verifier and Behavior Contract CI job with exact
-  environment, tracefile, and diagnostics contract regeneration, retained
-  corpus checks, schema validation, pinned source closure, and reverse mutation
-  guards.
+  environment, tracefile, diagnostics, and installation contract regeneration,
+  retained corpus checks, schema validation, pinned source closure, and reverse
+  mutation guards.
 
 ### Fixed
 
@@ -111,8 +115,8 @@ compatibility releases.
 - The workspace passes formatting, compilation, 106 Rust unit tests, clippy
   with warnings denied, 40 behavior-contract tests, 6 configuration-contract
   tests, 8 environment-contract tests, 11 tracefile-contract tests, 13
-  diagnostics-contract tests, 16 correctness tests, schema validators, and
-  retained evidence
+  diagnostics-contract tests, 22 installation-contract tests, 16 correctness
+  tests, schema validators, and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
 - M0 remains open with 462 explicit behavior-planning gaps; no compatibility or
