@@ -14,6 +14,14 @@ implementation and does not mark any M1 acceptance case as passing. M1 remains
 blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 [compatibility contract](../../docs/ssot/compatibility-contract.md).
 
+The M0 source and evidence inventory is now executable at
+`compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
+lexical rules, 15 reader matcher lines, 18 writer emission lines, 36 fixtures,
+21 per-record malformed fixtures, and 52 retained Oracle observations. That
+inventory does not change this document's proposed status: 28 planned M1
+tracefile IDs still lack exact executable mappings, and no M1 case has product
+evidence.
+
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT,
 RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this document are to be
 interpreted as normative requirements.

@@ -156,6 +156,11 @@ all remain planning-only without candidate evidence. A separate fail-closed
 environment contract now reviews 19 named variables, one dynamic input, five
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
+The separate tracefile contract reviews 20 record tags, two lexical rules, all
+15 reader matcher lines, all 18 writer emission lines, 36 fixtures, 21
+per-record malformed inputs, and 52 reference-only Oracle observations. It
+closes the M0 record/malformed inventory but leaves 28 planned M1 tracefile IDs
+without exact executable mappings.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 
@@ -435,6 +440,8 @@ candidate and a list of unresolved contract decisions.
   distinct from Ferricov compatibility evidence.
 - Retain a source-complete environment and configuration-discovery contract
   independently of the public inventory schema.
+- Retain a source-complete tracefile record and malformed-input contract
+  independently of the public inventory schema and M1 product evidence.
 - Specify the byte-preserving coverage model and tracefile grammar.
 - Define M1 acceptance fixtures, property invariants, fuzz targets, and
   benchmarks.

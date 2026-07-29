@@ -60,6 +60,20 @@ bindings, and product-evidence claims. See
 [`environment/README.md`](environment/README.md) for regeneration and mutation
 test commands.
 
+## Tracefile Records And Malformed Inputs
+
+The standalone [`tracefile/v2.5.json`](tracefile/v2.5.json) contract reviews 20
+known record tags, two lexical framing rules, the complete 15-line reader
+matcher closure, and the complete 18-line canonical writer emission closure.
+It binds all 36 retained fixtures, all 21 per-record malformed fixtures, and 52
+pinned Oracle observations by exact artifact and stream/output hashes.
+
+The reader-only `KF`, `FN`, and `FNDA` forms remain distinct from the 17 record
+tags emitted canonically. The Oracle observations are reference-only and do not
+authorize M1 or provide product evidence. See
+[`tracefile/README.md`](tracefile/README.md) for regeneration and mutation test
+commands.
+
 ## Oracle Correctness Baseline
 
 The aggregate M0 contract has a retained raw Oracle baseline with 148 cases

@@ -831,6 +831,10 @@ def main() -> int:
         [root / "compat/environment/v2.5.json"],
     )
     validate_documents(
+        root / "compat/schema/tracefile-contract.schema.json",
+        [root / "compat/tracefile/v2.5.json"],
+    )
+    validate_documents(
         root / "compat/schema/upstream-test-map.schema.json",
         [root / "compat/inventory/tests/upstream-test-map.json"],
     )
@@ -854,6 +858,10 @@ def main() -> int:
     )
     run(
         [sys.executable, str(root / "compat/correctness/validate.py")],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/fixtures/m0-tracefiles/validate.py")],
         root,
     )
 
@@ -882,6 +890,15 @@ def main() -> int:
             [
                 sys.executable,
                 str(root / "compat/environment/contract.py"),
+                "--upstream-root",
+                str(upstream_root),
+            ],
+            root,
+        )
+        run(
+            [
+                sys.executable,
+                str(root / "compat/tracefile/contract.py"),
                 "--upstream-root",
                 str(upstream_root),
             ],

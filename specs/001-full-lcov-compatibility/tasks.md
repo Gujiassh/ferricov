@@ -36,7 +36,9 @@
 - [x] Inventory all 19 named environment variables, the dynamic configuration
   input, five discovery paths, and all 36 direct `$ENV` source lines in a
   standalone fail-closed contract.
-- [ ] Inventory every tracefile record and malformed-input behavior.
+- [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
+  reader/writer source closures, and all 21 per-record malformed fixtures in a
+  standalone fail-closed contract bound to 52 Oracle observations.
 - [ ] Inventory error/warning classes, exit status, ignore, and keep-going rules.
 - [x] Review all 23 installed support scripts and callback planning subjects.
 - [ ] Complete installation-layout and asset behavior planning.
@@ -62,6 +64,13 @@ configuration expansion input, five configuration-discovery paths, and the
 complete 36-line direct `$ENV` source closure. Its 22 bindings point to retained
 Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
+
+The separate tracefile contract reviews 20 record tags, two lexical rules, all
+15 reader matcher lines, all 18 writer emission lines, 36 retained fixtures,
+and 21 per-record malformed fixtures. Its 52 Oracle observations are
+reference-only. The 28 planned M1 tracefile IDs without exact executable
+mappings remain blockers, so the complete grammar and M1 readiness tasks stay
+open.
 
 Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact

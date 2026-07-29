@@ -106,6 +106,15 @@ jobs:
       - name: Run environment contract mutation tests
         run: python3 -m unittest compat/environment/test_contract.py
 
+      - name: Validate retained tracefile corpus
+        run: python3 compat/fixtures/m0-tracefiles/validate.py
+
+      - name: Check generated tracefile contract
+        run: python3 compat/tracefile/contract.py --upstream-root "$LCOV_SOURCE_ROOT"
+
+      - name: Run tracefile contract mutation tests
+        run: python3 -m unittest compat/tracefile/test_contract.py
+
       - name: Validate current behavior contract
         run: python3 compat/behavior/validate.py --mode current
 
