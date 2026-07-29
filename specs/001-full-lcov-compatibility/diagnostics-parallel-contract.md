@@ -31,6 +31,12 @@ rule. The only approved non-identical result is
 `DEV-GENINFO-CHILD-001`, defined in
 [`ADR 0004`](../../docs/adr/0004-upstream-defect-safety-policy.md).
 
+The executable M0 source inventory is
+`compat/diagnostics/v2.5.json`. It closes over all 32 registry classes, 399
+symbol references, nine shared control rules, four unclassified failure
+surfaces, and ten command exit policies. Its 51 retained Oracle observations
+are reference-only; all 71 case identities in this document remain planned.
+
 ## 2. Scope And Inventory Links
 
 The shared Perl diagnostic policy applies to these commands:
@@ -445,6 +451,15 @@ The network-disabled pinned Oracle no-argument baseline is:
 
 These are exact behavioral cases, not a proposed normalized interface.
 
+The retained aggregate correctness case named
+`m0-core-geninfo-startup-control` does not satisfy
+`DIAG-NOARGS-GENINFO-001`: its read-only execution environment prevents
+temporary-file creation first and records exit `30` with a tempfile error.
+The diagnostics inventory preserves that observation as
+`startup_environment_intercept` and leaves the writable-temporary-directory
+no-argument case planned. It must not replace the status `255` semantic oracle
+above.
+
 `lcov`, `geninfo`, and `genhtml` use top-level eval boundaries for selected
 business phases and later force exit `1` after a continued named error through
 `saw_error()`. Errors before, after, or outside those boundaries may retain
@@ -778,6 +793,8 @@ M0 owns:
   the existing reviewed `lcovrc.expected-message-count` inventory entry;
 - correcting singular `--ignore-error` candidate interpretation;
 - adding registry and raw-surface inventory ownership;
+- retaining the fail-closed registry/control/exit-policy inventory while
+  keeping its Oracle references distinct from executable case completion;
 - freezing configuration discovery, arbitrary RC environment expansion, the
   fixed public runtime allowlist, clean-environment execution, and the known
   uncovered environment cases without changing the inventory schema;

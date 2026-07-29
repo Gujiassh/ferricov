@@ -100,6 +100,11 @@ the M0 harness become the permanent integration boundary.
   Oracle observations. Exact artifact and output hashes fail closed; all
   observations remain reference-only and 28 planned M1 tracefile IDs still
   lack exact executable mappings.
+- `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
+  message classes, the complete 399-reference symbol closure, nine control
+  rules, four unclassified failure surfaces, ten command exit policies, and 51
+  retained Oracle references. All 71 diagnostic/parallel case IDs remain
+  planned and product evidence remains empty.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Sixty-nine primary plans and all four required
   critical interaction domains are reviewed. The callback,
@@ -116,9 +121,9 @@ the M0 harness become the permanent integration boundary.
 - CI enables and smoke-tests the bubblewrap PID namespace required by Rust
   process-isolation tests, provisions the complete pinned toolchain before
   Oracle verification, and independently gates deterministic behavior,
-  environment, and tracefile contract generation, mutation tests, retained
-  corpus integrity, and current-mode validation against the pinned LCOV
-  checkout.
+  environment, tracefile, and diagnostics contract generation, mutation tests,
+  retained corpus integrity, and current-mode validation against the pinned
+  LCOV checkout.
 - Docker differential execution uses `/usr/bin/env -i` and then applies only the
   launcher-declared `HOME`, locale, `PATH`, and timezone values. Retained
   `effective_environment_variables` now describes the actual command

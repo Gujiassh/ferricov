@@ -74,6 +74,22 @@ authorize M1 or provide product evidence. See
 [`tracefile/README.md`](tracefile/README.md) for regeneration and mutation test
 commands.
 
+## Diagnostics And Error Control
+
+The standalone [`diagnostics/v2.5.json`](diagnostics/v2.5.json) contract
+reviews all 32 ordered shared message classes, the complete 399-line symbol
+reference closure, nine ignore/keep-going/message-control rules, four
+unclassified failure surfaces, and ten command exit policies. The `branch`
+class remains accepted but has no production emitter.
+
+Its 51 retained observations bind exact startup, parser, configuration, fatal,
+and one-ignore outcomes without claiming product evidence. The retained
+`geninfo` startup observation is explicitly an environment intercept because a
+read-only `/tmp` blocks the true no-argument path. All 71 diagnostic and
+parallel case identities remain planned. See
+[`diagnostics/README.md`](diagnostics/README.md) for regeneration and mutation
+test commands.
+
 ## Oracle Correctness Baseline
 
 The aggregate M0 contract has a retained raw Oracle baseline with 148 cases

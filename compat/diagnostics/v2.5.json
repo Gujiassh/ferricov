@@ -1,0 +1,1953 @@
+{
+  "artifact_bindings": [
+    {
+      "path": "compat/correctness/baselines/m0-cli-oracle-v2.5/result.json",
+      "sha256": "f1b8484ba8a9587791c294722ceddcca245c72fa1a090b0b5245375fec30f8a2"
+    },
+    {
+      "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
+      "sha256": "b0162c3677dcc3dcc859a5d13ea9002d36b7a093e89559643b4c89c1514659a7"
+    },
+    {
+      "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
+      "sha256": "01c6e11166d5ea440345744bd018c218b086847686f4474a96974e4c14efcca1"
+    }
+  ],
+  "categories": [
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.annotate",
+      "name": "annotate",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 169,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "my @lcovErrs = ([\"annotate\", \\$ERROR_ANNOTATE_SCRIPT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 3,
+      "symbol_references_sha256": "345316d5d440bb1d705b2c3a428152eed2df975a51bd191961bdaa960d91bfe0",
+      "upstream_numeric_id": 0,
+      "upstream_symbol": "ERROR_ANNOTATE_SCRIPT"
+    },
+    {
+      "emitter_status": "reserved_no_production_emitter",
+      "id": "diagnostic.category.branch",
+      "name": "branch",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 170,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"branch\", \\$ERROR_BRANCH],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 3,
+      "symbol_references_sha256": "6d2a4f0331a0944ded2ca2b139b46525a9add27b486fcac7fdb53c4fa0ff9303",
+      "upstream_numeric_id": 1,
+      "upstream_symbol": "ERROR_BRANCH"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.callback",
+      "name": "callback",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 171,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"callback\", \\$ERROR_CALLBACK],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 18,
+      "symbol_references_sha256": "ca6ce51a54b84da3f64b51ae36ffa369b4a6ba9313da2e79f30654f30256bbac",
+      "upstream_numeric_id": 2,
+      "upstream_symbol": "ERROR_CALLBACK"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.category",
+      "name": "category",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 172,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"category\", \\$ERROR_UNKNOWN_CATEGORY],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 10,
+      "symbol_references_sha256": "cf7608fc0ae851e35a513ff5bbbbe53945c53a0f5d5a0883361770ef791b2306",
+      "upstream_numeric_id": 3,
+      "upstream_symbol": "ERROR_UNKNOWN_CATEGORY"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.child",
+      "name": "child",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 173,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"child\", \\$ERROR_CHILD],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 10,
+      "symbol_references_sha256": "9bb924ad357a0152592f110c18e7a759ed8c20f32be123b7ebbe8f8235fd341e",
+      "upstream_numeric_id": 4,
+      "upstream_symbol": "ERROR_CHILD"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.corrupt",
+      "name": "corrupt",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 174,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"corrupt\", \\$ERROR_CORRUPT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 7,
+      "symbol_references_sha256": "a62e56297e37286a3215eba9ce235098f027df47eba4fb8f93b2871bd2da8d38",
+      "upstream_numeric_id": 5,
+      "upstream_symbol": "ERROR_CORRUPT"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.count",
+      "name": "count",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 175,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"count\", \\$ERROR_COUNT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 4,
+      "symbol_references_sha256": "05a5ed6bb9327bf4e817880c578611cb476b79dfb34430a2f9e14909aad943dd",
+      "upstream_numeric_id": 6,
+      "upstream_symbol": "ERROR_COUNT"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.deprecated",
+      "name": "deprecated",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 176,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"deprecated\", \\$ERROR_DEPRECATED],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 3,
+      "symbol_references_sha256": "03851d2277a2d27d0ba96fa4137b5542b22ec2d725e71285d36840eb1f3f6bd8",
+      "upstream_numeric_id": 7,
+      "upstream_symbol": "ERROR_DEPRECATED"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.empty",
+      "name": "empty",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 177,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"empty\", \\$ERROR_EMPTY],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 23,
+      "symbol_references_sha256": "5e684ad9b92465cca5e0d9726c42d60022ef46cd5b1d0d86912d73c4667c51d7",
+      "upstream_numeric_id": 8,
+      "upstream_symbol": "ERROR_EMPTY"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.excessive",
+      "name": "excessive",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 178,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                ['excessive', \\$ERROR_EXCESSIVE_COUNT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 4,
+      "symbol_references_sha256": "112ab1c46d856a1aa1eb34c545a868249187da1cd21eac197b5da5c50457bbb0",
+      "upstream_numeric_id": 9,
+      "upstream_symbol": "ERROR_EXCESSIVE_COUNT"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.format",
+      "name": "format",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 179,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"format\", \\$ERROR_FORMAT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 32,
+      "symbol_references_sha256": "91ed028261dbcebd7ed579d5eec2cb7b85272de877ea36004dd4668e2c02c25d",
+      "upstream_numeric_id": 10,
+      "upstream_symbol": "ERROR_FORMAT"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.fork",
+      "name": "fork",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 180,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"fork\", \\$ERROR_FORK],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 6,
+      "symbol_references_sha256": "4e551084c9f580833ee8385425806ed34be0cf7bd80354367bcb9150c1b8c749",
+      "upstream_numeric_id": 11,
+      "upstream_symbol": "ERROR_FORK"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.gcov",
+      "name": "gcov",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 181,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"gcov\", \\$ERROR_GCOV],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 7,
+      "symbol_references_sha256": "678993baf7dd838adbe08e2df4d7297b09a4180c1144c1b65ad699ba97da7b0c",
+      "upstream_numeric_id": 12,
+      "upstream_symbol": "ERROR_GCOV"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.graph",
+      "name": "graph",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 182,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"graph\", \\$ERROR_GRAPH],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 4,
+      "symbol_references_sha256": "e049c5e831c0269212b83de954d61c7c06bf3d28fec11219808a30ba28bd894e",
+      "upstream_numeric_id": 13,
+      "upstream_symbol": "ERROR_GRAPH"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.inconsistent",
+      "name": "inconsistent",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 183,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"inconsistent\", \\$ERROR_INCONSISTENT_DATA],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 47,
+      "symbol_references_sha256": "e39c1023310ad9b039ed4f41c9e68b82d6bb7a280f4f79f9fd0bfb3422960171",
+      "upstream_numeric_id": 14,
+      "upstream_symbol": "ERROR_INCONSISTENT_DATA"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.internal",
+      "name": "internal",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 184,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"internal\", \\$ERROR_INTERNAL],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 25,
+      "symbol_references_sha256": "ac76cc1065b235af68906b3a055269ca5b0a23800f58bc67e95e64a9b854b51a",
+      "upstream_numeric_id": 15,
+      "upstream_symbol": "ERROR_INTERNAL"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.mismatch",
+      "name": "mismatch",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 185,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"mismatch\", \\$ERROR_MISMATCH],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 16,
+      "symbol_references_sha256": "781d159aa760c049a685f8e8bf18652479698c0976321802370f6ca092b1e590",
+      "upstream_numeric_id": 16,
+      "upstream_symbol": "ERROR_MISMATCH"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.missing",
+      "name": "missing",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 186,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"missing\", \\$ERROR_MISSING],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 2,
+      "symbol_references_sha256": "2672a3167424d882de23a5c0e9fb29c619d6a2292359a23ef223db5e4e684246",
+      "upstream_numeric_id": 17,
+      "upstream_symbol": "ERROR_MISSING"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.negative",
+      "name": "negative",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 187,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"negative\", \\$ERROR_NEGATIVE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 7,
+      "symbol_references_sha256": "7c589a55428ea821e7ddc6b7f4882b3774c07537d048f3a75ea38535b7b73068",
+      "upstream_numeric_id": 18,
+      "upstream_symbol": "ERROR_NEGATIVE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.package",
+      "name": "package",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 188,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"package\", \\$ERROR_PACKAGE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 10,
+      "symbol_references_sha256": "aab6dd6fa6a785e4e659fcfddfe6c5f60102eac1d4b3b4e70e31d23ae6e6bb4e",
+      "upstream_numeric_id": 19,
+      "upstream_symbol": "ERROR_PACKAGE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.parallel",
+      "name": "parallel",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 189,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"parallel\", \\$ERROR_PARALLEL],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 19,
+      "symbol_references_sha256": "2766a134e2084ba627a797f5b58ed855f0925c61365d7ed9ba980dc8900db4e5",
+      "upstream_numeric_id": 20,
+      "upstream_symbol": "ERROR_PARALLEL"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.parent",
+      "name": "parent",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 190,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"parent\", \\$ERROR_PARENT],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 2,
+      "symbol_references_sha256": "809eed5a71dd04a2c60c4fe6f0f9b280f081e71596d1ed4c760ae932dc25d9ac",
+      "upstream_numeric_id": 21,
+      "upstream_symbol": "ERROR_PARENT"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.path",
+      "name": "path",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 191,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"path\", \\$ERROR_PATH],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 12,
+      "symbol_references_sha256": "2c4062f314e80f186ee47a71f572559710e4fb17d7df45e4a197f52777dfbcbf",
+      "upstream_numeric_id": 22,
+      "upstream_symbol": "ERROR_PATH"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.range",
+      "name": "range",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 192,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"range\", \\$ERROR_RANGE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 10,
+      "symbol_references_sha256": "3d9d261e05508ef62cea454bd0b397eb59428af33acdca6d47f6ac921d54d34d",
+      "upstream_numeric_id": 23,
+      "upstream_symbol": "ERROR_RANGE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.source",
+      "name": "source",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 193,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"source\", \\$ERROR_SOURCE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 9,
+      "symbol_references_sha256": "7c176a82712940f6b294b710dec69c5a3a4ca69b60a79d6bcbbdc06067067c9c",
+      "upstream_numeric_id": 24,
+      "upstream_symbol": "ERROR_SOURCE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.unmapped",
+      "name": "unmapped",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 194,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"unmapped\", \\$ERROR_UNMAPPED_LINE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 22,
+      "symbol_references_sha256": "d561e0aaf2f485e1d56f726505db08fcd5d7357e4d9607ca56bbdd05715edd79",
+      "upstream_numeric_id": 25,
+      "upstream_symbol": "ERROR_UNMAPPED_LINE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.unreachable",
+      "name": "unreachable",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 195,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"unreachable\", \\$ERROR_UNREACHABLE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 4,
+      "symbol_references_sha256": "33974d15f9fb3ff000b71e9a9d313db79f5d46cbf0f42d02f0723f2f88e2f483",
+      "upstream_numeric_id": 26,
+      "upstream_symbol": "ERROR_UNREACHABLE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.unsupported",
+      "name": "unsupported",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 196,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"unsupported\", \\$ERROR_UNSUPPORTED],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 7,
+      "symbol_references_sha256": "c24d11ac7abe361916918d622ea55a76bf5f1cba1cd73336146a1188edd176ce",
+      "upstream_numeric_id": 27,
+      "upstream_symbol": "ERROR_UNSUPPORTED"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.unused",
+      "name": "unused",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 197,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"unused\", \\$ERROR_UNUSED],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 7,
+      "symbol_references_sha256": "5580faa270ae9a24c7d7127e47a5f680083d89e29917ee57e62406021932c754",
+      "upstream_numeric_id": 28,
+      "upstream_symbol": "ERROR_UNUSED"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.usage",
+      "name": "usage",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 198,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                ['usage', \\$ERROR_USAGE],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 50,
+      "symbol_references_sha256": "c9a857621ec370b5753fcd0423a7cc7bc919aba4095660d70d65d4b21760fd18",
+      "upstream_numeric_id": 29,
+      "upstream_symbol": "ERROR_USAGE"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.utility",
+      "name": "utility",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 199,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                ['utility', \\$ERROR_UTILITY],"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 5,
+      "symbol_references_sha256": "f8f6587bf9d718ea67158db9650056a70ede711a42f6644701567f64096c94ea",
+      "upstream_numeric_id": 30,
+      "upstream_symbol": "ERROR_UTILITY"
+    },
+    {
+      "emitter_status": "emitted",
+      "id": "diagnostic.category.version",
+      "name": "version",
+      "product_evidence": [],
+      "registry_source": {
+        "line": 200,
+        "path": "lib/lcovutil.pm",
+        "role": "registry",
+        "text": "                [\"version\", \\$ERROR_VERSION],);"
+      },
+      "review_status": "reviewed",
+      "symbol_reference_count": 11,
+      "symbol_references_sha256": "e6a2a69eef3f1706fbafac4ae91d2ac21270c25274e43331f10dd7c9ceeec0d2",
+      "upstream_numeric_id": 31,
+      "upstream_symbol": "ERROR_VERSION"
+    }
+  ],
+  "control_rules": [
+    {
+      "behavior": "CLI ignore values replace the complete configuration list when any CLI value is present.",
+      "id": "diagnostic.control.ignore-list-precedence",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 1553,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "                    [\\@opt_ignore_errors, \\@rc_ignore],"
+        },
+        {
+          "line": 1575,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        @{$rc->[0]} = @{$rc->[1]} unless (@{$rc->[0]});"
+        }
+      ]
+    },
+    {
+      "behavior": "Names are comma-split, case-insensitive, rejected when unknown, and counted per occurrence.",
+      "id": "diagnostic.control.ignore-count-parse",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 1964,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    my @ignore_errors = split($split_char, join($split_char, @_));"
+        },
+        {
+          "line": 1975,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    foreach my $item (@ignore_errors) {"
+        },
+        {
+          "line": 1976,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        die(\"unknown argument for --ignore-errors: '$item'\")"
+        },
+        {
+          "line": 1977,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "            unless exists($ERROR_ID{lc($item)});"
+        },
+        {
+          "line": 1979,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        $ignore[$item_id] += 1;"
+        }
+      ]
+    },
+    {
+      "behavior": "Keep-going sets stop_on_error to zero and makes every registered class continuable without changing an unlisted error into a warning.",
+      "id": "diagnostic.control.keep-going",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 1582,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    $lcovutil::stop_on_error = 0"
+        },
+        {
+          "line": 1583,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        if (defined $keepGoing);"
+        },
+        {
+          "line": 2045,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    return $ignore[$code] || (defined($stop_on_error) && 0 == $stop_on_error);"
+        },
+        {
+          "line": 2362,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        if (defined($stop_on_error) && 0 == $stop_on_error) {"
+        },
+        {
+          "line": 2363,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "            _count_message('error', $errName);"
+        },
+        {
+          "line": 2364,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "            warn_handler(\"($errName) $msg\\n$ignoreOpt\", 1);"
+        },
+        {
+          "line": 2365,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "            return;"
+        }
+      ]
+    },
+    {
+      "behavior": "A registered error with ignore count zero is fatal unless keep-going is active.",
+      "id": "diagnostic.control.error-ignore-zero",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2355,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($code >= scalar(@ignore) ||"
+        },
+        {
+          "line": 2356,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        !$ignore[$code]) {"
+        },
+        {
+          "line": 2367,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('error', $errName);"
+        },
+        {
+          "line": 2368,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        die_handler(\"($errName) $msg\\n$ignoreOpt\");"
+        }
+      ]
+    },
+    {
+      "behavior": "A registered error with ignore count one continues as a warning.",
+      "id": "diagnostic.control.error-ignore-one",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2377,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($ignore[$code] > 1 || (defined($quiet) && $quiet)) {"
+        },
+        {
+          "line": 2379,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    } else {"
+        },
+        {
+          "line": 2380,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('warning', $errName);"
+        },
+        {
+          "line": 2381,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        warn_handler(\"($errName) $msg\\n$ignoreOpt\", 0);"
+        }
+      ]
+    },
+    {
+      "behavior": "A registered error with ignore count two or more continues silently in the ignore summary bucket.",
+      "id": "diagnostic.control.error-ignore-two-plus",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2377,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($ignore[$code] > 1 || (defined($quiet) && $quiet)) {"
+        },
+        {
+          "line": 2378,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('ignore', $errName);"
+        }
+      ]
+    },
+    {
+      "behavior": "Warnings are visible at ignore zero, silent at ignore one or more, and use the complete error ladder when promotion is enabled.",
+      "id": "diagnostic.control.warning-ladder",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2388,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($lcovutil::treat_warning_as_error) {"
+        },
+        {
+          "line": 2389,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        ignorable_error($code, $msg, $quiet);"
+        },
+        {
+          "line": 2397,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($message_count[$code]++ >= $suppressAfter &&"
+        },
+        {
+          "line": 2406,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($code >= scalar(@ignore) ||"
+        },
+        {
+          "line": 2414,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        warn_handler(\"($errName) $msg\\n$ignoreOpt\", 0);"
+        },
+        {
+          "line": 2415,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('warning', $errName);"
+        },
+        {
+          "line": 2417,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('ignore', $errName);"
+        }
+      ]
+    },
+    {
+      "behavior": "Semantic message counts continue after the configured console suppression threshold.",
+      "id": "diagnostic.control.message-suppression",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2297,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "sub warnSuppress($$)"
+        },
+        {
+          "line": 2301,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($ignore[$code] <= 1 &&    # don't warn if already suppressed"
+        },
+        {
+          "line": 2302,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        $message_count[$code] == ($suppressAfter + 1)"
+        },
+        {
+          "line": 2309,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        ignorable_warning($ERROR_COUNT,"
+        },
+        {
+          "line": 2341,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    if ($message_count[$code]++ >= $suppressAfter &&"
+        },
+        {
+          "line": 2347,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        _count_message('ignore', $errName);"
+        },
+        {
+          "line": 2350,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "        warnSuppress($code, $errName);"
+        }
+      ]
+    },
+    {
+      "behavior": "saw_error reports the presence of the error summary bucket for command-specific final-exit folding.",
+      "id": "diagnostic.control.error-summary-exit",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 2325,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "sub saw_error"
+        },
+        {
+          "line": 2329,
+          "path": "lib/lcovutil.pm",
+          "role": "control",
+          "text": "    return exists($message_types{error});"
+        }
+      ]
+    }
+  ],
+  "exit_policies": [
+    {
+      "command": "lcov",
+      "id": "diagnostic.exit-policy.lcov",
+      "policy": "shared_saw_error_fold",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 469,
+          "path": "bin/lcov",
+          "role": "exit",
+          "text": "# exit with non-zero status if --keep-going and some errors detected"
+        },
+        {
+          "line": 472,
+          "path": "bin/lcov",
+          "role": "exit",
+          "text": "        lcovutil::saw_error());"
+        },
+        {
+          "line": 474,
+          "path": "bin/lcov",
+          "role": "exit",
+          "text": "exit($exit_code);"
+        }
+      ]
+    },
+    {
+      "command": "geninfo",
+      "id": "diagnostic.exit-policy.geninfo",
+      "policy": "shared_saw_error_fold",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 610,
+          "path": "bin/geninfo",
+          "role": "exit",
+          "text": "# exit with non-zero status if --keep-going and some errors detected"
+        },
+        {
+          "line": 614,
+          "path": "bin/geninfo",
+          "role": "exit",
+          "text": "         lcovutil::saw_error()));"
+        },
+        {
+          "line": 615,
+          "path": "bin/geninfo",
+          "role": "exit",
+          "text": "exit($exit_code);"
+        }
+      ]
+    },
+    {
+      "command": "genhtml",
+      "id": "diagnostic.exit-policy.genhtml",
+      "policy": "shared_saw_error_fold",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 7639,
+          "path": "bin/genhtml",
+          "role": "exit",
+          "text": "# exit with non-zero status if --keep-going and some errors detected"
+        },
+        {
+          "line": 7641,
+          "path": "bin/genhtml",
+          "role": "exit",
+          "text": "    if (0 == $exit_status && lcovutil::saw_error());"
+        },
+        {
+          "line": 7643,
+          "path": "bin/genhtml",
+          "role": "exit",
+          "text": "exit($exit_status);"
+        }
+      ]
+    },
+    {
+      "command": "perl2lcov",
+      "id": "diagnostic.exit-policy.perl2lcov",
+      "policy": "criteria_only_no_saw_error_fold",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 438,
+          "path": "bin/perl2lcov",
+          "role": "exit",
+          "text": "my $exit_code = 0 != $CoverageCriteria::coverageCriteriaStatus;"
+        },
+        {
+          "line": 442,
+          "path": "bin/perl2lcov",
+          "role": "exit",
+          "text": "lcovutil::summarize_messages(1);    # silent if no messages"
+        },
+        {
+          "line": 444,
+          "path": "bin/perl2lcov",
+          "role": "exit",
+          "text": "exit $exit_code;"
+        }
+      ]
+    },
+    {
+      "command": "llvm2lcov",
+      "id": "diagnostic.exit-policy.llvm2lcov",
+      "policy": "criteria_only_no_saw_error_fold",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 558,
+          "path": "bin/llvm2lcov",
+          "role": "exit",
+          "text": "my $exit_code = 0;"
+        },
+        {
+          "line": 561,
+          "path": "bin/llvm2lcov",
+          "role": "exit",
+          "text": "$exit_code = 1 if $CoverageCriteria::coverageCriteriaStatus;"
+        },
+        {
+          "line": 567,
+          "path": "bin/llvm2lcov",
+          "role": "exit",
+          "text": "exit $exit_code;"
+        }
+      ]
+    },
+    {
+      "command": "py2lcov",
+      "id": "diagnostic.exit-policy.py2lcov",
+      "policy": "native_python_keep_going",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 148,
+          "path": "bin/py2lcov",
+          "role": "exit",
+          "text": "    parser.add_argument('-k', \"--keep-going\", dest='keepGoing', default=False, action='store_true',"
+        },
+        {
+          "line": 195,
+          "path": "bin/py2lcov",
+          "role": "exit",
+          "text": "            if not args.keepGoing:"
+        },
+        {
+          "line": 201,
+          "path": "bin/py2lcov",
+          "role": "exit",
+          "text": "    p.close()"
+        }
+      ]
+    },
+    {
+      "command": "xml2lcov",
+      "id": "diagnostic.exit-policy.xml2lcov",
+      "policy": "native_python_keep_going",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 82,
+          "path": "bin/xml2lcov",
+          "role": "exit",
+          "text": "    parser.add_argument('-k', \"--keep-going\", dest='keepGoing', default=False, action='store_true',"
+        },
+        {
+          "line": 96,
+          "path": "bin/xml2lcov",
+          "role": "exit",
+          "text": "        p.process_xml_file(f)"
+        },
+        {
+          "line": 98,
+          "path": "bin/xml2lcov",
+          "role": "exit",
+          "text": "    p.close()"
+        }
+      ]
+    },
+    {
+      "command": "xml2lcovutil.py",
+      "id": "diagnostic.exit-policy.xml2lcovutil.py",
+      "policy": "library_no_cli_entrypoint",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 143,
+          "path": "bin/xml2lcovutil.py",
+          "role": "exit",
+          "text": "    def process_xml_file(self, xml_file):"
+        }
+      ]
+    },
+    {
+      "command": "genpng",
+      "id": "diagnostic.exit-policy.genpng",
+      "policy": "direct_perl_exit",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 88,
+          "path": "bin/genpng",
+          "role": "exit",
+          "text": "    )) {"
+        },
+        {
+          "line": 90,
+          "path": "bin/genpng",
+          "role": "exit",
+          "text": "        exit(1);"
+        },
+        {
+          "line": 109,
+          "path": "bin/genpng",
+          "role": "exit",
+          "text": "        die(\"No filename specified\\n\");"
+        }
+      ]
+    },
+    {
+      "command": "gendesc",
+      "id": "diagnostic.exit-policy.gendesc",
+      "policy": "direct_perl_exit",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 73,
+          "path": "bin/gendesc",
+          "role": "exit",
+          "text": ")) {"
+        },
+        {
+          "line": 75,
+          "path": "bin/gendesc",
+          "role": "exit",
+          "text": "    exit(1);"
+        },
+        {
+          "line": 94,
+          "path": "bin/gendesc",
+          "role": "exit",
+          "text": "    die(\"No input filename specified\\n\" ."
+        }
+      ]
+    }
+  ],
+  "known_evidence_gaps": [
+    "ignore count two or greater",
+    "warning promotion",
+    "message suppression and expected counts",
+    "converter keep-going traps",
+    "parallel worker failure and state transfer",
+    "geninfo no-args after a writable temporary directory is available"
+  ],
+  "oracle_observation_evidence_status": "oracle_reference",
+  "oracle_observation_product_evidence": [],
+  "oracle_observations": [
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-lcov-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "021c08264164dc0f2874f15c53e2553f36c8a75dc23de70e7094de94361d7609",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-LCOV-001"
+      ],
+      "stderr_sha256": "8c4930b18d8bba04213de6ae59aa517ca4bb15e8c01ed1f6e190bc1bd0c2eeed",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-genhtml-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "7d4b7a1b109c91cee883a2d0fc548a96d386c060d7c0dfd46ceab9fa9c56e3e9",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-GENHTML-001"
+      ],
+      "stderr_sha256": "c4867054adf13951cf04eeb7b0588545271a8a0f69410adb0264e2a0459e9182",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 30,
+      "id": "correctness:m0-core-geninfo-startup-control",
+      "kind": "startup_environment_intercept",
+      "observation_sha256": "cec450cd730d697134328b04e636197286dbcbd6e1e47cd794677067540a999b",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [],
+      "stderr_sha256": "7b8cba6ba9c568581423b570367c529d4ab2aeaeec964a7ebbf63c6911d2917d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-genpng-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "fd0a69ea37d634736554534026bb1a8f66d62a933e60edbd50fcc6eb8ddfdc99",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-GENPNG-001"
+      ],
+      "stderr_sha256": "82713ff669ef3d5dc27572893c3322b9d9b7a04dc35894a7c1546ea7d9e12d66",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 255,
+      "id": "correctness:m0-core-gendesc-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "c9d2aaeb2a6c3ea47d366c30790267693aa242bb41b22e864a4c823c24d01512",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-GENDESC-001"
+      ],
+      "stderr_sha256": "2cc649f37cac5702441c891da4f597d2a6116b1dd10ff289ad256ba8a9a3a2b5",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-perl2lcov-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "cad90723f16c47e41fc090282378d00058d812baa26a3c0de6d64e92b8128c61",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-PERL2LCOV-001"
+      ],
+      "stderr_sha256": "20df504d0907621d45f82994b1e0afdb09fc915add48ac7bbaf855075e083bd8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-py2lcov-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "5d02c278912c85c3d3b33139c6f42f4aef01da63e17ede9ef4df542ffa376d88",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-PY2LCOV-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "fe0a2b26ff3089e106fe9066336f3c576df6d024e8af328554e18d35ab0c3c79"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-xml2lcov-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "8418ea454fc65a59e4d04acfbe98cae61ac626f4411adca0c8a2320edb93feb1",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-XML2LCOV-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "fe0a2b26ff3089e106fe9066336f3c576df6d024e8af328554e18d35ab0c3c79"
+    },
+    {
+      "exit_status": 0,
+      "id": "correctness:m0-core-xml2lcovutil-py-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "77e0575de4295a14d11c51731cf845952eb66978b97865311c1e22ac72363e56",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-XML2LCOVUTIL-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-llvm2lcov-startup-control",
+      "kind": "startup_boundary",
+      "observation_sha256": "f69ddadb191aaaa9375260b88cda5b9208439b234d8e8b2495116b7e8daea5ab",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-NOARGS-LLVM2LCOV-001"
+      ],
+      "stderr_sha256": "b069fedc2acde579a300835c4b5d901977d3343224acbf25f3d49600110c921c",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-lcov-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "c7c2d67087d8205411dff1fe232f947910771a54b94f13195b3f25226aa8a86c",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "c61476ca1a04b461250b311aca710ce50ef3f3c6030b42da39264a2900d5500b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-genhtml-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "3c7ca25ef211823ca890fb91f160eaceda6af73fded27cf4a0564d9bf9808dbb",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "2d1ed5b3e8e4291fc9a118a3bba480bedda55de16de302fd5914015157e213f7",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-geninfo-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "eaada850a5f45f28abe896f6863678594fa443ed4c8c84cfe2fdc281d8596a78",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "b3fb73ddbd27a589e0d8d766c3fd6d61a7d43e90e3e60bc1f9b2eaed6da81624",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-genpng-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "d84c29a4af37b0f48ea03aaea0af1e16933b1771698def66350b80344bf43028",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "f96c5f5e7e95d49e9a9f28ca0da57d3331593359de7b63db9684616b2ff99b18",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-gendesc-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "922d39bf902efa8f47dd3fff1d41635e2f9dec061d565a7429b7927eb2392c16",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "d4b48e2f2b9b7eb18e3d100c547d8d7c201ef9e4aaf2efbd334b1aed3edd629e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-perl2lcov-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "2c69863f61a7401ed848e2132dd5d29ec62ae6ae730addd63505c099f5c55a5b",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "92dbd45355d03eda435052bbfc0ede58973e5a343c5b19bb0f317a9f2f95bc64",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-py2lcov-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "d0933764ad609189b28726961dfdf99a6dfb0cffa4a610e014af8d7e7c68f1fc",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "291e9adc9b1532244ceb1872a3fe0cc76de3f9f1cfe4fbf4d509b973cf3357f6",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-core-xml2lcov-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "61ee9fe8d5956f372bd5fffcf6facb489a6cdef2ce8344c0e39a6e187f822b2e",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "322328c2d7273a2006fb3a2e6bf019f3b63b971bef40a7048ec7273e96a7d30d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 0,
+      "id": "correctness:m0-core-xml2lcovutil-py-invalid-argv-ignored-control",
+      "kind": "parser_boundary",
+      "observation_sha256": "f650f2881fa8adda6fb016211b2420e592e7c434b551f89a3aa3fbc19dea4726",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "correctness:m0-core-llvm2lcov-invalid-option",
+      "kind": "parser_boundary",
+      "observation_sha256": "f9d0c27137cca105805d16b5c04e53362c5840a2439361c1272c0d9013111c6f",
+      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "planned_case_ids": [
+        "DIAG-PARSER-FAMILY-001"
+      ],
+      "stderr_sha256": "48e0ab3ed141edb0d61fbb3fd9e81df9774ee3e2f1b7c34a4e63de5c580f2729",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 255,
+      "id": "correctness:m0-config-base-missing-env",
+      "kind": "configuration_error_control",
+      "observation_sha256": "848809d0e4ed64b4f71aaaf1821bf758c18f3680edc8d04136d19997425d31d3",
+      "output_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+      "planned_case_ids": [
+        "DIAG-CONFIG-ENV-EXPAND-001"
+      ],
+      "stderr_sha256": "46d1d856c6056cd46ad5ef5d376169fd06c2c1c68c15331218e61d50d108457c",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 0,
+      "id": "correctness:m0-config-base-missing-env-ignored",
+      "kind": "configuration_error_control",
+      "observation_sha256": "8267cf4fbea54710bee2460b12884645556c04bee9e5f73d6d00e78b8b29badb",
+      "output_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+      "planned_case_ids": [
+        "DIAG-CONFIG-ENV-EXPAND-001",
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "feef7c613640ddc2402cf5ac5423b8c51e730eb342052754ba5dbebf6efb7907",
+      "stdout_sha256": "9b7d72207abf3da9fea0e0d534c8e81b74a95cae694fcefabb698a91dda30b8b"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-config-base-missing-explicit-is-early",
+      "kind": "configuration_error_control",
+      "observation_sha256": "617a9dc00f5d16ae3924c91da7b516e933294a412c487a6932c11b46f95146bd",
+      "output_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+      "planned_case_ids": [
+        "DIAG-CONFIG-EARLY-ERROR-001"
+      ],
+      "stderr_sha256": "043f37ef5716427593d56492dff44a8bdb4196d461b035fbe03469803b2b45ae",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 25,
+      "id": "correctness:m0-config-base-include-loop",
+      "kind": "configuration_error_control",
+      "observation_sha256": "c10387052e18338830377d285088c5d6047283919f2bf60670cd8ed2fc481642",
+      "output_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+      "planned_case_ids": [
+        "DIAG-CONFIG-INCLUDE-001",
+        "DIAG-CONFIG-EARLY-ERROR-001"
+      ],
+      "stderr_sha256": "25a12767e95ecb42249faa373fc38d64db87521eecabe99beb3ca59b5997f994",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 2,
+      "id": "correctness:m0-config-base-unknown-rc-key",
+      "kind": "configuration_error_control",
+      "observation_sha256": "24b42852a71f51d74ea5b5c1a12d941013a71c27fb3bbc9a98be8e4b667efe38",
+      "output_sha256": "45fbaf84482042d72914bbc37d4ab0937320513ecc21b50e9833e1bae29e3152",
+      "planned_case_ids": [
+        "DIAG-CONFIG-UNKNOWN-KEY-001"
+      ],
+      "stderr_sha256": "117147f578ceac3647464fa3f588d2ecd1bf698cded027224a02682344a4fc46",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-tn.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "6e5865393384811d4898a2212540026bf459bedc580479abdbdcefe5ada10e53",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "85280ade8e4853b6932dfde2b70d621368e691b3ea928ea33f3c1245c523548f",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-sf.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "d52bfcb5bab03fdf99549c7af7f33976dec9c342caaaec15d6dc086c7ee734ca",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "8564a43822fb0451339315b69948f7cd8e87c18a24210834a7c65a64ae1a9cae",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-kf.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "a5b697480f1384e4f39541254fad3a7ef138f3d3f065be0f31e6c9a8cf0621dd",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "3e885e9946fe82c20b75daf52e8a1f852631c2388d92b46bc3e676ace2e3c042",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-ver.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "99521762fcc7fe71ec039acf034f30182d64a1828f99ce5d510454060159eb1f",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "8fc1f2b4f1a1d1c26aeac86b78f2c6f84502123731f979d1d15b13b1345502dc",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-da.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "a2a198732a1075c346562ef01f3aa5322ca028d8dc3dfe9855021d5215a57fed",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "ecb2714b652af034d4cc3f2fe8da37006f23971da833fc6348dde4f5cd9c2754",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-fn.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "5d9f449ef97ea698d38a5077e122a1627f85ec5fc9aa9bb6a095103520392010",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "f547f24385d4e383618cbd5e5600037141be7d92c5ba0e9eaf52cdca9f6fc68a",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-fnda.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "5456fad16e8c85ffc78c25e98cfbec6f62bf0c2c4bd12ccea3065d73c3288f82",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "9541a0be295e7581354c23f7d4d61951109976f98ba2f41c7d5d655f71236b0a",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-fnl.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "d713080f784febf78593af1d97bdd909e4a4dc3cdc308b8f403cb996a90fb0a7",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "0b8cdfe6be049b93fe864be8c8c524725cf8cdb4616074ce2c086eb51696c378",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-fna.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "11eefb0b875cfb0e822648e8a3a9bc6ad917db94866b8d276467b86c85d31b89",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "6539a48340bd9365db41f2b05d06567775fe4f404b3d78f3823342753b9afaca",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-brda.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "c0a0a85e8eefb77ba9c99284203c19e72321315307e314f3a83ed5f075273abe",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "36a581e4246ec988199c8b28f2d303d79fe6e483cc0d4d94d55204a95fc9fc9e",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-mcdc.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "cd06f5bdb07201ca4933f97bfe19034db76322147ef0692a41975be00b41ddf9",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "006f785428c855b8df5f0acd15cc6805469dfe5d355462c57517f0eebd8f0559",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-terminator.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "e50e03529d55d1436be126b3459eeacd64a74f87025b27850af32019adb67305",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "69879a8e1b5ae03bfe6772dbbb57224fae82eb3d39248c718e99c41a8193b0c2",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:malformed-unknown.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "599a38adb51a578180946b54171ab52017b3a085b9f738199869149928deb417",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "366aa20b811250c1b822c594b29edfe845f6e4c7fb362311f6b608afc8ebf834",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-negative.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "7eca374f8b54e5dd9ba21b7edfd2d6f316e9941cac55458960386f15a825a963",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "b5d4f1f50e63c6795c4875fc29e87dc7b488e4430355906b1208f3cc0ff0136c",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-nonnumeric.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "0c5ffe337694e5f68771c231e4e9bf89d095b59c4e7fb6cb5be138df93792c5b",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "8babbb67df99233ad02dd0b0fd811a614e4f00994bd892c08d2d779e6d901d7f",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-malformed-exponent.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "928ac0df9b0ebe8e8fb8717b91e8dcd898f630c482f3745b09f3c0395f0bd64f",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "9c57ec7845fe37d99ed22257f26090073b6cf1e8362a9bb57bceb4072e50997c",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-excessive.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "a0d8d2d61c017bb740fb136fd35969975a52848745123cdc70c11da7a3aa8c38",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "92f66f45fd3f3320b245cec5f3e1ac309284e2d20844c64e729fdfc39fa33d59",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-zero-line.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "e421d7e3c382dc08a874817d21a80c24a290d267d7de0b33117863eed4f864e9",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "79818d9f060c254e341bc9f89641795fd8e321047d6b4862a6752bbbdbacdc04",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:malformed-tn.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "c56183a16e65883d8541c0de8c1cc807478953f540afcf80da7f293429519275",
+      "output_sha256": "a39c5bc0e46f6b33f89d2ab94aa3a1793656ef118934e61495398ddde8d90beb",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "4126a86b001b31329626d823341e0c5344e2b50ca213bfe7dda817370cbb5da7",
+      "stdout_sha256": "b34eaf8e610c479cfa4909a9cdabe6dc124417855fa861e7849db000a8345918"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:malformed-da.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "f0fa3e9fffa187e6adf4e5168cfc6be95ad0d164cbf80788009ddaeeb5b47610",
+      "output_sha256": "186482499306796418d317223696a11ba1c82c9460a216687a76e5553a78a083",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "3f04697b4842a42dbc80c14783b43a02d7ec4dacbece26db0b5764b88c13f759",
+      "stdout_sha256": "b34eaf8e610c479cfa4909a9cdabe6dc124417855fa861e7849db000a8345918"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:malformed-ver.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "67e9286a34498398dc0a600e1dfc688cdbb086005ef36895af57f47ec56a6ad5",
+      "output_sha256": "ab5284503790e64f6c3c40f33491061af2efe398d5cd3c6e3d01d43bd39ffcd5",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "d2ee29970edd13c1aaf80be48a5c1b0d608b7b4b54efb35748ffc40e2646a892",
+      "stdout_sha256": "b34eaf8e610c479cfa4909a9cdabe6dc124417855fa861e7849db000a8345918"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-negative.ignore-negative",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "1256d3a04ed1dad64798f4c0788f9b73d35e487f5743fff8ba9eb916300e937c",
+      "output_sha256": "b51d9e5a823bd05d8f2d3c4ac8d2fefbc5f8e05ff5385a296c1651b92b0e501b",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "66d616b2ec33d826d0fad944b003759b5e8d285d534f66145ffe6298c38550d0",
+      "stdout_sha256": "4e2572c18b93f333f9e94811cbca1b5568c3aadbb89d0864505c9fae056bc247"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-nonnumeric.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "d6f132f94707770f63321b7f657a39daa49bc9049756631572899bb044411be7",
+      "output_sha256": "d3da51629220ba5ced99fa874207c35cc9cbbc8d9b1f0ffc9a9da5b1093ece68",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "a5d6bc7796846e9459f2c762d886b0712f12da67539b59e17e76bc80ce28697b",
+      "stdout_sha256": "92f3f957d72d285a8c2e3ca63140d7971f62a7e93834dc9a3afbda5fdc56fb27"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-malformed-exponent.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "a0036d1fc9f9a1dc68c7608471ac29b1fb0527889a08c86b98a2c85724fe75fb",
+      "output_sha256": "447c6423fde467fbbb8ee9c8946485a1e64a767092fb4ae2894b090fb1e0712a",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "22d8e0fd5cd5d040635a70fe4cce229f5fc07d911dd99183dba5af0c8bdf74ff",
+      "stdout_sha256": "92f3f957d72d285a8c2e3ca63140d7971f62a7e93834dc9a3afbda5fdc56fb27"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-excessive.ignore-excessive",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "298ee2528fc2945d528a8653a18fbc4839691533e1ca21b7dbe23bea0a6fce90",
+      "output_sha256": "367e788b0e6366393e24b019c8f95b5ac41704e8ac3401aeb9b41dc1378fe12d",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "ad0df453cb91e9f4202b6cdcd9c83ba9af884c29947a12f33913552ff97ee07f",
+      "stdout_sha256": "bc2fd80ed2859cec04821904a529f413daa1c81b8928697f2991db1d550b9228"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-zero-line.ignore-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "f4c85a512e80962a7c07933b4ce3eb12abc8afa4c533e59712ca1d454fa13399",
+      "output_sha256": "5b69fdc26f5d041f0affbd7883d8df8a3acacd9882b2541e1f0756eac616bec6",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "1d25c2ade3c44ffb4b88dd0fe6bbcbe7450958b0bc522d77df86234feb243e4c",
+      "stdout_sha256": "11391464d60bcbdc85979cdae769c98c22c1161600ae2b93d14d4f3b1781c109"
+    }
+  ],
+  "planned_case_evidence_status": "planned",
+  "planned_case_ids": [
+    "DIAG-NOARGS-GENINFO-001",
+    "DIAG-REGISTRY-001",
+    "DIAG-IGNORE-ERROR-001",
+    "DIAG-IGNORE-WARN-001",
+    "DIAG-IGNORE-SILENT-001",
+    "DIAG-IGNORE-PRECEDENCE-001",
+    "DIAG-IGNORE-UNKNOWN-001",
+    "DIAG-KEEP-GOING-001",
+    "DIAG-WARNING-PROMOTE-001",
+    "DIAG-MAX-MESSAGES-001",
+    "DIAG-EXPECTED-COUNT-FILE-001",
+    "DIAG-EXPECTED-COUNT-MANUAL-FILE-001",
+    "DIAG-EXPECTED-COUNT-MANUAL-RC-001",
+    "DIAG-MESSAGE-LOG-001",
+    "DIAG-CONFIG-DISCOVERY-001",
+    "DIAG-CONFIG-EXPLICIT-001",
+    "DIAG-CONFIG-INCLUDE-001",
+    "DIAG-CONFIG-UNKNOWN-KEY-001",
+    "DIAG-CONFIG-ENV-EXPAND-001",
+    "DIAG-CONFIG-EARLY-ERROR-001",
+    "DIAG-ENV-CLEAN-001",
+    "DIAG-ENV-PRECEDENCE-001",
+    "DIAG-ENV-ALLOWLIST-001",
+    "DIAG-ENV-LCOV-VALIDATE-001",
+    "DIAG-ENV-SHOW-LOCATION-001",
+    "DIAG-ENV-LCOV-HOME-001",
+    "DIAG-ENV-POSIX-PROFILE-001",
+    "DIAG-NOARGS-LCOV-001",
+    "DIAG-NOARGS-GENHTML-001",
+    "DIAG-NOARGS-GENPNG-001",
+    "DIAG-NOARGS-GENDESC-001",
+    "DIAG-NOARGS-PERL2LCOV-001",
+    "DIAG-NOARGS-PY2LCOV-001",
+    "DIAG-NOARGS-XML2LCOV-001",
+    "DIAG-NOARGS-XML2LCOVUTIL-001",
+    "DIAG-NOARGS-LLVM2LCOV-001",
+    "DIAG-PARSER-FAMILY-001",
+    "DIAG-IGNORE-PREFIX-PROFILE-001",
+    "DIAG-RAW-PERL-001",
+    "DIAG-PYTHON-TRACEBACK-001",
+    "DIAG-DEPENDENCY-GENPNG-001",
+    "DIAG-CALLBACK-FINALIZE-FAIL-001",
+    "DIAG-CALLBACK-CLEANUP-001",
+    "DIAG-PERL2LCOV-KEEP-001",
+    "DIAG-LLVM2LCOV-KEEP-001",
+    "DIAG-PY2LCOV-KEEP-001",
+    "DIAG-XML2LCOV-KEEP-001",
+    "DIAG-CONVERTER-KEEP-BOUNDARY-001",
+    "PAR-SERIAL-PARITY-001",
+    "PAR-CHILD-EXIT-001",
+    "PAR-GENINFO-CHILD-STOP-001",
+    "PAR-GENINFO-CHILD-EXIT-ORACLE-001",
+    "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
+    "PAR-GENINFO-CHILD-IGNORE1-ORACLE-001",
+    "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
+    "PAR-GENINFO-CHILD-IGNORE2-ORACLE-001",
+    "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001",
+    "PAR-CHILD-SIGNAL-001",
+    "PAR-LCOV-CAPTURE-STATUS-001",
+    "PAR-FORK-RETRY-001",
+    "PAR-PAYLOAD-MISSING-001",
+    "PAR-PAYLOAD-CORRUPT-001",
+    "PAR-UNKNOWN-CHILD-001",
+    "PAR-PARENT-DEATH-001",
+    "PAR-MESSAGE-ORDER-001",
+    "PAR-MSG-LOG-001",
+    "PAR-MEMORY-ADMISSION-001",
+    "PAR-MEMORY-FALLBACK-001",
+    "PAR-CALLBACK-STATE-001",
+    "PAR-CALLBACK-LIFECYCLE-FAIL-001",
+    "PAR-PARTIAL-COMMIT-001"
+  ],
+  "planned_case_product_evidence": [],
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "scope": "LCOV 2.5 named diagnostics, unclassified failure surfaces, severity and continuation controls, command exit policies, and retained Oracle references",
+  "totals": {
+    "categories": 32,
+    "category_symbol_references": 399,
+    "configuration_observations": 5,
+    "control_rules": 9,
+    "exit_policies": 10,
+    "named_error_fatal_observations": 18,
+    "named_error_ignore_one_observations": 8,
+    "oracle_observations": 51,
+    "parser_observations": 10,
+    "planned_cases": 71,
+    "reserved_categories": 1,
+    "startup_observations": 10,
+    "unclassified_surfaces": 4
+  },
+  "unclassified_surfaces": [
+    {
+      "behavior": "Getopt and argparse failures retain their native stream and status behavior.",
+      "family": "parser_error",
+      "id": "diagnostic.surface.parser",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 1518,
+          "path": "lib/lcovutil.pm",
+          "role": "surface",
+          "text": "    if (!GetOptions(%options)) {"
+        },
+        {
+          "line": 155,
+          "path": "bin/py2lcov",
+          "role": "surface",
+          "text": "    args = parser.parse_args()"
+        }
+      ]
+    },
+    {
+      "behavior": "Direct die/open/assertion failures outside a named wrapper are not controlled by ignore-errors.",
+      "family": "raw_perl_failure",
+      "id": "diagnostic.surface.raw-perl",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 112,
+          "path": "bin/llvm2lcov",
+          "role": "surface",
+          "text": "    die('JSON file argument required') unless @_;"
+        },
+        {
+          "line": 94,
+          "path": "bin/gendesc",
+          "role": "surface",
+          "text": "    die(\"No input filename specified\\n\" ."
+        }
+      ]
+    },
+    {
+      "behavior": "Python converter application diagnostics are printed directly and use their own keep-going boundaries.",
+      "family": "native_python_diagnostic",
+      "id": "diagnostic.surface.native-python",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 169,
+          "path": "bin/py2lcov",
+          "role": "surface",
+          "text": "            print(\"Error:  no input files\")"
+        },
+        {
+          "line": 193,
+          "path": "bin/py2lcov",
+          "role": "surface",
+          "text": "            print(\"Error:  error during XML conversion of %s: %s\" % ("
+        },
+        {
+          "line": 163,
+          "path": "bin/xml2lcovutil.py",
+          "role": "surface",
+          "text": "                print(\"Error: parse xml fail: no 'sources' in %s\" %(xml_file))"
+        }
+      ]
+    },
+    {
+      "behavior": "Dependency loading can fail before ordinary parser behavior is reached.",
+      "family": "early_dependency_failure",
+      "id": "diagnostic.surface.early-dependency",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "line": 58,
+          "path": "bin/genpng",
+          "role": "surface",
+          "text": "if (check_and_load_module(\"GD\")) {"
+        },
+        {
+          "line": 62,
+          "path": "bin/genpng",
+          "role": "surface",
+          "text": "ERROR: required module GD.pm not found on this system (see www.cpan.org)."
+        },
+        {
+          "line": 65,
+          "path": "bin/genpng",
+          "role": "surface",
+          "text": "    exit(2);"
+        }
+      ]
+    }
+  ],
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}

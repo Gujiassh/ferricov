@@ -39,7 +39,9 @@
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
   standalone fail-closed contract bound to 52 Oracle observations.
-- [ ] Inventory error/warning classes, exit status, ignore, and keep-going rules.
+- [x] Inventory all 32 shared error/warning classes, 399 symbol references,
+  nine ignore/keep-going controls, four unclassified surfaces, and ten command
+  exit policies in a standalone fail-closed contract.
 - [x] Review all 23 installed support scripts and callback planning subjects.
 - [ ] Complete installation-layout and asset behavior planning.
 - [x] Map all 205 upstream test files to public behaviors or internal coverage.
@@ -71,6 +73,14 @@ and 21 per-record malformed fixtures. Its 52 Oracle observations are
 reference-only. The 28 planned M1 tracefile IDs without exact executable
 mappings remain blockers, so the complete grammar and M1 readiness tasks stay
 open.
+
+The separate diagnostics contract reviews all 32 shared classes, the complete
+399-reference symbol closure, nine control rules, four unclassified failure
+surfaces, and ten command exit policies. Its 51 retained observations are
+reference-only; the `geninfo` startup observation is explicitly classified as
+a read-only temporary-directory intercept. All 71 diagnostic and parallel
+case IDs remain planned, so ignore-two, warning promotion, converter traps,
+parallel behavior, and product compatibility remain open.
 
 Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact

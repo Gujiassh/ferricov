@@ -161,6 +161,11 @@ The separate tracefile contract reviews 20 record tags, two lexical rules, all
 per-record malformed inputs, and 52 reference-only Oracle observations. It
 closes the M0 record/malformed inventory but leaves 28 planned M1 tracefile IDs
 without exact executable mappings.
+The separate diagnostics contract reviews all 32 shared classes, 399 symbol
+references, nine control rules, four unclassified failure surfaces, and ten
+command exit policies. Its 51 retained observations remain reference-only,
+including a `geninfo` startup case intercepted by read-only temporary storage;
+all 71 diagnostic and parallel case identities remain planned.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 
@@ -442,6 +447,8 @@ candidate and a list of unresolved contract decisions.
   independently of the public inventory schema.
 - Retain a source-complete tracefile record and malformed-input contract
   independently of the public inventory schema and M1 product evidence.
+- Retain a source-complete diagnostic registry, error-control, and exit-policy
+  contract independently of command implementation and product evidence.
 - Specify the byte-preserving coverage model and tracefile grammar.
 - Define M1 acceptance fixtures, property invariants, fuzz targets, and
   benchmarks.

@@ -46,6 +46,7 @@ relationships where supported.
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
 | tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 52 retained Oracle observations across 36 fixtures; reference-only, with 28 planned M1 tracefile IDs still unmapped |
+| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 51 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
 | behavior planning | primary plans cover all 531 public entries | not started | 69 reviewed primary plans, including 40 CLI parser entries plus 8 configuration-semantic slices with 67 bindings; all 4 critical interaction domains reviewed; 462 primary reviews open |
@@ -104,6 +105,14 @@ retained corpus and Oracle baseline by exact hashes. Its 52 observations are
 Oracle references only. They do not resolve the 28 M1 tracefile IDs that still
 lack executable mappings and do not provide Ferricov product compatibility
 evidence.
+
+The standalone diagnostics contract closes the M0 source inventory over the
+shared registry, symbol references, ignore/keep-going state machine, raw
+failure families, and command exit policies. Its 51 retained observations are
+Oracle references only. The retained `geninfo` startup case is marked as a
+read-only temporary-directory intercept rather than evidence for the true
+no-argument case. All 71 diagnostic and parallel acceptance identities remain
+planned and provide no Ferricov product evidence.
 
 ## Release Claims
 
