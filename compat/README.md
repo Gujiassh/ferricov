@@ -45,6 +45,21 @@ containers, and requires byte-stable inventory regeneration from the pinned
 checkout and review overlay. These are Oracle contract checks, not Ferricov
 product evidence.
 
+## Environment And Configuration Discovery
+
+The standalone [`environment/v2.5.json`](environment/v2.5.json) contract
+reviews 19 named environment variables, one dynamic `$ENV{NAME}` configuration
+input, five discovery paths, and the complete 36-line `$ENV` source closure
+under upstream `bin/`, `lib/`, and `scripts/`. Its 22 Oracle-case bindings point
+only to retained reference observations; every product-evidence field remains
+empty and the existing public inventory schema is unchanged.
+
+The generator embeds exact pinned source text and rejects source drift,
+incomplete line coverage, variable or discovery-order drift, unknown Oracle
+bindings, and product-evidence claims. See
+[`environment/README.md`](environment/README.md) for regeneration and mutation
+test commands.
+
 ## Oracle Correctness Baseline
 
 The aggregate M0 contract has a retained raw Oracle baseline with 148 cases

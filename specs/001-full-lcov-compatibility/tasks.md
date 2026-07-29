@@ -33,7 +33,9 @@
 - [x] Record parser policies and observed generated-token resolution for all commands.
 - [x] Review all 158 `lcovrc` candidates.
 - [x] Plan configuration discovery and precedence behavior.
-- [ ] Inventory environment variables and configuration discovery paths.
+- [x] Inventory all 19 named environment variables, the dynamic configuration
+  input, five discovery paths, and all 36 direct `$ENV` source lines in a
+  standalone fail-closed contract.
 - [ ] Inventory every tracefile record and malformed-input behavior.
 - [ ] Inventory error/warning classes, exit status, ignore, and keep-going rules.
 - [x] Review all 23 installed support scripts and callback planning subjects.
@@ -54,6 +56,12 @@ internal. The default profile resolves 9 generated tokens as unique
 abbreviations, rejects 2 as ambiguous, and rejects 30 as unknown; the POSIX
 profile rejects all 41 as unknown. These are pinned-Oracle observations and do
 not count as product evidence.
+
+The separate environment contract reviews 19 named variables, one dynamic
+configuration expansion input, five configuration-discovery paths, and the
+complete 36-line direct `$ENV` source closure. Its 22 bindings point to retained
+Oracle cases only; all product evidence remains empty and the inventory schema
+is unchanged.
 
 Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact

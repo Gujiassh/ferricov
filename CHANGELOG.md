@@ -34,6 +34,10 @@ compatibility releases.
 - Eight reviewed configuration-semantic planning slices with 67 exact suite
   bindings, raising reviewed primary coverage to 69 public entries while
   retaining empty product-evidence arrays.
+- A standalone fail-closed LCOV 2.5 environment and configuration-discovery
+  contract covering 19 named variables, one dynamic expansion input, five
+  discovery paths, all 36 direct `$ENV` source lines, and 22 existing Oracle
+  case bindings without changing the public inventory schema.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -51,6 +55,9 @@ compatibility releases.
   builder and into the correctness evidence validator.
 - Aggregated the CLI and configuration suites through one deterministic
   seven-suite correctness contract without changing the Suite schema.
+- Extended the repository verifier and Behavior Contract CI job with exact
+  environment-contract regeneration, schema validation, pinned source closure,
+  and eight reverse mutation guards.
 
 ### Fixed
 
@@ -94,7 +101,8 @@ compatibility releases.
   key-file, and smoke-output closures.
 - The workspace passes formatting, compilation, 106 Rust unit tests, clippy
   with warnings denied, 40 behavior-contract tests, 6 configuration-contract
-  tests, 16 correctness tests, schema validators, and retained evidence
+  tests, 8 environment-contract tests, 16 correctness tests, schema validators,
+  and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
 - M0 remains open with 462 explicit behavior-planning gaps; no compatibility or

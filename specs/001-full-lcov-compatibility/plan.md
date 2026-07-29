@@ -152,7 +152,10 @@ retained and passes independent semantic replay, without claiming Ferricov
 product compatibility. Forty public CLI primary entries covered by that
 contract now have reviewed planning bindings to 154 exact suite cases. Eight
 configuration-semantic slices add 67 bindings and six reviewed primary targets;
-all remain planning-only without candidate evidence.
+all remain planning-only without candidate evidence. A separate fail-closed
+environment contract now reviews 19 named variables, one dynamic input, five
+configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
+reference-only Oracle-case bindings without changing the public inventory.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 
@@ -430,6 +433,8 @@ candidate and a list of unresolved contract decisions.
   aggregate CLI/configuration correctness baseline is retained under
   `compat/correctness/` and remains
   distinct from Ferricov compatibility evidence.
+- Retain a source-complete environment and configuration-discovery contract
+  independently of the public inventory schema.
 - Specify the byte-preserving coverage model and tracefile grammar.
 - Define M1 acceptance fixtures, property invariants, fuzz targets, and
   benchmarks.

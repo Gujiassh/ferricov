@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ferricov.dev/schema/environment-contract-v1.json",
+  "title": "Ferricov LCOV environment and configuration discovery contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "scope",
+    "named_variables",
+    "dynamic_inputs",
+    "configuration_discovery",
+    "totals",
+    "product_compatibility_evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "scope": {
+      "const": "direct environment reads and writes in bin/, lib/, and scripts/, plus configuration discovery"
+    },
+    "named_variables": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/environment_variable"
+      }
+    },
+    "dynamic_inputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/dynamic_input"
+      }
+    },
+    "configuration_discovery": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/discovery_path"
+      }
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "named_variables",
+        "dynamic_inputs",
+        "configuration_discovery_paths",
+        "direct_env_use_lines",
+        "oracle_case_bindings"
+      ],
+      "properties": {
+        "named_variables": {
+          "const": 19
+        },
+        "dynamic_inputs": {
+          "const": 1
+        },
+        "configuration_discovery_paths": {
+          "const": 5
+        },
+        "direct_env_use_lines": {
+          "const": 36
+        },
+        "oracle_case_bindings": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_set": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "source_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "line", "access", "text"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?:bin|lib|scripts)/[A-Za-z0-9._-]+$"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "access": {
+          "enum": ["binding", "discovery", "match", "read", "write"]
+        },
+        "text": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "source_references": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/source_reference"
+      }
+    },
+    "oracle_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["suite_id", "case_id"],
+      "properties": {
+        "suite_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "case_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "oracle_cases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/oracle_case"
+      }
+    },
+    "common_review_fields": {
+      "type": "object",
+      "required": [
+        "id",
+        "observable_effect",
+        "source_references",
+        "oracle_cases",
+        "review_status",
+        "product_evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^environment\\.[A-Za-z0-9._*-]+$"
+        },
+        "observable_effect": {
+          "type": "string",
+          "minLength": 40
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        },
+        "oracle_cases": {
+          "$ref": "#/$defs/oracle_cases"
+        },
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "environment_variable": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common_review_fields"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "name",
+            "roles",
+            "access",
+            "consumers",
+            "observable_effect",
+            "source_references",
+            "oracle_cases",
+            "review_status",
+            "product_evidence"
+          ],
+          "properties": {
+            "id": true,
+            "name": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]*$"
+            },
+            "roles": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "build_helper",
+                  "developer_control",
+                  "integration_runtime",
+                  "process_control",
+                  "provenance_runtime",
+                  "user_configuration"
+                ]
+              }
+            },
+            "access": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": ["read", "write"]
+              }
+            },
+            "consumers": {
+              "$ref": "#/$defs/string_set"
+            },
+            "observable_effect": true,
+            "source_references": true,
+            "oracle_cases": true,
+            "review_status": true,
+            "product_evidence": true
+          }
+        }
+      ]
+    },
+    "dynamic_input": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common_review_fields"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "syntax",
+            "consumer",
+            "observable_effect",
+            "source_references",
+            "oracle_cases",
+            "review_status",
+            "product_evidence"
+          ],
+          "properties": {
+            "id": true,
+            "syntax": {
+              "const": "$ENV{NAME}"
+            },
+            "consumer": {
+              "const": "lcov configuration reader"
+            },
+            "observable_effect": true,
+            "source_references": true,
+            "oracle_cases": true,
+            "review_status": true,
+            "product_evidence": true
+          }
+        }
+      ]
+    },
+    "discovery_path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "phase",
+        "selection_priority",
+        "kind",
+        "trigger",
+        "path_template",
+        "stop_condition",
+        "source_references",
+        "oracle_cases",
+        "review_status",
+        "product_evidence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^configuration-discovery\\.[a-z0-9-]+$"
+        },
+        "phase": {
+          "enum": ["initial_selection", "recursive_read"]
+        },
+        "selection_priority": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 4
+        },
+        "kind": {
+          "enum": ["explicit", "home", "lcov_home", "none", "include"]
+        },
+        "trigger": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "path_template": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "stop_condition": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_references": {
+          "$ref": "#/$defs/source_references"
+        },
+        "oracle_cases": {
+          "$ref": "#/$defs/oracle_cases"
+        },
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    }
+  }
+}

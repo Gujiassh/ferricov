@@ -30,6 +30,7 @@ goal is unverified until candidate binaries and reproducible benchmarks exist.
 | Differential harness | 106 Rust unit tests, 40 behavior-contract tests, 6 configuration-contract tests, 16 correctness tests, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
 | M0 behavior planning | 531 public entries have primary plans; 69 are reviewed, including 40 CLI parser entries and 8 configuration-semantic slices with 67 exact bindings; all 4 critical interaction domains are reviewed, and 462 primary reviews remain open |
 | Oracle correctness baseline | 148 raw M0 observations, comprising 126 CLI and 22 configuration cases, retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
+| Environment contract | 19 named variables, 1 dynamic configuration input, 5 discovery paths, and all 36 direct `$ENV` source lines are reviewed; 22 Oracle-case bindings remain reference-only |
 | Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
 | Current milestone | M0: executable compatibility contract and reproducible baselines; 462 behavior-planning gaps remain |
 
@@ -134,8 +135,9 @@ is required only for the pinned LCOV Oracle and environment-equivalent
 differential tests. The ordinary CI Rust matrix sets
 `FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test and
 smoke-tests the bubblewrap PID namespace used by process-isolation tests. A
-dedicated Python job checks deterministic behavior-contract generation,
-mutation tests, and the current contract gate against the pinned LCOV source.
+dedicated Python job checks deterministic behavior- and environment-contract
+generation, mutation tests, and the current contract gate against the pinned
+LCOV source.
 The separate Oracle job builds the image and exercises the real Docker paths.
 Docker differential runs clear the image environment before supplying the
 reviewed `HOME`, locale, `PATH`, and timezone allowlist recorded by the launcher.
@@ -151,6 +153,9 @@ cargo clippy --workspace --all-targets -- -D warnings
 python3 compat/correctness/validate.py
 python3 -m unittest discover -s compat/cases -p 'test_*.py'
 python3 -m unittest discover -s compat/correctness -p 'test_*.py'
+python3 compat/environment/contract.py \
+  --upstream-root /home/cc/code1/lcov-upstream-reference
+python3 -m unittest compat/environment/test_contract.py
 ```
 
 Build and smoke-test the immutable LCOV 2.5 Oracle:

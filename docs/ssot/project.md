@@ -88,6 +88,12 @@ the M0 harness become the permanent integration boundary.
   pinned Oracle, not Ferricov compatibility.
 - `compat/inventory/tests/upstream-test-map.json` covers all 205 pinned upstream
   test files, and every mapping is reviewed.
+- `compat/environment/v2.5.json` separately records 19 named runtime
+  environment variables, one dynamic configuration expansion input, five
+  ordered configuration-discovery paths, and all 36 direct `$ENV` source lines
+  under `bin/`, `lib/`, and `scripts/`. Its 22 Oracle-case bindings are
+  reference-only, all product-evidence fields are empty, and the existing
+  inventory schema remains unchanged.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Sixty-nine primary plans and all four required
   critical interaction domains are reviewed. The callback,
@@ -103,9 +109,9 @@ the M0 harness become the permanent integration boundary.
   Compiler capture and release platform qualification remain open.
 - CI enables and smoke-tests the bubblewrap PID namespace required by Rust
   process-isolation tests, provisions the complete pinned toolchain before
-  Oracle verification, and independently gates deterministic behavior-contract
-  generation, mutation tests, and current-mode validation against the pinned
-  LCOV checkout.
+  Oracle verification, and independently gates deterministic behavior- and
+  environment-contract generation, mutation tests, and current-mode validation
+  against the pinned LCOV checkout.
 - Docker differential execution uses `/usr/bin/env -i` and then applies only the
   launcher-declared `HOME`, locale, `PATH`, and timezone values. Retained
   `effective_environment_variables` now describes the actual command

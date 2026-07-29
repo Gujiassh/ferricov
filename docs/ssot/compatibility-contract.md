@@ -44,6 +44,7 @@ relationships where supported.
 | command option review | all 394 reviewed: 346 public, 41 generated tokens, 7 internal | not started | default profile: 9 unique abbreviations, 2 ambiguous, 30 unknown; POSIX profile: 41 unknown |
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
+| environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
 | tracefile formats | pending | not started | none |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
@@ -88,6 +89,13 @@ review six previously open primary targets. These plans separate CLI parser
 ownership from configuration discovery and precedence ownership. Their Oracle
 observations remain reference-only; all eight plans stay `planned` with empty
 evidence arrays.
+
+The standalone environment contract is generated independently of the public
+inventory. It pins exact source text for the 36 direct `$ENV` lines across six
+upstream files, reviews 19 named inputs plus one dynamic configuration input,
+and orders five configuration discovery paths. Schema, source-closure, Oracle
+binding, mutation, and committed-byte checks fail closed. Its source and Oracle
+observations do not provide Ferricov product compatibility evidence.
 
 ## Release Claims
 

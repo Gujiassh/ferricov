@@ -827,6 +827,10 @@ def main() -> int:
     )
     validate_inventory_semantics(root / "compat/inventory/v2.5.json")
     validate_documents(
+        root / "compat/schema/environment-contract.schema.json",
+        [root / "compat/environment/v2.5.json"],
+    )
+    validate_documents(
         root / "compat/schema/upstream-test-map.schema.json",
         [root / "compat/inventory/tests/upstream-test-map.json"],
     )
@@ -874,6 +878,15 @@ def main() -> int:
             root,
         )
         validate_inventory_sources(root, upstream_root)
+        run(
+            [
+                sys.executable,
+                str(root / "compat/environment/contract.py"),
+                "--upstream-root",
+                str(upstream_root),
+            ],
+            root,
+        )
         run(
             [
                 sys.executable,

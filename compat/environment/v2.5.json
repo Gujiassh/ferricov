@@ -1,0 +1,1056 @@
+{
+  "configuration_discovery": [
+    {
+      "id": "configuration-discovery.explicit-files",
+      "kind": "explicit",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-duplicate-explicit-file",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-bypasses-home",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-off-on",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-explicit-order-on-off",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-explicit-is-early",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "path_template": "Each command-line value as provided, in occurrence order",
+      "phase": "initial_selection",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "selection_priority": 1,
+      "source_references": [
+        {
+          "access": "discovery",
+          "line": 1438,
+          "path": "lib/lcovutil.pm",
+          "text": "    Getopt::Long::GetOptions(\"config-file=s\" => \\@opt_config_files,"
+        },
+        {
+          "access": "discovery",
+          "line": 1448,
+          "path": "lib/lcovutil.pm",
+          "text": "    if (0 != scalar(@opt_config_files)) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1449,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $f (@opt_config_files) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1450,
+          "path": "lib/lcovutil.pm",
+          "text": "            $set_value |= read_config($f, \\%rcHash);"
+        }
+      ],
+      "stop_condition": "All explicit files are read; automatic HOME and LCOV_HOME discovery is bypassed.",
+      "trigger": "One or more --config-file values are present."
+    },
+    {
+      "id": "configuration-discovery.home",
+      "kind": "home",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-home-discovery",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        }
+      ],
+      "path_template": "$HOME/.lcovrc",
+      "phase": "initial_selection",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "selection_priority": 2,
+      "source_references": [
+        {
+          "access": "discovery",
+          "line": 1453,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $v (['HOME', '.lcovrc'], ['LCOV_HOME', 'etc', 'lcovrc']) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1454,
+          "path": "lib/lcovutil.pm",
+          "text": "            next unless exists($ENV{$v->[0]});"
+        },
+        {
+          "access": "discovery",
+          "line": 1455,
+          "path": "lib/lcovutil.pm",
+          "text": "            my $f = File::Spec->catfile($ENV{$v->[0]}, splice(@$v, 1));"
+        },
+        {
+          "access": "discovery",
+          "line": 1456,
+          "path": "lib/lcovutil.pm",
+          "text": "            if (-r $f) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1457,
+          "path": "lib/lcovutil.pm",
+          "text": "                $set_value |= read_config($f, \\%rcHash);"
+        },
+        {
+          "access": "discovery",
+          "line": 1458,
+          "path": "lib/lcovutil.pm",
+          "text": "                last;"
+        }
+      ],
+      "stop_condition": "The first readable automatic candidate is read and discovery stops.",
+      "trigger": "No explicit file is present, HOME exists, and $HOME/.lcovrc is readable."
+    },
+    {
+      "id": "configuration-discovery.lcov-home",
+      "kind": "lcov_home",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        },
+        {
+          "case_id": "m0-config-lcov-home-fallback",
+          "suite_id": "m0-config-contract-lcov-home"
+        }
+      ],
+      "path_template": "$LCOV_HOME/etc/lcovrc",
+      "phase": "initial_selection",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "selection_priority": 3,
+      "source_references": [
+        {
+          "access": "discovery",
+          "line": 1453,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $v (['HOME', '.lcovrc'], ['LCOV_HOME', 'etc', 'lcovrc']) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1454,
+          "path": "lib/lcovutil.pm",
+          "text": "            next unless exists($ENV{$v->[0]});"
+        },
+        {
+          "access": "discovery",
+          "line": 1455,
+          "path": "lib/lcovutil.pm",
+          "text": "            my $f = File::Spec->catfile($ENV{$v->[0]}, splice(@$v, 1));"
+        },
+        {
+          "access": "discovery",
+          "line": 1456,
+          "path": "lib/lcovutil.pm",
+          "text": "            if (-r $f) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1457,
+          "path": "lib/lcovutil.pm",
+          "text": "                $set_value |= read_config($f, \\%rcHash);"
+        },
+        {
+          "access": "discovery",
+          "line": 1458,
+          "path": "lib/lcovutil.pm",
+          "text": "                last;"
+        }
+      ],
+      "stop_condition": "The fallback file is read and automatic discovery stops.",
+      "trigger": "No explicit file or readable HOME file is present, LCOV_HOME exists, and its file is readable."
+    },
+    {
+      "id": "configuration-discovery.no-readable-default",
+      "kind": "none",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-no-discovery-control",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "path_template": "No configuration file; the compiled installation prefix is not consulted",
+      "phase": "initial_selection",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "selection_priority": 4,
+      "source_references": [
+        {
+          "access": "discovery",
+          "line": 1448,
+          "path": "lib/lcovutil.pm",
+          "text": "    if (0 != scalar(@opt_config_files)) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1452,
+          "path": "lib/lcovutil.pm",
+          "text": "    } else {"
+        },
+        {
+          "access": "discovery",
+          "line": 1453,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $v (['HOME', '.lcovrc'], ['LCOV_HOME', 'etc', 'lcovrc']) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1454,
+          "path": "lib/lcovutil.pm",
+          "text": "            next unless exists($ENV{$v->[0]});"
+        },
+        {
+          "access": "discovery",
+          "line": 1455,
+          "path": "lib/lcovutil.pm",
+          "text": "            my $f = File::Spec->catfile($ENV{$v->[0]}, splice(@$v, 1));"
+        },
+        {
+          "access": "discovery",
+          "line": 1456,
+          "path": "lib/lcovutil.pm",
+          "text": "            if (-r $f) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1458,
+          "path": "lib/lcovutil.pm",
+          "text": "                last;"
+        }
+      ],
+      "stop_condition": "Execution continues with built-in defaults and later --rc or command-line overrides.",
+      "trigger": "No explicit file and neither automatic candidate is readable."
+    },
+    {
+      "id": "configuration-discovery.inline-include",
+      "kind": "include",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-include-loop",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-inline-include-stops-parent",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-relative-include",
+          "suite_id": "m0-config-contract-base"
+        }
+      ],
+      "path_template": "The assigned path as provided, resolved by file open from process CWD",
+      "phase": "recursive_read",
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "selection_priority": null,
+      "source_references": [
+        {
+          "access": "discovery",
+          "line": 1354,
+          "path": "lib/lcovutil.pm",
+          "text": "    my $path = abs_path($filename);"
+        },
+        {
+          "access": "discovery",
+          "line": 1356,
+          "path": "lib/lcovutil.pm",
+          "text": "    if (exists($included_config_files{$path})) {"
+        },
+        {
+          "access": "discovery",
+          "line": 1400,
+          "path": "lib/lcovutil.pm",
+          "text": "            if ($key eq 'config_file') {"
+        },
+        {
+          "access": "discovery",
+          "line": 1401,
+          "path": "lib/lcovutil.pm",
+          "text": "                $set_value |= read_config($value, $opts);"
+        }
+      ],
+      "stop_condition": "The include is processed inline; canonical path identity rejects active loops.",
+      "trigger": "A parsed configuration assignment uses the config_file key."
+    }
+  ],
+  "dynamic_inputs": [
+    {
+      "consumer": "lcov configuration reader",
+      "id": "environment.config-expansion.*",
+      "observable_effect": "Expands every referenced environment name in a configuration value; an absent name records a deferred usage diagnostic and skips the assignment.",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-missing-env",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-base-missing-env-ignored",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-env-multiple-expansion",
+          "suite_id": "m0-config-contract-env"
+        },
+        {
+          "case_id": "m0-config-env-single-expansion",
+          "suite_id": "m0-config-contract-env"
+        }
+      ],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "access": "match",
+          "line": 1379,
+          "path": "lib/lcovutil.pm",
+          "text": "               $value =~ /\\$ENV\\{([^}]+)\\}/) {"
+        },
+        {
+          "access": "read",
+          "line": 1381,
+          "path": "lib/lcovutil.pm",
+          "text": "            if (!exists($ENV{$varname})) {"
+        },
+        {
+          "access": "read",
+          "line": 1390,
+          "path": "lib/lcovutil.pm",
+          "text": "            $value =~ s/\\$ENV\\{$varname\\}/$ENV{$varname}/g;"
+        }
+      ],
+      "syntax": "$ENV{NAME}"
+    }
+  ],
+  "named_variables": [
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "lcov configuration reader"
+      ],
+      "id": "environment.HOME",
+      "name": "HOME",
+      "observable_effect": "Selects $HOME/.lcovrc as the first automatic configuration candidate when the file is readable.",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-base-home-discovery",
+          "suite_id": "m0-config-contract-base"
+        },
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        },
+        {
+          "case_id": "m0-config-lcov-home-fallback",
+          "suite_id": "m0-config-contract-lcov-home"
+        }
+      ],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "user_configuration"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 1453,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $v (['HOME', '.lcovrc'], ['LCOV_HOME', 'etc', 'lcovrc']) {"
+        },
+        {
+          "access": "read",
+          "line": 1454,
+          "path": "lib/lcovutil.pm",
+          "text": "            next unless exists($ENV{$v->[0]});"
+        },
+        {
+          "access": "read",
+          "line": 1455,
+          "path": "lib/lcovutil.pm",
+          "text": "            my $f = File::Spec->catfile($ENV{$v->[0]}, splice(@$v, 1));"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "profile writer"
+      ],
+      "id": "environment.HOSTNAME",
+      "name": "HOSTNAME",
+      "observable_effect": "Copies the ambient hostname into optional profile output without changing coverage computation.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "provenance_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 901,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $var ('USER', 'HOSTNAME', 'MACHTYPE', 'PWD') {"
+        },
+        {
+          "access": "read",
+          "line": 902,
+          "path": "lib/lcovutil.pm",
+          "text": "            $lcovutil::profileData{config}{$var} = $ENV{$var}"
+        },
+        {
+          "access": "read",
+          "line": 903,
+          "path": "lib/lcovutil.pm",
+          "text": "                if exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "callback lifecycle",
+        "filter scheduler",
+        "geninfo scheduler",
+        "merge scheduler"
+      ],
+      "id": "environment.LCOV_FORCE_PARALLEL",
+      "name": "LCOV_FORCE_PARALLEL",
+      "observable_effect": "Presence forces parallel code paths, chunk creation, callback save/restore, and temporary-state handling even for small inputs.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "developer_control"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 1013,
+          "path": "lib/lcovutil.pm",
+          "text": "            if (exists($ENV{LCOV_FORCE_PARALLEL}) ||"
+        },
+        {
+          "access": "read",
+          "line": 1321,
+          "path": "bin/geninfo",
+          "text": "        ($chunkSize > 1 || exists($ENV{LCOV_FORCE_PARALLEL}))) {"
+        },
+        {
+          "access": "read",
+          "line": 8616,
+          "path": "lib/lcovutil.pm",
+          "text": "    if (exists($ENV{LCOV_FORCE_PARALLEL}) ||"
+        },
+        {
+          "access": "read",
+          "line": 8652,
+          "path": "lib/lcovutil.pm",
+          "text": "            exists($ENV{LCOV_FORCE_PARALLEL})) {"
+        },
+        {
+          "access": "read",
+          "line": 8688,
+          "path": "lib/lcovutil.pm",
+          "text": "        if (exists($ENV{LCOV_FORCE_PARALLEL}) ||"
+        },
+        {
+          "access": "read",
+          "line": 9889,
+          "path": "lib/lcovutil.pm",
+          "text": "        (exists($ENV{LCOV_FORCE_PARALLEL}) ||"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "lcov configuration reader"
+      ],
+      "id": "environment.LCOV_HOME",
+      "name": "LCOV_HOME",
+      "observable_effect": "Selects $LCOV_HOME/etc/lcovrc only when HOME did not yield a readable configuration file.",
+      "oracle_cases": [
+        {
+          "case_id": "m0-config-home-first-wins-over-lcov-home",
+          "suite_id": "m0-config-contract-home-first"
+        },
+        {
+          "case_id": "m0-config-lcov-home-fallback",
+          "suite_id": "m0-config-contract-lcov-home"
+        }
+      ],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "user_configuration"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 1453,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $v (['HOME', '.lcovrc'], ['LCOV_HOME', 'etc', 'lcovrc']) {"
+        },
+        {
+          "access": "read",
+          "line": 1454,
+          "path": "lib/lcovutil.pm",
+          "text": "            next unless exists($ENV{$v->[0]});"
+        },
+        {
+          "access": "read",
+          "line": 1455,
+          "path": "lib/lcovutil.pm",
+          "text": "            my $f = File::Spec->catfile($ENV{$v->[0]}, splice(@$v, 1));"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "bin/fix.pl"
+      ],
+      "id": "environment.LCOV_PERL_PATH",
+      "name": "LCOV_PERL_PATH",
+      "observable_effect": "Supplies a requested Perl interpreter replacement to fix.pl when interpreter rewriting is explicitly enabled.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "build_helper"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 92,
+          "path": "bin/fix.pl",
+          "text": "    my $path = $ENV{\"LCOV_PERL_PATH\"};"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "bin/fix.pl"
+      ],
+      "id": "environment.LCOV_PYTHON_PATH",
+      "name": "LCOV_PYTHON_PATH",
+      "observable_effect": "Supplies a requested Python interpreter replacement to fix.pl when interpreter rewriting is explicitly enabled.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "build_helper"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 134,
+          "path": "bin/fix.pl",
+          "text": "    my $path = $ENV{\"LCOV_PYTHON_PATH\"};"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "diagnostic handler"
+      ],
+      "id": "environment.LCOV_SHOW_LOCATION",
+      "name": "LCOV_SHOW_LOCATION",
+      "observable_effect": "Presence retains Perl source locations in diagnostics, and numeric values above one append a stack trace for errors.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "developer_control"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 639,
+          "path": "lib/lcovutil.pm",
+          "text": "    my $details = $ENV{LCOV_SHOW_LOCATION}"
+        },
+        {
+          "access": "read",
+          "line": 640,
+          "path": "lib/lcovutil.pm",
+          "text": "        if exists($ENV{LCOV_SHOW_LOCATION});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "genhtml"
+      ],
+      "id": "environment.LCOV_VALIDATE",
+      "name": "LCOV_VALIDATE",
+      "observable_effect": "Presence enables generated HTML validation independently of the command-line validation option.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "developer_control"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 7217,
+          "path": "bin/genhtml",
+          "text": "my $validateHTML = exists($ENV{LCOV_VALIDATE});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "write"
+      ],
+      "consumers": [
+        "geninfo"
+      ],
+      "id": "environment.LC_ALL",
+      "name": "LC_ALL",
+      "observable_effect": "geninfo overwrites LC_ALL with C before running capture logic and inherited subprocesses.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "process_control"
+      ],
+      "source_references": [
+        {
+          "access": "write",
+          "line": 244,
+          "path": "bin/geninfo",
+          "text": "$ENV{\"LC_ALL\"} = \"C\";"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "p4annotate.pm"
+      ],
+      "id": "environment.LOG_P4ANNOTATE",
+      "name": "LOG_P4ANNOTATE",
+      "observable_effect": "Provides the default Perforce annotation log path before callback or standalone command options are parsed.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "integration_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 76,
+          "path": "scripts/p4annotate.pm",
+          "text": "    if (exists($ENV{LOG_P4ANNOTATE})) {"
+        },
+        {
+          "access": "read",
+          "line": 77,
+          "path": "scripts/p4annotate.pm",
+          "text": "        $logfile = $ENV{LOG_P4ANNOTATE};"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "profile writer"
+      ],
+      "id": "environment.MACHTYPE",
+      "name": "MACHTYPE",
+      "observable_effect": "Copies the ambient machine type into optional profile output without changing coverage computation.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "provenance_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 901,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $var ('USER', 'HOSTNAME', 'MACHTYPE', 'PWD') {"
+        },
+        {
+          "access": "read",
+          "line": 902,
+          "path": "lib/lcovutil.pm",
+          "text": "            $lcovutil::profileData{config}{$var} = $ENV{$var}"
+        },
+        {
+          "access": "read",
+          "line": 903,
+          "path": "lib/lcovutil.pm",
+          "text": "                if exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "p4annotate.pm"
+      ],
+      "id": "environment.P4CLIENT",
+      "name": "P4CLIENT",
+      "observable_effect": "Must be present when constructing the Perforce annotation callback and selects the active client workspace through p4.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "integration_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 97,
+          "path": "scripts/p4annotate.pm",
+          "text": "    foreach my $var (\"P4USER\", \"P4PORT\", \"P4CLIENT\") {"
+        },
+        {
+          "access": "read",
+          "line": 98,
+          "path": "scripts/p4annotate.pm",
+          "text": "        push(@notset, $var) unless exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "p4annotate.pm"
+      ],
+      "id": "environment.P4PORT",
+      "name": "P4PORT",
+      "observable_effect": "Must be present when constructing the Perforce annotation callback and selects the server through p4.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "integration_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 97,
+          "path": "scripts/p4annotate.pm",
+          "text": "    foreach my $var (\"P4USER\", \"P4PORT\", \"P4CLIENT\") {"
+        },
+        {
+          "access": "read",
+          "line": 98,
+          "path": "scripts/p4annotate.pm",
+          "text": "        push(@notset, $var) unless exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "p4annotate.pm"
+      ],
+      "id": "environment.P4USER",
+      "name": "P4USER",
+      "observable_effect": "Must be present for the Perforce annotation callback and becomes the owner for locally modified lines.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "integration_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 97,
+          "path": "scripts/p4annotate.pm",
+          "text": "    foreach my $var (\"P4USER\", \"P4PORT\", \"P4CLIENT\") {"
+        },
+        {
+          "access": "read",
+          "line": 98,
+          "path": "scripts/p4annotate.pm",
+          "text": "        push(@notset, $var) unless exists($ENV{$var});"
+        },
+        {
+          "access": "read",
+          "line": 153,
+          "path": "scripts/p4annotate.pm",
+          "text": "            $owner = $ENV{P4USER};    # current user is responsible for changes"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "context.pm"
+      ],
+      "id": "environment.PERL5LIB",
+      "name": "PERL5LIB",
+      "observable_effect": "When present, the context callback copies PERL5LIB into emitted context and optional coverage comments.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "integration_runtime",
+        "provenance_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 79,
+          "path": "scripts/context.pm",
+          "text": "    $data{PERL5LIB}     = $ENV{PERL5LIB}"
+        },
+        {
+          "access": "read",
+          "line": 80,
+          "path": "scripts/context.pm",
+          "text": "        if exists($ENV{PERL5LIB});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "profile writer"
+      ],
+      "id": "environment.PWD",
+      "name": "PWD",
+      "observable_effect": "Copies the inherited PWD value into optional profile output alongside the independently measured current directory.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "provenance_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 901,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $var ('USER', 'HOSTNAME', 'MACHTYPE', 'PWD') {"
+        },
+        {
+          "access": "read",
+          "line": 902,
+          "path": "lib/lcovutil.pm",
+          "text": "            $lcovutil::profileData{config}{$var} = $ENV{$var}"
+        },
+        {
+          "access": "read",
+          "line": 903,
+          "path": "lib/lcovutil.pm",
+          "text": "                if exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "bin/fix.pl",
+        "genhtml"
+      ],
+      "id": "environment.SOURCE_DATE_EPOCH",
+      "name": "SOURCE_DATE_EPOCH",
+      "observable_effect": "Pins generated documentation dates, report age calculations, report timestamps, and generated file metadata to a reproducible epoch.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "build_helper",
+        "user_configuration"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 56,
+          "path": "bin/fix.pl",
+          "text": "    my $epoch = int($ENV{SOURCE_DATE_EPOCH} || $stat[9]);"
+        },
+        {
+          "access": "read",
+          "line": 5687,
+          "path": "bin/genhtml",
+          "text": "        exists($ENV{SOURCE_DATE_EPOCH}) ?"
+        },
+        {
+          "access": "read",
+          "line": 5688,
+          "path": "bin/genhtml",
+          "text": "        DateTime->from_epoch(epoch => $ENV{SOURCE_DATE_EPOCH}) :"
+        },
+        {
+          "access": "read",
+          "line": 5696,
+          "path": "bin/genhtml",
+          "text": "                exists($ENV{SOURCE_DATE_EPOCH}) ?"
+        },
+        {
+          "access": "read",
+          "line": 5700,
+          "path": "bin/genhtml",
+          "text": "                    \"computed from your 'SOURCE_DATE_EPOCH=$ENV{SOURCE_DATE_EPOCH}' environment variable - see 'man genhtml'\""
+        },
+        {
+          "access": "read",
+          "line": 5702,
+          "path": "bin/genhtml",
+          "text": "                    \"'SOURCE_DATE_EPOCH=$ENV{SOURCE_DATE_EPOCH}'\") :"
+        },
+        {
+          "access": "read",
+          "line": 5925,
+          "path": "bin/genhtml",
+          "text": "            exists($ENV{SOURCE_DATE_EPOCH}) ?"
+        },
+        {
+          "access": "read",
+          "line": 5926,
+          "path": "bin/genhtml",
+          "text": "            DateTime->from_epoch(epoch => $ENV{SOURCE_DATE_EPOCH}) :"
+        },
+        {
+          "access": "read",
+          "line": 8761,
+          "path": "bin/genhtml",
+          "text": "        if (defined $ENV{'SOURCE_DATE_EPOCH'}) {"
+        },
+        {
+          "access": "read",
+          "line": 8762,
+          "path": "bin/genhtml",
+          "text": "            @timeresult = gmtime($ENV{'SOURCE_DATE_EPOCH'});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "profile writer"
+      ],
+      "id": "environment.USER",
+      "name": "USER",
+      "observable_effect": "Copies the ambient user name into optional profile output without changing coverage computation.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "provenance_runtime"
+      ],
+      "source_references": [
+        {
+          "access": "binding",
+          "line": 901,
+          "path": "lib/lcovutil.pm",
+          "text": "        foreach my $var ('USER', 'HOSTNAME', 'MACHTYPE', 'PWD') {"
+        },
+        {
+          "access": "read",
+          "line": 902,
+          "path": "lib/lcovutil.pm",
+          "text": "            $lcovutil::profileData{config}{$var} = $ENV{$var}"
+        },
+        {
+          "access": "read",
+          "line": 903,
+          "path": "lib/lcovutil.pm",
+          "text": "                if exists($ENV{$var});"
+        }
+      ]
+    },
+    {
+      "access": [
+        "read"
+      ],
+      "consumers": [
+        "bin/fix.pl"
+      ],
+      "id": "environment.V",
+      "name": "V",
+      "observable_effect": "Controls fix.pl verbose output during source and installation payload rewriting.",
+      "oracle_cases": [],
+      "product_evidence": [],
+      "review_status": "reviewed",
+      "roles": [
+        "build_helper"
+      ],
+      "source_references": [
+        {
+          "access": "read",
+          "line": 45,
+          "path": "bin/fix.pl",
+          "text": "my $verbose = $ENV{\"V\"};"
+        }
+      ]
+    }
+  ],
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "scope": "direct environment reads and writes in bin/, lib/, and scripts/, plus configuration discovery",
+  "totals": {
+    "configuration_discovery_paths": 5,
+    "direct_env_use_lines": 36,
+    "dynamic_inputs": 1,
+    "named_variables": 19,
+    "oracle_case_bindings": 22
+  },
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}
