@@ -64,3 +64,11 @@ stdout, stderr, output-tree, timing, CPU, RSS, and output-size evidence. The
 result validates as `baseline_only`; correctness and performance gates remain
 `not_evaluated` until a distinct Ferricov candidate passes compatibility on the
 same fixtures.
+
+The separate `M0-RSRC-MEASURE-001` evidence under `compat/resources/` is an
+Oracle-only resource observation, not a performance baseline. It retains one
+bounded run for each of 13 controlled profiles, including raw wall/CPU/RSS
+metrics and host/runtime identity. It proves only that the pinned Oracle
+accepted those exact inputs under the harness budgets. The samples do not form
+stable distributions, compare no Ferricov candidate, select no product limit,
+and satisfy none of the release gates above.

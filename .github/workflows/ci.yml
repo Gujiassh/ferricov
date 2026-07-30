@@ -127,6 +127,15 @@ jobs:
       - name: Run installation contract mutation tests
         run: python3 -m unittest compat/installation/test_contract.py
 
+      - name: Check generated resource contract and retained Oracle result
+        run: |
+          python3 compat/resources/contract.py
+          python3 compat/resources/validate.py --result \
+            compat/resources/results/oracle-x86_64-linux-20260729/result.json
+
+      - name: Run resource contract mutation tests
+        run: python3 -m unittest compat/resources/test_contract.py
+
       - name: Validate current behavior contract
         run: python3 compat/behavior/validate.py --mode current
 
@@ -152,6 +161,13 @@ jobs:
 
       - name: Build and verify pinned Oracle
         run: python3 compat/verify.py
+
+      - name: Exercise resource capture path
+        run: |
+          output="$(mktemp -d)"
+          trap 'rm -rf "$output"' EXIT
+          python3 compat/resources/capture.py --output "$output"
+          python3 compat/resources/validate.py --result "$output/result.json"
 
       - name: Verify clean Docker execution
         run: >-

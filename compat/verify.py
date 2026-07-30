@@ -843,6 +843,14 @@ def main() -> int:
         [root / "compat/installation/v2.5.json"],
     )
     validate_documents(
+        root / "compat/schema/resource-contract.schema.json",
+        [root / "compat/resources/v2.5.json"],
+    )
+    validate_documents(
+        root / "compat/schema/resource-result.schema.json",
+        [root / "compat/resources/results/oracle-x86_64-linux-20260729/result.json"],
+    )
+    validate_documents(
         root / "compat/schema/upstream-test-map.schema.json",
         [root / "compat/inventory/tests/upstream-test-map.json"],
     )
@@ -870,6 +878,19 @@ def main() -> int:
     )
     run(
         [sys.executable, str(root / "compat/fixtures/m0-tracefiles/validate.py")],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/resources/contract.py")],
+        root,
+    )
+    run(
+        [
+            sys.executable,
+            str(root / "compat/resources/validate.py"),
+            "--result",
+            str(root / "compat/resources/results/oracle-x86_64-linux-20260729/result.json"),
+        ],
         root,
     )
 

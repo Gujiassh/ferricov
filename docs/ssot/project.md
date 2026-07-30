@@ -112,6 +112,17 @@ the M0 harness become the permanent integration boundary.
   samples bind their output trees through sample metadata and contain the same
   seven runtime assets, but all observations remain reference-only and product
   evidence remains empty.
+- `compat/resources/v2.5.json` defines 13 controlled scale profiles for the
+  immutable Oracle. It binds exact source-scoped input shape, branch/MC/DC
+  summary semantics and stream hashes, six harness/schema artifacts, raw
+  metrics, clean outcomes, cleanup, and host/kernel/Docker/cgroup identity.
+  Writable output storage retains canonical post-generation exact-input/raw-
+  artifact/wrapper/deadline/cleanup evidence; retention errors fail closed
+  without bypassing attempted container/temp cleanup. Only the host Docker
+  deadline establishes timeout, and successful result validation rejects any
+  extra entry or symlink. The
+  retained 13/13 accepted result is a bounded single-run Oracle observation,
+  not a Ferricov product limit, compatibility claim, or performance gate.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Sixty-nine primary plans and all four required
   critical interaction domains are reviewed. The callback,
@@ -128,9 +139,10 @@ the M0 harness become the permanent integration boundary.
 - CI enables and smoke-tests the bubblewrap PID namespace required by Rust
   process-isolation tests, provisions the complete pinned toolchain before
   Oracle verification, and independently gates deterministic behavior,
-  environment, tracefile, diagnostics, and installation contract generation,
-  mutation tests, retained corpus integrity, and current-mode validation
-  against the pinned LCOV checkout.
+  environment, tracefile, diagnostics, installation, and resource contract
+  generation, mutation tests, retained corpus integrity, current-mode
+  validation, and a fresh temporary resource capture against the immutable
+  Oracle image.
 - Docker differential execution uses `/usr/bin/env -i` and then applies only the
   launcher-declared `HOME`, locale, `PATH`, and timezone values. Retained
   `effective_environment_variables` now describes the actual command

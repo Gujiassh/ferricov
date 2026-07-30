@@ -93,6 +93,19 @@ samples bind their output trees through sample metadata and retain the same
 seven runtime assets as reference-only Oracle evidence; packaging and product
 compatibility remain open.
 
+The separate resource contract executes 13 controlled scale profiles against
+the immutable Oracle with branch and MC/DC summaries enabled. Every profile
+binds exact input shape, source-scoped coverage cardinality, expected stream
+hashes and semantics, raw metrics, clean outcome, cleanup, and host/runtime
+identity. The host-bounded Docker run is the only timeout observer; writable
+storage retains canonical exact-input/raw-artifact/wrapper/deadline/cleanup
+failure evidence, retention errors cannot bypass attempted cleanup, and
+successful validation rejects extra entries and symlinks. All 13
+retained profiles are accepted, but their timing and RSS are
+single-run bounded observations rather than performance distributions. No
+Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
+`M1-TF-063`, and `M1-TF-064` remain blocked.
+
 Behavior planning covers all 531 public entries with primary plans. Sixty-nine
 public primary plans are reviewed, including 40 CLI entries bound to 154 exact
 suite cases while retaining planning-only evidence status. All four required
@@ -108,14 +121,20 @@ reference-only evidence and does not unlock product parity.
 - [x] Generate formal startup/help/version/invalid-option suites.
 - [x] Generate configuration precedence suites.
 - [ ] Build representative tracefile fixtures from upstream and real projects.
-- [ ] Add user CPU, system CPU, and peak RSS measurement.
+- [x] Add user CPU, system CPU, and peak RSS measurement.
 - [x] Capture and retain the 148-case upstream CLI/configuration correctness baseline with
   immutable image/executable identities and raw artifact validation.
 - [x] Capture and retain startup, tracefile, operation, and report Oracle performance baselines.
 - [ ] Specify the byte-preserving coverage model.
 - [ ] Specify the complete LCOV 2.5 tracefile grammar.
 - [ ] Define parse/write algebra and property tests.
-- [ ] Define parser fuzz targets and resource limits.
+- [x] Define named parser fuzz targets, harness safety budgets, and the exact
+  M0 resource-measurement profiles without selecting product limits.
+- [x] Capture and retain the 13-profile immutable-Oracle resource observation
+  with source-scoped input semantics, branch/MC/DC summaries, raw single-run
+  metrics, host/runtime identity, host-deadline provenance, writable-storage
+  failure diagnostics, retention-error cleanup, exact successful-tree closure,
+  and fail-closed cleanup.
 - [ ] Define M1 benchmark sizes and performance gates.
 - [ ] Run the M0 go/no-go review.
 

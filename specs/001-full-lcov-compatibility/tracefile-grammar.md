@@ -769,7 +769,7 @@ Ferricov `ferricov_parity` phase runs during M1 only after authorization.
 | `M1-TF-060` | Plain file, standard stream where supported, valid gzip, missing gzip utility, empty/corrupt gzip |
 | `M1-TF-061` | Non-ASCII and invalid UTF-8 bytes in source paths, test names, function names, branch expressions, MC/DC expressions, and versions |
 | `M1-TF-062` | Deterministic scale profiles with recorded seed/hash, bytes, records, sections, family cardinalities, maximum field/record, exact model/output, wall/CPU, and peak RSS |
-| `M1-TF-063` | `M0-RSRC-MEASURE-001` exact size/cardinality matrix; any product limit, over-limit diagnostic/exit/model state, and reviewed deviation; remains blocked until measured |
+| `M1-TF-063` | `M0-RSRC-MEASURE-001` exact size/cardinality profiles; any Ferricov product limit, over-limit diagnostic/exit/model state, and reviewed deviation; Oracle acceptance is observed but product boundary/parity remains blocked |
 | `M1-TF-064` | Corpus seeds from every record/legacy/prefix/state/hard-failure case mapped to all named `M1-FZ-*` targets, shrink/replay artifacts, CI 60-second and scheduled 15-minute budgets; remains blocked until executable |
 
 The deterministic `M1-TF-062` generator profiles are:
@@ -787,12 +787,19 @@ MUST retain its version, seed, output SHA-256, byte length, section/record/famil
 counts, and maximum field/record. These are correctness/performance fixtures,
 not product acceptance limits.
 
-The exact M0 resource measurement sizes, harness input/record/cardinality caps,
-RSS/time budgets, failure oracle, minimization, and regression-retention rules
-are normative in
-[coverage-model.md](coverage-model.md#resource-and-fuzz-budgets). Upstream
-product limits remain unmeasured. Any Ferricov rejection limit stays blocked
-unless the measurement matrix and a required safety deviation approve it.
+The exact M0 controlled resource profiles, harness
+input/record/cardinality caps, RSS/time budgets, failure oracle, minimization,
+and regression-retention rules are normative in
+[coverage-model.md](coverage-model.md#resource-and-fuzz-budgets). The retained
+Oracle observations establish accepted lower bounds only; upstream rejection
+boundaries and Ferricov product limits remain unmeasured. The host-side Docker
+deadline is the sole timeout provenance; exit code 124 before that deadline is
+a non-timeout failure. When output storage is writable, post-generation
+failures retain exact input, available raw streams/metrics, wrapper status,
+reason, deadline, and cleanup evidence. Retention failure is reported with the
+original capture failure and cannot bypass attempted container/temp cleanup.
+Any Ferricov rejection limit stays blocked unless candidate boundary/parity
+evidence and a required safety deviation approve it.
 
 ## M1 Evidence And Exit Conditions
 
@@ -819,5 +826,8 @@ remains zero until the corresponding M1 parity cases pass. M0 upstream-only
 decision probes MUST run before the go/no-go review; they do not wait for M1.
 Parser implementation MUST NOT start before the M0 exit gate, approved model
 specification, executable case manifest, retained Oracle correctness/resource
-baselines, and hashed approval record are complete. `M1-TF-063` and
-`M1-TF-064` remain blockers, not implied limits or passes.
+observations, and hashed approval record are complete. The 13-profile
+`M0-RSRC-MEASURE-001` Oracle observation is retained with exact branch/MC/DC
+summary semantics and raw single-run metrics, but `M1-TF-063` still lacks
+Ferricov boundary/parity evidence and `M1-TF-064` still lacks an executable fuzz
+corpus. Both remain blockers, not implied limits or passes.

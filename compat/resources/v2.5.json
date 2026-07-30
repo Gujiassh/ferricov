@@ -1,0 +1,830 @@
+{
+  "blocked_case_ids": [
+    "M1-MD-020",
+    "M1-TF-063",
+    "M1-TF-064"
+  ],
+  "contract_id": "m0-resource-measurement-v1",
+  "execution_policy": {
+    "allocations": {
+      "reason": "the pinned Oracle and rusage backend expose no allocation counter",
+      "status": "not_observable"
+    },
+    "command": [
+      "/usr/local/bin/lcov",
+      "--branch-coverage",
+      "--mcdc-coverage",
+      "--summary",
+      "input.info"
+    ],
+    "container_memory_bytes": 1073741824,
+    "container_pids": 128,
+    "deadline_observer": "host_subprocess_timeout",
+    "environment": {
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/bin:/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "environment_inheritance": false,
+    "timeout_seconds": 60
+  },
+  "harness_artifacts": [
+    {
+      "bytes": 12400,
+      "path": "compat/resources/contract.py",
+      "sha256": "4d5e1da6fb655e5db0959ccffbb388c9ad7f5ad55fffbbbf45bed77727f5ffe6"
+    },
+    {
+      "bytes": 11270,
+      "path": "compat/resources/generate.py",
+      "sha256": "3a33a2fbf632e806d40b053d0d439ccf501b0c54046958f028a066d3700a399b"
+    },
+    {
+      "bytes": 25188,
+      "path": "compat/resources/capture.py",
+      "sha256": "21f73f51e5ecab6cc4611cd162b95990b46566e08573c4f942f47d9a231e85aa"
+    },
+    {
+      "bytes": 16150,
+      "path": "compat/resources/validate.py",
+      "sha256": "021cfd5aa543e059a6d16736175c209ea9687c354509354fd0cdfe4e556ac7ff"
+    },
+    {
+      "bytes": 11790,
+      "path": "compat/schema/resource-contract.schema.json",
+      "sha256": "72e366a27628b650f0ed32fae3aadbfaba15d6176d383c185880f8a9e9e21ef9"
+    },
+    {
+      "bytes": 8606,
+      "path": "compat/schema/resource-result.schema.json",
+      "sha256": "c05edc181d4a2d9cdc4bccc603f4df9405d22e10e9de78a16790b587c517dca0"
+    }
+  ],
+  "harness_budgets_are_product_limits": false,
+  "m0_case_id": "M0-RSRC-MEASURE-001",
+  "m0_case_status": "oracle_observation_required",
+  "matrix_interpretation": {
+    "data_record_axis": "DA record count inside one source section",
+    "design": "controlled_scale_profiles",
+    "family_cardinality_axis": "equal distinct line, function, branch, and logical MC/DC condition cardinalities inside one source section; each logical MC/DC condition emits two condition outcomes",
+    "field_axis": "TN payload bytes; the enclosing logical record adds the TN: prefix",
+    "primary_axis_rule": "each profile targets one primary scale axis while all dependent input dimensions are recorded",
+    "section_axis": "source sections containing one DA record each; global line cardinality therefore changes with section count"
+  },
+  "measurement_tool": {
+    "backend": "linux-rusage-children-v1",
+    "clock": "monotonic",
+    "metrics": [
+      "wall_time_ns",
+      "user_cpu_time_ns",
+      "system_cpu_time_ns",
+      "peak_rss_bytes"
+    ],
+    "path": "compat/benchmarks/measure.py",
+    "sha256": "0d19be022b27b886862290148770dea10d2c7ac9b62dbd75a1cc1e4b230a4687"
+  },
+  "oracle_identity": {
+    "evidence_scope": "environment_smoke",
+    "image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "lcov_path": "/usr/local/bin/lcov",
+    "lcov_sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252",
+    "manifest_id": "oracle-lcov-v2.5-image-smoke",
+    "manifest_path": "compat/manifests/oracle-lcov-v2.5-smoke.json",
+    "manifest_sha256": "a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+    "network": "none",
+    "product_compatibility_evidence": false,
+    "user": "root"
+  },
+  "product_compatibility_evidence": false,
+  "product_limit_evidence": [],
+  "product_limits_selected": false,
+  "profiles": [
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "field-1k",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 1069,
+        "maximum_field_bytes": 1024,
+        "maximum_record_bytes": 1027,
+        "record_count": 4,
+        "section_count": 1,
+        "sha256": "aeb2dd0ee38586aaca364659b382e19ad8f1a8a2be4c8790f7bd4b56006be40a"
+      },
+      "primary_scale_axis": "field_bytes",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "69e432b7df70b6bb675e601f4aabea63eb6fba73f8b5d000eaa83a4218883d80",
+      "sequence": 0,
+      "target": 1024
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "field-64k",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 65581,
+        "maximum_field_bytes": 65536,
+        "maximum_record_bytes": 65539,
+        "record_count": 4,
+        "section_count": 1,
+        "sha256": "c6b3c1dc16e7b9463692809f9f4ebdb40e0bb2a305e5df996bc2a8d4486fa38f"
+      },
+      "primary_scale_axis": "field_bytes",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "4f4e1e013030bf3faa00f457b878468b77ddd2f1750cd9e1d9217ccf30eb73d6",
+      "sequence": 1,
+      "target": 65536
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "field-1m",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 1048621,
+        "maximum_field_bytes": 1048576,
+        "maximum_record_bytes": 1048579,
+        "record_count": 4,
+        "section_count": 1,
+        "sha256": "fb0a97a2a0b1fb671edade18f0e77ffb0825d8ad704e80696748d52836317480"
+      },
+      "primary_scale_axis": "field_bytes",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "115776924eeef55dbf1e52ace26cea6c5cf37d328dfdee4047a3edfb1a4be6b3",
+      "sequence": 2,
+      "target": 1048576
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "field-16m",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 16777261,
+        "maximum_field_bytes": 16777216,
+        "maximum_record_bytes": 16777219,
+        "record_count": 4,
+        "section_count": 1,
+        "sha256": "3b93456a901044f84e33bdd002899068d21e2bfd9c5773f5e4ea55957b0d97f7"
+      },
+      "primary_scale_axis": "field_bytes",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "d6f5a4605fa19c769ae605cc518d75c990cb75949944bf717b3720272c216909",
+      "sequence": 3,
+      "target": 16777216
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "records-1",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 43,
+        "maximum_field_bytes": 18,
+        "maximum_record_bytes": 21,
+        "record_count": 3,
+        "section_count": 1,
+        "sha256": "74899da303dc24f1f31203a7fd6227fb965e810bc3ad513494c0dcd43c006abc"
+      },
+      "primary_scale_axis": "data_records",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "3ebaff248f8c0cd3b6e2c77317a2bc2d4e4319e08e405c27cc99929bd73aec87",
+      "sequence": 4,
+      "target": 1
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 250,
+          "sha256": "b91a665af4f8a3c1f2f6ef22e0e468c19c1cec3c560206f50231152a4feaf856"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1024,
+          "lines_hit": 1024,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "records-1024",
+      "input": {
+        "data_record_count": 1024,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1024,
+          "mcdc": 0
+        },
+        "input_bytes": 9169,
+        "maximum_field_bytes": 18,
+        "maximum_record_bytes": 21,
+        "record_count": 1026,
+        "section_count": 1,
+        "sha256": "36ae888ba79f1163e43f3e2d8dd1f2b3010885060472e03812fe65eae4659a5c"
+      },
+      "primary_scale_axis": "data_records",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "39c9258bd00e627003178c840ee4d952a5990e5858e5bbbce24dbcc42369fec1",
+      "sequence": 5,
+      "target": 1024
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 252,
+          "sha256": "e5bd24c719fa61c2287d3a5895681403a25e511f31c870ec17eedad812d9f9b7"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 65536,
+          "lines_hit": 65536,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "records-65536",
+      "input": {
+        "data_record_count": 65536,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 65536,
+          "mcdc": 0
+        },
+        "input_bytes": 709826,
+        "maximum_field_bytes": 18,
+        "maximum_record_bytes": 21,
+        "record_count": 65538,
+        "section_count": 1,
+        "sha256": "f445f2189cf783dd60f5dfa89b732d8a32696013c25ffe013b84b6d065ba8571"
+      },
+      "primary_scale_axis": "data_records",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "b4ed91a92f66cac82572b3729a649abae98135a3285f421a815fece0a5d72a0e",
+      "sequence": 6,
+      "target": 65536
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 243,
+          "sha256": "850e8a8ba41a45077280f40556b4024654d05613b0f6b1220071e8fbde6305ac"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "sections-1",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1,
+          "mcdc": 0
+        },
+        "input_bytes": 49,
+        "maximum_field_bytes": 24,
+        "maximum_record_bytes": 27,
+        "record_count": 3,
+        "section_count": 1,
+        "sha256": "72e4e9bcb4afb4a2a0addc6f3a901f1f04190f993d6ec4f50148981411302332"
+      },
+      "primary_scale_axis": "sections",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "901fd77c5e23a6d4cfa47e2b3d6d563fd5f0877eb6d8cf3373c8711c7327cc8f",
+      "sequence": 7,
+      "target": 1
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 253,
+          "sha256": "ebb5cab9d61df182cb1980bfc2fad3d2329b5ab329cc75c6e83b9d83ef86cda7"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 1024,
+          "lines_hit": 1024,
+          "source_files": 1024
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "sections-1024",
+      "input": {
+        "data_record_count": 1024,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 1024,
+          "mcdc": 0
+        },
+        "input_bytes": 50176,
+        "maximum_field_bytes": 24,
+        "maximum_record_bytes": 27,
+        "record_count": 3072,
+        "section_count": 1024,
+        "sha256": "2f729a39b0191f3612ac3dbe8518311c1631f9069c7d3936d0dad63631130829"
+      },
+      "primary_scale_axis": "sections",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "b3862423e2ca1247ffd70e38e5d9ef2425d05937da3d29257f740fe759a21aa6",
+      "sequence": 8,
+      "target": 1024
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 256,
+          "sha256": "d36b3c1c0ce1a2a0220d11cfc68a988aa2fb200eeea5e3cfbeae02cc253f2768"
+        },
+        "summary": {
+          "branches_found": null,
+          "branches_hit": null,
+          "condition_outcomes_found": null,
+          "condition_outcomes_hit": null,
+          "functions_found": null,
+          "functions_hit": null,
+          "lines_found": 16384,
+          "lines_hit": 16384,
+          "source_files": 16384
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "sections-16384",
+      "input": {
+        "data_record_count": 16384,
+        "family_cardinalities": {
+          "branch": 0,
+          "function": 0,
+          "line": 16384,
+          "mcdc": 0
+        },
+        "input_bytes": 802816,
+        "maximum_field_bytes": 24,
+        "maximum_record_bytes": 27,
+        "record_count": 49152,
+        "section_count": 16384,
+        "sha256": "82d177de3413f558fffa74b94be59c03262a7a3a342050594e01f134b94f2985"
+      },
+      "primary_scale_axis": "sections",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "ad95baec17433355c4c95422efb16ee2cd00c43f4540c82834b0580a72661e68",
+      "sequence": 9,
+      "target": 16384
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 276,
+          "sha256": "cbc0ee57856a3ac4cef3d22064169a55a3ce11ddb73e22e293a62d2d351e01ca"
+        },
+        "summary": {
+          "branches_found": 1,
+          "branches_hit": 1,
+          "condition_outcomes_found": 2,
+          "condition_outcomes_hit": 1,
+          "functions_found": 1,
+          "functions_hit": 1,
+          "lines_found": 1,
+          "lines_hit": 1,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "cardinality-1",
+      "input": {
+        "data_record_count": 1,
+        "family_cardinalities": {
+          "branch": 1,
+          "function": 1,
+          "line": 1,
+          "mcdc": 1
+        },
+        "input_bytes": 150,
+        "maximum_field_bytes": 22,
+        "maximum_record_bytes": 26,
+        "record_count": 8,
+        "section_count": 1,
+        "sha256": "6ba6d0e520c5454fd008ebb042894aa8cb66b31b3b9590c49275975b21df7177"
+      },
+      "primary_scale_axis": "family_cardinality",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "abd3b7aa0bc258bde80a988bcf36d063e7c83da3869461f8ebdaf761856c06d9",
+      "sequence": 10,
+      "target": 1
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 304,
+          "sha256": "af5a7faca2b2d2239a29f4ffe7c91d5e0ebcf3d29bbd3c3f95529095b17b03a0"
+        },
+        "summary": {
+          "branches_found": 1024,
+          "branches_hit": 1024,
+          "condition_outcomes_found": 2048,
+          "condition_outcomes_hit": 1024,
+          "functions_found": 1024,
+          "functions_hit": 1024,
+          "lines_found": 1024,
+          "lines_hit": 1024,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "cardinality-1024",
+      "input": {
+        "data_record_count": 1024,
+        "family_cardinalities": {
+          "branch": 1024,
+          "function": 1024,
+          "line": 1024,
+          "mcdc": 1024
+        },
+        "input_bytes": 136254,
+        "maximum_field_bytes": 27,
+        "maximum_record_bytes": 32,
+        "record_count": 6146,
+        "section_count": 1,
+        "sha256": "7e7cce1097b5f3855a4b35064ab877404bc322bfc4c06a95411f4d1bdd413d83"
+      },
+      "primary_scale_axis": "family_cardinality",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "67621619e02e17c2efd18a289bc87d7af68ec379c1d8d4c011a8d3b8fe6b3047",
+      "sequence": 11,
+      "target": 1024
+    },
+    {
+      "evidence_requirement": "oracle_observation_required",
+      "expected_observation": {
+        "outcome": {
+          "container_exit_code": 0,
+          "exit_code": 0,
+          "signal": null,
+          "timeout": false
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 313,
+          "sha256": "b1504aa82417db5eb06ca203081bfa3ea631a86e6984ebccfa620f840a941c9e"
+        },
+        "summary": {
+          "branches_found": 65536,
+          "branches_hit": 65536,
+          "condition_outcomes_found": 131072,
+          "condition_outcomes_hit": 65536,
+          "functions_found": 65536,
+          "functions_hit": 65536,
+          "lines_found": 65536,
+          "lines_hit": 65536,
+          "source_files": 1
+        },
+        "unexpected_output_entries": []
+      },
+      "generator_version": 1,
+      "id": "cardinality-65536",
+      "input": {
+        "data_record_count": 65536,
+        "family_cardinalities": {
+          "branch": 65536,
+          "function": 65536,
+          "line": 65536,
+          "mcdc": 65536
+        },
+        "input_bytes": 10221448,
+        "maximum_field_bytes": 29,
+        "maximum_record_bytes": 34,
+        "record_count": 393218,
+        "section_count": 1,
+        "sha256": "c8c0caef33f0586374a0b706f6f4c44367456a9a7506496f2af5a67c70ff4297"
+      },
+      "primary_scale_axis": "family_cardinality",
+      "product_limit_evidence": false,
+      "profile_seed_sha256": "a10edbbdcbe2c7232a7eb06634055b5ed601edd46a2f65c902eb05189ef460d2",
+      "sequence": 12,
+      "target": 65536
+    }
+  ],
+  "schema_version": 1,
+  "scope": "M0-RSRC-MEASURE-001 controlled Oracle parser-resource observations",
+  "source_sections": [
+    {
+      "id": "resource.coverage-model-budgets",
+      "line_count": 65,
+      "line_end": 944,
+      "line_start": 880,
+      "path": "specs/001-full-lcov-compatibility/coverage-model.md",
+      "role": "resource_and_fuzz_budgets",
+      "sha256": "d0dd5a0a4fa8db7ecbeaeace212e16e5941870b430307c02489dbdad1d630de4"
+    },
+    {
+      "id": "resource.tracefile-scale-profiles",
+      "line_count": 29,
+      "line_end": 803,
+      "line_start": 775,
+      "path": "specs/001-full-lcov-compatibility/tracefile-grammar.md",
+      "role": "tracefile_scale_and_resource_requirements",
+      "sha256": "3abb2326ed2684828446d7bfaa7ed3fb3d1de7c025a1f6be84ebbcaa6cd1c9f1"
+    }
+  ],
+  "totals": {
+    "axis_counts": {
+      "data_records": 3,
+      "family_cardinality": 3,
+      "field_bytes": 4,
+      "sections": 3
+    },
+    "harness_artifacts": 6,
+    "profiles": 13,
+    "source_lines": 94,
+    "source_sections": 2
+  },
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}

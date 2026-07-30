@@ -52,6 +52,7 @@ relationships where supported.
 | behavior planning | primary plans cover all 531 public entries | not started | 69 reviewed primary plans, including 40 CLI parser entries plus 8 configuration-semantic slices with 67 bindings; all 4 critical interaction domains reviewed; 462 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | two-build tree reproduction plus 4 reference-only samples of 7 runtime assets; no product evidence |
+| Oracle resource observation | 13 controlled profiles with exact source-scoped input shapes, branch/MC/DC summaries, streams, raw metrics, cleanup, and runtime identity | not started | 13/13 exact Oracle inputs accepted in one bounded run; no product limit, compatibility evidence, or performance gate |
 
 The inventory is generated from pinned parser definitions, manuals, help output,
 configuration templates, installation manifests, and tests. Schema and semantic
@@ -122,6 +123,20 @@ directories. Its 13 installation identities remain planned. Four retained
 `genhtml` samples bind each output tree through sample metadata and contain the
 same seven runtime report assets, but those samples are Oracle references only
 and provide no Ferricov product evidence.
+
+The standalone resource contract closes the reviewed 13-profile
+`M0-RSRC-MEASURE-001` observation against the immutable Oracle. It binds the
+six generator/capture/validator/schema artifacts, exact input shapes and
+source-scoped cardinalities, branch/MC/DC summary semantics, clean outcomes,
+raw streams and metrics, cleanup, and host/runtime identity. The host-bounded
+Docker run is the sole timeout observer. Writable storage retains canonical
+post-generation diagnostics; retention failure is reported with the original
+failure and cannot bypass attempted container/temp cleanup. The successful
+evidence tree rejects unreferenced entries and symlinks. All profiles exit zero without timeout, signal, stderr,
+or output. These bounded single-run
+observations neither select Ferricov product limits nor prove product
+compatibility or performance; `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` remain
+blocked.
 
 ## Release Claims
 

@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Gujiassh/ferricov/compat/schema/resource-result.schema.json",
+  "title": "Ferricov M0 Oracle Resource Measurement Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "result_id",
+    "recorded_at",
+    "status",
+    "case_id",
+    "contract",
+    "execution_manifest",
+    "measurement_tool",
+    "harness_artifacts",
+    "observed_image_sha256",
+    "observed_lcov_sha256",
+    "host_runtime",
+    "environment",
+    "container_policy",
+    "allocations",
+    "samples",
+    "totals",
+    "measurement_interpretation",
+    "harness_budgets_are_product_limits",
+    "product_limits_selected",
+    "product_limit_evidence",
+    "product_compatibility_evidence"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "result_id": { "const": "m0-resource-measurement-oracle" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "status": { "const": "oracle_observed" },
+    "case_id": { "const": "M0-RSRC-MEASURE-001" },
+    "contract": { "$ref": "#/$defs/artifact" },
+    "execution_manifest": { "$ref": "#/$defs/artifact" },
+    "measurement_tool": { "$ref": "#/$defs/artifact" },
+    "harness_artifacts": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "observed_image_sha256": { "$ref": "#/$defs/prefixedSha256" },
+    "observed_lcov_sha256": { "$ref": "#/$defs/prefixedSha256" },
+    "host_runtime": { "$ref": "#/$defs/hostRuntime" },
+    "environment": {
+      "const": {
+        "HOME": "/tmp",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "TZ": "UTC"
+      }
+    },
+    "container_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["network", "user", "memory_bytes", "pids", "timeout_seconds", "deadline_observer", "environment_inheritance"],
+      "properties": {
+        "network": { "const": "none" },
+        "user": { "const": "root" },
+        "memory_bytes": { "const": 1073741824 },
+        "pids": { "const": 128 },
+        "timeout_seconds": { "const": 60 },
+        "deadline_observer": { "const": "host_subprocess_timeout" },
+        "environment_inheritance": { "const": false }
+      }
+    },
+    "allocations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": { "const": "not_observable" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "samples": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": { "$ref": "#/$defs/sample" }
+    },
+    "totals": {
+      "const": {
+        "profiles": 13,
+        "accepted": 13,
+        "nonzero": 0,
+        "signaled": 0,
+        "timeouts": 0
+      }
+    },
+    "measurement_interpretation": { "const": "single_run_bounded_observations_not_performance_gates" },
+    "harness_budgets_are_product_limits": { "const": false },
+    "product_limits_selected": { "const": false },
+    "product_limit_evidence": { "type": "array", "maxItems": 0 },
+    "product_compatibility_evidence": { "const": false }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "prefixedSha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "bytes", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "hostRuntime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operating_system",
+        "architecture",
+        "kernel_release",
+        "cpu_model",
+        "logical_cpu_count",
+        "memory_bytes",
+        "docker_server_version",
+        "docker_cgroup_version",
+        "docker_cgroup_driver"
+      ],
+      "properties": {
+        "operating_system": { "type": "string", "minLength": 1 },
+        "architecture": { "type": "string", "minLength": 1 },
+        "kernel_release": { "type": "string", "minLength": 1 },
+        "cpu_model": { "type": "string", "minLength": 1 },
+        "logical_cpu_count": { "type": "integer", "minimum": 1 },
+        "memory_bytes": { "type": "integer", "minimum": 1 },
+        "docker_server_version": { "type": "string", "minLength": 1 },
+        "docker_cgroup_version": { "type": "string", "minLength": 1 },
+        "docker_cgroup_driver": { "type": "string", "minLength": 1 }
+      }
+    },
+    "familyCardinalities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["line", "function", "branch", "mcdc"],
+      "properties": {
+        "line": { "type": "integer", "minimum": 0 },
+        "function": { "type": "integer", "minimum": 0 },
+        "branch": { "type": "integer", "minimum": 0 },
+        "mcdc": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "inputShape": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "input_bytes",
+        "record_count",
+        "data_record_count",
+        "section_count",
+        "maximum_record_bytes",
+        "maximum_field_bytes",
+        "family_cardinalities"
+      ],
+      "properties": {
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "input_bytes": { "type": "integer", "minimum": 1 },
+        "record_count": { "type": "integer", "minimum": 1 },
+        "data_record_count": { "type": "integer", "minimum": 1 },
+        "section_count": { "type": "integer", "minimum": 1 },
+        "maximum_record_bytes": { "type": "integer", "minimum": 1 },
+        "maximum_field_bytes": { "type": "integer", "minimum": 1 },
+        "family_cardinalities": { "$ref": "#/$defs/familyCardinalities" }
+      }
+    },
+    "outcome": {
+      "const": {
+        "exit_code": 0,
+        "signal": null,
+        "timeout": false,
+        "container_exit_code": 0
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measurement_backend",
+        "clock",
+        "wall_time_ns",
+        "user_cpu_time_ns",
+        "system_cpu_time_ns",
+        "peak_rss_bytes"
+      ],
+      "properties": {
+        "measurement_backend": { "const": "linux-rusage-children-v1" },
+        "clock": { "const": "monotonic" },
+        "wall_time_ns": { "type": "integer", "minimum": 1 },
+        "user_cpu_time_ns": { "type": "integer", "minimum": 0 },
+        "system_cpu_time_ns": { "type": "integer", "minimum": 0 },
+        "peak_rss_bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "cleanup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_directory_removed", "evidence_directory_removed", "container_removed"],
+      "properties": {
+        "work_directory_removed": { "const": true },
+        "evidence_directory_removed": { "const": true },
+        "container_removed": { "const": true }
+      }
+    },
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence",
+        "profile_id",
+        "primary_scale_axis",
+        "target",
+        "generator_version",
+        "profile_seed_sha256",
+        "input",
+        "input_sha256_after",
+        "outcome",
+        "metrics",
+        "raw_metrics",
+        "stdout",
+        "stderr",
+        "unexpected_output_entries",
+        "cleanup"
+      ],
+      "properties": {
+        "sequence": { "type": "integer", "minimum": 0, "maximum": 12 },
+        "profile_id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "primary_scale_axis": { "enum": ["field_bytes", "data_records", "sections", "family_cardinality"] },
+        "target": { "type": "integer", "minimum": 1, "maximum": 16777216 },
+        "generator_version": { "const": 1 },
+        "profile_seed_sha256": { "$ref": "#/$defs/sha256" },
+        "input": { "$ref": "#/$defs/inputShape" },
+        "input_sha256_after": { "$ref": "#/$defs/sha256" },
+        "outcome": { "$ref": "#/$defs/outcome" },
+        "metrics": { "$ref": "#/$defs/metrics" },
+        "raw_metrics": { "$ref": "#/$defs/artifact" },
+        "stdout": { "$ref": "#/$defs/artifact" },
+        "stderr": { "$ref": "#/$defs/artifact" },
+        "unexpected_output_entries": { "type": "array", "maxItems": 0 },
+        "cleanup": { "$ref": "#/$defs/cleanup" }
+      }
+    }
+  }
+}

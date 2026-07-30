@@ -173,6 +173,16 @@ cases remain planned. Four retained report samples bind output trees through
 sample metadata and contain the same seven runtime assets without providing
 product evidence; directory layout remains an explicit gap because the tree
 recorder retains only files and symlinks.
+The resource-observation lane retains 13 accepted controlled scale profiles
+from the immutable Oracle. Exact input shapes, source-scoped family
+cardinalities, branch/MC/DC summary semantics, raw metrics, clean outcomes,
+cleanup, and host/runtime identity fail closed. Writable output storage retains
+canonical post-generation diagnostics with explicit host-deadline provenance;
+retention failure cannot bypass attempted container/temp cleanup. Successful
+result validation rejects unreferenced tree entries and symlinks. These are
+bounded single-run
+Oracle observations, not Ferricov product limits, compatibility evidence, or
+performance gates; `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` remain blocked.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are
 satisfied.
 

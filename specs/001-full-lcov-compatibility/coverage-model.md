@@ -897,19 +897,50 @@ when its case declares that outcome and the semantic/stream/status snapshot
 matches. Corpus minimization must run under the same cap, then replay the
 minimized input without minimizer instrumentation.
 
-Upstream LCOV exposes no measured product parser limit in the current evidence.
-M0 MUST run `M0-RSRC-MEASURE-001` under a content-addressed Oracle container
-across exact record/field sizes 1 KiB, 64 KiB, 1 MiB, and 16 MiB; record counts
-1, 1,024, and 65,536; sections 1, 1,024, and 16,384; and family cardinalities
-1, 1,024, and 65,536. It records input hash/bytes, maximum record and field,
-records, sections, cardinalities, wall/CPU time, peak RSS, allocations where
-observable, streams, exit, output, and cleanup.
+`M0-RSRC-MEASURE-001` contains 13 controlled scale profiles, each with one
+primary scale axis and every dependent input dimension recorded. The field
+profiles use an exact `TN` payload of 1 KiB, 64 KiB, 1 MiB, or 16 MiB; the
+logical record additionally contains the `TN:` prefix. The record profiles use
+exactly 1, 1,024, or 65,536 `DA` records inside one source section. The section
+profiles use exactly 1, 1,024, or 16,384 source sections with one `DA` record
+each, so their global line-point cardinality necessarily changes with the
+section count. The family profiles use equal source-scoped line, function,
+branch, and logical MC/DC-condition cardinalities of 1, 1,024, or 65,536
+inside one source section. Each logical MC/DC condition emits two condition
+outcomes, one observed hit and one observed miss.
+
+The Oracle command enables `--branch-coverage` and `--mcdc-coverage` before
+`--summary`; plain summary output is not evidence for those two families. Each
+profile binds its exact expected stdout/stderr hashes and parsed line,
+function, branch, and condition-outcome summary. The retained result also
+binds input hash/bytes, maximum record and field, total/data records, sections,
+source-scoped family cardinalities, raw metrics, wall/user/system CPU time,
+peak RSS, exit/signal/timeout, output, input immutability, cleanup, and
+host/kernel/Docker/cgroup identity. The host-bounded Docker invocation is the
+sole deadline observer: only a host `TimeoutExpired` event is a timeout, while
+a target exit code of 124 before the deadline remains a nonzero, non-timeout
+outcome. When output storage is writable, a post-generation failure retains
+the exact generated input, available raw metrics and streams, Docker status,
+failure class/reason, deadline provenance, and post-cleanup facts under the
+fresh result root. Retention failure is reported alongside the original
+capture failure, does not claim a manifest exists, and cannot bypass attempted
+named-container or temporary-directory cleanup. Successful evidence closes the
+retained tree exactly over `result.json` and three artifacts in each of the 13
+expected sample directories.
+
+All 13 retained Oracle profiles exit zero without a signal, timeout, stderr, or
+output file. They establish observed accepted lower bounds through a 16 MiB
+field, 65,536 `DA` records, 16,384 sections, and 65,536 distinct points in each
+coverage family. The timing and RSS values are one bounded observation per
+profile, not stable distributions, performance gates, or causal attribution.
+No larger input behavior is implied.
 
 Any Ferricov product limit or over-limit diagnostic must be selected only after
-that matrix and, when it intentionally differs from an accepted Oracle input,
-a reviewed resource-safety deviation. Until then the numeric representation
-resource decision, `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` remain
-`blocked`; the harness budgets above MUST NOT be reported as product limits.
+a candidate exists and, when it intentionally differs from an accepted Oracle
+input, a reviewed resource-safety deviation. `M1-MD-020` and `M1-TF-063`
+therefore retain their product/parity blockers, while `M1-TF-064` retains its
+executable fuzz-corpus blocker. The harness budgets above MUST NOT be reported
+as product limits.
 
 ## Oracle Decisions And Case IDs
 

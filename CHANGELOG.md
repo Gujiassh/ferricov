@@ -50,6 +50,13 @@ compatibility releases.
   321-entry installed-tree lock, nine exhaustive payload groups, 15 source
   closures, 13 planned installation cases, seven runtime report assets, and four
   metadata-bound, reference-only Oracle asset observations.
+- A standalone 13-profile LCOV 2.5 Oracle resource observation with exact
+  source-scoped input shapes, branch/MC/DC summary and stream contracts, six
+  bound harness/schema artifacts, retained raw metrics, clean outcome and
+  cleanup evidence, host/kernel/Docker/cgroup identity, writable-storage
+  diagnostics for post-generation failures, fail-closed retention-error cleanup,
+  explicit host-deadline timeout provenance, and exact successful-tree closure. All exact profiles are accepted without
+  selecting a Ferricov product limit or compatibility or performance claim.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -68,9 +75,10 @@ compatibility releases.
 - Aggregated the CLI and configuration suites through one deterministic
   seven-suite correctness contract without changing the Suite schema.
 - Extended the repository verifier and Behavior Contract CI job with exact
-  environment, tracefile, diagnostics, and installation contract regeneration,
-  retained corpus checks, schema validation, pinned source closure, and reverse
-  mutation guards.
+  environment, tracefile, diagnostics, installation, and resource contract
+  regeneration, retained corpus checks, schema validation, pinned source
+  closure, reverse mutation guards, and a fresh temporary Oracle resource
+  capture.
 
 ### Fixed
 
@@ -116,7 +124,7 @@ compatibility releases.
   with warnings denied, 40 behavior-contract tests, 6 configuration-contract
   tests, 8 environment-contract tests, 11 tracefile-contract tests, 13
   diagnostics-contract tests, 22 installation-contract tests, 16 correctness
-  tests, schema validators, and retained evidence
+  tests, 42 resource-contract tests, schema validators, and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
 - M0 remains open with 462 explicit behavior-planning gaps; no compatibility or
