@@ -9,7 +9,8 @@
 - Downstream target: `main`
 - Repair commit SHA: `19566ae6bdf6bac4ac0fc8bd6df08bab5791a22a`
 - Push state: repair commit pushed to `origin/fix/resource-ci-rebuild-image`
-- Integration step: reviewed fast-forward of the repair branch into `main`
+- Integration step: reviewed fast-forward completed on `main` at
+  `11631d607bab845a8658ab2b50265b7c2b39d68d`
 
 ## Failed Run
 
@@ -74,7 +75,9 @@
 - Local real alias exercise: pass against rebuilt immutable image
   `sha256:86cb121dfb4bb4d33f2547416953eb1dbf383b8f72bec88635e7a077616a9221`,
   with 13 profiles and no `result.json`
-- Hosted CI rerun: pending after fast-forward integration into `main`
+- Hosted CI rerun: GitHub Actions run `30512678167` passed `Rust 1.85.0`,
+  `Rust stable`, `Behavior Contract`, and `Oracle Evidence`; the rebuilt-image
+  resource exercise passed on the clean hosted runner
 
 ## Review And Integration
 
@@ -83,7 +86,7 @@
   metric mutations, caller-root symlink handling, immutable alias resolution,
   canonical LCOV identity, and the exact samples-only tree were independently
   verified
-- Controller dev-workbench checkpoint: pending and controller-owned
+- Controller dev-workbench checkpoint: recorded after hosted CI success
 - Commit/push authorization: granted by the user for delivery and repair
 - Target integration: fast-forward the reviewed repair into `main`, then confirm
   the `Oracle Evidence` job passes the rebuilt-image resource exercise
