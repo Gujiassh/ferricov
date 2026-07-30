@@ -7,9 +7,9 @@
 - Repair branch: `fix/resource-ci-rebuild-image`
 - Repair starting SHA: `c2111e90f23b5590dcd7bc5d88e54709ac8b9022`
 - Downstream target: `main`
-- Repair commit SHA: pending
-- Push state: not pushed
-- Integration step: pending reviewed merge of the repair branch into `main`
+- Repair commit SHA: `19566ae6bdf6bac4ac0fc8bd6df08bab5791a22a`
+- Push state: repair commit pushed to `origin/fix/resource-ci-rebuild-image`
+- Integration step: reviewed fast-forward of the repair branch into `main`
 
 ## Failed Run
 
@@ -74,7 +74,7 @@
 - Local real alias exercise: pass against rebuilt immutable image
   `sha256:86cb121dfb4bb4d33f2547416953eb1dbf383b8f72bec88635e7a077616a9221`,
   with 13 profiles and no `result.json`
-- Hosted CI rerun: pending after reviewed commit/push
+- Hosted CI rerun: pending after fast-forward integration into `main`
 
 ## Review And Integration
 
