@@ -1,213 +1,143 @@
-# Ferricov: a pre-alpha Rust reimplementation project for LCOV
+# Ferricov
 
 [![CI](https://github.com/Gujiassh/ferricov/actions/workflows/ci.yml/badge.svg)](https://github.com/Gujiassh/ferricov/actions/workflows/ci.yml)
 [![License: GPL-2.0-or-later](https://img.shields.io/badge/License-GPL--2.0--or--later-blue.svg)](LICENSE)
-[![Project status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#project-status)
+[![Project status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange.svg)](#status)
 
-Ferricov is a parity-first Rust reimplementation project for the LCOV code
-coverage tool suite, including `lcov`, `genhtml`, and `geninfo`. It aims to let
-GCC and LLVM coverage workflows migrate without changing commands,
-configuration, tracefiles, CI decisions, or report meaning, while eventually
-providing a faster and more memory-efficient implementation. That performance
-goal is unverified until candidate binaries and reproducible benchmarks exist.
+A parity-first Rust reimplementation of the LCOV 2.5 code coverage tool suite.
 
-> **Pre-alpha:** Ferricov does not provide replacement binaries yet and makes
-> no drop-in compatibility or performance claim. The current repository
-> contains the pinned upstream Oracle, public-surface inventory, differential
-> test harness, architecture, and release contracts needed to build those
-> claims from evidence.
+Ferricov aims to let GCC and LLVM coverage workflows migrate from LCOV without
+changing commands, configuration, tracefiles, CI decisions, or report meaning.
+Compatibility is the product requirement; improved speed and memory use are the
+reason to migrate once correctness has been demonstrated.
 
-## Project Status
+## Contents
 
-| Area | Current evidence |
-| --- | --- |
-| Compatibility target | LCOV `v2.5` at [`74c8eab`](https://github.com/linux-test-project/lcov/commit/74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5) |
-| Product compatibility | **0 verified commands**; implementation has not started |
-| Candidate inventory | 584 reviewed entries: 394 command candidates, 9 positional forms, 158 `lcovrc` keys, and 23 support scripts |
-| Inventory review | 346 command options public, 41 generated tokens, and 7 internal; 153 config keys public and 5 not applicable; all 23 support scripts public; no entry has product evidence yet |
-| Parser profiles | 353 parser-backed options plus 41 generated tokens observed under two profiles: default resolves 9 unique abbreviations, 2 ambiguous forms, and 30 unknown forms; POSIX rejects all 41 as unknown |
-| Upstream test map | All 205 files mapped and reviewed |
-| Differential harness | 106 Rust unit tests, 40 behavior-contract tests, 6 configuration-contract tests, 8 environment-contract tests, 11 tracefile-contract tests, 13 diagnostics-contract tests, 22 installation-contract tests, 16 correctness tests, 53 resource tests, 6 Oracle parser-policy probes, 82 profile-resolution probes, 6 Oracle self-tests, and an intentional reverse failure verified |
-| M0 behavior planning | 531 public entries have primary plans; 69 are reviewed, including 40 CLI parser entries and 8 configuration-semantic slices with 67 exact bindings; all 4 critical interaction domains are reviewed, and 462 primary reviews remain open |
-| Oracle correctness baseline | 148 raw M0 observations, comprising 126 CLI and 22 configuration cases, retained from immutable image `sha256:b02cc645...56eb80b7`; independent semantic replay passed; product compatibility evidence remains **false** |
-| Environment contract | 19 named variables, 1 dynamic configuration input, 5 discovery paths, and all 36 direct `$ENV` source lines are reviewed; 22 Oracle-case bindings remain reference-only |
-| Tracefile contract | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, 36 fixtures, and 52 Oracle observations are reviewed; 28 planned M1 tracefile IDs remain unmapped |
-| Diagnostics contract | All 32 shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies are reviewed; 51 retained observations are reference-only and all 71 diagnostic/parallel cases remain planned |
-| Installation contract | The 321-entry installed tree is canonical under `/usr/local`, split into 9 exact groups, and bound to 15 source closures; 13 install cases remain planned, while 4 metadata-bound Oracle samples retain the same 7 report assets without product evidence |
-| Oracle resource observation | The canonical 13/13 result remains bound to historical image `sha256:b02cc645...56eb80b7`; CI separately resolves its closure-verified rebuilt alias to that job's immutable ID and validates the same ordered sample semantics/tree without emitting canonical evidence, selecting a Ferricov limit, or making a compatibility/performance claim |
-| Performance | Four-family Oracle baseline retained and validated; no candidate results exist and no performance gate is evaluated |
-| Current milestone | M0: executable compatibility contract and reproducible baselines; 462 behavior-planning gaps remain |
+- [Status](#status)
+- [Goals](#goals)
+- [Compatibility Scope](#compatibility-scope)
+- [Install](#install)
+- [Usage](#usage)
+- [Development](#development)
+- [Roadmap](#roadmap)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-Self-tests prove that the harness captures differences and fails correctly.
-They do not count as Ferricov product compatibility. See the
-[compatibility contract](docs/ssot/compatibility-contract.md) for the live,
-evidence-backed matrix.
+## Status
 
-## Why Ferricov
+Ferricov is **pre-alpha**. It does not provide installable replacement binaries
+and makes no drop-in compatibility or performance claim. The project is
+currently completing the M0 executable contract and reproducible LCOV 2.5
+Oracle baselines before Rust product implementation begins.
 
-LCOV is mature, portable, and trusted. Replacing Perl by itself is not a reason
-for users to migrate. Ferricov therefore treats:
+Live engineering status belongs in the
+[compatibility contract](docs/ssot/compatibility-contract.md),
+[current tasks](specs/001-full-lcov-compatibility/tasks.md), and
+[changelog](CHANGELOG.md), rather than this overview.
 
-- **behavioral compatibility as the product:** observable LCOV 2.5 behavior
-  must be reproduced before a surface is called compatible;
-- **performance as the migration incentive:** representative workloads must
-  meet or beat the pinned Perl baseline after correctness passes;
-- **reproducible evidence as the release gate:** raw differential artifacts and
-  benchmark samples must support public claims;
-- **Rust as the implementation strategy:** memory safety and Rust-native module
-  boundaries should improve maintainability without changing coverage meaning.
+## Goals
+
+- Reproduce observable LCOV 2.5 behavior before calling a surface compatible.
+- Preserve coverage meaning, diagnostics, exit behavior, and filesystem output.
+- Validate claims through differential tests against a pinned upstream Oracle.
+- Measure performance continuously, while accepting benchmark results only after
+  the same fixtures pass correctness.
+- Use clear Rust-native module boundaries instead of translating Perl internals.
 
 ## Compatibility Scope
 
-The v1.0 target is the complete installed public surface of LCOV 2.5:
+The v1.0 target is the installed public surface of LCOV 2.5 at
+[`74c8eab`](https://github.com/linux-test-project/lcov/commit/74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5),
+including:
 
-- primary commands: `lcov`, `genhtml`, and `geninfo`;
-- auxiliary commands: `genpng`, `gendesc`, `perl2lcov`, `py2lcov`,
-  `xml2lcov`, `xml2lcovutil.py`, and `llvm2lcov`;
-- CLI options, aliases, defaults, interactions, diagnostics, and exit status;
-- `lcovrc` discovery, keys, precedence, and environment expansion;
-- LCOV tracefile parsing, serialization, merge, filtering, and summaries;
-- GCC and LLVM coverage capture across the declared compiler matrix;
-- HTML coverage report structure, links, assets, source annotations, and
-  thresholds;
-- installed support scripts, callback protocols, filesystem behavior, and
-  installation layout.
+- `lcov`, `genhtml`, `geninfo`, and the installed auxiliary tools;
+- CLI options, aliases, configuration, diagnostics, and exit status;
+- LCOV tracefile parsing, writing, merging, filtering, and summaries;
+- GCC and LLVM coverage capture;
+- HTML reports, assets, links, annotations, and thresholds;
+- callbacks, support scripts, filesystem behavior, and installation layout.
 
-Internal Perl packages and implementation structure are not compatibility
-contracts.
+Internal upstream Perl packages and implementation structure are not
+compatibility contracts.
 
-## Evidence Model
+## Install
 
-Ferricov runs the pinned upstream LCOV release and the Rust candidate in fresh,
-equivalent environments. The correctness baseline first retains the pinned
-Oracle's raw reference observations; the differential harness then records
-actual container image and executable SHA-256 identities, raw stdout, stderr,
-exit status, timings, and file-tree snapshots before applying a small, reviewed
-[normalizer registry](compat/normalizers.md). Filesystem evidence includes
-content, raw path bytes, Unix mode and ownership, symlink targets, and hardlink
-relationships where the platform exposes them.
+Ferricov is not installable yet. No crates or replacement binaries have been
+released. Continue using upstream LCOV for production coverage workflows until
+a qualified Ferricov release publishes an explicit compatibility matrix.
 
-Compatibility suites reject self-comparison, mismatched environments, unknown
-normalizers, and non-exact exit or filesystem comparison. HTML qualification
-will additionally compare normalized DOM, navigation, links, assets, source
-line state, thresholds, and encoded coverage meaning.
+## Usage
 
-Correctness gates all benchmarks. The
-[performance contract](docs/ssot/performance-contract.md) defines per-case and
-benchmark-family thresholds for wall time, CPU time, peak RSS, output size, and
-throughput.
-
-## Architecture
-
-| Crate | Responsibility |
-| --- | --- |
-| `ferricov-model` | Coverage entities, identifiers, counters, and invariants |
-| `ferricov-tracefile` | Byte-preserving streaming LCOV parser and writer |
-| `ferricov-ops` | Merge, filter, extract, remove, summary, and transforms |
-| `ferricov-report` | Report tree, aggregation, HTML, and report assets |
-| `ferricov-cli` | Public command parsing, configuration, and orchestration |
-| `ferricov-oracle` | Differential execution, normalization, and evidence |
-
-The domain model does not depend on CLI parsing, filesystem traversal,
-subprocess execution, or HTML rendering. Ferricov reproduces public behavior
-without translating the upstream Perl architecture line by line.
-
-## Roadmap
-
-| Milestone | Planned release | Qualification target |
-| --- | --- | --- |
-| M0 | internal | Complete inventory, executable Oracle, and baselines |
-| M1 | v0.1 | Tracefile model, parser, writer, properties, and fuzzing |
-| M2 | v0.2 | `lcov` manipulation and shared CLI/configuration runtime |
-| M3 | v0.3 | Complete `genhtml` report compatibility |
-| M4 | v0.4 | Complete `geninfo` and coverage capture |
-| M5 | v0.5 | Auxiliary suite, callbacks, packaging, Linux and macOS |
-| M6 | v1.0 | Full declared matrix, performance gates, and 3 downstream pilots |
-
-The current engineering estimate is 28-36 full-time weeks for one technical
-owner using AI assistance. It is an estimate, not a release promise. The
-[execution plan](specs/001-full-lcov-compatibility/plan.md) contains the
-dependencies, risks, go/no-go gates, and current tasks. The
-[changelog](CHANGELOG.md) records completed engineering slices without implying
-a compatibility release.
+There is no end-user Ferricov CLI in the pre-alpha phase. Preview releases will
+publish exact supported commands and examples as each milestone qualifies; they
+will not imply compatibility for unfinished surfaces.
 
 ## Development
 
-The workspace declares Rust `1.85.0` as its minimum supported version.
-`bubblewrap` is required on Linux for the local process-isolation tests. Docker
-is required only for the pinned LCOV Oracle and environment-equivalent
-differential tests. The ordinary CI Rust matrix sets
-`FERRICOV_SKIP_DOCKER_E2E=1` for the single prebuilt-image test and
-smoke-tests the bubblewrap PID namespace used by process-isolation tests. A
-dedicated Python job checks deterministic behavior, environment, tracefile,
-diagnostics, and installation contract generation, mutation tests, retained
-corpus integrity, and the current contract gate against the pinned LCOV source.
-The separate Oracle job builds the image and exercises the real Docker paths.
-Docker differential runs clear the image environment before supplying the
-reviewed `HOME`, locale, `PATH`, and timezone allowlist recorded by the launcher.
-The Oracle CI job verifies that clean environment in a real container before
-running the differential harness self-tests and retained correctness-baseline
-validator.
+The workspace uses Rust `1.85.0` and Python `3.12`; the contract verifier uses
+`jsonschema==4.25.1`. Linux process-isolation tests require `bubblewrap`.
+Docker is required for the pinned LCOV Oracle and full differential
+verification.
+
+```bash
+git clone https://github.com/Gujiassh/ferricov.git
+cd ferricov
+python3 -m pip install jsonschema==4.25.1
+FERRICOV_SKIP_DOCKER_E2E=1 cargo test --workspace --all-targets --locked
+```
+
+Run the local quality gate before submitting changes:
 
 ```bash
 cargo fmt --all --check
-cargo check --workspace --all-targets
-cargo test --workspace --all-targets
-cargo clippy --workspace --all-targets -- -D warnings
-python3 compat/correctness/validate.py
-python3 -m unittest discover -s compat/cases -p 'test_*.py'
-python3 -m unittest discover -s compat/correctness -p 'test_*.py'
-python3 compat/environment/contract.py \
-  --upstream-root /home/cc/code1/lcov-upstream-reference
-python3 -m unittest compat/environment/test_contract.py
-python3 compat/fixtures/m0-tracefiles/validate.py
-python3 compat/tracefile/contract.py \
-  --upstream-root /home/cc/code1/lcov-upstream-reference
-python3 -m unittest compat/tracefile/test_contract.py
-python3 compat/diagnostics/contract.py \
-  --upstream-root /home/cc/code1/lcov-upstream-reference
-python3 -m unittest compat/diagnostics/test_contract.py
-python3 compat/installation/contract.py \
-  --upstream-root /home/cc/code1/lcov-upstream-reference
-python3 -m unittest compat/installation/test_contract.py
+cargo check --workspace --all-targets --locked
+FERRICOV_SKIP_DOCKER_E2E=1 cargo test --workspace --all-targets --locked
+cargo clippy --workspace --all-targets --locked -- -D warnings
+python3 compat/verify.py --skip-oracle
 ```
 
-Build and smoke-test the immutable LCOV 2.5 Oracle:
+See the [compatibility harness guide](compat/README.md) for Oracle builds,
+differential runs, retained evidence, and full verification.
 
-```bash
-compat/upstream/build.sh
-```
+## Roadmap
 
-Run the positive harness self-test:
+| Milestone | Target |
+| --- | --- |
+| M0 | Executable compatibility contract and reproducible baselines |
+| M1 / v0.1 | Tracefile model, parser, writer, properties, and fuzzing |
+| M2 / v0.2 | `lcov` manipulation and shared CLI/configuration runtime |
+| M3 / v0.3 | Compatible `genhtml` report generation |
+| M4-M5 / v0.4-v0.5 | Coverage capture, auxiliary tools, and packaging |
+| M6 / v1.0 | Full published matrix, all performance gates, and three downstream pilots |
 
-```bash
-cargo run -p ferricov-oracle --bin differential -- \
-  compat/cases/harness-self-test.json \
-  compat/launchers/lcov-v2.5-oracle.json \
-  compat/launchers/lcov-v2.5-oracle.json \
-  /tmp/ferricov-harness-self-test
-```
+The [execution plan](specs/001-full-lcov-compatibility/plan.md) defines detailed
+scope, dependencies, risks, and release gates. M1 must not start before the M0
+go/no-go gate is approved.
 
-This command intentionally compares the Oracle with itself to validate the
-harness. It cannot produce compatibility credit.
+## Documentation
+
+- [Project source of truth](docs/ssot/project.md)
+- [Compatibility contract](docs/ssot/compatibility-contract.md)
+- [Performance contract](docs/ssot/performance-contract.md)
+- [Execution plan](specs/001-full-lcov-compatibility/plan.md)
+- [Current tasks](specs/001-full-lcov-compatibility/tasks.md)
+- [Changelog](CHANGELOG.md)
 
 ## Contributing
 
-Ferricov welcomes upstream-test mapping, behavioral fixtures, parser and model
-work, GCC/LLVM matrix coverage, reproducible benchmarks, and documentation.
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. A public
-surface is not complete until its success, interaction, boundary, and failure
-behavior have differential evidence.
+Contributions are welcome for compatibility fixtures, upstream-test mapping,
+Rust implementation, compiler coverage, benchmarks, and documentation. Read
+[CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Use the
+[issue chooser](https://github.com/Gujiassh/ferricov/issues/new/choose) for
+questions, defects, and compatibility gaps.
 
-Use GitHub's private security advisory flow for vulnerabilities; see
-[SECURITY.md](SECURITY.md). Use the issue templates for compatibility gaps and
-general defects.
+Report vulnerabilities through GitHub's private security advisory flow as
+described in [SECURITY.md](SECURITY.md).
 
-## License And Upstream Attribution
+## License
 
 Ferricov is licensed under
-[GPL-2.0-or-later](https://spdx.org/licenses/GPL-2.0-or-later.html). The
-behavioral reference is the
-[Linux Test Project LCOV repository](https://github.com/linux-test-project/lcov),
-also licensed under GPL-2.0. Ferricov is an independent project and is not
-affiliated with or endorsed by the Linux Test Project.
+[GPL-2.0-or-later](https://spdx.org/licenses/GPL-2.0-or-later.html); see
+[LICENSE](LICENSE). LCOV is also GPL-2.0-or-later. Ferricov is an independent
+project and is not affiliated with or endorsed by the Linux Test Project.
