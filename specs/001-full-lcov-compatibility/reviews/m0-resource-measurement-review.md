@@ -75,7 +75,8 @@ only after capture self-validation plus an independent validation pass:
 ```sh
 python3 -m py_compile compat/resources/contract.py \
   compat/resources/generate.py compat/resources/capture.py \
-  compat/resources/validate.py compat/resources/test_contract.py
+  compat/resources/validate.py compat/resources/test_contract.py \
+  compat/resources/exercise.py compat/resources/test_exercise.py
 python3 compat/resources/contract.py --write
 python3 compat/resources/contract.py
 output="$(mktemp -d /tmp/ferricov-resource-retention-final.XXXXXX)"
@@ -83,12 +84,15 @@ python3 compat/resources/capture.py --output "$output"
 python3 compat/resources/validate.py --result "$output/result.json"
 python3 compat/resources/validate.py --result \
   compat/resources/results/oracle-x86_64-linux-20260729/result.json
-python3 -m unittest compat/resources/test_contract.py
+python3 -m unittest \
+  compat/resources/test_contract.py \
+  compat/resources/test_exercise.py
 python3 compat/behavior/generate.py --check
 python3 compat/behavior/validate.py --mode current
 python3 compat/verify.py --skip-oracle
 (cd compat/resources && basedpyright --level error \
-  capture.py contract.py generate.py validate.py test_contract.py)
+  capture.py contract.py generate.py validate.py test_contract.py \
+  exercise.py test_exercise.py)
 git check-attr -a -- compat/resources/results/oracle-x86_64-linux-20260729/samples/field-1k/stdout.bin
 git diff --check
 git diff --cached --quiet
@@ -114,7 +118,19 @@ Observed final evidence:
   sample artifacts with no symlinks;
 - host: Linux x86_64, WSL2 kernel `6.6.87.2-microsoft-standard-WSL2`,
   20 logical CPUs, Docker `29.1.3`, systemd cgroup v2;
-- resource tests: 42/42 pass;
+- resource tests: 53/53 pass;
+- local rebuilt-alias exercise: 13/13 ordered profiles pass against
+  `sha256:86cb121dfb4bb4d33f2547416953eb1dbf383b8f72bec88635e7a077616a9221`
+  with no `result.json`;
+- rebuilt-image adapter tests cover one-time mutable-tag resolution, immutable-
+  ID-only execution, LCOV mismatch, ordered 13-profile samples-only closure,
+  nonempty output, caller symlink rejection, absent `result.json`,
+  extra/symlink entries, adapter-local Draft 2020-12 sample-schema validation
+  with sorted dotted-path errors, coherent invalid raw metrics/artifact descriptors,
+  and coherent metric/stream drift;
+- canonical resource evidence remains bound to
+  `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`;
+  the CI exercise emits no retained/canonical result;
 - BasedPyright: 0 errors, 0 warnings;
 - resource `*.bin` Git attributes: `binary` set; `diff`, `merge`, and `text`
   unset;
@@ -142,12 +158,19 @@ is retained as nonzero/timeout false, host `TimeoutExpired` is timeout true,
 and both leave exact-input/raw-artifact/Docker/deadline/post-cleanup evidence
 when storage is writable. Signal-path coverage proves raw `exit_code=null`/`signal=9` becomes
 `oracle_signal`, remains non-timeout, and retains canonical measured outcome and
-post-cleanup facts. Fault injection proves artifact retention failure reports
+post-cleanup facts. Adapter reverse tests additionally reject coherent invalid
+measurement backend/clock/range/extra-key raw metrics, extra artifact descriptor
+keys, coherent stream drift, and a caller output-root symlink before resolution.
+Fault injection proves artifact retention failure reports
 the original nonzero outcome and storage error, while combined injection also
 preserves the distinct named-container cleanup error; both claim no manifest,
 call cleanup, remove both temporary directories, and produce no success result.
 Cleanup tests also prove exact-name absence checks, container removal,
-observer-failure propagation, and nonempty-output rejection.
+observer-failure propagation, and nonempty-output rejection. CI-only adapter
+tests additionally prove that a mutable rebuilt alias resolves once, all
+capture calls use the resolved immutable ID in canonical profile order, LCOV
+identity mismatch fails before capture, no `result.json` is emitted, and
+samples-only extra/symlink/metric/stream drift is rejected.
 
 Assuming a regression occurred, exact generation and source-scoped input
 analysis identify the affected profile; static stream/outcome semantics expose
@@ -169,8 +192,8 @@ No observed value can silently become a Ferricov limit or compatibility claim.
 | Allocation evidence | blocked | The rusage backend exposes no allocation counter. |
 | Product limits | blocked | Exact accepted inputs are lower-bound observations only. |
 | Fuzz execution | blocked | `M1-TF-064` has no executable corpus or run. |
-| Tests | pass | 42 focused positive/reverse tests plus real capture validation pass. |
-| CI | pass | Oracle CI exercises capture into a fresh temporary directory. |
+| Tests | pass | 53 focused resource tests cover canonical contracts/results and the non-retained rebuilt-image adapter. |
+| CI | pass | After closure verification, Oracle CI resolves the rebuilt alias to that job's immutable ID and validates 13 samples-only outputs; it does not recapture canonical evidence. |
 | Documentation | pass | README, changelog, model/grammar, plan/tasks, and compatibility/performance SSoT agree. |
 | M1 authorization | blocked | Remaining M0 gates and go/no-go approval are open. |
 | Product compatibility | blocked | No Ferricov candidate executed any profile. |

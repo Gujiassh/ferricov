@@ -100,7 +100,10 @@ hashes and semantics, raw metrics, clean outcome, cleanup, and host/runtime
 identity. The host-bounded Docker run is the only timeout observer; writable
 storage retains canonical exact-input/raw-artifact/wrapper/deadline/cleanup
 failure evidence, retention errors cannot bypass attempted cleanup, and
-successful validation rejects extra entries and symlinks. All 13
+successful validation rejects extra entries and symlinks. The canonical result
+remains bound to historical `sha256:b02cc645...56eb80b7`; the CI-only adapter
+resolves the closure-verified rebuilt alias to that job's immutable ID and
+validates all 13 ordered samples without emitting `result.json`. All 13
 retained profiles are accepted, but their timing and RSS are
 single-run bounded observations rather than performance distributions. No
 Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
@@ -135,6 +138,10 @@ reference-only evidence and does not unlock product parity.
   metrics, host/runtime identity, host-deadline provenance, writable-storage
   failure diagnostics, retention-error cleanup, exact successful-tree closure,
   and fail-closed cleanup.
+- [x] Add a non-retained CI exercise for closure-equivalent rebuilt Oracle
+  images that resolves the job-local alias once, rechecks the LCOV executable
+  identity, and validates exact ordered samples-only output without changing
+  canonical evidence.
 - [ ] Define M1 benchmark sizes and performance gates.
 - [ ] Run the M0 go/no-go review.
 

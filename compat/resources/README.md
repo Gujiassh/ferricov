@@ -68,10 +68,42 @@ its contract and harness hashes, runtime identity, exact stream semantics, and
 all raw metrics. Replace the canonical uncommitted result as an explicit
 reviewed operation; `capture.py` never overwrites a nonempty directory.
 
-Run the 42 focused positive/reverse tests. Failure-path coverage includes raw
+Run the 53 focused positive/reverse tests. Failure-path coverage includes raw
 signal evidence and a combined original-capture, output-retention, and
-container-cleanup failure diagnostic:
+container-cleanup failure diagnostic. The CI-only rebuilt-image adapter has
+separate resolution, identity, order, samples-only closure, schema validation,
+and drift tests:
 
 ```sh
-python3 -m unittest compat/resources/test_contract.py
+python3 -m unittest \
+  compat/resources/test_contract.py \
+  compat/resources/test_exercise.py
 ```
+
+## CI Rebuilt-Image Exercise
+
+The canonical retained result remains bound to historical immutable image
+`sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`.
+Docker image configuration IDs may differ across otherwise closure-equivalent
+rebuilds, so CI does not invoke canonical `capture.py` against its fresh image.
+After `compat/verify.py` proves the rebuilt package, installed-tree, key-file,
+and smoke closures, CI invokes:
+
+```sh
+output="$(mktemp -d)"
+python3 compat/resources/exercise.py \
+  --image ferricov/lcov-oracle:v2.5 \
+  --output "$output"
+```
+
+`exercise.py` validates the committed canonical contract before making an
+in-memory copy, resolves the job-local alias once to an immutable image ID,
+requires the canonical LCOV executable SHA-256 in that image, and exercises all
+13 profiles in order. Each rebuilt sample is checked against an adapter-local
+Draft 2020-12 wrapper containing only the original `$schema`, `$defs`, and the
+`$ref` to `sample`; schema failures report their first sorted dotted path. It
+emits only a validated samples tree and the
+`REBUILD_RESOURCE_EXERCISE_OK` status line. It does not emit `result.json`,
+mutate the canonical contract/result, or create retained resource evidence.
+The exercise establishes no product limit, compatibility evidence, or
+performance evidence.

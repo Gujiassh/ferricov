@@ -120,9 +120,14 @@ the M0 harness become the permanent integration boundary.
   artifact/wrapper/deadline/cleanup evidence; retention errors fail closed
   without bypassing attempted container/temp cleanup. Only the host Docker
   deadline establishes timeout, and successful result validation rejects any
-  extra entry or symlink. The
-  retained 13/13 accepted result is a bounded single-run Oracle observation,
-  not a Ferricov product limit, compatibility claim, or performance gate.
+  extra entry or symlink. The retained 13/13 accepted result stays bound to
+  historical immutable image `sha256:b02cc645...56eb80b7` and remains a bounded
+  single-run Oracle observation, not a Ferricov product limit, compatibility
+  claim, or performance gate. `compat/resources/exercise.py` is outside the
+  canonical six-file harness: CI resolves its closure-verified rebuilt alias to
+  that job's immutable ID, rechecks the canonical LCOV executable hash, and
+  validates the 13 ordered samples-only trees without emitting retained
+  evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Sixty-nine primary plans and all four required
   critical interaction domains are reviewed. The callback,
@@ -140,9 +145,10 @@ the M0 harness become the permanent integration boundary.
   process-isolation tests, provisions the complete pinned toolchain before
   Oracle verification, and independently gates deterministic behavior,
   environment, tracefile, diagnostics, installation, and resource contract
-  generation, mutation tests, retained corpus integrity, current-mode
-  validation, and a fresh temporary resource capture against the immutable
-  Oracle image.
+  generation, 53 resource tests, retained corpus integrity, current-mode
+  validation, and a samples-only resource exercise against the job's
+  closure-verified rebuilt immutable Oracle ID. The exercise emits no canonical
+  result and does not alter the historical image binding.
 - Docker differential execution uses `/usr/bin/env -i` and then applies only the
   launcher-declared `HOME`, locale, `PATH`, and timezone values. Retained
   `effective_environment_variables` now describes the actual command

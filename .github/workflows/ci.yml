@@ -133,8 +133,11 @@ jobs:
           python3 compat/resources/validate.py --result \
             compat/resources/results/oracle-x86_64-linux-20260729/result.json
 
-      - name: Run resource contract mutation tests
-        run: python3 -m unittest compat/resources/test_contract.py
+      - name: Run resource tests
+        run: >-
+          python3 -m unittest
+          compat/resources/test_contract.py
+          compat/resources/test_exercise.py
 
       - name: Validate current behavior contract
         run: python3 compat/behavior/validate.py --mode current
@@ -162,12 +165,13 @@ jobs:
       - name: Build and verify pinned Oracle
         run: python3 compat/verify.py
 
-      - name: Exercise resource capture path
+      - name: Exercise rebuilt Oracle resource capture path
         run: |
           output="$(mktemp -d)"
           trap 'rm -rf "$output"' EXIT
-          python3 compat/resources/capture.py --output "$output"
-          python3 compat/resources/validate.py --result "$output/result.json"
+          python3 compat/resources/exercise.py \
+            --image ferricov/lcov-oracle:v2.5 \
+            --output "$output"
 
       - name: Verify clean Docker execution
         run: >-

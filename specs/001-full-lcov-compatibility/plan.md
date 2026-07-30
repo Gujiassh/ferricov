@@ -179,8 +179,12 @@ cardinalities, branch/MC/DC summary semantics, raw metrics, clean outcomes,
 cleanup, and host/runtime identity fail closed. Writable output storage retains
 canonical post-generation diagnostics with explicit host-deadline provenance;
 retention failure cannot bypass attempted container/temp cleanup. Successful
-result validation rejects unreferenced tree entries and symlinks. These are
-bounded single-run
+result validation rejects unreferenced tree entries and symlinks. The canonical
+13/13 result remains bound to historical image `sha256:b02cc645...56eb80b7`.
+CI separately resolves the closure-verified rebuilt alias to its immutable ID,
+rechecks the canonical LCOV executable hash, and validates the 13 ordered
+samples-only trees without emitting retained evidence. These are bounded
+single-run
 Oracle observations, not Ferricov product limits, compatibility evidence, or
 performance gates; `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` remain blocked.
 M1 must not start until the M0 exit gate and the Week 2 parser gate are

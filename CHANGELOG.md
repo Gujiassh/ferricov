@@ -55,8 +55,12 @@ compatibility releases.
   bound harness/schema artifacts, retained raw metrics, clean outcome and
   cleanup evidence, host/kernel/Docker/cgroup identity, writable-storage
   diagnostics for post-generation failures, fail-closed retention-error cleanup,
-  explicit host-deadline timeout provenance, and exact successful-tree closure. All exact profiles are accepted without
-  selecting a Ferricov product limit or compatibility or performance claim.
+  explicit host-deadline timeout provenance, and exact successful-tree closure.
+  The canonical 13/13 result remains bound to historical immutable image
+  `sha256:b02cc645...56eb80b7`; the CI-only adapter validates ordered samples
+  against a closure-verified rebuilt immutable image without retaining a result.
+  No Ferricov product limit, compatibility claim, or performance claim is
+  selected.
 - Normative M0 contracts for the coverage model, tracefile grammar,
   diagnostics, parallel execution, callbacks, installation, and upstream
   defect handling.
@@ -77,11 +81,18 @@ compatibility releases.
 - Extended the repository verifier and Behavior Contract CI job with exact
   environment, tracefile, diagnostics, installation, and resource contract
   regeneration, retained corpus checks, schema validation, pinned source
-  closure, reverse mutation guards, and a fresh temporary Oracle resource
-  capture.
+  closure, reverse mutation guards, and a non-retained samples-only resource
+  exercise against the job's closure-verified rebuilt immutable Oracle ID.
 
 ### Fixed
 
+- Added a CI-only resource exercise adapter for closure-equivalent Oracle
+  rebuilds. The hosted job resolves the verified `v2.5` alias once to its
+  immutable image ID, retains the canonical LCOV executable hash requirement,
+  validates all 13 ordered sample trees, and emits no canonical `result.json`.
+  This keeps historical resource evidence bound to its original image ID while
+  avoiding invalid assumptions that reproducible filesystem/package closures
+  imply reproducible Docker image configuration IDs.
 - Made clean-checkout Oracle verification consume the immutable image ID from
   its newly generated execution manifest instead of assuming a pre-existing
   mutable tag; successful standalone builds also refresh the documented
@@ -124,7 +135,7 @@ compatibility releases.
   with warnings denied, 40 behavior-contract tests, 6 configuration-contract
   tests, 8 environment-contract tests, 11 tracefile-contract tests, 13
   diagnostics-contract tests, 22 installation-contract tests, 16 correctness
-  tests, 42 resource-contract tests, schema validators, and retained evidence
+  tests, 53 resource tests, schema validators, and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
 - M0 remains open with 462 explicit behavior-planning gaps; no compatibility or
