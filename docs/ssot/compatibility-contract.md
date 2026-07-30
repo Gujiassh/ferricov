@@ -49,7 +49,7 @@ relationships where supported.
 | diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 51 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary plans cover all 531 public entries | not started | 69 reviewed primary plans, including 40 CLI parser entries plus 8 configuration-semantic slices with 67 bindings; all 4 critical interaction domains reviewed; 462 primary reviews open |
+| behavior planning | primary plans cover all 531 public entries | not started | 73 reviewed primary plans, including 40 CLI parser entries, 8 configuration-semantic slices with 67 bindings, and 4 reference-only tracefile CLI targets; all 4 critical interaction domains reviewed; 458 primary reviews open |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | two-build tree reproduction plus 4 reference-only samples of 7 runtime assets; no product evidence |
 | Oracle resource observation | 13 controlled profiles with exact source-scoped input shapes, branch/MC/DC summaries, streams, raw metrics, cleanup, and runtime identity | not started | 13/13 exact Oracle inputs accepted in one bounded run; no product limit, compatibility evidence, or performance gate |
@@ -91,6 +91,15 @@ review six previously open primary targets. These plans separate CLI parser
 ownership from configuration discovery and precedence ownership. Their Oracle
 observations remain reference-only; all eight plans stay `planned` with empty
 evidence arrays.
+
+Four additional `lcov` tracefile CLI primary plans cover `--add-tracefile`,
+`--output-file`, `--no-function-coverage`, and `--mcdc-coverage`. Their
+semantics are limited to exact retained canonical-rewrite argv, exit, named
+output, stream/output hash observations, and reviewed upstream planning links.
+All four stay `evidence_status=none` with empty evidence and suite arrays. The
+eight related diagnostic recovery observations remain Oracle references and
+are not promoted or rebound; summary, branch-coverage, and ignore-errors
+primary ownership remains unchanged.
 
 The standalone environment contract is generated independently of the public
 inventory. It pins exact source text for the 36 direct `$ENV` lines across six

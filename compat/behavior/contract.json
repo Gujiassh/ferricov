@@ -10655,7 +10655,11 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.function-differential",
+        "lcov.add-and-prune",
+        "lcov.format"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -10663,13 +10667,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for command.lcov.option.add-tracefile; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcov --add-tracefile as the input selector present in all eight retained canonical-rewrite argv observations. Each observation reads input.info, names output.info through --output-file, exits zero, and retains exact stdout, stderr, and output hashes. The upstream tests are reviewed planning references only; no Ferricov compatibility evidence is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.lcov.option.add-tracefile",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -10728,7 +10732,12 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh",
+        "tests/lcov/add/prune.sh",
+        "tests/lcov/add/track.sh",
+        "tests/lcov/format/format.sh"
+      ]
     },
     {
       "applicability": {
@@ -13391,7 +13400,9 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.set-operations"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -13399,13 +13410,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for command.lcov.option.mcdc-coverage; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcov --mcdc-coverage only for the two retained canonical-rewrite argv observations that also use --add-tracefile and --output-file. Both observations exit zero and retain exact stdout, stderr, and output hashes. The reviewed upstream set-operation driver is a planning reference only; summary and branch-coverage ownership are not included and no Ferricov compatibility evidence is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.lcov.option.mcdc-coverage",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -13452,7 +13463,9 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/lcov/merge/merge.sh"
+      ]
     },
     {
       "applicability": {
@@ -13830,7 +13843,9 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.format"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -13838,13 +13853,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for command.lcov.option.no-function-coverage; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcov --no-function-coverage only for the five retained canonical-rewrite argv observations that carry this flag with --add-tracefile and --output-file. Every observation exits zero and retains an exact output hash. No broader function-filtering semantics, diagnostic ownership, or Ferricov compatibility evidence is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.lcov.option.no-function-coverage",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "help_definition",
@@ -14128,7 +14143,11 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.function-differential",
+        "lcov.add-and-prune",
+        "lcov.format"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -14136,13 +14155,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for command.lcov.option.output-file; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcov --output-file as the output path selector present in all eight retained canonical-rewrite argv observations. Each observation names output.info, records that the output exists, exits zero, and retains exact stdout, stderr, and output hashes. The upstream tests are reviewed planning references only; no Ferricov compatibility evidence is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.lcov.option.output-file",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -14207,7 +14226,12 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh",
+        "tests/lcov/add/prune.sh",
+        "tests/lcov/add/track.sh",
+        "tests/lcov/format/format.sh"
+      ]
     },
     {
       "applicability": {
@@ -31426,8 +31450,8 @@
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 109,
-      "unreviewed": 462
+      "reviewed": 113,
+      "unreviewed": 458
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -31438,9 +31462,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 69,
+    "reviewed_primary_coverage": 73,
     "subjects": 35,
-    "uncovered_public_entries": 462
+    "uncovered_public_entries": 458
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

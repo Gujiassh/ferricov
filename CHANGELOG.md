@@ -34,6 +34,11 @@ compatibility releases.
 - Eight reviewed configuration-semantic planning slices with 67 exact suite
   bindings, raising reviewed primary coverage to 69 public entries while
   retaining empty product-evidence arrays.
+- Reviewed reference-only primary plans for `lcov --add-tracefile`,
+  `--output-file`, `--no-function-coverage`, and `--mcdc-coverage`, bounded to
+  exact retained tracefile argv, exit, named-output, hash observations, and
+  reviewed upstream planning sources. The four plans raise reviewed primary
+  coverage to 73 while keeping evidence and compatibility-suite bindings empty.
 - A standalone fail-closed LCOV 2.5 environment and configuration-discovery
   contract covering 19 named variables, one dynamic expansion input, five
   discovery paths, all 36 direct `$ENV` source lines, and 22 existing Oracle
@@ -132,13 +137,13 @@ compatibility releases.
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
 - The workspace passes formatting, compilation, 106 Rust unit tests, clippy
-  with warnings denied, 40 behavior-contract tests, 6 configuration-contract
+  with warnings denied, 42 behavior-contract tests, 6 configuration-contract
   tests, 8 environment-contract tests, 11 tracefile-contract tests, 13
   diagnostics-contract tests, 22 installation-contract tests, 16 correctness
   tests, 53 resource tests, schema validators, and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
-- M0 remains open with 462 explicit behavior-planning gaps; no compatibility or
+- M0 remains open with 458 explicit behavior-planning gaps; no compatibility or
   candidate performance claim is made.
 
 [Unreleased]: https://github.com/Gujiassh/ferricov/commits/main

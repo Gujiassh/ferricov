@@ -30,6 +30,7 @@ from generate import (  # noqa: E402
     inventory_entries,
     load_authored_fragments,
     load_object,
+    make_source_references,
     merge_fragments,
     schema_validator,
     validate_fragment_document,
@@ -332,8 +333,242 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 69)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 462)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 73)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 458)
+
+    def test_m0_tracefile_cli_primary_reviews_remain_reference_only(self) -> None:
+        fragment = next(
+            fragment
+            for _, fragment in self.authored_fragments
+            if fragment["fragment_id"] == "authored.m0-tracefile-cli-primary"
+        )
+        cases = fragment["case_groups"]
+        expected_targets = {
+            "command.lcov.option.add-tracefile": {
+                "tests/genhtml/function/function.sh",
+                "tests/lcov/add/prune.sh",
+                "tests/lcov/add/track.sh",
+                "tests/lcov/format/format.sh",
+            },
+            "command.lcov.option.mcdc-coverage": {
+                "tests/lcov/merge/merge.sh",
+            },
+            "command.lcov.option.no-function-coverage": set(),
+            "command.lcov.option.output-file": {
+                "tests/genhtml/function/function.sh",
+                "tests/lcov/add/prune.sh",
+                "tests/lcov/add/track.sh",
+                "tests/lcov/format/format.sh",
+            },
+        }
+        self.assertEqual(len(cases), 4)
+        self.assertEqual(
+            {case["targets"][0]["id"]: set(case["upstream_tests"]) for case in cases},
+            expected_targets,
+        )
+        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
+        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
+        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
+        self.assertTrue(all(case["evidence"] == [] for case in cases))
+        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
+
+        aggregate = {case["id"]: case for case in self.base["case_groups"]}
+        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 73)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 458)
+
+        inventory_by_id = {
+            item["entry"]["id"]: item["entry"]
+            for item in inventory_entries(self.inventory)
+        }
+        expected_source_references = {
+            target: make_source_references(inventory_by_id[target])
+            for target in expected_targets
+        }
+        self.assertTrue(
+            all(
+                inventory_by_id[target]["review_status"] == "reviewed"
+                for target in expected_targets
+            )
+        )
+
+        def require_exact_inventory_sources(values: list[dict[str, Any]]) -> None:
+            for value in values:
+                target = value["targets"][0]["id"]
+                if value["source_references"] != expected_source_references[target]:
+                    raise AssertionError(
+                        f"{target}: authored source references differ from reviewed inventory"
+                    )
+
+        source_mutations = (
+            lambda value: value["source_references"].pop(),
+            lambda value: value["source_references"][0].__setitem__(
+                "line", value["source_references"][0]["line"] + 1
+            ),
+        )
+        for mutation in source_mutations:
+            with self.subTest(source_mutation=mutation):
+                mutated = copy.deepcopy(cases)
+                mutation(mutated[0])
+                with self.assertRaises(AssertionError):
+                    require_exact_inventory_sources(mutated)
+        require_exact_inventory_sources(cases)
+
+        def require_reference_only(values: list[dict[str, Any]]) -> None:
+            for value in values:
+                if value["evidence_status"] != "none":
+                    raise AssertionError("authored tracefile CLI plan promoted evidence status")
+                if value["evidence"]:
+                    raise AssertionError("authored tracefile CLI plan gained product evidence")
+                if value["suite_cases"]:
+                    raise AssertionError("authored tracefile CLI plan gained a suite binding")
+
+        mutations = (
+            lambda value: value.__setitem__("evidence_status", "planned"),
+            lambda value: value["evidence"].append({"unexpected": "product-evidence"}),
+            lambda value: value["suite_cases"].append(
+                {"suite_id": "m0-cli-contract-core", "case_id": "m0-core-lcov-version"}
+            ),
+        )
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                mutated = copy.deepcopy(cases)
+                mutation(mutated[0])
+                with self.assertRaises(AssertionError):
+                    require_reference_only(mutated)
+        require_reference_only(cases)
+
+    def test_m0_tracefile_cli_primary_planning_sources_are_exact(self) -> None:
+        oracle_source = json.loads(
+            (REPO_ROOT / "compat/fixtures/m0-tracefiles/oracle-cases.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        tracefile_contract = json.loads(
+            (REPO_ROOT / "compat/tracefile/v2.5.json").read_text(encoding="utf-8")
+        )
+        diagnostics_contract = json.loads(
+            (REPO_ROOT / "compat/diagnostics/v2.5.json").read_text(encoding="utf-8")
+        )
+        oracle_by_id = {case["id"]: case for case in oracle_source["cases"]}
+        tracefile_by_id = {
+            case["id"]: case for case in tracefile_contract["oracle_cases"]
+        }
+        canonical_ids = {
+            "bytes-crlf.canonical",
+            "bytes-no-final-newline.canonical",
+            "bytes-non-utf8.canonical",
+            "bytes-nul-accepted.canonical",
+            "current-all-records.canonical",
+            "legacy.canonical",
+            "numeric-boundary.canonical",
+            "permissive-prefix.canonical",
+        }
+        self.assertEqual(
+            {
+                identifier
+                for identifier, case in tracefile_by_id.items()
+                if case["kind"] == "canonical_rewrite"
+            },
+            canonical_ids,
+        )
+        for identifier in canonical_ids:
+            with self.subTest(oracle_case=identifier):
+                source = oracle_by_id[identifier]
+                retained = tracefile_by_id[identifier]
+                self.assertIn("--add-tracefile", source["argv"])
+                self.assertIn("--output-file", source["argv"])
+                self.assertEqual(source["output_file"], "output.info")
+                self.assertEqual(source["expected_exit"], 0)
+                self.assertEqual(retained["evidence_status"], "oracle_reference")
+                self.assertEqual(retained["exit_status"], 0)
+                self.assertIsNotNone(retained["output_sha256"])
+        self.assertEqual(
+            {
+                identifier
+                for identifier in canonical_ids
+                if "--no-function-coverage" in oracle_by_id[identifier]["argv"]
+            },
+            {
+                "bytes-crlf.canonical",
+                "bytes-no-final-newline.canonical",
+                "bytes-nul-accepted.canonical",
+                "numeric-boundary.canonical",
+                "permissive-prefix.canonical",
+            },
+        )
+        self.assertEqual(
+            {
+                identifier
+                for identifier in canonical_ids
+                if "--mcdc-coverage" in oracle_by_id[identifier]["argv"]
+            },
+            {"bytes-non-utf8.canonical", "current-all-records.canonical"},
+        )
+
+        recovery_ids = {
+            "malformed-da.ignore-format",
+            "malformed-tn.ignore-format",
+            "malformed-ver.ignore-format",
+            "numeric-excessive.ignore-excessive",
+            "numeric-malformed-exponent.ignore-format",
+            "numeric-negative.ignore-negative",
+            "numeric-nonnumeric.ignore-format",
+            "numeric-zero-line.ignore-format",
+        }
+        diagnostics_by_id = {
+            observation["id"]: observation
+            for observation in diagnostics_contract["oracle_observations"]
+        }
+        for identifier in recovery_ids:
+            with self.subTest(diagnostic_reference=identifier):
+                source = oracle_by_id[identifier]
+                retained = diagnostics_by_id[f"tracefile:{identifier}"]
+                self.assertIn("--add-tracefile", source["argv"])
+                self.assertIn("--output-file", source["argv"])
+                self.assertIn("--no-function-coverage", source["argv"])
+                self.assertEqual(source["expected_exit"], 0)
+                self.assertEqual(retained["exit_status"], 0)
+                self.assertIsNotNone(retained["output_sha256"])
+        self.assertFalse(tracefile_contract["product_compatibility_evidence"])
+        self.assertEqual(
+            diagnostics_contract["oracle_observation_evidence_status"],
+            "oracle_reference",
+        )
+        self.assertEqual(
+            diagnostics_contract["oracle_observation_product_evidence"], []
+        )
+        self.assertFalse(diagnostics_contract["product_compatibility_evidence"])
+
+        linked_tests = {
+            test
+            for case in next(
+                fragment
+                for _, fragment in self.authored_fragments
+                if fragment["fragment_id"] == "authored.m0-tracefile-cli-primary"
+            )["case_groups"]
+            for test in case["upstream_tests"]
+        }
+        tests_by_path = {entry["source"]: entry for entry in self.test_map["entries"]}
+        self.assertEqual(
+            linked_tests,
+            {
+                "tests/genhtml/function/function.sh",
+                "tests/lcov/add/prune.sh",
+                "tests/lcov/add/track.sh",
+                "tests/lcov/format/format.sh",
+                "tests/lcov/merge/merge.sh",
+            },
+        )
+        for test_path in linked_tests:
+            with self.subTest(upstream_test=test_path):
+                entry = tests_by_path[test_path]
+                self.assertEqual(entry["review_status"], "reviewed")
+                self.assertEqual(entry["classification"], "public_behavior")
+                self.assertIn(
+                    entry["evidence_scope"],
+                    {"direct_public_behavior", "indirect_public_behavior"},
+                )
 
     def test_m0_ready_cli_rejects_honest_debt(self) -> None:
         completed = subprocess.run(
@@ -861,8 +1096,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 )
 
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 462)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 69)
+        self.assertEqual(len(report.readiness_gaps), 458)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 73)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:

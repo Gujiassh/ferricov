@@ -129,10 +129,10 @@ the M0 harness become the permanent integration boundary.
   validates the 13 ordered samples-only trees without emitting retained
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Sixty-nine primary plans and all four required
-  critical interaction domains are reviewed. The callback,
+  531 public inventory entries. Seventy-three primary plans and all four
+  required critical interaction domains are reviewed. The callback,
   error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 462 public primary reviews remain open.
+  and reciprocal planning cases; 458 public primary reviews remain open.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
@@ -174,5 +174,11 @@ the M0 harness become the permanent integration boundary.
   slices with 67 exact suite bindings and reviews six additional public primary
   targets. Exit, branch-summary, and diagnostic expectations are validated
   against raw Oracle artifacts, but all product evidence remains empty.
+- The authored tracefile CLI fragment reviews the four primary targets for
+  `lcov` add-tracefile, output-file, no-function-coverage, and mcdc-coverage.
+  It is limited to exact retained argv, zero-exit, named-output, output-hash,
+  and reviewed upstream planning references. All four cases remain
+  `evidence_status=none` with empty evidence and suite arrays; related
+  diagnostic recovery observations remain reference-only.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

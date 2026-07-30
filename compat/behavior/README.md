@@ -21,6 +21,9 @@ Human-reviewed decisions live under `fragments/authored/`:
   primary plans already exercised by the retained M0 CLI Oracle contract
 - `m0-config-primary.json`: reviewed configuration discovery, precedence,
   override, and diagnostic ownership plans
+- `m0-tracefile-cli-primary.json`: reviewed reference-only primary plans for
+  `lcov` add/output and function/MC/DC coverage controls observed by the retained
+  tracefile corpus
 
 Machine-generated imports and inventory skeletons live under
 `fragments/generated/`. The generator places inventory entries into eight stable
@@ -110,8 +113,13 @@ suites. These cases use `evidence_status=planned` and retain empty evidence
 arrays because the retained Oracle observations are reference baselines, not
 Ferricov differential results. The configuration fragment adds eight semantic
 slices with 67 exact bindings and reviews six additional primary targets. It
-also retains `planned` status and empty evidence arrays. `m0-ready` now rejects
-the remaining 462 public entries without reviewed primary case groups.
+also retains `planned` status and empty evidence arrays. The tracefile CLI
+fragment reviews four additional primary targets from eight exact canonical
+rewrite observations plus reviewed upstream planning sources. Those four cases
+stay `evidence_status=none` with empty evidence and suite arrays; the related
+diagnostic recovery observations remain reference-only and are not rebound.
+`m0-ready` now rejects the remaining 458 public entries without reviewed
+primary case groups.
 
 ## Evidence Rules
 

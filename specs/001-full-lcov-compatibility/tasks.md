@@ -50,6 +50,8 @@
 - [x] Define the four required critical interaction groups with reciprocal cases.
 - [x] Review the 40 public CLI primary entries exercised by the retained M0
   contract and bind their 154 exact suite cases without claiming product evidence.
+- [x] Review the four retained-corpus `lcov` tracefile CLI primary targets while
+  keeping Oracle references out of product evidence and compatibility suites.
 - [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
 - [x] Write the callback/runtime ADR.
 - [x] Write the initial compiler/platform matrix ADR.
@@ -109,13 +111,16 @@ single-run bounded observations rather than performance distributions. No
 Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
-Behavior planning covers all 531 public entries with primary plans. Sixty-nine
-public primary plans are reviewed, including 40 CLI entries bound to 154 exact
-suite cases while retaining planning-only evidence status. All four required
-critical interaction domains now have reviewed members and reciprocal cases.
-Eight configuration-semantic slices bind 67 exact cases and review six more
-primary targets. The current M0 gate reports 462 gaps, all public entries
-without reviewed primary cases.
+Behavior planning covers all 531 public entries with primary plans.
+Seventy-three public primary plans are reviewed, including 40 CLI entries bound
+to 154 exact suite cases while retaining planning-only evidence status. All four
+required critical interaction domains now have reviewed members and reciprocal
+cases. Eight configuration-semantic slices bind 67 exact cases and review six
+more primary targets. Four tracefile CLI primary plans cover add-tracefile,
+output-file, no-function-coverage, and mcdc-coverage from exact retained
+reference observations and reviewed upstream planning sources. They keep
+`evidence_status=none` with empty evidence and suite arrays. The current M0 gate
+reports 458 gaps, all public entries without reviewed primary cases.
 The raw Oracle correctness baseline is complete and replayed, but it remains
 reference-only evidence and does not unlock product parity.
 

@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 69 reviewed primary plans, all 4 required
-  critical interaction domains reviewed, and 462 primary-review gaps
+- 531 public behavior plans, with 73 reviewed primary plans, all 4 required
+  critical interaction domains reviewed, and 458 primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
 percentages. One option may require multiple positive, negative, configuration,
@@ -146,13 +146,18 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. M0 is
-not complete: 462 behavior-planning gaps, compiler capture qualification, and
+not complete: 458 behavior-planning gaps, compiler capture qualification, and
 release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
 product compatibility. Forty public CLI primary entries covered by that
 contract now have reviewed planning bindings to 154 exact suite cases. Eight
 configuration-semantic slices add 67 bindings and six reviewed primary targets;
-all remain planning-only without candidate evidence. A separate fail-closed
+all remain planning-only without candidate evidence. Four additional `lcov`
+tracefile CLI targets now have reviewed primary plans bounded to exact retained
+canonical-rewrite and reviewed upstream planning references. Their evidence
+status remains `none`, evidence and suite arrays remain empty, and related
+diagnostic recovery observations remain reference-only rather than becoming
+product evidence. A separate fail-closed
 environment contract now reviews 19 named variables, one dynamic input, five
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
