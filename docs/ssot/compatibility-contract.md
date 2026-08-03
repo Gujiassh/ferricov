@@ -45,7 +45,7 @@ relationships where supported.
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
-| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 52 retained Oracle observations across 36 fixtures; reference-only, with 28 planned M1 tracefile IDs still unmapped |
+| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 59 retained Oracle observations across 39 fixtures including state-ownership semantic snapshots; reference-only, with 25 planned M1 tracefile IDs still unmapped |
 | diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 51 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
@@ -111,8 +111,10 @@ observations do not provide Ferricov product compatibility evidence.
 The standalone tracefile contract is also independent of the public inventory.
 It closes the pinned source inventory over every reader matcher and canonical
 writer emission, distinguishes the three reader-only tags, and binds the
-retained corpus and Oracle baseline by exact hashes. Its 52 observations are
-Oracle references only. They do not resolve the 28 M1 tracefile IDs that still
+retained corpus and Oracle baseline by exact hashes. Its 59 observations are
+Oracle references only. Exact structured mappings now cover `M1-TF-021`,
+`M1-TF-022`, and `M1-TF-026`, reducing unmapped planned M1 tracefile IDs from 28
+to 25. They still do not resolve the 25 M1 tracefile IDs that still
 lack executable mappings and do not provide Ferricov product compatibility
 evidence.
 

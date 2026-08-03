@@ -16,9 +16,10 @@ blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 
 The M0 source and evidence inventory is now executable at
 `compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
-lexical rules, 15 reader matcher lines, 18 writer emission lines, 36 fixtures,
-21 per-record malformed fixtures, and 52 retained Oracle observations. That
-inventory does not change this document's proposed status: 28 planned M1
+lexical rules, 15 reader matcher lines, 18 writer emission lines, 39 fixtures,
+21 per-record malformed fixtures, and 59 retained Oracle observations, including
+three state-ownership fixtures, two semantic snapshots, and the inspect_model.pl
+runner. That inventory does not change this document's proposed status: 25 planned M1
 tracefile IDs still lack exact executable mappings, and no M1 case has product
 evidence.
 
@@ -205,7 +206,7 @@ whether `B` exists only in the MC/DC map, whether `A` has empty MC/DC, and
 whether writer enumeration from the line-test key omits `B`'s MC/DC. Variants
 close the first block by a new MC/DC line and by `end_of_record`.
 
-`M0-TF-MCDC-SF-001` uses these exact bytes:
+`M0-TF-MCDC-SF-001` uses these exact success bytes:
 
 ```text
 TN:A
@@ -219,10 +220,28 @@ DA:2,1
 end_of_record
 ```
 
-It MUST freeze which source/test receives the old open block, duplicate-line
-failure, aggregate/testcase snapshots, diagnostics, and output. These are
-upstream-only M0 decision probes mapped to `M1-TF-021`, `M1-TF-022`, and
-`M1-TF-026`; they do not claim compatibility.
+Pinned Oracle result for the success bytes under
+`--no-function-coverage --mcdc-coverage`: the unterminated first source is
+filtered; only `/m0/next.c` / testcase `B` is retained. Aggregate MC/DC cached
+counters are `found=4,hit=2` while aggregate line data contains only line 2;
+testcase MC/DC under `B` holds both the line1 clone (`first`) and line2
+(`second`) with zero cached found/hit. Canonical output SHA
+`0fc19d686b099477165a80ff9909acc9f1a9480fd1441830f6434c20ceac3b95` enumerates
+`TN:B` / `/m0/next.c` with line1+line2 MC/DC and `DA:2`.
+
+A separate return-to-line1 variant inserts `MCDC:1,1,f,1,0,first` after the
+line2 MC/DC and before `DA`/`end_of_record`. That variant hard-fails with exit
+status 1 and stderr containing `MCDC already defined for 1`.
+
+`M0-TF-TN-MCDC-001` late-TN ownership freezes line/function/branch on testcase
+`A`, aggregate MC/DC with both senses, testcase MC/DC empty `A` plus line1 clone
+under `B` with zero cached counters, and canonical writer output that enumerates
+only testcase `A` and therefore omits B MC/DC entirely (canonical SHA
+`6af975d55989695523fce76a562cf0dc8d4513234929e610b7a7d131f317237e`).
+
+These are upstream-only M0 decision probes with exact executable mappings for
+`M1-TF-021`, `M1-TF-022`, and `M1-TF-026`; they do not claim product compatibility
+and do not resolve whole `M1-MD-*` rows.
 
 ### Version
 
@@ -672,24 +691,28 @@ and two independent statuses:
   It compares Ferricov to the retained baseline and may be `pass`,
   `not_applicable`, or `blocked`.
 
-The current `compat/fixtures/m0-tracefiles/oracle-cases.json` has candidate
-coverage for exactly these 19 IDs:
+The current `compat/fixtures/m0-tracefiles/oracle-cases.json` plus the generated
+tracefile contract now have exact structured executable mappings for these 22
+IDs:
 
 `M1-TF-001`, `M1-TF-004`, `M1-TF-006`, `M1-TF-008`, `M1-TF-010`,
-`M1-TF-012`, `M1-TF-015`, `M1-TF-016`, `M1-TF-030`, `M1-TF-031`,
-`M1-TF-032`, `M1-TF-033`, `M1-TF-034`, `M1-TF-036`, `M1-TF-040`,
-`M1-TF-042`, `M1-TF-044`, `M1-TF-061`, and `M1-TF-062`.
+`M1-TF-012`, `M1-TF-015`, `M1-TF-016`, `M1-TF-021`, `M1-TF-022`,
+`M1-TF-026`, `M1-TF-030`, `M1-TF-031`, `M1-TF-032`, `M1-TF-033`,
+`M1-TF-034`, `M1-TF-036`, `M1-TF-040`, `M1-TF-042`, `M1-TF-044`,
+`M1-TF-061`, and `M1-TF-062`.
 
-Its free-form compound `requirement` labels are not semantically validated and
-its baselines lack the aggregate plus four-family testcase snapshots. These 28
-IDs have no current exact executable mapping and remain explicit blockers:
+`M1-TF-021`, `M1-TF-022`, and `M1-TF-026` are bound through the state-ownership
+fixture group, semantic-snapshot runner `inspect_model.pl`, and retained Oracle
+identities; the contract also records `M0-TF-TN-MCDC-001` and
+`M0-TF-MCDC-SF-001`. Older free-form compound `requirement` labels on non-state
+cases remain informational only. These 25 IDs still have no exact executable
+mapping and remain explicit blockers:
 
 `M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-007`, `M1-TF-009`,
-`M1-TF-011`, `M1-TF-013`, `M1-TF-014`, `M1-TF-020`, `M1-TF-021`,
-`M1-TF-022`, `M1-TF-023`, `M1-TF-024`, `M1-TF-025`, `M1-TF-026`,
-`M1-TF-027`, `M1-TF-028`, `M1-TF-035`, `M1-TF-041`, `M1-TF-043`,
-`M1-TF-045`, `M1-TF-046`, `M1-TF-050`, `M1-TF-051`, `M1-TF-052`,
-`M1-TF-060`, `M1-TF-063`, and `M1-TF-064`.
+`M1-TF-011`, `M1-TF-013`, `M1-TF-014`, `M1-TF-020`, `M1-TF-023`,
+`M1-TF-024`, `M1-TF-025`, `M1-TF-027`, `M1-TF-028`, `M1-TF-035`,
+`M1-TF-041`, `M1-TF-043`, `M1-TF-045`, `M1-TF-046`, `M1-TF-050`,
+`M1-TF-051`, `M1-TF-052`, `M1-TF-060`, `M1-TF-063`, and `M1-TF-064`.
 
 No M1 parser implementation is authorized until the M0 baseline phase resolves
 the model-shaping decisions and the executable manifest/approval record exist.

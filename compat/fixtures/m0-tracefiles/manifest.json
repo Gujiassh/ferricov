@@ -881,6 +881,75 @@
       "contains_nul": false
     },
     {
+      "id": "state-late-tn-mcdc",
+      "path": "fixtures/state/late-tn-mcdc.info",
+      "group": "state-ownership",
+      "description": "Late TN during an open MC/DC block: line/function/branch stay on A while closed MC/DC clones under B.",
+      "committed": true,
+      "oracle_default": "accept",
+      "sha256": "fc468de82bfeea9880ff11c3bc35d7bed96cb46d3509002dc0f84f4b73975098",
+      "byte_size": 124,
+      "record_count": 10,
+      "record_counts": {
+        "BRDA": 1,
+        "DA": 1,
+        "FNA": 1,
+        "FNL": 1,
+        "MCDC": 2,
+        "SF": 1,
+        "TN": 2,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "state-cross-sf-mcdc-success",
+      "path": "fixtures/state/cross-sf-mcdc-success.info",
+      "group": "state-ownership",
+      "description": "Cross-SF while MC/DC is open without terminator: first source is filtered; surviving next-source ownership and both line MC/DC blocks under B.",
+      "committed": true,
+      "oracle_default": "accept",
+      "sha256": "ffdce5b7f5226be1868345a71230f0ba7834d9de1d5c9f07ca5086c92a1ee144",
+      "byte_size": 110,
+      "record_count": 9,
+      "record_counts": {
+        "DA": 2,
+        "MCDC": 2,
+        "SF": 2,
+        "TN": 2,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "state-cross-sf-mcdc-duplicate",
+      "path": "fixtures/state/cross-sf-mcdc-duplicate.info",
+      "group": "state-ownership",
+      "description": "Cross-SF return-to-line1 MC/DC after line2: hard-fails with MCDC already defined for 1.",
+      "committed": true,
+      "oracle_default": "reject",
+      "sha256": "4dc738ce2a34cf80ffabf3e3468d30e7112568ac96209deed47bb25602669e79",
+      "byte_size": 131,
+      "record_count": 10,
+      "record_counts": {
+        "DA": 2,
+        "MCDC": 3,
+        "SF": 2,
+        "TN": 2,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
       "id": "scale-medium",
       "path": "generated/medium.info",
       "group": "deterministic-scale",

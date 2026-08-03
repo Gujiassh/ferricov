@@ -140,8 +140,8 @@ semantic testcase identity. Changing `TN` after a source binding does not rebind
 the already-selected line, function, or branch maps. MC/DC is different: close
 paths at `U-MCDC-LATE-TN` look up the current test name instead of the
 source-bound `$mcdcMap`, so a late `TN` can assign an open MC/DC block to a
-different testcase. `M0-TF-TN-MCDC-001` and `M1-TF-021` must freeze the exact
-split before implementation.
+different testcase. `M0-TF-TN-MCDC-001`/`M1-TF-021` freeze A line/function/branch, both-sense aggregate MC/DC, empty A plus B line1 clone (cached 0/0), and A-only canonical output omitting B MC/DC; `M0-TF-MCDC-SF-001`/`M1-TF-022` keep only next/B with aggregate MC/DC cache 4/2 versus line2 data plus B line1+line2 clones, and
+`M1-TF-026` return-to-line1 hard-fails `MCDC already defined for 1` without resolving full `M1-MD-*` rows.
 
 ## Numeric And Counter Representation
 

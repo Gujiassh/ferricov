@@ -18,6 +18,10 @@ content-identified image and executable recorded in `manifest.json`.
 - `fixtures/numeric-boundary.info` and `fixtures/numeric/` pin the Perl numeric
   acceptance and error boundaries used by counts.
 - `fixtures/bytes/` pins CRLF, no final newline, invalid UTF-8, and NUL input.
+- `fixtures/state/` pins late-TN MC/DC ownership, cross-SF MC/DC success, and
+  the cross-SF return-to-line1 duplicate hard failure. Success ownership is
+  captured with `inspect_model.pl` semantic snapshots as well as canonical
+  rewrite observations.
 - `generated/medium.info` and `generated/large.info` are manifest entries but
   are not committed. They are deterministic outputs of `generate.py`.
 
@@ -48,7 +52,7 @@ python3 capture_oracle.py
 ```
 
 Validate committed bytes, deterministic temporary regeneration, provenance,
-case references, statuses, and all stdout/stderr/output identities:
+case references, statuses, semantic snapshot content, and all stdout/stderr/output identities:
 
 ```sh
 python3 validate.py

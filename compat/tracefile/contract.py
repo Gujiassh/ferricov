@@ -30,9 +30,10 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "57edf63e9d4988d380eac51fa2fb134a8628a6ef9b5c5431a0bc3b2a48b5eb56",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "01c6e11166d5ea440345744bd018c218b086847686f4474a96974e4c14efcca1",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "b0162c3677dcc3dcc859a5d13ea9002d36b7a093e89559643b4c89c1514659a7",
+    "compat/fixtures/m0-tracefiles/manifest.json": "7a9406ac7b69bfdb2e709ec496b6d80242341c595e5234f126638609a07b76d0",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca",
+    "compat/fixtures/m0-tracefiles/inspect_model.pl": "6f77427c548039d4fe17828b30ff73b245d3f6d21f6b587420dc1c830fa03d4a",
 }
 EXPECTED_RECORD_TAGS = (
     "TN", "SF", "KF", "VER", "FNL", "FNA", "FN", "FNDA", "FNF", "FNH",
@@ -51,6 +52,7 @@ EXPECTED_FIXTURE_IDS = (
     "bytes-no-final-newline", "bytes-non-utf8", "bytes-nul-accepted",
     "numeric-boundary", "numeric-negative", "numeric-nonnumeric",
     "numeric-malformed-exponent", "numeric-excessive", "numeric-zero-line",
+    "state-late-tn-mcdc", "state-cross-sf-mcdc-success", "state-cross-sf-mcdc-duplicate",
     "scale-medium", "scale-large",
 )
 EXPECTED_CASE_IDS = (
@@ -69,6 +71,8 @@ EXPECTED_CASE_IDS = (
     "numeric-boundary.summary", "numeric-negative.summary",
     "numeric-nonnumeric.summary", "numeric-malformed-exponent.summary",
     "numeric-excessive.summary", "numeric-zero-line.summary",
+    "state-late-tn-mcdc.summary", "state-cross-sf-mcdc-success.summary",
+    "state-cross-sf-mcdc-duplicate.summary",
     "scale-medium.summary", "scale-large.summary",
     "current-all-records.canonical", "legacy.canonical",
     "permissive-prefix.canonical", "bytes-crlf.canonical",
@@ -79,6 +83,9 @@ EXPECTED_CASE_IDS = (
     "numeric-nonnumeric.ignore-format",
     "numeric-malformed-exponent.ignore-format",
     "numeric-excessive.ignore-excessive", "numeric-zero-line.ignore-format",
+    "state-late-tn-mcdc.canonical", "state-late-tn-mcdc.semantic-snapshot",
+    "state-cross-sf-mcdc-success.canonical",
+    "state-cross-sf-mcdc-success.semantic-snapshot",
 )
 
 
@@ -263,9 +270,43 @@ def case_kind(case_id: str) -> str:
         return "default_parse"
     if case_id.endswith(".canonical"):
         return "canonical_rewrite"
+    if case_id.endswith(".semantic-snapshot"):
+        return "semantic_snapshot"
     if ".ignore-" in case_id:
         return "ignore_recovery"
     raise TracefileContractError(f"unknown tracefile Oracle case kind: {case_id}")
+
+
+STATE_CASE_REQUIREMENTS = {
+    "state-late-tn-mcdc.summary": {
+        "requirement_ids": ["M1-TF-021"],
+        "m0_decision_ids": ["M0-TF-TN-MCDC-001"],
+    },
+    "state-late-tn-mcdc.canonical": {
+        "requirement_ids": ["M1-TF-021"],
+        "m0_decision_ids": ["M0-TF-TN-MCDC-001"],
+    },
+    "state-late-tn-mcdc.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-021"],
+        "m0_decision_ids": ["M0-TF-TN-MCDC-001"],
+    },
+    "state-cross-sf-mcdc-success.summary": {
+        "requirement_ids": ["M1-TF-022"],
+        "m0_decision_ids": ["M0-TF-MCDC-SF-001"],
+    },
+    "state-cross-sf-mcdc-success.canonical": {
+        "requirement_ids": ["M1-TF-022"],
+        "m0_decision_ids": ["M0-TF-MCDC-SF-001"],
+    },
+    "state-cross-sf-mcdc-success.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-022"],
+        "m0_decision_ids": ["M0-TF-MCDC-SF-001"],
+    },
+    "state-cross-sf-mcdc-duplicate.summary": {
+        "requirement_ids": ["M1-TF-026"],
+        "m0_decision_ids": ["M0-TF-MCDC-SF-001"],
+    },
+}
 
 
 def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -279,20 +320,25 @@ def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]
         if observed is None:
             raise TracefileContractError(f"missing Oracle observation: {case['id']}")
         output = observed["output"]
-        result.append(
-            {
-                "id": case["id"],
-                "fixture_id": fixture_by_path[case["fixture"]],
-                "kind": case_kind(case["id"]),
-                "exit_status": observed["exit_status"],
-                "stdout_sha256": observed["stdout"]["sha256"],
-                "stderr_sha256": observed["stderr"]["sha256"],
-                "output_sha256": output.get("sha256"),
-                "evidence_status": "oracle_reference",
-            }
-        )
+        entry: dict[str, Any] = {
+            "id": case["id"],
+            "fixture_id": fixture_by_path[case["fixture"]],
+            "kind": case_kind(case["id"]),
+            "exit_status": observed["exit_status"],
+            "stdout_sha256": observed["stdout"]["sha256"],
+            "stderr_sha256": observed["stderr"]["sha256"],
+            "output_sha256": output.get("sha256"),
+            "evidence_status": "oracle_reference",
+        }
+        runner = case.get("runner") or observed.get("runner")
+        if runner is not None:
+            entry["runner"] = runner
+        mapping = STATE_CASE_REQUIREMENTS.get(case["id"])
+        if mapping is not None:
+            entry["requirement_ids"] = list(mapping["requirement_ids"])
+            entry["m0_decision_ids"] = list(mapping["m0_decision_ids"])
+        result.append(entry)
     return result
-
 
 def malformed_behaviors(
     record_entries: list[dict[str, Any]],
@@ -343,7 +389,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "schema_version": 1,
         "upstream_release": "v2.5",
         "upstream_commit": UPSTREAM_COMMIT,
-        "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, and Oracle-observed malformed input behavior",
+        "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, and Oracle-observed malformed input behavior",
         "artifact_bindings": artifact_bindings(),
         "lexical_rules": lexical_rules(upstream_root),
         "records": record_entries,
@@ -362,8 +408,23 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             "default_parse_cases": sum(case["kind"] == "default_parse" for case in cases),
             "canonical_rewrite_cases": sum(case["kind"] == "canonical_rewrite" for case in cases),
             "ignore_recovery_cases": sum(case["kind"] == "ignore_recovery" for case in cases),
+            "semantic_snapshot_cases": sum(case["kind"] == "semantic_snapshot" for case in cases),
             "oracle_exit_zero": sum(case["exit_status"] == 0 for case in cases),
             "oracle_exit_nonzero": sum(case["exit_status"] != 0 for case in cases),
+            "exact_executable_requirement_ids": sorted(
+                {
+                    requirement_id
+                    for case in cases
+                    for requirement_id in case.get("requirement_ids", [])
+                }
+            ),
+            "exact_executable_m0_decision_ids": sorted(
+                {
+                    decision_id
+                    for case in cases
+                    for decision_id in case.get("m0_decision_ids", [])
+                }
+            ),
         },
         "product_compatibility_evidence": False,
     }
@@ -505,6 +566,29 @@ def validate_artifacts(document: dict[str, Any]) -> None:
             raise TracefileContractError(f"tracefile fixture byte drift: {fixture['id']}")
 
     expected_cases = oracle_case_bindings(expected_fixtures)
+    if len(document["oracle_cases"]) == len(expected_cases):
+        for actual, expected in zip(document["oracle_cases"], expected_cases):
+            if actual.get("id") != expected.get("id"):
+                break
+            if actual.get("requirement_ids") != expected.get("requirement_ids"):
+                raise TracefileContractError(
+                    f"tracefile requirement_ids mapping drift: {actual.get('id')}"
+                )
+            if actual.get("m0_decision_ids") != expected.get("m0_decision_ids"):
+                raise TracefileContractError(
+                    f"tracefile m0_decision_ids mapping drift: {actual.get('id')}"
+                )
+            if actual.get("runner") != expected.get("runner"):
+                raise TracefileContractError(
+                    f"tracefile Oracle runner drift: {actual.get('id')}"
+                )
+            if (
+                actual.get("kind") == "semantic_snapshot"
+                and actual.get("stdout_sha256") != expected.get("stdout_sha256")
+            ):
+                raise TracefileContractError(
+                    f"semantic snapshot identity drift: {actual.get('id')}"
+                )
     if document["oracle_cases"] != expected_cases:
         raise TracefileContractError("tracefile Oracle case or observation identity drift")
     case_ids = tuple(case["id"] for case in document["oracle_cases"])
@@ -521,6 +605,36 @@ def validate_artifacts(document: dict[str, Any]) -> None:
         observed_exit = observed_by_id[case["id"]]["exit_status"]
         if expected_exit != observed_exit or case["exit_status"] != observed_exit:
             raise TracefileContractError(f"unexpected retained Oracle exit: {case['id']}")
+        source_case = source_by_id[case["id"]]
+        observed = observed_by_id[case["id"]]
+        source_runner = source_case.get("runner")
+        observed_runner = observed.get("runner")
+        if case.get("runner") != source_runner or case.get("runner") != observed_runner:
+            raise TracefileContractError(f"tracefile Oracle runner drift: {case['id']}")
+        expected_mapping = STATE_CASE_REQUIREMENTS.get(case["id"])
+        if expected_mapping is None:
+            if case.get("requirement_ids") or case.get("m0_decision_ids"):
+                raise TracefileContractError(
+                    f"unexpected ownership mapping on non-state case: {case['id']}"
+                )
+        else:
+            if case.get("requirement_ids") != expected_mapping["requirement_ids"]:
+                raise TracefileContractError(
+                    f"tracefile requirement_ids mapping drift: {case['id']}"
+                )
+            if case.get("m0_decision_ids") != expected_mapping["m0_decision_ids"]:
+                raise TracefileContractError(
+                    f"tracefile m0_decision_ids mapping drift: {case['id']}"
+                )
+        if case["kind"] == "semantic_snapshot":
+            if case.get("runner") != "inspect_model.pl":
+                raise TracefileContractError(
+                    f"semantic snapshot runner drift: {case['id']}"
+                )
+            if case["stdout_sha256"] != observed["stdout"]["sha256"]:
+                raise TracefileContractError(
+                    f"semantic snapshot identity drift: {case['id']}"
+                )
 
 
 def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
@@ -584,14 +698,24 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "lexical_rules": 2,
         "reader_matcher_lines": 15,
         "canonical_writer_lines": 18,
-        "fixtures": 36,
+        "fixtures": 39,
         "malformed_fixtures": 21,
-        "oracle_cases": 52,
-        "default_parse_cases": 36,
-        "canonical_rewrite_cases": 8,
+        "oracle_cases": 59,
+        "default_parse_cases": 39,
+        "canonical_rewrite_cases": 10,
         "ignore_recovery_cases": 8,
-        "oracle_exit_zero": 34,
-        "oracle_exit_nonzero": 18,
+        "semantic_snapshot_cases": 2,
+        "oracle_exit_zero": 40,
+        "oracle_exit_nonzero": 19,
+        "exact_executable_requirement_ids": [
+            "M1-TF-021",
+            "M1-TF-022",
+            "M1-TF-026",
+        ],
+        "exact_executable_m0_decision_ids": [
+            "M0-TF-MCDC-SF-001",
+            "M0-TF-TN-MCDC-001",
+        ],
     }
     if document["totals"] != expected_totals:
         raise TracefileContractError("tracefile contract totals drift")

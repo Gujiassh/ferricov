@@ -10,6 +10,11 @@ compatibility releases.
 
 ### Added
 
+- M0 tracefile state-ownership Oracle evidence: three committed fixtures,
+  `inspect_model.pl` semantic snapshots, and exact mappings for
+  `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` (59 observations / 39 fixtures;
+  25 planned M1 IDs remain unmapped). No product compatibility claim.
+
 - A reviewed LCOV 2.5 executable-surface inventory with 584 entries covering
   command options, positional forms, `lcovrc` entries, and support scripts.
 - Identity-bound review overlays and 82 default/POSIX generated-token Oracle
@@ -45,8 +50,8 @@ compatibility releases.
   case bindings without changing the public inventory schema.
 - A standalone fail-closed LCOV 2.5 tracefile contract covering 20 record tags,
   two lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 36 retained fixtures, 21 per-record malformed inputs, and 52
-  reference-only Oracle observations.
+  emission lines, 39 retained fixtures, 21 per-record malformed inputs, and 59
+  reference-only Oracle observations, including state-ownership snapshots.
 - A standalone fail-closed LCOV 2.5 diagnostics contract covering all 32 shared
   message classes, 399 symbol references, nine error-control rules, four
   unclassified failure surfaces, ten command exit policies, 71 planned case

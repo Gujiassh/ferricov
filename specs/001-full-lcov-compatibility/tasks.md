@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 52 Oracle observations.
+  standalone fail-closed contract bound to 59 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -72,11 +72,12 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 36 retained fixtures,
-and 21 per-record malformed fixtures. Its 52 Oracle observations are
-reference-only. The 28 planned M1 tracefile IDs without exact executable
-mappings remain blockers, so the complete grammar and M1 readiness tasks stay
-open.
+15 reader matcher lines, all 18 writer emission lines, 39 retained fixtures,
+and 21 per-record malformed fixtures. Its 59 Oracle observations are
+reference-only and include exact ownership mappings for `M1-TF-021`,
+`M1-TF-022`, and `M1-TF-026`. The 25 planned M1 tracefile IDs without exact
+executable mappings remain blockers, so the complete grammar and M1 readiness
+tasks stay open.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure

@@ -28,8 +28,8 @@
     "scope": { "type": "string", "minLength": 1 },
     "artifact_bindings": {
       "type": "array",
-      "minItems": 3,
-      "maxItems": 3,
+      "minItems": 4,
+      "maxItems": 4,
       "items": { "$ref": "#/$defs/artifactBinding" }
     },
     "lexical_rules": {
@@ -47,8 +47,8 @@
     "fallback_behavior": { "$ref": "#/$defs/fallbackBehavior" },
     "fixtures": {
       "type": "array",
-      "minItems": 36,
-      "maxItems": 36,
+      "minItems": 39,
+      "maxItems": 39,
       "items": { "$ref": "#/$defs/fixture" }
     },
     "malformed_behaviors": {
@@ -59,8 +59,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 52,
-      "maxItems": 52,
+      "minItems": 59,
+      "maxItems": 59,
       "items": { "$ref": "#/$defs/oracleCase" }
     },
     "totals": { "$ref": "#/$defs/totals" },
@@ -226,6 +226,7 @@
             "malformed-per-record",
             "byte-boundary",
             "numeric-boundary",
+            "state-ownership",
             "deterministic-scale"
           ]
         },
@@ -283,7 +284,34 @@
         "id": { "type": "string", "minLength": 1 },
         "fixture_id": { "type": "string", "minLength": 1 },
         "kind": {
-          "enum": ["default_parse", "canonical_rewrite", "ignore_recovery"]
+          "enum": [
+            "default_parse",
+            "canonical_rewrite",
+            "ignore_recovery",
+            "semantic_snapshot"
+          ]
+        },
+        "runner": {
+          "type": "string",
+          "const": "inspect_model.pl"
+        },
+        "requirement_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^M1-TF-[0-9]{3}$"
+          },
+          "uniqueItems": true
+        },
+        "m0_decision_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^M0-TF-[A-Z0-9-]+$"
+          },
+          "uniqueItems": true
         },
         "exit_status": { "type": "integer", "minimum": 0 },
         "stdout_sha256": { "$ref": "#/$defs/sha256" },
@@ -311,22 +339,34 @@
         "default_parse_cases",
         "canonical_rewrite_cases",
         "ignore_recovery_cases",
+        "semantic_snapshot_cases",
         "oracle_exit_zero",
-        "oracle_exit_nonzero"
+        "oracle_exit_nonzero",
+        "exact_executable_requirement_ids",
+        "exact_executable_m0_decision_ids"
       ],
       "properties": {
         "records": { "const": 20 },
         "lexical_rules": { "const": 2 },
         "reader_matcher_lines": { "const": 15 },
         "canonical_writer_lines": { "const": 18 },
-        "fixtures": { "const": 36 },
+        "fixtures": { "const": 39 },
         "malformed_fixtures": { "const": 21 },
-        "oracle_cases": { "const": 52 },
-        "default_parse_cases": { "const": 36 },
-        "canonical_rewrite_cases": { "const": 8 },
+        "oracle_cases": { "const": 59 },
+        "default_parse_cases": { "const": 39 },
+        "canonical_rewrite_cases": { "const": 10 },
         "ignore_recovery_cases": { "const": 8 },
-        "oracle_exit_zero": { "const": 34 },
-        "oracle_exit_nonzero": { "const": 18 }
+        "semantic_snapshot_cases": { "const": 2 },
+        "oracle_exit_zero": { "const": 40 },
+        "oracle_exit_nonzero": { "const": 19 },
+        "exact_executable_requirement_ids": {
+          "type": "array",
+          "const": ["M1-TF-021", "M1-TF-022", "M1-TF-026"]
+        },
+        "exact_executable_m0_decision_ids": {
+          "type": "array",
+          "const": ["M0-TF-MCDC-SF-001", "M0-TF-TN-MCDC-001"]
+        }
       }
     }
   }

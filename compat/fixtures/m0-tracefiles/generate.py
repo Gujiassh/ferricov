@@ -316,6 +316,76 @@ def numeric_fixtures() -> list[Fixture]:
     return fixtures
 
 
+def state_ownership_fixtures() -> list[Fixture]:
+    late = ascii_bytes(
+        """
+TN:A
+SF:/m0/late-tn.c
+FNL:0,1,1
+FNA:0,1,f
+BRDA:1,0,edge,1
+MCDC:1,1,t,1,0,cond
+DA:1,1
+TN:B
+MCDC:1,1,f,1,0,cond
+end_of_record
+"""
+    )
+    cross_success = ascii_bytes(
+        """
+TN:A
+SF:/m0/first.c
+MCDC:1,1,t,1,0,first
+DA:1,1
+TN:B
+SF:/m0/next.c
+MCDC:2,1,t,1,0,second
+DA:2,1
+end_of_record
+"""
+    )
+    cross_duplicate = ascii_bytes(
+        """
+TN:A
+SF:/m0/first.c
+MCDC:1,1,t,1,0,first
+DA:1,1
+TN:B
+SF:/m0/next.c
+MCDC:2,1,t,1,0,second
+MCDC:1,1,f,1,0,first
+DA:2,1
+end_of_record
+"""
+    )
+    return [
+        Fixture(
+            "state-late-tn-mcdc",
+            "fixtures/state/late-tn-mcdc.info",
+            "state-ownership",
+            "Late TN during an open MC/DC block: line/function/branch stay on A while closed MC/DC clones under B.",
+            late,
+            "accept",
+        ),
+        Fixture(
+            "state-cross-sf-mcdc-success",
+            "fixtures/state/cross-sf-mcdc-success.info",
+            "state-ownership",
+            "Cross-SF while MC/DC is open without terminator: first source is filtered; surviving next-source ownership and both line MC/DC blocks under B.",
+            cross_success,
+            "accept",
+        ),
+        Fixture(
+            "state-cross-sf-mcdc-duplicate",
+            "fixtures/state/cross-sf-mcdc-duplicate.info",
+            "state-ownership",
+            "Cross-SF return-to-line1 MC/DC after line2: hard-fails with MCDC already defined for 1.",
+            cross_duplicate,
+            "reject",
+        ),
+    ]
+
+
 def scale_fixture(profile: str, sections: int, lines_per_section: int) -> Fixture:
     chunks: list[str] = []
     for section in range(sections):
@@ -365,6 +435,7 @@ def build_fixtures() -> list[Fixture]:
     fixtures.extend(malformed_fixtures())
     fixtures.extend(byte_fixtures())
     fixtures.extend(numeric_fixtures())
+    fixtures.extend(state_ownership_fixtures())
     fixtures.extend(
         [
             scale_fixture("medium", sections=256, lines_per_section=64),
@@ -491,11 +562,15 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
         "malformed-per-record": "M1-TF-012/016",
         "byte-boundary": "M1-TF-001/061",
         "numeric-boundary": "M1-TF-030/031/032/033/034",
+        "state-ownership": "M1-TF-021/022/026",
         "deterministic-scale": "M1-TF-062",
     }
     feature_flags = {
         "current-all-records": ["--branch-coverage", "--mcdc-coverage"],
         "bytes-non-utf8": ["--branch-coverage", "--mcdc-coverage"],
+        "state-late-tn-mcdc": ["--branch-coverage", "--mcdc-coverage"],
+        "state-cross-sf-mcdc-success": ["--no-function-coverage", "--mcdc-coverage"],
+        "state-cross-sf-mcdc-duplicate": ["--no-function-coverage", "--mcdc-coverage"],
         "scale-medium": ["--branch-coverage", "--mcdc-coverage"],
         "scale-large": ["--branch-coverage", "--mcdc-coverage"],
     }
@@ -599,9 +674,57 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
                 "expected_exit": 0,
             }
         )
+    state_cases = [
+        {
+            "id": "state-late-tn-mcdc.canonical",
+            "fixture": "fixtures/state/late-tn-mcdc.info",
+            "requirement": "M1-TF-021",
+            "description": "Canonical writer output for late TN MC/DC ownership.",
+            "argv": [
+                "lcov", "--branch-coverage", "--mcdc-coverage",
+                "--add-tracefile", "input.info", "--output-file", "output.info",
+            ],
+            "output_file": "output.info",
+            "expected_exit": 0,
+        },
+        {
+            "id": "state-late-tn-mcdc.semantic-snapshot",
+            "fixture": "fixtures/state/late-tn-mcdc.info",
+            "requirement": "M1-TF-021",
+            "description": "Aggregate plus four testcase-family semantic snapshot for late TN MC/DC ownership.",
+            "runner": "inspect_model.pl",
+            "argv": ["perl", "inspect_model.pl", "input.info"],
+            "expected_exit": 0,
+        },
+        {
+            "id": "state-cross-sf-mcdc-success.canonical",
+            "fixture": "fixtures/state/cross-sf-mcdc-success.info",
+            "requirement": "M1-TF-022",
+            "description": "Canonical writer output for cross-SF MC/DC success ownership.",
+            "argv": [
+                "lcov", "--no-function-coverage", "--mcdc-coverage",
+                "--add-tracefile", "input.info", "--output-file", "output.info",
+            ],
+            "output_file": "output.info",
+            "expected_exit": 0,
+        },
+        {
+            "id": "state-cross-sf-mcdc-success.semantic-snapshot",
+            "fixture": "fixtures/state/cross-sf-mcdc-success.info",
+            "requirement": "M1-TF-022",
+            "description": "Aggregate plus four testcase-family semantic snapshot for cross-SF MC/DC success ownership.",
+            "runner": "inspect_model.pl",
+            "argv": ["perl", "inspect_model.pl", "input.info"],
+            "expected_exit": 0,
+        },
+    ]
+    # The summary loop already emits one default observation per fixture, including the
+    # three state-ownership fixtures. Append only the additional ownership probes.
+    cases.extend(state_cases)
+
     return {
         "schema_version": 1,
-        "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization and ignored-error recovery cases.",
+        "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, and state-ownership semantic snapshot cases.",
         "execution": {
             "working_directory": "/work",
             "input_name": "input.info",

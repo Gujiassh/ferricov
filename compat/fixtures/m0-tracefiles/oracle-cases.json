@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization and ignored-error recovery cases.",
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, and state-ownership semantic snapshot cases.",
   "execution": {
     "working_directory": "/work",
     "input_name": "input.info",
@@ -423,6 +423,48 @@
       "expected_exit": 1
     },
     {
+      "id": "state-late-tn-mcdc.summary",
+      "fixture": "fixtures/state/late-tn-mcdc.info",
+      "requirement": "M1-TF-021/022/026",
+      "description": "Default summary observation for state-late-tn-mcdc.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "state-cross-sf-mcdc-success.summary",
+      "fixture": "fixtures/state/cross-sf-mcdc-success.info",
+      "requirement": "M1-TF-021/022/026",
+      "description": "Default summary observation for state-cross-sf-mcdc-success.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "state-cross-sf-mcdc-duplicate.summary",
+      "fixture": "fixtures/state/cross-sf-mcdc-duplicate.info",
+      "requirement": "M1-TF-021/022/026",
+      "description": "Default summary observation for state-cross-sf-mcdc-duplicate.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
       "id": "scale-medium.summary",
       "fixture": "generated/medium.info",
       "requirement": "M1-TF-062",
@@ -723,6 +765,66 @@
         "output.info"
       ],
       "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "state-late-tn-mcdc.canonical",
+      "fixture": "fixtures/state/late-tn-mcdc.info",
+      "requirement": "M1-TF-021",
+      "description": "Canonical writer output for late TN MC/DC ownership.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "state-late-tn-mcdc.semantic-snapshot",
+      "fixture": "fixtures/state/late-tn-mcdc.info",
+      "requirement": "M1-TF-021",
+      "description": "Aggregate plus four testcase-family semantic snapshot for late TN MC/DC ownership.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "state-cross-sf-mcdc-success.canonical",
+      "fixture": "fixtures/state/cross-sf-mcdc-success.info",
+      "requirement": "M1-TF-022",
+      "description": "Canonical writer output for cross-SF MC/DC success ownership.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "state-cross-sf-mcdc-success.semantic-snapshot",
+      "fixture": "fixtures/state/cross-sf-mcdc-success.info",
+      "requirement": "M1-TF-022",
+      "description": "Aggregate plus four testcase-family semantic snapshot for cross-SF MC/DC success ownership.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
       "expected_exit": 0
     }
   ]

@@ -2,15 +2,19 @@
   "artifact_bindings": [
     {
       "path": "compat/fixtures/m0-tracefiles/manifest.json",
-      "sha256": "57edf63e9d4988d380eac51fa2fb134a8628a6ef9b5c5431a0bc3b2a48b5eb56"
+      "sha256": "7a9406ac7b69bfdb2e709ec496b6d80242341c595e5234f126638609a07b76d0"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "01c6e11166d5ea440345744bd018c218b086847686f4474a96974e4c14efcca1"
+      "sha256": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "b0162c3677dcc3dcc859a5d13ea9002d36b7a093e89559643b4c89c1514659a7"
+      "sha256": "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca"
+    },
+    {
+      "path": "compat/fixtures/m0-tracefiles/inspect_model.pl",
+      "sha256": "6f77427c548039d4fe17828b30ff73b245d3f6d21f6b587420dc1c830fa03d4a"
     }
   ],
   "fallback_behavior": {
@@ -272,6 +276,27 @@
       "oracle_default": "reject",
       "path": "fixtures/numeric/zero-line.info",
       "sha256": "3e0bcbb5153c20a8130e97b2de51a7e28f221bdda3f496b792b4a09460d5c137"
+    },
+    {
+      "group": "state-ownership",
+      "id": "state-late-tn-mcdc",
+      "oracle_default": "accept",
+      "path": "fixtures/state/late-tn-mcdc.info",
+      "sha256": "fc468de82bfeea9880ff11c3bc35d7bed96cb46d3509002dc0f84f4b73975098"
+    },
+    {
+      "group": "state-ownership",
+      "id": "state-cross-sf-mcdc-success",
+      "oracle_default": "accept",
+      "path": "fixtures/state/cross-sf-mcdc-success.info",
+      "sha256": "ffdce5b7f5226be1868345a71230f0ba7834d9de1d5c9f07ca5086c92a1ee144"
+    },
+    {
+      "group": "state-ownership",
+      "id": "state-cross-sf-mcdc-duplicate",
+      "oracle_default": "reject",
+      "path": "fixtures/state/cross-sf-mcdc-duplicate.info",
+      "sha256": "4dc738ce2a34cf80ffabf3e3468d30e7112568ac96209deed47bb25602669e79"
     },
     {
       "group": "deterministic-scale",
@@ -923,6 +948,54 @@
     {
       "evidence_status": "oracle_reference",
       "exit_status": 0,
+      "fixture_id": "state-late-tn-mcdc",
+      "id": "state-late-tn-mcdc.summary",
+      "kind": "default_parse",
+      "m0_decision_ids": [
+        "M0-TF-TN-MCDC-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-021"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b613da4a7945b53047f03804ca4608a8fea1d7d19fa4952226453d42a07d3907"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "state-cross-sf-mcdc-success",
+      "id": "state-cross-sf-mcdc-success.summary",
+      "kind": "default_parse",
+      "m0_decision_ids": [
+        "M0-TF-MCDC-SF-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-022"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2ef7087e3b347af8af722a4a43231b396ede7a18b68577c21daed0031699616d"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "state-cross-sf-mcdc-duplicate",
+      "id": "state-cross-sf-mcdc-duplicate.summary",
+      "kind": "default_parse",
+      "m0_decision_ids": [
+        "M0-TF-MCDC-SF-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-026"
+      ],
+      "stderr_sha256": "6e5eda62e47c7942ba4170c58f454ed0c79139642933a50be7a244caf9782fc8",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
       "fixture_id": "scale-medium",
       "id": "scale-medium.summary",
       "kind": "default_parse",
@@ -1099,6 +1172,72 @@
       "output_sha256": "5b69fdc26f5d041f0affbd7883d8df8a3acacd9882b2541e1f0756eac616bec6",
       "stderr_sha256": "1d25c2ade3c44ffb4b88dd0fe6bbcbe7450958b0bc522d77df86234feb243e4c",
       "stdout_sha256": "11391464d60bcbdc85979cdae769c98c22c1161600ae2b93d14d4f3b1781c109"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "state-late-tn-mcdc",
+      "id": "state-late-tn-mcdc.canonical",
+      "kind": "canonical_rewrite",
+      "m0_decision_ids": [
+        "M0-TF-TN-MCDC-001"
+      ],
+      "output_sha256": "6af975d55989695523fce76a562cf0dc8d4513234929e610b7a7d131f317237e",
+      "requirement_ids": [
+        "M1-TF-021"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a0efd94c421beeb09933db221e28c8253064fc4c4adac538c3172e09e9b4feb1"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "state-late-tn-mcdc",
+      "id": "state-late-tn-mcdc.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-TN-MCDC-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-021"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9a8e89a672436d90f523618e72dbeb62467e4bb46313ffeb0665499fa5c2bf43"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "state-cross-sf-mcdc-success",
+      "id": "state-cross-sf-mcdc-success.canonical",
+      "kind": "canonical_rewrite",
+      "m0_decision_ids": [
+        "M0-TF-MCDC-SF-001"
+      ],
+      "output_sha256": "0fc19d686b099477165a80ff9909acc9f1a9480fd1441830f6434c20ceac3b95",
+      "requirement_ids": [
+        "M1-TF-022"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7c9242c99f8f4d6bb2d0532683282c015fe8b149b8fe28b46beb3f7a7fadf8dc"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "state-cross-sf-mcdc-success",
+      "id": "state-cross-sf-mcdc-success.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-MCDC-SF-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-022"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "02c3e58fa26211e39ae4529632833ead9c652ab886a020bdca8a166d6dbabfa3"
     }
   ],
   "product_compatibility_evidence": false,
@@ -1741,20 +1880,30 @@
     }
   ],
   "schema_version": 1,
-  "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, and Oracle-observed malformed input behavior",
+  "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, and Oracle-observed malformed input behavior",
   "totals": {
-    "canonical_rewrite_cases": 8,
+    "canonical_rewrite_cases": 10,
     "canonical_writer_lines": 18,
-    "default_parse_cases": 36,
-    "fixtures": 36,
+    "default_parse_cases": 39,
+    "exact_executable_m0_decision_ids": [
+      "M0-TF-MCDC-SF-001",
+      "M0-TF-TN-MCDC-001"
+    ],
+    "exact_executable_requirement_ids": [
+      "M1-TF-021",
+      "M1-TF-022",
+      "M1-TF-026"
+    ],
+    "fixtures": 39,
     "ignore_recovery_cases": 8,
     "lexical_rules": 2,
     "malformed_fixtures": 21,
-    "oracle_cases": 52,
-    "oracle_exit_nonzero": 18,
-    "oracle_exit_zero": 34,
+    "oracle_cases": 59,
+    "oracle_exit_nonzero": 19,
+    "oracle_exit_zero": 40,
     "reader_matcher_lines": 15,
-    "records": 20
+    "records": 20,
+    "semantic_snapshot_cases": 2
   },
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
   "upstream_release": "v2.5"

@@ -17,6 +17,8 @@ import generate
 
 ROOT = Path(__file__).resolve().parent
 RAW_OUTPUT_LIMIT = 256 * 1024
+MODEL_INSPECTOR = ROOT / "inspect_model.pl"
+MODEL_INSPECTOR_NAME = "inspect_model.pl"
 
 
 def byte_identity(data: bytes, include_raw: bool = True) -> dict[str, object]:
@@ -42,7 +44,7 @@ def inspect_image(image: str) -> str:
 def inspect_program(image: str) -> dict[str, str]:
     script = (
         'path=$(readlink -f "$(command -v lcov)"); '
-        'printf "path=%s\\n" "$path"; sha256sum "$path"; '
+        'printf "path=%s\n" "$path"; sha256sum "$path"; '
         "perl -e 'printf \"perl=%vd\\n\", $^V'"
     )
     result = subprocess.run(
@@ -73,21 +75,34 @@ def output_identity(path: Path) -> dict[str, object]:
     return result
 
 
+def case_uses_model_inspector(case: dict[str, object]) -> bool:
+    runner = case.get("runner")
+    if runner == MODEL_INSPECTOR_NAME:
+        return True
+    argv = [str(value) for value in case.get("argv", [])]
+    return MODEL_INSPECTOR_NAME in argv
+
+
 def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
         shutil.copyfile(generated_root / str(case["fixture"]), work / "input.info")
+        if case_uses_model_inspector(case):
+            if not MODEL_INSPECTOR.is_file():
+                raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")
+            shutil.copyfile(MODEL_INSPECTOR, work / MODEL_INSPECTOR_NAME)
+            os.chmod(work / MODEL_INSPECTOR_NAME, 0o755)
         command = [
             "docker", "run", "--rm", "--network", "none",
             "--user", f"{os.getuid()}:{os.getgid()}",
             "--env", "HOME=/tmp", "--env", "LC_ALL=C.UTF-8", "--env", "LANG=C.UTF-8",
-            "--volume", f"{work}:/work", image,
+            "--volume", f"{work}:/work", "--workdir", "/work", image,
             *[str(value) for value in case["argv"]],
         ]
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
         output_file = case.get("output_file")
         output = output_identity(work / str(output_file)) if output_file else {"exists": False}
-        return {
+        observation: dict[str, object] = {
             "id": case["id"],
             "fixture": case["fixture"],
             "argv": case["argv"],
@@ -97,14 +112,20 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             "output_file": output_file,
             "output": output,
         }
+        if case.get("runner") is not None:
+            observation["runner"] = case["runner"]
+        return observation
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--image", default=generate.ORACLE_IMAGE)
+    parser.add_argument("--image", default=generate.ORACLE_IMAGE_ID)
     parser.add_argument("--cases", type=Path, default=ROOT / "oracle-cases.json")
     parser.add_argument("--output", type=Path, default=ROOT / "oracle-baseline.json")
     args = parser.parse_args()
+
+    if not MODEL_INSPECTOR.is_file():
+        raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")
 
     manifest = generate.build_manifest(generate.build_fixtures())
     expected_oracle = manifest["provenance"]["oracle"]
@@ -128,7 +149,7 @@ def main() -> int:
         "schema_version": 1,
         "oracle": {
             "source_commit": expected_oracle["source_commit"],
-            "docker_image": args.image,
+            "docker_image": generate.ORACLE_IMAGE,
             "docker_image_id": image_id,
             "program": program["path"],
             "program_sha256": program["sha256"],

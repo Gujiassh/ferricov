@@ -141,6 +141,69 @@ class TracefileContractTests(unittest.TestCase):
         with self.assertRaises(contract.TracefileContractError):
             self.validate(document)
 
+    def test_requirement_mapping_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        target = next(
+            case
+            for case in document["oracle_cases"]
+            if case["id"] == "state-late-tn-mcdc.semantic-snapshot"
+        )
+        target["requirement_ids"] = ["M1-TF-999"]
+
+        with self.assertRaisesRegex(
+            contract.TracefileContractError,
+            "requirement_ids mapping drift",
+        ):
+            self.validate(document)
+
+    def test_semantic_snapshot_runner_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        target = next(
+            case
+            for case in document["oracle_cases"]
+            if case["id"] == "state-late-tn-mcdc.semantic-snapshot"
+        )
+        target["runner"] = "inspect_model.pl"
+        # Force kind/runner mismatch by clearing runner after copy of valid doc is not enough;
+        # mutate runner away from inspect_model.pl.
+        target["runner"] = "other-runner.pl"
+
+        with self.assertRaises(contract.TracefileContractError):
+            self.validate(document)
+
+    def test_semantic_snapshot_identity_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        target = next(
+            case
+            for case in document["oracle_cases"]
+            if case["id"] == "state-cross-sf-mcdc-success.semantic-snapshot"
+        )
+        other = next(
+            case
+            for case in document["oracle_cases"]
+            if case["id"] == "state-late-tn-mcdc.semantic-snapshot"
+        )
+        target["stdout_sha256"] = other["stdout_sha256"]
+
+        with self.assertRaisesRegex(
+            contract.TracefileContractError,
+            "Oracle case or observation identity drift|semantic snapshot identity drift",
+        ):
+            self.validate(document)
+
+    def test_evidence_promotion_on_state_case_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        target = next(
+            case
+            for case in document["oracle_cases"]
+            if case["id"] == "state-cross-sf-mcdc-duplicate.summary"
+        )
+        target["evidence_status"] = "product_pass"
+
+        with self.assertRaises(contract.TracefileContractError):
+            self.validate(document)
+
+
 
 if __name__ == "__main__":
     unittest.main()
