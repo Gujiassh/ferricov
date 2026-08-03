@@ -343,8 +343,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 90)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 441)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
 
     def test_m0_small_cli_primary_reviews_remain_planning_only(self) -> None:
         fragment = next(
@@ -402,6 +402,75 @@ class BehaviorContractValidationTests(unittest.TestCase):
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
 
+    def test_m0_config_key_primary_reviews_remain_planning_only(self) -> None:
+        fragment = next(
+            fragment
+            for _, fragment in self.authored_fragments
+            if fragment["fragment_id"] == "authored.m0-config-key-primary"
+        )
+        expected_targets = {
+            "lcovrc.checksum",
+            "lcovrc.exclude",
+            "lcovrc.expected-message-count",
+            "lcovrc.filter",
+            "lcovrc.fork-fail-timeout",
+            "lcovrc.function-coverage",
+            "lcovrc.ignore-errors",
+            "lcovrc.include",
+            "lcovrc.lcov-tmp-dir",
+            "lcovrc.max-message-count",
+            "lcovrc.mcdc-coverage",
+            "lcovrc.memory",
+            "lcovrc.parallel",
+            "lcovrc.source-directory",
+            "lcovrc.stop-on-error",
+            "lcovrc.treat-warning-as-error",
+            "lcovrc.warn-once-per-file",
+        }
+        cases = fragment["case_groups"]
+        self.assertEqual(len(cases), len(expected_targets))
+        self.assertEqual(
+            {case["targets"][0]["id"] for case in cases},
+            expected_targets,
+        )
+        self.assertTrue(all(case["surface"] == "config" for case in cases))
+        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
+        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
+        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
+        self.assertTrue(all(case["evidence"] == [] for case in cases))
+        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
+        self.assertTrue(
+            all(
+                case["comparison_dimensions"] == [
+                    "exit",
+                    "filesystem",
+                    "stderr",
+                    "stdout",
+                ]
+                for case in cases
+            )
+        )
+
+        inventory_by_id = {
+            item["entry"]["id"]: item["entry"]
+            for item in inventory_entries(self.inventory)
+        }
+        self.assertEqual(
+            {
+                case["targets"][0]["id"]: case["source_references"]
+                for case in cases
+            },
+            {
+                target: make_source_references(inventory_by_id[target])
+                for target in expected_targets
+            },
+        )
+
+        aggregate = {case["id"]: case for case in self.base["case_groups"]}
+        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
+
     def test_m0_tracefile_cli_primary_reviews_remain_reference_only(self) -> None:
         fragment = next(
             fragment
@@ -440,8 +509,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 90)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 441)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
 
         inventory_by_id = {
             item["entry"]["id"]: item["entry"]
@@ -1166,8 +1235,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 )
 
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 441)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 90)
+        self.assertEqual(len(report.readiness_gaps), 424)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:

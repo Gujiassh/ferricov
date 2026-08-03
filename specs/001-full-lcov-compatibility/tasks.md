@@ -113,7 +113,7 @@ Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
 Behavior planning covers all 531 public entries with primary plans.
-Ninety public primary plans are reviewed, including 40 CLI entries bound
+One hundred seven public primary plans are reviewed, including 40 CLI entries bound
 to 154 exact suite cases while retaining planning-only evidence status. All four
 required critical interaction domains now have reviewed members and reciprocal
 cases. Eight configuration-semantic slices bind 67 exact cases and review six
@@ -122,8 +122,9 @@ output-file, no-function-coverage, and mcdc-coverage from exact retained
 reference observations and reviewed upstream planning sources. They keep
 `evidence_status=none` with empty evidence and suite arrays. The current M0 gate
 also includes 17 source-bound small-tool CLI plans with no executable suite or
-product evidence and reports 441 gaps, all public entries without reviewed
-primary cases.
+product evidence. Seventeen source-bound `lcovrc` configuration plans also
+have no executable suite or product evidence. The current M0 gate reports 424
+gaps, all public entries without reviewed primary cases.
 The raw Oracle correctness baseline is complete and replayed, but it remains
 reference-only evidence and does not unlock product parity.
 

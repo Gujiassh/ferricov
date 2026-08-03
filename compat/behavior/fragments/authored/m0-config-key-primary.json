@@ -15,23 +15,23 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.derive-function-end-line; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.checksum configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.derive-function-end-line",
+      "id": "case.acceptance.lcovrc.checksum",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 222,
+          "line": 251,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1117,
+          "line": 1186,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -40,7 +40,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.derive-function-end-line",
+          "id": "lcovrc.checksum",
           "role": "primary"
         }
       ],
@@ -59,23 +59,29 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.excessive-count-threshold; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.exclude configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.excessive-count-threshold",
+      "id": "case.acceptance.lcovrc.exclude",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 233,
+          "line": 402,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1196,
+          "line": 403,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1171,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -84,7 +90,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.excessive-count-threshold",
+          "id": "lcovrc.exclude",
           "role": "primary"
         }
       ],
@@ -103,23 +109,17 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.fail-under-lines; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.expected-message-count configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.fail-under-lines",
+      "id": "case.acceptance.lcovrc.expected-message-count",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 330,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 1200,
+          "line": 1144,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -128,7 +128,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.fail-under-lines",
+          "id": "lcovrc.expected-message-count",
           "role": "primary"
         }
       ],
@@ -147,23 +147,17 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.filter-blank-aggressive; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.filter configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.filter-blank-aggressive",
+      "id": "case.acceptance.lcovrc.filter",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 116,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 1158,
+          "line": 1170,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -172,7 +166,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.filter-blank-aggressive",
+          "id": "lcovrc.filter",
           "role": "primary"
         }
       ],
@@ -191,325 +185,23 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-css-file; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.fork-fail-timeout configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-css-file",
+      "id": "case.acceptance.lcovrc.fork-fail-timeout",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 7155,
-          "path": "bin/genhtml",
+          "line": 463,
+          "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 19,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-css-file",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-hi-limit; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-hi-limit",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7175,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 37,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-hi-limit",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-html-gzip; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-html-gzip",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7171,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 181,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-html-gzip",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-line-hi-limit; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-line-hi-limit",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7177,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 44,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-line-hi-limit",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-line-med-limit; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-line-med-limit",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7178,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 45,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-line-med-limit",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-missed; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-missed",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7194,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 213,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-missed",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.genhtml-nav-offset; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.genhtml-nav-offset",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7161,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 146,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.genhtml-nav-offset",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.geninfo-chunk-size; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.geninfo-chunk-size",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 1233,
+          "line": 1165,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -518,7 +210,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.geninfo-chunk-size",
+          "id": "lcovrc.fork-fail-timeout",
           "role": "primary"
         }
       ],
@@ -537,23 +229,23 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.geninfo-compat-libtool; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.function-coverage configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.geninfo-compat-libtool",
+      "id": "case.acceptance.lcovrc.function-coverage",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 263,
+          "line": 314,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1224,
+          "line": 1125,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -562,7 +254,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.geninfo-compat-libtool",
+          "id": "lcovrc.function-coverage",
           "role": "primary"
         }
       ],
@@ -581,23 +273,23 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.geninfo-gcov-tool; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.ignore-errors configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.geninfo-gcov-tool",
+      "id": "case.acceptance.lcovrc.ignore-errors",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 241,
+          "line": 64,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1222,
+          "line": 1141,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -606,7 +298,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.geninfo-gcov-tool",
+          "id": "lcovrc.ignore-errors",
           "role": "primary"
         }
       ],
@@ -625,67 +317,29 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.lcov-excl-br-line; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.include configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.lcov-excl-br-line",
+      "id": "case.acceptance.lcovrc.include",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 491,
+          "line": 397,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1127,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.lcov-excl-br-line",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.lcov-excl-exception-br-line; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.lcov-excl-exception-br-line",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 494,
+          "line": 398,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1128,
+          "line": 1172,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -694,7 +348,7 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.lcov-excl-exception-br-line",
+          "id": "lcovrc.include",
           "role": "primary"
         }
       ],
@@ -713,61 +367,23 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.lcov-filter-chunk-size; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Review lcovrc.lcov-tmp-dir configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
       "evidence": [],
       "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.lcov-filter-chunk-size",
+      "id": "case.acceptance.lcovrc.lcov-tmp-dir",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
-          "line": 1203,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.lcov-filter-chunk-size",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unreviewed acceptance skeleton for lcovrc.max-tasks-per-core; observable semantics, fixtures, and expected outcomes require manual adjudication.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.max-tasks-per-core",
-      "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 460,
+          "line": 298,
           "path": "lcovrc",
           "repository": "lcov-v2.5"
         },
         {
           "kind": "config_definition",
-          "line": 1164,
+          "line": 1121,
           "path": "lib/lcovutil.pm",
           "repository": "lcov-v2.5"
         }
@@ -776,16 +392,362 @@
       "surface": "config",
       "targets": [
         {
-          "id": "lcovrc.max-tasks-per-core",
+          "id": "lcovrc.lcov-tmp-dir",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.max-message-count configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.max-message-count",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 68,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1142,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.max-message-count",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.mcdc-coverage configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.mcdc-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 320,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1124,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.mcdc-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.memory configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.memory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 452,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1161,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.memory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.parallel configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.parallel",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 447,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1160,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.parallel",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.source-directory configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.source-directory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1166,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.source-directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.stop-on-error configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.stop-on-error",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 75,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1145,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.stop-on-error",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.treat-warning-as-error configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.treat-warning-as-error",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 80,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1146,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.treat-warning-as-error",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Review lcovrc.warn-once-per-file configuration value boundary from pinned definitions; downstream command effects, precedence, and runtime semantics remain unexecuted. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.warn-once-per-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 84,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1147,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.warn-once-per-file",
           "role": "primary"
         }
       ],
       "upstream_tests": []
     }
   ],
-  "description": "Deterministic unreviewed public inventory skeleton bucket 1 for the config responsibility domain.",
-  "fragment_id": "generated.inventory.config.1",
-  "fragment_type": "generated",
+  "description": "Reviewed primary acceptance plans for 17 M0 lcovrc configuration keys, each bound to its source-defined value boundary with no downstream command effects, precedence, or error-semantic claims.",
+  "fragment_id": "authored.m0-config-key-primary",
+  "fragment_type": "authored",
   "interaction_groups": [],
   "schema_version": 1,
   "subjects": []

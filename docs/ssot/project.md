@@ -131,10 +131,12 @@ the M0 harness become the permanent integration boundary.
   validates the 13 ordered samples-only trees without emitting retained
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Ninety primary plans and all four
+  531 public inventory entries. One hundred seven primary plans and all four
   required critical interaction domains are reviewed. The callback,
   error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 441 public primary reviews remain open.
+  and reciprocal planning cases; 424 public primary reviews remain open. The
+  latest 17 source-bound `lcovrc` configuration plans remain planning-only with
+  no suite or product evidence.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.

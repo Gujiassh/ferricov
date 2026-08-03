@@ -142,13 +142,14 @@ compatibility releases.
 - Two independent no-cache Oracle builds match their package, installed-tree,
   key-file, and smoke-output closures.
 - The workspace passes formatting, compilation, 106 Rust unit tests, clippy
-  with warnings denied, 43 behavior-contract tests, 6 configuration-contract
+  with warnings denied, 44 behavior-contract tests, 6 configuration-contract
   tests, 8 environment-contract tests, 11 tracefile-contract tests, 13
   diagnostics-contract tests, 22 installation-contract tests, 16 correctness
   tests, 53 resource tests, schema validators, and retained evidence
   validation. Two independent 148-case Oracle captures pass semantic replay
   comparison.
-- M0 remains open with 441 explicit behavior-planning gaps; no compatibility or
-  candidate performance claim is made.
+- M0 remains open with 424 explicit behavior-planning gaps after adding 17
+  source-bound `lcovrc` configuration plans; no compatibility or candidate
+  performance claim is made.
 
 [Unreleased]: https://github.com/Gujiassh/ferricov/commits/main

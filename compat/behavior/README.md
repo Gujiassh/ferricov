@@ -122,7 +122,11 @@ The small-tool CLI fragment reviews 17 additional `genpng`, `gendesc`,
 `py2lcov`, and `xml2lcov` parser/value boundaries from exact pinned source
 references. They stay `evidence_status=none` with empty suite and evidence
 arrays because no current executable case exercises those option semantics.
-`m0-ready` now rejects the remaining 441 public entries without reviewed
+The configuration-key fragment reviews 17 additional `lcovrc` value boundaries
+from exact pinned definitions. These cases also stay `evidence_status=none`
+with empty suite and evidence arrays; downstream command effects, precedence,
+and runtime semantics remain unexecuted.
+`m0-ready` now rejects the remaining 424 public entries without reviewed
 primary case groups.
 
 ## Evidence Rules

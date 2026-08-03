@@ -260,16 +260,40 @@ Codex final data is intentionally pending. This document MUST be updated only
 after the controller accepts or rejects a concrete Codex slice using the same
 criteria.
 
+## DeepSeek V4 Pro Bounded Configuration Lane
+
+The controller dispatched a fresh implementation-only lane to
+`deepseek-v4-pro` after the previous evaluation's four rejected attempts. The
+brief assigned exactly 17 `lcovrc` primary plans and permitted only one authored
+fragment plus the derived behavior contract. DeepSeek first stopped on a real
+duplicate-target conflict (`lcovrc.branch-coverage` already belonged to the
+existing configuration fragment); the controller replaced that target with
+`lcovrc.fork-fail-timeout`, then resumed the same bounded lane.
+
+DeepSeek produced the authored fragment and regenerated contract with 17 unique
+planning-only cases and no boundary violations. The controller independently
+reworked descriptions that inferred downstream effects, added the invariant test,
+and updated SSoT/spec/changelog records. After that rework, the following gates
+passed: 44 behavior tests, deterministic generation, current validation at
+`107/424`, `compat/verify.py --skip-oracle`, Rust fmt/check/106 tests/clippy,
+source closure for all 33 config references, and `git diff --check`. No Oracle
+capture, product evidence, or M1 authorization was claimed.
+
+**Provisional decision: accepted after controller rework.** This is an accepted
+implementation contribution, not autonomous model acceptance: the controller
+owns semantic review, test additions, documentation, commit, push, and hosted
+CI. The implementation-only worker did not commit or push.
+
 ## Comparison Metrics
 
 | Metric | DeepSeek observed | Codex |
 | --- | --- | --- |
-| Attempted implementation slices | 4 | pending |
-| Accepted slices | 0 | pending |
-| Acceptance rate | 0% | pending |
-| Critical findings and required rework | Every attempt rejected; normalized per-finding count not established | pending |
-| Focused gate results | Some local tests and deterministic generation passed; acceptance gates failed | pending |
-| Workspace/integration gate results | Required end-to-end gates failed or were skipped | pending |
+| Attempted implementation slices | 5 | pending |
+| Accepted slices | 1 (after controller rework) | pending |
+| Acceptance rate | 20% (1 of 5) | pending |
+| Critical findings and required rework | Four prior attempts rejected; v4-pro lane required duplicate-target correction and controller wording/test/doc rework | pending |
+| Focused gate results | v4-pro lane accepted after 44 behavior tests, generation/current validation, and source closure passed | pending |
+| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI pending for this lane | pending |
 | Wall time | approximately 61 min | pending |
 | Cost | approximately $62.76 | pending |
 
@@ -279,9 +303,11 @@ consumed, or tests written are supporting observations, not acceptance metrics.
 
 ## Decision
 
-All four DeepSeek implementation attempts in this evaluation are rejected. No
-DeepSeek-produced slice may be merged, checkpointed as completed, or used to
-support an M0 or compatibility claim without a new controller acceptance.
+The four historical DeepSeek implementation attempts remain rejected. The
+fifth attempt using `deepseek-v4-pro` is provisionally accepted only as the
+implementation portion of the bounded configuration lane after controller
+rework and independent gates. No model-produced slice may support an M0 or
+compatibility claim without controller acceptance.
 
 The useful outputs are the negative findings, bounded test ideas, and mechanical
 inventory observations. Those inputs may guide the Codex replacement, but they
