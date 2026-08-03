@@ -111,7 +111,7 @@ changed retained baseline without an explicit reviewed source change.
 | Failure behavior | pass | Default parse, canonical rewrite, and ignore-recovery identities remain bound to raw Oracle evidence. |
 | Tests | pass | Eleven reverse mutations plus corpus and repository validation pass. |
 | Documentation and SSoT | pass | README, changelog, compatibility SSoT, plan, tasks, and grammar status are synchronized. |
-| M1 authorization | blocked | Twenty-eight planned tracefile IDs and model-shaping decisions still lack executable mappings. |
+| M1 authorization | blocked | Twenty-five planned tracefile IDs and model-shaping decisions still lack executable mappings. |
 | Product compatibility | blocked | No candidate parser exists and all product evidence remains empty. |
 
 ## Residual Risk
