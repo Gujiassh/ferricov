@@ -118,7 +118,11 @@ fragment reviews four additional primary targets from eight exact canonical
 rewrite observations plus reviewed upstream planning sources. Those four cases
 stay `evidence_status=none` with empty evidence and suite arrays; the related
 diagnostic recovery observations remain reference-only and are not rebound.
-`m0-ready` now rejects the remaining 458 public entries without reviewed
+The small-tool CLI fragment reviews 17 additional `genpng`, `gendesc`,
+`py2lcov`, and `xml2lcov` parser/value boundaries from exact pinned source
+references. They stay `evidence_status=none` with empty suite and evidence
+arrays because no current executable case exercises those option semantics.
+`m0-ready` now rejects the remaining 441 public entries without reviewed
 primary case groups.
 
 ## Evidence Rules
