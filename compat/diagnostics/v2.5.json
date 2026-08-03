@@ -6,11 +6,11 @@
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "b0162c3677dcc3dcc859a5d13ea9002d36b7a093e89559643b4c89c1514659a7"
+      "sha256": "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "01c6e11166d5ea440345744bd018c218b086847686f4474a96974e4c14efcca1"
+      "sha256": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875"
     }
   ],
   "categories": [
@@ -1661,6 +1661,18 @@
       "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
     },
     {
+      "exit_status": 1,
+      "id": "tracefile:state-cross-sf-mcdc-duplicate.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "660584c11ce3779a7c073b1090bb95a30000801f29cba60f6bce5c52217bec30",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "6e5eda62e47c7942ba4170c58f454ed0c79139642933a50be7a244caf9782fc8",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
       "exit_status": 0,
       "id": "tracefile:malformed-tn.ignore-format",
       "kind": "named_error_ignore_one",
@@ -1841,9 +1853,9 @@
     "configuration_observations": 5,
     "control_rules": 9,
     "exit_policies": 10,
-    "named_error_fatal_observations": 18,
+    "named_error_fatal_observations": 19,
     "named_error_ignore_one_observations": 8,
-    "oracle_observations": 51,
+    "oracle_observations": 52,
     "parser_observations": 10,
     "planned_cases": 71,
     "reserved_categories": 1,

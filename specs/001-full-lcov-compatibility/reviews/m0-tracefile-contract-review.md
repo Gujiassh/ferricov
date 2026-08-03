@@ -30,11 +30,11 @@ The review uses these verifiable invariants:
    to canonical writer output.
 5. Each known tag has one per-record malformed fixture; the unknown-record
    fallback supplies the twenty-first malformed fixture.
-6. All 36 fixtures and all 52 Oracle observations retain their exact identities,
+6. All 39 fixtures and all 59 Oracle observations retain their exact identities,
    exits, stdout hashes, stderr hashes, and optional output hashes.
 7. All observations remain `oracle_reference`; root product compatibility is
    false and entry product-evidence arrays are empty.
-8. The contract does not claim to resolve the 28 planned M1 tracefile IDs that
+8. The contract does not claim to resolve the 25 planned M1 tracefile IDs that
    still lack exact executable mappings.
 
 ## Evidence
@@ -65,12 +65,12 @@ Observed results:
 - record totals: 20;
 - reader matcher source closure: 15 of 15;
 - writer emission source closure: 18 of 18;
-- fixture bindings: 36 of 36;
+- fixture bindings: 39 of 39;
 - per-record malformed fixture bindings: 21 of 21;
-- Oracle case bindings: 52 of 52;
-- Oracle exit distribution: 34 zero, 18 nonzero;
+- Oracle case bindings: 59 of 59;
+- Oracle exit distribution: 40 zero, 19 nonzero;
 - mutation tests: 11 of 11 pass;
-- retained tracefile corpus validation: 36 fixtures and pinned baseline pass;
+- retained tracefile corpus validation: 39 fixtures and pinned baseline pass;
 - repository verifier without Docker: pass;
 - full repository verifier: clean upstream checkout, source closure, and the first
   no-cache Oracle build passed; the second no-cache build was blocked by an

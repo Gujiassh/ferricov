@@ -69,8 +69,8 @@
     "planned_case_product_evidence": { "$ref": "#/$defs/productEvidence" },
     "oracle_observations": {
       "type": "array",
-      "minItems": 51,
-      "maxItems": 51,
+      "minItems": 52,
+      "maxItems": 52,
       "items": { "$ref": "#/$defs/oracleObservation" }
     },
     "oracle_observation_evidence_status": { "const": "oracle_reference" },
@@ -193,11 +193,11 @@
         "unclassified_surfaces": { "const": 4 },
         "exit_policies": { "const": 10 },
         "planned_cases": { "const": 71 },
-        "oracle_observations": { "const": 51 },
+        "oracle_observations": { "const": 52 },
         "startup_observations": { "const": 10 },
         "parser_observations": { "const": 10 },
         "configuration_observations": { "const": 5 },
-        "named_error_fatal_observations": { "const": 18 },
+        "named_error_fatal_observations": { "const": 19 },
         "named_error_ignore_one_observations": { "const": 8 }
       }
     }

@@ -83,7 +83,7 @@ reference closure, nine ignore/keep-going/message-control rules, four
 unclassified failure surfaces, and ten command exit policies. The `branch`
 class remains accepted but has no production emitter.
 
-Its 51 retained observations bind exact startup, parser, configuration, fatal,
+Its 52 retained observations bind exact startup, parser, configuration, fatal,
 and one-ignore outcomes without claiming product evidence. The retained
 `geninfo` startup observation is explicitly an environment intercept because a
 read-only `/tmp` blocks the true no-argument path. All 71 diagnostic and

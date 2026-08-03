@@ -81,7 +81,7 @@ tasks stay open.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 51 retained observations are
+surfaces, and ten command exit policies. Its 52 retained observations are
 reference-only; the `geninfo` startup observation is explicitly classified as
 a read-only temporary-directory intercept. All 71 diagnostic and parallel
 case IDs remain planned, so ignore-two, warning promotion, converter traps,

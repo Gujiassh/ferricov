@@ -15,7 +15,7 @@ The generated contract freezes:
   suppression, summary, and command exit-folding controls;
 - parser, raw Perl, native Python, and early dependency failure surfaces;
 - all 71 planned diagnostic and parallel case identities; and
-- 51 bindings to retained raw Oracle observations.
+- 52 bindings to retained raw Oracle observations.
 
 The retained observations are references only. In particular, the retained
 `geninfo` startup case is classified as an environment intercept because its

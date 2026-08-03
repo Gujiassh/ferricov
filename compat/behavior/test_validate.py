@@ -464,13 +464,17 @@ class BehaviorContractValidationTests(unittest.TestCase):
             "numeric-boundary.canonical",
             "permissive-prefix.canonical",
         }
+        state_canonical_ids = {
+            "state-late-tn-mcdc.canonical",
+            "state-cross-sf-mcdc-success.canonical",
+        }
         self.assertEqual(
             {
                 identifier
                 for identifier, case in tracefile_by_id.items()
                 if case["kind"] == "canonical_rewrite"
             },
-            canonical_ids,
+            canonical_ids | state_canonical_ids,
         )
         for identifier in canonical_ids:
             with self.subTest(oracle_case=identifier):

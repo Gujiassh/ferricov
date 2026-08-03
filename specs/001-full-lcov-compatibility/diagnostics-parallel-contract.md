@@ -34,7 +34,7 @@ rule. The only approved non-identical result is
 The executable M0 source inventory is
 `compat/diagnostics/v2.5.json`. It closes over all 32 registry classes, 399
 symbol references, nine shared control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 51 retained Oracle observations
+surfaces, and ten command exit policies. Its 52 retained Oracle observations
 are reference-only; all 71 case identities in this document remain planned.
 
 ## 2. Scope And Inventory Links

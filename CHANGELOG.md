@@ -55,7 +55,7 @@ compatibility releases.
 - A standalone fail-closed LCOV 2.5 diagnostics contract covering all 32 shared
   message classes, 399 symbol references, nine error-control rules, four
   unclassified failure surfaces, ten command exit policies, 71 planned case
-  identities, and 51 reference-only Oracle observations.
+  identities, and 52 reference-only Oracle observations.
 - A standalone fail-closed LCOV 2.5 installation contract covering the complete
   321-entry installed-tree lock, nine exhaustive payload groups, 15 source
   closures, 13 planned installation cases, seven runtime report assets, and four

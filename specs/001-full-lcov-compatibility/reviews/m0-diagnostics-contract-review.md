@@ -39,7 +39,7 @@ The review uses these verifiable invariants:
    `xml2lcovutil.py` library-only boundary.
 7. All 71 `DIAG-*` and `PAR-*` identities in the normative specification remain
    ordered and `planned`; none has product evidence.
-8. All 51 retained Oracle observations preserve exact case identity, exit,
+8. All 52 retained Oracle observations preserve exact case identity, exit,
    stdout, stderr, output, and observation hashes as applicable.
 9. The retained `m0-core-geninfo-startup-control` observation remains a
    `startup_environment_intercept` with exit `30` and no planned-case binding.
@@ -77,8 +77,8 @@ Observed results:
 - unclassified failure surfaces: 4 of 4;
 - command exit policies: 10 of 10;
 - planned diagnostic/parallel identities: 71 of 71, all `planned`;
-- retained Oracle observations: 51 of 51, comprising 10 startup, 10 parser,
-  5 configuration/error-control, 18 fatal named-error, and 8 one-ignore
+- retained Oracle observations: 52 of 52, comprising 10 startup, 10 parser,
+  5 configuration/error-control, 19 fatal named-error, and 8 one-ignore
   warning observations;
 - mutation tests: 12 of 12 pass;
 - repository verifier without Docker: pass;

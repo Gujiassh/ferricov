@@ -169,7 +169,7 @@ closes the M0 record/malformed inventory and adds exact ownership mappings for
 without exact executable mappings.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
-command exit policies. Its 51 retained observations remain reference-only,
+command exit policies. Its 52 retained observations remain reference-only,
 including a `geninfo` startup case intercepted by read-only temporary storage;
 all 71 diagnostic and parallel case identities remain planned.
 The separate installation contract binds the 321-entry installed tree to nine
