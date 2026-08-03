@@ -34,9 +34,9 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/correctness/baselines/m0-cli-oracle-v2.5/result.json":
         "f1b8484ba8a9587791c294722ceddcca245c72fa1a090b0b5245375fec30f8a2",
     "compat/fixtures/m0-tracefiles/oracle-baseline.json":
-        "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca",
+        "01377b8f57e6617420339106c4a186f67edeefeb67fa8904c6d571635fe6afc3",
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
-        "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875",
+        "8aeae0002d12a2fab80b1e43867b7f0cc15f1e5abeb93ec3470fc2ac55b088c9",
 }
 
 EXPECTED_REGISTRY = (

@@ -1,5 +1,9 @@
 # M0 Tracefile State-Ownership Oracle Evidence Review
 
+This is the historical review for the state-ownership slice delivered before
+the later VER mapping. Its totals below are intentionally time-scoped to the
+39-fixture/59-observation delivery and are not the current tracefile SSoT.
+
 Status: Critical review complete for the bounded ownership slice only.
 Product compatibility evidence: false.
 M1 authorization: not granted.
@@ -109,7 +113,7 @@ Retained artifacts:
 - `compat/fixtures/m0-tracefiles/oracle-baseline.json`
 - `compat/tracefile/v2.5.json`
 
-Exact totals after this slice: 39 fixtures, 59 Oracle cases, 2 semantic
+Exact totals at the time of this slice: 39 fixtures, 59 Oracle cases, 2 semantic
 snapshots, 40 exit-zero / 19 exit-nonzero. Exact structured mappings added for
 `M1-TF-021`, `M1-TF-022`, `M1-TF-026`. Missing exact executable IDs: 25.
 M0 primary behavior review remains 73/458. Existing first-52 observation
@@ -143,7 +147,8 @@ payloads preserved by case ID.
 - Cross-SF aggregate cached-count/data divergence is Oracle-observed and must not
   be "cleaned up" by product code without an explicit approved behavior change.
 - Exact executable mappings cover three M1-TF IDs only; whole M1-MD rows and the
-  remaining 25 M1-TF IDs stay open.
+  remaining 25 M1-TF IDs were open at the time of this slice. The later VER
+  mapping review records the current 42-fixture/63-observation totals.
 - M1 remains unauthorized.
 
 ## Compatibility Claim

@@ -105,9 +105,9 @@ rustup run 1.85.0 cargo clippy --workspace --all-targets --locked -- -D warnings
 Observed final evidence:
 
 - contract SHA-256:
-  `4de3f0b2474034c96dcac068909bcb7f8a2d23240ae0265b7797e653c8777ada`;
+  `28c5ebd9f927bd77070af6bd69b34698e4bfcb6c72b5fcd1165b4bb5891f03f4`;
 - retained result SHA-256:
-  `526d2c81b33776928cbd1e049a32c16cf5229f2764fd36c9063c35ee453894f4`;
+  `07ecfaa2b00bbc2a96b0c393c901a37122c2436d7b93ce0e08cf486f3f390da7`;
 - 13 total, 13 accepted, 0 nonzero, 0 signal, 0 timeout;
 - 0 stderr bytes and 0 unexpected output entries;
 - maximum observed peak RSS: 565,981,184 bytes on `cardinality-65536`;
@@ -141,6 +141,8 @@ Observed final evidence:
 
 The wall/RSS values are one captured observation per profile and are not
 performance gates or stable benchmark distributions.
+
+The later M1-TF-007 VER contract added lines to `tracefile-grammar.md`, shifting the two retained resource source-section ranges. The resource contract and retained result contract binding were regenerated to the hashes above; all 13 raw samples and their identities are unchanged.
 
 ## Reverse Review
 

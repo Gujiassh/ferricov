@@ -598,6 +598,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
             "legacy.canonical",
             "numeric-boundary.canonical",
             "permissive-prefix.canonical",
+            "ver-repeat-equal.canonical",
         }
         state_canonical_ids = {
             "state-late-tn-mcdc.canonical",
@@ -634,6 +635,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 "bytes-nul-accepted.canonical",
                 "numeric-boundary.canonical",
                 "permissive-prefix.canonical",
+                "ver-repeat-equal.canonical",
             },
         )
         self.assertEqual(
