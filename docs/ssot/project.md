@@ -96,11 +96,11 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 39 fixtures, 21 per-record malformed inputs, and 59 retained
-  Oracle observations, including state-ownership semantic snapshots bound to
-  `M1-TF-021`/`M1-TF-022`/`M1-TF-026` and M0 decisions `M0-TF-TN-MCDC-001` /
-  `M0-TF-MCDC-SF-001`. Product compatibility evidence remains false; those
-  observations remain reference-only and 25 planned M1 tracefile IDs still
+  emission lines, 42 fixtures, 21 per-record malformed inputs, and 63 retained
+  Oracle observations, including VER semantics and state-ownership probes bound to
+  `M1-TF-007`/`M1-TF-021`/`M1-TF-022`/`M1-TF-026` and M0 decisions
+  `M0-TF-TN-MCDC-001` / `M0-TF-MCDC-SF-001`. Product compatibility evidence
+  remains false; those observations remain reference-only and 24 planned M1 tracefile IDs still
   lack exact executable mappings.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control

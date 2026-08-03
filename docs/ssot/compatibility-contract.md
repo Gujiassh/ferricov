@@ -45,8 +45,8 @@ relationships where supported.
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
-| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 59 retained Oracle observations across 39 fixtures including state-ownership semantic snapshots; reference-only, with 25 planned M1 tracefile IDs still unmapped |
-| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 52 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
+| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 63 retained Oracle observations across 42 fixtures including VER semantics and state-ownership probes; reference-only, with 24 planned M1 tracefile IDs still unmapped |
+| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 53 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
 | behavior planning | primary plans cover all 531 public entries | not started | 107 reviewed primary plans, including 40 CLI parser entries, 8 configuration-semantic slices with 67 bindings, 4 reference-only tracefile CLI targets, 17 source-bound small-tool CLI targets, and 17 source-bound `lcovrc` targets; all 4 critical interaction domains reviewed; 424 primary reviews open |
@@ -111,16 +111,16 @@ observations do not provide Ferricov product compatibility evidence.
 The standalone tracefile contract is also independent of the public inventory.
 It closes the pinned source inventory over every reader matcher and canonical
 writer emission, distinguishes the three reader-only tags, and binds the
-retained corpus and Oracle baseline by exact hashes. Its 59 observations are
-Oracle references only. Exact structured mappings now cover `M1-TF-021`,
-`M1-TF-022`, and `M1-TF-026`, reducing unmapped planned M1 tracefile IDs from 28
-to 25. They still do not resolve the 25 M1 tracefile IDs that still
-lack executable mappings and do not provide Ferricov product compatibility
+retained corpus and Oracle baseline by exact hashes. Its 63 observations are
+Oracle references only. Exact structured mappings now cover `M1-TF-007`,
+`M1-TF-021`, `M1-TF-022`, and `M1-TF-026`, reducing unmapped planned M1
+tracefile IDs from 25 to 24. They still do not resolve the 24 M1 tracefile IDs
+that still lack executable mappings and do not provide Ferricov product compatibility
 evidence.
 
 The standalone diagnostics contract closes the M0 source inventory over the
 shared registry, symbol references, ignore/keep-going state machine, raw
-failure families, and command exit policies. Its 52 retained observations are
+failure families, and command exit policies. Its 53 retained observations are
 Oracle references only. The retained `geninfo` startup case is marked as a
 read-only temporary-directory intercept rather than evidence for the true
 no-argument case. All 71 diagnostic and parallel acceptance identities remain

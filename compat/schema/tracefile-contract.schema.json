@@ -47,8 +47,8 @@
     "fallback_behavior": { "$ref": "#/$defs/fallbackBehavior" },
     "fixtures": {
       "type": "array",
-      "minItems": 39,
-      "maxItems": 39,
+      "minItems": 42,
+      "maxItems": 42,
       "items": { "$ref": "#/$defs/fixture" }
     },
     "malformed_behaviors": {
@@ -59,8 +59,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 59,
-      "maxItems": 59,
+      "minItems": 63,
+      "maxItems": 63,
       "items": { "$ref": "#/$defs/oracleCase" }
     },
     "totals": { "$ref": "#/$defs/totals" },
@@ -227,7 +227,8 @@
             "byte-boundary",
             "numeric-boundary",
             "state-ownership",
-            "deterministic-scale"
+            "deterministic-scale",
+            "ver-semantics"
           ]
         },
         "oracle_default": { "enum": ["accept", "reject"] },
@@ -350,18 +351,18 @@
         "lexical_rules": { "const": 2 },
         "reader_matcher_lines": { "const": 15 },
         "canonical_writer_lines": { "const": 18 },
-        "fixtures": { "const": 39 },
+        "fixtures": { "const": 42 },
         "malformed_fixtures": { "const": 21 },
-        "oracle_cases": { "const": 59 },
-        "default_parse_cases": { "const": 39 },
-        "canonical_rewrite_cases": { "const": 10 },
+        "oracle_cases": { "const": 63 },
+        "default_parse_cases": { "const": 42 },
+        "canonical_rewrite_cases": { "const": 11 },
         "ignore_recovery_cases": { "const": 8 },
         "semantic_snapshot_cases": { "const": 2 },
-        "oracle_exit_zero": { "const": 40 },
-        "oracle_exit_nonzero": { "const": 19 },
+        "oracle_exit_zero": { "const": 43 },
+        "oracle_exit_nonzero": { "const": 20 },
         "exact_executable_requirement_ids": {
           "type": "array",
-          "const": ["M1-TF-021", "M1-TF-022", "M1-TF-026"]
+          "const": ["M1-TF-007", "M1-TF-021", "M1-TF-022", "M1-TF-026"]
         },
         "exact_executable_m0_decision_ids": {
           "type": "array",

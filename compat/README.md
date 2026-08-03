@@ -65,9 +65,10 @@ test commands.
 The standalone [`tracefile/v2.5.json`](tracefile/v2.5.json) contract reviews 20
 known record tags, two lexical framing rules, the complete 15-line reader
 matcher closure, and the complete 18-line canonical writer emission closure.
-It binds all 39 retained fixtures, all 21 per-record malformed fixtures, and 59
+It binds all 42 retained fixtures, all 21 per-record malformed fixtures, and 63
 pinned Oracle observations by exact artifact and stream/output hashes, including
-state-ownership semantic snapshots for `M1-TF-021`, `M1-TF-022`, and `M1-TF-026`.
+VER semantics and state-ownership probes for `M1-TF-007`, `M1-TF-021`,
+`M1-TF-022`, and `M1-TF-026`.
 
 The reader-only `KF`, `FN`, and `FNDA` forms remain distinct from the 17 record
 tags emitted canonically. The Oracle observations are reference-only and do not
@@ -83,7 +84,7 @@ reference closure, nine ignore/keep-going/message-control rules, four
 unclassified failure surfaces, and ten command exit policies. The `branch`
 class remains accepted but has no production emitter.
 
-Its 52 retained observations bind exact startup, parser, configuration, fatal,
+Its 53 retained observations bind exact startup, parser, configuration, fatal,
 and one-ignore outcomes without claiming product evidence. The retained
 `geninfo` startup observation is explicitly an environment intercept because a
 read-only `/tmp` blocks the true no-argument path. All 71 diagnostic and

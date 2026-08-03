@@ -10,7 +10,7 @@
     "locale": "C.UTF-8",
     "network": "none"
   },
-  "cases_sha256": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875",
+  "cases_sha256": "8aeae0002d12a2fab80b1e43867b7f0cc15f1e5abeb93ec3470fc2ac55b088c9",
   "cases": [
     {
       "id": "current-all-records.summary",
@@ -913,6 +913,78 @@
       }
     },
     {
+      "id": "ver-repeat-equal.summary",
+      "fixture": "fixtures/ver/repeat-equal.info",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "77f9cbf7f36d15d49b6d0c548883ec07439e62af9afd23503bc61c4ed0d5a43e",
+        "byte_size": 183,
+        "base64": "UmVhZGluZyB0cmFjZWZpbGUgaW5wdXQuaW5mby4KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgxIG9mIDEgbGluZSkKICBmdW5jdGlvbnMuLi46IG5vIGRhdGEgZm91bmQKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": null,
+      "output": {
+        "exists": false
+      }
+    },
+    {
+      "id": "ver-repeat-different.summary",
+      "fixture": "fixtures/ver/repeat-different.info",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "exit_status": 1,
+      "stdout": {
+        "sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a",
+        "byte_size": 30,
+        "base64": "UmVhZGluZyB0cmFjZWZpbGUgaW5wdXQuaW5mby4K"
+      },
+      "stderr": {
+        "sha256": "aa858b007730a8fa4172469022227f4648ae74d5f95f1ed9c0aa3a417cfb176f",
+        "byte_size": 257,
+        "base64": "bGNvdjogRVJST1I6IChjb3JydXB0KSB1bmFibGUgdG8gcmVhZCB0cmFjZSBmaWxlICdpbnB1dC5pbmZvJzogbGNvdjogRVJST1I6IGV4cGVjdGVkIHRvIHNldCB2ZXJzaW9uIElEIGF0IG1vc3Qgb25jZTogcmV2LTIuMCByZXYtMS4wIGF0IC91c3IvbG9jYWwvbGliL2xjb3YvbGNvdnV0aWwucG0gbGluZSA2MDc3LCA8SU5GTz4gbGluZSA0LgoJKHVzZSAibGNvdiAtLWlnbm9yZS1lcnJvcnMgY29ycnVwdCAuLi4iIHRvIGJ5cGFzcyB0aGlzIGVycm9yKQo="
+      },
+      "output_file": null,
+      "output": {
+        "exists": false
+      }
+    },
+    {
+      "id": "ver-per-source.summary",
+      "fixture": "fixtures/ver/per-source.info",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "5daba54025101dc5d9bb53c944f407e2a7fd809908436e1d08cd6dd92e347b00",
+        "byte_size": 184,
+        "base64": "UmVhZGluZyB0cmFjZWZpbGUgaW5wdXQuaW5mby4KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMgogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgyIG9mIDIgbGluZXMpCiAgZnVuY3Rpb25zLi4uOiBubyBkYXRhIGZvdW5kCk1lc3NhZ2Ugc3VtbWFyeToKICBubyBtZXNzYWdlcyB3ZXJlIHJlcG9ydGVkCg=="
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": null,
+      "output": {
+        "exists": false
+      }
+    },
+    {
       "id": "scale-medium.summary",
       "fixture": "generated/medium.info",
       "argv": [
@@ -1300,6 +1372,46 @@
           "SF": 15,
           "TN": 15,
           "end_of_record": 15
+        }
+      }
+    },
+    {
+      "id": "ver-repeat-equal.canonical",
+      "fixture": "fixtures/ver/repeat-equal.info",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "1556837d07b98f4c002a3c159e0c1a9c0737476c710c151d0c620dab49067bb0",
+        "byte_size": 234,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgxIG9mIDEgbGluZSkKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output.info",
+      "output": {
+        "exists": true,
+        "sha256": "8af20de8ea36e9f879a13e2eb4ad58352fdb28cf97ed04f6c0de58061be4974d",
+        "byte_size": 72,
+        "base64": "VE46dmVyX2VxClNGOnNyYy92ZXItZXF1YWwuYwpWRVI6cmV2LTEuMApEQToxLDEKTEY6MQpMSDoxCmVuZF9vZl9yZWNvcmQK",
+        "record_count": 7,
+        "record_counts": {
+          "DA": 1,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "VER": 1,
+          "end_of_record": 1
         }
       }
     },

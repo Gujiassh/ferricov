@@ -30,11 +30,13 @@ The review uses these verifiable invariants:
    to canonical writer output.
 5. Each known tag has one per-record malformed fixture; the unknown-record
    fallback supplies the twenty-first malformed fixture.
-6. All 39 fixtures and all 59 Oracle observations retain their exact identities,
+6. All 42 fixtures and all 63 Oracle observations retain their exact identities,
    exits, stdout hashes, stderr hashes, and optional output hashes.
 7. All observations remain `oracle_reference`; root product compatibility is
    false and entry product-evidence arrays are empty.
-8. The contract does not claim to resolve the 25 planned M1 tracefile IDs that
+8. The VER lane binds equal-repeat acceptance, different-repeat rejection, and
+   per-source version scope to exact pinned Oracle outcomes.
+9. The contract does not claim to resolve the 24 planned M1 tracefile IDs that
    still lack exact executable mappings.
 
 ## Evidence
@@ -65,12 +67,12 @@ Observed results:
 - record totals: 20;
 - reader matcher source closure: 15 of 15;
 - writer emission source closure: 18 of 18;
-- fixture bindings: 39 of 39;
+- fixture bindings: 42 of 42;
 - per-record malformed fixture bindings: 21 of 21;
-- Oracle case bindings: 59 of 59;
-- Oracle exit distribution: 40 zero, 19 nonzero;
+- Oracle case bindings: 63 of 63;
+- Oracle exit distribution: 43 zero, 20 nonzero;
 - mutation tests: 11 of 11 pass;
-- retained tracefile corpus validation: 39 fixtures and pinned baseline pass;
+- retained tracefile corpus validation: 42 fixtures and pinned baseline pass;
 - repository verifier without Docker: pass;
 - full repository verifier: clean upstream checkout, source closure, and the first
   no-cache Oracle build passed; the second no-cache build was blocked by an
@@ -111,7 +113,7 @@ changed retained baseline without an explicit reviewed source change.
 | Failure behavior | pass | Default parse, canonical rewrite, and ignore-recovery identities remain bound to raw Oracle evidence. |
 | Tests | pass | Eleven reverse mutations plus corpus and repository validation pass. |
 | Documentation and SSoT | pass | README, changelog, compatibility SSoT, plan, tasks, and grammar status are synchronized. |
-| M1 authorization | blocked | Twenty-five planned tracefile IDs and model-shaping decisions still lack executable mappings. |
+| M1 authorization | blocked | Twenty-four planned tracefile IDs and model-shaping decisions still lack executable mappings. |
 | Product compatibility | blocked | No candidate parser exists and all product evidence remains empty. |
 
 ## Residual Risk

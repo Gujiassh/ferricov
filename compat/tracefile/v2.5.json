@@ -2,15 +2,15 @@
   "artifact_bindings": [
     {
       "path": "compat/fixtures/m0-tracefiles/manifest.json",
-      "sha256": "7a9406ac7b69bfdb2e709ec496b6d80242341c595e5234f126638609a07b76d0"
+      "sha256": "009d63f48ed1e2b8ac5923ca1bf878d9b122c94d04b9407b13cdfe2c1c339193"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875"
+      "sha256": "8aeae0002d12a2fab80b1e43867b7f0cc15f1e5abeb93ec3470fc2ac55b088c9"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca"
+      "sha256": "01377b8f57e6617420339106c4a186f67edeefeb67fa8904c6d571635fe6afc3"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/inspect_model.pl",
@@ -297,6 +297,27 @@
       "oracle_default": "reject",
       "path": "fixtures/state/cross-sf-mcdc-duplicate.info",
       "sha256": "4dc738ce2a34cf80ffabf3e3468d30e7112568ac96209deed47bb25602669e79"
+    },
+    {
+      "group": "ver-semantics",
+      "id": "ver-repeat-equal",
+      "oracle_default": "accept",
+      "path": "fixtures/ver/repeat-equal.info",
+      "sha256": "246f9fa103f74dac97c4a4bcb81bb4e426f272704808f6f47924fd20d1e10ad6"
+    },
+    {
+      "group": "ver-semantics",
+      "id": "ver-repeat-different",
+      "oracle_default": "reject",
+      "path": "fixtures/ver/repeat-different.info",
+      "sha256": "c84dccf9c6ccd17c6470ba5406e41404ef0c1b0c6d79348053473e03ceb0cefa"
+    },
+    {
+      "group": "ver-semantics",
+      "id": "ver-per-source",
+      "oracle_default": "accept",
+      "path": "fixtures/ver/per-source.info",
+      "sha256": "a83ce9bed794ffbeb7cfa73e675d8eba24b3d651b3911a9d16443a1a5eda6545"
     },
     {
       "group": "deterministic-scale",
@@ -996,6 +1017,45 @@
     {
       "evidence_status": "oracle_reference",
       "exit_status": 0,
+      "fixture_id": "ver-repeat-equal",
+      "id": "ver-repeat-equal.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-007"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "77f9cbf7f36d15d49b6d0c548883ec07439e62af9afd23503bc61c4ed0d5a43e"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "ver-repeat-different",
+      "id": "ver-repeat-different.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-007"
+      ],
+      "stderr_sha256": "aa858b007730a8fa4172469022227f4648ae74d5f95f1ed9c0aa3a417cfb176f",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "ver-per-source",
+      "id": "ver-per-source.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-007"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5daba54025101dc5d9bb53c944f407e2a7fd809908436e1d08cd6dd92e347b00"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
       "fixture_id": "scale-medium",
       "id": "scale-medium.summary",
       "kind": "default_parse",
@@ -1092,6 +1152,19 @@
       "output_sha256": "64f31dff8d29291b0149f64e9867f368f4df850c34f55ea41bbd30e6d52b6a39",
       "stderr_sha256": "8ba712706f0a7de3c124db1f53330ffc2139ff5d907aad65194c4b44ab9a5dcb",
       "stdout_sha256": "746e3063d645a4fb862c56c2d950f768975e5f395c74cc3de51a2474d0bbe09d"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "ver-repeat-equal",
+      "id": "ver-repeat-equal.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "8af20de8ea36e9f879a13e2eb4ad58352fdb28cf97ed04f6c0de58061be4974d",
+      "requirement_ids": [
+        "M1-TF-007"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1556837d07b98f4c002a3c159e0c1a9c0737476c710c151d0c620dab49067bb0"
     },
     {
       "evidence_status": "oracle_reference",
@@ -1882,25 +1955,26 @@
   "schema_version": 1,
   "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, and Oracle-observed malformed input behavior",
   "totals": {
-    "canonical_rewrite_cases": 10,
+    "canonical_rewrite_cases": 11,
     "canonical_writer_lines": 18,
-    "default_parse_cases": 39,
+    "default_parse_cases": 42,
     "exact_executable_m0_decision_ids": [
       "M0-TF-MCDC-SF-001",
       "M0-TF-TN-MCDC-001"
     ],
     "exact_executable_requirement_ids": [
+      "M1-TF-007",
       "M1-TF-021",
       "M1-TF-022",
       "M1-TF-026"
     ],
-    "fixtures": 39,
+    "fixtures": 42,
     "ignore_recovery_cases": 8,
     "lexical_rules": 2,
     "malformed_fixtures": 21,
-    "oracle_cases": 59,
-    "oracle_exit_nonzero": 19,
-    "oracle_exit_zero": 40,
+    "oracle_cases": 63,
+    "oracle_exit_nonzero": 20,
+    "oracle_exit_zero": 43,
     "reader_matcher_lines": 15,
     "records": 20,
     "semantic_snapshot_cases": 2

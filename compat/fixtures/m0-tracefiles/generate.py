@@ -386,6 +386,81 @@ end_of_record
     ]
 
 
+def ver_repeat_equal_fixture() -> Fixture:
+    data = ascii_bytes(
+        """
+TN:ver_eq
+SF:src/ver-equal.c
+VER:rev-1.0
+VER:rev-1.0
+DA:1,1
+LF:1
+LH:1
+end_of_record
+"""
+    )
+    return Fixture(
+        "ver-repeat-equal",
+        "fixtures/ver/repeat-equal.info",
+        "ver-semantics",
+        "Same VER repeated within one source section; accepted and canonical output emits at most one version.",
+        data,
+        "accept",
+    )
+
+
+def ver_repeat_different_fixture() -> Fixture:
+    data = ascii_bytes(
+        """
+TN:ver_diff
+SF:src/ver-diff.c
+VER:rev-1.0
+VER:rev-2.0
+DA:1,1
+LF:1
+LH:1
+end_of_record
+"""
+    )
+    return Fixture(
+        "ver-repeat-different",
+        "fixtures/ver/repeat-different.info",
+        "ver-semantics",
+        "Different second VER for the same source is an unconditional failure, not an ignorable ERROR_VERSION case.",
+        data,
+        "reject",
+    )
+
+
+def ver_per_source_fixture() -> Fixture:
+    data = ascii_bytes(
+        """
+TN:ver_src_a
+SF:src/ver-src-a.c
+VER:rev-a
+DA:1,1
+LF:1
+LH:1
+end_of_record
+TN:ver_src_b
+SF:src/ver-src-b.c
+VER:rev-b
+DA:2,1
+LF:1
+LH:1
+end_of_record
+"""
+    )
+    return Fixture(
+        "ver-per-source",
+        "fixtures/ver/per-source.info",
+        "ver-semantics",
+        "Separate terminated sources retain independent versions in one input.",
+        data,
+        "accept",
+    )
+
+
 def scale_fixture(profile: str, sections: int, lines_per_section: int) -> Fixture:
     chunks: list[str] = []
     for section in range(sections):
@@ -436,6 +511,9 @@ def build_fixtures() -> list[Fixture]:
     fixtures.extend(byte_fixtures())
     fixtures.extend(numeric_fixtures())
     fixtures.extend(state_ownership_fixtures())
+    fixtures.extend(
+        [ver_repeat_equal_fixture(), ver_repeat_different_fixture(), ver_per_source_fixture()]
+    )
     fixtures.extend(
         [
             scale_fixture("medium", sections=256, lines_per_section=64),
@@ -563,6 +641,7 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
         "byte-boundary": "M1-TF-001/061",
         "numeric-boundary": "M1-TF-030/031/032/033/034",
         "state-ownership": "M1-TF-021/022/026",
+        "ver-semantics": "M1-TF-007",
         "deterministic-scale": "M1-TF-062",
     }
     feature_flags = {
@@ -627,6 +706,12 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
             "numeric-boundary.canonical",
             "fixtures/numeric-boundary.info",
             "M1-TF-030",
+            ["--no-function-coverage"],
+        ),
+        (
+            "ver-repeat-equal.canonical",
+            "fixtures/ver/repeat-equal.info",
+            "M1-TF-007",
             ["--no-function-coverage"],
         ),
     ]

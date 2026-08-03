@@ -950,6 +950,78 @@
       "contains_nul": false
     },
     {
+      "id": "ver-repeat-equal",
+      "path": "fixtures/ver/repeat-equal.info",
+      "group": "ver-semantics",
+      "description": "Same VER repeated within one source section; accepted and canonical output emits at most one version.",
+      "committed": true,
+      "oracle_default": "accept",
+      "sha256": "246f9fa103f74dac97c4a4bcb81bb4e426f272704808f6f47924fd20d1e10ad6",
+      "byte_size": 84,
+      "record_count": 8,
+      "record_counts": {
+        "DA": 1,
+        "LF": 1,
+        "LH": 1,
+        "SF": 1,
+        "TN": 1,
+        "VER": 2,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "ver-repeat-different",
+      "path": "fixtures/ver/repeat-different.info",
+      "group": "ver-semantics",
+      "description": "Different second VER for the same source is an unconditional failure, not an ignorable ERROR_VERSION case.",
+      "committed": true,
+      "oracle_default": "reject",
+      "sha256": "c84dccf9c6ccd17c6470ba5406e41404ef0c1b0c6d79348053473e03ceb0cefa",
+      "byte_size": 85,
+      "record_count": 8,
+      "record_counts": {
+        "DA": 1,
+        "LF": 1,
+        "LH": 1,
+        "SF": 1,
+        "TN": 1,
+        "VER": 2,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "ver-per-source",
+      "path": "fixtures/ver/per-source.info",
+      "group": "ver-semantics",
+      "description": "Separate terminated sources retain independent versions in one input.",
+      "committed": true,
+      "oracle_default": "accept",
+      "sha256": "a83ce9bed794ffbeb7cfa73e675d8eba24b3d651b3911a9d16443a1a5eda6545",
+      "byte_size": 146,
+      "record_count": 14,
+      "record_counts": {
+        "DA": 2,
+        "LF": 2,
+        "LH": 2,
+        "SF": 2,
+        "TN": 2,
+        "VER": 2,
+        "end_of_record": 2
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
       "id": "scale-medium",
       "path": "generated/medium.info",
       "group": "deterministic-scale",

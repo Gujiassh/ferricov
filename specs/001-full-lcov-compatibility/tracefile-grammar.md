@@ -16,10 +16,10 @@ blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 
 The M0 source and evidence inventory is now executable at
 `compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
-lexical rules, 15 reader matcher lines, 18 writer emission lines, 39 fixtures,
-21 per-record malformed fixtures, and 59 retained Oracle observations, including
-three state-ownership fixtures, two semantic snapshots, and the inspect_model.pl
-runner. That inventory does not change this document's proposed status: 25 planned M1
+lexical rules, 15 reader matcher lines, 18 writer emission lines, 42 fixtures,
+21 per-record malformed fixtures, and 63 retained Oracle observations, including
+three VER fixtures, three state-ownership fixtures, two semantic snapshots, and
+the inspect_model.pl runner. That inventory does not change this document's proposed status: 24 planned M1
 tracefile IDs still lack exact executable mappings, and no M1 case has product
 evidence.
 
@@ -692,19 +692,21 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 3 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 4 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
-`M1-TF-021`, `M1-TF-022`, and `M1-TF-026`.
+`M1-TF-007`, `M1-TF-021`, `M1-TF-022`, and `M1-TF-026`.
 
-Those three IDs are bound through the state-ownership fixture group,
-semantic-snapshot runner `inspect_model.pl`, and retained Oracle identities; the
-contract also records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. The other
-Oracle-case bindings and older free-form compound `requirement` labels remain
-informational only; they are not exact executable mappings. These 25 IDs still
-have no exact executable mapping and remain explicit blockers:
+`M1-TF-007` is bound through the VER fixture group and pinned summary/canonical
+Oracle observations. The other three IDs are bound through the state-ownership
+fixture group, semantic-snapshot runner `inspect_model.pl`, and retained Oracle
+identities; the contract also records `M0-TF-TN-MCDC-001` and
+`M0-TF-MCDC-SF-001`. The other Oracle-case bindings and older free-form compound
+`requirement` labels remain informational only; they are not exact executable
+mappings. These 24 IDs still have no exact executable mapping and remain explicit
+blockers:
 
-`M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-007`, `M1-TF-009`,
+`M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-009`,
 `M1-TF-011`, `M1-TF-013`, `M1-TF-014`, `M1-TF-020`, `M1-TF-023`,
 `M1-TF-024`, `M1-TF-025`, `M1-TF-027`, `M1-TF-028`, `M1-TF-035`,
 `M1-TF-041`, `M1-TF-043`, `M1-TF-045`, `M1-TF-046`, `M1-TF-050`,

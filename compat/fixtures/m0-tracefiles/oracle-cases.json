@@ -465,6 +465,42 @@
       "expected_exit": 1
     },
     {
+      "id": "ver-repeat-equal.summary",
+      "fixture": "fixtures/ver/repeat-equal.info",
+      "requirement": "M1-TF-007",
+      "description": "Default summary observation for ver-repeat-equal.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "ver-repeat-different.summary",
+      "fixture": "fixtures/ver/repeat-different.info",
+      "requirement": "M1-TF-007",
+      "description": "Default summary observation for ver-repeat-different.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "ver-per-source.summary",
+      "fixture": "fixtures/ver/per-source.info",
+      "requirement": "M1-TF-007",
+      "description": "Default summary observation for ver-per-source.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
       "id": "scale-medium.summary",
       "fixture": "generated/medium.info",
       "requirement": "M1-TF-062",
@@ -609,6 +645,22 @@
       "id": "numeric-boundary.canonical",
       "fixture": "fixtures/numeric-boundary.info",
       "requirement": "M1-TF-030",
+      "description": "Canonical writer output identity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "ver-repeat-equal.canonical",
+      "fixture": "fixtures/ver/repeat-equal.info",
+      "requirement": "M1-TF-007",
       "description": "Canonical writer output identity.",
       "argv": [
         "lcov",

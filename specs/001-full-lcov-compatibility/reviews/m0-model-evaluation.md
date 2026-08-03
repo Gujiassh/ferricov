@@ -40,6 +40,7 @@ conditions is still rejected.
 | DeepSeek first pass | differential runner | reject | 16 min | included in first-pass total |
 | DeepSeek first pass | reproducible Oracle | reject | 20 min | included in first-pass total |
 | DeepSeek controlled rework | inventory only | reject | 13 min 25 s | $17.841925 |
+| DeepSeek v4-pro bounded VER lane | M1-TF-007 implementation draft | aborted/reject | ~17 min | not recorded |
 
 The three first-pass lanes cost approximately $44.92 in total. The controlled
 inventory rework recorded `duration_api_ms=781635` and result
@@ -50,9 +51,11 @@ Aggregate DeepSeek results for this evaluation:
 
 - first-pass acceptance: 0 of 3, or 0%;
 - controlled-rework acceptance: 0 of 1, or 0%;
-- total acceptable implementation rate: 0 of 4;
-- total estimated cost: approximately $62.76;
-- total approximate wall time: 61 minutes.
+- bounded configuration acceptance: 1 of 1 after controller rework;
+- bounded VER-lane acceptance: 0 of 1 (aborted before evidence handoff);
+- total attempted implementation slices: 6; accepted slices: 1; acceptance rate: 16.7%;
+- total estimated cost: approximately $62.76 plus the unpriced aborted lane;
+- total approximate wall time: approximately 78 minutes.
 
 The cost total is approximate because the first-pass value is approximate. The
 wall-time total uses the result duration for the controlled rework, not API time.
@@ -256,9 +259,8 @@ from the pinned requirements and negative findings above.
 7. Accept only a coherent slice whose focused, workspace, integration, and
    reverse gates all pass.
 
-Codex final data is intentionally pending. This document MUST be updated only
-after the controller accepts or rejects a concrete Codex slice using the same
-criteria.
+Codex final data is recorded in the bounded VER lane below using the same
+controller acceptance criteria.
 
 ## DeepSeek V4 Pro Bounded Configuration Lane
 
@@ -289,18 +291,59 @@ the follow-up tracefile documentation/resource-contract correction is on
 `30805082580` passed all four jobs, including rebuilt Oracle and clean Docker
 execution.
 
+## DeepSeek V4 Pro Bounded VER Lane
+
+The controller dispatched a second `deepseek-v4-pro` implementation-only lane for
+`M1-TF-007` after writing an explicit brief with semantic invariants, an
+allowlist, and stop conditions. The worker produced only an unverified draft of
+three fixtures and generated case files, then stalled before Oracle capture,
+contract regeneration, tests, or a structured handoff. The controller
+interrupted it after approximately 17 minutes, restored the worktree to
+`0a0c0cc`, and recorded the rejection in
+[`m0-tracefile-ver-agent-review.md`](m0-tracefile-ver-agent-review.md).
+
+This attempt demonstrates that `deepseek-v4-pro` is useful for bounded drafting
+but is not reliable as an autonomous evidence/contract implementer. The
+controller therefore takes over the VER lane manually; the draft does not count
+toward accepted implementation output.
+
+## Codex Bounded VER Lane
+
+The controller implemented the `M1-TF-007` lane after rejecting the incomplete
+worker draft. The accepted slice adds three VER fixtures and one canonical
+rewrite case, captures four new observations from the pinned LCOV 2.5 Oracle,
+and updates the generated manifest, baseline, schema, contract, tests, and
+controller-owned SSoT/spec records. All 59 prior observations were compared
+byte-for-byte and remained unchanged.
+
+Evidence and gates passed:
+
+- `python3 compat/fixtures/m0-tracefiles/validate.py`: 42 fixtures and 63 observations;
+- `python3 compat/tracefile/contract.py --write`: 20 records, 15 reader lines, 18 writer lines;
+- `python3 -m unittest compat.tracefile.test_contract`: 16/16;
+- `python3 compat/verify.py --skip-oracle`: pass with product compatibility still false;
+- `python3 compat/behavior/validate.py --mode current`: 531 public, 107 reviewed, 424 gaps.
+
+The pinned outcomes are: equal repeat accepted, different repeat exits 1 with
+`expected to set version ID at most once`, independent source versions accepted,
+and canonical output retains one `VER`. No Ferricov parser or product evidence
+was added.
+
+**Decision: accepted as a controller-owned implementation slice.** It is not
+DeepSeek implementation credit; the model lane remains rejected/aborted.
+
 ## Comparison Metrics
 
 | Metric | DeepSeek observed | Codex |
 | --- | --- | --- |
-| Attempted implementation slices | 5 | pending |
-| Accepted slices | 1 (after controller rework) | pending |
-| Acceptance rate | 20% (1 of 5) | pending |
-| Critical findings and required rework | Four prior attempts rejected; v4-pro lane required duplicate-target correction and controller wording/test/doc rework | pending |
-| Focused gate results | v4-pro lane accepted after 44 behavior tests, generation/current validation, and source closure passed | pending |
-| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI run `30805082580` passed all four jobs | pending |
-| Wall time | approximately 61 min | pending |
-| Cost | approximately $62.76 | pending |
+| Attempted implementation slices | 6 | 1 |
+| Accepted slices | 1 (after controller rework) | 1 controller-owned slice |
+| Acceptance rate | 16.7% (1 of 6) | 100% of the one reviewed slice |
+| Critical findings and required rework | Four prior attempts rejected; accepted config lane required duplicate-target correction and controller wording/test/doc rework; VER lane aborted before evidence handoff and draft crossed into unresolved repeated-section semantics | Fixed optional M0 mapping handling and synchronized generated counts/hashes; no product code changed |
+| Focused gate results | v4-pro lane accepted after 44 behavior tests, generation/current validation, and source closure passed | VER lane accepted after 4 pinned Oracle observations, 16 contract tests, fixture/baseline validation, and `compat/verify.py --skip-oracle` |
+| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI run `30805082580` passed all four jobs | Python/contract gates passed; Rust/hosted CI pending |
+| Wall time | approximately 61 min | controller implementation time not tracked as model cost |
+| Cost | approximately $62.76 | no model cost; controller execution |
 
 Future comparisons MUST report accepted slices, Critical findings, rework
 cycles, exact gate results, wall time, and cost. Source lines changed, tokens
@@ -309,14 +352,15 @@ consumed, or tests written are supporting observations, not acceptance metrics.
 ## Decision
 
 The four historical DeepSeek implementation attempts remain rejected. The
-fifth attempt using `deepseek-v4-pro` is provisionally accepted only as the
-implementation portion of the bounded configuration lane after controller
-rework and independent gates. No model-produced slice may support an M0 or
-compatibility claim without controller acceptance.
+fifth `deepseek-v4-pro` attempt is accepted only as the implementation portion
+of the bounded configuration lane after controller rework and independent
+gates; the sixth VER lane was aborted and rejected before evidence handoff. No
+model-produced slice may support an M0 or compatibility claim without controller
+acceptance.
 
-The useful outputs are the negative findings, bounded test ideas, and mechanical
-inventory observations. Those inputs may guide the Codex replacement, but they
-do not transfer implementation credit or acceptance. Codex status remains
-pending until separately reviewed evidence is recorded here.
+The useful model outputs are the negative findings, bounded test ideas, and
+mechanical inventory observations. They guide controller-owned implementation
+but do not transfer implementation credit. The Codex VER replacement is
+accepted below only after independent evidence and gates.
 
 The model worker made no commit or push; the controller committed and pushed the accepted slices after review.

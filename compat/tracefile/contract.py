@@ -30,9 +30,9 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "7a9406ac7b69bfdb2e709ec496b6d80242341c595e5234f126638609a07b76d0",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "3fdd8b3c8103ee51f78b61309177f485dd686111448e1be86af4980d9bb0b875",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "ff2793d9189de805ceffb8644aea2ccbd9674b9cecd172a107e90c2610ee09ca",
+    "compat/fixtures/m0-tracefiles/manifest.json": "009d63f48ed1e2b8ac5923ca1bf878d9b122c94d04b9407b13cdfe2c1c339193",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "8aeae0002d12a2fab80b1e43867b7f0cc15f1e5abeb93ec3470fc2ac55b088c9",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "01377b8f57e6617420339106c4a186f67edeefeb67fa8904c6d571635fe6afc3",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "6f77427c548039d4fe17828b30ff73b245d3f6d21f6b587420dc1c830fa03d4a",
 }
 EXPECTED_RECORD_TAGS = (
@@ -53,6 +53,7 @@ EXPECTED_FIXTURE_IDS = (
     "numeric-boundary", "numeric-negative", "numeric-nonnumeric",
     "numeric-malformed-exponent", "numeric-excessive", "numeric-zero-line",
     "state-late-tn-mcdc", "state-cross-sf-mcdc-success", "state-cross-sf-mcdc-duplicate",
+    "ver-repeat-equal", "ver-repeat-different", "ver-per-source",
     "scale-medium", "scale-large",
 )
 EXPECTED_CASE_IDS = (
@@ -73,11 +74,13 @@ EXPECTED_CASE_IDS = (
     "numeric-excessive.summary", "numeric-zero-line.summary",
     "state-late-tn-mcdc.summary", "state-cross-sf-mcdc-success.summary",
     "state-cross-sf-mcdc-duplicate.summary",
+    "ver-repeat-equal.summary", "ver-repeat-different.summary", "ver-per-source.summary",
     "scale-medium.summary", "scale-large.summary",
     "current-all-records.canonical", "legacy.canonical",
     "permissive-prefix.canonical", "bytes-crlf.canonical",
     "bytes-no-final-newline.canonical", "bytes-non-utf8.canonical",
     "bytes-nul-accepted.canonical", "numeric-boundary.canonical",
+    "ver-repeat-equal.canonical",
     "malformed-tn.ignore-format", "malformed-da.ignore-format",
     "malformed-ver.ignore-format", "numeric-negative.ignore-negative",
     "numeric-nonnumeric.ignore-format",
@@ -277,7 +280,7 @@ def case_kind(case_id: str) -> str:
     raise TracefileContractError(f"unknown tracefile Oracle case kind: {case_id}")
 
 
-STATE_CASE_REQUIREMENTS = {
+EXACT_CASE_REQUIREMENTS = {
     "state-late-tn-mcdc.summary": {
         "requirement_ids": ["M1-TF-021"],
         "m0_decision_ids": ["M0-TF-TN-MCDC-001"],
@@ -306,6 +309,10 @@ STATE_CASE_REQUIREMENTS = {
         "requirement_ids": ["M1-TF-026"],
         "m0_decision_ids": ["M0-TF-MCDC-SF-001"],
     },
+    "ver-repeat-equal.summary": {"requirement_ids": ["M1-TF-007"]},
+    "ver-repeat-equal.canonical": {"requirement_ids": ["M1-TF-007"]},
+    "ver-repeat-different.summary": {"requirement_ids": ["M1-TF-007"]},
+    "ver-per-source.summary": {"requirement_ids": ["M1-TF-007"]},
 }
 
 
@@ -333,10 +340,11 @@ def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]
         runner = case.get("runner") or observed.get("runner")
         if runner is not None:
             entry["runner"] = runner
-        mapping = STATE_CASE_REQUIREMENTS.get(case["id"])
+        mapping = EXACT_CASE_REQUIREMENTS.get(case["id"])
         if mapping is not None:
             entry["requirement_ids"] = list(mapping["requirement_ids"])
-            entry["m0_decision_ids"] = list(mapping["m0_decision_ids"])
+            if "m0_decision_ids" in mapping:
+                entry["m0_decision_ids"] = list(mapping["m0_decision_ids"])
         result.append(entry)
     return result
 
@@ -570,14 +578,12 @@ def validate_artifacts(document: dict[str, Any]) -> None:
         for actual, expected in zip(document["oracle_cases"], expected_cases):
             if actual.get("id") != expected.get("id"):
                 break
-            if actual.get("requirement_ids") != expected.get("requirement_ids"):
-                raise TracefileContractError(
-                    f"tracefile requirement_ids mapping drift: {actual.get('id')}"
-                )
-            if actual.get("m0_decision_ids") != expected.get("m0_decision_ids"):
-                raise TracefileContractError(
-                    f"tracefile m0_decision_ids mapping drift: {actual.get('id')}"
-                )
+            for field in ("requirement_ids", "m0_decision_ids"):
+                expected_value = expected.get(field)
+                if actual.get(field) != expected_value:
+                    raise TracefileContractError(
+                        f"tracefile {field} mapping drift: {actual.get('id')}"
+                    )
             if actual.get("runner") != expected.get("runner"):
                 raise TracefileContractError(
                     f"tracefile Oracle runner drift: {actual.get('id')}"
@@ -611,21 +617,18 @@ def validate_artifacts(document: dict[str, Any]) -> None:
         observed_runner = observed.get("runner")
         if case.get("runner") != source_runner or case.get("runner") != observed_runner:
             raise TracefileContractError(f"tracefile Oracle runner drift: {case['id']}")
-        expected_mapping = STATE_CASE_REQUIREMENTS.get(case["id"])
+        expected_mapping = EXACT_CASE_REQUIREMENTS.get(case["id"])
         if expected_mapping is None:
             if case.get("requirement_ids") or case.get("m0_decision_ids"):
                 raise TracefileContractError(
-                    f"unexpected ownership mapping on non-state case: {case['id']}"
+                    f"unexpected exact mapping on non-mapped case: {case['id']}"
                 )
         else:
-            if case.get("requirement_ids") != expected_mapping["requirement_ids"]:
-                raise TracefileContractError(
-                    f"tracefile requirement_ids mapping drift: {case['id']}"
-                )
-            if case.get("m0_decision_ids") != expected_mapping["m0_decision_ids"]:
-                raise TracefileContractError(
-                    f"tracefile m0_decision_ids mapping drift: {case['id']}"
-                )
+            for field in ("requirement_ids", "m0_decision_ids"):
+                if case.get(field) != expected_mapping.get(field):
+                    raise TracefileContractError(
+                        f"tracefile {field} mapping drift: {case['id']}"
+                    )
         if case["kind"] == "semantic_snapshot":
             if case.get("runner") != "inspect_model.pl":
                 raise TracefileContractError(
@@ -698,16 +701,17 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "lexical_rules": 2,
         "reader_matcher_lines": 15,
         "canonical_writer_lines": 18,
-        "fixtures": 39,
+        "fixtures": 42,
         "malformed_fixtures": 21,
-        "oracle_cases": 59,
-        "default_parse_cases": 39,
-        "canonical_rewrite_cases": 10,
+        "oracle_cases": 63,
+        "default_parse_cases": 42,
+        "canonical_rewrite_cases": 11,
         "ignore_recovery_cases": 8,
         "semantic_snapshot_cases": 2,
-        "oracle_exit_zero": 40,
-        "oracle_exit_nonzero": 19,
+        "oracle_exit_zero": 43,
+        "oracle_exit_nonzero": 20,
         "exact_executable_requirement_ids": [
+            "M1-TF-007",
             "M1-TF-021",
             "M1-TF-022",
             "M1-TF-026",

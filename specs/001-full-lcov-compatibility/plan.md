@@ -165,14 +165,14 @@ fail-closed environment contract now reviews 19 named variables, one dynamic inp
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 39 fixtures, 21
-per-record malformed inputs, and 59 reference-only Oracle observations. It
-closes the M0 record/malformed inventory and adds exact ownership mappings for
-`M1-TF-021`/`M1-TF-022`/`M1-TF-026`, leaving 25 planned M1 tracefile IDs
+15 reader matcher lines, all 18 writer emission lines, 42 fixtures, 21
+per-record malformed inputs, and 63 reference-only Oracle observations. It
+closes the M0 record/malformed inventory and adds exact mappings for
+`M1-TF-007`/`M1-TF-021`/`M1-TF-022`/`M1-TF-026`, leaving 24 planned M1 tracefile IDs
 without exact executable mappings.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
-command exit policies. Its 52 retained observations remain reference-only,
+command exit policies. Its 53 retained observations remain reference-only,
 including a `geninfo` startup case intercepted by read-only temporary storage;
 all 71 diagnostic and parallel case identities remain planned.
 The separate installation contract binds the 321-entry installed tree to nine

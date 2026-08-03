@@ -156,6 +156,26 @@ class TracefileContractTests(unittest.TestCase):
         ):
             self.validate(document)
 
+    def test_ver_mapping_is_exact_and_source_scoped(self) -> None:
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith("ver-")
+        }
+        self.assertEqual(
+            set(targets),
+            {
+                "ver-repeat-equal.summary",
+                "ver-repeat-different.summary",
+                "ver-per-source.summary",
+                "ver-repeat-equal.canonical",
+            },
+        )
+        for target in targets.values():
+            with self.subTest(case_id=target["id"]):
+                self.assertEqual(target["requirement_ids"], ["M1-TF-007"])
+                self.assertNotIn("m0_decision_ids", target)
+
     def test_semantic_snapshot_runner_drift_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)
         target = next(

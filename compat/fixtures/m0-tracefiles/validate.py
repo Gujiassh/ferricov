@@ -75,6 +75,7 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
         "current-all-records", "legacy", "permissive-prefix", "numeric-boundary",
         "bytes-crlf", "bytes-no-final-newline", "bytes-non-utf8", "bytes-nul-accepted",
         "state-late-tn-mcdc", "state-cross-sf-mcdc-success", "state-cross-sf-mcdc-duplicate",
+        "ver-repeat-equal", "ver-repeat-different", "ver-per-source",
         "scale-medium", "scale-large",
     }
     by_id = {fixture.id: fixture for fixture in fixtures}
@@ -363,6 +364,19 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
                 "cross-SF canonical output hash drift",
             )
 
+        if case["id"] == "ver-repeat-different.summary":
+            stderr = decode_identity(observation["stderr"], "different VER stderr").decode("utf-8", "replace")
+            require(
+                "expected to set version ID at most once" in stderr,
+                "different VER must retain the fatal version diagnostic",
+            )
+        if case["id"] == "ver-per-source.summary":
+            stdout = decode_identity(observation["stdout"], "per-source VER stdout")
+            require(b"source files: 2" in stdout, "per-source VER must retain both source records")
+        if case["id"] == "ver-repeat-equal.canonical":
+            output_bytes = decode_identity(observation["output"], "repeat-equal canonical output")
+            require(output_bytes.count(b"VER:") == 1, "canonical repeat-equal output must emit one VER")
+
     # Exact fixture/case closure for the ownership slice.
     state_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "state-ownership"]
     require([fixture.id for fixture in state_fixtures] == list(STATE_FIXTURE_IDS), "state-ownership fixture closure drift")
@@ -379,6 +393,17 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             "state-cross-sf-mcdc-success.semantic-snapshot",
         ],
         f"state-ownership case closure drift: {state_case_ids}",
+    )
+    ver_case_ids = [case["id"] for case in cases if case["fixture"].startswith("fixtures/ver/")]
+    require(
+        ver_case_ids
+        == [
+            "ver-repeat-equal.summary",
+            "ver-repeat-different.summary",
+            "ver-per-source.summary",
+            "ver-repeat-equal.canonical",
+        ],
+        f"ver-semantics case closure drift: {ver_case_ids}",
     )
 
 
