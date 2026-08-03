@@ -5,7 +5,7 @@
 This is an interim engineering evaluation of model-produced implementation
 slices for Ferricov M0. It records the DeepSeek first-pass lanes, one controlled
 DeepSeek inventory rework, and the controller-selected Codex replacement route.
-Codex results are pending and MUST NOT be inferred from this document.
+The Codex replacement route remains separately tracked; this document records the accepted DeepSeek bounded lane and does not attribute controller work to the model.
 
 This evaluation answers one question: did a model-produced implementation slice
 meet its assigned ownership boundary, semantic requirements, review findings,
@@ -279,10 +279,15 @@ passed: 44 behavior tests, deterministic generation, current validation at
 source closure for all 33 config references, and `git diff --check`. No Oracle
 capture, product evidence, or M1 authorization was claimed.
 
-**Provisional decision: accepted after controller rework.** This is an accepted
-implementation contribution, not autonomous model acceptance: the controller
-owns semantic review, test additions, documentation, commit, push, and hosted
-CI. The implementation-only worker did not commit or push.
+**Decision: accepted after controller rework and hosted CI.** This is an
+accepted implementation contribution, not autonomous model acceptance: the
+controller owns semantic review, test additions, documentation, commit, push,
+and hosted CI. The implementation-only worker did not commit or push. The
+accepted configuration slice is on commit `2ae34280355aaa3583258c53c7246589a9d2a690`;
+the follow-up tracefile documentation/resource-contract correction is on
+`eb19e73edb7b82caf0adbb8d549d28c100157ad7`. Hosted CI run
+`30805082580` passed all four jobs, including rebuilt Oracle and clean Docker
+execution.
 
 ## Comparison Metrics
 
@@ -293,7 +298,7 @@ CI. The implementation-only worker did not commit or push.
 | Acceptance rate | 20% (1 of 5) | pending |
 | Critical findings and required rework | Four prior attempts rejected; v4-pro lane required duplicate-target correction and controller wording/test/doc rework | pending |
 | Focused gate results | v4-pro lane accepted after 44 behavior tests, generation/current validation, and source closure passed | pending |
-| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI pending for this lane | pending |
+| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI run `30805082580` passed all four jobs | pending |
 | Wall time | approximately 61 min | pending |
 | Cost | approximately $62.76 | pending |
 
@@ -314,4 +319,4 @@ inventory observations. Those inputs may guide the Codex replacement, but they
 do not transfer implementation credit or acceptance. Codex status remains
 pending until separately reviewed evidence is recorded here.
 
-No commit or push is part of this evaluation.
+The model worker made no commit or push; the controller committed and pushed the accepted slices after review.
