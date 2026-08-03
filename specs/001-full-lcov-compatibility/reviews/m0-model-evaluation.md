@@ -341,7 +341,7 @@ DeepSeek implementation credit; the model lane remains rejected/aborted.
 | Acceptance rate | 16.7% (1 of 6) | 100% of the one reviewed slice |
 | Critical findings and required rework | Four prior attempts rejected; accepted config lane required duplicate-target correction and controller wording/test/doc rework; VER lane aborted before evidence handoff and draft crossed into unresolved repeated-section semantics | Fixed optional M0 mapping handling and synchronized generated counts/hashes; no product code changed |
 | Focused gate results | v4-pro lane accepted after 44 behavior tests, generation/current validation, and source closure passed | VER lane accepted after 4 pinned Oracle observations, 16 contract tests, fixture/baseline validation, and `compat/verify.py --skip-oracle` |
-| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI run `30805082580` passed all four jobs | Python/contract gates passed; Rust/hosted CI pending |
+| Workspace/integration gate results | Rust fmt/check/106 tests/clippy passed; hosted CI run `30805082580` passed all four jobs | Rust fmt/check/106 tests/clippy passed; hosted CI run `30813152285` passed all four jobs |
 | Wall time | approximately 61 min | controller implementation time not tracked as model cost |
 | Cost | approximately $62.76 | no model cost; controller execution |
 
