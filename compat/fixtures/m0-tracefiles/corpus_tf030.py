@@ -7,18 +7,19 @@ import json
 from corpus_model import Fixture, ascii_bytes
 
 TF030_UPSTREAM_ATOMS = (
-    ("DA", "-3", {"line": 4}, "DA:4,-3", 1),
-    ("DA", "1.a0e+19", {"line": 10}, "DA:10,1.a0e+19", 2),
-    ("DA", "1.0e+19", {"line": 12}, "DA:12,1.0e+19", 3),
-    ("FNDA", "-2", {"function_name": "alias", "alias": "alias"}, "FNDA:-2,alias", 1),
-    ("FNDA", "1.5eb+20", {"function_name": "alias2", "alias": "alias2"}, "FNDA:1.5eb+20,alias2", 2),
-    ("FNDA", "1.5e+20", {"function_name": "alias3", "alias": "alias3"}, "FNDA:1.5e+20,alias3", 3),
-    ("FNDA", "-0", {"function_name": "onlyA", "alias": "onlyA"}, "FNDA:-0,onlyA", 4),
-    ("BRDA", "-1", {"line": 1, "block": 1, "branch": 1, "expression": None}, "BRDA:1,1,1,-1", 1),
-    ("BRDA", "-", {"line": 1, "block": 1, "branch": 2, "expression": None}, "BRDA:1,1,2,-", 2),
-    ("BRDA", "1.67+20", {"line": 1, "block": 2, "branch": 0, "expression": None}, "BRDA:1,2,0,1.67+20", 3),
-    ("BRDA", "1.67e+20", {"line": 1, "block": 2, "branch": 1, "expression": None}, "BRDA:1,2,1,1.67e+20", 4),
-    ("BRDA", "-0", {"line": 11, "block": 0, "branch": 1, "expression": None}, "BRDA:11,0,1,-0", 5),
+    # record_ordinal is one-based among DA/FNDA/FNA/BRDA records in the source section.
+    ("DA", "-3", {"line": 4}, "DA:4,-3", 4),
+    ("DA", "1.a0e+19", {"line": 10}, "DA:10,1.a0e+19", 5),
+    ("DA", "1.0e+19", {"line": 12}, "DA:12,1.0e+19", 7),
+    ("FNDA", "-2", {"function_name": "alias", "alias": "alias"}, "FNDA:-2,alias", 9),
+    ("FNDA", "1.5eb+20", {"function_name": "alias2", "alias": "alias2"}, "FNDA:1.5eb+20,alias2", 10),
+    ("FNDA", "1.5e+20", {"function_name": "alias3", "alias": "alias3"}, "FNDA:1.5e+20,alias3", 11),
+    ("FNDA", "-0", {"function_name": "onlyA", "alias": "onlyA"}, "FNDA:-0,onlyA", 12),
+    ("BRDA", "-1", {"line": 1, "block": 1, "branch": 1, "expression": None}, "BRDA:1,1,1,-1", 15),
+    ("BRDA", "-", {"line": 1, "block": 1, "branch": 2, "expression": None}, "BRDA:1,1,2,-", 16),
+    ("BRDA", "1.67+20", {"line": 1, "block": 2, "branch": 0, "expression": None}, "BRDA:1,2,0,1.67+20", 17),
+    ("BRDA", "1.67e+20", {"line": 1, "block": 2, "branch": 1, "expression": None}, "BRDA:1,2,1,1.67e+20", 18),
+    ("BRDA", "-0", {"line": 11, "block": 0, "branch": 1, "expression": None}, "BRDA:11,0,1,-0", 21),
 )
 
 TF030_FNA_ATOMS = ("-2", "1.5eb+20", "1.5e+20", "-0")

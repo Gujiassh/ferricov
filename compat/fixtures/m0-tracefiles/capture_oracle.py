@@ -139,9 +139,20 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
         shutil.copyfile(generated_root / str(case["fixture"]), work / "input.info")
+        # Materialize durable fixture path so plan.fixture bindings can resolve
+        # against the same relative path used in committed plans.
+        fixture_rel = Path(str(case["fixture"]))
+        durable_fixture = work / fixture_rel
+        durable_fixture.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(generated_root / fixture_rel, durable_fixture)
         additional_fixtures = case.get("additional_fixtures", {})
         for name, fixture in additional_fixtures.items():
             shutil.copyfile(generated_root / str(fixture), work / str(name))
+            # Also materialize durable plan/fixture companion paths.
+            fixture_path = Path(str(fixture))
+            durable = work / fixture_path
+            durable.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(generated_root / fixture_path, durable)
         if case_uses_model_inspector(case):
             if not MODEL_INSPECTOR.is_file():
                 raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")

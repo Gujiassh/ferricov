@@ -352,12 +352,6 @@ class NumericExtraSpellingsSnapshotTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     validate_numeric_extra_spellings_snapshot(document)
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
-
 class Tf030NumericMatrixMutationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -387,30 +381,81 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         mutated["numeric_rows"] = list(reversed(mutated["numeric_rows"]))
         with self.assertRaises(ValueError):
             self.validate_tf030_numeric_rows(mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot")
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"] = mutated["numeric_rows"] + [copy.deepcopy(mutated["numeric_rows"][0])]
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot")
 
-    def test_tf030_scalar_and_category_mutations_are_rejected(self) -> None:
+    def test_tf030_plan_identity_and_ordinal_mutations_are_rejected(self) -> None:
         document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
         for field, value in (
-            ("category", "format"),
-            ("looks_like_number", False),
-            ("record_matched", False),
-            ("retained", False),
+            ("family", "FNA"),
+            ("lexeme", "0"),
+            ("raw_record", "DA:4,0"),
+            ("record_ordinal", 1),
+            ("reader_match_kind", "brda_never_evaluated"),
         ):
             mutated = copy.deepcopy(document)
-            mutated["numeric_rows"][0][field] = value if field != "category" else "excessive"
+            mutated["numeric_rows"][0][field] = value
             with self.subTest(field=field), self.assertRaises(ValueError):
                 self.validate_tf030_numeric_rows(
                     mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
                 )
         mutated = copy.deepcopy(document)
-        mutated["numeric_rows"][0]["sv_before"]["iok"] = not mutated["numeric_rows"][0]["sv_before"]["iok"]
+        mutated["numeric_rows"][0]["locator"] = {"line": 999}
         with self.assertRaises(ValueError):
-            # projection shape still valid, but category/recovery path for this row remains checked
-            # force an invalid projection class instead
-            mutated["numeric_rows"][0]["sv_before"]["class"] = "NotB"
             self.validate_tf030_numeric_rows(
                 mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
             )
+
+    def test_tf030_scalar_and_category_mutations_are_rejected(self) -> None:
+        document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
+        for field, value in (
+            ("category", "excessive"),
+            ("looks_like_number", False),
+            ("record_matched", False),
+            ("retained", False),
+            ("skipped", True),
+            ("value_class", "nan"),
+        ):
+            mutated = copy.deepcopy(document)
+            mutated["numeric_rows"][0][field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(
+                    mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+                )
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"][0]["sv_before"]["class"] = "NotB"
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+        for flag in ("iok", "nok", "pok", "is_uv"):
+            mutated = copy.deepcopy(document)
+            mutated["numeric_rows"][0]["sv_before"][flag] = not mutated["numeric_rows"][0]["sv_before"][flag]
+            # Flag flip alone currently accepted if class remains valid B::* and path checks pass;
+            # force invalid class on after stage to prove projection validation.
+            mutated["numeric_rows"][0]["sv_after_looks_like_number"]["class"] = "NotB"
+            with self.subTest(flag=flag), self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(
+                    mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+                )
+
+    def test_tf030_all_matrix_sizes_reject_missing_row(self) -> None:
+        for case_id, count in (
+            ("numeric-format-atoms.tf030.semantic-snapshot", 12),
+            ("numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot", 4),
+            ("numeric-tf030-candidates.ignore-negative.semantic-snapshot", 40),
+            ("numeric-format-atoms.tf030-threshold.semantic-snapshot", 12),
+            ("numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot", 4),
+            ("numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot", 40),
+        ):
+            document = self._snapshot(case_id)
+            self.validate_tf030_numeric_rows(document, expected_count=count, case_id=case_id)
+            mutated = copy.deepcopy(document)
+            del mutated["numeric_rows"][-1]
+            with self.subTest(case_id=case_id), self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
 
     def test_tf030_plan_companion_hash_mutation_is_rejected(self) -> None:
         case = copy.deepcopy(self.cases["numeric-format-atoms.tf030.semantic-snapshot"])
@@ -448,4 +493,16 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         stop_obs["output"] = {"exists": True, "sha256": "0"*64, "byte_size": 1, "base64": base64.b64encode(b"x").decode()}
         with self.assertRaises(ValueError):
             validate_added_numeric_case(stop, stop_obs)
+        # stop cases still validate ordered stderr policy
+        stop_obs = copy.deepcopy(self.baseline[stop["id"]])
+        stop_obs["stderr"] = {
+            "sha256": hashlib.sha256(b"").hexdigest(),
+            "byte_size": 0,
+            "base64": base64.b64encode(b"").decode("ascii"),
+        }
+        with self.assertRaises(ValueError):
+            validate_added_numeric_case(stop, stop_obs)
 
+
+if __name__ == "__main__":
+    unittest.main()

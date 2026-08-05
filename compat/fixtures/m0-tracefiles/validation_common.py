@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import base64
-from collections import Counter
 import hashlib
 import json
 import re
@@ -230,9 +229,10 @@ def validate_semantic_stderr(case_id: str, raw: bytes) -> None:
         require(match is not None, f"{case_id}: unclassified diagnostic line")
         actual.append((match.group(1), match.group(2)))
         previous_was_header = True
+    expected = list(SEMANTIC_STDERR_POLICIES[case_id])
     require(
-        Counter(actual) == Counter(SEMANTIC_STDERR_POLICIES[case_id]),
-        f"{case_id}: stderr policy drift: {actual!r}",
+        actual == expected,
+        f"{case_id}: stderr policy order/count drift: actual={actual!r} expected={expected!r}",
     )
 
 
@@ -250,7 +250,10 @@ def validate_lcov_stderr(case_id: str, raw: bytes, expected: tuple[tuple[str, st
         require(matches and line.startswith("lcov: "), f"{case_id}: unclassified diagnostic line")
         actual.extend((match.group(1), match.group(2)) for match in matches)
         previous_was_header = True
-    require(Counter(actual) == Counter(expected), f"{case_id}: stderr policy drift: {actual!r}")
+    require(
+        actual == list(expected),
+        f"{case_id}: stderr policy order/count drift: actual={actual!r} expected={list(expected)!r}",
+    )
 
 
 def verify_identity(identity: dict[str, object], label: str) -> None:

@@ -80,3 +80,8 @@ python3 validate.py
 and byte size. Small canonical outputs are stored the same way. Scale cases
 use summary commands, so repeated multi-megabyte canonical outputs are never
 committed.
+
+TF-030 numeric plans bind every matrix row to fixture bytes with section-local
+`record_ordinal` values among `DA`/`FNDA`/`FNA`/`BRDA` records. Validators and
+`inspect_model.pl --numeric-plan` fail closed on plan/fixture/record drift.
+Product compatibility evidence remains false; M1 remains blocked.

@@ -55,7 +55,7 @@ from validation_numeric import (
     validate_tf030_numeric_rows,
 )
 
-EXPECTED_MODEL_INSPECTOR_SHA256 = "3a42fd4bf38e2ba02341f5b2d3afd4ecc18f40b402ec5745c315fa916d749bae"
+EXPECTED_MODEL_INSPECTOR_SHA256 = "ec5564914dbadf3fb4b70d37b7760bc1567fbfc490671a84bdef01de1176dbf1"
 
 STATE_FIXTURE_IDS = (
     "state-late-tn-mcdc",
@@ -1042,8 +1042,8 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             validate_lcov_stderr(
                 case["id"],
                 decode_identity(observation["stderr"], f"{case['id']} stderr"),
-                (("WARNING", "negative"), ("WARNING", "negative"), ("WARNING", "format"), ("WARNING", "format"),
-                 ("ERROR", "excessive"), ("ERROR", "excessive"), ("ERROR", "excessive")),
+                (("WARNING", "negative"), ("WARNING", "format"), ("ERROR", "excessive"),
+                 ("WARNING", "negative"), ("WARNING", "format"), ("ERROR", "excessive"), ("ERROR", "excessive")),
             )
             require(observation["exit_status"] == 1, "stop_on_error=0 must exit nonzero")
         if case["id"] == "numeric-format-atoms.excessive-stop-on-error-1":

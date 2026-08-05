@@ -9,6 +9,7 @@ use lcovutil;
 use Scalar::Util qw(looks_like_number);
 use B;
 use JSON::PP ();
+use File::Basename ();
 
 $| = 1;
 
@@ -237,7 +238,9 @@ sub load_strict_ascii_json_object {
     close($fh);
     die("inspect_model.pl: numeric plan $path is empty\n") unless defined($raw) && length($raw);
     die("inspect_model.pl: numeric plan $path contains non-ASCII bytes\n") if $raw =~ /[^\x00-\x7F]/;
-    my $json = JSON::PP->new->ascii(1)->allow_nonref(0);
+    # Fail closed on bare non-RFC constants outside JSON strings.
+    reject_bare_non_rfc_json_constants($raw, $path);
+    my $json = JSON::PP->new->ascii(1)->allow_nonref(0)->relaxed(0)->loose(0);
     my $document;
     eval {
         $document = $json->decode($raw);
@@ -248,9 +251,140 @@ sub load_strict_ascii_json_object {
     };
     die("inspect_model.pl: numeric plan $path root must be an object\n")
         unless ref($document) eq 'HASH';
-    # Reject trailing data by re-encoding and ensuring a second decode of the same text
-    # cannot leave unconsumed payload. JSON::PP already fails closed on trailing junk.
+    # Reject trailing data: re-encode canonical form and ensure full consumption via incr parser.
+    my $incr = JSON::PP->new->ascii(1)->allow_nonref(0)->relaxed(0)->loose(0);
+    my $again;
+    eval {
+        $again = $incr->incr_parse($raw);
+        my $trailing = $incr->incr_text;
+        $trailing =~ s/^\s+//;
+        die("trailing data after JSON value") if defined($trailing) && length($trailing);
+        1;
+    } or do {
+        my $error = $@ || 'trailing check failed';
+        die("inspect_model.pl: numeric plan $path trailing/incomplete JSON: $error");
+    };
+    die("inspect_model.pl: numeric plan $path root must be an object\n")
+        unless ref($again) eq 'HASH';
+    # Reject duplicate object keys with a second-pass scanner over object scopes.
+    reject_duplicate_json_keys($raw, $path);
     return ($document, $raw);
+}
+
+
+sub reject_bare_non_rfc_json_constants {
+    my ($raw, $path) = @_;
+    my $in_string = 0;
+    my $escape = 0;
+    my $i = 0;
+    my $len = length($raw);
+    while ($i < $len) {
+        my $ch = substr($raw, $i, 1);
+        if ($in_string) {
+            if ($escape) { $escape = 0; $i++; next; }
+            if ($ch eq "\\") { $escape = 1; $i++; next; }
+            if ($ch eq '"') { $in_string = 0; }
+            $i++;
+            next;
+        }
+        if ($ch eq '"') { $in_string = 1; $i++; next; }
+        my $rest = substr($raw, $i);
+        if ($rest =~ /^(?:-?Infinity|-?Inf|NaN)\b/i) {
+            my $before = $i > 0 ? substr($raw, $i - 1, 1) : '';
+            if ($before !~ /[A-Za-z0-9_]/) {
+                die("inspect_model.pl: numeric plan $path contains non-RFC JSON constant\n");
+            }
+        }
+        $i++;
+    }
+}
+
+sub reject_duplicate_json_keys {
+    my ($raw, $path) = @_;
+    # Lightweight structural scan: within each {...} object depth, track keys seen
+    # at that depth while ignoring strings/escapes. Nested objects reset their key set.
+    my @stack_keys;
+    my $in_string = 0;
+    my $escape = 0;
+    my $expect_key = 0;
+    my $i = 0;
+    my $len = length($raw);
+    while ($i < $len) {
+        my $ch = substr($raw, $i, 1);
+        if ($in_string) {
+            if ($escape) { $escape = 0; $i++; next; }
+            if ($ch eq "\\") { $escape = 1; $i++; next; }
+            if ($ch eq '"') {
+                $in_string = 0;
+                if ($expect_key && @stack_keys) {
+                    # key just closed; next non-space should be ':'
+                    my $j = $i + 1;
+                    while ($j < $len && substr($raw, $j, 1) =~ /\s/) { $j++; }
+                    if ($j < $len && substr($raw, $j, 1) eq ':') {
+                        my $key = $stack_keys[-1]{_pending};
+                        delete $stack_keys[-1]{_pending};
+                        if (defined $key) {
+                            die("inspect_model.pl: numeric plan $path has duplicate object key '$key'\n")
+                                if exists $stack_keys[-1]{keys}{$key};
+                            $stack_keys[-1]{keys}{$key} = 1;
+                        }
+                        $expect_key = 0;
+                    }
+                }
+            }
+            $i++;
+            next;
+        }
+        if ($ch eq '"') {
+            $in_string = 1;
+            if (@stack_keys && $stack_keys[-1]{expecting_key}) {
+                # capture key text
+                my $j = $i + 1;
+                my $buf = '';
+                my $esc = 0;
+                while ($j < $len) {
+                    my $c = substr($raw, $j, 1);
+                    if ($esc) { $buf .= $c; $esc = 0; $j++; next; }
+                    last if $c eq '"';
+                    if ($c eq '\\') { $esc = 1; $j++; next; }
+                    $buf .= $c;
+                    $j++;
+                }
+                $stack_keys[-1]{_pending} = $buf;
+                $expect_key = 1;
+            }
+            $i++;
+            next;
+        }
+        if ($ch eq '{') {
+            push @stack_keys, { keys => {}, expecting_key => 1 };
+            $i++;
+            next;
+        }
+        if ($ch eq '}') {
+            pop @stack_keys if @stack_keys;
+            $i++;
+            next;
+        }
+        if ($ch eq '[') {
+            # arrays do not introduce object keys
+            push @stack_keys, { keys => {}, expecting_key => 0, array => 1 } if 0; # no-op marker
+            $i++;
+            next;
+        }
+        if ($ch eq ']') { $i++; next; }
+        if ($ch eq ',' && @stack_keys && !$stack_keys[-1]{array}) {
+            $stack_keys[-1]{expecting_key} = 1;
+            $i++;
+            next;
+        }
+        if ($ch eq ':' && @stack_keys) {
+            $stack_keys[-1]{expecting_key} = 0;
+            $i++;
+            next;
+        }
+        $i++;
+    }
 }
 
 sub project_sv {
@@ -496,6 +630,13 @@ sub extract_model_value {
     }
     if ($family eq 'FNDA' || $family eq 'FNA') {
         my $alias = $locator->{alias};
+        die("missing function alias in locator") unless defined($alias);
+        if ($family eq 'FNDA') {
+            die("FNDA locator missing function_name") unless defined($locator->{function_name});
+        }
+        if ($family eq 'FNA') {
+            die("FNA locator missing function_index") unless defined($locator->{function_index});
+        }
         my $func_map;
         if ($view eq 'aggregate') {
             $func_map = $info->func();
@@ -506,14 +647,18 @@ sub extract_model_value {
             $func_map = $info->testfnc()->value($names[0]);
         }
         die("missing function map in $view") unless defined($func_map);
+        my $found;
         foreach my $key ($func_map->keylist()) {
             my $entry = $func_map->findKey($key);
             my $aliases = $entry->aliases();
-            if (exists $aliases->{$alias}) {
-                return tagged_model_value($aliases->{$alias});
+            next unless exists $aliases->{$alias};
+            if (defined $found) {
+                die("ambiguous function match for alias $alias in $view");
             }
+            $found = tagged_model_value($aliases->{$alias});
         }
-        die("missing function alias $alias in $view");
+        die("missing function alias $alias in $view") unless defined($found);
+        return $found;
     }
     if ($family eq 'BRDA') {
         my $line   = 0 + $locator->{line};
@@ -579,6 +724,142 @@ sub extract_model_value {
     die("unknown family $family");
 }
 
+sub scan_numeric_records_from_fixture {
+    my ($path) = @_;
+    open(my $fh, '<:raw', $path) or die("inspect_model.pl: cannot read fixture $path: $!\n");
+    local $/;
+    my $raw = <$fh>;
+    close($fh);
+    die("inspect_model.pl: fixture $path is empty\n") unless defined($raw) && length($raw);
+    my @records;
+    my $source;
+    my $ordinal = 0;
+    for my $line (split(/\n/, $raw, -1)) {
+        $line =~ s/\r$//;
+        if ($line =~ /^SF:(.*)$/) {
+            $source = $1;
+            $ordinal = 0;
+            next;
+        }
+        if ($line =~ /^end_of_record/) {
+            $source = undef;
+            $ordinal = 0;
+            next;
+        }
+        next unless defined($source);
+        if ($line =~ /^(DA|FNDA|FNA|BRDA):(.*)$/) {
+            my ($family, $rest) = ($1, $2);
+            $ordinal += 1;
+            my ($lexeme, $locator, $raw_record);
+            $raw_record = "$family:$rest";
+            if ($family eq 'DA') {
+                my ($ln, $count) = split(/,/, $rest, 2);
+                die("inspect_model.pl: malformed DA in $path: $line\n") unless defined($count);
+                $lexeme = $count;
+                $locator = { line => 0 + $ln };
+            }
+            elsif ($family eq 'FNDA') {
+                my ($count, $name) = split(/,/, $rest, 2);
+                die("inspect_model.pl: malformed FNDA in $path: $line\n") unless defined($name);
+                $lexeme = $count;
+                $locator = { function_name => $name, alias => $name };
+            }
+            elsif ($family eq 'FNA') {
+                my ($idx, $count, $alias) = split(/,/, $rest, 3);
+                die("inspect_model.pl: malformed FNA in $path: $line\n") unless defined($alias);
+                $lexeme = $count;
+                $locator = { function_index => 0 + $idx, alias => $alias };
+            }
+            else {
+                # BRDA: line, block-prefix?, branch, count/expression tail
+                # Keep fixture-block as the numeric block index from the record.
+                if ($rest =~ /^(\d+),([ef]?)(U?)(\d+),(.+)$/) {
+                    my ($ln, $block, $branch_and_count) = ($1, $4, $5);
+                    # branch_and_count is "branch,count" or "branch,expr,count"?
+                    # Standard form: BRDA:line,block,branch,count
+                    # After block, remaining is branch,count where branch may be non-numeric.
+                    my ($branch_token, $count) = split(/,/, $branch_and_count, 2);
+                    die("inspect_model.pl: malformed BRDA in $path: $line\n") unless defined($count);
+                    my $branch_value = ($branch_token =~ /^-?\d+$/) ? 0 + $branch_token : $branch_token;
+                    $lexeme = $count;
+                    $locator = {
+                        line => 0 + $ln,
+                        block => 0 + $block,
+                        branch => $branch_value,
+                        expression => undef,
+                    };
+                }
+                else {
+                    die("inspect_model.pl: unparsed BRDA in $path: $line\n");
+                }
+            }
+            push @records, {
+                family => $family,
+                lexeme => $lexeme,
+                raw_record => $raw_record,
+                record_ordinal => $ordinal,
+                locator => $locator,
+                source => $source,
+            };
+        }
+    }
+    return \@records;
+}
+
+sub locator_equal {
+    my ($family, $a, $b) = @_;
+    return 0 unless ref($a) eq 'HASH' && ref($b) eq 'HASH';
+    if ($family eq 'DA') {
+        return ((0 + ($a->{line} // -1)) == (0 + ($b->{line} // -2))) ? 1 : 0;
+    }
+    if ($family eq 'FNDA') {
+        return (
+            defined($a->{function_name}) && defined($b->{function_name})
+            && defined($a->{alias}) && defined($b->{alias})
+            && $a->{function_name} eq $b->{function_name}
+            && $a->{alias} eq $b->{alias}
+        ) ? 1 : 0;
+    }
+    if ($family eq 'FNA') {
+        return (
+            defined($a->{function_index}) && defined($b->{function_index})
+            && defined($a->{alias}) && defined($b->{alias})
+            && (0 + $a->{function_index}) == (0 + $b->{function_index})
+            && $a->{alias} eq $b->{alias}
+        ) ? 1 : 0;
+    }
+    if ($family eq 'BRDA') {
+        my $ae = $a->{expression};
+        my $be = $b->{expression};
+        my $expr_ok = (!defined($ae) && !defined($be)) || (defined($ae) && defined($be) && $ae eq $be);
+        return 0 unless $expr_ok;
+        return (
+            (0 + ($a->{line} // -1)) == (0 + ($b->{line} // -2))
+            && (0 + ($a->{block} // -1)) == (0 + ($b->{block} // -2))
+            && ("$a->{branch}" eq "$b->{branch}")
+        ) ? 1 : 0;
+    }
+    return 0;
+}
+
+sub match_plan_row_to_fixture_record {
+    my ($plan_row, $records) = @_;
+    my $family = $plan_row->{family};
+    my $found;
+    for my $rec (@$records) {
+        next unless $rec->{family} eq $family;
+        next unless $rec->{source} eq $plan_row->{source};
+        next unless $rec->{lexeme} eq $plan_row->{lexeme};
+        next unless $rec->{raw_record} eq $plan_row->{raw_record};
+        next unless locator_equal($family, $rec->{locator}, $plan_row->{locator});
+        if (defined $found) {
+            die("inspect_model.pl: ambiguous fixture match for $plan_row->{id}\n");
+        }
+        $found = $rec;
+    }
+    return $found;
+}
+
 sub build_numeric_rows {
     my ($plan, $trace, $threshold_enabled, $threshold_text, $block_map) = @_;
     die("inspect_model.pl: numeric plan missing rows array\n")
@@ -588,6 +869,7 @@ sub build_numeric_rows {
     my %seen_locators;
     my @rows;
     my %source_info = map { $_ => $trace->data($_) } $trace->files();
+    my %fixture_scan_cache;
 
     for my $index (0 .. $#plan_rows) {
         my $plan_row = $plan_rows[$index];
@@ -627,12 +909,51 @@ sub build_numeric_rows {
         die("inspect_model.pl: missing source $source for $id\n") unless exists $source_info{$source};
         my $info = $source_info{$source};
 
+        # Bind plan row against actual fixture bytes before model extract.
+        my $fixture_rel = $plan_row->{fixture};
+        die("inspect_model.pl: $id fixture path missing\n") unless defined($fixture_rel) && length($fixture_rel);
+        my $fixture_path;
+        for my $candidate (
+            $fixture_rel,
+            File::Basename::basename($fixture_rel),
+            # Capture workdirs mount the case fixture as input.info.
+            'input.info',
+        )
+        {
+            if (defined($candidate) && length($candidate) && -f $candidate) {
+                $fixture_path = $candidate;
+                last;
+            }
+        }
+        die("inspect_model.pl: $id cannot locate fixture bytes for $fixture_rel\n")
+            unless defined($fixture_path);
+        if (!exists $fixture_scan_cache{$fixture_path}) {
+            $fixture_scan_cache{$fixture_path} = scan_numeric_records_from_fixture($fixture_path);
+        }
+        my $fixture_records = $fixture_scan_cache{$fixture_path};
+        my $matched_rec = match_plan_row_to_fixture_record($plan_row, $fixture_records);
+        die("inspect_model.pl: $id plan row not found in fixture bytes\n") unless defined($matched_rec);
+        die("inspect_model.pl: $id record_ordinal drift plan="
+            . (0 + $plan_row->{record_ordinal})
+            . " fixture="
+            . (0 + $matched_rec->{record_ordinal})
+            . "\n")
+            unless (0 + $plan_row->{record_ordinal}) == (0 + $matched_rec->{record_ordinal});
+        # Prove identity fields from fixture scan, not plan literals alone.
+        die("inspect_model.pl: $id family mismatch against fixture\n")
+            unless $matched_rec->{family} eq $family;
+        die("inspect_model.pl: $id lexeme mismatch against fixture\n")
+            unless $matched_rec->{lexeme} eq $plan_row->{lexeme};
+        die("inspect_model.pl: $id raw_record mismatch against fixture\n")
+            unless $matched_rec->{raw_record} eq $plan_row->{raw_record};
+
         my $classification = classify_lexeme(
             $plan_row->{lexeme},
             $threshold_enabled,
             $threshold_text,
         );
 
+        # record_matched is true only when fixture scan identity closed.
         my $record_matched = JSON::PP::true;
         my $retained       = JSON::PP::true;
         my $skipped        = JSON::PP::false;
@@ -648,9 +969,20 @@ sub build_numeric_rows {
 
         # BRDA never-evaluated is retained without looks_like_number.
         if ($plan_row->{reader_match_kind} eq 'brda_never_evaluated') {
+            die("inspect_model.pl: $id never-evaluated requires BRDA '-'\n")
+                unless $family eq 'BRDA' && $plan_row->{lexeme} eq '-';
             $classification = classify_lexeme('-', $threshold_enabled, $threshold_text);
             $stored_aggregate = { state => 'never_evaluated' };
             $stored_testcase  = { state => 'never_evaluated' };
+        }
+
+        # retained/skipped derived from category recovery path for ignored diagnostics.
+        # For successful semantic snapshot capture paths, ignored diagnostics still retain
+        # the coerced or original model value; skipped remains false when extract succeeded.
+        if (!defined($stored_aggregate)) {
+            $retained = JSON::PP::false;
+            $skipped  = JSON::PP::true;
+            $record_matched = JSON::PP::false;
         }
 
         push(
@@ -663,8 +995,8 @@ sub build_numeric_rows {
                 source                       => $source,
                 testcase                     => $plan_row->{testcase},
                 reader_match_kind            => $plan_row->{reader_match_kind},
-                raw_record                   => $plan_row->{raw_record},
-                record_ordinal               => 0 + $plan_row->{record_ordinal},
+                raw_record                   => $matched_rec->{raw_record},
+                record_ordinal               => 0 + $matched_rec->{record_ordinal},
                 locator                      => $locator,
                 record_matched               => $record_matched,
                 retained                     => $retained,

@@ -30,10 +30,10 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "5a1f5b04d751728b601779b58b3cc1c2332606fe762b211eb0ab90f4a3bacc13",
+    "compat/fixtures/m0-tracefiles/manifest.json": "71d6880fe4bb400a051411401e57cfcda0a451656a65917478705522563ab0d0",
     "compat/fixtures/m0-tracefiles/oracle-cases.json": "a8771082f4ecb09c773a58ae83af2aed6d36c04f737143e55fddf590e088dc51",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "634873b9741c8c8b4539da3d45be1e483de85d3fc0b176d598c74131773a3689",
-    "compat/fixtures/m0-tracefiles/inspect_model.pl": "3a42fd4bf38e2ba02341f5b2d3afd4ecc18f40b402ec5745c315fa916d749bae",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "9397eb506e02d4a19ff8e470a2f71d3e5fb11aa64d29569d60c25988c430ae5f",
+    "compat/fixtures/m0-tracefiles/inspect_model.pl": "ec5564914dbadf3fb4b70d37b7760bc1567fbfc490671a84bdef01de1176dbf1",
 }
 EXPECTED_RECORD_TAGS = (
     "TN", "SF", "KF", "VER", "FNL", "FNA", "FN", "FNDA", "FNF", "FNH",

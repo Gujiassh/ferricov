@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from validation_common import (
     assert_single_testcase_parity,
     decode_identity,
@@ -497,10 +499,11 @@ def validate_added_numeric_case(case: dict[str, object], observation: dict[str, 
         return
     expected_exists = ADDED_OUTPUT_EXPECTATIONS[case_id]
     require(case.get("expected_output_exists") is expected_exists, f"{case_id}: expected output policy missing")
+    output = None
     if not expected_exists:
         require(observation["output"]["exists"] is False, f"{case_id}: output must be absent")
-        return
-    output = decode_identity(observation["output"], f"{case_id} output")
+    else:
+        output = decode_identity(observation["output"], f"{case_id} output")
     exact_outputs = {
         "numeric-fna-malformed-exponent.ignore-format": (
             b"TN:numeric_fna_malformed_exponent\n"
@@ -536,6 +539,7 @@ def validate_added_numeric_case(case: dict[str, object], observation: dict[str, 
         "numeric-tf030-candidates.threshold-ignore-all.canonical": b'TN:tf030_candidate_brda\nSF:src/tf030-candidate-brda.c\nFNF:0\nFNH:0\nBRDA:1,0,0,0\nBRDA:1,0,1,+1\nBRDA:1,0,2,1.5\nBRDA:1,0,3,1e3\nBRDA:1,0,4,Inf\nBRDA:1,0,5,+Inf\nBRDA:1,0,6,Infinity\nBRDA:1,0,7,NaN\nBRDA:1,0,8,nan\nBRDA:1,0,9,0\nBRF:10\nBRH:6\nDA:1,1\nLF:1\nLH:1\nend_of_record\nTN:tf030_candidate_da\nSF:src/tf030-candidate-da.c\nFNF:0\nFNH:0\nDA:1,0\nDA:2,+1\nDA:3,1.5\nDA:4,1e3\nDA:5,Inf\nDA:6,+Inf\nDA:7,Infinity\nDA:8,NaN\nDA:9,nan\nDA:10,0\nLF:10\nLH:6\nend_of_record\nTN:tf030_candidate_fna\nSF:src/tf030-candidate-fna.c\nFNL:0,1,1\nFNA:0,0,alias_zero\nFNL:1,2,2\nFNA:1,1,alias_plus_one\nFNL:2,3,3\nFNA:2,1.5,alias_one_point_five\nFNL:3,4,4\nFNA:3,1000,alias_one_e3\nFNL:4,5,5\nFNA:4,Inf,alias_inf\nFNL:5,6,6\nFNA:5,Inf,alias_plus_inf\nFNL:6,7,7\nFNA:6,Inf,alias_infinity\nFNL:7,8,8\nFNA:7,NaN,alias_nan_upper\nFNL:8,9,9\nFNA:8,NaN,alias_nan_lower\nFNL:9,10,10\nFNA:9,0,alias_neg_inf\nFNF:10\nFNH:6\nDA:1,0\nDA:2,1\nDA:3,1\nDA:4,1\nDA:5,1\nDA:6,1\nDA:7,1\nDA:8,1\nDA:9,1\nDA:10,0\nLF:10\nLH:8\nend_of_record\nTN:tf030_candidate_fnda\nSF:src/tf030-candidate-fnda.c\nFNL:0,1,1\nFNA:0,0,fn_zero\nFNL:1,2,2\nFNA:1,1,fn_plus_one\nFNL:2,3,3\nFNA:2,1.5,fn_one_point_five\nFNL:3,4,4\nFNA:3,1000,fn_one_e3\nFNL:4,5,5\nFNA:4,Inf,fn_inf\nFNL:5,6,6\nFNA:5,Inf,fn_plus_inf\nFNL:6,7,7\nFNA:6,Inf,fn_infinity\nFNL:7,8,8\nFNA:7,NaN,fn_nan_upper\nFNL:8,9,9\nFNA:8,NaN,fn_nan_lower\nFNL:9,10,10\nFNA:9,0,fn_neg_inf\nFNF:10\nFNH:6\nDA:1,0\nDA:2,1\nDA:3,1\nDA:4,1\nDA:5,1\nDA:6,1\nDA:7,1\nDA:8,1\nDA:9,1\nDA:10,0\nLF:10\nLH:8\nend_of_record\n',
     }
     if case_id in exact_outputs:
+        require(output is not None, f"{case_id}: exact output requires present file")
         require(output == exact_outputs[case_id], f"{case_id}: canonical output drift")
 
     tf030_lcov_stderr = {
@@ -644,6 +648,135 @@ def _assert_stored_value(value: object, label: str, *, allow_never: bool = False
     _assert_sv_projection(value["scalar"], f"{label}.scalar", allow_null=False)
 
 
+def _tf030_plan_path_for_case(case_id: str) -> Path:
+    plan_name = {
+        "numeric-format-atoms.tf030.semantic-snapshot": "tf030-format-atoms-plan.json",
+        "numeric-format-atoms.tf030-threshold.semantic-snapshot": "tf030-format-atoms-plan.json",
+        "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot": "tf030-fna-mirror-plan.json",
+        "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot": "tf030-fna-mirror-plan.json",
+        "numeric-tf030-candidates.ignore-negative.semantic-snapshot": "tf030-candidate-plan.json",
+        "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot": "tf030-candidate-plan.json",
+    }.get(case_id)
+    require(plan_name is not None, f"{case_id}: no TF-030 plan binding")
+    from validation_common import ROOT
+    path = ROOT / "fixtures" / "numeric" / plan_name
+    require(path.is_file(), f"{case_id}: missing plan file {path}")
+    return path
+
+
+def _load_tf030_plan(case_id: str) -> dict[str, object]:
+    from validation_common import ROOT, strict_json_loads_ascii
+    path = _tf030_plan_path_for_case(case_id)
+    raw = path.read_bytes()
+    require(all(byte < 0x80 for byte in raw), f"{case_id}: plan non-ASCII")
+    document = strict_json_loads_ascii(raw, f"{case_id} numeric plan")
+    require(document.get("schema_version") == 1, f"{case_id}: plan schema")
+    require(document.get("kind") == "tf030_numeric_plan", f"{case_id}: plan kind")
+    require(isinstance(document.get("rows"), list), f"{case_id}: plan rows")
+    return document
+
+
+def _scan_fixture_numeric_records(fixture_rel: str, label: str) -> list[dict[str, object]]:
+    from validation_common import ROOT
+    import re as _re
+    path = ROOT / fixture_rel
+    require(path.is_file(), f"{label}: fixture missing {fixture_rel}")
+    text = path.read_bytes().decode("utf-8", "strict")
+    records: list[dict[str, object]] = []
+    source: str | None = None
+    ordinal = 0
+    for line in text.splitlines():
+        if line.startswith("SF:"):
+            source = line[3:]
+            ordinal = 0
+            continue
+        if line.startswith("end_of_record"):
+            source = None
+            ordinal = 0
+            continue
+        if source is None:
+            continue
+        if not (
+            line.startswith("DA:")
+            or line.startswith("FNDA:")
+            or line.startswith("FNA:")
+            or line.startswith("BRDA:")
+        ):
+            continue
+        family, rest = line.split(":", 1)
+        ordinal += 1
+        if family == "DA":
+            line_no, lexeme = rest.split(",", 1)
+            locator: dict[str, object] = {"line": int(line_no)}
+        elif family == "FNDA":
+            lexeme, name = rest.split(",", 1)
+            locator = {"function_name": name, "alias": name}
+        elif family == "FNA":
+            idx, lexeme, alias = rest.split(",", 2)
+            locator = {"function_index": int(idx), "alias": alias}
+        else:
+            match = _re.match(r"^(\d+),([ef]?)(U?)(\d+),(.+)$", rest)
+            require(match is not None, f"{label}: unparsed BRDA {line!r}")
+            assert match is not None
+            ln = match.group(1)
+            block = match.group(4)
+            branch_and_count = match.group(5)
+            branch_token, lexeme = branch_and_count.split(",", 1)
+            if branch_token.lstrip("-").isdigit():
+                branch_value: object = int(branch_token)
+            else:
+                branch_value = branch_token
+            locator = {
+                "line": int(ln),
+                "block": int(block),
+                "branch": branch_value,
+                "expression": None,
+            }
+        records.append(
+            {
+                "family": family,
+                "lexeme": lexeme,
+                "raw_record": line,
+                "record_ordinal": ordinal,
+                "locator": locator,
+                "source": source,
+            }
+        )
+    return records
+
+
+def _locator_equal(family: str, left: dict[str, object], right: dict[str, object]) -> bool:
+    if family == "DA":
+        return int(left["line"]) == int(right["line"])
+    if family == "FNDA":
+        return left.get("function_name") == right.get("function_name") and left.get("alias") == right.get("alias")
+    if family == "FNA":
+        return int(left["function_index"]) == int(right["function_index"]) and left.get("alias") == right.get("alias")
+    if family == "BRDA":
+        return (
+            int(left["line"]) == int(right["line"])
+            and int(left["block"]) == int(right["block"])
+            and str(left["branch"]) == str(right["branch"])
+            and left.get("expression") == right.get("expression")
+        )
+    return False
+
+
+def _expected_value_class(lexeme: str, looks_like_number: bool | None, never: bool) -> str:
+    if never:
+        return "not_evaluated"
+    if looks_like_number is False:
+        return "nonnumeric"
+    lower = lexeme.lower()
+    if lower == "nan":
+        return "nan"
+    if lower in {"inf", "+inf", "infinity", "+infinity"}:
+        return "positive_infinity"
+    if lower in {"-inf", "-infinity"}:
+        return "negative_infinity"
+    return "finite"
+
+
 def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: int, case_id: str) -> None:
     require(document.get("kind") == "semantic_model_snapshot", f"{case_id}: kind mismatch")
     require(document.get("schema_version") == 1, f"{case_id}: schema mismatch")
@@ -651,54 +784,63 @@ def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: 
     rows = document.get("numeric_rows")
     require(isinstance(rows, list), f"{case_id}: numeric_rows must be a list")
     require(len(rows) == expected_count, f"{case_id}: expected {expected_count} numeric rows, got {len(rows)}")
+
+    plan_doc = _load_tf030_plan(case_id)
+    plan_rows = plan_doc["rows"]
+    require(isinstance(plan_rows, list), f"{case_id}: plan rows list")
+    require(len(plan_rows) == expected_count, f"{case_id}: plan row count {len(plan_rows)} != {expected_count}")
+
     threshold_enabled = case_id in {
         "numeric-format-atoms.tf030-threshold.semantic-snapshot",
         "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
         "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
     }
 
-    if expected_count == 12:
-        expected_ids = [
-            "format.da.neg3",
-            "format.da.malformed_a0e",
-            "format.da.one_e19",
-            "format.fnda.neg2",
-            "format.fnda.malformed_eb",
-            "format.fnda.one_point_five_e20",
-            "format.fnda.neg0",
-            "format.brda.neg1",
-            "format.brda.dash",
-            "format.brda.malformed_plus",
-            "format.brda.one_point_six_seven_e20",
-            "format.brda.neg0",
-        ]
-    elif expected_count == 4:
-        expected_ids = [
-            "fna_mirror.fna.neg2",
-            "fna_mirror.fna.malformed_eb",
-            "fna_mirror.fna.one_point_five_e20",
-            "fna_mirror.fna.neg0",
-        ]
-    else:
-        families = ("da", "fnda", "fna", "brda")
-        atoms = (
-            "zero",
-            "plus_one",
-            "one_point_five",
-            "one_e3",
-            "inf",
-            "plus_inf",
-            "infinity",
-            "nan_upper",
-            "nan_lower",
-            "neg_inf",
-        )
-        expected_ids = [f"candidate.{family}.{atom}" for family in families for atom in atoms]
-
-    require([row.get("id") for row in rows] == expected_ids, f"{case_id}: row order/id closure drift")
-    seen_locators: set[str] = set()
+    for index, plan_row in enumerate(plan_rows):
+        require(isinstance(plan_row, dict), f"{case_id}: plan row {index} object")
+        require(plan_row.get("family") != "MCDC", f"{case_id}: MC/DC out of TF-030 scope in plan")
     for index, row in enumerate(rows):
-        require(isinstance(row, dict), f"{case_id}: row {index} must be object")
+        require(isinstance(row, dict), f"{case_id}: row {index} object")
+        require(row.get("family") != "MCDC", f"{case_id}: MC/DC out of TF-030 scope in output")
+
+    # Bind every plan row to fixture bytes with exact ordinal/family/lexeme/raw/locator.
+    fixture_cache: dict[str, list[dict[str, object]]] = {}
+    for plan_row in plan_rows:
+        fixture_rel = str(plan_row["fixture"])
+        if fixture_rel not in fixture_cache:
+            fixture_cache[fixture_rel] = _scan_fixture_numeric_records(fixture_rel, case_id)
+        records = fixture_cache[fixture_rel]
+        hits = [
+            rec
+            for rec in records
+            if rec["family"] == plan_row["family"]
+            and rec["source"] == plan_row["source"]
+            and rec["lexeme"] == plan_row["lexeme"]
+            and rec["raw_record"] == plan_row["raw_record"]
+            and _locator_equal(str(plan_row["family"]), rec["locator"], plan_row["locator"])  # type: ignore[arg-type]
+        ]
+        require(len(hits) == 1, f"{case_id}: plan row {plan_row.get('id')} fixture match count={len(hits)}")
+        hit = hits[0]
+        require(
+            int(hit["record_ordinal"]) == int(plan_row["record_ordinal"]),
+            f"{case_id}: plan ordinal drift {plan_row.get('id')} plan={plan_row['record_ordinal']} fixture={hit['record_ordinal']}",
+        )
+
+    require(
+        [row.get("id") for row in rows] == [plan_row.get("id") for plan_row in plan_rows],
+        f"{case_id}: row order/id closure drift",
+    )
+    require(
+        [row.get("record_ordinal") for row in rows] == [plan_row.get("record_ordinal") for plan_row in plan_rows],
+        f"{case_id}: record_ordinal plan/output closure drift",
+    )
+
+    seen_locators: set[str] = set()
+    sources = document.get("sources")
+    require(isinstance(sources, list) and sources, f"{case_id}: sources missing")
+
+    for index, (plan_row, row) in enumerate(zip(plan_rows, rows)):
+        row_id = str(plan_row["id"])
         for key in (
             "id", "family", "lexeme", "fixture", "source", "testcase", "reader_match_kind",
             "raw_record", "record_ordinal", "locator", "record_matched", "retained", "skipped",
@@ -708,100 +850,133 @@ def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: 
             "category", "recovery", "stored_aggregate", "stored_testcase",
         ):
             require(key in row, f"{case_id}: row {index} missing {key}")
-        require(row["family"] in {"DA", "FNDA", "FNA", "BRDA"}, f"{case_id}: invalid family")
-        require(row["record_matched"] is True, f"{case_id}: {row['id']} record_matched")
-        require(row["retained"] is True, f"{case_id}: {row['id']} retained")
-        require(row["skipped"] is False, f"{case_id}: {row['id']} skipped")
-        require(row["threshold_enabled"] is threshold_enabled, f"{case_id}: {row['id']} threshold_enabled")
-        if threshold_enabled:
-            require(row["threshold_text"] == "1000000", f"{case_id}: {row['id']} threshold_text")
-        else:
-            require(row["threshold_text"] is None, f"{case_id}: {row['id']} threshold_text null")
+        for key in (
+            "id", "family", "lexeme", "fixture", "source", "testcase",
+            "reader_match_kind", "raw_record", "record_ordinal",
+        ):
+            require(row[key] == plan_row[key], f"{case_id}:{row_id}: plan field {key} mismatch")
+        require(isinstance(row["locator"], dict) and isinstance(plan_row["locator"], dict), f"{case_id}:{row_id}: locator type")
+        require(
+            _locator_equal(str(plan_row["family"]), row["locator"], plan_row["locator"]),  # type: ignore[arg-type]
+            f"{case_id}:{row_id}: locator mismatch against plan",
+        )
+
+        family = str(row["family"])
+        require(family in {"DA", "FNDA", "FNA", "BRDA"}, f"{case_id}: invalid family")
         locator = row["locator"]
-        require(isinstance(locator, dict), f"{case_id}: locator object")
-        if row["family"] == "DA":
+        if family == "DA":
             require(set(locator) == {"line"}, f"{case_id}: DA locator keys")
-        elif row["family"] == "FNDA":
+        elif family == "FNDA":
             require(set(locator) == {"function_name", "alias"}, f"{case_id}: FNDA locator keys")
-        elif row["family"] == "FNA":
+        elif family == "FNA":
             require(set(locator) == {"function_index", "alias"}, f"{case_id}: FNA locator keys")
         else:
             require(set(locator) == {"line", "block", "branch", "expression"}, f"{case_id}: BRDA locator keys")
-        locator_key = f"{row['family']}:{sorted((k, repr(v)) for k, v in locator.items())}"
-        require(locator_key not in seen_locators, f"{case_id}: duplicate locator {row['id']}")
+
+        locator_key = f"{family}:{sorted((k, repr(v)) for k, v in locator.items())}"
+        require(locator_key not in seen_locators, f"{case_id}: duplicate locator {row_id}")
         seen_locators.add(locator_key)
 
-        never = row["lexeme"] == "-" and row["family"] == "BRDA"
+        require(row["record_matched"] is True, f"{case_id}:{row_id}: record_matched")
+        require(row["retained"] is True, f"{case_id}:{row_id}: retained")
+        require(row["skipped"] is False, f"{case_id}:{row_id}: skipped")
+        require(row["threshold_enabled"] is threshold_enabled, f"{case_id}:{row_id}: threshold_enabled")
+        if threshold_enabled:
+            require(row["threshold_text"] == "1000000", f"{case_id}:{row_id}: threshold_text")
+        else:
+            require(row["threshold_text"] is None, f"{case_id}:{row_id}: threshold_text null")
+
+        # Source identity present in snapshot.
+        source_matches = [item for item in sources if isinstance(item, dict) and item.get("filename") == row["source"]]
+        require(len(source_matches) == 1, f"{case_id}:{row_id}: source identity")
+        source_entry = source_matches[0]
+        aggregate = source_entry.get("aggregate")
+        testcases = source_entry.get("testcases")
+        require(isinstance(aggregate, dict), f"{case_id}:{row_id}: aggregate object")
+        require(isinstance(testcases, dict), f"{case_id}:{row_id}: testcases object")
+        for family_key in ("line", "function", "branch", "mcdc"):
+            require(family_key in aggregate, f"{case_id}:{row_id}: aggregate missing {family_key}")
+            require(family_key in testcases, f"{case_id}:{row_id}: testcases missing {family_key}")
+
+        never = row["lexeme"] == "-" and family == "BRDA"
         if never:
-            require(row["reader_match_kind"] == "brda_never_evaluated", f"{case_id}: never path")
-            require(row["looks_like_number"] is None, f"{case_id}: never lln null")
-            require(row["value_class"] == "not_evaluated", f"{case_id}: never class")
-            require(row["category"] is None, f"{case_id}: never category")
-            require(row["recovery"] == "never evaluated", f"{case_id}: never recovery")
-            require(row["sv_after_looks_like_number"] is None, f"{case_id}: never after-lln null")
-            require(row["sv_after_negative_compare"] is None, f"{case_id}: never after-neg null")
-            require(row["sv_after_threshold_compare"] is None, f"{case_id}: never after-thr null")
-            require(row["greater_than_threshold"] is None, f"{case_id}: never greater null")
-            _assert_stored_value(row["stored_aggregate"], f"{case_id}:{row['id']}.agg", allow_never=True)
-            _assert_stored_value(row["stored_testcase"], f"{case_id}:{row['id']}.tc", allow_never=True)
+            require(row["reader_match_kind"] == "brda_never_evaluated", f"{case_id}:{row_id}: never path")
+            require(row["looks_like_number"] is None, f"{case_id}:{row_id}: never lln null")
+            require(row["value_class"] == "not_evaluated", f"{case_id}:{row_id}: never class")
+            require(row["category"] is None, f"{case_id}:{row_id}: never category")
+            require(row["recovery"] == "never evaluated", f"{case_id}:{row_id}: never recovery")
+            require(row["sv_after_looks_like_number"] is None, f"{case_id}:{row_id}: never after-lln null")
+            require(row["sv_after_negative_compare"] is None, f"{case_id}:{row_id}: never after-neg null")
+            require(row["sv_after_threshold_compare"] is None, f"{case_id}:{row_id}: never after-thr null")
+            require(row["greater_than_threshold"] is None, f"{case_id}:{row_id}: never greater null")
+            _assert_sv_projection(row["sv_before"], f"{case_id}:{row_id}.sv_before", allow_null=False)
+            _assert_stored_value(row["stored_aggregate"], f"{case_id}:{row_id}.agg", allow_never=True)
+            _assert_stored_value(row["stored_testcase"], f"{case_id}:{row_id}.tc", allow_never=True)
+            require(row["stored_aggregate"] == {"state": "never_evaluated"}, f"{case_id}:{row_id}: agg never")
+            require(row["stored_testcase"] == {"state": "never_evaluated"}, f"{case_id}:{row_id}: tc never")
             continue
 
-        require(row["reader_match_kind"] == "looks_like_number", f"{case_id}: reader path")
-        require(isinstance(row["looks_like_number"], bool), f"{case_id}: lln bool")
-        _assert_sv_projection(row["sv_before"], f"{case_id}:{row['id']}.sv_before", allow_null=False)
-        _assert_sv_projection(row["sv_after_looks_like_number"], f"{case_id}:{row['id']}.sv_lln", allow_null=False)
+        require(row["reader_match_kind"] == "looks_like_number", f"{case_id}:{row_id}: reader path")
+        require(isinstance(row["looks_like_number"], bool), f"{case_id}:{row_id}: lln bool")
+        _assert_sv_projection(row["sv_before"], f"{case_id}:{row_id}.sv_before", allow_null=False)
+        _assert_sv_projection(row["sv_after_looks_like_number"], f"{case_id}:{row_id}.sv_lln", allow_null=False)
+
+        expected_vc = _expected_value_class(str(row["lexeme"]), bool(row["looks_like_number"]), False)
+        require(row["value_class"] == expected_vc, f"{case_id}:{row_id}: value_class expected {expected_vc} got {row['value_class']}")
+
         if row["looks_like_number"] is False:
-            require(row["category"] == "format", f"{case_id}: format category")
-            require(row["recovery"] == "zero", f"{case_id}: format recovery")
-            require(row["sv_after_negative_compare"] is None, f"{case_id}: format no neg stage")
-            require(row["sv_after_threshold_compare"] is None, f"{case_id}: format no thr stage")
-            require(row["greater_than_threshold"] is None, f"{case_id}: format greater null")
+            require(row["category"] == "format", f"{case_id}:{row_id}: format category")
+            require(row["recovery"] == "zero", f"{case_id}:{row_id}: format recovery")
+            require(row["sv_after_negative_compare"] is None, f"{case_id}:{row_id}: format no neg stage")
+            require(row["sv_after_threshold_compare"] is None, f"{case_id}:{row_id}: format no thr stage")
+            require(row["greater_than_threshold"] is None, f"{case_id}:{row_id}: format greater null")
         else:
-            _assert_sv_projection(row["sv_after_negative_compare"], f"{case_id}:{row['id']}.sv_neg", allow_null=False)
+            require(isinstance(row["negative"], bool), f"{case_id}:{row_id}: negative bool")
+            _assert_sv_projection(row["sv_after_negative_compare"], f"{case_id}:{row_id}.sv_neg", allow_null=False)
             if row["negative"] is True:
-                require(row["category"] == "negative", f"{case_id}: negative category")
-                require(row["recovery"] == "zero", f"{case_id}: negative recovery")
-                require(row["sv_after_threshold_compare"] is None, f"{case_id}: negative skips thr")
-                require(row["greater_than_threshold"] is None, f"{case_id}: negative greater null")
+                require(row["category"] == "negative", f"{case_id}:{row_id}: negative category")
+                require(row["recovery"] == "zero", f"{case_id}:{row_id}: negative recovery")
+                require(row["sv_after_threshold_compare"] is None, f"{case_id}:{row_id}: negative skips thr")
+                require(row["greater_than_threshold"] is None, f"{case_id}:{row_id}: negative greater null")
             else:
                 if threshold_enabled:
-                    _assert_sv_projection(row["sv_after_threshold_compare"], f"{case_id}:{row['id']}.sv_thr", allow_null=False)
-                    require(isinstance(row["greater_than_threshold"], bool), f"{case_id}: greater bool")
+                    _assert_sv_projection(row["sv_after_threshold_compare"], f"{case_id}:{row_id}.sv_thr", allow_null=False)
+                    require(isinstance(row["greater_than_threshold"], bool), f"{case_id}:{row_id}: greater bool")
                     if row["greater_than_threshold"] is True:
-                        require(row["category"] == "excessive", f"{case_id}: excessive category")
-                        require(row["recovery"] == "retain value", f"{case_id}: excessive recovery")
+                        require(row["category"] == "excessive", f"{case_id}:{row_id}: excessive category")
+                        require(row["recovery"] == "retain value", f"{case_id}:{row_id}: excessive recovery")
                     else:
-                        require(row["category"] is None, f"{case_id}: no category")
+                        require(row["category"] is None, f"{case_id}:{row_id}: no category")
                         if row["lexeme"] == "-0":
-                            require(row["recovery"] == "retain signed zero", f"{case_id}: signed zero recovery")
+                            require(row["recovery"] == "retain signed zero", f"{case_id}:{row_id}: signed zero recovery")
                         else:
-                            require(row["recovery"] == "retain value", f"{case_id}: retain recovery")
+                            require(row["recovery"] == "retain value", f"{case_id}:{row_id}: retain recovery")
                 else:
-                    require(row["sv_after_threshold_compare"] is None, f"{case_id}: no thr stage")
-                    require(row["greater_than_threshold"] is None, f"{case_id}: greater null")
-                    require(row["category"] is None, f"{case_id}: no category")
+                    require(row["sv_after_threshold_compare"] is None, f"{case_id}:{row_id}: no thr stage")
+                    require(row["greater_than_threshold"] is None, f"{case_id}:{row_id}: greater null")
+                    require(row["category"] is None, f"{case_id}:{row_id}: no category")
                     if row["lexeme"] == "-0":
-                        require(row["recovery"] == "retain signed zero", f"{case_id}: signed zero recovery")
+                        require(row["recovery"] == "retain signed zero", f"{case_id}:{row_id}: signed zero recovery")
                     else:
-                        require(row["recovery"] == "retain value", f"{case_id}: retain recovery")
-        require(row["value_class"] in {
-            "finite", "positive_infinity", "negative_infinity", "nan", "nonnumeric", "not_evaluated"
-        }, f"{case_id}: value_class")
-        _assert_stored_value(row["stored_aggregate"], f"{case_id}:{row['id']}.agg")
-        _assert_stored_value(row["stored_testcase"], f"{case_id}:{row['id']}.tc")
-        # Aggregate and testcase must both be independently present. Semantic
-        # text/signed-zero must match; Perl scalar flag projections may differ
-        # between the two maps for the same retained value.
+                        require(row["recovery"] == "retain value", f"{case_id}:{row_id}: retain recovery")
+
+        _assert_stored_value(row["stored_aggregate"], f"{case_id}:{row_id}.agg")
+        _assert_stored_value(row["stored_testcase"], f"{case_id}:{row_id}.tc")
         require(
             row["stored_aggregate"]["text"] == row["stored_testcase"]["text"],
-            f"{case_id}: agg/tc text parity {row['id']}",
+            f"{case_id}: agg/tc text parity {row_id}",
         )
         require(
             row["stored_aggregate"]["signed_zero"] == row["stored_testcase"]["signed_zero"],
-            f"{case_id}: agg/tc signed-zero parity {row['id']}",
+            f"{case_id}: agg/tc signed-zero parity {row_id}",
         )
         if row["category"] in {"format", "negative"}:
-            require(row["stored_aggregate"]["text"] in {"0", "+0"}, f"{case_id}: coerced zero text {row['id']}")
+            require(row["stored_aggregate"]["text"] in {"0", "+0"}, f"{case_id}: coerced zero text {row_id}")
             require(row["stored_aggregate"]["signed_zero"] is False, f"{case_id}: coerced not signed zero")
-        if row["lexeme"] == "-0" and row["category"] is None and row["stored_aggregate"]["text"] == "-0":
-            require(row["stored_aggregate"]["signed_zero"] is True, f"{case_id}: -0 flag")
+        if row["lexeme"] == "-0" and row["category"] is None:
+            # Family-specific stored spelling: BRDA keeps "-0"/signed_zero; some
+            # function counts may normalize while recovery still records signed zero.
+            if row["stored_aggregate"]["text"] == "-0":
+                require(row["stored_aggregate"]["signed_zero"] is True, f"{case_id}: -0 flag")
+            else:
+                require(row["recovery"] == "retain signed zero", f"{case_id}:{row_id}: -0 recovery")
