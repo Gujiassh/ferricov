@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from functools import cache
 from pathlib import Path
 
 from validation_common import (
+    ROOT,
     assert_single_testcase_parity,
     decode_identity,
     require,
+    strict_json_loads_ascii,
 )
 
 
@@ -676,6 +679,26 @@ def _load_tf030_plan(case_id: str) -> dict[str, object]:
     return document
 
 
+@cache
+def _load_tf030_semantic_registry() -> dict[str, object]:
+    path = ROOT / "tf030-semantic-registry.json"
+    require(path.is_file(), f"TF-030 semantic registry missing: {path}")
+    document = strict_json_loads_ascii(path.read_bytes(), "tf030 semantic registry")
+    require(document.get("schema_version") == 1, "TF-030 semantic registry schema")
+    require(document.get("kind") == "tf030_semantic_registry", "TF-030 semantic registry kind")
+    cases = document.get("cases")
+    require(isinstance(cases, dict), "TF-030 semantic registry cases")
+    return document
+
+
+def _expected_tf030_case(case_id: str) -> dict[str, object]:
+    cases = _load_tf030_semantic_registry()["cases"]
+    require(isinstance(cases, dict), "TF-030 semantic registry cases")
+    expected = cases.get(case_id)
+    require(isinstance(expected, dict), f"{case_id}: semantic registry case missing")
+    return expected
+
+
 def _scan_fixture_numeric_records(fixture_rel: str, label: str) -> list[dict[str, object]]:
     from validation_common import ROOT
     import re as _re
@@ -789,6 +812,19 @@ def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: 
     plan_rows = plan_doc["rows"]
     require(isinstance(plan_rows, list), f"{case_id}: plan rows list")
     require(len(plan_rows) == expected_count, f"{case_id}: plan row count {len(plan_rows)} != {expected_count}")
+
+    # Compare the complete retained semantic oracle before applying generic
+    # shape checks. This prevents a self-consistent but fabricated row/source
+    # snapshot from satisfying the compatibility contract.
+    expected_case = _expected_tf030_case(case_id)
+    require(
+        rows == expected_case.get("numeric_rows"),
+        f"{case_id}: numeric row semantic registry mismatch",
+    )
+    require(
+        document.get("sources") == expected_case.get("sources"),
+        f"{case_id}: aggregate/testcase semantic registry mismatch",
+    )
 
     threshold_enabled = case_id in {
         "numeric-format-atoms.tf030-threshold.semantic-snapshot",

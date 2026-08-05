@@ -46,7 +46,7 @@ relationships where supported.
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
 | tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 184 retained Oracle observations across 93 fixtures, including VER, state-ownership, function, branch, numeric/error/checksum probes, the TF-030 exact numeric matrix, and 23 semantic snapshots; reference-only, with 18 named tracefile blockers still open |
-| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 112 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
+| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 121 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
 | behavior planning | primary plans cover all 531 public entries | not started | 107 reviewed primary plans, including 40 CLI parser entries, 8 configuration-semantic slices with 67 bindings, 4 reference-only tracefile CLI targets, 17 source-bound small-tool CLI targets, and 17 source-bound `lcovrc` targets; all 4 critical interaction domains reviewed; 424 primary reviews open |
@@ -117,13 +117,16 @@ Oracle references only across 93 fixtures. Exact structured mappings cover
 `M1-TF-024`, `M1-TF-025`, `M1-TF-026`, `M1-TF-030`, and `M1-TF-031` through
 `M1-TF-036`. `M1-TF-030` is mapped through the 56-row four-family exact atom
 matrix (12 upstream format atoms, four current-FNA mirrors, and 40 candidate
-rows) with row-level semantic validators and policy cases. The observations
-remain reference-only and do not provide Ferricov product compatibility
+rows) with row-level semantic validators. The six TF-030 semantic snapshots
+are independently bound to `compat/fixtures/m0-tracefiles/tf030-semantic-registry.json`,
+which fixes all row fields, scalar projections, stored aggregate/testcase
+values, and source cache facts by SHA-256. The observations remain
+reference-only and do not provide Ferricov product compatibility
 evidence; the remaining 18 named tracefile blockers remain open.
 
 The standalone diagnostics contract closes the M0 source inventory over the
 shared registry, symbol references, ignore/keep-going state machine, raw
-failure families, and command exit policies. Its 112 retained observations are
+failure families, and command exit policies. Its 121 retained observations are
 Oracle references only. The retained `geninfo` startup case is marked as a
 read-only temporary-directory intercept rather than evidence for the true
 no-argument case. All 71 diagnostic and parallel acceptance identities remain

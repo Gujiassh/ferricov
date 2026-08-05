@@ -14,17 +14,22 @@ The generated contract freezes:
 - all 21 per-record malformed fixtures, including the unknown-record fallback;
 - all 93 retained fixtures and 184 pinned Oracle observations, including three
   VER fixtures, three state-ownership fixtures, function-record probes, branch-record
-  probes, numeric/error/checksum probes, and 17 semantic snapshots; and
-- exact hashes for the corpus manifest, Oracle case manifest, and raw Oracle
-  baseline.
+  probes, numeric/error/checksum probes, and 23 semantic snapshots; and
+- exact hashes for the corpus manifest, Oracle case manifest, raw Oracle
+  baseline, and the TF-030 semantic registry.
 
 The 184 observations remain reference-only. They comprise 90 default parses, 41
 canonical rewrites, 30 ignore-category recovery cases, and 23 semantic snapshots
 (two state-ownership probes, three function-record probes, three branch-record
-probes, nine numeric/error probes, and six TF-030 exact numeric matrix snapshots). Exact arguments and raw stream/output
-bytes remain owned
-by `compat/fixtures/m0-tracefiles/`; this contract binds their identities without
+probes, nine numeric/error probes, and six TF-030 exact numeric matrix snapshots).
+Exact arguments and raw stream/output bytes remain owned by
+`compat/fixtures/m0-tracefiles/`; this contract binds their identities without
 duplicating those evidence documents.
+
+`compat/fixtures/m0-tracefiles/tf030-semantic-registry.json` independently fixes
+all six TF-030 semantic snapshots: every row identity/field, Perl/B scalar
+projection and flag, stored aggregate/testcase value, and source cache fact.
+The registry is retained by SHA-256 in the generated tracefile contract.
 
 Validate the committed contract against a clean pinned upstream checkout:
 

@@ -433,13 +433,96 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         for flag in ("iok", "nok", "pok", "is_uv"):
             mutated = copy.deepcopy(document)
             mutated["numeric_rows"][0]["sv_before"][flag] = not mutated["numeric_rows"][0]["sv_before"][flag]
-            # Flag flip alone currently accepted if class remains valid B::* and path checks pass;
-            # force invalid class on after stage to prove projection validation.
-            mutated["numeric_rows"][0]["sv_after_looks_like_number"]["class"] = "NotB"
             with self.subTest(flag=flag), self.assertRaises(ValueError):
                 self.validate_tf030_numeric_rows(
                     mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
                 )
+
+    def test_tf030_every_row_semantic_field_and_cache_fact_is_bound(self) -> None:
+        cases = (
+            ("numeric-format-atoms.tf030.semantic-snapshot", 12),
+            ("numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot", 4),
+            ("numeric-tf030-candidates.ignore-negative.semantic-snapshot", 40),
+            ("numeric-format-atoms.tf030-threshold.semantic-snapshot", 12),
+            ("numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot", 4),
+            ("numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot", 40),
+        )
+        row_fields = (
+            "category", "family", "fixture", "greater_than_threshold", "id", "lexeme", "locator",
+            "looks_like_number", "negative", "raw_record", "reader_match_kind", "record_matched",
+            "record_ordinal", "recovery", "retained", "skipped", "source", "testcase",
+            "threshold_enabled", "threshold_text", "value_class",
+        )
+        stage_fields = ("class", "iok", "is_uv", "nok", "pok")
+
+        def different(value: object) -> object:
+            if isinstance(value, bool):
+                return not value
+            if isinstance(value, int):
+                return value + 1
+            if isinstance(value, str):
+                return value + "-mutated"
+            if value is None:
+                return True
+            if isinstance(value, dict):
+                mutated = copy.deepcopy(value)
+                mutated["__mutated__"] = True
+                return mutated
+            return "mutated"
+
+        for case_id, count in cases:
+            document = self._snapshot(case_id)
+            self.validate_tf030_numeric_rows(document, expected_count=count, case_id=case_id)
+            for row_index, row in enumerate(document["numeric_rows"]):
+                for field in row_fields:
+                    mutated = copy.deepcopy(document)
+                    mutated["numeric_rows"][row_index][field] = different(row[field])
+                    with self.subTest(case_id=case_id, row=row_index, field=field), self.assertRaises(ValueError):
+                        self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
+                for stage in ("sv_before", "sv_after_looks_like_number", "sv_after_negative_compare", "sv_after_threshold_compare"):
+                    if not isinstance(row[stage], dict):
+                        continue
+                    for field in stage_fields:
+                        mutated = copy.deepcopy(document)
+                        mutated["numeric_rows"][row_index][stage][field] = different(row[stage][field])
+                        with self.subTest(case_id=case_id, row=row_index, field=f"{stage}.{field}"), self.assertRaises(ValueError):
+                            self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
+                for stored in ("stored_aggregate", "stored_testcase"):
+                    if not isinstance(row[stored], dict) or "scalar" not in row[stored]:
+                        mutated = copy.deepcopy(document)
+                        mutated["numeric_rows"][row_index][stored]["state"] = different(row[stored]["state"])
+                        with self.subTest(case_id=case_id, row=row_index, field=f"{stored}.state"), self.assertRaises(ValueError):
+                            self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
+                        continue
+                    for field in ("text", "signed_zero"):
+                        mutated = copy.deepcopy(document)
+                        mutated["numeric_rows"][row_index][stored][field] = different(row[stored][field])
+                        with self.subTest(case_id=case_id, row=row_index, field=f"{stored}.{field}"), self.assertRaises(ValueError):
+                            self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
+                    for field in stage_fields:
+                        mutated = copy.deepcopy(document)
+                        mutated["numeric_rows"][row_index][stored]["scalar"][field] = different(
+                            row[stored]["scalar"][field]
+                        )
+                        with self.subTest(case_id=case_id, row=row_index, field=f"{stored}.scalar.{field}"), self.assertRaises(ValueError):
+                            self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
+
+            for source_index, source in enumerate(document["sources"]):
+                for container_name in ("aggregate", "testcases"):
+                    for metric_name, metric in source[container_name].items():
+                        if container_name == "aggregate":
+                            metrics = [(metric_name, metric)]
+                        else:
+                            metrics = list(metric.items())
+                        for metric_key, cache in metrics:
+                            for field in ("found", "hit"):
+                                mutated = copy.deepcopy(document)
+                                target = mutated["sources"][source_index][container_name][metric_name]
+                                if container_name == "testcases":
+                                    target = target[metric_key]
+                                target[field] = different(cache[field])
+                                with self.subTest(case_id=case_id, source=source_index, field=f"{container_name}.{metric_name}.{metric_key}.{field}"), self.assertRaises(ValueError):
+                                    self.validate_tf030_numeric_rows(mutated, expected_count=count, case_id=case_id)
 
     def test_tf030_all_matrix_sizes_reject_missing_row(self) -> None:
         for case_id, count in (

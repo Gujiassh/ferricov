@@ -6,11 +6,11 @@
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "8e82b73f5bf5ab71baa802565ca5d21472c5fd0e3b7c155011ce4baa67988d15"
+      "sha256": "a04d26a29d548ebbf594a38dda3200c4c3e8e1c5b25afd3651568e15909c7689"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "ce5975c546c8e98cc23265ee9d1b20130dd59d7992190921233d4ad4bfad3c9f"
+      "sha256": "a8771082f4ecb09c773a58ae83af2aed6d36c04f737143e55fddf590e088dc51"
     }
   ],
   "categories": [
@@ -2466,6 +2466,114 @@
     },
     {
       "exit_status": 1,
+      "id": "tracefile:numeric-tf030-fna-mirror.default-stop",
+      "kind": "named_error_fatal",
+      "observation_sha256": "38eaa0a54455806f22a44fd31af8a93b7d4a20d255e14d845427936453344ad0",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "b4d11a67536a300b30aad6f85115ae9c9f9522c03d7e892b4a1a3ac6e7cb7464",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-tf030-fna-mirror.ignore-negative-stop-format",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "de1ffd783b4995ecaa591053f7fff9dfb2de1d65b25b7a15dcd51e603e767bf9",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "da0f163887e784fe3be4ea26531f2f37451719398adcf24e092f0058ca03b580",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "09c244124299330871fd2ad7c952d69b1b866992e576b83c25ded80a6eab0cf6",
+      "output_sha256": "004ad6e973074fe8e152acf2d0317d9f528682468413458703b82402fafa387e",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "f6a7c9d6f3e3b149f25d82da732779b9895cbd406daa6b8ff25b65c0bd790dcd",
+      "stdout_sha256": "a5f53764e01018c8c89bd098c0a0941ee25eaeae122d1528614040c2bc63b8ff"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "378fd338b26c23a9324e3c3f3bc74b54367e8835e72378e5215b348f1947eb10",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "c426c1978c561770edde4e331d615c6094f90fa8dbee107596305e56ac86532b",
+      "stdout_sha256": "623855b28b06e9bbdac6672579ea7d42160ff28c6bacde653820e28fa4801aa7"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-tf030-fna-mirror.threshold-default-stop",
+      "kind": "named_error_fatal",
+      "observation_sha256": "fb2ddea45773af30f39c16825cd6b13547b65a035716be62cb8e43f5b4bd89a5",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "6bcb9ccfc5dd9f742a0c47140774cdcf219b2ffa54bf5459408460b797c13136",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-tf030-candidates.default-stop",
+      "kind": "named_error_fatal",
+      "observation_sha256": "43569d82b7af1bbc4183307094e3f394d549a39af08e4a4502929e461c795d96",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "dc1384ceb90a4568d6607a5bb0ad9c34aeb6de0d9db444f87ca341fc560f2ba9",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-tf030-candidates.ignore-negative.canonical",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "b0fc02d9e8eca659b92133568f807bfb8fae7322ab0adc68564d37d502c66bb5",
+      "output_sha256": "0afc39537934bee7f6e97a56ee490677fb408bb5810156d31f4e4a2f9b9e61d8",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "ef0e61f8f6efe24bdc2ec6b627e28d07cf5a7f5ec4b1f704e7f7e163839fda6d",
+      "stdout_sha256": "1e05fa89187430f4a194fcd043a50781a7b5cdcfde0ba8e5ef70e196514e4bc9"
+    },
+    {
+      "exit_status": 0,
+      "id": "tracefile:numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "e64900117025b39bb2fc813619e3b2616b537cf8b71098dae6e537768e0d2ff1",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "2070c43d1133a1445378866af9f5c0b9271ff63112e0fa28c2dedc98bfc91ce2",
+      "stdout_sha256": "67eaaf66247ea5eb05d42442f7b03ac38085c35d52e24a83393c86a7c2dc6d7b"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:numeric-tf030-candidates.threshold-default-stop",
+      "kind": "named_error_fatal",
+      "observation_sha256": "a9c608ddab912fa5081551c1466f5644ae989df6000bd410f753ac65e9305495",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "4405173b30b7c1b31942a2393d90b753f45cc2c827f878142ac6ed5d7c6e8313",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "exit_status": 1,
       "id": "tracefile:branches-malformed-tail.canonical",
       "kind": "named_error_fatal",
       "observation_sha256": "bb1d7302c2be652a71967145e3e4ac71895c226ea9f3b2b0691844ca56d37322",
@@ -2573,9 +2681,9 @@
     "configuration_observations": 5,
     "control_rules": 9,
     "exit_policies": 10,
-    "named_error_fatal_observations": 58,
-    "named_error_ignore_one_observations": 29,
-    "oracle_observations": 112,
+    "named_error_fatal_observations": 62,
+    "named_error_ignore_one_observations": 34,
+    "oracle_observations": 121,
     "parser_observations": 10,
     "planned_cases": 71,
     "reserved_categories": 1,

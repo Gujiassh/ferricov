@@ -21,7 +21,10 @@ content-identified image and executable recorded in `manifest.json`.
   matrix required by `M1-TF-030` is retained through
   `tf030-format-atoms-plan.json`, `tf030-fna-exact-mirror.info`,
   `tf030-candidate-matrix.info`, and the companion numeric plans, with 15 added
-  Oracle cases and row-level semantic validators.
+  Oracle cases and row-level semantic validators. The retained
+  `tf030-semantic-registry.json` binds all six TF-030 semantic snapshots,
+  including every numeric row and aggregate/testcase cache map, to its exact
+  SHA-256 through the tracefile contract.
 - `fixtures/bytes/` pins CRLF, no final newline, invalid UTF-8, and NUL input.
 - `fixtures/state/` pins late-TN MC/DC ownership, cross-SF MC/DC success, and
   the cross-SF return-to-line1 duplicate hard failure. Success ownership is
@@ -83,5 +86,9 @@ committed.
 
 TF-030 numeric plans bind every matrix row to fixture bytes with section-local
 `record_ordinal` values among `DA`/`FNDA`/`FNA`/`BRDA` records. Validators and
-`inspect_model.pl --numeric-plan` fail closed on plan/fixture/record drift.
+`inspect_model.pl --numeric-plan` fail closed on plan/fixture/record drift. The
+six-snapshot `tf030-semantic-registry.json` additionally fixes every row field,
+Perl/B scalar projection, stored aggregate/testcase value, and source cache
+fact; its contract-bound SHA-256 is
+`8a353e6429889bef3b1d66dbbcd31776d36eea0382ad951e64a27935362cb16d`.
 Product compatibility evidence remains false; M1 remains blocked.

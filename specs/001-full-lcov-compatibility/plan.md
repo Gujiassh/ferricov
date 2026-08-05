@@ -174,7 +174,7 @@ the 56-row four-family exact atom matrix; 18 named tracefile blockers remain
 open and product compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
-command exit policies. Its 112 retained observations remain reference-only,
+command exit policies. Its 121 retained observations remain reference-only,
 including a `geninfo` startup case intercepted by read-only temporary storage;
 all 71 diagnostic and parallel case identities remain planned.
 The separate installation contract binds the 321-entry installed tree to nine

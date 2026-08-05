@@ -103,11 +103,15 @@ the M0 harness become the permanent integration boundary.
   `M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`,
   `M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is now
   mapped through the 56-row four-family exact atom matrix and row-level
-  semantic validators; product compatibility evidence remains false, all
-  observations remain reference-only, and M1 implementation remains unauthorized.
+  semantic validators. The six TF-030 semantic snapshots are independently
+  bound to `compat/fixtures/m0-tracefiles/tf030-semantic-registry.json`, which
+  fixes every row field, scalar projection, stored aggregate/testcase value,
+  and source cache fact by SHA-256; product compatibility evidence remains
+  false, all observations remain reference-only, and M1 implementation remains
+  unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
-  rules, four unclassified failure surfaces, ten command exit policies, and 112
+  rules, four unclassified failure surfaces, ten command exit policies, and 121
   retained Oracle references. All 71 diagnostic/parallel case IDs remain
   planned and product evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry

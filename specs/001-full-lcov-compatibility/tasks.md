@@ -87,13 +87,15 @@ The TF-030 exact numeric matrix module defined in
 branch `test/m0-tf030-exact-numeric-matrix`. It preserved `main@6a9a85d` as the
 169-observation comparison base (common=169, changed=0, removed=0, added=15),
 split the numeric corpus modules, added the complete 56-row matrix, captured
-the pinned Oracle once after stabilization, mapped `M1-TF-030`, and
-synchronized generated contracts. MC/DC remains outside this module under
-`M1-TF-031`.
+and independently revalidated the pinned Oracle, mapped `M1-TF-030`, and
+synchronized generated contracts. A contract-bound six-snapshot semantic
+registry fixes every row field, scalar projection, stored aggregate/testcase
+value, and source cache fact; the full row/cache mutation suite fails closed.
+MC/DC remains outside this module under `M1-TF-031`.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 112 retained observations are
+surfaces, and ten command exit policies. Its 121 retained observations are
 reference-only; the `geninfo` startup observation is explicitly classified as
 a read-only temporary-directory intercept. All 71 diagnostic and parallel
 case IDs remain planned, so ignore-two, warning promotion, converter traps,
