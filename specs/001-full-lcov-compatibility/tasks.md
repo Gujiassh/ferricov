@@ -81,6 +81,15 @@ the current corpus lacks its required cross-family exact atom matrix. The 19
 named tracefile blockers remain, so the complete grammar and M1 readiness tasks
 stay open.
 
+The next bounded tracefile execution module is defined in
+`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md`. It starts from
+`main@6a9a85d`, first extracts the oversized numeric corpus and validation
+responsibilities with byte-identical retained artifacts, then adds the complete
+cross-family `M1-TF-030` Oracle matrix, row-level semantic mutations, one final
+stabilized capture, and controller review. This is an approved development
+plan only: `M1-TF-030` remains unmapped, product evidence remains false, and M1
+implementation remains unauthorized until that brief is executed and accepted.
+
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
 surfaces, and ten command exit policies. Its 112 retained observations are
