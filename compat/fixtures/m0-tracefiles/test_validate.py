@@ -355,3 +355,97 @@ class NumericExtraSpellingsSnapshotTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+
+class Tf030NumericMatrixMutationTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        from validation_numeric import validate_tf030_numeric_rows
+        cls.validate_tf030_numeric_rows = staticmethod(validate_tf030_numeric_rows)
+        cls.fixtures = {fixture.path: fixture for fixture in generate.build_fixtures()}
+        cls.cases = {
+            case["id"]: case
+            for case in generate.build_oracle_cases(generate.build_fixtures())["cases"]
+        }
+        baseline = strict_json_loads_ascii((ROOT / "oracle-baseline.json").read_bytes(), "oracle-baseline.json")
+        cls.baseline = {case["id"]: case for case in baseline["cases"]}
+
+    def _snapshot(self, case_id: str) -> dict:
+        observation = self.baseline[case_id]
+        raw = base64.b64decode(observation["stdout"]["base64"], validate=True)
+        return strict_json_loads_ascii(raw, f"{case_id} snapshot")
+
+    def test_tf030_row_count_and_order_mutations_are_rejected(self) -> None:
+        document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
+        self.validate_tf030_numeric_rows(document, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot")
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"] = mutated["numeric_rows"][1:]
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot")
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"] = list(reversed(mutated["numeric_rows"]))
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot")
+
+    def test_tf030_scalar_and_category_mutations_are_rejected(self) -> None:
+        document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
+        for field, value in (
+            ("category", "format"),
+            ("looks_like_number", False),
+            ("record_matched", False),
+            ("retained", False),
+        ):
+            mutated = copy.deepcopy(document)
+            mutated["numeric_rows"][0][field] = value if field != "category" else "excessive"
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(
+                    mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+                )
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"][0]["sv_before"]["iok"] = not mutated["numeric_rows"][0]["sv_before"]["iok"]
+        with self.assertRaises(ValueError):
+            # projection shape still valid, but category/recovery path for this row remains checked
+            # force an invalid projection class instead
+            mutated["numeric_rows"][0]["sv_before"]["class"] = "NotB"
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+
+    def test_tf030_plan_companion_hash_mutation_is_rejected(self) -> None:
+        case = copy.deepcopy(self.cases["numeric-format-atoms.tf030.semantic-snapshot"])
+        observation = copy.deepcopy(self.baseline[case["id"]])
+        observation["fixture_sha256"] = hashlib.sha256(self.fixtures[case["fixture"]].data).hexdigest()
+        observation["additional_fixture_sha256"] = {
+            name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+            for name, path in case.get("additional_fixtures", {}).items()
+        }
+        validate_observation_binding(case, observation, self.fixtures)
+        plan_name = next(iter(case["additional_fixtures"]))
+        observation["additional_fixture_sha256"][plan_name] = "0" * 64
+        with self.assertRaises(ValueError):
+            validate_observation_binding(case, observation, self.fixtures)
+
+    def test_tf030_canonical_output_and_stop_mutations_are_rejected(self) -> None:
+        from validation_numeric import validate_added_numeric_case
+        case = copy.deepcopy(self.cases["numeric-tf030-fna-mirror.ignore-negative-format.canonical"])
+        observation = copy.deepcopy(self.baseline[case["id"]])
+        validate_added_numeric_case(case, observation)
+        mutated = copy.deepcopy(observation)
+        raw = base64.b64decode(mutated["output"]["base64"], validate=True)
+        raw = raw.replace(b"FNA:0,0,fna_neg2", b"FNA:0,1,fna_neg2", 1)
+        mutated["output"] = {
+            "exists": True,
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "byte_size": len(raw),
+            "base64": base64.b64encode(raw).decode("ascii"),
+        }
+        with self.assertRaises(ValueError):
+            validate_added_numeric_case(case, mutated)
+        stop = copy.deepcopy(self.cases["numeric-tf030-fna-mirror.default-stop"])
+        stop_obs = copy.deepcopy(self.baseline[stop["id"]])
+        validate_added_numeric_case(stop, stop_obs)
+        stop_obs["output"] = {"exists": True, "sha256": "0"*64, "byte_size": 1, "base64": base64.b64encode(b"x").decode()}
+        with self.assertRaises(ValueError):
+            validate_added_numeric_case(stop, stop_obs)
+

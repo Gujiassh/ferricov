@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 169 Oracle observations.
+  standalone fail-closed contract bound to 184 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -72,27 +72,24 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 88 retained fixtures,
-and 21 per-record malformed fixtures. Its 169 Oracle observations are
+15 reader matcher lines, all 18 writer emission lines, 93 retained fixtures,
+and 21 per-record malformed fixtures. Its 184 Oracle observations are
 reference-only. Exact mappings cover `M1-TF-007`, `M1-TF-009`, `M1-TF-011`,
 `M1-TF-013`, `M1-TF-021`, `M1-TF-022`, `M1-TF-024`, `M1-TF-025`, `M1-TF-026`,
-and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains unmapped because
-the current corpus lacks its required cross-family exact atom matrix. The 19
-named tracefile blockers remain, so the complete grammar and M1 readiness tasks
-stay open.
+`M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is mapped through
+the 56-row four-family exact atom matrix with row-level semantic validators.
+The remaining 18 named tracefile blockers keep the complete grammar and M1
+readiness tasks open. Product compatibility evidence remains false and M1
+implementation remains unauthorized.
 
-The next bounded tracefile execution module is defined in
-`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md`. It starts from the
-controller-assigned clean `main` containing that brief and preserves
-`main@6a9a85d` as the 169-observation comparison base. It first extracts the
-oversized numeric corpus and validation responsibilities with byte-identical
-retained artifacts, then adds the complete 56-row matrix across the four
-`looks_like_number` families (12 exact upstream rows, four current-FNA mirrors,
-and 40 candidate rows), Perl/B scalar-flag projections, row-level semantic
-mutations, one final stabilized capture, and controller review. MC/DC remains
-outside this module under `M1-TF-031`. This is an approved development plan
-only: `M1-TF-030` remains unmapped, product evidence remains false, and M1
-implementation remains unauthorized until that brief is executed and accepted.
+The TF-030 exact numeric matrix module defined in
+`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been executed on
+branch `test/m0-tf030-exact-numeric-matrix`. It preserved `main@6a9a85d` as the
+169-observation comparison base (common=169, changed=0, removed=0, added=15),
+split the numeric corpus modules, added the complete 56-row matrix, captured
+the pinned Oracle once after stabilization, mapped `M1-TF-030`, and
+synchronized generated contracts. MC/DC remains outside this module under
+`M1-TF-031`.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure

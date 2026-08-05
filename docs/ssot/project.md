@@ -96,14 +96,15 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 88 fixtures, 21 per-record malformed inputs, and 169 retained
+  emission lines, 93 fixtures, 21 per-record malformed inputs, and 184 retained
   Oracle observations, including VER, state-ownership, function, branch,
-  numeric/error/checksum probes, and 17 semantic snapshots. Exact structured
-  mappings cover `M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`
-  and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains blocked because
-  the current numeric corpus lacks its required cross-family exact atom matrix.
-  Product compatibility evidence remains false; all observations remain
-  reference-only and M1 implementation remains unauthorized.
+  numeric/error/checksum probes, the TF-030 exact numeric matrix, and 23
+  semantic snapshots. Exact structured mappings cover
+  `M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`,
+  `M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is now
+  mapped through the 56-row four-family exact atom matrix and row-level
+  semantic validators; product compatibility evidence remains false, all
+  observations remain reference-only, and M1 implementation remains unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
   rules, four unclassified failure surfaces, ten command exit policies, and 112

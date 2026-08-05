@@ -16,13 +16,14 @@ blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 
 The M0 source and evidence inventory is now executable at
 `compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
-lexical rules, 15 reader matcher lines, 18 writer emission lines, 88 fixtures,
-21 per-record malformed fixtures, and 169 retained Oracle observations, including
-VER, state-ownership, function, branch, numeric/error/checksum probes, 17 semantic
-snapshots, and the inspect_model.pl runner. That inventory does not change this
-document's proposed status: the 19 named tracefile blockers still lack exact
-executable mappings, `M1-TF-030` remains intentionally unmapped for its incomplete
-cross-family exact atom matrix, and no M1 case has product evidence.
+lexical rules, 15 reader matcher lines, 18 writer emission lines, 93 fixtures,
+21 per-record malformed fixtures, and 184 retained Oracle observations, including
+VER, state-ownership, function, branch, numeric/error/checksum probes, the TF-030
+exact numeric matrix, 23 semantic snapshots, and the inspect_model.pl runner.
+That inventory does not change this document's proposed status: the remaining 18
+named tracefile blockers still lack exact executable mappings, `M1-TF-030` is
+mapped as Oracle-only evidence through the 56-row four-family exact atom matrix,
+and no M1 case has product evidence.
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT,
 RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this document are to be
@@ -693,13 +694,13 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 15 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 16 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
 `M1-TF-007`, `M1-TF-009`, `M1-TF-011`, `M1-TF-013`, `M1-TF-021`, `M1-TF-022`,
-`M1-TF-024`, `M1-TF-025`, `M1-TF-026`, and `M1-TF-031` through `M1-TF-036`.
-`M1-TF-030` is deliberately not mapped until the cross-family exact atom matrix
-and corresponding semantic assertions exist.
+`M1-TF-024`, `M1-TF-025`, `M1-TF-026`, `M1-TF-030`, and `M1-TF-031` through
+`M1-TF-036`. `M1-TF-030` is mapped through the 56-row four-family exact atom
+matrix and row-level semantic validators as Oracle-only evidence.
 
 `M1-TF-007` is bound through the VER fixture group and pinned summary/canonical
 Oracle observations. `M1-TF-009`, `M1-TF-011`, and `M1-TF-024` are bound through
@@ -716,10 +717,11 @@ renumbering, semantic snapshots, and retained Oracle identities.
 state-ownership fixture group and the same inspector runner; the contract also
 records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. The other Oracle-case
 bindings and older free-form compound `requirement` labels remain informational
-only; they are not exact executable mappings. The 19 named blockers are:
+only; they are not exact executable mappings. The remaining 18 named blockers
+are:
 
 `M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-014`, `M1-TF-020`,
-`M1-TF-023`, `M1-TF-027`, `M1-TF-028`, `M1-TF-030`, `M1-TF-041`,
+`M1-TF-023`, `M1-TF-027`, `M1-TF-028`, `M1-TF-041`,
 `M1-TF-043`, `M1-TF-045`, `M1-TF-046`, `M1-TF-050`, `M1-TF-051`, `M1-TF-052`,
 `M1-TF-060`, `M1-TF-063`, and `M1-TF-064`.
 

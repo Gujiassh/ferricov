@@ -2,19 +2,19 @@
   "artifact_bindings": [
     {
       "path": "compat/fixtures/m0-tracefiles/manifest.json",
-      "sha256": "ddce1d5c359788ad766cf4a08f549f963216aff20c2117a253d400249d73f22e"
+      "sha256": "5a1f5b04d751728b601779b58b3cc1c2332606fe762b211eb0ab90f4a3bacc13"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "ce5975c546c8e98cc23265ee9d1b20130dd59d7992190921233d4ad4bfad3c9f"
+      "sha256": "a8771082f4ecb09c773a58ae83af2aed6d36c04f737143e55fddf590e088dc51"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "8e82b73f5bf5ab71baa802565ca5d21472c5fd0e3b7c155011ce4baa67988d15"
+      "sha256": "634873b9741c8c8b4539da3d45be1e483de85d3fc0b176d598c74131773a3689"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/inspect_model.pl",
-      "sha256": "ede3ee7014a0623485381c29f0756e24251e4436ac8c99300c7febb85c742a0c"
+      "sha256": "3a42fd4bf38e2ba02341f5b2d3afd4ecc18f40b402ec5745c315fa916d749bae"
     }
   ],
   "fallback_behavior": {
@@ -437,6 +437,41 @@
       "oracle_default": "accept",
       "path": "fixtures/numeric/cs.c",
       "sha256": "996137ced8354c0b4b3730a96a1480001118944458519ab2d63f519546de97a4"
+    },
+    {
+      "group": "numeric-boundary",
+      "id": "numeric-tf030-fna-mirror",
+      "oracle_default": "reject",
+      "path": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "sha256": "6656ed4b1fb65bb69c2934f20e6caa8176a05ad093dfbe1ee755b4392e87220d"
+    },
+    {
+      "group": "numeric-boundary",
+      "id": "numeric-tf030-candidate-matrix",
+      "oracle_default": "reject",
+      "path": "fixtures/numeric/tf030-candidate-matrix.info",
+      "sha256": "51c394df721a4ce05096f0f9d89cf31715e79f1848d34c3dc286f5b6c0b179cb"
+    },
+    {
+      "group": "numeric-boundary",
+      "id": "numeric-tf030-format-atoms-plan",
+      "oracle_default": "accept",
+      "path": "fixtures/numeric/tf030-format-atoms-plan.json",
+      "sha256": "335e036b4f921906099df5bfb7a1fd8d86fe2d5bbedd84509fcad70ecf55108e"
+    },
+    {
+      "group": "numeric-boundary",
+      "id": "numeric-tf030-fna-mirror-plan",
+      "oracle_default": "accept",
+      "path": "fixtures/numeric/tf030-fna-mirror-plan.json",
+      "sha256": "b93c4aeaabd5b0468ff2bcca025c3f0deccc6362d30eb2a872ffd5bd04b3acdc"
+    },
+    {
+      "group": "numeric-boundary",
+      "id": "numeric-tf030-candidate-plan",
+      "oracle_default": "accept",
+      "path": "fixtures/numeric/tf030-candidate-plan.json",
+      "sha256": "72e7ed56041e70a424cef288665b38c0f30ecbcc26b91b4f159f574d851fabb5"
     },
     {
       "group": "state-ownership",
@@ -2304,8 +2339,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.default-stop",
       "kind": "default_parse",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-036"
       ],
       "stderr_sha256": "8a26c4401fc45284c94f7c622eebe3d56c9b55ab04d43428e8c2e2ae2808e57d",
@@ -2317,8 +2356,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.ignore-negative",
       "kind": "ignore_recovery",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-032",
         "M1-TF-036"
       ],
@@ -2331,8 +2374,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.ignore-format-negative.canonical",
       "kind": "canonical_rewrite",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": "5eae19cf6238a8eb227ba55a05262e1476ccae3a2feaf9e75f8161edd5725c71",
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-031",
         "M1-TF-032",
         "M1-TF-036"
@@ -2346,8 +2393,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.ignore-format-negative.semantic-snapshot",
       "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-031",
         "M1-TF-032"
       ],
@@ -2361,8 +2412,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.excessive-default-stop",
       "kind": "default_parse",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-033",
         "M1-TF-036"
       ],
@@ -2375,8 +2430,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.excessive-keep-going",
       "kind": "ignore_recovery",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": "5eae19cf6238a8eb227ba55a05262e1476ccae3a2feaf9e75f8161edd5725c71",
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-033",
         "M1-TF-036"
       ],
@@ -2389,8 +2448,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.excessive-stop-on-error-0",
       "kind": "ignore_recovery",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": "5eae19cf6238a8eb227ba55a05262e1476ccae3a2feaf9e75f8161edd5725c71",
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-036"
       ],
       "stderr_sha256": "6471338f6a996def17e2c7e4eb4b887654c323c6eb2beb4755e621b570463a39",
@@ -2402,8 +2465,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.excessive-stop-on-error-1",
       "kind": "ignore_recovery",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-036"
       ],
       "stderr_sha256": "eba9df008cfdbbe8600e66a0e26b1dbb842f545b4180ca84e3e1469f5fc9e064",
@@ -2415,8 +2482,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.ignore-format-negative-excessive.canonical",
       "kind": "canonical_rewrite",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": "5eae19cf6238a8eb227ba55a05262e1476ccae3a2feaf9e75f8161edd5725c71",
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-031",
         "M1-TF-032",
         "M1-TF-033",
@@ -2431,8 +2502,12 @@
       "fixture_id": "numeric-format-atoms",
       "id": "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot",
       "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
       "output_sha256": null,
       "requirement_ids": [
+        "M1-TF-030",
         "M1-TF-031",
         "M1-TF-032",
         "M1-TF-033"
@@ -2901,6 +2976,238 @@
       ],
       "stderr_sha256": "4f83005435ce79c6c3b21fbdb2204ae801762b9b7773fb8c034048a7ec80c178",
       "stdout_sha256": "7e09f365d2e457b4b41fc9247cf974481d5fe19a22dad34f3cc01e808ef9ec77"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-format-atoms-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-format-atoms",
+      "id": "numeric-format-atoms.tf030.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "30a78a8eb35643d27c5809da4420b82c5cd9d35f8f369394527ad6571cfa0fe9",
+      "stdout_sha256": "c89efe380514ffb6162cf13550c5b3f4144650a75e5cbb5583525771ccc0ba42"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-format-atoms-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-format-atoms",
+      "id": "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "m0_decision_ids": [
+        "M0-TF-NUMERIC-001"
+      ],
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "f6fbcdcb90c7e2399aa67fefe8d7cbf0af36cad742fe2fb2ee3193284219ebfc",
+      "stdout_sha256": "266832e1fc87ebb1f11c5efb9ede568188c4bd029e466abde267a681cfa64b04"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.default-stop",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "stderr_sha256": "b4d11a67536a300b30aad6f85115ae9c9f9522c03d7e892b4a1a3ac6e7cb7464",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.ignore-negative-stop-format",
+      "kind": "ignore_recovery",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "da0f163887e784fe3be4ea26531f2f37451719398adcf24e092f0058ca03b580",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "004ad6e973074fe8e152acf2d0317d9f528682468413458703b82402fafa387e",
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "f6a7c9d6f3e3b149f25d82da732779b9895cbd406daa6b8ff25b65c0bd790dcd",
+      "stdout_sha256": "a5f53764e01018c8c89bd098c0a0941ee25eaeae122d1528614040c2bc63b8ff"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-fna-mirror-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "c426c1978c561770edde4e331d615c6094f90fa8dbee107596305e56ac86532b",
+      "stdout_sha256": "623855b28b06e9bbdac6672579ea7d42160ff28c6bacde653820e28fa4801aa7"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.threshold-default-stop",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "6bcb9ccfc5dd9f742a0c47140774cdcf219b2ffa54bf5459408460b797c13136",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "004ad6e973074fe8e152acf2d0317d9f528682468413458703b82402fafa387e",
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "91883402caa69b1d2109786f07a92bff09c37831aa061082d9f805ceaf81bdc5",
+      "stdout_sha256": "3baa3ab132dd630f67ebeac7e639f98b6eeb57e5a89de5477b7e53ad40dafa34"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-fna-mirror-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-fna-mirror",
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "35c124364632d5e9d1d8e25c7fe9d0bd6bebc0232ef05778d17e3e908041e542",
+      "stdout_sha256": "111f74bd76f1be28f0afea4bf10eff840dd67eee44490cea91e2a32a1dae2de7"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.default-stop",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "stderr_sha256": "dc1384ceb90a4568d6607a5bb0ad9c34aeb6de0d9db444f87ca341fc560f2ba9",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.ignore-negative.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "0afc39537934bee7f6e97a56ee490677fb408bb5810156d31f4e4a2f9b9e61d8",
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "ef0e61f8f6efe24bdc2ec6b627e28d07cf5a7f5ec4b1f704e7f7e163839fda6d",
+      "stdout_sha256": "1e05fa89187430f4a194fcd043a50781a7b5cdcfde0ba8e5ef70e196514e4bc9"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-candidate-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "2070c43d1133a1445378866af9f5c0b9271ff63112e0fa28c2dedc98bfc91ce2",
+      "stdout_sha256": "67eaaf66247ea5eb05d42442f7b03ac38085c35d52e24a83393c86a7c2dc6d7b"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.threshold-default-stop",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "4405173b30b7c1b31942a2393d90b753f45cc2c827f878142ac6ed5d7c6e8313",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.threshold-ignore-all.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "0afc39537934bee7f6e97a56ee490677fb408bb5810156d31f4e4a2f9b9e61d8",
+      "requirement_ids": [
+        "M1-TF-030",
+        "M1-TF-036"
+      ],
+      "stderr_sha256": "902f22a0a325e0b3896689cff8eb7a2084f5d8678b26c9a1c0df9d0657d32cb3",
+      "stdout_sha256": "285c8138ef1f37b1400821aef974511304afd784138149164bc086f1505a2e62"
+    },
+    {
+      "additional_fixture_ids": [
+        "numeric-tf030-candidate-plan"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "numeric-tf030-candidate-matrix",
+      "id": "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
+      "kind": "semantic_snapshot",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-030"
+      ],
+      "runner": "inspect_model.pl",
+      "stderr_sha256": "713eefd0d8baf8efb8cadbd8844f7f03ead6bb311965c625c130b6d869758097",
+      "stdout_sha256": "c9cb4f0d7c434ed27ee78763ac8305652c754e8af8a4ef07bf1e35e7e17d18ee"
     },
     {
       "evidence_status": "oracle_reference",
@@ -3749,11 +4056,12 @@
   "schema_version": 1,
   "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, and Oracle-observed malformed input behavior",
   "totals": {
-    "canonical_rewrite_cases": 37,
+    "canonical_rewrite_cases": 41,
     "canonical_writer_lines": 18,
-    "default_parse_cases": 86,
+    "default_parse_cases": 90,
     "exact_executable_m0_decision_ids": [
       "M0-TF-MCDC-SF-001",
+      "M0-TF-NUMERIC-001",
       "M0-TF-TN-MCDC-001"
     ],
     "exact_executable_requirement_ids": [
@@ -3766,6 +4074,7 @@
       "M1-TF-024",
       "M1-TF-025",
       "M1-TF-026",
+      "M1-TF-030",
       "M1-TF-031",
       "M1-TF-032",
       "M1-TF-033",
@@ -3773,16 +4082,16 @@
       "M1-TF-035",
       "M1-TF-036"
     ],
-    "fixtures": 88,
-    "ignore_recovery_cases": 29,
+    "fixtures": 93,
+    "ignore_recovery_cases": 30,
     "lexical_rules": 2,
     "malformed_fixtures": 21,
-    "oracle_cases": 169,
-    "oracle_exit_nonzero": 59,
-    "oracle_exit_zero": 110,
+    "oracle_cases": 184,
+    "oracle_exit_nonzero": 64,
+    "oracle_exit_zero": 120,
     "reader_matcher_lines": 15,
     "records": 20,
-    "semantic_snapshot_cases": 17
+    "semantic_snapshot_cases": 23
   },
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
   "upstream_release": "v2.5"

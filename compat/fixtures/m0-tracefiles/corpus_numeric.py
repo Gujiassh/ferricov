@@ -6,6 +6,13 @@ import hashlib
 from typing import Iterable
 
 from corpus_model import Fixture, ascii_bytes
+from corpus_tf030 import (
+    TF030_CASE_IDS,
+    TF030_FIXTURE_IDS,
+    TF030_SKIP_SUMMARY_FIXTURE_IDS,
+    build_tf030_oracle_cases,
+    tf030_numeric_fixtures,
+)
 
 
 def valid_wrapper(record: str, name: str) -> bytes:
@@ -458,6 +465,7 @@ def numeric_fixtures() -> list[Fixture]:
             ),
         ]
     )
+    fixtures.extend(tf030_numeric_fixtures())
     return fixtures
 
 def validate_numeric_fixture_closure(fixtures: Iterable[Fixture]) -> None:
@@ -1181,5 +1189,5 @@ def build_numeric_oracle_cases() -> list[dict[str, object]]:
             "expected_exit": 0,
         },
     ]
-
+    numeric_cases.extend(build_tf030_oracle_cases())
     return numeric_cases

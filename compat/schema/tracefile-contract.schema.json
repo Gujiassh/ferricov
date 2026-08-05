@@ -47,8 +47,8 @@
     "fallback_behavior": { "$ref": "#/$defs/fallbackBehavior" },
     "fixtures": {
       "type": "array",
-      "minItems": 88,
-      "maxItems": 88,
+      "minItems": 93,
+      "maxItems": 93,
       "items": { "$ref": "#/$defs/fixture" }
     },
     "malformed_behaviors": {
@@ -59,8 +59,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 169,
-      "maxItems": 169,
+      "minItems": 184,
+      "maxItems": 184,
       "items": { "$ref": "#/$defs/oracleCase" }
     },
     "totals": { "$ref": "#/$defs/totals" },
@@ -359,22 +359,22 @@
         "lexical_rules": { "const": 2 },
         "reader_matcher_lines": { "const": 15 },
         "canonical_writer_lines": { "const": 18 },
-        "fixtures": { "const": 88 },
+        "fixtures": { "const": 93 },
         "malformed_fixtures": { "const": 21 },
-        "oracle_cases": { "const": 169 },
-        "default_parse_cases": { "const": 86 },
-        "canonical_rewrite_cases": { "const": 37 },
-        "ignore_recovery_cases": { "const": 29 },
-        "semantic_snapshot_cases": { "const": 17 },
-        "oracle_exit_zero": { "const": 110 },
-        "oracle_exit_nonzero": { "const": 59 },
+        "oracle_cases": { "const": 184 },
+        "default_parse_cases": { "const": 90 },
+        "canonical_rewrite_cases": { "const": 41 },
+        "ignore_recovery_cases": { "const": 30 },
+        "semantic_snapshot_cases": { "const": 23 },
+        "oracle_exit_zero": { "const": 120 },
+        "oracle_exit_nonzero": { "const": 64 },
         "exact_executable_requirement_ids": {
           "type": "array",
-          "const": ["M1-TF-007", "M1-TF-009", "M1-TF-011", "M1-TF-013", "M1-TF-021", "M1-TF-022", "M1-TF-024", "M1-TF-025", "M1-TF-026", "M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"]
+          "const": ["M1-TF-007", "M1-TF-009", "M1-TF-011", "M1-TF-013", "M1-TF-021", "M1-TF-022", "M1-TF-024", "M1-TF-025", "M1-TF-026", "M1-TF-030", "M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"]
         },
         "exact_executable_m0_decision_ids": {
           "type": "array",
-          "const": ["M0-TF-MCDC-SF-001", "M0-TF-TN-MCDC-001"]
+          "const": ["M0-TF-MCDC-SF-001", "M0-TF-NUMERIC-001", "M0-TF-TN-MCDC-001"]
         }
       }
     }

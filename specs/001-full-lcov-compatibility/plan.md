@@ -165,13 +165,13 @@ fail-closed environment contract now reviews 19 named variables, one dynamic inp
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 88 fixtures, 21
-per-record malformed inputs, and 169 reference-only Oracle observations. It
+15 reader matcher lines, all 18 writer emission lines, 93 fixtures, 21
+per-record malformed inputs, and 184 reference-only Oracle observations. It
 closes the M0 record/malformed inventory and adds exact mappings for
-`M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026` and
-`M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains blocked because the
-current corpus lacks its required cross-family exact atom matrix; 19 named
-tracefile blockers remain open.
+`M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`,
+`M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is mapped through
+the 56-row four-family exact atom matrix; 18 named tracefile blockers remain
+open and product compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
 command exit policies. Its 112 retained observations remain reference-only,

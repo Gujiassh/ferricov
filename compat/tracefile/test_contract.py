@@ -260,22 +260,27 @@ class TracefileContractTests(unittest.TestCase):
             ["branches-expression-merge-right"],
         )
 
-    def test_numeric_mapping_keeps_incomplete_exact_atoms_blocked(self) -> None:
+    def test_numeric_mapping_includes_exact_tf030_matrix(self) -> None:
         targets = {
             case["id"]: case
             for case in self.committed["oracle_cases"]
             if case["id"].startswith(("numeric-", "checksum-"))
         }
-        self.assertNotIn("M1-TF-030", {
+        mapped = {
             requirement
             for case in targets.values()
             for requirement in case.get("requirement_ids", [])
-        })
+        }
+        self.assertIn("M1-TF-030", mapped)
         for requirement in ("M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"):
             with self.subTest(requirement=requirement):
-                self.assertTrue(
-                    any(requirement in case.get("requirement_ids", []) for case in targets.values())
-                )
+                self.assertIn(requirement, mapped)
+        exact_upstream = targets["numeric-format-atoms.tf030.semantic-snapshot"]
+        self.assertEqual(exact_upstream["requirement_ids"], ["M1-TF-030"])
+        self.assertEqual(exact_upstream["m0_decision_ids"], ["M0-TF-NUMERIC-001"])
+        candidate = targets["numeric-tf030-candidates.ignore-negative.semantic-snapshot"]
+        self.assertEqual(candidate["requirement_ids"], ["M1-TF-030"])
+        self.assertNotIn("m0_decision_ids", candidate)
 
     def test_semantic_snapshot_runner_drift_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)

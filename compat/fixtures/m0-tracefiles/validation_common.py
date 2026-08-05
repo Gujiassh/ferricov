@@ -32,6 +32,12 @@ SEMANTIC_SNAPSHOT_CASE_IDS = (
     "numeric-zero-fn-end.semantic-snapshot",
     "numeric-invalid-fnl-fields.semantic-snapshot",
     "functions-zero-start.semantic-snapshot",
+    "numeric-format-atoms.tf030.semantic-snapshot",
+    "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+    "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+    "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+    "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+    "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
 )
 SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
     "state-late-tn-mcdc.semantic-snapshot": (),
@@ -73,6 +79,70 @@ SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("WARNING", "format"),
     ),
     "functions-zero-start.semantic-snapshot": (("WARNING", "inconsistent"),),
+    "numeric-format-atoms.tf030.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+    ),
+    "numeric-format-atoms.tf030-threshold.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+    ),
+    "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+    ),
+    "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+    ),
+    "numeric-tf030-candidates.ignore-negative.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "negative"),
+        ("WARNING", "negative"),
+        ("WARNING", "negative"),
+    ),
+    "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot": (
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+    ),
 }
 def require(condition: bool, message: str) -> None:
     if not condition:
@@ -118,7 +188,7 @@ def semantic_inputs_from_argv(argv: list[object], label: str) -> list[str]:
     index = 2
     while index < len(argv):
         value = str(argv[index])
-        if value in {"--ignore", "--ignore-errors", "--excessive-threshold"}:
+        if value in {"--ignore", "--ignore-errors", "--excessive-threshold", "--numeric-plan"}:
             require(index + 1 < len(argv), f"{label}: option {value} lacks a value")
             index += 2
             continue

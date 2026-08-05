@@ -107,6 +107,26 @@ def output_identity(path: Path) -> dict[str, object]:
     return result
 
 
+
+
+def load_strict_numeric_plan(path: Path) -> tuple[bytes, dict[str, object]]:
+    raw = path.read_bytes()
+    if any(byte > 127 for byte in raw):
+        raise SystemExit(f"{path}: numeric plan contains non-ASCII bytes")
+    document = strict_json_loads_ascii(raw, f"{path} numeric plan")
+    # strict_json_loads_ascii already rejects non-object root, constants, duplicate keys
+    return raw, document
+
+
+def case_numeric_plan_path(case: dict[str, object]) -> str | None:
+    argv = [str(value) for value in case.get("argv", [])]
+    if "--numeric-plan" not in argv:
+        return None
+    index = argv.index("--numeric-plan")
+    if index + 1 >= len(argv):
+        raise SystemExit(f"{case.get('id')}: --numeric-plan lacks a value")
+    return argv[index + 1]
+
 def case_uses_model_inspector(case: dict[str, object]) -> bool:
     runner = case.get("runner")
     if runner == MODEL_INSPECTOR_NAME:
@@ -127,6 +147,23 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
                 raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")
             shutil.copyfile(MODEL_INSPECTOR, work / MODEL_INSPECTOR_NAME)
             os.chmod(work / MODEL_INSPECTOR_NAME, 0o755)
+        plan_name = case_numeric_plan_path(case)
+        if plan_name is not None:
+            # Prefer additional_fixtures binding; otherwise look under generated root fixtures.
+            plan_source = None
+            for name, fixture in additional_fixtures.items():
+                if name == plan_name or Path(str(fixture)).name == plan_name:
+                    plan_source = generated_root / str(fixture)
+                    break
+            if plan_source is None:
+                # search common fixture path
+                candidate = generated_root / "fixtures" / "numeric" / plan_name
+                if candidate.is_file():
+                    plan_source = candidate
+            if plan_source is None or not plan_source.is_file():
+                raise SystemExit(f"{case['id']}: numeric plan not found for {plan_name}")
+            plan_raw, _plan_doc = load_strict_numeric_plan(plan_source)
+            (work / Path(plan_name).name).write_bytes(plan_raw)
         command = [
             "docker", "run", "--rm", "--network", "none",
             "--user", f"{os.getuid()}:{os.getgid()}",

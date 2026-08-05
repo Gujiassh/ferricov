@@ -2283,6 +2283,302 @@
       "expected_exit": 0
     },
     {
+      "id": "numeric-format-atoms.tf030.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 row-level semantic snapshot for the 12 upstream format-atoms without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative",
+        "--numeric-plan",
+        "tf030-format-atoms-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 row-level semantic snapshot for the 12 upstream format-atoms with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-format-atoms-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.default-stop",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Default stop on FNA -2 negative; output absent.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-stop-format",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative then stop on malformed exponent format; output absent.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative and format; coerce first two atoms to zero and retain 1.5e+20 and -0.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for four FNA mirror rows without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,format",
+        "--numeric-plan",
+        "tf030-fna-mirror-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-default-stop",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "With threshold 1000000 and negative/format ignored, stop on excessive 1.5e+20.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative/format/excessive with threshold; retain excessive value.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format,excessive",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for four FNA mirror rows with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,format,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-fna-mirror-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-tf030-candidates.default-stop",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Without threshold, -Inf selects negative and default stop leaves output absent.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-tf030-candidates.ignore-negative.canonical",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative coerces only -Inf to zero and writes output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for all 40 candidate rows without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative",
+        "--numeric-plan",
+        "tf030-candidate-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-default-stop",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "With threshold 1000000, first positive infinity selects excessive before -Inf.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-ignore-all.canonical",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative/excessive; retain infinities and NaNs; coerce -Inf to zero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative,excessive",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for all 40 candidate rows with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-candidate-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
+      },
+      "expected_exit": 0
+    },
+    {
       "id": "branches-forms-core.canonical",
       "fixture": "fixtures/branches/forms-core.info",
       "requirement": "M1-TF-013",

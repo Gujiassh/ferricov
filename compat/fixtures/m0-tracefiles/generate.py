@@ -11,6 +11,7 @@ from typing import Iterable
 
 from corpus_model import Fixture, ascii_bytes
 from corpus_numeric import (
+    TF030_SKIP_SUMMARY_FIXTURE_IDS,
     NUMERIC_BOUNDARY_LEXEMES,
     NUMERIC_BOUNDARY_SHA256,
     NUMERIC_EXTRA_LEXEMES,
@@ -1135,6 +1136,7 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
             "checksum-duplicate",
             "checksum-source-cs",
             "numeric-function-source",
+            *TF030_SKIP_SUMMARY_FIXTURE_IDS,
         }:
             continue
         flags = feature_flags.get(fixture.id, [])

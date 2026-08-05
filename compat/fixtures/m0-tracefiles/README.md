@@ -17,8 +17,11 @@ content-identified image and executable recorded in `manifest.json`.
   checks their prefixes.
 - `fixtures/numeric-boundary.info` and `fixtures/numeric/` pin the Perl numeric
   acceptance, negative/zero, malformed-field, threshold, suppression, checksum,
-  and stop-on-error boundaries used by counts. The exact cross-family atom matrix
-  required by `M1-TF-030` remains a follow-up gap.
+  and stop-on-error boundaries used by counts. The TF-030 exact cross-family atom
+  matrix required by `M1-TF-030` is retained through
+  `tf030-format-atoms-plan.json`, `tf030-fna-exact-mirror.info`,
+  `tf030-candidate-matrix.info`, and the companion numeric plans, with 15 added
+  Oracle cases and row-level semantic validators.
 - `fixtures/bytes/` pins CRLF, no final newline, invalid UTF-8, and NUL input.
 - `fixtures/state/` pins late-TN MC/DC ownership, cross-SF MC/DC success, and
   the cross-SF return-to-line1 duplicate hard failure. Success ownership is

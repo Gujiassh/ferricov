@@ -52,9 +52,10 @@ from validation_numeric import (
     validate_numeric_negative_inf_snapshot,
     validate_numeric_signed_zero_snapshot,
     validate_numeric_zero_fn_end_snapshot,
+    validate_tf030_numeric_rows,
 )
 
-EXPECTED_MODEL_INSPECTOR_SHA256 = "ede3ee7014a0623485381c29f0756e24251e4436ac8c99300c7febb85c742a0c"
+EXPECTED_MODEL_INSPECTOR_SHA256 = "3a42fd4bf38e2ba02341f5b2d3afd4ecc18f40b402ec5745c315fa916d749bae"
 
 STATE_FIXTURE_IDS = (
     "state-late-tn-mcdc",
@@ -606,6 +607,18 @@ def validate_semantic_snapshot_observation(case: dict[str, object], observation:
         validate_numeric_invalid_fnl_fields_snapshot(document)
     elif case["id"] == "functions-zero-start.semantic-snapshot":
         validate_functions_zero_start_snapshot(document)
+    elif case["id"] == "numeric-format-atoms.tf030.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=12, case_id=case["id"])
+    elif case["id"] == "numeric-format-atoms.tf030-threshold.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=12, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=4, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=4, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-candidates.ignore-negative.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
     else:
         raise ValueError(f"unexpected semantic snapshot case: {case['id']}")
 
@@ -1343,6 +1356,21 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             "checksum-duplicate.summary",
             "checksum-duplicate.ignore-version",
             "checksum-no-verify.canonical",
+            "numeric-format-atoms.tf030.semantic-snapshot",
+            "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+            "numeric-tf030-fna-mirror.default-stop",
+            "numeric-tf030-fna-mirror.ignore-negative-stop-format",
+            "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+            "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+            "numeric-tf030-fna-mirror.threshold-default-stop",
+            "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
+            "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+            "numeric-tf030-candidates.default-stop",
+            "numeric-tf030-candidates.ignore-negative.canonical",
+            "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+            "numeric-tf030-candidates.threshold-default-stop",
+            "numeric-tf030-candidates.threshold-ignore-all.canonical",
+            "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
         ],
         f"numeric/checksum case closure drift: {numeric_case_ids}",
     )

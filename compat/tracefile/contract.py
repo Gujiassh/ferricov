@@ -30,10 +30,10 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "ddce1d5c359788ad766cf4a08f549f963216aff20c2117a253d400249d73f22e",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "ce5975c546c8e98cc23265ee9d1b20130dd59d7992190921233d4ad4bfad3c9f",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "8e82b73f5bf5ab71baa802565ca5d21472c5fd0e3b7c155011ce4baa67988d15",
-    "compat/fixtures/m0-tracefiles/inspect_model.pl": "ede3ee7014a0623485381c29f0756e24251e4436ac8c99300c7febb85c742a0c",
+    "compat/fixtures/m0-tracefiles/manifest.json": "5a1f5b04d751728b601779b58b3cc1c2332606fe762b211eb0ab90f4a3bacc13",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "a8771082f4ecb09c773a58ae83af2aed6d36c04f737143e55fddf590e088dc51",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "634873b9741c8c8b4539da3d45be1e483de85d3fc0b176d598c74131773a3689",
+    "compat/fixtures/m0-tracefiles/inspect_model.pl": "3a42fd4bf38e2ba02341f5b2d3afd4ecc18f40b402ec5745c315fa916d749bae",
 }
 EXPECTED_RECORD_TAGS = (
     "TN", "SF", "KF", "VER", "FNL", "FNA", "FN", "FNDA", "FNF", "FNH",
@@ -98,6 +98,11 @@ EXPECTED_FIXTURE_IDS = (
     'checksum-missing',
     'checksum-duplicate',
     'checksum-source-cs',
+    'numeric-tf030-fna-mirror',
+    'numeric-tf030-candidate-matrix',
+    'numeric-tf030-format-atoms-plan',
+    'numeric-tf030-fna-mirror-plan',
+    'numeric-tf030-candidate-plan',
     'state-late-tn-mcdc',
     'state-cross-sf-mcdc-success',
     'state-cross-sf-mcdc-duplicate',
@@ -285,6 +290,21 @@ EXPECTED_CASE_IDS = (
     'checksum-duplicate.summary',
     'checksum-duplicate.ignore-version',
     'checksum-no-verify.canonical',
+    'numeric-format-atoms.tf030.semantic-snapshot',
+    'numeric-format-atoms.tf030-threshold.semantic-snapshot',
+    'numeric-tf030-fna-mirror.default-stop',
+    'numeric-tf030-fna-mirror.ignore-negative-stop-format',
+    'numeric-tf030-fna-mirror.ignore-negative-format.canonical',
+    'numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot',
+    'numeric-tf030-fna-mirror.threshold-default-stop',
+    'numeric-tf030-fna-mirror.threshold-ignore-all.canonical',
+    'numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot',
+    'numeric-tf030-candidates.default-stop',
+    'numeric-tf030-candidates.ignore-negative.canonical',
+    'numeric-tf030-candidates.ignore-negative.semantic-snapshot',
+    'numeric-tf030-candidates.threshold-default-stop',
+    'numeric-tf030-candidates.threshold-ignore-all.canonical',
+    'numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot',
     'branches-forms-core.canonical',
     'branches-forms-core.semantic-snapshot',
     'branches-u-modes.canonical',
@@ -488,12 +508,21 @@ def case_kind(case_id: str) -> str:
         return "semantic_snapshot"
     if case_id.endswith(".clear-unreachable"):
         return "canonical_rewrite"
-    if case_id.endswith((".default-stop", ".excessive-default-stop")):
+    if case_id.endswith((".default-stop", ".excessive-default-stop", ".threshold-default-stop")):
         # Write/summary attempts that stop on first named error and leave output absent.
         return "default_parse"
-    if case_id.endswith((".excessive-keep-going", ".excessive-stop-on-error-0", ".excessive-stop-on-error-1", ".stop-on-error-0", ".stop-on-error-1", ".erase-suppressed")):
+    if case_id.endswith((
+        ".excessive-keep-going",
+        ".excessive-stop-on-error-0",
+        ".excessive-stop-on-error-1",
+        ".stop-on-error-0",
+        ".stop-on-error-1",
+        ".erase-suppressed",
+        ".ignore-negative-stop-format",
+        ".threshold-ignore-all.canonical",
+    )):
         return "ignore_recovery"
-    if ".ignore-" in case_id:
+    if ".ignore-" in case_id or ".threshold-ignore-all." in case_id:
         return "ignore_recovery"
     raise TracefileContractError(f"unknown tracefile Oracle case kind: {case_id}")
 
@@ -660,6 +689,72 @@ EXACT_CASE_REQUIREMENTS.update({
     "functions-zero-start.semantic-snapshot": {"requirement_ids": ["M1-TF-034"]},
     "numeric-function-excessive.default-stop": {"requirement_ids": ["M1-TF-033", "M1-TF-036"]},
     "numeric-function-excessive.erase-suppressed": {"requirement_ids": ["M1-TF-033", "M1-TF-036"]},
+})
+
+
+# TF-030 exact numeric matrix mappings remain Oracle-only.
+EXACT_CASE_REQUIREMENTS.update({
+    "numeric-format-atoms.tf030.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-030"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.tf030-threshold.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-030"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.default-stop": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.ignore-negative": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-032", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.ignore-format-negative.canonical": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-031", "M1-TF-032", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.ignore-format-negative.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-031", "M1-TF-032"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.excessive-default-stop": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-033", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.excessive-keep-going": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-033", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.excessive-stop-on-error-0": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.excessive-stop-on-error-1": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.ignore-format-negative-excessive.canonical": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-036"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot": {
+        "requirement_ids": ["M1-TF-030", "M1-TF-031", "M1-TF-032", "M1-TF-033"],
+        "m0_decision_ids": ["M0-TF-NUMERIC-001"],
+    },
+    "numeric-tf030-fna-mirror.default-stop": {"requirement_ids": ["M1-TF-030"]},
+    "numeric-tf030-fna-mirror.ignore-negative-stop-format": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-fna-mirror.ignore-negative-format.canonical": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot": {"requirement_ids": ["M1-TF-030"]},
+    "numeric-tf030-fna-mirror.threshold-default-stop": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-fna-mirror.threshold-ignore-all.canonical": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot": {"requirement_ids": ["M1-TF-030"]},
+    "numeric-tf030-candidates.default-stop": {"requirement_ids": ["M1-TF-030"]},
+    "numeric-tf030-candidates.ignore-negative.canonical": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-candidates.ignore-negative.semantic-snapshot": {"requirement_ids": ["M1-TF-030"]},
+    "numeric-tf030-candidates.threshold-default-stop": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-candidates.threshold-ignore-all.canonical": {"requirement_ids": ["M1-TF-030", "M1-TF-036"]},
+    "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot": {"requirement_ids": ["M1-TF-030"]},
 })
 
 
@@ -1069,15 +1164,15 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "lexical_rules": 2,
         "reader_matcher_lines": 15,
         "canonical_writer_lines": 18,
-        "fixtures": 88,
+        "fixtures": 93,
         "malformed_fixtures": 21,
-        "oracle_cases": 169,
-        "default_parse_cases": 86,
-        "canonical_rewrite_cases": 37,
-        "ignore_recovery_cases": 29,
-        "semantic_snapshot_cases": 17,
-        "oracle_exit_zero": 110,
-        "oracle_exit_nonzero": 59,
+        "oracle_cases": 184,
+        "default_parse_cases": 90,
+        "canonical_rewrite_cases": 41,
+        "ignore_recovery_cases": 30,
+        "semantic_snapshot_cases": 23,
+        "oracle_exit_zero": 120,
+        "oracle_exit_nonzero": 64,
         "exact_executable_requirement_ids": [
             "M1-TF-007",
             "M1-TF-009",
@@ -1088,6 +1183,7 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-024",
             "M1-TF-025",
             "M1-TF-026",
+            "M1-TF-030",
             "M1-TF-031",
             "M1-TF-032",
             "M1-TF-033",
@@ -1097,6 +1193,7 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         ],
         "exact_executable_m0_decision_ids": [
             "M0-TF-MCDC-SF-001",
+            "M0-TF-NUMERIC-001",
             "M0-TF-TN-MCDC-001",
         ],
     }

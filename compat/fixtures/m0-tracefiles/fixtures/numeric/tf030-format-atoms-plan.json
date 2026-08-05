@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "kind": "tf030_numeric_plan",
+  "rows": [
+    {
+      "id": "format.da.neg3",
+      "family": "DA",
+      "lexeme": "-3",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:4,-3",
+      "record_ordinal": 1,
+      "locator": {
+        "line": 4
+      }
+    },
+    {
+      "id": "format.da.malformed_a0e",
+      "family": "DA",
+      "lexeme": "1.a0e+19",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:10,1.a0e+19",
+      "record_ordinal": 2,
+      "locator": {
+        "line": 10
+      }
+    },
+    {
+      "id": "format.da.one_e19",
+      "family": "DA",
+      "lexeme": "1.0e+19",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:12,1.0e+19",
+      "record_ordinal": 3,
+      "locator": {
+        "line": 12
+      }
+    },
+    {
+      "id": "format.fnda.neg2",
+      "family": "FNDA",
+      "lexeme": "-2",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:-2,alias",
+      "record_ordinal": 1,
+      "locator": {
+        "function_name": "alias",
+        "alias": "alias"
+      }
+    },
+    {
+      "id": "format.fnda.malformed_eb",
+      "family": "FNDA",
+      "lexeme": "1.5eb+20",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:1.5eb+20,alias2",
+      "record_ordinal": 2,
+      "locator": {
+        "function_name": "alias2",
+        "alias": "alias2"
+      }
+    },
+    {
+      "id": "format.fnda.one_point_five_e20",
+      "family": "FNDA",
+      "lexeme": "1.5e+20",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:1.5e+20,alias3",
+      "record_ordinal": 3,
+      "locator": {
+        "function_name": "alias3",
+        "alias": "alias3"
+      }
+    },
+    {
+      "id": "format.fnda.neg0",
+      "family": "FNDA",
+      "lexeme": "-0",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:-0,onlyA",
+      "record_ordinal": 4,
+      "locator": {
+        "function_name": "onlyA",
+        "alias": "onlyA"
+      }
+    },
+    {
+      "id": "format.brda.neg1",
+      "family": "BRDA",
+      "lexeme": "-1",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,1,1,-1",
+      "record_ordinal": 1,
+      "locator": {
+        "line": 1,
+        "block": 1,
+        "branch": 1,
+        "expression": null
+      }
+    },
+    {
+      "id": "format.brda.dash",
+      "family": "BRDA",
+      "lexeme": "-",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "brda_never_evaluated",
+      "raw_record": "BRDA:1,1,2,-",
+      "record_ordinal": 2,
+      "locator": {
+        "line": 1,
+        "block": 1,
+        "branch": 2,
+        "expression": null
+      }
+    },
+    {
+      "id": "format.brda.malformed_plus",
+      "family": "BRDA",
+      "lexeme": "1.67+20",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,2,0,1.67+20",
+      "record_ordinal": 3,
+      "locator": {
+        "line": 1,
+        "block": 2,
+        "branch": 0,
+        "expression": null
+      }
+    },
+    {
+      "id": "format.brda.one_point_six_seven_e20",
+      "family": "BRDA",
+      "lexeme": "1.67e+20",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,2,1,1.67e+20",
+      "record_ordinal": 4,
+      "locator": {
+        "line": 1,
+        "block": 2,
+        "branch": 1,
+        "expression": null
+      }
+    },
+    {
+      "id": "format.brda.neg0",
+      "family": "BRDA",
+      "lexeme": "-0",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "source": "a.cpp",
+      "testcase": "",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:11,0,1,-0",
+      "record_ordinal": 5,
+      "locator": {
+        "line": 11,
+        "block": 0,
+        "branch": 1,
+        "expression": null
+      }
+    }
+  ]
+}

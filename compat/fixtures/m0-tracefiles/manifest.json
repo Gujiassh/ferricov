@@ -1447,6 +1447,133 @@
       "contains_nul": false
     },
     {
+      "id": "numeric-tf030-fna-mirror",
+      "path": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "group": "numeric-boundary",
+      "description": "Current FNL/FNA mirror of the four legacy function-count atoms required by TF-030.",
+      "committed": true,
+      "oracle_default": "reject",
+      "parameters": {
+        "tf030_rows": 4,
+        "role": "tf030_fna_mirror"
+      },
+      "sha256": "6656ed4b1fb65bb69c2934f20e6caa8176a05ad093dfbe1ee755b4392e87220d",
+      "byte_size": 243,
+      "record_count": 17,
+      "record_counts": {
+        "DA": 4,
+        "FNA": 4,
+        "FNL": 4,
+        "LF": 1,
+        "LH": 1,
+        "SF": 1,
+        "TN": 1,
+        "end_of_record": 1
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "numeric-tf030-candidate-matrix",
+      "path": "fixtures/numeric/tf030-candidate-matrix.info",
+      "group": "numeric-boundary",
+      "description": "Cross-family TF-030 candidate matrix covering ten atoms across DA/FNDA/FNA/BRDA.",
+      "committed": true,
+      "oracle_default": "reject",
+      "parameters": {
+        "tf030_rows": 40,
+        "role": "tf030_candidate_matrix"
+      },
+      "sha256": "51c394df721a4ce05096f0f9d89cf31715e79f1848d34c3dc286f5b6c0b179cb",
+      "byte_size": 1458,
+      "record_count": 101,
+      "record_counts": {
+        "BRDA": 10,
+        "DA": 31,
+        "FN": 10,
+        "FNA": 10,
+        "FNDA": 10,
+        "FNL": 10,
+        "LF": 4,
+        "LH": 4,
+        "SF": 4,
+        "TN": 4,
+        "end_of_record": 4
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "numeric-tf030-format-atoms-plan",
+      "path": "fixtures/numeric/tf030-format-atoms-plan.json",
+      "group": "numeric-boundary",
+      "description": "Strict ASCII JSON plan for the 12 upstream format-atoms TF-030 rows.",
+      "committed": true,
+      "oracle_default": "accept",
+      "parameters": {
+        "tf030_rows": 12,
+        "role": "tf030_plan"
+      },
+      "sha256": "335e036b4f921906099df5bfb7a1fd8d86fe2d5bbedd84509fcad70ecf55108e",
+      "byte_size": 4895,
+      "record_count": 193,
+      "record_counts": {
+        "unknown": 193
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "numeric-tf030-fna-mirror-plan",
+      "path": "fixtures/numeric/tf030-fna-mirror-plan.json",
+      "group": "numeric-boundary",
+      "description": "Strict ASCII JSON plan for the four FNA mirror TF-030 rows.",
+      "committed": true,
+      "oracle_default": "accept",
+      "parameters": {
+        "tf030_rows": 4,
+        "role": "tf030_plan"
+      },
+      "sha256": "b93c4aeaabd5b0468ff2bcca025c3f0deccc6362d30eb2a872ffd5bd04b3acdc",
+      "byte_size": 1914,
+      "record_count": 66,
+      "record_counts": {
+        "unknown": 66
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
+      "id": "numeric-tf030-candidate-plan",
+      "path": "fixtures/numeric/tf030-candidate-plan.json",
+      "group": "numeric-boundary",
+      "description": "Strict ASCII JSON plan for the 40 candidate TF-030 rows.",
+      "committed": true,
+      "oracle_default": "accept",
+      "parameters": {
+        "tf030_rows": 40,
+        "role": "tf030_plan"
+      },
+      "sha256": "72e7ed56041e70a424cef288665b38c0f30ecbcc26b91b4f159f574d851fabb5",
+      "byte_size": 18126,
+      "record_count": 616,
+      "record_counts": {
+        "unknown": 616
+      },
+      "line_endings": "lf",
+      "final_newline": true,
+      "valid_utf8": true,
+      "contains_nul": false
+    },
+    {
       "id": "state-late-tn-mcdc",
       "path": "fixtures/state/late-tn-mcdc.info",
       "group": "state-ownership",
