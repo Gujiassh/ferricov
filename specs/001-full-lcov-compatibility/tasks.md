@@ -82,12 +82,16 @@ named tracefile blockers remain, so the complete grammar and M1 readiness tasks
 stay open.
 
 The next bounded tracefile execution module is defined in
-`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md`. It starts from
-`main@6a9a85d`, first extracts the oversized numeric corpus and validation
-responsibilities with byte-identical retained artifacts, then adds the complete
-cross-family `M1-TF-030` Oracle matrix, row-level semantic mutations, one final
-stabilized capture, and controller review. This is an approved development
-plan only: `M1-TF-030` remains unmapped, product evidence remains false, and M1
+`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md`. It starts from the
+controller-assigned clean `main` containing that brief and preserves
+`main@6a9a85d` as the 169-observation comparison base. It first extracts the
+oversized numeric corpus and validation responsibilities with byte-identical
+retained artifacts, then adds the complete 56-row matrix across the four
+`looks_like_number` families (12 exact upstream rows, four current-FNA mirrors,
+and 40 candidate rows), Perl/B scalar-flag projections, row-level semantic
+mutations, one final stabilized capture, and controller review. MC/DC remains
+outside this module under `M1-TF-031`. This is an approved development plan
+only: `M1-TF-030` remains unmapped, product evidence remains false, and M1
 implementation remains unauthorized until that brief is executed and accepted.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
