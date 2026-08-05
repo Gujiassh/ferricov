@@ -16,12 +16,13 @@ blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 
 The M0 source and evidence inventory is now executable at
 `compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
-lexical rules, 15 reader matcher lines, 18 writer emission lines, 42 fixtures,
-21 per-record malformed fixtures, and 63 retained Oracle observations, including
-three VER fixtures, three state-ownership fixtures, two semantic snapshots, and
-the inspect_model.pl runner. That inventory does not change this document's proposed status: 24 planned M1
-tracefile IDs still lack exact executable mappings, and no M1 case has product
-evidence.
+lexical rules, 15 reader matcher lines, 18 writer emission lines, 88 fixtures,
+21 per-record malformed fixtures, and 169 retained Oracle observations, including
+VER, state-ownership, function, branch, numeric/error/checksum probes, 17 semantic
+snapshots, and the inspect_model.pl runner. That inventory does not change this
+document's proposed status: the 19 named tracefile blockers still lack exact
+executable mappings, `M1-TF-030` remains intentionally unmapped for its incomplete
+cross-family exact atom matrix, and no M1 case has product evidence.
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT,
 RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this document are to be
@@ -692,25 +693,35 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 4 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 15 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
-`M1-TF-007`, `M1-TF-021`, `M1-TF-022`, and `M1-TF-026`.
+`M1-TF-007`, `M1-TF-009`, `M1-TF-011`, `M1-TF-013`, `M1-TF-021`, `M1-TF-022`,
+`M1-TF-024`, `M1-TF-025`, `M1-TF-026`, and `M1-TF-031` through `M1-TF-036`.
+`M1-TF-030` is deliberately not mapped until the cross-family exact atom matrix
+and corresponding semantic assertions exist.
 
 `M1-TF-007` is bound through the VER fixture group and pinned summary/canonical
-Oracle observations. The other three IDs are bound through the state-ownership
-fixture group, semantic-snapshot runner `inspect_model.pl`, and retained Oracle
-identities; the contract also records `M0-TF-TN-MCDC-001` and
-`M0-TF-MCDC-SF-001`. The other Oracle-case bindings and older free-form compound
-`requirement` labels remain informational only; they are not exact executable
-mappings. These 24 IDs still have no exact executable mapping and remain explicit
-blockers:
+Oracle observations. `M1-TF-009`, `M1-TF-011`, and `M1-TF-024` are bound through
+the function-record fixture group, including current `FNL`/`FNA` probes, mixed
+legacy/current merge and mismatch probes, FNL index scope/hard-failure probes,
+semantic-snapshot runner `inspect_model.pl`, and retained Oracle identities.
+`M1-TF-013` and `M1-TF-025` are bound through the branch-record fixture group,
+including `BRDA` form/exclusion/taken/expression probes, both unreachable-flag
+modes, distinct no-final-comma/empty-taken/empty-expression outcomes, positional
+expressions within one input block, a two-tracefile merge proving expression
+independence and left-expression retention, branch-block contiguity/reuse/gap/sort
+renumbering, semantic snapshots, and retained Oracle identities.
+`M1-TF-021`, `M1-TF-022`, and `M1-TF-026` remain bound through the
+state-ownership fixture group and the same inspector runner; the contract also
+records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. The other Oracle-case
+bindings and older free-form compound `requirement` labels remain informational
+only; they are not exact executable mappings. The 19 named blockers are:
 
-`M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-009`,
-`M1-TF-011`, `M1-TF-013`, `M1-TF-014`, `M1-TF-020`, `M1-TF-023`,
-`M1-TF-024`, `M1-TF-025`, `M1-TF-027`, `M1-TF-028`, `M1-TF-035`,
-`M1-TF-041`, `M1-TF-043`, `M1-TF-045`, `M1-TF-046`, `M1-TF-050`,
-`M1-TF-051`, `M1-TF-052`, `M1-TF-060`, `M1-TF-063`, and `M1-TF-064`.
+`M1-TF-002`, `M1-TF-003`, `M1-TF-005`, `M1-TF-014`, `M1-TF-020`,
+`M1-TF-023`, `M1-TF-027`, `M1-TF-028`, `M1-TF-030`, `M1-TF-041`,
+`M1-TF-043`, `M1-TF-045`, `M1-TF-046`, `M1-TF-050`, `M1-TF-051`, `M1-TF-052`,
+`M1-TF-060`, `M1-TF-063`, and `M1-TF-064`.
 
 No M1 parser implementation is authorized until the M0 baseline phase resolves
 the model-shaping decisions and the executable manifest/approval record exist.
@@ -737,7 +748,7 @@ Ferricov `ferricov_parity` phase runs during M1 only after authorization.
 | `M1-TF-010` | Legacy `FN`/`FNDA`: optional-end ambiguity, comma-bearing names, repeated definitions/counts, unknown name, legacy-to-current rewrite |
 | `M1-TF-011` | Mixed legacy/current function records sharing names and locations; mismatch and merge outcomes |
 | `M1-TF-012` | All eight summary tags in canonical, missing-colon, nonnumeric, duplicate, misplaced, and suffixed forms |
-| `M1-TF-013` | `BRDA` vanilla, exception, fallthrough, `U` with both unreachable-flag modes, `-`, numeric and comma-bearing expressions, malformed tail |
+| `M1-TF-013` | `BRDA` vanilla, exception, fallthrough, `U` with both unreachable-flag modes, `-`, numeric and comma-bearing expressions, no-final-comma, empty-taken, empty-expression, and shared line/type/block expression identity |
 | `M1-TF-014` | `MCDC` group sizes, indices, both senses, `U` with both unreachable-flag modes, comma-bearing expressions, repeated counts |
 | `M1-TF-015` | Exact and suffixed `end_of_record`, missing terminator, duplicate terminator, records after terminator |
 | `M1-TF-016` | Unknown tags, `TD`, leading whitespace before known tags, case changes, and configured format-ignore behavior |

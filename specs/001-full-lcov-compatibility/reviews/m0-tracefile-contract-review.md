@@ -1,3 +1,5 @@
+# Historical snapshot: counts below describe the pre-expanded tracefile lane.
+
 # M0 Tracefile Contract Review
 
 ## Decision

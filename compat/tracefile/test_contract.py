@@ -176,6 +176,107 @@ class TracefileContractTests(unittest.TestCase):
                 self.assertEqual(target["requirement_ids"], ["M1-TF-007"])
                 self.assertNotIn("m0_decision_ids", target)
 
+    def test_function_mapping_is_exact_and_source_scoped(self) -> None:
+        expected = {
+            "functions-current-core.summary": ["M1-TF-009"],
+            "functions-current-core.canonical": ["M1-TF-009"],
+            "functions-current-core.semantic-snapshot": ["M1-TF-009"],
+            "functions-current-missing-alias.summary": ["M1-TF-009"],
+            "functions-zero-end.summary": ["M1-TF-009"],
+            "functions-zero-end.canonical": ["M1-TF-009"],
+            "functions-zero-start.summary": ["M1-TF-009"],
+            "functions-zero-start.ignore-inconsistent-format": ["M1-TF-034", "M1-TF-036"],
+            "functions-zero-start.semantic-snapshot": ["M1-TF-034"],
+            "functions-mixed-merge.summary": ["M1-TF-011"],
+            "functions-mixed-merge.canonical": ["M1-TF-011"],
+            "functions-mixed-merge.semantic-snapshot": ["M1-TF-011"],
+            "functions-mixed-location-mismatch.summary": ["M1-TF-011"],
+            "functions-mixed-location-mismatch.canonical": ["M1-TF-011"],
+            "functions-mixed-range-mismatch.summary": ["M1-TF-011"],
+            "functions-mixed-range-mismatch.canonical": ["M1-TF-011"],
+            "functions-index-duplicate.summary": ["M1-TF-024"],
+            "functions-index-duplicate.canonical": ["M1-TF-024"],
+            "functions-index-unknown.summary": ["M1-TF-024"],
+            "functions-index-unknown.canonical": ["M1-TF-024"],
+            "functions-index-scope-reset.summary": ["M1-TF-024"],
+            "functions-index-scope-reset.canonical": ["M1-TF-024"],
+            "functions-index-tn-preserves.summary": ["M1-TF-024"],
+        }
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith("functions-")
+        }
+        self.assertEqual(set(targets), set(expected))
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+
+    def test_branch_mapping_is_exact_and_source_scoped(self) -> None:
+        expected = {
+            "branches-forms-core.summary": ["M1-TF-013"],
+            "branches-forms-core.canonical": ["M1-TF-013"],
+            "branches-forms-core.semantic-snapshot": ["M1-TF-013"],
+            "branches-u-modes.summary": ["M1-TF-013"],
+            "branches-u-modes.canonical": ["M1-TF-013"],
+            "branches-u-modes.clear-unreachable": ["M1-TF-013"],
+            "branches-malformed-tail.summary": ["M1-TF-013"],
+            "branches-malformed-tail.canonical": ["M1-TF-013"],
+            "branches-malformed-tail-empty-taken.summary": ["M1-TF-013"],
+            "branches-malformed-tail-empty-taken.canonical": ["M1-TF-013"],
+            "branches-malformed-tail-empty-expression.summary": ["M1-TF-013"],
+            "branches-malformed-tail-empty-expression.canonical": ["M1-TF-013"],
+            "branches-expression-mismatch.summary": ["M1-TF-013"],
+            "branches-expression-mismatch.canonical": ["M1-TF-013"],
+            "branches-expression-merge.canonical": ["M1-TF-025"],
+            "branches-expression-merge.semantic-snapshot": ["M1-TF-025"],
+            "branches-order-gaps.summary": ["M1-TF-025"],
+            "branches-order-gaps.canonical": ["M1-TF-025"],
+            "branches-noncontiguous.summary": ["M1-TF-025"],
+            "branches-noncontiguous.canonical": ["M1-TF-025"],
+            "branches-noncontiguous.semantic-snapshot": ["M1-TF-025"],
+            "branches-interleave.summary": ["M1-TF-025"],
+            "branches-interleave.canonical": ["M1-TF-025"],
+            "branches-sort-signatures.summary": ["M1-TF-025"],
+            "branches-sort-signatures.canonical": ["M1-TF-025"],
+        }
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith("branches-")
+        }
+        self.assertEqual(set(targets), set(expected))
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+        self.assertEqual(
+            targets["branches-expression-merge.canonical"]["additional_fixture_ids"],
+            ["branches-expression-merge-right"],
+        )
+        self.assertEqual(
+            targets["branches-expression-merge.semantic-snapshot"]["additional_fixture_ids"],
+            ["branches-expression-merge-right"],
+        )
+
+    def test_numeric_mapping_keeps_incomplete_exact_atoms_blocked(self) -> None:
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith(("numeric-", "checksum-"))
+        }
+        self.assertNotIn("M1-TF-030", {
+            requirement
+            for case in targets.values()
+            for requirement in case.get("requirement_ids", [])
+        })
+        for requirement in ("M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"):
+            with self.subTest(requirement=requirement):
+                self.assertTrue(
+                    any(requirement in case.get("requirement_ids", []) for case in targets.values())
+                )
+
     def test_semantic_snapshot_runner_drift_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)
         target = next(

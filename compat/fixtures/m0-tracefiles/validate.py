@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import base64
+from collections import Counter
 import hashlib
 import json
+import re
 import tempfile
 from pathlib import Path
 
@@ -14,22 +16,243 @@ import generate
 ROOT = Path(__file__).resolve().parent
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
-EXPECTED_MODEL_INSPECTOR_SHA256 = "6f77427c548039d4fe17828b30ff73b245d3f6d21f6b587420dc1c830fa03d4a"
+EXPECTED_MODEL_INSPECTOR_SHA256 = "ede3ee7014a0623485381c29f0756e24251e4436ac8c99300c7febb85c742a0c"
 ALLOWED_ARGV_HEADS = {"lcov", "perl"}
 SEMANTIC_SNAPSHOT_CASE_IDS = (
     "state-late-tn-mcdc.semantic-snapshot",
     "state-cross-sf-mcdc-success.semantic-snapshot",
+    "functions-current-core.semantic-snapshot",
+    "functions-mixed-merge.semantic-snapshot",
+    "branches-forms-core.semantic-snapshot",
+    "branches-noncontiguous.semantic-snapshot",
+    "branches-expression-merge.semantic-snapshot",
+    "numeric-boundary.semantic-snapshot",
+    "numeric-extra-spellings.semantic-snapshot",
+    "numeric-format-atoms.ignore-format-negative.semantic-snapshot",
+    "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot",
+    "numeric-signed-zero.semantic-snapshot",
+    "numeric-negative-inf.semantic-snapshot",
+    "numeric-fna-nonnumeric.semantic-snapshot",
+    "numeric-zero-fn-end.semantic-snapshot",
+    "numeric-invalid-fnl-fields.semantic-snapshot",
+    "functions-zero-start.semantic-snapshot",
 )
+SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
+    "state-late-tn-mcdc.semantic-snapshot": (),
+    "state-cross-sf-mcdc-success.semantic-snapshot": (),
+    "functions-current-core.semantic-snapshot": (("WARNING", "unsupported"),),
+    "functions-mixed-merge.semantic-snapshot": (),
+    "branches-forms-core.semantic-snapshot": (),
+    "branches-noncontiguous.semantic-snapshot": (),
+    "branches-expression-merge.semantic-snapshot": (),
+    "numeric-boundary.semantic-snapshot": (("WARNING", "format"),),
+    "numeric-extra-spellings.semantic-snapshot": (),
+    "numeric-format-atoms.ignore-format-negative.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+    ),
+    "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot": (
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "negative"),
+        ("WARNING", "format"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+        ("WARNING", "excessive"),
+    ),
+    "numeric-signed-zero.semantic-snapshot": (),
+    "numeric-negative-inf.semantic-snapshot": (("WARNING", "negative"),),
+    "numeric-fna-nonnumeric.semantic-snapshot": (("WARNING", "format"),),
+    "numeric-zero-fn-end.semantic-snapshot": (("WARNING", "format"),),
+    "numeric-invalid-fnl-fields.semantic-snapshot": (
+        ("WARNING", "format"),
+        ("WARNING", "format"),
+    ),
+    "functions-zero-start.semantic-snapshot": (("WARNING", "inconsistent"),),
+}
 STATE_FIXTURE_IDS = (
     "state-late-tn-mcdc",
     "state-cross-sf-mcdc-success",
     "state-cross-sf-mcdc-duplicate",
 )
+FUNCTION_FIXTURE_IDS = (
+    "functions-current-core",
+    "functions-current-missing-alias",
+    "functions-zero-end",
+    "functions-zero-start",
+    "functions-mixed-merge",
+    "functions-mixed-location-mismatch",
+    "functions-mixed-range-mismatch",
+    "functions-index-duplicate",
+    "functions-index-unknown",
+    "functions-index-scope-reset",
+    "functions-index-tn-preserves",
+)
+BRANCH_FIXTURE_IDS = (
+    "branches-forms-core",
+    "branches-u-modes",
+    "branches-malformed-tail",
+    "branches-malformed-tail-empty-taken",
+    "branches-malformed-tail-empty-expression",
+    "branches-expression-mismatch",
+    "branches-expression-merge-left",
+    "branches-expression-merge-right",
+    "branches-order-gaps",
+    "branches-noncontiguous",
+    "branches-interleave",
+    "branches-sort-signatures",
+)
+NUMERIC_FIXTURE_IDS = (
+    "numeric-boundary",
+    "numeric-extra-spellings",
+    "numeric-format-atoms",
+    "numeric-negative",
+    "numeric-nonnumeric",
+    "numeric-malformed-exponent",
+    "numeric-excessive",
+    "numeric-zero-line",
+    "numeric-negative-inf",
+    "numeric-signed-zero",
+    "numeric-fnda-negative",
+    "numeric-fnda-nonnumeric",
+    "numeric-fna-nonnumeric",
+    "numeric-fna-malformed-exponent",
+    "numeric-brda-nonnumeric",
+    "numeric-mcdc-nondigit",
+    "numeric-zero-brda",
+    "numeric-zero-mcdc",
+    "numeric-zero-fn",
+    "numeric-zero-fn-end",
+    "numeric-invalid-fnl-fields",
+    "numeric-inf-excessive",
+    "numeric-function-excessive",
+    "numeric-function-source",
+    "checksum-match",
+    "checksum-mismatch",
+    "checksum-missing",
+    "checksum-duplicate",
+    "checksum-source-cs",
+)
+CHECKSUM_SOURCE_SHA256 = "996137ced8354c0b4b3730a96a1480001118944458519ab2d63f519546de97a4"
+CHECKSUM_SOURCE_BYTES = b"int x = 1;\n"
+CHECKSUM_MD5_BASE64 = "AVO7Y115x231sZo9ymlVFA"
 
 
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
+
+def reject_json_constant(value: str) -> None:
+    raise ValueError(f"non-RFC JSON constant: {value}")
+
+
+def reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    document: dict[str, object] = {}
+    for key, value in pairs:
+        if key in document:
+            raise ValueError(f"duplicate JSON object key: {key}")
+        document[key] = value
+    return document
+
+
+def strict_json_loads_ascii(raw: bytes, label: str) -> dict[str, object]:
+    try:
+        # Decode inside this helper so malformed bytes receive the same
+        # fail-closed diagnostic as RFC-invalid constants.
+        text = raw.decode("ascii")
+        document = json.loads(
+            text,
+            parse_constant=reject_json_constant,
+            object_pairs_hook=reject_duplicate_json_keys,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+        raise ValueError(f"{label}: not strict ASCII JSON: {error}") from error
+    require(isinstance(document, dict), f"{label}: root must be object")
+    return document
+
+
+def strict_json_file(path: Path, label: str) -> dict[str, object]:
+    return strict_json_loads_ascii(path.read_bytes(), label)
+
+
+def semantic_inputs_from_argv(argv: list[object], label: str) -> list[str]:
+    require(argv[:2] == ["perl", MODEL_INSPECTOR_NAME], f"{label}: inspector argv drift")
+    inputs: list[str] = []
+    index = 2
+    while index < len(argv):
+        value = str(argv[index])
+        if value in {"--ignore", "--ignore-errors", "--excessive-threshold"}:
+            require(index + 1 < len(argv), f"{label}: option {value} lacks a value")
+            index += 2
+            continue
+        if value == "--":
+            inputs.extend(str(item) for item in argv[index + 1 :])
+            break
+        require(not value.startswith("-"), f"{label}: unexpected inspector option {value}")
+        inputs.append(value)
+        index += 1
+    require(inputs, f"{label}: inspector argv has no input")
+    return inputs
+
+
+def validate_semantic_input_identity(case: dict[str, object], document: dict[str, object]) -> None:
+    expected = semantic_inputs_from_argv(list(case["argv"]), str(case["id"]))
+    has_input = "input" in document
+    has_inputs = "inputs" in document
+    require(has_input != has_inputs, f"{case['id']}: exactly one of input/inputs is required")
+    if len(expected) == 1:
+        require(has_input and not has_inputs, f"{case['id']}: single input must use input")
+        require(document.get("input") == expected[0], f"{case['id']}: input identity drift")
+    else:
+        require(has_inputs and not has_input, f"{case['id']}: multiple inputs must use inputs")
+        require(document.get("inputs") == expected, f"{case['id']}: ordered inputs identity drift")
+
+
+def validate_semantic_stderr(case_id: str, raw: bytes) -> None:
+    require(case_id in SEMANTIC_STDERR_POLICIES, f"{case_id}: missing stderr policy")
+    text = raw.decode("utf-8", "strict")
+    actual: list[tuple[str, str]] = []
+    previous_was_header = False
+    for line in text.splitlines():
+        if not line:
+            continue
+        if line.startswith("\t"):
+            require(previous_was_header, f"{case_id}: orphan diagnostic continuation")
+            continue
+        match = re.match(rf"^{re.escape(MODEL_INSPECTOR_NAME)}: (WARNING|ERROR): \(([^)]+)\) ", line)
+        require(match is not None, f"{case_id}: unclassified diagnostic line")
+        actual.append((match.group(1), match.group(2)))
+        previous_was_header = True
+    require(
+        Counter(actual) == Counter(SEMANTIC_STDERR_POLICIES[case_id]),
+        f"{case_id}: stderr policy drift: {actual!r}",
+    )
+
+
+def validate_lcov_stderr(case_id: str, raw: bytes, expected: tuple[tuple[str, str], ...]) -> None:
+    text = raw.decode("utf-8", "strict")
+    actual: list[tuple[str, str]] = []
+    previous_was_header = False
+    for line in text.splitlines():
+        if not line:
+            continue
+        if line.startswith("\t"):
+            require(previous_was_header, f"{case_id}: orphan diagnostic continuation")
+            continue
+        matches = list(re.finditer(r"(?<!\S)lcov: (WARNING|ERROR): \(([^)]+)\) ", line))
+        require(matches and line.startswith("lcov: "), f"{case_id}: unclassified diagnostic line")
+        actual.extend((match.group(1), match.group(2)) for match in matches)
+        previous_was_header = True
+    require(Counter(actual) == Counter(expected), f"{case_id}: stderr policy drift: {actual!r}")
 
 
 def verify_identity(identity: dict[str, object], label: str) -> None:
@@ -48,7 +271,7 @@ def decode_identity(identity: dict[str, object], label: str) -> bytes:
 
 
 def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]:
-    manifest = json.loads((ROOT / "manifest.json").read_text(encoding="ascii"))
+    manifest = strict_json_file(ROOT / "manifest.json", "manifest.json")
     fixtures = generate.build_fixtures()
     generated_manifest = generate.build_manifest(fixtures)
     require(manifest == generated_manifest, "manifest.json is not the exact generator result")
@@ -58,11 +281,25 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
         path.relative_to(ROOT).as_posix()
         for directory in (ROOT / "fixtures", ROOT / "generated")
         if directory.exists()
-        for path in directory.rglob("*.info")
+        for path in directory.rglob("*")
+        if path.is_file()
     }
     require(not (tracked - set(by_path)), f"unmanifested fixture paths: {sorted(tracked - set(by_path))}")
     required_paths = {fixture.path for fixture in fixtures if fixture.committed}
     require(not (required_paths - tracked), f"missing committed fixtures: {sorted(required_paths - tracked)}")
+    # Git-tracked invariant for companion sources that are not .info records.
+    git_tracked = {
+        line
+        for line in __import__("subprocess")
+        .check_output(["git", "-C", str(ROOT), "ls-files", "--", "fixtures"], text=True)
+        .splitlines()
+        if line
+    }
+    companion_paths = {fixture.path for fixture in fixtures if fixture.committed and not fixture.path.endswith(".info")}
+    require(
+        companion_paths <= git_tracked,
+        f"companion fixtures must be git-tracked: {sorted(companion_paths - git_tracked)}",
+    )
 
     for fixture in fixtures:
         path = ROOT / fixture.path
@@ -76,6 +313,16 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
         "bytes-crlf", "bytes-no-final-newline", "bytes-non-utf8", "bytes-nul-accepted",
         "state-late-tn-mcdc", "state-cross-sf-mcdc-success", "state-cross-sf-mcdc-duplicate",
         "ver-repeat-equal", "ver-repeat-different", "ver-per-source",
+        "functions-current-core", "functions-current-missing-alias", "functions-zero-end",
+        "functions-zero-start", "functions-mixed-merge", "functions-mixed-location-mismatch",
+        "functions-mixed-range-mismatch", "functions-index-duplicate", "functions-index-unknown",
+        "functions-index-scope-reset", "functions-index-tn-preserves",
+        "branches-forms-core", "branches-u-modes", "branches-malformed-tail",
+        "branches-malformed-tail-empty-taken", "branches-malformed-tail-empty-expression",
+        "branches-expression-mismatch",
+        "branches-expression-merge-left", "branches-expression-merge-right",
+        "branches-order-gaps", "branches-noncontiguous", "branches-interleave",
+        "branches-sort-signatures",
         "scale-medium", "scale-large",
     }
     by_id = {fixture.id: fixture for fixture in fixtures}
@@ -101,8 +348,99 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     require(b"SF:/m0/next.c\n" in by_id["state-cross-sf-mcdc-success"].data, "cross-SF next source missing")
     require(b"MCDC:1,1,f,1,0,first\n" in by_id["state-cross-sf-mcdc-duplicate"].data, "cross-SF duplicate line1 MC/DC missing")
     require(by_id["state-cross-sf-mcdc-duplicate"].oracle_default == "reject", "duplicate fixture must reject")
+    require(b"FNA:0,2,alpha_alias,with,commas\n" in by_id["functions-current-core"].data, "comma alias fixture missing")
+    require(b"FNL:5,30,40\n" in by_id["functions-current-core"].data, "noncontiguous FNL index missing")
+    require(b"FNL:7,50\n" in by_id["functions-current-core"].data, "optional-end FNL missing")
+    require(b"FNA:0,1\n" in by_id["functions-current-missing-alias"].data, "missing alias fixture missing")
+    require(b"FNL:0,5,0\n" in by_id["functions-zero-end"].data, "zero-end FNL missing")
+    require(b"FNL:0,0,5\n" in by_id["functions-zero-start"].data, "zero-start FNL missing")
+    require(b"FN:10,20,alpha\n" in by_id["functions-mixed-merge"].data, "mixed merge FN missing")
+    require(b"FNA:0,2,alpha\n" in by_id["functions-mixed-merge"].data, "mixed merge FNA missing")
+    require(b"FN:10,20,alpha\n" in by_id["functions-mixed-location-mismatch"].data, "mixed location FN missing")
+    require(b"FNL:0,30,40\n" in by_id["functions-mixed-location-mismatch"].data, "mixed location FNL missing")
+    require(b"FN:10,20,alpha\n" in by_id["functions-mixed-range-mismatch"].data, "mixed range FN missing")
+    require(b"FNL:0,10,40\n" in by_id["functions-mixed-range-mismatch"].data, "mixed range FNL missing")
+    require(by_id["functions-index-duplicate"].data.count(b"FNL:0,") == 2, "duplicate index fixture missing second FNL:0")
+    require(b"FNA:9,1,ghost\n" in by_id["functions-index-unknown"].data, "unknown index fixture missing")
+    require(b"SF:src/fn-scope-a.c\n" in by_id["functions-index-scope-reset"].data, "scope-reset first source missing")
+    require(b"SF:src/fn-scope-b.c\n" in by_id["functions-index-scope-reset"].data, "scope-reset second source missing")
+    require(b"TN:fn_tn_b\nFNL:0,3,4\n" in by_id["functions-index-tn-preserves"].data, "TN-preserves index reuse missing")
+    require(by_id["functions-current-missing-alias"].oracle_default == "reject", "missing alias must reject")
+    require(by_id["functions-zero-start"].oracle_default == "reject", "zero-start default must reject")
+    require(by_id["functions-mixed-location-mismatch"].oracle_default == "reject", "location mismatch must reject")
+    require(by_id["functions-mixed-range-mismatch"].oracle_default == "reject", "range mismatch must reject")
+    require(by_id["functions-index-duplicate"].oracle_default == "reject", "duplicate index must reject")
+    require(by_id["functions-index-unknown"].oracle_default == "reject", "unknown index must reject")
+    require(by_id["functions-index-tn-preserves"].oracle_default == "reject", "TN-preserves reuse must reject")
+    require(b"BRDA:20,e0,exception,0\n" in by_id["branches-forms-core"].data, "exception BRDA form missing")
+    require(b"BRDA:30,f0,fall,1\n" in by_id["branches-forms-core"].data, "fallthrough BRDA form missing")
+    require(b"BRDA:40,U0,unreach,0\n" in by_id["branches-forms-core"].data, "U BRDA form missing")
+    require(b"BRDA:50,0,never,-\n" in by_id["branches-forms-core"].data, "dash taken BRDA missing")
+    require(b"BRDA:60,0,a,b,c,2\n" in by_id["branches-forms-core"].data, "comma-bearing expression missing")
+    require(b"BRDA:70,0,0,1\n" in by_id["branches-forms-core"].data, "numeric expression identity missing")
+    require(b"BRDA:10,U0,unreach,0\n" in by_id["branches-u-modes"].data, "u-modes U form missing")
+    require(b"BRDA:20,fU0,x > 0,0\n" in by_id["branches-u-modes"].data, "u-modes fU form missing")
+    require(b"BRDA:30,eU0,exc,0\n" in by_id["branches-u-modes"].data, "u-modes eU form missing")
+    require(b"BRDA:1,0,expr\n" in by_id["branches-malformed-tail"].data, "malformed-tail BRDA missing")
+    require(
+        b"BRDA:1,0,expr,\n" in by_id["branches-malformed-tail-empty-taken"].data,
+        "malformed-tail empty-taken BRDA missing",
+    )
+    require(
+        b"BRDA:1,0,,1\n" in by_id["branches-malformed-tail-empty-expression"].data,
+        "malformed-tail empty-expression BRDA missing",
+    )
+    require(
+        b"BRDA:10,0,first,1\nBRDA:10,0,second,0\n"
+        in by_id["branches-expression-mismatch"].data,
+        "expression-mismatch positional branch probe missing",
+    )
+    require(
+        b"BRDA:10,0,left,1\nBRDA:10,0,left_else,0\n"
+        in by_id["branches-expression-merge-left"].data,
+        "expression-merge left identity probe missing",
+    )
+    require(
+        b"BRDA:10,0,right,2\nBRDA:10,0,right_else,3\n"
+        in by_id["branches-expression-merge-right"].data,
+        "expression-merge right identity probe missing",
+    )
+    require(b"BRDA:10,5,a,1\n" in by_id["branches-order-gaps"].data, "order-gaps first block missing")
+    require(b"BRDA:10,9,f,0\n" in by_id["branches-order-gaps"].data, "order-gaps last block missing")
+    require(b"BRDA:10,0,e,1\n" in by_id["branches-noncontiguous"].data, "noncontiguous line reuse missing")
+    require(b"BRDA:10,1,c,1\n" in by_id["branches-interleave"].data, "interleave second block missing")
+    require(b"BRDA:10,e2,e0,1\n" in by_id["branches-sort-signatures"].data, "sort exception signature missing")
+    require(by_id["branches-malformed-tail"].oracle_default == "reject", "malformed-tail must reject")
+    require(
+        by_id["branches-malformed-tail-empty-taken"].oracle_default == "reject",
+        "malformed-tail empty taken must reject",
+    )
+    require(
+        by_id["branches-malformed-tail-empty-expression"].oracle_default == "accept",
+        "malformed-tail empty expression must accept",
+    )
+    require(
+        by_id["branches-expression-mismatch"].oracle_default == "accept",
+        "expression mismatch probe must accept",
+    )
     for profile in ("scale-medium", "scale-large"):
         require(not by_id[profile].committed, f"{profile} must remain generated-only")
+    require(set(NUMERIC_FIXTURE_IDS) <= set(by_id), f"missing numeric fixtures: {sorted(set(NUMERIC_FIXTURE_IDS) - set(by_id))}")
+    require(by_id["checksum-source-cs"].data == CHECKSUM_SOURCE_BYTES, "checksum companion source bytes drift")
+    require(
+        hashlib.sha256(by_id["checksum-source-cs"].data).hexdigest() == CHECKSUM_SOURCE_SHA256,
+        "checksum companion source sha256 drift",
+    )
+    require(CHECKSUM_MD5_BASE64.encode("ascii") in by_id["checksum-match"].data, "checksum-match must embed md5_base64 identity")
+    require(b"DA:1,1,WRONGCHK\n" in by_id["checksum-mismatch"].data, "checksum-mismatch token missing")
+    require(b"DA:1,1\n" in by_id["checksum-missing"].data, "checksum-missing must omit checksum field")
+    require(b"OTHERCHK" in by_id["checksum-duplicate"].data, "checksum-duplicate alternate token missing")
+    require(by_id["numeric-format-atoms"].data.count(b" ") >= 1, "format-atoms must retain upstream trailing spaces")
+    require(b"DA:4,-3\n" in by_id["numeric-format-atoms"].data, "format-atoms negative DA missing")
+    require(b"DA:1,-0\n" in by_id["numeric-signed-zero"].data, "signed-zero DA missing")
+    require(b"BRDA:2,0,expr,-0\n" in by_id["numeric-signed-zero"].data, "signed-zero BRDA missing")
+    require(by_id["numeric-boundary"].parameters.get("accepted_lexemes") == 15, "numeric-boundary accepted lexeme count drift")
+    require(by_id["numeric-extra-spellings"].parameters.get("accepted_lexemes") == 3, "extra-spellings accepted lexeme count drift")
     require(MODEL_INSPECTOR.is_file(), "missing inspect_model.pl")
     inspector_bytes = MODEL_INSPECTOR.read_bytes()
     require(inspector_bytes.startswith(b"#!/usr/bin/env perl\n"), "inspect_model.pl must be a perl script")
@@ -168,6 +506,21 @@ def assert_four_family_maps(testcases: dict[str, object], label: str) -> None:
     require(set(testcases) == {"line", "function", "branch", "mcdc"}, f"{label}: four family maps required")
     for family in ("line", "function", "branch", "mcdc"):
         require(isinstance(testcases[family], dict), f"{label}.{family}: map must be object")
+
+
+def assert_single_testcase_parity(source: dict[str, object], testcase: str, label: str) -> None:
+    aggregate = source.get("aggregate")
+    testcases = source.get("testcases")
+    require(isinstance(aggregate, dict), f"{label}: aggregate missing")
+    require(set(aggregate) == {"line", "function", "branch", "mcdc"}, f"{label}: aggregate families drift")
+    require(isinstance(testcases, dict), f"{label}: testcases missing")
+    assert_four_family_maps(testcases, f"{label}.testcases")
+    for family in ("line", "function", "branch", "mcdc"):
+        require(set(testcases[family]) == {testcase}, f"{label}: {family} testcase identity drift")
+        require(
+            testcases[family][testcase] == aggregate[family],
+            f"{label}: aggregate/testcase {family} parity drift",
+        )
 
 
 def validate_late_tn_snapshot(document: dict[str, object]) -> None:
@@ -254,19 +607,587 @@ def validate_cross_sf_success_snapshot(document: dict[str, object]) -> None:
     )
 
 
+
+def validate_functions_current_core_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "function-core snapshot kind mismatch")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "function-core must have one source")
+    source = sources[0]
+    require(source.get("filename") == "src/fn-current.c", "function-core filename mismatch")
+    aggregate = source["aggregate"]
+    assert_function_store(aggregate["function"], "function-core aggregate.function")
+    functions = aggregate["function"]["functions"]
+    require(set(functions) == {"10", "30", "50"}, "function-core start-line keys mismatch")
+    require(functions["10"]["aliases"] == {"alpha": 4, "alpha_alias,with,commas": 2}, "function-core alias accumulation mismatch")
+    require(functions["10"]["end"] == 20, "function-core alpha end mismatch")
+    require(functions["30"]["aliases"] == {"beta": 0}, "function-core beta alias mismatch")
+    require(functions["30"]["end"] == 40, "function-core beta end mismatch")
+    require(functions["50"]["aliases"] == {"gamma": 1}, "function-core gamma alias mismatch")
+    require(functions["50"]["end"] == 51, "function-core gamma optional end must be derived to last contiguous line")
+    require(aggregate["function"]["found"] == 4, "function-core alias-level found mismatch")
+    require(aggregate["function"]["hit"] == 3, "function-core alias-level hit mismatch")
+    testcases = source["testcases"]
+    require(set(testcases["function"]) == {"fn_current"}, "function-core testcase map mismatch")
+    require(
+        testcases["function"]["fn_current"]["functions"]["10"]["aliases"]
+        == {"alpha": 4, "alpha_alias,with,commas": 2},
+        "function-core testcase alias mismatch",
+    )
+
+
+def validate_functions_mixed_merge_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "mixed-merge snapshot kind mismatch")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "mixed-merge must have one source")
+    source = sources[0]
+    require(source.get("filename") == "src/fn-mix.c", "mixed-merge filename mismatch")
+    aggregate = source["aggregate"]
+    assert_function_store(aggregate["function"], "mixed-merge aggregate.function")
+    functions = aggregate["function"]["functions"]
+    require(set(functions) == {"10"}, "mixed-merge must keep one start location")
+    require(functions["10"]["aliases"] == {"alpha": 3, "alpha_alias": 3}, "mixed-merge alias accumulation mismatch")
+    require(functions["10"]["end"] == 20, "mixed-merge end mismatch")
+    require(functions["10"]["name"] == "alpha", "mixed-merge representative mismatch")
+    require(aggregate["function"]["found"] == 2, "mixed-merge alias-level found mismatch")
+    require(aggregate["function"]["hit"] == 2, "mixed-merge alias-level hit mismatch")
+    testcases = source["testcases"]
+    require(set(testcases["function"]) == {"fn_mix"}, "mixed-merge testcase map mismatch")
+    require(
+        testcases["function"]["fn_mix"]["functions"]["10"]["aliases"]
+        == {"alpha": 3, "alpha_alias": 3},
+        "mixed-merge testcase alias mismatch",
+    )
+
+
+def _branch_line_blocks(store: dict[str, object], line: str) -> list[dict[str, object]]:
+    assert_branch_store(store, f"branch line {line}")
+    lines = store["lines"]
+    require(isinstance(lines, dict) and line in lines, f"branch line {line} missing")
+    blocks = lines[line]["blocks"]
+    require(isinstance(blocks, list), f"branch line {line} blocks must be list")
+    return blocks
+
+
+def validate_branches_forms_core_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "branch-forms snapshot kind mismatch")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "branch-forms must have one source")
+    source = sources[0]
+    require(source.get("filename") == "src/br-forms.c", "branch-forms filename mismatch")
+    aggregate = source["aggregate"]
+    assert_branch_store(aggregate["branch"], "branch-forms aggregate.branch")
+    require(aggregate["branch"]["found"] == 13 and aggregate["branch"]["hit"] == 7, "branch-forms found/hit mismatch")
+    line10 = _branch_line_blocks(aggregate["branch"], "10")
+    require(len(line10) == 1 and line10[0]["signature"] == "bb", "branch-forms line10 block mismatch")
+    require(
+        [element["expr"] for element in line10[0]["elements"]] == ["cond", "!cond"],
+        "branch-forms vanilla expressions mismatch",
+    )
+    line20 = _branch_line_blocks(aggregate["branch"], "20")
+    require(line20[0]["signature"] == "eb", "branch-forms exception signature mismatch")
+    require(line20[0]["elements"][0]["type"] == "exception", "branch-forms exception type mismatch")
+    line30 = _branch_line_blocks(aggregate["branch"], "30")
+    require(line30[0]["signature"] == "fb", "branch-forms fallthrough signature mismatch")
+    require(line30[0]["elements"][0]["type"] == "fallthrough", "branch-forms fallthrough type mismatch")
+    line40 = _branch_line_blocks(aggregate["branch"], "40")
+    require(line40[0]["elements"][0]["excluded"] is True, "branch-forms U exclusion missing")
+    require(line40[0]["elements"][1]["excluded"] is False, "branch-forms non-U must not be excluded")
+    line50 = _branch_line_blocks(aggregate["branch"], "50")
+    require(line50[0]["elements"][0]["taken"] == "-", "branch-forms dash taken missing")
+    require(line50[0]["elements"][0]["count"] == 0, "branch-forms dash count must be zero")
+    line60 = _branch_line_blocks(aggregate["branch"], "60")
+    require(line60[0]["elements"][0]["expr"] == "a,b,c", "branch-forms comma expression mismatch")
+    require(line60[0]["elements"][0]["taken"] == 2, "branch-forms comma expression taken mismatch")
+    line70 = _branch_line_blocks(aggregate["branch"], "70")
+    require(
+        [element["expr"] for element in line70[0]["elements"]] == [None, None],
+        "branch-forms numeric expression identity must collapse to null expr",
+    )
+    require(
+        [element["id"] for element in line70[0]["elements"]] == [0, 1],
+        "branch-forms numeric expression branch indices mismatch",
+    )
+    testcases = source["testcases"]
+    require(set(testcases["branch"]) == {"br_forms"}, "branch-forms testcase map mismatch")
+
+
+def validate_branches_noncontiguous_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "branch-noncont snapshot kind mismatch")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "branch-noncont must have one source")
+    source = sources[0]
+    require(source.get("filename") == "src/br-noncont.c", "branch-noncont filename mismatch")
+    aggregate = source["aggregate"]
+    assert_branch_store(aggregate["branch"], "branch-noncont aggregate.branch")
+    require(aggregate["branch"]["found"] == 6 and aggregate["branch"]["hit"] == 3, "branch-noncont found/hit mismatch")
+    line10 = _branch_line_blocks(aggregate["branch"], "10")
+    require(len(line10) == 2, "branch-noncont line10 must keep two positional blocks")
+    require(
+        [element["expr"] for element in line10[0]["elements"]] == ["a", "b"],
+        "branch-noncont first block expressions mismatch",
+    )
+    require(
+        [element["expr"] for element in line10[1]["elements"]] == ["e", "f"],
+        "branch-noncont second block expressions mismatch",
+    )
+    require(line10[0]["idx"] == 0 and line10[1]["idx"] == 1, "branch-noncont block indices mismatch")
+    line20 = _branch_line_blocks(aggregate["branch"], "20")
+    require(len(line20) == 1, "branch-noncont line20 must have one block")
+    require(
+        [element["expr"] for element in line20[0]["elements"]] == ["c", "d"],
+        "branch-noncont line20 expressions mismatch",
+    )
+
+
+def validate_branches_expression_merge_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "branch-expression-merge snapshot kind mismatch")
+    require(document.get("inputs") == ["input.info", "right.info"], "branch-expression-merge inputs mismatch")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "branch-expression-merge must have one source")
+    source = sources[0]
+    require(source.get("filename") == "src/br-expression-merge.c", "branch-expression-merge filename mismatch")
+    aggregate = source.get("aggregate")
+    require(isinstance(aggregate, dict), "branch-expression-merge aggregate missing")
+    assert_count_store(aggregate["line"], "branch-expression-merge aggregate.line", allow_empty=False)
+    require(
+        aggregate["line"]["found"] == 1
+        and aggregate["line"]["hit"] == 1
+        and aggregate["line"]["lines"] == {"10": 3},
+        "branch-expression-merge aggregate line cache mismatch",
+    )
+    assert_branch_store(aggregate["branch"], "branch-expression-merge aggregate.branch")
+    require(
+        aggregate["branch"]["found"] == 2 and aggregate["branch"]["hit"] == 1,
+        "branch-expression-merge cached totals mismatch",
+    )
+    line10 = _branch_line_blocks(aggregate["branch"], "10")
+    require(len(line10) == 1 and line10[0]["signature"] == "bb", "branch-expression-merge block mismatch")
+    elements = line10[0]["elements"]
+    require([element["id"] for element in elements] == [0, 1], "branch-expression-merge edge indices mismatch")
+    require(
+        [element["expr"] for element in elements] == ["left", "left_else"],
+        "branch-expression-merge must retain left expressions",
+    )
+    require(
+        [element["count"] for element in elements] == [3, 3],
+        "branch-expression-merge counts must add positionally",
+    )
+    testcases = source.get("testcases")
+    require(isinstance(testcases, dict), "branch-expression-merge testcase maps missing")
+    require(set(testcases["line"]) == {"br_expression_merge"}, "branch-expression-merge testcase line map mismatch")
+    testcase_line = testcases["line"]["br_expression_merge"]
+    assert_count_store(testcase_line, "branch-expression-merge testcase.line", allow_empty=False)
+    require(
+        testcase_line["found"] == 1
+        and testcase_line["hit"] == 1
+        and testcase_line["lines"] == {"10": 3},
+        "branch-expression-merge testcase line cache mismatch",
+    )
+    require(set(testcases["branch"]) == {"br_expression_merge"}, "branch-expression-merge testcase branch map mismatch")
+    testcase = testcases["branch"]["br_expression_merge"]
+    assert_branch_store(testcase, "branch-expression-merge testcase.branch")
+    require(
+        testcase["found"] == 2 and testcase["hit"] == 1,
+        "branch-expression-merge testcase branch cache mismatch",
+    )
+    testcase_elements = _branch_line_blocks(testcase, "10")[0]["elements"]
+    require(
+        [element["expr"] for element in testcase_elements] == ["left", "left_else"]
+        and [element["count"] for element in testcase_elements] == [3, 3],
+        "branch-expression-merge testcase positional merge mismatch",
+    )
+
+
+
+def _source_by_name(document: dict[str, object], filename: str) -> dict[str, object]:
+    sources = document.get("sources")
+    require(isinstance(sources, list), "snapshot sources must be a list")
+    matches = [source for source in sources if source.get("filename") == filename]
+    require(len(matches) == 1, f"expected exactly one source {filename}")
+    return matches[0]
+
+
+def _single_source_by_name(document: dict[str, object], filename: str) -> dict[str, object]:
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, f"expected one source {filename}")
+    return _source_by_name(document, filename)
+
+
+def _assert_json_number_value(value: object, label: str) -> None:
+    require(
+        isinstance(value, (int, float, str)) and not isinstance(value, bool),
+        f"{label}: value must be int/float/str JSON number encoding",
+    )
+    if isinstance(value, float):
+        require(value == value and value not in (float("inf"), float("-inf")), f"{label}: raw nonfinite float forbidden")
+
+
+def validate_numeric_boundary_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "numeric-boundary snapshot kind mismatch")
+    require(document.get("schema_version") == 1, "numeric-boundary snapshot schema mismatch")
+    require(document.get("input") == "input.info", "numeric-boundary single-input identity must use input")
+    require("inputs" not in document, "numeric-boundary must not emit multi-input inputs field")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 15, "numeric-boundary must retain 15 sources")
+    expected = {
+        "src/numeric-00.c": 0,
+        "src/numeric-01.c": "+0",
+        "src/numeric-02.c": "-0",
+        "src/numeric-03.c": 1,
+        "src/numeric-04.c": 1.5,
+        "src/numeric-05.c": ".5",
+        "src/numeric-06.c": "1.",
+        "src/numeric-07.c": "1e3",
+        "src/numeric-08.c": "1E-3",
+        "src/numeric-09.c": "NaN",
+        "src/numeric-10.c": "Inf",
+        "src/numeric-11.c": "Infinity",
+        "src/numeric-12.c": " 1",
+        "src/numeric-13.c": 9007199254740993,
+        "src/numeric-14.c": 18446744073709551615,
+    }
+    expected_hits = {
+        filename: 0 if filename in {
+            "src/numeric-00.c",
+            "src/numeric-01.c",
+            "src/numeric-02.c",
+            "src/numeric-09.c",
+        } else 1
+        for filename in expected
+    }
+    categories = {
+        "finite_simple": {"src/numeric-00.c", "src/numeric-03.c", "src/numeric-04.c", "src/numeric-13.c", "src/numeric-14.c"},
+        "finite_string": {"src/numeric-01.c", "src/numeric-02.c", "src/numeric-05.c", "src/numeric-06.c", "src/numeric-07.c", "src/numeric-08.c", "src/numeric-12.c"},
+        "nan": {"src/numeric-09.c"},
+        "inf": {"src/numeric-10.c", "src/numeric-11.c"},
+    }
+    seen = set()
+    for source in sources:
+        filename = source["filename"]
+        seen.add(filename)
+        require(filename in expected, f"unexpected numeric-boundary source: {filename}")
+        testcase = filename.removeprefix("src/").removesuffix(".c").replace("-", "_")
+        assert_single_testcase_parity(source, testcase, f"numeric-boundary {filename}")
+        aggregate = source["aggregate"]
+        empty_function = {"found": 0, "hit": 0, "functions": {}}
+        empty_branch = {"found": 0, "hit": 0, "lines": {}}
+        empty_mcdc = {"found": 0, "hit": 0, "lines": {}}
+        value = expected[filename]
+        expected_line = {"found": 1, "hit": expected_hits[filename], "lines": {"1": value}}
+        require(
+            aggregate
+            == {
+                "line": expected_line,
+                "function": empty_function,
+                "branch": empty_branch,
+                "mcdc": empty_mcdc,
+            },
+            f"numeric-boundary {filename} aggregate/testcase state drift",
+        )
+        _assert_json_number_value(value, f"numeric-boundary {filename}")
+        require(value == expected[filename], f"numeric-boundary {filename} value mismatch: {value!r}")
+        if filename in categories["nan"] | categories["inf"]:
+            require(isinstance(value, str), f"{filename}: nonfinite must be JSON string")
+            require(value in {"NaN", "nan", "Inf", "+Inf", "Infinity", "-Inf"}, f"{filename}: unexpected nonfinite spelling {value!r}")
+        if filename in categories["finite_simple"]:
+            require(isinstance(value, (int, float)) and not isinstance(value, bool), f"{filename}: simple finite must stay numeric JSON")
+        if filename in categories["finite_string"]:
+            require(isinstance(value, str), f"{filename}: non-simple finite must stay string")
+    require(seen == set(expected), f"numeric-boundary source set drift: {sorted(seen ^ set(expected))}")
+
+
+def validate_numeric_format_atoms_snapshot(document: dict[str, object], *, with_excessive_threshold: bool) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "format-atoms snapshot kind mismatch")
+    require(document.get("schema_version") == 1, "format-atoms snapshot schema mismatch")
+    require(document.get("input") == "input.info", "format-atoms single-input identity must use input")
+    require("inputs" not in document, "format-atoms must not emit multi-input inputs field")
+    source = _single_source_by_name(document, "a.cpp")
+    assert_single_testcase_parity(source, "", "format-atoms")
+    expected = {
+        "line": {
+            "found": 7,
+            "hit": 4,
+            "lines": {"1": 1, "2": 1, "3": 1, "4": 0, "10": 0, "11": 0, "12": "1.0e+19"},
+        },
+        "function": {
+            "found": 6,
+            "hit": 2,
+            "functions": {
+                "1": {
+                    "name": "fcn",
+                    "start": 1,
+                    "end": 2,
+                    "hit": 1.5e20,
+                    "aliases": {"alias": 0, "alias2": 0, "alias3": 1.5e20, "fcn": 0},
+                },
+                "3": {
+                    "name": "noCommonAlias",
+                    "start": 3,
+                    "end": 3,
+                    "hit": 1,
+                    "aliases": {"noCommonAlias": 1},
+                },
+                "11": {
+                    "name": "onlyA",
+                    "start": 11,
+                    "end": 11,
+                    "hit": 0,
+                    "aliases": {"onlyA": 0},
+                },
+            },
+        },
+        "branch": {
+            "found": 8,
+            "hit": 2,
+            "lines": {
+                "1": {
+                    "blocks": [
+                        {
+                            "idx": 0,
+                            "signature": "bbb",
+                            "elements": [
+                                {"id": 0, "taken": 1, "count": 1, "expr": None, "type": "", "excluded": False},
+                                {"id": 1, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
+                                {"id": 2, "taken": "-", "count": 0, "expr": None, "type": "", "excluded": False},
+                            ],
+                        },
+                        {
+                            "idx": 1,
+                            "signature": "bbb",
+                            "elements": [
+                                {"id": 0, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
+                                {"id": 1, "taken": 1.67e20, "count": 1.67e20, "expr": None, "type": "", "excluded": False},
+                                {"id": 2, "taken": 0, "count": 0, "expr": "1", "type": "", "excluded": False},
+                            ],
+                        },
+                    ]
+                },
+                "11": {
+                    "blocks": [
+                        {
+                            "idx": 0,
+                            "signature": "bb",
+                            "elements": [
+                                {"id": 0, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
+                                {"id": 1, "taken": "-0", "count": "-0", "expr": None, "type": "", "excluded": False},
+                            ],
+                        }
+                    ]
+                },
+            },
+        },
+        "mcdc": {"found": 0, "hit": 0, "lines": {}},
+    }
+    require(source["aggregate"] == expected, "format-atoms aggregate state drift")
+    # Threshold is recorded only by inspector argv/runtime; model values remain identical.
+    require(with_excessive_threshold in (True, False), "format-atoms threshold flag required")
+
+
+def validate_numeric_signed_zero_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "signed-zero snapshot kind mismatch")
+    require(document.get("schema_version") == 1, "signed-zero snapshot schema mismatch")
+    require(document.get("input") == "input.info", "signed-zero single-input identity must use input")
+    require("inputs" not in document, "signed-zero must not emit multi-input inputs field")
+    source = _single_source_by_name(document, "src/numeric-signed-zero.c")
+    assert_single_testcase_parity(source, "numeric_signed_zero", "signed-zero")
+    require(
+        source["aggregate"]
+        == {
+            "line": {"found": 2, "hit": 1, "lines": {"1": "-0", "2": 1}},
+            "function": {"found": 0, "hit": 0, "functions": {}},
+            "branch": {
+                "found": 2,
+                "hit": 1,
+                "lines": {
+                    "2": {
+                        "blocks": [
+                            {
+                                "idx": 0,
+                                "signature": "bb",
+                                "elements": [
+                                    {"id": 0, "taken": "-0", "count": "-0", "expr": "expr", "type": "", "excluded": False},
+                                    {"id": 1, "taken": 1, "count": 1, "expr": "expr2", "type": "", "excluded": False},
+                                ],
+                            }
+                        ]
+                    }
+                },
+            },
+            "mcdc": {"found": 0, "hit": 0, "lines": {}},
+        },
+        "signed-zero aggregate state drift",
+    )
+
+
+
+def validate_numeric_extra_spellings_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "extra-spellings snapshot kind mismatch")
+    require(document.get("schema_version") == 1, "extra-spellings snapshot schema mismatch")
+    require(document.get("input") == "input.info", "extra-spellings single-input identity must use input")
+    require("inputs" not in document, "extra-spellings must not emit multi-input inputs field")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 3, "extra-spellings must retain 3 sources")
+    expected = {
+        "src/extra-00.c": "+1",
+        "src/extra-01.c": "nan",
+        "src/extra-02.c": "+Inf",
+    }
+    seen: set[str] = set()
+    for source in sources:
+        filename = source["filename"]
+        require(filename in expected, f"unexpected extra-spellings source: {filename}")
+        seen.add(filename)
+        testcase = filename.removeprefix("src/").removesuffix(".c").replace("-", "_")
+        assert_single_testcase_parity(source, testcase, f"extra-spellings {filename}")
+        expected_hit = 0 if filename == "src/extra-01.c" else 1
+        value = expected[filename]
+        require(
+            source["aggregate"]
+            == {
+                "line": {"found": 1, "hit": expected_hit, "lines": {"1": value}},
+                "function": {"found": 0, "hit": 0, "functions": {}},
+                "branch": {"found": 0, "hit": 0, "lines": {}},
+                "mcdc": {"found": 0, "hit": 0, "lines": {}},
+            },
+            f"extra-spellings {filename} aggregate state drift",
+        )
+        _assert_json_number_value(value, f"extra-spellings {filename}")
+        if filename in {"src/extra-01.c", "src/extra-02.c"}:
+            require(isinstance(value, str), f"{filename}: nonfinite must be JSON string")
+        if filename == "src/extra-00.c":
+            require(isinstance(value, str), f"{filename}: +1 must stay string spelling")
+    require(seen == set(expected), f"extra-spellings source set drift: {sorted(seen ^ set(expected))}")
+
+
+def validate_numeric_negative_inf_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "negative-inf snapshot kind mismatch")
+    require(document.get("schema_version") == 1, "negative-inf snapshot schema mismatch")
+    source = _single_source_by_name(document, "src/numeric-negative-inf.c")
+    assert_single_testcase_parity(source, "numeric_negative_inf", "negative-inf")
+    require(
+        source["aggregate"]
+        == {
+            "line": {"found": 2, "hit": 1, "lines": {"1": 0, "2": 1}},
+            "function": {"found": 0, "hit": 0, "functions": {}},
+            "branch": {"found": 0, "hit": 0, "lines": {}},
+            "mcdc": {"found": 0, "hit": 0, "lines": {}},
+        },
+        "negative-inf recovered aggregate state drift",
+    )
+
+
+def validate_recovered_function_snapshot(
+    document: dict[str, object],
+    *,
+    label: str,
+    filename: str,
+    testcase: str,
+    expected_lines: dict[str, int],
+    location: str,
+    name: str,
+    start: int,
+    end: int,
+    count: int,
+) -> None:
+    source = _single_source_by_name(document, filename)
+    assert_single_testcase_parity(source, testcase, label)
+    line = {"found": len(expected_lines), "hit": sum(value != 0 for value in expected_lines.values()), "lines": expected_lines}
+    function = {
+        "found": 1,
+        "hit": 1 if count else 0,
+        "functions": {
+            location: {
+                "name": name,
+                "start": start,
+                "end": end,
+                "hit": count,
+                "aliases": {name: count},
+            }
+        },
+    }
+    require(
+        source["aggregate"]
+        == {
+            "line": line,
+            "function": function,
+            "branch": {"found": 0, "hit": 0, "lines": {}},
+            "mcdc": {"found": 0, "hit": 0, "lines": {}},
+        },
+        f"{label}: recovered aggregate state drift",
+    )
+
+
+def validate_numeric_fna_nonnumeric_snapshot(document: dict[str, object]) -> None:
+    validate_recovered_function_snapshot(
+        document,
+        label="fna-nonnumeric",
+        filename="src/numeric-fna-nonnumeric.c",
+        testcase="numeric_fna_nonnumeric",
+        expected_lines={"1": 0},
+        location="1",
+        name="alias",
+        start=1,
+        end=1,
+        count=0,
+    )
+
+
+def validate_numeric_zero_fn_end_snapshot(document: dict[str, object]) -> None:
+    validate_recovered_function_snapshot(
+        document,
+        label="zero-fn-end",
+        filename="src/numeric-zero-fn-end.c",
+        testcase="numeric_zero_fn_end",
+        expected_lines={"1": 0},
+        location="1",
+        name="name",
+        start=1,
+        end=0,
+        count=0,
+    )
+
+
+def validate_numeric_invalid_fnl_fields_snapshot(document: dict[str, object]) -> None:
+    validate_recovered_function_snapshot(
+        document,
+        label="invalid-fnl-fields",
+        filename="src/numeric-invalid-fnl-fields.c",
+        testcase="numeric_invalid_fnl_fields",
+        expected_lines={"1": 0},
+        location="1",
+        name="valid",
+        start=1,
+        end=1,
+        count=0,
+    )
+
+
+def validate_functions_zero_start_snapshot(document: dict[str, object]) -> None:
+    validate_recovered_function_snapshot(
+        document,
+        label="functions-zero-start",
+        filename="src/fn-zero-start.c",
+        testcase="fn_zero_start",
+        expected_lines={"1": 1, "5": 1},
+        location="0",
+        name="zero_start",
+        start=0,
+        end=5,
+        count=1,
+    )
+
+
 def validate_semantic_snapshot_observation(case: dict[str, object], observation: dict[str, object]) -> None:
     require(case.get("runner") == MODEL_INSPECTOR_NAME, f"{case['id']}: runner must be inspect_model.pl")
     require(observation.get("runner") == MODEL_INSPECTOR_NAME, f"{case['id']}: baseline runner missing")
     require(case["argv"][:2] == ["perl", MODEL_INSPECTOR_NAME], f"{case['id']}: inspector argv drift")
     require(observation["exit_status"] == 0, f"{case['id']}: semantic snapshot must exit 0")
     raw = decode_identity(observation["stdout"], f"{case['id']} stdout")
-    require(not observation["stderr"].get("byte_size", 1), f"{case['id']}: semantic snapshot stderr must be empty")
-    try:
-        text = raw.decode("ascii")
-        document = json.loads(text)
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise ValueError(f"{case['id']}: semantic snapshot stdout is not valid ASCII JSON: {error}") from error
-    require(isinstance(document, dict), f"{case['id']}: snapshot root must be object")
+    stderr_bytes = decode_identity(observation["stderr"], f"{case['id']} stderr")
+    validate_semantic_stderr(case["id"], stderr_bytes)
+    document = strict_json_loads_ascii(raw, f"{case['id']} semantic snapshot stdout")
+    validate_semantic_input_identity(case, document)
+    text = raw.decode("ascii")
     require(raw.endswith(b"\n"), f"{case['id']}: snapshot JSON must end with newline")
     require("\t" not in text, f"{case['id']}: snapshot JSON must not contain tabs")
     require(document.get("oracle", {}).get("module") == "/usr/local/lib/lcov/lcovutil.pm", f"{case['id']}: module identity drift")
@@ -275,17 +1196,185 @@ def validate_semantic_snapshot_observation(case: dict[str, object], observation:
         validate_late_tn_snapshot(document)
     elif case["id"] == "state-cross-sf-mcdc-success.semantic-snapshot":
         validate_cross_sf_success_snapshot(document)
+    elif case["id"] == "functions-current-core.semantic-snapshot":
+        validate_functions_current_core_snapshot(document)
+    elif case["id"] == "functions-mixed-merge.semantic-snapshot":
+        validate_functions_mixed_merge_snapshot(document)
+    elif case["id"] == "branches-forms-core.semantic-snapshot":
+        validate_branches_forms_core_snapshot(document)
+    elif case["id"] == "branches-noncontiguous.semantic-snapshot":
+        validate_branches_noncontiguous_snapshot(document)
+    elif case["id"] == "branches-expression-merge.semantic-snapshot":
+        validate_branches_expression_merge_snapshot(document)
+    elif case["id"] == "numeric-boundary.semantic-snapshot":
+        validate_numeric_boundary_snapshot(document)
+    elif case["id"] == "numeric-extra-spellings.semantic-snapshot":
+        validate_numeric_extra_spellings_snapshot(document)
+    elif case["id"] == "numeric-format-atoms.ignore-format-negative.semantic-snapshot":
+        validate_numeric_format_atoms_snapshot(document, with_excessive_threshold=False)
+    elif case["id"] == "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot":
+        validate_numeric_format_atoms_snapshot(document, with_excessive_threshold=True)
+    elif case["id"] == "numeric-signed-zero.semantic-snapshot":
+        validate_numeric_signed_zero_snapshot(document)
+    elif case["id"] == "numeric-negative-inf.semantic-snapshot":
+        validate_numeric_negative_inf_snapshot(document)
+    elif case["id"] == "numeric-fna-nonnumeric.semantic-snapshot":
+        validate_numeric_fna_nonnumeric_snapshot(document)
+    elif case["id"] == "numeric-zero-fn-end.semantic-snapshot":
+        validate_numeric_zero_fn_end_snapshot(document)
+    elif case["id"] == "numeric-invalid-fnl-fields.semantic-snapshot":
+        validate_numeric_invalid_fnl_fields_snapshot(document)
+    elif case["id"] == "functions-zero-start.semantic-snapshot":
+        validate_functions_zero_start_snapshot(document)
     else:
         raise ValueError(f"unexpected semantic snapshot case: {case['id']}")
+
+
+def validate_observation_binding(
+    case: dict[str, object],
+    observation: dict[str, object],
+    fixtures: dict[str, generate.Fixture],
+) -> None:
+    """Validate identity and side-effect bindings shared by every Oracle case."""
+    label = str(case["id"])
+    require(observation["fixture"] == case["fixture"], f"fixture mismatch: {label}")
+    require(
+        observation.get("fixture_sha256") == hashlib.sha256(fixtures[case["fixture"]].data).hexdigest(),
+        f"fixture byte identity mismatch: {label}",
+    )
+    require(
+        observation.get("additional_fixtures", {}) == case.get("additional_fixtures", {}),
+        f"additional fixture mismatch: {label}",
+    )
+    expected_additional_hashes = {
+        name: hashlib.sha256(fixtures[path].data).hexdigest()
+        for name, path in case.get("additional_fixtures", {}).items()
+    }
+    require(
+        observation.get("additional_fixture_sha256", {}) == expected_additional_hashes,
+        f"additional fixture byte identity mismatch: {label}",
+    )
+    require(observation["argv"] == case["argv"], f"argv mismatch: {label}")
+    require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {label}")
+    verify_identity(observation["stdout"], f"{label} stdout")
+    verify_identity(observation["stderr"], f"{label} stderr")
+    output = observation["output"]
+    expected_output_exists = case.get("expected_output_exists")
+    if expected_output_exists is not None:
+        require(isinstance(expected_output_exists, bool), f"{label}: expected_output_exists must be boolean")
+        require(output.get("exists") is expected_output_exists, f"{label}: output existence drift")
+    if output["exists"]:
+        verify_identity(output, f"{label} output")
+        require(observation["output_file"] == case.get("output_file"), f"output path mismatch: {label}")
+    else:
+        require(observation["output_file"] == case.get("output_file"), f"missing output declaration: {label}")
+        require(case.get("output_file") is None or output["exists"] is False, f"missing output bytes: {label}")
+
+
+ADDED_OUTPUT_EXPECTATIONS = {
+    "numeric-format-atoms.excessive-stop-on-error-0": True,
+    "numeric-format-atoms.excessive-stop-on-error-1": False,
+    "numeric-fna-malformed-exponent.ignore-format": True,
+    "numeric-zero-fn-end.ignore-format": True,
+    "numeric-invalid-fnl-fields.ignore-format": True,
+    "functions-zero-start.ignore-inconsistent-format": True,
+    "numeric-function-excessive.default-stop": False,
+    "numeric-function-excessive.erase-suppressed": True,
+}
+
+ADDED_CASE_ARGV = {
+    "numeric-format-atoms.excessive-stop-on-error-0": [
+        "lcov", "--branch-coverage", "--no-function-coverage", "--ignore-errors", "format,negative",
+        "--rc", "excessive_count_threshold=1000000", "--rc", "stop_on_error=0",
+        "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-format-atoms.excessive-stop-on-error-1": [
+        "lcov", "--branch-coverage", "--no-function-coverage", "--ignore-errors", "format,negative",
+        "--rc", "excessive_count_threshold=1000000", "--rc", "stop_on_error=1",
+        "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-negative-inf.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "negative", "input.info"],
+    "numeric-fna-nonnumeric.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
+    "numeric-fna-malformed-exponent.ignore-format": [
+        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-zero-fn-end.ignore-format": [
+        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-zero-fn-end.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
+    "numeric-invalid-fnl-fields.ignore-format": [
+        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-invalid-fnl-fields.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
+    "functions-zero-start.ignore-inconsistent-format": [
+        "lcov", "--ignore-errors", "inconsistent,format", "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "functions-zero-start.semantic-snapshot": [
+        "perl", "inspect_model.pl", "--ignore", "inconsistent,format", "input.info",
+    ],
+    "numeric-function-excessive.default-stop": [
+        "lcov", "--rc", "excessive_count_threshold=100", "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+    "numeric-function-excessive.erase-suppressed": [
+        "lcov", "--rc", "excessive_count_threshold=100", "--rc", "erase_functions=^suppress_me$",
+        "--add-tracefile", "input.info", "--output-file", "output.info",
+    ],
+}
+
+
+def validate_added_numeric_case(case: dict[str, object], observation: dict[str, object]) -> None:
+    case_id = str(case["id"])
+    if case_id in ADDED_CASE_ARGV:
+        require(case.get("argv") == ADDED_CASE_ARGV[case_id], f"{case_id}: argv policy drift")
+    if case_id not in ADDED_OUTPUT_EXPECTATIONS:
+        return
+    expected_exists = ADDED_OUTPUT_EXPECTATIONS[case_id]
+    require(case.get("expected_output_exists") is expected_exists, f"{case_id}: expected output policy missing")
+    if not expected_exists:
+        require(observation["output"]["exists"] is False, f"{case_id}: output must be absent")
+        return
+    output = decode_identity(observation["output"], f"{case_id} output")
+    exact_outputs = {
+        "numeric-fna-malformed-exponent.ignore-format": (
+            b"TN:numeric_fna_malformed_exponent\n"
+            b"SF:src/numeric-fna-malformed-exponent.c\n"
+            b"FNL:0,1,1\nFNA:0,0,alias\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
+        ),
+        "numeric-zero-fn-end.ignore-format": (
+            b"TN:numeric_zero_fn_end\nSF:src/numeric-zero-fn-end.c\n"
+            b"FNL:0,1,0\nFNA:0,0,name\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
+        ),
+        "numeric-invalid-fnl-fields.ignore-format": (
+            b"TN:numeric_invalid_fnl_fields\nSF:src/numeric-invalid-fnl-fields.c\n"
+            b"FNL:0,1,1\nFNA:0,0,valid\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
+        ),
+        "functions-zero-start.ignore-inconsistent-format": (
+            b"TN:fn_zero_start\nSF:src/fn-zero-start.c\nFNL:0,0,5\nFNA:0,1,zero_start\n"
+            b"FNF:1\nFNH:1\nDA:1,1\nDA:5,1\nLF:2\nLH:2\nend_of_record\n"
+        ),
+        "numeric-format-atoms.excessive-stop-on-error-0": (
+            b"TN:\nSF:a.cpp\nBRDA:1,0,0,1\nBRDA:1,0,1,0\nBRDA:1,0,2,-\n"
+            b"BRDA:1,1,0,0\nBRDA:1,1,1,1.67e+20\nBRDA:1,1,1,0\nBRDA:11,0,0,0\n"
+            b"BRDA:11,0,1,-0\nBRF:8\nBRH:2\nDA:1,1\nDA:2,1\nDA:3,1\nDA:4,0\n"
+            b"DA:10,0\nDA:11,0\nDA:12,1.0e+19\nLF:7\nLH:4\nend_of_record\n"
+        ),
+        "numeric-function-excessive.erase-suppressed": (
+            b"TN:function_excessive\nSF:function-excessive.c\nFNL:0,1,1\nFNA:0,99,below_fn\n"
+            b"FNL:1,2,2\nFNA:1,100,at_fn\nFNF:2\nFNH:2\nDA:1,1\nDA:2,1\nDA:4,1\n"
+            b"LF:3\nLH:3\nend_of_record\n"
+        ),
+    }
+    if case_id in exact_outputs:
+        require(output == exact_outputs[case_id], f"{case_id}: canonical output drift")
 
 
 def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.Fixture]) -> None:
     cases_path = ROOT / "oracle-cases.json"
     baseline_path = ROOT / "oracle-baseline.json"
-    cases_document = json.loads(cases_path.read_text(encoding="ascii"))
+    cases_document = strict_json_file(cases_path, "oracle-cases.json")
     expected_cases = generate.build_oracle_cases(generate.build_fixtures())
     require(cases_document == expected_cases, "oracle-cases.json is not the exact generator result")
-    baseline = json.loads(baseline_path.read_text(encoding="ascii"))
+    baseline = strict_json_file(baseline_path, "oracle-baseline.json")
     require(cases_document["schema_version"] == 1, "unsupported oracle-cases schema")
     require(baseline["schema_version"] == 1, "unsupported Oracle baseline schema")
 
@@ -295,11 +1384,23 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
     require(MODEL_INSPECTOR.is_file(), "model inspector must be committed")
     for case in cases:
         require(case["fixture"] in fixtures, f"Oracle case references unknown fixture: {case['id']}")
+        additional_fixtures = case.get("additional_fixtures", {})
+        require(isinstance(additional_fixtures, dict), f"invalid additional_fixtures: {case['id']}")
+        for name, fixture in additional_fixtures.items():
+            require(name == Path(name).name, f"unsafe additional fixture name: {case['id']}")
+            require(name not in {"input.info", MODEL_INSPECTOR_NAME}, f"reserved additional fixture name: {case['id']}")
+            require(fixture in fixtures, f"Oracle case references unknown additional fixture: {case['id']}")
         require(case["argv"] and case["argv"][0] in ALLOWED_ARGV_HEADS, f"invalid Oracle argv head: {case['id']}")
         require(isinstance(case["expected_exit"], int), f"missing expected_exit: {case['id']}")
         output_file = case.get("output_file")
         if output_file is not None:
             require(output_file == Path(output_file).name, f"unsafe output_file: {case['id']}")
+        if "expected_output_exists" in case:
+            require(
+                isinstance(case["expected_output_exists"], bool),
+                f"expected_output_exists must be boolean: {case['id']}",
+            )
+            require(output_file is not None, f"expected_output_exists requires output_file: {case['id']}")
         runner = case.get("runner")
         if runner is not None:
             require(runner == MODEL_INSPECTOR_NAME, f"unsupported runner: {case['id']}")
@@ -311,11 +1412,29 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
         require(case.get("evidence_status") in (None, "oracle_reference"), f"product evidence claim: {case['id']}")
         require("product_compatibility" not in case, f"product compatibility claim: {case['id']}")
 
+        if case["id"].startswith("checksum-") and case["id"] != "checksum-no-verify.canonical":
+            require(
+                case.get("additional_fixtures") == {"cs.c": "fixtures/numeric/cs.c"},
+                f"checksum companion binding drift: {case['id']}",
+            )
+        if case["id"] == "checksum-no-verify.canonical":
+            require(not case.get("additional_fixtures"), "checksum-no-verify must not bind a companion source")
+        if case["id"].startswith("numeric-function-excessive."):
+            require(
+                case.get("additional_fixtures") == {"function-excessive.c": "fixtures/numeric/function-excessive.c"},
+                f"function excessive companion binding drift: {case['id']}",
+            )
+
     expected_oracle = manifest["provenance"]["oracle"]
     for key in ("source_commit", "docker_image", "docker_image_id", "program", "program_sha256", "perl_version"):
         require(baseline["oracle"][key] == expected_oracle[key], f"baseline Oracle {key} mismatch")
     require(baseline["oracle"]["network"] == "none", "Oracle baseline must disable network")
     require(baseline["cases_sha256"] == hashlib.sha256(cases_path.read_bytes()).hexdigest(), "oracle-cases hash mismatch")
+    require(
+        baseline.get("manifest_sha256")
+        == hashlib.sha256((ROOT / "manifest.json").read_bytes()).hexdigest(),
+        "Oracle baseline manifest hash mismatch",
+    )
 
     observations = baseline["cases"]
     observed_by_id = {observation["id"]: observation for observation in observations}
@@ -325,18 +1444,8 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
 
     for case in cases:
         observation = observed_by_id[case["id"]]
-        require(observation["fixture"] == case["fixture"], f"fixture mismatch: {case['id']}")
-        require(observation["argv"] == case["argv"], f"argv mismatch: {case['id']}")
-        require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {case['id']}")
-        verify_identity(observation["stdout"], f"{case['id']} stdout")
-        verify_identity(observation["stderr"], f"{case['id']} stderr")
-        output = observation["output"]
-        if output["exists"]:
-            verify_identity(output, f"{case['id']} output")
-            require(observation["output_file"] == case.get("output_file"), f"output path mismatch: {case['id']}")
-        else:
-            require(observation["output_file"] == case.get("output_file"), f"missing output declaration: {case['id']}")
-            require(case.get("output_file") is None or output["exists"] is False, f"missing output bytes: {case['id']}")
+        validate_observation_binding(case, observation, fixtures)
+        validate_added_numeric_case(case, observation)
 
         if case["id"] in SEMANTIC_SNAPSHOT_CASE_IDS:
             validate_semantic_snapshot_observation(case, observation)
@@ -377,6 +1486,392 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             output_bytes = decode_identity(observation["output"], "repeat-equal canonical output")
             require(output_bytes.count(b"VER:") == 1, "canonical repeat-equal output must emit one VER")
 
+        if case["id"] == "functions-current-core.canonical":
+            output_bytes = decode_identity(observation["output"], "function-core canonical output")
+            require(b"FNA:0,4,alpha\n" in output_bytes, "function-core must accumulate repeated alias counts")
+            require(b"FNA:0,2,alpha_alias,with,commas\n" in output_bytes, "function-core must retain comma alias text")
+            require(b"FNL:1,30,40\n" in output_bytes, "function-core must renumber noncontiguous indices")
+            require(b"FNL:2,50,51\n" in output_bytes, "function-core must derive optional end line in writer")
+            require(b"FNL:5," not in output_bytes and b"FNL:7," not in output_bytes, "function-core must not preserve input indices")
+        if case["id"] == "functions-zero-end.canonical":
+            output_bytes = decode_identity(observation["output"], "zero-end canonical output")
+            require(b"FNL:0,5,0\n" in output_bytes, "zero-end must retain end line zero")
+            require(b"FNA:0,0,zero_end\n" in output_bytes, "zero-end alias must remain zero")
+        if case["id"] == "functions-mixed-merge.canonical":
+            output_bytes = decode_identity(observation["output"], "mixed-merge canonical output")
+            require(b"FN:" not in output_bytes and b"FNDA:" not in output_bytes, "mixed-merge must rewrite to FNL/FNA only")
+            require(b"FNA:0,3,alpha\n" in output_bytes, "mixed-merge alpha count mismatch")
+            require(b"FNA:0,3,alpha_alias\n" in output_bytes, "mixed-merge alpha_alias count mismatch")
+        if case["id"] == "functions-index-scope-reset.canonical":
+            output_bytes = decode_identity(observation["output"], "index-scope-reset canonical output")
+            require(b"SF:src/fn-scope-a.c\n" in output_bytes and b"SF:src/fn-scope-b.c\n" in output_bytes, "scope-reset sources missing")
+            require(output_bytes.count(b"FNL:0,") == 2, "scope-reset must allow index reuse across SF sections")
+        if case["id"] == "functions-current-missing-alias.summary":
+            stderr = decode_identity(observation["stderr"], "missing-alias stderr").decode("utf-8", "replace")
+            require("unexpected .info file record 'FNA:0,1'" in stderr, "missing-alias diagnostic drift")
+        if case["id"] == "functions-zero-start.summary":
+            stderr = decode_identity(observation["stderr"], "zero-start stderr").decode("utf-8", "replace")
+            require("function 'zero_start' is not hit but line 1 is" in stderr, "zero-start consistency diagnostic drift")
+        if case["id"] == "functions-mixed-location-mismatch.summary":
+            stderr = decode_identity(observation["stderr"], "mixed-location stderr").decode("utf-8", "replace")
+            require("duplicate function 'alpha'" in stderr, "mixed-location diagnostic drift")
+            require(observation["output"]["exists"] is False, "mixed-location summary must not create output")
+        if case["id"] == "functions-mixed-location-mismatch.canonical":
+            require(observation["output"]["exists"] is False, "mixed-location write failure must leave output absent")
+            stderr = decode_identity(observation["stderr"], "mixed-location write stderr").decode("utf-8", "replace")
+            require("duplicate function 'alpha'" in stderr, "mixed-location write diagnostic drift")
+        if case["id"] == "functions-mixed-range-mismatch.summary":
+            stderr = decode_identity(observation["stderr"], "mixed-range stderr").decode("utf-8", "replace")
+            require("mismatched end line for alpha" in stderr, "mixed-range diagnostic drift")
+        if case["id"] == "functions-mixed-range-mismatch.canonical":
+            require(observation["output"]["exists"] is False, "mixed-range write failure must leave output absent")
+            stderr = decode_identity(observation["stderr"], "mixed-range write stderr").decode("utf-8", "replace")
+            require("mismatched end line for alpha" in stderr, "mixed-range write diagnostic drift")
+        if case["id"] == "functions-index-duplicate.summary":
+            stderr = decode_identity(observation["stderr"], "index-duplicate stderr").decode("utf-8", "replace")
+            require("unexpected duplicate index 0" in stderr, "index-duplicate diagnostic drift")
+        if case["id"] == "functions-index-duplicate.canonical":
+            require(observation["output"]["exists"] is False, "index-duplicate write failure must leave output absent")
+            stderr = decode_identity(observation["stderr"], "index-duplicate write stderr").decode("utf-8", "replace")
+            require("unexpected duplicate index 0" in stderr, "index-duplicate write diagnostic drift")
+        if case["id"] == "functions-index-unknown.summary":
+            stderr = decode_identity(observation["stderr"], "index-unknown stderr").decode("utf-8", "replace")
+            require("unknown index 9" in stderr, "index-unknown diagnostic drift")
+        if case["id"] == "functions-index-unknown.canonical":
+            require(observation["output"]["exists"] is False, "index-unknown write failure must leave output absent")
+            stderr = decode_identity(observation["stderr"], "index-unknown write stderr").decode("utf-8", "replace")
+            require("unknown index 9" in stderr, "index-unknown write diagnostic drift")
+        if case["id"] == "functions-index-tn-preserves.summary":
+            stderr = decode_identity(observation["stderr"], "index-tn-preserves stderr").decode("utf-8", "replace")
+            require("unexpected duplicate index 0" in stderr, "index-tn-preserves diagnostic drift")
+
+        if case["id"] == "branches-forms-core.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-forms canonical output")
+            require(b"BRDA:20,e0,exception,0\n" in output_bytes, "branch-forms exception rewrite missing")
+            require(b"BRDA:30,f0,fall,1\n" in output_bytes, "branch-forms fallthrough rewrite missing")
+            require(b"BRDA:40,U0,unreach,0\n" in output_bytes, "branch-forms U exclusion rewrite missing")
+            require(b"BRDA:50,0,never,-\n" in output_bytes, "branch-forms dash taken rewrite missing")
+            require(b"BRDA:60,0,a,b,c,2\n" in output_bytes, "branch-forms comma expression rewrite missing")
+            require(b"BRDA:70,0,0,1\n" in output_bytes and b"BRDA:70,0,1,0\n" in output_bytes, "branch-forms numeric identity rewrite missing")
+            require(b"BRF:13\n" in output_bytes and b"BRH:7\n" in output_bytes, "branch-forms BRF/BRH exclude U")
+        if case["id"] == "branches-u-modes.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-u-modes default output")
+            require(b"BRDA:10,U0,unreach,0\n" in output_bytes, "branch-u-modes default U missing")
+            require(b"BRDA:20,fU0,x > 0,0\n" in output_bytes, "branch-u-modes default fU missing")
+            require(b"BRDA:30,eU0,exc,0\n" in output_bytes, "branch-u-modes default eU missing")
+            require(b"BRF:3\n" in output_bytes and b"BRH:3\n" in output_bytes, "branch-u-modes default BRF/BRH mismatch")
+        if case["id"] == "branches-u-modes.clear-unreachable":
+            output_bytes = decode_identity(observation["output"], "branch-u-modes ignore-unreachable output")
+            require(b"BRDA:10,0,unreach,0\n" in output_bytes, "ignore-unreachable must clear plain U")
+            require(b"BRDA:20,f0,x > 0,0\n" in output_bytes, "ignore-unreachable must clear fU")
+            require(b"BRDA:30,e0,exc,0\n" in output_bytes, "ignore-unreachable must clear eU")
+            require(b"U0," not in output_bytes and b"fU" not in output_bytes and b"eU" not in output_bytes, "ignore-unreachable residual U mark")
+            require(b"BRF:6\n" in output_bytes and b"BRH:3\n" in output_bytes, "ignore-unreachable BRF/BRH mismatch")
+        if case["id"] == "branches-malformed-tail.summary":
+            stderr = decode_identity(observation["stderr"], "branch-malformed-tail summary stderr").decode("utf-8", "replace")
+            require("Unexpected non-integer taken count 'expr'" in stderr, "branch-malformed-tail diagnostic drift")
+            require(observation["output"]["exists"] is False, "branch-malformed-tail summary must not create output")
+        if case["id"] == "branches-malformed-tail.canonical":
+            require(observation["output"]["exists"] is False, "branch-malformed-tail write failure must leave output absent")
+            stderr = decode_identity(observation["stderr"], "branch-malformed-tail write stderr").decode("utf-8", "replace")
+            require("Unexpected non-integer taken count 'expr'" in stderr, "branch-malformed-tail write diagnostic drift")
+        if case["id"] == "branches-malformed-tail-empty-taken.summary":
+            stderr = decode_identity(
+                observation["stderr"], "branch-malformed-tail empty-taken summary stderr"
+            ).decode("utf-8", "replace")
+            require(
+                "Unexpected non-integer taken count ''" in stderr,
+                "branch-malformed-tail empty-taken diagnostic drift",
+            )
+            require(
+                observation["output"]["exists"] is False,
+                "branch-malformed-tail empty-taken summary must not create output",
+            )
+        if case["id"] == "branches-malformed-tail-empty-taken.canonical":
+            require(
+                observation["output"]["exists"] is False,
+                "branch-malformed-tail empty-taken write failure must leave output absent",
+            )
+            stderr = decode_identity(
+                observation["stderr"], "branch-malformed-tail empty-taken write stderr"
+            ).decode("utf-8", "replace")
+            require(
+                "Unexpected non-integer taken count ''" in stderr,
+                "branch-malformed-tail empty-taken write diagnostic drift",
+            )
+        if case["id"] == "branches-malformed-tail-empty-expression.canonical":
+            output_bytes = decode_identity(
+                observation["output"], "branch-malformed-tail empty-expression output"
+            )
+            require(
+                b"BRDA:1,0,,1\n" in output_bytes,
+                "branch-malformed-tail empty expression must be retained",
+            )
+            require(
+                b"BRF:1\n" in output_bytes and b"BRH:1\n" in output_bytes,
+                "branch-malformed-tail empty expression totals mismatch",
+            )
+        if case["id"] == "branches-malformed-tail-empty-expression.summary":
+            stdout = decode_identity(
+                observation["stdout"], "branch-malformed-tail empty-expression summary stdout"
+            )
+            stderr = decode_identity(
+                observation["stderr"], "branch-malformed-tail empty-expression summary stderr"
+            )
+            require(b"branches....: 100.0% (1 of 1 branch)" in stdout, "empty expression summary coverage mismatch")
+            require(stderr == b"", "empty expression summary must not emit diagnostics")
+        if case["id"] == "branches-expression-mismatch.summary":
+            stdout = decode_identity(
+                observation["stdout"], "branch-expression-mismatch summary stdout"
+            )
+            stderr = decode_identity(
+                observation["stderr"], "branch-expression-mismatch summary stderr"
+            )
+            require(b"branches....: 50.0% (1 of 2 branches)" in stdout, "expression mismatch summary coverage mismatch")
+            require(stderr == b"", "expression mismatch summary must not emit diagnostics")
+        if case["id"] == "branches-expression-mismatch.canonical":
+            output_bytes = decode_identity(
+                observation["output"], "branch-expression-mismatch canonical output"
+            )
+            require(
+                b"BRDA:10,0,first,1\nBRDA:10,0,second,0\n" in output_bytes,
+                "branch positional expression order mismatch",
+            )
+            require(
+                b"BRF:2\n" in output_bytes and b"BRH:1\n" in output_bytes,
+                "branch expression mismatch totals mismatch",
+            )
+        if case["id"] == "branches-expression-merge.canonical":
+            output_bytes = decode_identity(
+                observation["output"], "branch-expression-merge canonical output"
+            )
+            require(
+                b"BRDA:10,0,left,3\nBRDA:10,0,left_else,3\n" in output_bytes,
+                "branch expression merge must retain left expressions and add counts",
+            )
+            require(
+                b"right" not in output_bytes,
+                "branch expression merge must not retain right expressions",
+            )
+            require(
+                b"BRF:2\n" in output_bytes and b"BRH:2\n" in output_bytes,
+                "branch expression merge writer totals mismatch",
+            )
+            require(
+                b"branches....: 50.0% (1 of 2 branches)" in decode_identity(
+                    observation["stdout"], "branch-expression-merge canonical stdout"
+                ),
+                "branch expression merge cached summary mismatch",
+            )
+        if case["id"] == "branches-order-gaps.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-order-gaps canonical output")
+            require(b"BRDA:10,0,a,1\n" in output_bytes and b"BRDA:10,0,b,0\n" in output_bytes, "order-gaps first renumbered block missing")
+            require(b"BRDA:10,1,c,1\n" in output_bytes and b"BRDA:10,1,d,0\n" in output_bytes, "order-gaps second renumbered block missing")
+            require(b"BRDA:10,2,e,1\n" in output_bytes and b"BRDA:10,2,f,0\n" in output_bytes, "order-gaps third renumbered block missing")
+            require(b"BRDA:10,5," not in output_bytes and b"BRDA:10,9," not in output_bytes, "order-gaps must not preserve input block IDs")
+        if case["id"] == "branches-noncontiguous.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-noncont canonical output")
+            require(b"BRDA:10,0,a,1\n" in output_bytes and b"BRDA:10,0,b,0\n" in output_bytes, "noncont first block missing")
+            require(b"BRDA:10,1,e,1\n" in output_bytes and b"BRDA:10,1,f,0\n" in output_bytes, "noncont second positional block missing")
+            require(b"BRDA:20,0,c,1\n" in output_bytes and b"BRDA:20,0,d,0\n" in output_bytes, "noncont line20 block missing")
+        if case["id"] == "branches-interleave.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-interleave canonical output")
+            require(b"BRDA:10,0,a,1\n" in output_bytes, "interleave first element missing")
+            require(b"BRDA:10,1,c,1\n" in output_bytes, "interleave second element missing")
+            require(b"BRDA:10,2,b,0\n" in output_bytes, "interleave third positional element missing")
+            require(b"BRDA:10,3,d,0\n" in output_bytes, "interleave fourth positional element missing")
+            require(b"BRF:4\n" in output_bytes, "interleave BRF mismatch")
+        if case["id"] == "branches-sort-signatures.canonical":
+            output_bytes = decode_identity(observation["output"], "branch-sort canonical output")
+            require(
+                output_bytes.index(b"BRDA:10,e0,e0,1\n")
+                < output_bytes.index(b"BRDA:10,1,b0,1\n")
+                < output_bytes.index(b"BRDA:10,f2,f0,1\n")
+                < output_bytes.index(b"BRDA:10,3,a0,1\n"),
+                "branch-sort signature order mismatch",
+            )
+            require(b"BRDA:10,e2," not in output_bytes and b"BRDA:10,f3," not in output_bytes, "branch-sort must renumber input block IDs")
+
+
+        # Numeric / checksum / error-policy invariants (M1-TF-030..036).
+        if case["id"] == "numeric-boundary.summary":
+            stdout = decode_identity(observation["stdout"], "numeric-boundary summary stdout")
+            require(b"source files: 15" in stdout, "numeric-boundary must summarize all accepted lexeme sources")
+            require(observation["exit_status"] == 0, "numeric-boundary default must accept")
+        if case["id"] == "numeric-boundary.canonical":
+            output_bytes = decode_identity(observation["output"], "numeric-boundary canonical output")
+            require(output_bytes.count(b"end_of_record") == 15, "numeric-boundary canonical record count drift")
+            require(b"DA:1,NaN\n" in output_bytes or b"DA:1,nan\n" in output_bytes, "numeric-boundary must retain NaN spellings")
+            require(b"DA:1,Inf\n" in output_bytes or b"DA:1,+Inf\n" in output_bytes or b"DA:1,Infinity\n" in output_bytes, "numeric-boundary must retain Inf spellings")
+        if case["id"] == "numeric-extra-spellings.summary":
+            stdout = decode_identity(observation["stdout"], "extra-spellings summary stdout")
+            require(b"source files: 3" in stdout, "extra-spellings must summarize three sources")
+            require(observation["exit_status"] == 0, "extra-spellings default must accept")
+        if case["id"] == "numeric-extra-spellings.canonical":
+            output_bytes = decode_identity(observation["output"], "extra-spellings canonical output")
+            require(output_bytes.count(b"end_of_record") == 3, "extra-spellings canonical record count drift")
+            require(b"DA:1,+1\n" in output_bytes, "extra-spellings must retain +1")
+            require(b"DA:1,nan\n" in output_bytes, "extra-spellings must retain nan")
+            require(b"DA:1,+Inf\n" in output_bytes, "extra-spellings must retain +Inf")
+        if case["id"] == "numeric-format-atoms.summary":
+            stderr = decode_identity(observation["stderr"], "format-atoms summary stderr").decode("utf-8", "replace")
+            require("Unexpected negative hit count '-3'" in stderr, "format-atoms default must hit ERROR_NEGATIVE")
+            require(observation["exit_status"] == 1, "format-atoms default summary must exit 1")
+        if case["id"] == "numeric-format-atoms.default-stop":
+            require(observation["output"]["exists"] is False, "default-stop must leave output absent")
+            stderr = decode_identity(observation["stderr"], "format-atoms default-stop stderr").decode("utf-8", "replace")
+            require("Unexpected negative hit count '-3'" in stderr, "default-stop must surface ERROR_NEGATIVE")
+            require("Unexpected non-integer hit count" not in stderr, "default-stop must not continue into ERROR_FORMAT")
+        if case["id"] == "numeric-format-atoms.ignore-negative":
+            require(observation["output"]["exists"] is False, "ignore-negative-only must still stop without output")
+            stderr = decode_identity(observation["stderr"], "format-atoms ignore-negative stderr").decode("utf-8", "replace")
+            require("Unexpected non-integer hit count" in stderr, "ignore-negative must continue into ERROR_FORMAT")
+        if case["id"] == "numeric-format-atoms.ignore-format-negative.canonical":
+            output_bytes = decode_identity(observation["output"], "format-atoms ignore-format-negative output")
+            require(b"DA:4,0\n" in output_bytes, "negative DA must coerce to zero")
+            require(b"DA:10,0\n" in output_bytes, "malformed exponent DA must coerce to zero")
+            require(b"DA:12,1.0e+19\n" in output_bytes, "excessive DA must be retained without threshold")
+            require(b"BRDA:1,1,1,1.67e+20\n" in output_bytes, "excessive BRDA must be retained")
+            require(observation["exit_status"] == 0, "ignore format+negative without threshold must exit 0")
+        if case["id"] == "numeric-format-atoms.excessive-default-stop":
+            require(observation["output"]["exists"] is False, "excessive default-stop must leave output absent")
+            stderr = decode_identity(observation["stderr"], "format-atoms excessive-default-stop stderr").decode("utf-8", "replace")
+            require("excessive" in stderr.lower() or "Excessive" in stderr, "excessive-default-stop must surface ERROR_EXCESSIVE")
+        if case["id"] == "numeric-format-atoms.excessive-keep-going":
+            require(observation["output"]["exists"] is True, "keep-going must still write output")
+            require(observation["exit_status"] == 1, "keep-going must exit nonzero")
+            output_bytes = decode_identity(observation["output"], "format-atoms keep-going output")
+            require(b"DA:12,1.0e+19\n" in output_bytes, "keep-going must retain excessive counts in output")
+        if case["id"] == "numeric-format-atoms.excessive-stop-on-error-0":
+            validate_lcov_stderr(
+                case["id"],
+                decode_identity(observation["stderr"], f"{case['id']} stderr"),
+                (("WARNING", "negative"), ("WARNING", "negative"), ("WARNING", "format"), ("WARNING", "format"),
+                 ("ERROR", "excessive"), ("ERROR", "excessive"), ("ERROR", "excessive")),
+            )
+            require(observation["exit_status"] == 1, "stop_on_error=0 must exit nonzero")
+        if case["id"] == "numeric-format-atoms.excessive-stop-on-error-1":
+            validate_lcov_stderr(
+                case["id"],
+                decode_identity(observation["stderr"], f"{case['id']} stderr"),
+                (("WARNING", "negative"), ("WARNING", "format"), ("ERROR", "corrupt"), ("ERROR", "excessive")),
+            )
+            require(observation["output"]["exists"] is False, "stop_on_error=1 must leave output absent")
+        if case["id"] == "numeric-fna-malformed-exponent.summary":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("ERROR", "corrupt"), ("ERROR", "format")))
+            require(observation["output"]["exists"] is False, "malformed FNA summary must not write output")
+        if case["id"] == "numeric-zero-fn-end.summary":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("ERROR", "corrupt"), ("ERROR", "format")))
+            require(observation["output"]["exists"] is False, "zero FN end summary must not write output")
+        if case["id"] == "numeric-invalid-fnl-fields.summary":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("ERROR", "corrupt"), ("ERROR", "format")))
+            require(observation["output"]["exists"] is False, "invalid FNL summary must not write output")
+        if case["id"] == "functions-zero-start.summary":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("ERROR", "corrupt"), ("ERROR", "inconsistent")))
+            require(observation["output"]["exists"] is False, "zero-start summary must not write output")
+        if case["id"] == "numeric-fna-malformed-exponent.ignore-format":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("WARNING", "format"),))
+        if case["id"] == "numeric-zero-fn-end.ignore-format":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("WARNING", "format"),))
+        if case["id"] == "numeric-invalid-fnl-fields.ignore-format":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("WARNING", "format"), ("WARNING", "format")))
+        if case["id"] == "functions-zero-start.ignore-inconsistent-format":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("WARNING", "inconsistent"), ("WARNING", "format")))
+        if case["id"] == "numeric-function-excessive.default-stop":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), (("ERROR", "corrupt"), ("ERROR", "excessive")))
+        if case["id"] == "numeric-function-excessive.erase-suppressed":
+            validate_lcov_stderr(case["id"], decode_identity(observation["stderr"], f"{case['id']} stderr"), ())
+            require(b"suppress_me" not in decode_identity(observation["output"], f"{case['id']} output"), "erase_functions must remove suppressed function")
+        if case["id"] == "numeric-format-atoms.ignore-format-negative-excessive.canonical":
+            require(observation["exit_status"] == 0, "ignore excessive policy must exit 0")
+            output_bytes = decode_identity(observation["output"], "format-atoms full-ignore output")
+            require(b"DA:12,1.0e+19\n" in output_bytes, "full-ignore must retain excessive line count")
+        if case["id"] == "numeric-signed-zero.canonical":
+            output_bytes = decode_identity(observation["output"], "signed-zero canonical output")
+            require(b"DA:1,-0\n" in output_bytes, "signed-zero DA rewrite missing")
+            require(b"BRDA:2,0,expr,-0\n" in output_bytes, "signed-zero BRDA rewrite missing")
+        if case["id"] == "numeric-negative.ignore-negative":
+            output_bytes = decode_identity(observation["output"], "negative ignore output")
+            require(b"DA:2,0\n" in output_bytes, "negative count must coerce to zero")
+            stderr = decode_identity(observation["stderr"], "negative ignore stderr").decode("utf-8", "replace")
+            require("Unexpected negative hit count" in stderr, "negative ignore must warn")
+        if case["id"] == "numeric-nonnumeric.ignore-format":
+            output_bytes = decode_identity(observation["output"], "nonnumeric ignore output")
+            require(b"DA:2,0\n" in output_bytes, "nonnumeric count must coerce to zero")
+            stderr = decode_identity(observation["stderr"], "nonnumeric ignore stderr").decode("utf-8", "replace")
+            require("Unexpected non-integer hit count" in stderr, "nonnumeric ignore must warn")
+        if case["id"] == "numeric-malformed-exponent.ignore-format":
+            output_bytes = decode_identity(observation["output"], "malformed-exponent ignore output")
+            require(b"DA:2,0\n" in output_bytes, "malformed exponent must coerce to zero")
+        if case["id"] == "numeric-excessive.ignore-excessive":
+            require(observation["exit_status"] == 0, "ignore excessive must exit 0")
+        if case["id"] == "numeric-zero-line.summary":
+            stderr = decode_identity(observation["stderr"], "zero-line summary stderr").decode("utf-8", "replace")
+            require("unexpected line number '0'" in stderr, "zero-line must reject line number zero")
+        if case["id"] == "numeric-zero-brda.summary":
+            stderr = decode_identity(observation["stderr"], "zero-brda summary stderr").decode("utf-8", "replace")
+            require("unexpected line number '0'" in stderr, "zero-brda must reject line number zero")
+        if case["id"] == "numeric-zero-fn.summary":
+            stderr = decode_identity(observation["stderr"], "zero-fn summary stderr").decode("utf-8", "replace")
+            require("unexpected" in stderr.lower() or "format" in stderr.lower(), "zero-fn must reject invalid start/end")
+        if case["id"] == "numeric-zero-mcdc.summary":
+            stderr = decode_identity(observation["stderr"], "zero-mcdc summary stderr").decode("utf-8", "replace")
+            require("unexpected" in stderr.lower() or "format" in stderr.lower(), "zero-mcdc must reject invalid fields")
+        if case["id"] == "numeric-negative-inf.ignore-negative":
+            output_bytes = decode_identity(observation["output"], "negative-inf ignore output")
+            require(b"DA:1,0\n" in output_bytes or b",0\n" in output_bytes, "negative Inf must coerce under ignore-negative")
+        if case["id"] == "numeric-fnda-negative.ignore-negative":
+            output_bytes = decode_identity(observation["output"], "fnda-negative ignore output")
+            require(b"FNA:" in output_bytes or b"FNDA:0," in output_bytes, "negative FNDA must rewrite under ignore-negative")
+        if case["id"] == "numeric-fnda-nonnumeric.ignore-format":
+            output_bytes = decode_identity(observation["output"], "fnda-nonnumeric ignore output")
+            require(b"FNA:" in output_bytes or b"FNDA:0," in output_bytes, "nonnumeric FNDA must rewrite under ignore-format")
+        if case["id"] == "numeric-fna-nonnumeric.ignore-format":
+            output_bytes = decode_identity(observation["output"], "fna-nonnumeric ignore output")
+            require(b"FNA:" in output_bytes, "nonnumeric FNA must rewrite under ignore-format")
+        if case["id"] == "numeric-brda-nonnumeric.ignore-format":
+            output_bytes = decode_identity(observation["output"], "brda-nonnumeric ignore output")
+            require(b"BRDA:" in output_bytes, "nonnumeric BRDA must rewrite under ignore-format")
+        if case["id"] == "numeric-mcdc-nondigit.ignore-format":
+            output_bytes = decode_identity(observation["output"], "mcdc-nondigit ignore output")
+            require(b"MCDC:" in output_bytes or observation["exit_status"] == 0, "nondigit MCDC ignore-format must recover")
+        if case["id"] == "numeric-inf-excessive.ignore-excessive":
+            require(observation["exit_status"] == 0, "Inf/NaN excessive ignore must exit 0")
+        if case["id"] == "checksum-match.summary":
+            require(observation["exit_status"] == 0, "checksum-match must accept")
+            require(observation.get("additional_fixtures") == {"cs.c": "fixtures/numeric/cs.c"}, "checksum-match additional fixture binding drift")
+        if case["id"] == "checksum-match.canonical":
+            output_bytes = decode_identity(observation["output"], "checksum-match canonical output")
+            require(CHECKSUM_MD5_BASE64.encode("ascii") in output_bytes, "checksum-match rewrite must retain md5_base64")
+            require(b"DA:1,1,AVO7Y115x231sZo9ymlVFA\n" in output_bytes, "checksum-match DA identity drift")
+        if case["id"] == "checksum-mismatch.summary":
+            require(observation["exit_status"] == 1, "checksum-mismatch default must reject")
+            stderr = decode_identity(observation["stderr"], "checksum-mismatch stderr").decode("utf-8", "replace")
+            require("checksum mismatch" in stderr, "checksum-mismatch diagnostic drift")
+        if case["id"] == "checksum-mismatch.ignore-version":
+            require(observation["exit_status"] == 0, "checksum-mismatch ignore-version must recover")
+            output_bytes = decode_identity(observation["output"], "checksum-mismatch ignore output")
+            require(b"WRONGCHK" in output_bytes, "ignore-version must keep recorded mismatch token")
+        if case["id"] == "checksum-missing.summary":
+            require(observation["exit_status"] == 1, "checksum-missing default must reject")
+            stderr = decode_identity(observation["stderr"], "checksum-missing stderr").decode("utf-8", "replace")
+            require("no checksum" in stderr, "checksum-missing diagnostic drift")
+        if case["id"] == "checksum-missing.ignore-version-recompute":
+            require(observation["exit_status"] == 0, "checksum recompute must exit 0")
+            output_bytes = decode_identity(observation["output"], "checksum recompute output")
+            require(b"DA:1,1,AVO7Y115x231sZo9ymlVFA\n" in output_bytes, "missing checksum must recompute md5_base64")
+        if case["id"] == "checksum-duplicate.summary":
+            require(observation["exit_status"] == 1, "checksum-duplicate default must reject")
+            stderr = decode_identity(observation["stderr"], "checksum-duplicate stderr").decode("utf-8", "replace")
+            require("checksum mismatch" in stderr, "checksum-duplicate diagnostic drift")
+        if case["id"] == "checksum-duplicate.ignore-version":
+            require(observation["exit_status"] == 0, "checksum-duplicate ignore-version must recover")
+        if case["id"] == "checksum-no-verify.canonical":
+            output_bytes = decode_identity(observation["output"], "checksum-no-verify output")
+            require(b"DA:1,1\n" in output_bytes, "without --checksum writer must omit checksum field")
+            require(b"AVO7Y115x231sZo9ymlVFA" not in output_bytes, "without --checksum must not emit checksum token")
+
+
     # Exact fixture/case closure for the ownership slice.
     state_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "state-ownership"]
     require([fixture.id for fixture in state_fixtures] == list(STATE_FIXTURE_IDS), "state-ownership fixture closure drift")
@@ -404,6 +1899,169 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             "ver-repeat-equal.canonical",
         ],
         f"ver-semantics case closure drift: {ver_case_ids}",
+    )
+    function_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "function-records"]
+    require(
+        [fixture.id for fixture in function_fixtures] == list(FUNCTION_FIXTURE_IDS),
+        "function-records fixture closure drift",
+    )
+    function_case_ids = [case["id"] for case in cases if case["fixture"].startswith("fixtures/functions/")]
+    require(
+        function_case_ids
+        == [
+            "functions-current-core.summary",
+            "functions-current-missing-alias.summary",
+            "functions-zero-end.summary",
+            "functions-zero-start.summary",
+            "functions-mixed-merge.summary",
+            "functions-mixed-location-mismatch.summary",
+            "functions-mixed-range-mismatch.summary",
+            "functions-index-duplicate.summary",
+            "functions-index-unknown.summary",
+            "functions-index-scope-reset.summary",
+            "functions-index-tn-preserves.summary",
+            "functions-current-core.canonical",
+            "functions-current-core.semantic-snapshot",
+            "functions-zero-end.canonical",
+            "functions-mixed-merge.canonical",
+            "functions-mixed-merge.semantic-snapshot",
+            "functions-mixed-location-mismatch.canonical",
+            "functions-mixed-range-mismatch.canonical",
+            "functions-index-duplicate.canonical",
+            "functions-index-unknown.canonical",
+            "functions-index-scope-reset.canonical",
+            "functions-zero-start.ignore-inconsistent-format",
+            "functions-zero-start.semantic-snapshot",
+        ],
+        f"function-records case closure drift: {function_case_ids}",
+    )
+    branch_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "branch-records"]
+    require(
+        [fixture.id for fixture in branch_fixtures] == list(BRANCH_FIXTURE_IDS),
+        "branch-records fixture closure drift",
+    )
+    branch_case_ids = [case["id"] for case in cases if case["fixture"].startswith("fixtures/branches/")]
+    require(
+        branch_case_ids
+        == [
+            "branches-forms-core.summary",
+            "branches-u-modes.summary",
+            "branches-malformed-tail.summary",
+            "branches-malformed-tail-empty-taken.summary",
+            "branches-malformed-tail-empty-expression.summary",
+            "branches-expression-mismatch.summary",
+            "branches-order-gaps.summary",
+            "branches-noncontiguous.summary",
+            "branches-interleave.summary",
+            "branches-sort-signatures.summary",
+            "branches-forms-core.canonical",
+            "branches-forms-core.semantic-snapshot",
+            "branches-u-modes.canonical",
+            "branches-u-modes.clear-unreachable",
+            "branches-malformed-tail.canonical",
+            "branches-malformed-tail-empty-taken.canonical",
+            "branches-malformed-tail-empty-expression.canonical",
+            "branches-expression-mismatch.canonical",
+            "branches-expression-merge.canonical",
+            "branches-expression-merge.semantic-snapshot",
+            "branches-order-gaps.canonical",
+            "branches-noncontiguous.canonical",
+            "branches-noncontiguous.semantic-snapshot",
+            "branches-interleave.canonical",
+            "branches-sort-signatures.canonical",
+        ],
+        f"branch-records case closure drift: {branch_case_ids}",
+    )
+    numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
+    require(
+        [fixture.id for fixture in numeric_fixtures] == list(NUMERIC_FIXTURE_IDS),
+        f"numeric-boundary fixture closure drift: {[fixture.id for fixture in numeric_fixtures]}",
+    )
+    numeric_case_ids = [
+        case["id"]
+        for case in cases
+        if case["fixture"] == "fixtures/numeric-boundary.info"
+        or case["fixture"].startswith("fixtures/numeric/")
+        or case["fixture"] == "fixtures/functions/zero-start.info"
+    ]
+    require(
+        numeric_case_ids
+        == [
+            "numeric-boundary.summary",
+            "numeric-extra-spellings.summary",
+            "numeric-format-atoms.summary",
+            "numeric-negative.summary",
+            "numeric-nonnumeric.summary",
+            "numeric-malformed-exponent.summary",
+            "numeric-excessive.summary",
+            "numeric-zero-line.summary",
+            "numeric-negative-inf.summary",
+            "numeric-signed-zero.summary",
+            "numeric-fnda-negative.summary",
+            "numeric-fnda-nonnumeric.summary",
+            "numeric-fna-nonnumeric.summary",
+            "numeric-fna-malformed-exponent.summary",
+            "numeric-brda-nonnumeric.summary",
+            "numeric-mcdc-nondigit.summary",
+            "numeric-zero-mcdc.summary",
+            "numeric-zero-fn.summary",
+            "numeric-zero-fn-end.summary",
+            "numeric-invalid-fnl-fields.summary",
+            "numeric-inf-excessive.summary",
+            "functions-zero-start.summary",
+            "numeric-boundary.canonical",
+            "numeric-negative.ignore-negative",
+            "numeric-nonnumeric.ignore-format",
+            "numeric-malformed-exponent.ignore-format",
+            "numeric-excessive.ignore-excessive",
+            "numeric-zero-line.ignore-format",
+            "numeric-boundary.semantic-snapshot",
+            "numeric-extra-spellings.canonical",
+            "numeric-extra-spellings.semantic-snapshot",
+            "numeric-format-atoms.default-stop",
+            "numeric-format-atoms.ignore-negative",
+            "numeric-format-atoms.ignore-format-negative.canonical",
+            "numeric-format-atoms.ignore-format-negative.semantic-snapshot",
+            "numeric-format-atoms.excessive-default-stop",
+            "numeric-format-atoms.excessive-keep-going",
+            "numeric-format-atoms.excessive-stop-on-error-0",
+            "numeric-format-atoms.excessive-stop-on-error-1",
+            "numeric-format-atoms.ignore-format-negative-excessive.canonical",
+            "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot",
+            "numeric-signed-zero.canonical",
+            "numeric-signed-zero.semantic-snapshot",
+            "numeric-negative-inf.ignore-negative",
+            "numeric-negative-inf.semantic-snapshot",
+            "numeric-fnda-negative.ignore-negative",
+            "numeric-fnda-nonnumeric.ignore-format",
+            "numeric-fna-nonnumeric.ignore-format",
+            "numeric-fna-nonnumeric.semantic-snapshot",
+            "numeric-fna-malformed-exponent.ignore-format",
+            "numeric-brda-nonnumeric.ignore-format",
+            "numeric-mcdc-nondigit.ignore-format",
+            "numeric-zero-brda.summary",
+            "numeric-zero-mcdc.ignore-format",
+            "numeric-zero-fn.ignore-format",
+            "numeric-zero-fn-end.ignore-format",
+            "numeric-zero-fn-end.semantic-snapshot",
+            "numeric-invalid-fnl-fields.ignore-format",
+            "numeric-invalid-fnl-fields.semantic-snapshot",
+            "functions-zero-start.ignore-inconsistent-format",
+            "functions-zero-start.semantic-snapshot",
+            "numeric-function-excessive.default-stop",
+            "numeric-function-excessive.erase-suppressed",
+            "numeric-inf-excessive.ignore-excessive",
+            "checksum-match.summary",
+            "checksum-match.canonical",
+            "checksum-mismatch.summary",
+            "checksum-mismatch.ignore-version",
+            "checksum-missing.summary",
+            "checksum-missing.ignore-version-recompute",
+            "checksum-duplicate.summary",
+            "checksum-duplicate.ignore-version",
+            "checksum-no-verify.canonical",
+        ],
+        f"numeric/checksum case closure drift: {numeric_case_ids}",
     )
 
 

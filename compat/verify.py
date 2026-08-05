@@ -881,6 +881,15 @@ def main() -> int:
         root,
     )
     run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            str(root / "compat/fixtures/m0-tracefiles/test_validate.py"),
+        ],
+        root,
+    )
+    run(
         [sys.executable, str(root / "compat/resources/contract.py")],
         root,
     )

@@ -1,3 +1,5 @@
+# Historical snapshot: counts below describe the pre-expanded diagnostics lane.
+
 # M0 Diagnostics Contract Review
 
 ## Decision

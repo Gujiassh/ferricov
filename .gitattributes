@@ -7,3 +7,7 @@ compat/fixtures/m0-tracefiles/fixtures/bytes/* binary
 # Retained Oracle streams are byte evidence, not formatted text.
 compat/correctness/baselines/**/*.bin binary
 compat/resources/results/**/*.bin binary
+
+# Upstream format.info atoms retain trailing spaces on comment lines.
+compat/fixtures/m0-tracefiles/fixtures/numeric/format-atoms.info whitespace=-blank-at-eol,-blank-at-eof
+compat/fixtures/m0-tracefiles/fixtures/numeric/cs.c -text

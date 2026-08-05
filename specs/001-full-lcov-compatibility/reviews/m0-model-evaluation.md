@@ -1,3 +1,5 @@
+# Historical snapshot: counts below describe earlier M0 evaluation stages, not the current corpus.
+
 # M0 Implementation Model Evaluation
 
 ## Status And Scope

@@ -589,7 +589,11 @@ class BehaviorContractValidationTests(unittest.TestCase):
         tracefile_by_id = {
             case["id"]: case for case in tracefile_contract["oracle_cases"]
         }
-        canonical_ids = {
+        # Planning-source ownership for the four retained-corpus lcov CLI primary
+        # targets remains limited to the original rewrite set plus state-ownership
+        # rewrites. Function/branch/numeric/checksum rewrites are exact tracefile
+        # mappings and must not expand those primary-plan argv closures.
+        planning_canonical_ids = {
             "bytes-crlf.canonical",
             "bytes-no-final-newline.canonical",
             "bytes-non-utf8.canonical",
@@ -604,15 +608,22 @@ class BehaviorContractValidationTests(unittest.TestCase):
             "state-late-tn-mcdc.canonical",
             "state-cross-sf-mcdc-success.canonical",
         }
+        module_canonical_ids = {
+            identifier
+            for identifier, case in tracefile_by_id.items()
+            if case["kind"] == "canonical_rewrite"
+            and identifier.startswith(("functions-", "branches-", "numeric-", "checksum-"))
+        }
         self.assertEqual(
             {
                 identifier
                 for identifier, case in tracefile_by_id.items()
                 if case["kind"] == "canonical_rewrite"
             },
-            canonical_ids | state_canonical_ids,
+            planning_canonical_ids | state_canonical_ids | module_canonical_ids,
         )
-        for identifier in canonical_ids:
+        self.assertTrue(module_canonical_ids)
+        for identifier in planning_canonical_ids:
             with self.subTest(oracle_case=identifier):
                 source = oracle_by_id[identifier]
                 retained = tracefile_by_id[identifier]
@@ -626,7 +637,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertEqual(
             {
                 identifier
-                for identifier in canonical_ids
+                for identifier in planning_canonical_ids
                 if "--no-function-coverage" in oracle_by_id[identifier]["argv"]
             },
             {
@@ -641,7 +652,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertEqual(
             {
                 identifier
-                for identifier in canonical_ids
+                for identifier in planning_canonical_ids
                 if "--mcdc-coverage" in oracle_by_id[identifier]["argv"]
             },
             {"bytes-non-utf8.canonical", "current-all-records.canonical"},

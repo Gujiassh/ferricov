@@ -16,12 +16,26 @@ content-identified image and executable recorded in `manifest.json`.
   family. Summary payload cases intentionally succeed because the Oracle only
   checks their prefixes.
 - `fixtures/numeric-boundary.info` and `fixtures/numeric/` pin the Perl numeric
-  acceptance and error boundaries used by counts.
+  acceptance, negative/zero, malformed-field, threshold, suppression, checksum,
+  and stop-on-error boundaries used by counts. The exact cross-family atom matrix
+  required by `M1-TF-030` remains a follow-up gap.
 - `fixtures/bytes/` pins CRLF, no final newline, invalid UTF-8, and NUL input.
 - `fixtures/state/` pins late-TN MC/DC ownership, cross-SF MC/DC success, and
   the cross-SF return-to-line1 duplicate hard failure. Success ownership is
   captured with `inspect_model.pl` semantic snapshots as well as canonical
   rewrite observations.
+- `fixtures/functions/` pins current `FNL`/`FNA` behavior, mixed legacy/current
+  function records, and FNL index scope/hard-failure cases. Successful model
+  shaping uses `inspect_model.pl` semantic snapshots plus canonical rewrites;
+  hard failures retain exact diagnostics and output-file absence.
+- `fixtures/branches/` pins `BRDA` form coverage (vanilla, exception,
+  fallthrough, `U`/`fU`/`eU`, dash taken, comma-bearing and numeric expressions,
+  no-final-comma, empty-taken, empty-expression, positional expressions, and a
+  two-tracefile expression-independence merge probe) and branch-block construction (input gaps, noncontiguous
+  reuse, interleaved same-line tokens, and signature sort/renumber). Successful
+  model shaping uses `inspect_model.pl` semantic snapshots plus canonical
+  rewrites; both unreachable-flag modes and hard-failure diagnostics are
+  retained.
 - `generated/medium.info` and `generated/large.info` are manifest entries but
   are not committed. They are deterministic outputs of `generate.py`.
 
@@ -45,7 +59,8 @@ Materialize scale fixtures outside the checkout:
 python3 generate.py --include-scale --output-root /tmp/ferricov-m0-tracefiles
 ```
 
-Capture the pinned Docker Oracle baseline with networking disabled:
+After the fixture and case set is stable, capture the pinned Docker Oracle
+  baseline once with networking disabled:
 
 ```sh
 python3 capture_oracle.py

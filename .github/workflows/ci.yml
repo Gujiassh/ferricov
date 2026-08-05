@@ -109,6 +109,9 @@ jobs:
       - name: Validate retained tracefile corpus
         run: python3 compat/fixtures/m0-tracefiles/validate.py
 
+      - name: Run tracefile semantic snapshot mutation tests
+        run: python3 -m unittest compat/fixtures/m0-tracefiles/test_validate.py
+
       - name: Check generated tracefile contract
         run: python3 compat/tracefile/contract.py --upstream-root "$LCOV_SOURCE_ROOT"
 

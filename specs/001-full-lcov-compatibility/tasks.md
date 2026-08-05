@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 63 Oracle observations.
+  standalone fail-closed contract bound to 169 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -72,16 +72,18 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 42 retained fixtures,
-and 21 per-record malformed fixtures. Its 63 Oracle observations are
-reference-only and include exact mappings for `M1-TF-007`, `M1-TF-021`,
-`M1-TF-022`, and `M1-TF-026`. The 24 planned M1 tracefile IDs without exact
-executable mappings remain blockers, so the complete grammar and M1 readiness
-tasks stay open.
+15 reader matcher lines, all 18 writer emission lines, 88 retained fixtures,
+and 21 per-record malformed fixtures. Its 169 Oracle observations are
+reference-only. Exact mappings cover `M1-TF-007`, `M1-TF-009`, `M1-TF-011`,
+`M1-TF-013`, `M1-TF-021`, `M1-TF-022`, `M1-TF-024`, `M1-TF-025`, `M1-TF-026`,
+and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains unmapped because
+the current corpus lacks its required cross-family exact atom matrix. The 19
+named tracefile blockers remain, so the complete grammar and M1 readiness tasks
+stay open.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 53 retained observations are
+surfaces, and ten command exit policies. Its 112 retained observations are
 reference-only; the `geninfo` startup observation is explicitly classified as
 a read-only temporary-directory intercept. All 71 diagnostic and parallel
 case IDs remain planned, so ignore-two, warning promotion, converter traps,

@@ -10,20 +10,74 @@ use JSON::PP ();
 
 $| = 1;
 
-my $input = $ARGV[0];
-die("usage: inspect_model.pl <tracefile>\n") unless defined($input) && -f $input;
+my @raw = @ARGV;
+my @inputs;
+my @ignore;
+my $excessive_threshold;
+
+while (@raw) {
+    my $arg = shift(@raw);
+    if ($arg eq '--ignore' || $arg eq '--ignore-errors') {
+        die("inspect_model.pl: $arg requires a value\n") unless @raw;
+        push(@ignore, split(/,/, shift(@raw)));
+        next;
+    }
+    if ($arg eq '--excessive-threshold') {
+        die("inspect_model.pl: --excessive-threshold requires a value\n") unless @raw;
+        $excessive_threshold = shift(@raw);
+        next;
+    }
+    if ($arg eq '--') {
+        push(@inputs, @raw);
+        last;
+    }
+    if ($arg =~ /^-/) {
+        die("inspect_model.pl: unknown option '$arg'\n");
+    }
+    push(@inputs, $arg);
+}
+
+die("usage: inspect_model.pl [--ignore CLASS[,CLASS...]] [--excessive-threshold N] <tracefile> [tracefile ...]\n")
+    unless @inputs && !grep({ !-f $_ } @inputs);
 
 # Match the feature surface used by the state-ownership Oracle cases.
 $lcovutil::br_coverage   = 1;
 $lcovutil::mcdc_coverage = 1;
 $lcovutil::func_coverage = 1;
 $lcovutil::verbose       = 0;
+lcovutil::parse_ignore_errors(@ignore) if @ignore;
+$lcovutil::excessive_count_threshold = $excessive_threshold
+    if defined($excessive_threshold);
 
-my $trace = TraceFile->load($input, ReadCurrentSource->new(), 0);
+my @resolved_inputs = @inputs;
+my $reader = ReadCurrentSource->new();
+my $trace = TraceFile->load(shift(@inputs), $reader, 0);
+foreach my $input (@inputs) {
+    my $current = TraceFile->load($input, $reader, 0);
+    $trace->merge_tracefile($current, TraceInfo::UNION);
+}
 
 sub json_number {
     my ($value) = @_;
-    return 0 + $value if defined($value) && $value =~ /^-?\d+(?:\.\d+)?$/;
+    return undef unless defined($value);
+    # Preserve the observable sign that numeric coercion would otherwise erase.
+    return '-0' if "$value" eq '-0';
+    # Historical finite simple decimals remain JSON numbers.
+    if ($value =~ /^-?\d+(?:\.\d+)?$/) {
+        return 0 + $value;
+    }
+    # Every nonfinite spelling/value must be a plain string before JSON::PP encode.
+    {
+        no warnings qw(numeric uninitialized);
+        if ($value != $value) {
+            return "$value";
+        }
+        my $inf = 9**9**9;
+        if ($value == $inf || $value == -$inf) {
+            return "$value";
+        }
+    }
+    # Preserve other finite spellings as historical strings.
     return $value;
 }
 
@@ -198,9 +252,15 @@ my $document = {
         program => '/usr/local/bin/lcov',
         module  => '/usr/local/lib/lcov/lcovutil.pm',
     },
-    input   => $input,
     sources => \@sources,
 };
+# Bind only resolved tracefile paths so option argv does not leak into identity fields.
+if (@resolved_inputs == 1) {
+    $document->{input} = $resolved_inputs[0];
+}
+else {
+    $document->{inputs} = [@resolved_inputs];
+}
 
 my $json = JSON::PP->new->canonical(1)->ascii(1)->pretty(1)->encode($document);
 print $json;

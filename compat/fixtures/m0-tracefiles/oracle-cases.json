@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, and state-ownership semantic snapshot cases.",
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, and numeric/error/checksum probes.",
   "execution": {
     "working_directory": "/work",
     "input_name": "input.info",
@@ -361,6 +361,31 @@
       "expected_exit": 0
     },
     {
+      "id": "numeric-extra-spellings.summary",
+      "fixture": "fixtures/numeric/extra-spellings.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-extra-spellings.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.summary",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-format-atoms.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
       "id": "numeric-negative.summary",
       "fixture": "fixtures/numeric/negative.info",
       "requirement": "M1-TF-030/031/032/033/034",
@@ -417,6 +442,168 @@
       "description": "Default summary observation for numeric-zero-line.",
       "argv": [
         "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-negative-inf.summary",
+      "fixture": "fixtures/numeric/negative-inf.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-negative-inf.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-signed-zero.summary",
+      "fixture": "fixtures/numeric/signed-zero.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-signed-zero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fnda-negative.summary",
+      "fixture": "fixtures/numeric/fnda-negative.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-fnda-negative.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-fnda-nonnumeric.summary",
+      "fixture": "fixtures/numeric/fnda-nonnumeric.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-fnda-nonnumeric.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-fna-nonnumeric.summary",
+      "fixture": "fixtures/numeric/fna-nonnumeric.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-fna-nonnumeric.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-fna-malformed-exponent.summary",
+      "fixture": "fixtures/numeric/fna-malformed-exponent.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-fna-malformed-exponent.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-brda-nonnumeric.summary",
+      "fixture": "fixtures/numeric/brda-nonnumeric.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-brda-nonnumeric.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-mcdc-nondigit.summary",
+      "fixture": "fixtures/numeric/mcdc-nondigit.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-mcdc-nondigit.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-zero-mcdc.summary",
+      "fixture": "fixtures/numeric/zero-mcdc.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-zero-mcdc.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-zero-fn.summary",
+      "fixture": "fixtures/numeric/zero-fn.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-zero-fn.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-zero-fn-end.summary",
+      "fixture": "fixtures/numeric/zero-fn-end.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-zero-fn-end.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-invalid-fnl-fields.summary",
+      "fixture": "fixtures/numeric/invalid-fnl-fields.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-invalid-fnl-fields.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-inf-excessive.summary",
+      "fixture": "fixtures/numeric/inf-excessive.info",
+      "requirement": "M1-TF-030/031/032/033/034",
+      "description": "Default summary observation for numeric-inf-excessive.",
+      "argv": [
+        "lcov",
+        "--rc",
+        "excessive_count_threshold=100",
         "--summary",
         "input.info"
       ],
@@ -495,6 +682,268 @@
       "description": "Default summary observation for ver-per-source.",
       "argv": [
         "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-current-core.summary",
+      "fixture": "fixtures/functions/current-core.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-current-core.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-current-missing-alias.summary",
+      "fixture": "fixtures/functions/current-missing-alias.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-current-missing-alias.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-zero-end.summary",
+      "fixture": "fixtures/functions/zero-end.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-zero-end.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-zero-start.summary",
+      "fixture": "fixtures/functions/zero-start.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-zero-start.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-mixed-merge.summary",
+      "fixture": "fixtures/functions/mixed-merge.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-mixed-merge.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-mixed-location-mismatch.summary",
+      "fixture": "fixtures/functions/mixed-location-mismatch.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-mixed-location-mismatch.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-mixed-range-mismatch.summary",
+      "fixture": "fixtures/functions/mixed-range-mismatch.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-mixed-range-mismatch.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-duplicate.summary",
+      "fixture": "fixtures/functions/index-duplicate.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-index-duplicate.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-unknown.summary",
+      "fixture": "fixtures/functions/index-unknown.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-index-unknown.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-scope-reset.summary",
+      "fixture": "fixtures/functions/index-scope-reset.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-index-scope-reset.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-index-tn-preserves.summary",
+      "fixture": "fixtures/functions/index-tn-preserves.info",
+      "requirement": "M1-TF-009/011/024",
+      "description": "Default summary observation for functions-index-tn-preserves.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "branches-forms-core.summary",
+      "fixture": "fixtures/branches/forms-core.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-forms-core.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-u-modes.summary",
+      "fixture": "fixtures/branches/u-modes.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-u-modes.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-malformed-tail.summary",
+      "fixture": "fixtures/branches/malformed-tail.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-malformed-tail.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "branches-malformed-tail-empty-taken.summary",
+      "fixture": "fixtures/branches/malformed-tail-empty-taken.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-malformed-tail-empty-taken.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "branches-malformed-tail-empty-expression.summary",
+      "fixture": "fixtures/branches/malformed-tail-empty-expression.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-malformed-tail-empty-expression.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-expression-mismatch.summary",
+      "fixture": "fixtures/branches/expression-mismatch.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-expression-mismatch.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-order-gaps.summary",
+      "fixture": "fixtures/branches/order-gaps.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-order-gaps.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-noncontiguous.summary",
+      "fixture": "fixtures/branches/noncontiguous.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-noncontiguous.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-interleave.summary",
+      "fixture": "fixtures/branches/interleave.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-interleave.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-sort-signatures.summary",
+      "fixture": "fixtures/branches/sort-signatures.info",
+      "requirement": "M1-TF-013/025",
+      "description": "Default summary observation for branches-sort-signatures.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
         "--summary",
         "input.info"
       ],
@@ -877,6 +1326,1216 @@
         "inspect_model.pl",
         "input.info"
       ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-current-core.canonical",
+      "fixture": "fixtures/functions/current-core.info",
+      "requirement": "M1-TF-009",
+      "description": "Canonical writer output for current FNL/FNA core behavior.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-current-core.semantic-snapshot",
+      "fixture": "fixtures/functions/current-core.info",
+      "requirement": "M1-TF-009",
+      "description": "Semantic snapshot for current FNL/FNA aliases, ranges, and counts.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-zero-end.canonical",
+      "fixture": "fixtures/functions/zero-end.info",
+      "requirement": "M1-TF-009",
+      "description": "Canonical writer output retaining zero function end line.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-mixed-merge.canonical",
+      "fixture": "fixtures/functions/mixed-merge.info",
+      "requirement": "M1-TF-011",
+      "description": "Canonical rewrite of mixed legacy/current function records.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-mixed-merge.semantic-snapshot",
+      "fixture": "fixtures/functions/mixed-merge.info",
+      "requirement": "M1-TF-011",
+      "description": "Semantic snapshot for mixed legacy/current function merge.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-mixed-location-mismatch.canonical",
+      "fixture": "fixtures/functions/mixed-location-mismatch.info",
+      "requirement": "M1-TF-011",
+      "description": "Write attempt for mixed location mismatch hard failure.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-mixed-range-mismatch.canonical",
+      "fixture": "fixtures/functions/mixed-range-mismatch.info",
+      "requirement": "M1-TF-011",
+      "description": "Write attempt for mixed range mismatch hard failure.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-duplicate.canonical",
+      "fixture": "fixtures/functions/index-duplicate.info",
+      "requirement": "M1-TF-024",
+      "description": "Write attempt for duplicate FNL index hard failure.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-unknown.canonical",
+      "fixture": "fixtures/functions/index-unknown.info",
+      "requirement": "M1-TF-024",
+      "description": "Write attempt for unknown FNA index hard failure.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "functions-index-scope-reset.canonical",
+      "fixture": "fixtures/functions/index-scope-reset.info",
+      "requirement": "M1-TF-024",
+      "description": "Canonical writer output after FNL index map reset on SF.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-boundary.semantic-snapshot",
+      "fixture": "fixtures/numeric-boundary.info",
+      "requirement": "M1-TF-030",
+      "description": "Semantic snapshot of the pinned 15-atom numeric acceptance matrix.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-extra-spellings.canonical",
+      "fixture": "fixtures/numeric/extra-spellings.info",
+      "requirement": "M1-TF-030",
+      "description": "Canonical rewrite of additional legal numeric spellings +1/nan/+Inf.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-extra-spellings.semantic-snapshot",
+      "fixture": "fixtures/numeric/extra-spellings.info",
+      "requirement": "M1-TF-030",
+      "description": "Semantic snapshot for additional legal numeric spellings +1/nan/+Inf.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.default-stop",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-036",
+      "description": "Default stop on first ERROR_NEGATIVE from M0-TF-NUMERIC-001 atoms; no output file.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-format-atoms.ignore-negative",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-032/036",
+      "description": "Ignore negative only; next ERROR_FORMAT still stops without output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-format-atoms.ignore-format-negative.canonical",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030/031/032/036",
+      "description": "Ignore format and negative; rewrite retains coerced zeros and excessive values without threshold.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.ignore-format-negative.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030/031/032",
+      "description": "Semantic model after ignoring format and negative on M0-TF-NUMERIC-001 atoms.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.excessive-default-stop",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-033/036",
+      "description": "With threshold 1000000, first excessive count stops and suppresses output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-format-atoms.excessive-keep-going",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-033/036",
+      "description": "keep-going continues after excessive counts, writes output, and exits nonzero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--keep-going",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-format-atoms.excessive-stop-on-error-0",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-036",
+      "description": "Explicit stop_on_error=0 continues after excessive counts, writes output, and exits nonzero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--rc",
+        "stop_on_error=0",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-format-atoms.excessive-stop-on-error-1",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-036",
+      "description": "Explicit stop_on_error=1 stops on the first excessive count and leaves output absent.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--rc",
+        "stop_on_error=1",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-format-atoms.ignore-format-negative-excessive.canonical",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030/031/032/033/036",
+      "description": "Ignore format/negative/excessive at threshold 1000000; retained excessive values and exit zero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,negative,excessive",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030/031/032/033",
+      "description": "Semantic model after ignoring format/negative/excessive for M0-TF-NUMERIC-001.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-signed-zero.canonical",
+      "fixture": "fixtures/numeric/signed-zero.info",
+      "requirement": "M1-TF-032",
+      "description": "Canonical rewrite retains signed-zero DA and BRDA counts.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-signed-zero.semantic-snapshot",
+      "fixture": "fixtures/numeric/signed-zero.info",
+      "requirement": "M1-TF-032",
+      "description": "Semantic snapshot for accepted negative zero across DA and BRDA.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-negative-inf.ignore-negative",
+      "fixture": "fixtures/numeric/negative-inf.info",
+      "requirement": "M1-TF-032/036",
+      "description": "Ignore negative for -Inf coerces the count to zero in output.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-negative-inf.semantic-snapshot",
+      "fixture": "fixtures/numeric/negative-inf.info",
+      "requirement": "M1-TF-030/032",
+      "description": "Semantic snapshot proving -Inf is Perl-numeric, categorized as negative, and coerced to zero when ignored.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fnda-negative.ignore-negative",
+      "fixture": "fixtures/numeric/fnda-negative.info",
+      "requirement": "M1-TF-032",
+      "description": "Ignore negative on FNDA:-2 rewrites to FNA count zero.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fnda-nonnumeric.ignore-format",
+      "fixture": "fixtures/numeric/fnda-nonnumeric.info",
+      "requirement": "M1-TF-031",
+      "description": "Ignore format on nonnumeric FNDA rewrites to FNA count zero.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fna-nonnumeric.ignore-format",
+      "fixture": "fixtures/numeric/fna-nonnumeric.info",
+      "requirement": "M1-TF-031",
+      "description": "Ignore format on ordinary nonnumeric FNA rewrites count zero.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fna-nonnumeric.semantic-snapshot",
+      "fixture": "fixtures/numeric/fna-nonnumeric.info",
+      "requirement": "M1-TF-031",
+      "description": "Semantic snapshot after ordinary nonnumeric FNA format recovery.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-fna-malformed-exponent.ignore-format",
+      "fixture": "fixtures/numeric/fna-malformed-exponent.info",
+      "requirement": "M1-TF-031",
+      "description": "Ignore format on malformed-exponent FNA rewrites count zero.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-brda-nonnumeric.ignore-format",
+      "fixture": "fixtures/numeric/brda-nonnumeric.info",
+      "requirement": "M1-TF-031",
+      "description": "Ignore format on nonnumeric BRDA taken rewrites to zero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-mcdc-nondigit.ignore-format",
+      "fixture": "fixtures/numeric/mcdc-nondigit.info",
+      "requirement": "M1-TF-031",
+      "description": "Ignore format on digit-only MC/DC violation skips the bad true sense and retains the false sense.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-zero-brda.summary",
+      "fixture": "fixtures/numeric/zero-brda.info",
+      "requirement": "M1-TF-034",
+      "description": "Default summary rejects zero BRDA line number.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "numeric-zero-mcdc.ignore-format",
+      "fixture": "fixtures/numeric/zero-mcdc.info",
+      "requirement": "M1-TF-034",
+      "description": "Ignore format retains zero MCDC line and synthesizes the complementary sense.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-zero-fn.ignore-format",
+      "fixture": "fixtures/numeric/zero-fn.info",
+      "requirement": "M1-TF-034",
+      "description": "Ignore format retains zero FN start line in current FNL rewrite.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-zero-fn-end.ignore-format",
+      "fixture": "fixtures/numeric/zero-fn-end.info",
+      "requirement": "M1-TF-034",
+      "description": "Ignore format retains zero legacy FN end line in current FNL rewrite.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-zero-fn-end.semantic-snapshot",
+      "fixture": "fixtures/numeric/zero-fn-end.info",
+      "requirement": "M1-TF-034",
+      "description": "Semantic snapshot after zero legacy FN end-line format recovery.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-invalid-fnl-fields.ignore-format",
+      "fixture": "fixtures/numeric/invalid-fnl-fields.info",
+      "requirement": "M1-TF-034",
+      "description": "Ignore format drops nondigit FNL start/end declarations and retains the valid sentinel function.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-invalid-fnl-fields.semantic-snapshot",
+      "fixture": "fixtures/numeric/invalid-fnl-fields.info",
+      "requirement": "M1-TF-034",
+      "description": "Semantic snapshot proving invalid FNL declarations do not populate the index map.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "functions-zero-start.ignore-inconsistent-format",
+      "fixture": "fixtures/functions/zero-start.info",
+      "requirement": "M1-TF-034",
+      "description": "Ignore inconsistent and format errors to retain current FNL start zero and its repaired hit count.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "inconsistent,format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "functions-zero-start.semantic-snapshot",
+      "fixture": "fixtures/functions/zero-start.info",
+      "requirement": "M1-TF-034",
+      "description": "Semantic snapshot after current FNL zero-start consistency repair.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "inconsistent,format",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "numeric-function-excessive.default-stop",
+      "fixture": "fixtures/numeric/function-excessive.info",
+      "requirement": "M1-TF-033",
+      "description": "Function count 101 exceeds threshold 100 without a matching suppression pattern.",
+      "argv": [
+        "lcov",
+        "--rc",
+        "excessive_count_threshold=100",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "function-excessive.c": "fixtures/numeric/function-excessive.c"
+      },
+      "expected_exit": 1,
+      "expected_output_exists": false
+    },
+    {
+      "id": "numeric-function-excessive.erase-suppressed",
+      "fixture": "fixtures/numeric/function-excessive.info",
+      "requirement": "M1-TF-033",
+      "description": "erase_functions suppresses the excessive diagnostic for the matching function while filtering it from output.",
+      "argv": [
+        "lcov",
+        "--rc",
+        "excessive_count_threshold=100",
+        "--rc",
+        "erase_functions=^suppress_me$",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "function-excessive.c": "fixtures/numeric/function-excessive.c"
+      },
+      "expected_exit": 0,
+      "expected_output_exists": true
+    },
+    {
+      "id": "numeric-inf-excessive.ignore-excessive",
+      "fixture": "fixtures/numeric/inf-excessive.info",
+      "requirement": "M1-TF-033",
+      "description": "Ignore excessive retains Inf and NaN counts above threshold.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--rc",
+        "excessive_count_threshold=100",
+        "--ignore-errors",
+        "excessive",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-match.summary",
+      "fixture": "fixtures/numeric/checksum-match.info",
+      "requirement": "M1-TF-035",
+      "description": "Matching DA checksum with companion source under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-match.canonical",
+      "fixture": "fixtures/numeric/checksum-match.info",
+      "requirement": "M1-TF-035",
+      "description": "Canonical rewrite retains matching checksum under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-mismatch.summary",
+      "fixture": "fixtures/numeric/checksum-mismatch.info",
+      "requirement": "M1-TF-035",
+      "description": "Mismatched DA checksum is ERROR_VERSION under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 1
+    },
+    {
+      "id": "checksum-mismatch.ignore-version",
+      "fixture": "fixtures/numeric/checksum-mismatch.info",
+      "requirement": "M1-TF-035/036",
+      "description": "Ignore version keeps the recorded mismatched checksum in output.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "version",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-missing.summary",
+      "fixture": "fixtures/numeric/checksum-missing.info",
+      "requirement": "M1-TF-035",
+      "description": "Missing DA checksum is ERROR_VERSION under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 1
+    },
+    {
+      "id": "checksum-missing.ignore-version-recompute",
+      "fixture": "fixtures/numeric/checksum-missing.info",
+      "requirement": "M1-TF-035",
+      "description": "Ignore version recomputes the missing checksum from companion source into output.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "version",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-duplicate.summary",
+      "fixture": "fixtures/numeric/checksum-duplicate.info",
+      "requirement": "M1-TF-035",
+      "description": "Second stored checksum for the same source line mismatches under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 1
+    },
+    {
+      "id": "checksum-duplicate.ignore-version",
+      "fixture": "fixtures/numeric/checksum-duplicate.info",
+      "requirement": "M1-TF-035/036",
+      "description": "Ignore version continues after duplicate/mismatched stored checksums.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "version",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      },
+      "expected_exit": 0
+    },
+    {
+      "id": "checksum-no-verify.canonical",
+      "fixture": "fixtures/numeric/checksum-match.info",
+      "requirement": "M1-TF-035",
+      "description": "Without --checksum, stored input checksums are not emitted.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-forms-core.canonical",
+      "fixture": "fixtures/branches/forms-core.info",
+      "requirement": "M1-TF-013",
+      "description": "Canonical rewrite of BRDA forms including U exclusion, dash taken, comma expressions, and numeric expression identity.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-forms-core.semantic-snapshot",
+      "fixture": "fixtures/branches/forms-core.info",
+      "requirement": "M1-TF-013",
+      "description": "Semantic snapshot for BRDA forms, exclusion, dash taken, and expression identity.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-u-modes.canonical",
+      "fixture": "fixtures/branches/u-modes.info",
+      "requirement": "M1-TF-013",
+      "description": "Canonical rewrite with default unreachable-flag mode retaining U exclusion.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-u-modes.clear-unreachable",
+      "fixture": "fixtures/branches/u-modes.info",
+      "requirement": "M1-TF-013",
+      "description": "Canonical rewrite with ignore_unreachable_flag clearing U exclusion marks.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--rc",
+        "ignore_unreachable_flag=1",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-malformed-tail.canonical",
+      "fixture": "fixtures/branches/malformed-tail.info",
+      "requirement": "M1-TF-013",
+      "description": "Write attempt for BRDA malformed-tail hard failure.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "branches-malformed-tail-empty-taken.canonical",
+      "fixture": "fixtures/branches/malformed-tail-empty-taken.info",
+      "requirement": "M1-TF-013",
+      "description": "Write attempt for a BRDA record whose final taken field is empty.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "branches-malformed-tail-empty-expression.canonical",
+      "fixture": "fixtures/branches/malformed-tail-empty-expression.info",
+      "requirement": "M1-TF-013",
+      "description": "Canonical rewrite of an accepted BRDA record with an empty expression.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-expression-mismatch.canonical",
+      "fixture": "fixtures/branches/expression-mismatch.info",
+      "requirement": "M1-TF-013",
+      "description": "Canonical rewrite of distinct positional expressions under one input block token.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-expression-merge.canonical",
+      "fixture": "fixtures/branches/expression-merge-left.info",
+      "additional_fixtures": {
+        "right.info": "fixtures/branches/expression-merge-right.info"
+      },
+      "requirement": "M1-TF-025",
+      "description": "Canonical two-tracefile merge proving positional identity, left-expression retention, and count addition.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--parallel",
+        "1",
+        "--add-tracefile",
+        "input.info",
+        "--add-tracefile",
+        "right.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-expression-merge.semantic-snapshot",
+      "fixture": "fixtures/branches/expression-merge-left.info",
+      "additional_fixtures": {
+        "right.info": "fixtures/branches/expression-merge-right.info"
+      },
+      "requirement": "M1-TF-025",
+      "description": "Semantic two-tracefile merge snapshot for branch expression independence and cached totals.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info",
+        "right.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-order-gaps.canonical",
+      "fixture": "fixtures/branches/order-gaps.info",
+      "requirement": "M1-TF-025",
+      "description": "Canonical renumbering of gapped input block IDs.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-noncontiguous.canonical",
+      "fixture": "fixtures/branches/noncontiguous.info",
+      "requirement": "M1-TF-025",
+      "description": "Canonical rewrite after noncontiguous line/block reuse creates new positional blocks.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-noncontiguous.semantic-snapshot",
+      "fixture": "fixtures/branches/noncontiguous.info",
+      "requirement": "M1-TF-025",
+      "description": "Semantic snapshot of positional branch blocks after noncontiguous reuse.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-interleave.canonical",
+      "fixture": "fixtures/branches/interleave.info",
+      "requirement": "M1-TF-025",
+      "description": "Canonical rewrite of interleaved same-line block transitions.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "branches-sort-signatures.canonical",
+      "fixture": "fixtures/branches/sort-signatures.info",
+      "requirement": "M1-TF-025",
+      "description": "Canonical writer branch-block sort and renumbering by signature length then text.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
       "expected_exit": 0
     }
   ]

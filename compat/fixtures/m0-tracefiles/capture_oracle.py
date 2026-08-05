@@ -31,6 +31,38 @@ def byte_identity(data: bytes, include_raw: bool = True) -> dict[str, object]:
     return identity
 
 
+def reject_json_constant(value: str) -> None:
+    raise ValueError(f"non-RFC JSON constant: {value}")
+
+
+def reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    document: dict[str, object] = {}
+    for key, value in pairs:
+        if key in document:
+            raise ValueError(f"duplicate JSON object key: {key}")
+        document[key] = value
+    return document
+
+
+def strict_json_loads_ascii(data: bytes, label: str) -> dict[str, object]:
+    try:
+        text = data.decode("ascii")
+        document = json.loads(
+            text,
+            parse_constant=reject_json_constant,
+            object_pairs_hook=reject_duplicate_json_keys,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+        raise SystemExit(f"{label}: not strict ASCII JSON: {error}") from error
+    if not isinstance(document, dict):
+        raise SystemExit(f"{label}: JSON root must be an object")
+    return document
+
+
+def validate_semantic_json(data: bytes, case_id: str) -> None:
+    strict_json_loads_ascii(data, f"{case_id} inspector stdout")
+
+
 def inspect_image(image: str) -> str:
     result = subprocess.run(
         ["docker", "image", "inspect", image, "--format", "{{.Id}}"],
@@ -87,6 +119,9 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
         shutil.copyfile(generated_root / str(case["fixture"]), work / "input.info")
+        additional_fixtures = case.get("additional_fixtures", {})
+        for name, fixture in additional_fixtures.items():
+            shutil.copyfile(generated_root / str(fixture), work / str(name))
         if case_uses_model_inspector(case):
             if not MODEL_INSPECTOR.is_file():
                 raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")
@@ -99,12 +134,21 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             "--volume", f"{work}:/work", "--workdir", "/work", image,
             *[str(value) for value in case["argv"]],
         ]
+        # Hash the exact bytes mounted into the container before execution.
+        fixture_sha256 = hashlib.sha256((work / "input.info").read_bytes()).hexdigest()
+        additional_fixture_sha256 = {
+            name: hashlib.sha256((work / name).read_bytes()).hexdigest()
+            for name in additional_fixtures
+        }
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+        if case_uses_model_inspector(case):
+            validate_semantic_json(result.stdout, str(case["id"]))
         output_file = case.get("output_file")
         output = output_identity(work / str(output_file)) if output_file else {"exists": False}
         observation: dict[str, object] = {
             "id": case["id"],
             "fixture": case["fixture"],
+            "fixture_sha256": fixture_sha256,
             "argv": case["argv"],
             "exit_status": result.returncode,
             "stdout": byte_identity(result.stdout),
@@ -112,6 +156,9 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             "output_file": output_file,
             "output": output,
         }
+        if additional_fixtures:
+            observation["additional_fixtures"] = additional_fixtures
+            observation["additional_fixture_sha256"] = additional_fixture_sha256
         if case.get("runner") is not None:
             observation["runner"] = case["runner"]
         return observation
@@ -136,10 +183,14 @@ def main() -> int:
     if program["sha256"] != expected_oracle["program_sha256"]:
         raise SystemExit(f"Oracle executable mismatch: {program['sha256']}")
 
-    cases_document = json.loads(args.cases.read_text(encoding="ascii"))
+    cases_raw = args.cases.read_bytes()
+    cases_document = strict_json_loads_ascii(cases_raw, "oracle cases")
+    if not isinstance(cases_document.get("cases"), list):
+        raise SystemExit("oracle cases: cases must be an array")
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-") as raw_generated:
         generated_root = Path(raw_generated)
         generate.write_corpus(generated_root, include_scale=True)
+        manifest_sha256 = hashlib.sha256((generated_root / "manifest.json").read_bytes()).hexdigest()
         observations = []
         for index, case in enumerate(cases_document["cases"], start=1):
             print(f"[{index}/{len(cases_document['cases'])}] {case['id']}", flush=True)
@@ -157,7 +208,8 @@ def main() -> int:
             "locale": "C.UTF-8",
             "network": "none",
         },
-        "cases_sha256": hashlib.sha256(args.cases.read_bytes()).hexdigest(),
+        "cases_sha256": hashlib.sha256(cases_raw).hexdigest(),
+        "manifest_sha256": manifest_sha256,
         "cases": observations,
     }
     args.output.write_text(json.dumps(baseline, indent=2) + "\n", encoding="ascii")

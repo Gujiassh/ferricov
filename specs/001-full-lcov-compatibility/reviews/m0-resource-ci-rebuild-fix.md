@@ -45,14 +45,14 @@
   exercise after the existing closure-verified build.
 - Add focused adapter tests and synchronize CI/SSoT/review documentation.
 
-The VER grammar additions later shifted the retained resource source section line ranges. This metadata-only rebind updates the canonical contract/result digests above; the 13 raw samples remain unchanged.
+Later grammar additions (including VER, function-record, and branch-record Oracle evidence) shifted the retained resource source section line ranges. This metadata-only rebind updates the canonical contract/result digests above; section content hashes and the 13 raw samples remain unchanged.
 
 ## Canonical Invariants
 
 - Canonical contract SHA-256 is
-  `28c5ebd9f927bd77070af6bd69b34698e4bfcb6c72b5fcd1165b4bb5891f03f4`.
+  `eec94e282d93a6dcee237b34cf014d16a1301b6b839396c8f1a7d565e3e8e387`.
 - Canonical retained result SHA-256 is
-  `07ecfaa2b00bbc2a96b0c393c901a37122c2436d7b93ce0e08cf486f3f390da7`.
+  `9b8dde867e810cf56f8a5b2e338a3aa5998d7c0f7c34e116b7fca143b3a6484f`.
 - Canonical retained image remains
   `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`.
 - `compat/resources/exercise.py` is not canonical evidence, a product limit, a
@@ -68,9 +68,9 @@ The VER grammar additions later shifted the retained resource source section lin
 - BasedPyright: 0 errors, 0 warnings
 - Canonical contract/result validation: pass
 - Canonical contract SHA-256:
-  `28c5ebd9f927bd77070af6bd69b34698e4bfcb6c72b5fcd1165b4bb5891f03f4`
+  `eec94e282d93a6dcee237b34cf014d16a1301b6b839396c8f1a7d565e3e8e387`
 - Canonical retained result SHA-256:
-  `07ecfaa2b00bbc2a96b0c393c901a37122c2436d7b93ce0e08cf486f3f390da7`
+  `9b8dde867e810cf56f8a5b2e338a3aa5998d7c0f7c34e116b7fca143b3a6484f`
 - `compat/verify.py --skip-oracle`: pass
 - CI YAML parse: pass
 - `git diff --check`: pass
