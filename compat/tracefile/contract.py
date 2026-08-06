@@ -31,8 +31,8 @@ DEFAULT_UPSTREAM_ROOT = Path(
 
 EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/manifest.json": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "3b31382fc6239fb447fd92f8d21694a6957e3c0472ef227baf12da31b7ee5503",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "94787d0820a228e716954961fb7c611af807721e3a547b65cec5ae4dcb89fb4a",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "d5a274ecabdfbb29425092c1ff44cd5be1367a8a26bf38e46b7755978a059cf1",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "eb45db04a984a4833e3556c6bddcfa2e7b0360e72c9d0051ab0c21ca8f3832ba",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }
@@ -993,21 +993,35 @@ EXACT_CASE_REQUIREMENTS.update({
     "writer-summaries.canonical": {"requirement_ids": ["M1-TF-042"]},
     "writer-comments.canonical": {"requirement_ids": ["M1-TF-043"]},
     "writer-forbidden.canonical": {"requirement_ids": ["M1-TF-044"]},
-    # writer-fixedpoint.canonical remains observational only; M1-TF-045 needs
-    # parse-write-parse across canonical/legacy/permissive/ignored-error corpora.
+    # M1-TF-045 group: canonical member plus legacy/permissive/ignored-error
+    # members bound below. Group-completeness is enforced in validation_common.
+    "writer-fixedpoint.canonical": {"requirement_ids": ["M1-TF-045"]},
+    "legacy.canonical": {"requirement_ids": ["M1-TF-010", "M1-TF-044", "M1-TF-045"]},
+    "permissive-prefix.canonical": {
+        "requirement_ids": [
+            "M1-TF-004",
+            "M1-TF-006",
+            "M1-TF-008",
+            "M1-TF-012",
+            "M1-TF-015",
+            "M1-TF-044",
+            "M1-TF-045",
+        ]
+    },
+    "wave2-unknown-tags.ignore-format": {"requirement_ids": ["M1-TF-016", "M1-TF-045"]},
     "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
-    "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050"]},
+    "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050", "M1-TF-052"]},
     "converter-coverage.py2lcov-no-functions": {"requirement_ids": ["M1-TF-051"]},
     "converter-coverage.py2lcov-with-functions": {"requirement_ids": ["M1-TF-051"]},
-    # converter-coverage.canonical-rewrite remains observational only; M1-TF-052
-    # needs converter input/output semantic snapshots proving no loss.
+    "converter-coverage.canonical-rewrite": {"requirement_ids": ["M1-TF-052"]},
     "gzip-valid.summary": {"requirement_ids": ["M1-TF-060"]},
     "gzip-plain.write-gz": {"requirement_ids": ["M1-TF-060"]},
     "gzip-corrupt.summary": {"requirement_ids": ["M1-TF-060"]},
     "gzip-empty.summary": {"requirement_ids": ["M1-TF-060"]},
     "gzip-valid.missing-gzip": {"requirement_ids": ["M1-TF-060"]},
-    # writer-non-utf8.canonical remains observational only; M1-TF-061 needs an
-    # invalid/non-ASCII byte matrix across SF/TN/function/branch/MC/DC/version.
+    # M1-TF-061 full field matrix (TN/SF/alias/branch/MC/DC/VER). The SF-only
+    # writer-non-utf8.canonical capture remains observational.
+    "bytes-non-utf8.canonical": {"requirement_ids": ["M1-TF-061"]},
 })
 
 def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1435,6 +1449,7 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-007",
             "M1-TF-008",
             "M1-TF-009",
+            "M1-TF-010",
             "M1-TF-011",
             "M1-TF-012",
             "M1-TF-013",
@@ -1461,10 +1476,13 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-042",
             "M1-TF-043",
             "M1-TF-044",
+            "M1-TF-045",
             "M1-TF-046",
             "M1-TF-050",
             "M1-TF-051",
+            "M1-TF-052",
             "M1-TF-060",
+            "M1-TF-061",
         ],
         "exact_executable_m0_decision_ids": [
             "M0-TF-MCDC-SF-001",

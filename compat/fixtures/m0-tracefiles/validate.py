@@ -22,6 +22,12 @@ from validation_common import (
     SEMANTIC_STDERR_POLICIES,
     assert_branch_store,
     assert_converter_rewrite_observational,
+    assert_tf045_group_completeness,
+    assert_tf052_group_completeness,
+    assert_tf061_group_completeness,
+    assert_tf045_member_semantics,
+    assert_tf052_source_to_output_semantics,
+    assert_tf061_field_matrix,
     assert_count_store,
     assert_four_family_maps,
     assert_function_store,
@@ -1730,9 +1736,15 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
                 "py2lcov with-functions",
             )
         if case_id == "converter-coverage.canonical-rewrite":
-            assert_converter_rewrite_observational(
+            # Full M1-TF-052 source→output semantic no-loss (not substring-only).
+            assert_tf052_source_to_output_semantics(
                 decode_identity(observation["output"], "converter rewrite"),
                 "converter rewrite",
+            )
+            # Keep observational shape check as a nested defense.
+            assert_converter_rewrite_observational(
+                decode_identity(observation["output"], "converter rewrite shape"),
+                "converter rewrite shape",
             )
         if case_id == "gzip-plain.write-gz":
             output = observation["output"]
@@ -1758,6 +1770,39 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
                 decode_identity(observation["output"], "writer non-utf8"),
                 "writer non-utf8",
             )
+
+    # Wave3 semantic group completeness for exact M1-TF-045/052/061 bindings.
+    # Binding is only valid when every required corpus/field member validates.
+    observed_by_id = {str(observation["id"]): observation for observation in observations}
+    assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045")
+    assert_tf052_group_completeness(observed_by_id, decode_identity, "M1-TF-052")
+    assert_tf061_group_completeness(observed_by_id, decode_identity, "M1-TF-061")
+    # Per-member exact tables also cover non-writer cases used by TF-045/061.
+    assert_tf045_member_semantics(
+        decode_identity(observed_by_id["legacy.canonical"]["output"], "legacy.canonical"),
+        "legacy",
+        "legacy.canonical",
+    )
+    assert_tf045_member_semantics(
+        decode_identity(
+            observed_by_id["permissive-prefix.canonical"]["output"],
+            "permissive-prefix.canonical",
+        ),
+        "permissive",
+        "permissive-prefix.canonical",
+    )
+    assert_tf045_member_semantics(
+        decode_identity(
+            observed_by_id["wave2-unknown-tags.ignore-format"]["output"],
+            "wave2-unknown-tags.ignore-format",
+        ),
+        "ignored_error",
+        "wave2-unknown-tags.ignore-format",
+    )
+    assert_tf061_field_matrix(
+        decode_identity(observed_by_id["bytes-non-utf8.canonical"]["output"], "bytes-non-utf8"),
+        "bytes-non-utf8.canonical",
+    )
 
     numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
     require(

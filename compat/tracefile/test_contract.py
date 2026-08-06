@@ -363,7 +363,7 @@ class TracefileContractTests(unittest.TestCase):
             "wave2-terminator-missing.ignore-empty": ["M1-TF-015"],
             "wave2-unknown-tags.summary": ["M1-TF-016"],
             "wave2-unknown-tags.canonical": ["M1-TF-016"],
-            "wave2-unknown-tags.ignore-format": ["M1-TF-016"],
+            "wave2-unknown-tags.ignore-format": ["M1-TF-016", "M1-TF-045"],
             "wave2-leading-ws-tag.summary": ["M1-TF-016"],
             "wave2-leading-ws-tag.canonical": ["M1-TF-016"],
             "wave2-leading-ws-tag.ignore-format": ["M1-TF-016"],
@@ -391,10 +391,12 @@ class TracefileContractTests(unittest.TestCase):
             "writer-summaries.canonical": ["M1-TF-042"],
             "writer-comments.canonical": ["M1-TF-043"],
             "writer-forbidden.canonical": ["M1-TF-044"],
+            "writer-fixedpoint.canonical": ["M1-TF-045"],
             "writer-fixedpoint.repeated-write": ["M1-TF-046"],
-            "converter-coverage.xml2lcov": ["M1-TF-050"],
+            "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
             "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
             "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],
+            "converter-coverage.canonical-rewrite": ["M1-TF-052"],
             "gzip-valid.summary": ["M1-TF-060"],
             "gzip-plain.write-gz": ["M1-TF-060"],
             "gzip-corrupt.summary": ["M1-TF-060"],
@@ -402,8 +404,6 @@ class TracefileContractTests(unittest.TestCase):
             "gzip-valid.missing-gzip": ["M1-TF-060"],
         }
         observational_only = {
-            "writer-fixedpoint.canonical",
-            "converter-coverage.canonical-rewrite",
             "writer-non-utf8.canonical",
         }
         targets = {
@@ -420,6 +420,37 @@ class TracefileContractTests(unittest.TestCase):
             with self.subTest(case_id=case_id):
                 self.assertNotIn("requirement_ids", targets[case_id])
                 self.assertNotIn("m0_decision_ids", targets[case_id])
+
+    def test_wave3_semantic_mappings_are_exact_and_group_scoped(self) -> None:
+        expected = {
+            "writer-fixedpoint.canonical": ["M1-TF-045"],
+            "legacy.canonical": ["M1-TF-010", "M1-TF-044", "M1-TF-045"],
+            "permissive-prefix.canonical": [
+                "M1-TF-004",
+                "M1-TF-006",
+                "M1-TF-008",
+                "M1-TF-012",
+                "M1-TF-015",
+                "M1-TF-044",
+                "M1-TF-045",
+            ],
+            "wave2-unknown-tags.ignore-format": ["M1-TF-016", "M1-TF-045"],
+            "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
+            "converter-coverage.canonical-rewrite": ["M1-TF-052"],
+            "bytes-non-utf8.canonical": ["M1-TF-061"],
+        }
+        targets = {case["id"]: case for case in self.committed["oracle_cases"]}
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+        # SF-only writer non-utf8 remains observational; matrix is on bytes-non-utf8.
+        writer_non_utf8 = targets["writer-non-utf8.canonical"]
+        self.assertNotIn("requirement_ids", writer_non_utf8)
+        self.assertIn("M1-TF-045", self.committed["totals"]["exact_executable_requirement_ids"])
+        self.assertIn("M1-TF-052", self.committed["totals"]["exact_executable_requirement_ids"])
+        self.assertIn("M1-TF-061", self.committed["totals"]["exact_executable_requirement_ids"])
+        self.assertFalse(self.committed["product_compatibility_evidence"])
 
 
 if __name__ == "__main__":

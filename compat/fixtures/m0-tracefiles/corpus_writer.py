@@ -1,16 +1,23 @@
 """Writer/converter/transport M0 Oracle fixtures and cases.
 
 Exact executable mappings for:
-  M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044,
-  M1-TF-046, M1-TF-050, M1-TF-051, M1-TF-060.
+  M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044, M1-TF-045,
+  M1-TF-046, M1-TF-050, M1-TF-051, M1-TF-052, M1-TF-060.
+
+Wave3 exact semantic closures (multi-corpus / source-bound):
+  M1-TF-045 via writer-fixedpoint.canonical plus legacy / permissive /
+  ignored-error corpora (group-completeness in validation_common).
+  M1-TF-052 via converter-coverage.canonical-rewrite + xml2lcov direct
+  with independent XML/Python source semantic facts.
+
+M1-TF-061 is bound on bytes-non-utf8.canonical (field matrix), not on the
+SF-only writer-non-utf8.canonical observational capture.
 
 Observational-only captures retained without exact mapping:
-  writer-fixedpoint.canonical (partial M1-TF-045),
-  converter-coverage.canonical-rewrite (partial M1-TF-052),
-  writer-non-utf8.canonical (partial M1-TF-061).
+  writer-non-utf8.canonical (SF-only; matrix lives on bytes-non-utf8).
 
 Oracle evidence only. Product compatibility remains false.
-M1-TF-045 / M1-TF-052 / M1-TF-061 / M1-TF-063 / M1-TF-064 remain blocked.
+M1-TF-063 / M1-TF-064 remain blocked.
 """
 
 from __future__ import annotations
@@ -21,7 +28,7 @@ import io
 from corpus_model import Fixture, ascii_bytes
 
 WRITER_GROUP = "writer-tracefile"
-WRITER_REQUIREMENT_TEXT = "M1-TF-041/042/043/044/046/050/051/060 (+ observational 045/052/061)"
+WRITER_REQUIREMENT_TEXT = "M1-TF-041/042/043/044/045/046/050/051/052/060 (+ observational SF-only 061 writer capture)"
 
 WRITER_FIXTURE_IDS = (
     "writer-order-core",
@@ -450,8 +457,8 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
         _lcov_write(
             "writer-fixedpoint.canonical",
             "fixtures/writer/fixedpoint.info",
-            "observational-fixedpoint-single-corpus",
-            "Observational single-corpus fixed-point rewrite; not full M1-TF-045 evidence.",
+            "M1-TF-045",
+            "Canonical corpus member of M1-TF-045 parse-write-parse group (with legacy/permissive/ignored-error).",
             branch_mcdc,
         ),
         _lcov_write(
@@ -517,8 +524,8 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
         {
             "id": "converter-coverage.canonical-rewrite",
             "fixture": "fixtures/writer/coverage.xml",
-            "requirement": "observational-converter-rewrite",
-            "description": "Observational converter-to-canonical rewrite; not full M1-TF-052 semantic no-loss evidence.",
+            "requirement": "M1-TF-052",
+            "description": "Converter output parsed and canonically rewritten without semantic loss (XML/Python source facts bound).",
             "argv": [
                 "sh",
                 "-c",
@@ -618,10 +625,12 @@ WRITER_EXACT_REQUIREMENTS: dict[str, list[str]] = {
     "writer-summaries.canonical": ["M1-TF-042"],
     "writer-comments.canonical": ["M1-TF-043"],
     "writer-forbidden.canonical": ["M1-TF-044"],
+    "writer-fixedpoint.canonical": ["M1-TF-045"],
     "writer-fixedpoint.repeated-write": ["M1-TF-046"],
     "converter-coverage.xml2lcov": ["M1-TF-050"],
     "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
     "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],
+    "converter-coverage.canonical-rewrite": ["M1-TF-052"],
     "gzip-valid.summary": ["M1-TF-060"],
     "gzip-plain.write-gz": ["M1-TF-060"],
     "gzip-corrupt.summary": ["M1-TF-060"],

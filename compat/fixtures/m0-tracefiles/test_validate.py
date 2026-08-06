@@ -1561,6 +1561,8 @@ class WriterTracefileMutationTests(unittest.TestCase):
             assert_converter_rewrite_observational,
             assert_py2lcov_no_functions_semantics,
             assert_py2lcov_with_functions_semantics,
+            assert_tf045_member_semantics,
+            assert_tf052_source_to_output_semantics,
             assert_writer_comment_semantics,
             assert_writer_fixedpoint_semantics,
             assert_writer_forbidden_semantics,
@@ -1581,9 +1583,20 @@ class WriterTracefileMutationTests(unittest.TestCase):
             "converter-coverage.xml2lcov": assert_xml2lcov_semantics,
             "converter-coverage.py2lcov-no-functions": assert_py2lcov_no_functions_semantics,
             "converter-coverage.py2lcov-with-functions": assert_py2lcov_with_functions_semantics,
-            "converter-coverage.canonical-rewrite": assert_converter_rewrite_observational,
+            "converter-coverage.canonical-rewrite": assert_tf052_source_to_output_semantics,
             "writer-non-utf8.canonical": assert_writer_non_utf8_observational,
         }
+        # Keep nested observational shape defense for the rewrite case.
+        rewrite_output = decode_identity(
+            self.cases["converter-coverage.canonical-rewrite"]["output"],
+            "converter-coverage.canonical-rewrite",
+        )
+        assert_converter_rewrite_observational(rewrite_output, "converter rewrite shape")
+        assert_tf045_member_semantics(
+            decode_identity(self.cases["writer-fixedpoint.canonical"]["output"], "fixedpoint"),
+            "canonical",
+            "writer-fixedpoint.canonical",
+        )
         for case_id, predicate in checks.items():
             observation = self.cases[case_id]
             output = decode_identity(observation["output"], case_id)
@@ -1634,6 +1647,91 @@ class WriterTracefileMutationTests(unittest.TestCase):
                 poisoned = output + b"#mut\n"
             with self.assertRaises(ValueError, msg=f"{case_id} poisoned still passes"):
                 predicate(bytes(poisoned), f"{case_id} poisoned")
+
+    def test_wave3_semantic_group_mutations_are_rejected(self) -> None:
+        from validate import decode_identity
+        from validation_common import (
+            TF045_CORPUS_MEMBERS,
+            TF052_DIRECT_CASE_ID,
+            TF052_REWRITE_CASE_ID,
+            TF061_CASE_ID,
+            TF061_REQUIRED_FIELDS,
+            assert_tf045_group_completeness,
+            assert_tf045_member_semantics,
+            assert_tf052_group_completeness,
+            assert_tf052_source_to_output_semantics,
+            assert_tf061_field_matrix,
+            assert_tf061_group_completeness,
+            mutate_tf045_field_bytes,
+            mutate_tf045_lost_record,
+            mutate_tf045_reordered_records,
+            mutate_tf052_identity_swap,
+            mutate_tf052_member_omission,
+            mutate_tf061_field_bytes,
+        )
+
+        observed_by_id = {case_id: copy.deepcopy(case) for case_id, case in self.cases.items()}
+
+        def decode_output(identity, label):
+            return decode_identity(identity, label)
+
+        assert_tf045_group_completeness(observed_by_id, decode_output)
+        assert_tf052_group_completeness(observed_by_id, decode_output)
+        assert_tf061_group_completeness(observed_by_id, decode_output)
+
+        # Member omission from TF-045 group must fail closed.
+        omitted = copy.deepcopy(observed_by_id)
+        del omitted["legacy.canonical"]
+        with self.assertRaises(ValueError):
+            assert_tf045_group_completeness(omitted, decode_output, "omit-legacy")
+
+        # Reorder / loss / field-byte mutations for each TF-045 corpus member.
+        for member_name, member in TF045_CORPUS_MEMBERS.items():
+            case_id = str(member["case_id"])
+            output = decode_identity(self.cases[case_id]["output"], case_id)
+            assert_tf045_member_semantics(output, member_name, case_id)
+            for mutator in (
+                mutate_tf045_lost_record,
+                mutate_tf045_reordered_records,
+                mutate_tf045_field_bytes,
+            ):
+                poisoned = mutator(output)
+                with self.subTest(member=member_name, mutator=mutator.__name__):
+                    with self.assertRaises(ValueError):
+                        assert_tf045_member_semantics(poisoned, member_name, f"{case_id} poisoned")
+
+        # TF-052 reverse mutations: identity swap and member omission.
+        rewrite = decode_identity(self.cases[TF052_REWRITE_CASE_ID]["output"], TF052_REWRITE_CASE_ID)
+        assert_tf052_source_to_output_semantics(rewrite, TF052_REWRITE_CASE_ID)
+        for mutator in (mutate_tf052_identity_swap, mutate_tf052_member_omission):
+            with self.subTest(mutator=mutator.__name__):
+                with self.assertRaises(ValueError):
+                    assert_tf052_source_to_output_semantics(mutator(rewrite), f"{mutator.__name__}")
+        # Dropping the direct converter case breaks group completeness.
+        missing_direct = copy.deepcopy(observed_by_id)
+        del missing_direct[TF052_DIRECT_CASE_ID]
+        with self.assertRaises(ValueError):
+            assert_tf052_group_completeness(missing_direct, decode_output, "omit-direct")
+
+        # TF-061 field-byte matrix mutations, including refreshed self-hash rejection path.
+        matrix = decode_identity(self.cases[TF061_CASE_ID]["output"], TF061_CASE_ID)
+        assert_tf061_field_matrix(matrix, TF061_CASE_ID)
+        for field in sorted(TF061_REQUIRED_FIELDS):
+            poisoned = mutate_tf061_field_bytes(matrix, field)
+            with self.subTest(field=field):
+                with self.assertRaises(ValueError):
+                    assert_tf061_field_matrix(poisoned, f"field-{field}")
+
+        # Refreshed self-hash after payload mutation must still fail semantic matrix.
+        from validation_common import assert_identity_self_hash
+
+        identity = dict(self.cases[TF061_CASE_ID]["output"])
+        assert_identity_self_hash(identity, "tf061 good")
+        mutated_bytes = mutate_tf061_field_bytes(matrix, "sf")
+        refreshed = _identity(mutated_bytes)
+        assert_identity_self_hash(refreshed, "tf061 refreshed self-hash")
+        with self.assertRaises(ValueError):
+            assert_tf061_field_matrix(mutated_bytes, "tf061 refreshed still drifts")
 
     def test_writer_identity_self_hash_mutations_are_rejected(self) -> None:
         from validation_common import assert_identity_self_hash

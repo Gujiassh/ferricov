@@ -694,20 +694,19 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 39 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 44 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
-`M1-TF-001` through `M1-TF-009`, `M1-TF-011` through `M1-TF-016`, `M1-TF-020`
-through `M1-TF-028`, `M1-TF-030` through `M1-TF-036`, `M1-TF-041` through
-`M1-TF-044`, `M1-TF-046`, `M1-TF-050`, `M1-TF-051`, and `M1-TF-060`.
+`M1-TF-001` through `M1-TF-016`, `M1-TF-020` through `M1-TF-028`, `M1-TF-030`
+through `M1-TF-036`, `M1-TF-041` through `M1-TF-046`, `M1-TF-050` through
+`M1-TF-052`, `M1-TF-060`, and `M1-TF-061`.
 `M1-TF-030` is mapped through the 56-row four-family exact atom matrix and
 row-level semantic validators as Oracle-only evidence.
 
 `M1-TF-007` is bound through the VER fixture group and pinned summary/canonical
-Oracle observations. `M1-TF-009`, `M1-TF-011`, and `M1-TF-024` are bound through
-the function-record fixture group, including current `FNL`/`FNA` probes, mixed
-legacy/current merge and mismatch probes, FNL index scope/hard-failure probes,
-semantic-snapshot runner `inspect_model.pl`, and retained Oracle identities.
+Oracle observations. `M1-TF-009`/`010`/`011`/`024` are bound through function
+probes (current/legacy rewrite, mixed merge, FNL index hard-failure) plus the
+semantic-snapshot runner `inspect_model.pl` and retained Oracle identities.
 `M1-TF-013` and `M1-TF-025` are bound through the branch-record fixture group,
 including `BRDA` form/exclusion/taken/expression probes, both unreachable-flag
 modes, distinct no-final-comma/empty-taken/empty-expression outcomes, positional
@@ -717,10 +716,11 @@ renumbering, semantic snapshots, and retained Oracle identities.
 `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` remain bound through the
 state-ownership fixture group and the same inspector runner; the contract also
 records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. Writer/converter probes bind
-`M1-TF-041`–`044`/`046`/`050`/`051`/`060` as Oracle-only evidence. Incomplete
-writer identities remain blocked pending complete semantic corpora:
+`M1-TF-041`–`046`/`050`–`052`/`060`/`061` as Oracle-only evidence. Wave-3 exact
+semantic closures cover parse-write-parse multi-corpus, converter no-loss, and
+the non-ASCII field matrix; remaining blocked identities are:
 
-`M1-TF-045`, `M1-TF-052`, `M1-TF-061`, `M1-TF-063`, and `M1-TF-064`.
+`M1-TF-063` and `M1-TF-064`.
 
 
 
