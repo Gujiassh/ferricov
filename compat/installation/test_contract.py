@@ -272,15 +272,63 @@ class InstallationContractTests(unittest.TestCase):
         self.assertEqual(layout["independent_facts"]["tree_entry_count"], 321)
         self.assertEqual(layout["independent_facts"]["support_script_count"], 23)
         self.assertFalse(layout["independent_facts"]["directory_entries_retained"])
+        self.assertTrue(layout["independent_facts"]["directory_companion_retained"])
+        self.assertEqual(layout["independent_facts"]["directory_companion_entry_count"], 57)
 
     def test_missing_evidence_gap_for_executable_lifecycle_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)
         document["known_evidence_gaps"] = [
             gap for gap in document["known_evidence_gaps"]
-            if "executable install/uninstall lifecycle" not in gap
+            if "no Ferricov product installer" not in gap
         ]
         with self.assertRaisesRegex(contract.InstallationContractError, "known_evidence_gaps"):
             self.validate(document)
+
+    def test_wave2_directory_companion_is_bound(self) -> None:
+        records = contract.load_case_records()
+        layout = next(case for case in records["cases"] if case["id"] == "INST-LAYOUT-001")
+        facts = layout["independent_facts"]
+        self.assertFalse(facts["directory_entries_retained"])
+        self.assertTrue(facts["directory_companion_retained"])
+        self.assertEqual(facts["directory_companion_entry_count"], 57)
+        self.assertEqual(facts["directory_companion_mode"], "755")
+        self.assertEqual(
+            facts["directory_companion_path"],
+            "compat/installation/wave2/installed-directories.lock",
+        )
+        self.assertEqual(
+            facts["directory_companion_sha256"],
+            contract.EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256,
+        )
+        companion = contract.wave2_directory_companion()
+        self.assertEqual(companion["entry_count"], 57)
+        self.assertEqual(len(companion["paths"]), 57)
+
+    def test_wave2_case_captures_are_bound_and_remain_planned(self) -> None:
+        records = contract.load_case_records()
+        capture = contract.wave2_capture_document()
+        self.assertEqual(capture["evidence_status"], "oracle_reference")
+        self.assertEqual(capture["execution_status"], "planned")
+        self.assertIs(capture["product_compatibility_evidence"], False)
+        for case in records["cases"]:
+            self.assertEqual(case["execution_status"], "planned")
+            self.assertEqual(case["evidence_status"], "oracle_reference")
+            self.assertEqual(case["product_evidence"], [])
+            if case["id"] == "INST-LAYOUT-001":
+                continue
+            facts = case["independent_facts"]
+            self.assertEqual(facts["oracle_execution_status"], "captured")
+            expected = contract.capture_artifact_for_case(case["id"], capture)
+            self.assertEqual(facts["capture_artifact"], expected)
+
+    def test_wave2_artifact_drift_is_rejected(self) -> None:
+        expected = contract.EXPECTED_WAVE2_CAPTURE_SHA256
+        try:
+            contract.EXPECTED_WAVE2_CAPTURE_SHA256 = "0" * 64
+            with self.assertRaisesRegex(contract.InstallationContractError, "wave2 capture"):
+                contract.wave2_capture_document()
+        finally:
+            contract.EXPECTED_WAVE2_CAPTURE_SHA256 = expected
 
     def _rewrite_case_records(self, mutate) -> tuple[bytes, str]:
         backup = contract.CASE_RECORDS_PATH.read_bytes()
