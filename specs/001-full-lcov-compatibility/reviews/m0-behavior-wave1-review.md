@@ -91,3 +91,17 @@ be honestly bound yet. Their unbound drafts remain in-tree as explicit debt.
 - No product compatibility evidence
 - No shared tasks/README/docs/ssot edits outside this lane review note
 - No push
+
+
+## Fixed semantic / interaction bindings (rework)
+
+Independent review rejected presence-only substance checks. This rework adds:
+
+- `compat/behavior/plan-bindings.json` with exact primary-plan fingerprints
+  (source refs, upstream drivers, boundary form, description SHA-256, suite ids)
+  and critical interaction member/case-context identities
+- hard-coded `EXPECTED_PLAN_BINDINGS_SHA256` in `validate.py`
+- reverse mutation tests that regenerate bindings after semantic or same-kind
+  interaction member/context substitution and still fail the trusted self-hash
+
+Honest counts remain reviewed_primary=361 and m0_gaps=170. Product evidence stays absent.

@@ -137,6 +137,14 @@ status-only reviews no longer satisfy `m0-ready`. Current honest debt remains
 for entries without exact executable or upstream public-behavior binding.
 Product compatibility evidence remains false/absent.
 
+## Fixed plan bindings
+
+`plan-bindings.json` seals substantive primary-plan semantics and critical
+interaction member/context identities. The validator hard-codes the trusted
+SHA-256 for that file, so regenerating bindings after a silent source/driver/
+boundary or interaction-member swap still fails closed. Product compatibility
+evidence remains false/absent.
+
 ## Evidence Rules
 
 Upstream test links are planning sources only. They must resolve to a reviewed
