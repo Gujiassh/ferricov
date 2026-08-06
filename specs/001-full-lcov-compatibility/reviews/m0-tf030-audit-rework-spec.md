@@ -2,7 +2,7 @@
 
 ## Status
 
-Blocked pending rework and a second independent Critical audit. This document
+Rework continues after successive Critical audits; the fourth independent Critical audit found residual blockers. This document
 supersedes the prior controller acceptance wording for the current branch; it
 does not change the original TF-030 scope or authorize M1 implementation.
 
@@ -90,7 +90,7 @@ git diff --check origin/main...HEAD
   remain unchanged: `common=169 changed=0 removed=0 added=15`.
 - `product_compatibility_evidence=false` and M1 blocked remain explicit.
 - All relevant generated artifact hashes, diagnostics/resource downstream
-  bindings, SSoT/spec/task/review files, and the second independent audit are
+  bindings, SSoT/spec/task/review files, and the fourth independent audit are
   synchronized.
 
 ## Verification
@@ -118,3 +118,34 @@ git diff --check origin/main...HEAD
 
 A fresh read-only Critical reviewer must independently inspect the resulting
 diff and reproduce the reverse mutations before this rework is accepted.
+
+
+## Additional Blocker: selective merge integrity (fourth audit)
+
+The fourth independent Critical audit found that `capture_oracle.py --merge-into`
+could accept an untrusted retained baseline copy: a temp/mutated file with
+refreshed local observation self-hashes could still be used as the merge target,
+and partial or non-TF-030 selections could replace retained observations outside
+the 15 TF-030 cases.
+
+### Required repair
+
+1. Before any Docker capture or merge write, require `--merge-into` to resolve to
+   the canonical `compat/fixtures/m0-tracefiles/oracle-baseline.json` path.
+2. Require the merge input file bytes to equal the fixed expected baseline SHA-256
+   (`b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`) — do not
+   trust observation self-hashes alone.
+3. Require the selected merge set to be exactly the 15 `TF030_CASE_IDS` in registry
+   order (no partial merge, no non-TF-030 ids).
+4. Keep non-merge `--case-id` selective capture available for repeat determinism
+   probes without merge.
+5. Add reverse coverage that mutates one non-TF-030 stdout, refreshes its local
+   hash, invokes selective TF-030 `--merge-into`, and proves rejection before any
+   output is accepted.
+
+### Acceptance status
+
+This blocker is an Oracle capture/tooling integrity issue, not Ferricov product
+compatibility evidence. `product_compatibility_evidence` remains false and M1
+remains blocked. Final acceptance still requires a subsequent independent
+Critical audit after the merge-integrity repair lands.

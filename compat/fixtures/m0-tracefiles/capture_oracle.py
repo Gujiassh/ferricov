@@ -16,6 +16,8 @@ from pathlib import Path
 import generate
 
 ROOT = Path(__file__).resolve().parent
+CANONICAL_BASELINE_PATH = ROOT / "oracle-baseline.json"
+EXPECTED_MERGE_BASELINE_SHA256 = "b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e"
 RAW_OUTPUT_LIMIT = 256 * 1024
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
@@ -241,6 +243,36 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
         return observation
 
 
+
+def validate_merge_into_request(
+    merge_into: Path,
+    selected_case_ids: list[str],
+) -> None:
+    """Reject untrusted or incomplete TF-030 selective merge inputs before capture."""
+    from corpus_tf030 import TF030_CASE_IDS
+
+    merge_path = merge_into.resolve()
+    canonical = CANONICAL_BASELINE_PATH.resolve()
+    if merge_path != canonical:
+        raise SystemExit(
+            f"merge-into must be the canonical baseline path {canonical}, got {merge_path}"
+        )
+    raw = merge_path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != EXPECTED_MERGE_BASELINE_SHA256:
+        raise SystemExit(
+            "merge-into baseline byte identity mismatch: "
+            f"expected {EXPECTED_MERGE_BASELINE_SHA256}, got {digest}"
+        )
+    selected = list(selected_case_ids)
+    expected = list(TF030_CASE_IDS)
+    if selected != expected:
+        raise SystemExit(
+            "merge-into selection must be exactly the 15 TF-030 case ids in registry order; "
+            f"got {len(selected)} ids"
+        )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--image", default=generate.ORACLE_IMAGE_ID)
@@ -282,31 +314,46 @@ def main() -> int:
     cases_document = strict_json_loads_ascii(cases_raw, "oracle cases")
     if not isinstance(cases_document.get("cases"), list):
         raise SystemExit("oracle cases: cases must be an array")
+
+    selected_cases = list(cases_document["cases"])
+    if args.case_id or args.case_prefix:
+        wanted_ids = set(args.case_id)
+        prefixes = list(args.case_prefix)
+        selected_cases = [
+            case
+            for case in selected_cases
+            if case["id"] in wanted_ids
+            or any(str(case["id"]).startswith(prefix) for prefix in prefixes)
+        ]
+        if not selected_cases:
+            raise SystemExit("no oracle cases matched --case-id/--case-prefix filters")
+        missing = wanted_ids - {case["id"] for case in selected_cases}
+        if missing:
+            raise SystemExit(f"unknown --case-id values: {sorted(missing)}")
+
+    # Fail closed before any Docker capture when merging retained evidence.
+    if args.merge_into is not None:
+        validate_merge_into_request(
+            args.merge_into,
+            [str(case["id"]) for case in selected_cases],
+        )
+
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-") as raw_generated:
         generated_root = Path(raw_generated)
         generate.write_corpus(generated_root, include_scale=True)
         manifest_sha256 = hashlib.sha256((generated_root / "manifest.json").read_bytes()).hexdigest()
-        selected_cases = list(cases_document["cases"])
-        if args.case_id or args.case_prefix:
-            wanted_ids = set(args.case_id)
-            prefixes = list(args.case_prefix)
-            selected_cases = [
-                case
-                for case in selected_cases
-                if case["id"] in wanted_ids
-                or any(str(case["id"]).startswith(prefix) for prefix in prefixes)
-            ]
-            if not selected_cases:
-                raise SystemExit("no oracle cases matched --case-id/--case-prefix filters")
-            missing = wanted_ids - {case["id"] for case in selected_cases}
-            if missing:
-                raise SystemExit(f"unknown --case-id values: {sorted(missing)}")
         observations = []
         for index, case in enumerate(selected_cases, start=1):
             print(f"[{index}/{len(selected_cases)}] {case['id']}", flush=True)
             observations.append(run_case(case, generated_root, args.image))
 
     if args.merge_into is not None:
+        # Re-check byte identity immediately before writing so a race/mutation
+        # of the retained baseline cannot be accepted after capture.
+        validate_merge_into_request(
+            args.merge_into,
+            [str(case["id"]) for case in selected_cases],
+        )
         merge_document = strict_json_loads_ascii(args.merge_into.read_bytes(), "merge baseline")
         if not isinstance(merge_document.get("cases"), list):
             raise SystemExit("merge baseline: cases must be an array")

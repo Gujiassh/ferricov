@@ -55,15 +55,16 @@ Pinned Oracle identity:
 
 ## Current Audit Decision
 
-**Rework implemented; pending fourth independent Critical audit.** Prior audit
-rework items remain in place. A third independent Critical audit found that
-TF-030 threshold stderr could be nondeterministic because Oracle capture pinned
-locale but not Perl hash behavior. The branch now pins
-`PERL_HASH_SEED=0` and `PERL_PERTURB_KEYS=0` on all 15 TF-030 case definitions,
-Docker captures, retained observations, and independent registry bindings, with
-type-sensitive validation and reverse mutation coverage. This review does
-**not** mark the branch final-accepted; the fourth independent Critical audit
-remains required.
+**Rework implemented; pending next independent Critical audit.** Prior audit
+rework items remain in place. The fourth independent Critical audit found that
+`capture_oracle.py --merge-into` could accept an untrusted retained baseline
+copy (temp/mutated file with refreshed local self-hashes) and could merge a
+partial/non-TF-030 selection. The branch now requires the canonical baseline
+path, fixed baseline byte hash
+`b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`, and an exact
+15-case TF-030 selection before any Docker capture/merge, with reverse coverage
+proving rejection of poisoned retained evidence. This review does **not** mark
+the branch final-accepted; another independent Critical audit remains required.
 
 ## Independent Review Matrix
 
@@ -103,12 +104,11 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Deterministic TF-030 Perl environment binding is implemented
-  (`PERL_HASH_SEED=0`, `PERL_PERTURB_KEYS=0`) with independent registry facts and
-  10x Docker repeat evidence for threshold canonical/semantic stderr hashes.
-  Registry hash is `bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c`; baseline hash is `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`. Final
-  acceptance still requires the fourth independent Critical audit; this document
-  does not claim final acceptance.
+- Merge-integrity hardening is implemented for TF-030 selective recapture
+  (`--merge-into` requires canonical baseline path + fixed SHA-256
+  `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e` + exact
+  15 TF-030 ids). Final acceptance still requires the next independent Critical
+  audit; this document does not claim final acceptance.
 - The remaining 18 named blockers and broader M1 readiness tasks remain open.
 
 ## Verification
@@ -125,5 +125,5 @@ python3 -m compileall -q compat
 ```
 
 The commands above are the required verification set for the rework. The
-branch remains pending the fourth independent Critical audit and is not final
+branch remains pending the next independent Critical audit and is not final
 accepted in this document.

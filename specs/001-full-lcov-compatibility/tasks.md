@@ -156,7 +156,9 @@ reference-only evidence and does not unlock product parity.
   semantic registry comparisons (reject int/bool/float cross-type).
 - [x] Pin deterministic TF-030 Perl environment (`PERL_HASH_SEED=0`,
   `PERL_PERTURB_KEYS=0`) on case defs, capture, observations, and registry.
-- [ ] Fourth independent Critical audit remains required before acceptance.
+- [x] Harden TF-030 selective `--merge-into` against untrusted retained baseline
+  copies (canonical path + fixed baseline SHA-256 + exact 15 TF-030 ids).
+- [ ] Next independent Critical audit remains required before acceptance.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 

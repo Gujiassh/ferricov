@@ -985,5 +985,100 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
 
 
 
+    def test_merge_into_rejects_mutated_retained_baseline(self) -> None:
+        """Selective TF-030 merge must not accept a mutated retained baseline copy."""
+        import json
+        import subprocess
+        import tempfile
+        from pathlib import Path
+
+        from capture_oracle import (
+            CANONICAL_BASELINE_PATH,
+            EXPECTED_MERGE_BASELINE_SHA256,
+            validate_merge_into_request,
+        )
+        from corpus_tf030 import TF030_CASE_IDS
+
+        baseline_path = CANONICAL_BASELINE_PATH
+        raw = baseline_path.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), EXPECTED_MERGE_BASELINE_SHA256)
+
+        # Helper accepts only canonical path + exact TF-030 selection.
+        validate_merge_into_request(baseline_path, list(TF030_CASE_IDS))
+        with self.assertRaises(SystemExit):
+            validate_merge_into_request(baseline_path, list(TF030_CASE_IDS)[:14])
+        with self.assertRaises(SystemExit):
+            validate_merge_into_request(
+                baseline_path,
+                list(TF030_CASE_IDS) + ["numeric-format-atoms.ignore-all.canonical"],
+            )
+
+        document = json.loads(raw.decode("ascii"))
+        # Mutate one non-TF030 observation and refresh its local stdout hash so a
+        # self-hash-only check would still pass.
+        non_tf = next(case for case in document["cases"] if case["id"] not in TF030_CASE_IDS)
+        mutated_stdout = dict(non_tf["stdout"])
+        original_b64 = mutated_stdout.get("base64")
+        self.assertIsInstance(original_b64, str)
+        import base64
+        original_bytes = base64.b64decode(original_b64)
+        poisoned = original_bytes + b"\n#mutated-retained-evidence\n"
+        mutated_stdout["base64"] = base64.b64encode(poisoned).decode("ascii")
+        mutated_stdout["sha256"] = hashlib.sha256(poisoned).hexdigest()
+        mutated_stdout["byte_size"] = len(poisoned)
+        non_tf["stdout"] = mutated_stdout
+
+        with tempfile.TemporaryDirectory(prefix="ferricov-merge-integrity-") as tmp:
+            tmp_path = Path(tmp)
+            poisoned_baseline = tmp_path / "oracle-baseline.mutated.json"
+            poisoned_bytes = (json.dumps(document, indent=2) + "\n").encode("ascii")
+            poisoned_baseline.write_bytes(poisoned_bytes)
+            self.assertNotEqual(
+                hashlib.sha256(poisoned_bytes).hexdigest(),
+                EXPECTED_MERGE_BASELINE_SHA256,
+            )
+            # Path must be canonical; temp copy is rejected before Docker/merge.
+            with self.assertRaises(SystemExit) as path_err:
+                validate_merge_into_request(poisoned_baseline, list(TF030_CASE_IDS))
+            self.assertIn("canonical baseline path", str(path_err.exception))
+
+            # Even if path is ignored, byte identity of mutated content must fail.
+            # Simulate by writing over a non-canonical path check via direct hash.
+            self.assertNotEqual(
+                hashlib.sha256(poisoned_baseline.read_bytes()).hexdigest(),
+                EXPECTED_MERGE_BASELINE_SHA256,
+            )
+
+            output_path = tmp_path / "merged-out.json"
+            cmd = [
+                "python3",
+                str(Path(__file__).resolve().parent / "capture_oracle.py"),
+                "--cases",
+                str(Path(__file__).resolve().parent / "oracle-cases.json"),
+                "--merge-into",
+                str(poisoned_baseline),
+                "--output",
+                str(output_path),
+            ]
+            for case_id in TF030_CASE_IDS:
+                cmd.extend(["--case-id", case_id])
+            result = subprocess.run(
+                cmd,
+                cwd=str(Path(__file__).resolve().parent),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            combined = (result.stdout + result.stderr).decode("utf-8", "replace")
+            self.assertTrue(
+                "canonical baseline path" in combined
+                or "baseline byte identity mismatch" in combined,
+                msg=combined,
+            )
+            self.assertFalse(output_path.exists())
+
+
+
 if __name__ == "__main__":
     unittest.main()
