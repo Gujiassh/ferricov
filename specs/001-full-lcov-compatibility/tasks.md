@@ -161,7 +161,8 @@ reference-only evidence and does not unlock product parity.
 - [x] Move TF-030 `--merge-into` validation before Docker inspect and bind
   merge parse to trusted baseline bytes; preserve ordered duplicate-free
   `--case-id` selection.
-- [ ] Next independent Critical audit remains required before acceptance.
+- [x] Sixth independent Critical audit completed: TF-030 M0 Oracle evidence
+  closure accepted; product compatibility remains false and M1 remains blocked.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 

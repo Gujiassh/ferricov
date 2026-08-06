@@ -2,9 +2,10 @@
 
 ## Status
 
-Rework continues after successive Critical audits; the fourth independent Critical audit found residual blockers. This document
-supersedes the prior controller acceptance wording for the current branch; it
-does not change the original TF-030 scope or authorize M1 implementation.
+Accepted for the scoped M0 TF-030 Oracle evidence closure after the sixth
+independent Critical audit. This document does not authorize M1 implementation
+or claim product compatibility; all retained observations remain Oracle
+reference evidence.
 
 ## Context
 
@@ -90,7 +91,7 @@ git diff --check origin/main...HEAD
   remain unchanged: `common=169 changed=0 removed=0 added=15`.
 - `product_compatibility_evidence=false` and M1 blocked remain explicit.
 - All relevant generated artifact hashes, diagnostics/resource downstream
-  bindings, SSoT/spec/task/review files, and the fourth independent audit are
+  bindings, SSoT/spec/task/review files, and the sixth independent audit are
   synchronized.
 
 ## Verification
@@ -116,11 +117,15 @@ cargo clippy --workspace --all-targets --locked -- -D warnings
 git diff --check origin/main...HEAD
 ```
 
-A fresh read-only Critical reviewer must independently inspect the resulting
-diff and reproduce the reverse mutations before this rework is accepted.
+The sixth independent Critical audit completed the required fresh review and
+found no remaining blocker in this scoped rework. It reproduced the merge
+integrity gates, prior reverse mutations, deterministic Docker repetitions,
+56-row/112-evaluation closure, old-baseline delta, and generated contract
+checks. The TF-030 M0 Oracle evidence closure is accepted; product compatibility
+remains false and M1 remains blocked.
 
 
-## Additional Blocker: selective merge integrity (fourth/fifth audit)
+## Additional Blocker: selective merge integrity (fourth/fifth/sixth audit)
 
 The fourth independent Critical audit found that `capture_oracle.py --merge-into`
 could accept an untrusted retained baseline copy: a temp/mutated file with
@@ -128,7 +133,7 @@ refreshed local observation self-hashes could still be used as the merge target,
 and partial or non-TF-030 selections could replace retained observations outside
 the 15 TF-030 cases.
 
-### Required repair (implemented; pending next audit)
+### Required repair (implemented and independently accepted)
 
 1. Before any Docker capture or merge write, require `--merge-into` to resolve to
    the canonical `compat/fixtures/m0-tracefiles/oracle-baseline.json` path.
@@ -150,10 +155,11 @@ the 15 TF-030 cases.
 
 ### Acceptance status
 
-Merge-integrity repair is implemented on the branch: validation runs before any
-Docker introspection, selection preserves explicit `--case-id` order and rejects
-duplicates, and merge parsing uses the single trusted baseline byte snapshot
-returned by hash validation. This remains an Oracle capture/tooling integrity
-issue, not Ferricov product compatibility evidence.
-`product_compatibility_evidence` remains false and M1 remains blocked. Final
-acceptance still requires the next independent Critical audit.
+Merge-integrity repair is implemented and was accepted by the sixth independent
+Critical audit: validation runs before any Docker introspection, selection
+preserves explicit `--case-id` order and rejects duplicate/overlapping/unmatched
+selectors, and merge parsing uses the single trusted baseline byte snapshot
+returned by hash validation. This remains Oracle capture/tooling work, not
+Ferricov product compatibility evidence. `product_compatibility_evidence`
+remains false, M1 remains blocked, and the 18 broader tracefile blockers remain
+open.

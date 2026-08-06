@@ -5,9 +5,7 @@
 This review records the intended TF-030 exact numeric Oracle matrix closure in
 `compat/fixtures/m0-tracefiles/`. It does not authorize Ferricov parser/model
 implementation and does not claim product compatibility. The earlier controller
-acceptance was superseded by independent Critical audit `dd5399b1`; the current
-branch is blocked pending the rework specified in
-`m0-tf030-audit-rework-spec.md`.
+`m0-tf030-audit-rework-spec.md`. The TF-030 M0 Oracle evidence closure is now accepted after the sixth independent Critical audit; this does not authorize Ferricov parser/model implementation or claim product compatibility.
 
 Pinned Oracle identity:
 
@@ -55,15 +53,18 @@ Pinned Oracle identity:
 
 ## Current Audit Decision
 
-**Rework implemented; pending next independent Critical audit.** The fifth
-independent Critical audit found residual merge-tool issues: merge validation
-ran after Docker image/program introspection, explicit `--case-id` order was
-collapsed through a set, and merge parsing re-read the baseline path after hash
-validation. The branch now validates merge inputs before any Docker calls,
-preserves argv order while rejecting duplicates/out-of-order TF-030 merge
-selections, and parses only the trusted baseline bytes returned by hash
-validation. This review does **not** mark the branch final-accepted; another
-independent Critical audit remains required.
+**Accepted for M0 TF-030 Oracle evidence closure; product compatibility remains
+false and M1 remains blocked.** The sixth fresh-context independent Critical
+audit found no blockers. It reproduced the pre-Docker merge rejection matrix,
+trusted-baseline-byte parsing, ordered 15-case selection, 90/90 observation
+mutation rejections, 90/90 case/observation type mutations, five fresh Docker
+captures for each threshold case with stable retained stderr hashes, the
+56-row/112-evaluation matrix, the `common=169, changed=0, removed=0, added=15`
+baseline delta, and the generated contract/Rust/Python/Perl gates.
+
+This acceptance is limited to the M0 Oracle evidence and contract work in this
+branch. It does not authorize Ferricov parser/model implementation, promote
+Oracle observations to product evidence, or unlock M1.
 
 
 ## Independent Review Matrix
@@ -72,10 +73,10 @@ independent Critical audit remains required.
 | --- | --- | --- |
 | Goal alignment | pass | M0 Oracle evidence only; no Ferricov parser/model changes |
 | Old observation preservation | pass | pinned baseline comparison: common=169, changed=0, removed=0, added=15 |
-| Fixture and companion identity | pass (pending next audit) | retained hashes are bound; format-atoms bytes are compared to pinned upstream checkout |
+| Fixture and companion identity | pass | retained hashes are bound; format-atoms bytes are compared to pinned upstream checkout |
 | Exact matrix completeness | pass | 12 upstream rows + 4 FNA mirrors + 40 candidates, in both policy modes |
 | Scalar, stored-value, and cache semantics | pass | exact registry equality plus all-row single-field mutation tests |
-| Diagnostic/order/output policy | pass (pending next audit) | independent observation registry binds stdout/stderr/output/exit; type-sensitive JSON equality rejects int/bool/float cross-type mutations |
+| Diagnostic/order/output policy | pass | independent observation registry binds stdout/stderr/output/exit; type-sensitive JSON equality rejects int/bool/float cross-type mutations |
 | Module responsibility and file size | pass | numeric registry loading remains in `validation_numeric.py`; no product boundary crossed |
 | Generated contracts | pass | tracefile and resource contracts regenerate and validate |
 | Product evidence | pass | `product_compatibility_evidence=false` |
@@ -104,13 +105,13 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Merge-tool hardening is implemented: pre-Docker validation, ordered duplicate-
-  free TF-030 selection, and single trusted-bytes merge parse against fixed
-  baseline SHA-256
-  `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`. Final
-  acceptance still requires the next independent Critical audit; this document
-  does not claim final acceptance.
-- The remaining 18 named blockers and broader M1 readiness tasks remain open.
+- The sixth independent Critical audit found no remaining blocker in the scoped
+  TF-030 Oracle evidence closure. Merge-tool validation is bound to the
+  canonical baseline path, fixed baseline SHA-256
+  `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`, exact
+  ordered TF-030 selection, and a single trusted baseline byte snapshot.
+- The remaining 18 named blockers and broader M1 readiness tasks remain open;
+  this closure does not claim product compatibility or authorize M1.
 
 ## Verification
 
@@ -125,6 +126,8 @@ python3 compat/verify.py --skip-oracle
 python3 -m compileall -q compat
 ```
 
-The commands above are the required verification set for the rework. The
-branch remains pending the next independent Critical audit and is not final
-accepted in this document.
+The required verification set passed, together with the sixth independent
+Critical audit's fresh Docker repetition, mutation, merge-integrity, baseline
+comparison, Rust, Perl, and generated-contract evidence. This controller review
+accepts the scoped TF-030 M0 Oracle evidence closure; it does not mark Ferricov
+product compatibility or authorize M1.
