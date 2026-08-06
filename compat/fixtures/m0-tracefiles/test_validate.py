@@ -1290,7 +1290,7 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
         )
         parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
-        self.assertEqual(len(parsed["cases"]), 254)
+        self.assertEqual(len(parsed["cases"]), 271)
 
 
 
@@ -1520,6 +1520,152 @@ class Wave2TracefileMutationTests(unittest.TestCase):
             else:
                 poisoned = output + b"#mut\n"
             self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")
+
+
+
+class WriterTracefileMutationTests(unittest.TestCase):
+    """Independent reverse mutations for writer/converter/transport Oracle evidence."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.baseline = strict_json_loads_ascii((ROOT / "oracle-baseline.json").read_bytes(), "oracle-baseline.json")
+        cls.cases = {case["id"]: case for case in cls.baseline["cases"]}
+        cls.case_defs = {
+            case["id"]: case
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+        }
+
+    def test_writer_case_and_fixture_closure(self) -> None:
+        from corpus_writer import WRITER_CASE_IDS, WRITER_FIXTURE_IDS
+        import generate
+
+        fixture_ids = [
+            fixture.id
+            for fixture in generate.build_fixtures()
+            if fixture.group == "writer-tracefile"
+        ]
+        self.assertEqual(fixture_ids, list(WRITER_FIXTURE_IDS))
+        case_ids = [
+            case["id"]
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+            if case["id"].startswith(("writer-", "gzip-", "converter-coverage."))
+        ]
+        self.assertEqual(case_ids, list(WRITER_CASE_IDS))
+        for case_id in WRITER_CASE_IDS:
+            self.assertIn(case_id, self.cases)
+            self.assertEqual(self.cases[case_id]["exit_status"], self.case_defs[case_id]["expected_exit"])
+
+    def test_writer_rewrite_output_independent_facts(self) -> None:
+        from validate import decode_identity
+
+        checks = {
+            "writer-order-core.canonical": lambda output: (
+                output.startswith(b"TN:a\nSF:src/a.c\n")
+                and b"FNL:0,10,20\nFNA:0,2,za\nFNA:0,1,zb\n" in output
+                and b"MCDC:3,2,t,1,0,expr\nMCDC:3,2,f,0,0,expr\n" in output
+                and b"FNF:9" not in output
+            ),
+            "writer-mcdc-groups.canonical": lambda output: (
+                b"MCDC:1,10,t,1,0,big\n" in output
+                and b"MCDC:1,U3,t,1,0,ucond\n" in output
+                and b"MCDC:2,1,t,2,0,sense_first\nMCDC:2,1,f,1,0,sense_first\n" in output
+                and b"MCDC:3,1,t,1,0,a,b,c\n" in output
+                and b"MCF:10\nMCH:6\n" in output
+            ),
+            "writer-summaries.canonical": lambda output: output
+            == (
+                b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
+            ),
+            "writer-comments.canonical": lambda output: (
+                b"#" not in output
+                and b",chk" not in output
+                and output == b"TN:c\nSF:src/c.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
+            ),
+            "writer-forbidden.canonical": lambda output: (
+                b"KF:" not in output
+                and b"FN:" not in output
+                and b"FNDA:" not in output
+                and b"end_of_record_and_junk" not in output
+                and b"FNL:0,1,2\nFNA:0,3,foo\n" in output
+            ),
+            "writer-fixedpoint.canonical": lambda output: output
+            == (
+                b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
+            ),
+            "converter-coverage.xml2lcov": lambda output: (
+                output.startswith(b"TN:xml\nSF:mod.py\n")
+                and b"BRDA:1,0,0,1\nBRDA:1,0,1,0\n" in output
+                and b"FNL:0,1,1\nFNA:0,3,foo\n" in output
+                and b"MCDC:" not in output
+            ),
+            "converter-coverage.py2lcov-with-functions": lambda output: (
+                output.startswith(b"TN:py\nSF:./mod.py\n")
+                and b"FNL:0,1,1\nFNA:0,3,foo\nFNL:1,1,2\nFNA:1,1,foo\n" in output
+                and b"FNF:2\nFNH:2\n" in output
+            ),
+            "converter-coverage.canonical-rewrite": lambda output: (
+                output.startswith(b"TN:xml\nSF:mod.py\n")
+                and output.find(b"FNL:") < output.find(b"BRDA:")
+                and b"MCDC:" not in output
+            ),
+            "writer-non-utf8.canonical": lambda output: output
+            == b"TN:x\nSF:src/\xff.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
+        }
+        for case_id, predicate in checks.items():
+            observation = self.cases[case_id]
+            output = decode_identity(observation["output"], case_id)
+            self.assertTrue(predicate(output), case_id)
+            if case_id == "writer-order-core.canonical":
+                poisoned = output.replace(b"FNA:0,2,za\n", b"FNA:0,1,za\n", 1)
+            elif case_id == "writer-mcdc-groups.canonical":
+                poisoned = output.replace(b"MCDC:1,10,t,1,0,big\n", b"MCDC:1,2,t,1,0,big\n", 1)
+            elif case_id == "writer-summaries.canonical":
+                poisoned = output.replace(b"LF:2\n", b"LF:999\n", 1)
+            elif case_id == "writer-comments.canonical":
+                poisoned = b"# leaked\n" + output
+            elif case_id == "writer-forbidden.canonical":
+                poisoned = output.replace(b"SF:src/k.c\n", b"KF:src/k.c\n", 1)
+            elif case_id == "writer-fixedpoint.canonical":
+                poisoned = output + b"#mut\n"
+            elif case_id == "converter-coverage.xml2lcov":
+                poisoned = output + b"MCDC:1,1,t,1,0,x\n"
+            elif case_id == "converter-coverage.py2lcov-with-functions":
+                poisoned = output.replace(b"FNF:2\n", b"FNF:1\n", 1)
+            elif case_id == "converter-coverage.canonical-rewrite":
+                poisoned = output.replace(b"FNL:0,1,1\n", b"BRDA:1,0,0,1\nFNL:0,1,1\n", 1)
+            elif case_id == "writer-non-utf8.canonical":
+                poisoned = output.replace(b"\xff", b"x", 1)
+            else:
+                poisoned = output + b"#mut\n"
+            self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")
+
+    def test_writer_gzip_transport_independent_facts(self) -> None:
+        from validate import decode_identity
+
+        valid = self.cases["gzip-valid.summary"]
+        self.assertEqual(valid["exit_status"], 0)
+        stdout = decode_identity(valid["stdout"], "gzip-valid stdout")
+        self.assertIn(b"source files: 1", stdout)
+        write_gz = self.cases["gzip-plain.write-gz"]
+        raw = decode_identity(write_gz["output"], "gzip write")
+        self.assertEqual(raw[:2], b"\x1f\x8b")
+        for case_id, needle in {
+            "gzip-corrupt.summary": "integrity check failed for compressed file",
+            "gzip-empty.summary": "no valid records found in tracefile",
+            "gzip-valid.missing-gzip": "gzip command not available",
+        }.items():
+            observation = self.cases[case_id]
+            self.assertEqual(observation["exit_status"], 1, case_id)
+            stderr = decode_identity(observation["stderr"], f"{case_id} stderr").decode("utf-8", "replace")
+            self.assertIn(needle, stderr)
+            poisoned = stderr.replace(needle, "mutated diagnostic")
+            self.assertNotIn(needle, poisoned)
 
 
 if __name__ == "__main__":

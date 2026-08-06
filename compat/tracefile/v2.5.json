@@ -2,15 +2,15 @@
   "artifact_bindings": [
     {
       "path": "compat/fixtures/m0-tracefiles/manifest.json",
-      "sha256": "808710631581d0426401d34a425c451607d11b1459486bb2fcadc37fef930bd8"
+      "sha256": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "20e4bc440d855d7c773bd37087c318a852e850534f3c7f71ab847f9291053a28"
+      "sha256": "4cec83ca3ae22ee90dfb5f693a6bb1b01006775feae6774efe76b386ead1a15d"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "1fb07bd39932acf7edfc35b487b23ef504a226239e9de2b6e24ef70c0bfa46bb"
+      "sha256": "69312253531ac9ba999b9e3f5b111a593b5cbb864e148db2fe9030ffe660ad48"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/inspect_model.pl",
@@ -896,6 +896,97 @@
       "oracle_default": "reject",
       "path": "fixtures/wave2/case-change.info",
       "sha256": "6b95f73f6846a5769083bd0338bf649444144afa145a61a80a776680f18e5771"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-order-core",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/order-core.info",
+      "sha256": "183fb504cd15f45ada74788e47b7684b089d845eadd38f16d3a089eade53e2df"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-mcdc-groups",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/mcdc-groups.info",
+      "sha256": "fca529d236b004da47c9915f5b5ac3930bda950ec095253a1450dc601954b2f4"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-summaries",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/summaries.info",
+      "sha256": "f0ddb949d29a1773f08eb138149cbc27814544ef58b6c9f6bc3a83706fc06402"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-forbidden",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/forbidden.info",
+      "sha256": "7d9929d2afab5b775080f72d81987126fb8ccbe648f0c388c0f01d233be4f121"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-comments",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/comments.info",
+      "sha256": "8d520327fa57924462d9374362a7495e06b6026a3fe5d1c818edd369f2cf4ec5"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-fixedpoint",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/fixedpoint.info",
+      "sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "gzip-plain",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/gzip-plain.info",
+      "sha256": "2838d79e31414436336cd5bd9313be185b45fcd7e29c4accb046a7732b44df13"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "gzip-valid",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/gzip-valid.info.gz",
+      "sha256": "2bc0156dcf3f9c62ff04de3e9cadb45e092c67b46c6721452cb3a077708c0f21"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "gzip-corrupt",
+      "oracle_default": "reject",
+      "path": "fixtures/writer/gzip-corrupt.info.gz",
+      "sha256": "bcb8aaa6d52659ddb846c97c61fa2c5fbeabb06a0552cc4466baf930228159ab"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "gzip-empty",
+      "oracle_default": "reject",
+      "path": "fixtures/writer/gzip-empty.info.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "writer-non-utf8",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/non-utf8.info",
+      "sha256": "3dd822ad49c034109b3594d97be46d0828d2b0306405027b087a387a43b07cdf"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "converter-coverage-xml",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/coverage.xml",
+      "sha256": "e003b67fdbdcb0f448f0cdef5d9fab32409067b7c93c62ba5edea87ffddeaf80"
+    },
+    {
+      "group": "writer-tracefile",
+      "id": "converter-mod-py",
+      "oracle_default": "accept",
+      "path": "fixtures/writer/mod.py",
+      "sha256": "b84887e8198d1a98ddf4b4dc92a0bc6c68ee40717ed32bd3c76034fad9136047"
     },
     {
       "group": "deterministic-scale",
@@ -4551,6 +4642,230 @@
       ],
       "stderr_sha256": "6bf96699a15efa83e37189232746b2b65b4e22aa21e0877fd34acf99a4ba4c55",
       "stdout_sha256": "0dae023f9550cfadb307182a05c6729ead86991c46474012dff3b962713890aa"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-order-core",
+      "id": "writer-order-core.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "331400bc08238760363e6c4d6337d98af0f9f08eb332d24c331f1af89020559a",
+      "requirement_ids": [
+        "M1-TF-041"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "c0c57506f814c81db7a44a74ed2a4c1796289b63659df5ebcf4e7a117dc2ff9a"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-mcdc-groups",
+      "id": "writer-mcdc-groups.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "8f782f3c51358d54fd0d385a187a3fd18577754bc0978053ab97ef0a7b905bac",
+      "requirement_ids": [
+        "M1-TF-041"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9fbcdf3caeb90c72532f9941c7c72c8783c950108812c4d1bfcdb2b177b6447d"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-summaries",
+      "id": "writer-summaries.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+      "requirement_ids": [
+        "M1-TF-042"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "142c098fa9bba1106ef785a638a39697766c6c34ccddc545c30e8415321b74b8"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-comments",
+      "id": "writer-comments.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "c4172822cd07232cab18c9cd6034dce4555c2bd981ea60431c56fb6007b3041b",
+      "requirement_ids": [
+        "M1-TF-043"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1556837d07b98f4c002a3c159e0c1a9c0737476c710c151d0c620dab49067bb0"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-forbidden",
+      "id": "writer-forbidden.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "52f40c87089fd80a8fb4a59001c25434df5f2ef044edc4a47280e500542ffc53",
+      "requirement_ids": [
+        "M1-TF-044"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4726e09a41d1a8b557931db7009bb3df79d7de49e4795de6e438bcb01ed070c1"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-fixedpoint",
+      "id": "writer-fixedpoint.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+      "requirement_ids": [
+        "M1-TF-045"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "142c098fa9bba1106ef785a638a39697766c6c34ccddc545c30e8415321b74b8"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-fixedpoint",
+      "id": "writer-fixedpoint.repeated-write",
+      "kind": "canonical_rewrite",
+      "output_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+      "requirement_ids": [
+        "M1-TF-046"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "142c098fa9bba1106ef785a638a39697766c6c34ccddc545c30e8415321b74b8"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "converter-coverage-xml",
+      "id": "converter-coverage.xml2lcov",
+      "kind": "canonical_rewrite",
+      "output_sha256": "054859e88961c8ef28c6278b4eccda0fc90f6852a8427d0baaab3ab1d5ea72db",
+      "requirement_ids": [
+        "M1-TF-050"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4f597b7f1ec4f0139a19cff7f0486980df1cb5497f77faf731d02c20b17a0216"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "converter-coverage-xml",
+      "id": "converter-coverage.py2lcov-no-functions",
+      "kind": "canonical_rewrite",
+      "output_sha256": "57651f9787879c06de13d0f793e12db820ec896e83d20580b06b0e61587f75f2",
+      "requirement_ids": [
+        "M1-TF-051"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4f597b7f1ec4f0139a19cff7f0486980df1cb5497f77faf731d02c20b17a0216"
+    },
+    {
+      "additional_fixture_ids": [
+        "converter-mod-py"
+      ],
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "converter-coverage-xml",
+      "id": "converter-coverage.py2lcov-with-functions",
+      "kind": "canonical_rewrite",
+      "output_sha256": "3608b0480e5a5e4d3e87c7dd2d8924d7dcf078526cf4df0e7e0bad2cd2774d02",
+      "requirement_ids": [
+        "M1-TF-051"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "converter-coverage-xml",
+      "id": "converter-coverage.canonical-rewrite",
+      "kind": "canonical_rewrite",
+      "output_sha256": "f06bfe3cf48d34e838ffac76714fc0cef5956450eef02e552e91a628f73801ba",
+      "requirement_ids": [
+        "M1-TF-052"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "08ae121d985ba70bd3df1b05235bf847d2ff7ff98b389955f3f169a8440125e0"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "gzip-valid",
+      "id": "gzip-valid.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-060"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d53f3cec257fe7efc04d459c2a5591566c408d6e5c969c991420b3ecaedcfa88"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "gzip-plain",
+      "id": "gzip-plain.write-gz",
+      "kind": "canonical_rewrite",
+      "output_sha256": "7bf737c0a1e099b8505b2fb454aa1c0052c8c12b0a55bc6c7ce9628bdc18cf31",
+      "requirement_ids": [
+        "M1-TF-060"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8fd75498c29bfc1412c4e8d23ecc9e4a09f73df49aff82218d6ac6140b3272fb"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "gzip-corrupt",
+      "id": "gzip-corrupt.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-060"
+      ],
+      "stderr_sha256": "cb6bfc51420362f2fa9737707e32108f6c6523a9dbbace5cac7116c0de14d242",
+      "stdout_sha256": "1e28a131354858ad78e05ee38d0457a46f2bf3cf08081f1f22ed4c6b24d0b472"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "gzip-empty",
+      "id": "gzip-empty.summary",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-060"
+      ],
+      "stderr_sha256": "04c6d639afb26882da660cfc554c9b03a3d557ae1aa224717ff8f23fbafa7f4d",
+      "stdout_sha256": "1e28a131354858ad78e05ee38d0457a46f2bf3cf08081f1f22ed4c6b24d0b472"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 1,
+      "fixture_id": "gzip-valid",
+      "id": "gzip-valid.missing-gzip",
+      "kind": "default_parse",
+      "output_sha256": null,
+      "requirement_ids": [
+        "M1-TF-060"
+      ],
+      "stderr_sha256": "deb536026ceb1acc099d861d7842dd217cdaa3561da7dd200dde738f3ce3665e",
+      "stdout_sha256": "1e28a131354858ad78e05ee38d0457a46f2bf3cf08081f1f22ed4c6b24d0b472"
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "exit_status": 0,
+      "fixture_id": "writer-non-utf8",
+      "id": "writer-non-utf8.canonical",
+      "kind": "canonical_rewrite",
+      "output_sha256": "e71ff86216d254f3355347ae554881d96310f46ec8e60e76510a88f09d784236",
+      "requirement_ids": [
+        "M1-TF-061"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1556837d07b98f4c002a3c159e0c1a9c0737476c710c151d0c620dab49067bb0"
     }
   ],
   "product_compatibility_evidence": false,
@@ -5193,11 +5508,11 @@
     }
   ],
   "schema_version": 1,
-  "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, and Oracle-observed malformed input behavior",
+  "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, writer/converter/transport probes, and Oracle-observed malformed input behavior",
   "totals": {
-    "canonical_rewrite_cases": 79,
+    "canonical_rewrite_cases": 92,
     "canonical_writer_lines": 18,
-    "default_parse_cases": 111,
+    "default_parse_cases": 115,
     "exact_executable_m0_decision_ids": [
       "M0-TF-MCDC-SF-001",
       "M0-TF-NUMERIC-001",
@@ -5234,15 +5549,26 @@
       "M1-TF-033",
       "M1-TF-034",
       "M1-TF-035",
-      "M1-TF-036"
+      "M1-TF-036",
+      "M1-TF-041",
+      "M1-TF-042",
+      "M1-TF-043",
+      "M1-TF-044",
+      "M1-TF-045",
+      "M1-TF-046",
+      "M1-TF-050",
+      "M1-TF-051",
+      "M1-TF-052",
+      "M1-TF-060",
+      "M1-TF-061"
     ],
-    "fixtures": 124,
+    "fixtures": 137,
     "ignore_recovery_cases": 36,
     "lexical_rules": 2,
     "malformed_fixtures": 21,
-    "oracle_cases": 254,
-    "oracle_exit_nonzero": 80,
-    "oracle_exit_zero": 174,
+    "oracle_cases": 271,
+    "oracle_exit_nonzero": 83,
+    "oracle_exit_zero": 188,
     "reader_matcher_lines": 15,
     "records": 20,
     "semantic_snapshot_cases": 28

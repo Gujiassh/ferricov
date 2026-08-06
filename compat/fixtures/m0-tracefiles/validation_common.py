@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
-ALLOWED_ARGV_HEADS = {"lcov", "perl"}
+ALLOWED_ARGV_HEADS = {"lcov", "perl", "xml2lcov", "py2lcov", "sh"}
 
 SEMANTIC_SNAPSHOT_CASE_IDS = (
     "state-late-tn-mcdc.semantic-snapshot",
