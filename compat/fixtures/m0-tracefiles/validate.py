@@ -666,6 +666,11 @@ def validate_observation_binding(
                 expected_tf030[field],
                 f"{label}: independent TF-030 {field} identity drift",
             )
+        require_json_equal(
+            case.get("expected_exit"),
+            expected_tf030["exit_status"],
+            f"{label}: TF-030 case expected_exit must type-sensitively equal registry exit_status",
+        )
 
     if label in TF030_CASE_IDS:
         require_json_equal(
@@ -706,7 +711,14 @@ def validate_observation_binding(
         f"additional fixture byte identity mismatch: {label}",
     )
     require(observation["argv"] == case["argv"], f"argv mismatch: {label}")
-    require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {label}")
+    if label in TF030_CASE_IDS:
+        require_json_equal(
+            observation.get("exit_status"),
+            case.get("expected_exit"),
+            f"unexpected exit status: {label}",
+        )
+    else:
+        require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {label}")
     verify_identity(observation["stdout"], f"{label} stdout")
     verify_identity(observation["stderr"], f"{label} stderr")
     output = observation["output"]
@@ -727,7 +739,11 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
     baseline_path = ROOT / "oracle-baseline.json"
     cases_document = strict_json_file(cases_path, "oracle-cases.json")
     expected_cases = generate.build_oracle_cases(generate.build_fixtures())
-    require(cases_document == expected_cases, "oracle-cases.json is not the exact generator result")
+    require_json_equal(
+        cases_document,
+        expected_cases,
+        "oracle-cases.json is not the exact generator result",
+    )
     baseline = strict_json_file(baseline_path, "oracle-baseline.json")
     require(cases_document["schema_version"] == 1, "unsupported oracle-cases schema")
     require(baseline["schema_version"] == 1, "unsupported Oracle baseline schema")
@@ -745,12 +761,23 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             require(name not in {"input.info", MODEL_INSPECTOR_NAME}, f"reserved additional fixture name: {case['id']}")
             require(fixture in fixtures, f"Oracle case references unknown additional fixture: {case['id']}")
         require(case["argv"] and case["argv"][0] in ALLOWED_ARGV_HEADS, f"invalid Oracle argv head: {case['id']}")
-        require(isinstance(case["expected_exit"], int), f"missing expected_exit: {case['id']}")
+        # bool is a subclass of int; reject True/False as expected_exit.
+        require(
+            type(case.get("expected_exit")) is int,
+            f"missing expected_exit: {case['id']}",
+        )
         if case["id"] in TF030_CASE_IDS:
             require_json_equal(
                 case.get("environment"),
                 TF030_PERL_ENV,
                 f"{case['id']}: TF-030 case environment must equal TF030_PERL_ENV",
+            )
+            expected_tf030 = expected_tf030_observation(str(case["id"]))
+            require(expected_tf030 is not None, f"{case['id']}: TF-030 registry observation missing")
+            require_json_equal(
+                case.get("expected_exit"),
+                expected_tf030["exit_status"],
+                f"{case['id']}: TF-030 case expected_exit must type-sensitively equal registry exit_status",
             )
         else:
             require(

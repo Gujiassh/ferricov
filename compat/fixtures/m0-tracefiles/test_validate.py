@@ -913,5 +913,77 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
 
 
 
+    def test_tf030_expected_exit_type_sensitivity_is_rejected(self) -> None:
+        """TF-030 expected_exit must type-sensitively match registry/observation exit_status."""
+        fail_id = "numeric-tf030-fna-mirror.default-stop"
+        ok_id = "numeric-tf030-fna-mirror.ignore-negative-format.canonical"
+
+        def bind(case_id: str):
+            case = copy.deepcopy(self.cases[case_id])
+            observation = copy.deepcopy(self.baseline[case_id])
+            observation["fixture_sha256"] = hashlib.sha256(self.fixtures[case["fixture"]].data).hexdigest()
+            observation["additional_fixture_sha256"] = {
+                name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+                for name, path in case.get("additional_fixtures", {}).items()
+            }
+            validate_observation_binding(case, observation, self.fixtures)
+            return case, observation
+
+        fail_case, fail_obs = bind(fail_id)
+        self.assertEqual(fail_case["expected_exit"], 1)
+        self.assertEqual(fail_obs["exit_status"], 1)
+        for value in (True, 1.0):
+            mutated = copy.deepcopy(fail_case)
+            mutated["expected_exit"] = value
+            with self.subTest(case=fail_id, expected_exit=value), self.assertRaises(ValueError):
+                validate_observation_binding(mutated, fail_obs, self.fixtures)
+
+        ok_case, ok_obs = bind(ok_id)
+        self.assertEqual(ok_case["expected_exit"], 0)
+        self.assertEqual(ok_obs["exit_status"], 0)
+        for value in (False, 0.0):
+            mutated = copy.deepcopy(ok_case)
+            mutated["expected_exit"] = value
+            with self.subTest(case=ok_id, expected_exit=value), self.assertRaises(ValueError):
+                validate_observation_binding(mutated, ok_obs, self.fixtures)
+
+        # Full generated document equality must reject bool/float expected_exit.
+        from validation_common import json_values_equal, require_json_equal
+        import json
+        from pathlib import Path
+
+        expected_cases = generate.build_oracle_cases(generate.build_fixtures())
+        cases_path = Path(__file__).resolve().parent / "oracle-cases.json"
+        cases_document = json.loads(cases_path.read_text(encoding="ascii"))
+        self.assertTrue(json_values_equal(cases_document, expected_cases))
+
+        mutated_fail = copy.deepcopy(cases_document)
+        for case in mutated_fail["cases"]:
+            if case["id"] == fail_id:
+                case["expected_exit"] = True
+                break
+        self.assertFalse(json_values_equal(mutated_fail, expected_cases))
+        with self.assertRaises(ValueError):
+            require_json_equal(
+                mutated_fail,
+                expected_cases,
+                "oracle-cases.json is not the exact generator result",
+            )
+
+        mutated_ok = copy.deepcopy(cases_document)
+        for case in mutated_ok["cases"]:
+            if case["id"] == ok_id:
+                case["expected_exit"] = 0.0
+                break
+        self.assertFalse(json_values_equal(mutated_ok, expected_cases))
+        with self.assertRaises(ValueError):
+            require_json_equal(
+                mutated_ok,
+                expected_cases,
+                "oracle-cases.json is not the exact generator result",
+            )
+
+
+
 if __name__ == "__main__":
     unittest.main()
