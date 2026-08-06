@@ -62,8 +62,8 @@
     },
     "fixtures": {
       "type": "array",
-      "minItems": 108,
-      "maxItems": 108,
+      "minItems": 124,
+      "maxItems": 124,
       "items": {
         "$ref": "#/$defs/fixture"
       }
@@ -78,8 +78,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 217,
-      "maxItems": 217,
+      "minItems": 254,
+      "maxItems": 254,
       "items": {
         "$ref": "#/$defs/oracleCase"
       }
@@ -348,7 +348,8 @@
             "function-records",
             "branch-records",
             "deterministic-scale",
-            "wave1-tracefile"
+            "wave1-tracefile",
+            "wave2-tracefile"
           ]
         },
         "oracle_default": {
@@ -542,43 +543,50 @@
           "const": 18
         },
         "fixtures": {
-          "const": 108
+          "const": 124
         },
         "malformed_fixtures": {
           "const": 21
         },
         "oracle_cases": {
-          "const": 217
+          "const": 254
         },
         "default_parse_cases": {
-          "const": 96
+          "const": 111
         },
         "canonical_rewrite_cases": {
-          "const": 62
+          "const": 79
         },
         "ignore_recovery_cases": {
-          "const": 31
+          "const": 36
         },
         "semantic_snapshot_cases": {
           "const": 28
         },
         "oracle_exit_zero": {
-          "const": 147
+          "const": 174
         },
         "oracle_exit_nonzero": {
-          "const": 70
+          "const": 80
         },
         "exact_executable_requirement_ids": {
           "type": "array",
           "const": [
+            "M1-TF-001",
             "M1-TF-002",
             "M1-TF-003",
+            "M1-TF-004",
             "M1-TF-005",
+            "M1-TF-006",
             "M1-TF-007",
+            "M1-TF-008",
             "M1-TF-009",
             "M1-TF-011",
+            "M1-TF-012",
             "M1-TF-013",
             "M1-TF-014",
+            "M1-TF-015",
+            "M1-TF-016",
             "M1-TF-020",
             "M1-TF-021",
             "M1-TF-022",

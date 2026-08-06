@@ -1290,7 +1290,7 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
         )
         parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
-        self.assertEqual(len(parsed["cases"]), 217)
+        self.assertEqual(len(parsed["cases"]), 254)
 
 
 
@@ -1446,6 +1446,77 @@ class Wave1TracefileMutationTests(unittest.TestCase):
                 poisoned = output.replace(b"DA:1,3\n", b"DA:1,1\n", 1)
             elif case_id == "wave1-repeat-same-tn.canonical":
                 poisoned = output.replace(b"FNA:0,3,f\n", b"FNA:0,1,f\n", 1)
+            else:
+                poisoned = output + b"#mut\n"
+            self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")
+
+
+class Wave2TracefileMutationTests(unittest.TestCase):
+    """Independent reverse mutations for wave-2 M0 Oracle evidence."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.baseline = strict_json_loads_ascii((ROOT / "oracle-baseline.json").read_bytes(), "oracle-baseline.json")
+        cls.cases = {case["id"]: case for case in cls.baseline["cases"]}
+        cls.case_defs = {
+            case["id"]: case
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+        }
+
+    def test_wave2_case_and_fixture_closure(self) -> None:
+        from corpus_wave2 import WAVE2_CASE_IDS, WAVE2_FIXTURE_IDS
+        import generate
+
+        fixture_ids = [fixture.id for fixture in generate.build_fixtures() if fixture.group == "wave2-tracefile"]
+        self.assertEqual(fixture_ids, list(WAVE2_FIXTURE_IDS))
+        case_ids = [
+            case["id"]
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+            if case["id"].startswith("wave2-")
+        ]
+        self.assertEqual(case_ids, list(WAVE2_CASE_IDS))
+        for case_id in WAVE2_CASE_IDS:
+            self.assertIn(case_id, self.cases)
+            self.assertEqual(self.cases[case_id]["exit_status"], self.case_defs[case_id]["expected_exit"])
+
+    def test_wave2_rewrite_output_independent_facts(self) -> None:
+        from validate import decode_identity
+
+        checks = {
+            "wave2-framing-blank.canonical": lambda output: output
+            == b"TN:blank\nSF:src/blank.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
+            "wave2-tn-diff.canonical": lambda output: b"TN:,diff\n" in output
+            and b"TN:name,diff\n" in output
+            and b"TN:name\n" in output
+            and b"TN:has_space\n" in output
+            and b"TN:name,diff,extra\n" not in output,
+            "wave2-kf-parity.canonical": lambda output: b"KF:" not in output
+            and b"SF:src/kf2.c\n" in output
+            and b"DA:1,2\nDA:2,1\n" in output,
+            "wave2-da-accumulate.canonical": lambda output: b"DA:1,6\n" in output and b",chk" not in output,
+            "wave2-da-checksum-store.canonical": lambda output: output
+            == b"TN:chkstore\nSF:cs.c\nDA:1,3,AVO7Y115x231sZo9ymlVFA\nLF:1\nLH:1\nend_of_record\n",
+            "wave2-summary-forms.canonical": lambda output: b"LF:2\nLH:1\n" in output and b"FNF:999" not in output,
+            "wave2-unknown-tags.ignore-format": lambda output: b"DA:1,1\n" in output and b"TD:" not in output,
+        }
+        for case_id, predicate in checks.items():
+            observation = self.cases[case_id]
+            output = decode_identity(observation["output"], case_id)
+            self.assertTrue(predicate(output), case_id)
+            if case_id == "wave2-framing-blank.canonical":
+                poisoned = output.replace(b"TN:blank\n", b"TN:blanked\n", 1)
+            elif case_id == "wave2-tn-diff.canonical":
+                poisoned = output.replace(b"TN:name,diff\n", b"TN:name,diff,extra\n", 1)
+            elif case_id == "wave2-kf-parity.canonical":
+                poisoned = output.replace(b"SF:src/kf.c\n", b"KF:src/kf.c\n", 1)
+            elif case_id == "wave2-da-accumulate.canonical":
+                poisoned = output.replace(b"DA:1,6\n", b"DA:1,1,chk\n", 1)
+            elif case_id == "wave2-da-checksum-store.canonical":
+                poisoned = output.replace(b",AVO7Y115x231sZo9ymlVFA", b"", 1)
+            elif case_id == "wave2-summary-forms.canonical":
+                poisoned = output.replace(b"LF:2\n", b"LF:333\n", 1)
+            elif case_id == "wave2-unknown-tags.ignore-format":
+                poisoned = b"TD:desc\n" + output
             else:
                 poisoned = output + b"#mut\n"
             self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")

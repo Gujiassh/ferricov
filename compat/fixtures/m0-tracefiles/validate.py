@@ -39,6 +39,7 @@ from validation_common import (
 )
 from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
 from corpus_wave1 import WAVE1_CASE_IDS, WAVE1_FIXTURE_IDS
+from corpus_wave2 import WAVE2_CASE_IDS, WAVE2_FIXTURE_IDS
 from validation_numeric import (
     ADDED_CASE_ARGV,
     ADDED_OUTPUT_EXPECTATIONS,
@@ -280,6 +281,22 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     require(b"TN:a\n" in by_id["wave1-repeat-diff-tn-mcdc"].data and b"TN:b\n" in by_id["wave1-repeat-diff-tn-mcdc"].data, "wave1 diff-TN mcdc missing")
     require(b"FNL:0,1,1\n" in by_id["wave1-features-all"].data and b"BRDA:1,0,e,1\n" in by_id["wave1-features-all"].data, "wave1 features records missing")
     require(b"FNF:999\n" in by_id["wave1-summary-payloads"].data and b"LF:333\n" in by_id["wave1-summary-payloads"].data, "wave1 summary junk missing")
+    require(b"\n\nSF:src/blank.c\n\n" in by_id["wave2-framing-blank"].data, "wave2 blank framing missing")
+    require(by_id["wave2-framing-crlf-blank"].data.count(b"\r\n") >= 6, "wave2 crlf blank framing missing")
+    require(not by_id["wave2-framing-no-final-newline-blank"].data.endswith(b"\n"), "wave2 no-final-newline blank must omit final newline")
+    require(b"TN:ws  \n" in by_id["wave2-framing-trailing-ws"].data, "wave2 trailing-ws TN missing")
+    require(b"TN:,diff\n" in by_id["wave2-tn-diff"].data and b"TN:name,diff,extra\n" in by_id["wave2-tn-diff"].data, "wave2 TN diff forms missing")
+    require(b"KF:src/kf.c\n" in by_id["wave2-kf-parity"].data, "wave2 KF parity missing")
+    require(by_id["wave2-kf-empty"].oracle_default == "reject", "wave2 empty KF must reject")
+    require(b"DA:1,3,chk\n" in by_id["wave2-da-accumulate"].data, "wave2 DA accumulate checksum missing")
+    require(b"DA:1,2,AVO7Y115x231sZo9ymlVFA\n" in by_id["wave2-da-checksum-store"].data, "wave2 DA checksum store missing")
+    require(b"BRF_without_colon\n" in by_id["wave2-summary-forms"].data and b"LF999\n" in by_id["wave2-summary-forms"].data, "wave2 summary forms missing")
+    require(b"end_of_record_and_ignored\n" in by_id["wave2-terminator-suffix"].data, "wave2 terminator suffix missing")
+    require(by_id["wave2-terminator-dup"].data.count(b"end_of_record\n") == 4, "wave2 terminator dup missing")
+    require(by_id["wave2-terminator-missing"].oracle_default == "reject", "wave2 missing terminator must reject")
+    require(b"TD:desc\nZZ:x\n" in by_id["wave2-unknown-tags"].data, "wave2 unknown tags missing")
+    require(b" DA:1,1\n" in by_id["wave2-leading-ws-tag"].data, "wave2 leading-ws tag missing")
+    require(b"da:1,1\n" in by_id["wave2-case-change"].data, "wave2 case-change tag missing")
     require(by_id["branches-malformed-tail"].oracle_default == "reject", "malformed-tail must reject")
     require(
         by_id["branches-malformed-tail-empty-taken"].oracle_default == "reject",
@@ -1544,6 +1561,76 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
         if case["id"] == "wave1-repeat-diff-tn-mcdc.canonical":
             output_bytes = decode_identity(observation["output"], "wave1 repeat diff")
             require(b"TN:a\n" in output_bytes and b"TN:b\n" in output_bytes, "wave1 diff-TN sections missing")
+
+    wave2_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "wave2-tracefile"]
+    require(
+        [fixture.id for fixture in wave2_fixtures] == list(WAVE2_FIXTURE_IDS),
+        f"wave2 fixture closure drift: {[fixture.id for fixture in wave2_fixtures]}",
+    )
+    wave2_case_ids = [case["id"] for case in cases if case["id"].startswith("wave2-")]
+    require(
+        wave2_case_ids == list(WAVE2_CASE_IDS),
+        f"wave2 case closure drift: {wave2_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        if not str(case["id"]).startswith("wave2-"):
+            continue
+        if case["id"] == "wave2-framing-blank.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 framing blank")
+            require(output_bytes == b"TN:blank\nSF:src/blank.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", "wave2 blank rewrite drift")
+        if case["id"] == "wave2-framing-crlf-blank.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 framing crlf")
+            require(b"\r" not in output_bytes, "wave2 crlf must normalize to LF")
+            require(b"TN:crlfblank\nSF:src/crlf-blank.c\nDA:1,1\n" in output_bytes, "wave2 crlf body missing")
+        if case["id"] == "wave2-framing-trailing-ws.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 trailing ws")
+            require(output_bytes == b"TN:ws\nSF:src/ws.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", "wave2 trailing-ws rewrite drift")
+        if case["id"] == "wave2-tn-diff.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 tn diff")
+            require(b"TN:,diff\n" in output_bytes, "wave2 exact empty,diff missing")
+            require(b"TN:name,diff\n" in output_bytes, "wave2 name,diff retention missing")
+            require(b"TN:name\n" in output_bytes, "wave2 other-comma strip missing")
+            require(b"TN:has_space\n" in output_bytes, "wave2 sanitized space-diff missing")
+            require(b"TN:has space" not in output_bytes, "wave2 unsanitized space TN leaked")
+            require(b"TN:name,diff,extra\n" not in output_bytes, "wave2 suffix-after-diff leaked")
+            stderr_bytes = decode_identity(observation["stderr"], "wave2 tn diff stderr")
+            require(b"invalid characters removed from testname" in stderr_bytes, "wave2 sanitization warning missing")
+        if case["id"] == "wave2-kf-parity.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 kf parity")
+            require(b"KF:" not in output_bytes, "wave2 KF must rewrite to SF")
+            require(b"SF:src/kf.c\n" in output_bytes and b"SF:src/kf2.c\n" in output_bytes, "wave2 KF path rewrite missing")
+            require(b"DA:1,2\nDA:2,1\n" in output_bytes, "wave2 KF repeated-source additive missing")
+        if case["id"] == "wave2-da-accumulate.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da accumulate")
+            require(b"DA:1,6\nDA:2,0\n" in output_bytes, "wave2 DA accumulate rewrite missing")
+            require(b",chk" not in output_bytes, "wave2 stored checksum retained without --checksum")
+        if case["id"] == "wave2-da-checksum-store.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da checksum store")
+            require(
+                output_bytes == b"TN:chkstore\nSF:cs.c\nDA:1,3,AVO7Y115x231sZo9ymlVFA\nLF:1\nLH:1\nend_of_record\n",
+                "wave2 checksum store/rewrite drift",
+            )
+        if case["id"] == "wave2-da-checksum-store.no-verify.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da checksum no-verify")
+            require(
+                output_bytes == b"TN:chkstore\nSF:cs.c\nDA:1,3\nLF:1\nLH:1\nend_of_record\n",
+                "wave2 no-verify checksum drop drift",
+            )
+        if case["id"] == "wave2-summary-forms.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 summary forms")
+            require(b"FNF:999" not in output_bytes and b"LF:333" not in output_bytes, "wave2 junk summary retained")
+            require(b"LF:2\nLH:1\n" in output_bytes, "wave2 recomputed line summary missing")
+            require(b"BRF_without_colon" not in output_bytes and b"LF999" not in output_bytes, "wave2 malformed summary retained")
+        if case["id"] == "wave2-terminator-suffix.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 terminator suffix")
+            require(b"end_of_record\n" in output_bytes and b"end_of_record_and_ignored" not in output_bytes, "wave2 terminator suffix rewrite drift")
+        if case["id"] == "wave2-terminator-dup.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 terminator dup")
+            require(b"TN:a\n" in output_bytes and b"TN:b\n" in output_bytes and b"TN:c\n" in output_bytes, "wave2 terminator-dup sections missing")
+        if case["id"] == "wave2-unknown-tags.ignore-format":
+            output_bytes = decode_identity(observation["output"], "wave2 unknown ignore")
+            require(b"TD:" not in output_bytes and b"ZZ:" not in output_bytes, "wave2 unknown tags retained")
+            require(b"DA:1,1\n" in output_bytes, "wave2 unknown ignore DA missing")
 
     numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
     require(

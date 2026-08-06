@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, and wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes.",
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, and wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes.",
   "execution": {
     "working_directory": "/work",
     "input_name": "input.info",
@@ -1019,6 +1019,201 @@
       "fixture": "fixtures/wave1/sf-whitespace.info",
       "requirement": "M1-TF-002/003/005/014/020/023/027/028",
       "description": "Default summary observation for wave1-sf-whitespace.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-framing-blank.summary",
+      "fixture": "fixtures/wave2/framing-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-crlf-blank.summary",
+      "fixture": "fixtures/wave2/framing-crlf-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-crlf-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-no-final-newline-blank.summary",
+      "fixture": "fixtures/wave2/framing-no-final-newline-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-no-final-newline-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-trailing-ws.summary",
+      "fixture": "fixtures/wave2/framing-trailing-ws.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-trailing-ws.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-tn-diff.summary",
+      "fixture": "fixtures/wave2/tn-diff.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-tn-diff.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-parity.summary",
+      "fixture": "fixtures/wave2/kf-parity.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-kf-parity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-empty.summary",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-kf-empty.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-da-accumulate.summary",
+      "fixture": "fixtures/wave2/da-accumulate.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-da-accumulate.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-summary-forms.summary",
+      "fixture": "fixtures/wave2/summary-forms.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-summary-forms.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-suffix.summary",
+      "fixture": "fixtures/wave2/terminator-suffix.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-suffix.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-dup.summary",
+      "fixture": "fixtures/wave2/terminator-dup.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-dup.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-missing.summary",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-missing.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-unknown-tags.summary",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-unknown-tags.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-leading-ws-tag.summary",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-leading-ws-tag.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-case-change.summary",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-case-change.",
       "argv": [
         "lcov",
         "--no-function-coverage",
@@ -3398,6 +3593,372 @@
         "--no-function-coverage",
         "--branch-coverage",
         "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-blank.canonical",
+      "fixture": "fixtures/wave2/framing-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite collapses blank lines and emits LF records.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-crlf-blank.canonical",
+      "fixture": "fixtures/wave2/framing-crlf-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite normalizes CRLF blank-line framing to LF.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-no-final-newline-blank.canonical",
+      "fixture": "fixtures/wave2/framing-no-final-newline-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite accepts no-final-newline input with blank lines.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-trailing-ws.canonical",
+      "fixture": "fixtures/wave2/framing-trailing-ws.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite strips trailing Perl whitespace from records.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-tn-diff.canonical",
+      "fixture": "fixtures/wave2/tn-diff.info",
+      "requirement": "M1-TF-004",
+      "description": "Canonical rewrite of TN ,diff exact/suffix/other-comma and sanitization.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-parity.canonical",
+      "fixture": "fixtures/wave2/kf-parity.info",
+      "requirement": "M1-TF-006",
+      "description": "Canonical rewrite emits SF not KF and merges repeated KF source sections.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-empty.canonical",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-006",
+      "description": "Write attempt for empty KF payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-kf-empty.ignore-format",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-006",
+      "description": "Ignore-format recovery for empty KF yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-da-accumulate.canonical",
+      "fixture": "fixtures/wave2/da-accumulate.info",
+      "requirement": "M1-TF-008",
+      "description": "Canonical rewrite accumulates repeated DA counts and drops stored checksum without --checksum.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-da-checksum-store.canonical",
+      "fixture": "fixtures/wave2/da-checksum-store.info",
+      "requirement": "M1-TF-008",
+      "description": "Matching DA checksum is verified and rewritten under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      }
+    },
+    {
+      "id": "wave2-da-checksum-store.no-verify.canonical",
+      "fixture": "fixtures/wave2/da-checksum-store.info",
+      "requirement": "M1-TF-008",
+      "description": "Without --checksum, stored DA checksums are not emitted.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-summary-forms.canonical",
+      "fixture": "fixtures/wave2/summary-forms.info",
+      "requirement": "M1-TF-012",
+      "description": "Canonical rewrite recomputes all eight summary tags and ignores junk forms.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-suffix.canonical",
+      "fixture": "fixtures/wave2/terminator-suffix.info",
+      "requirement": "M1-TF-015",
+      "description": "Canonical rewrite normalizes suffixed end_of_record.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-dup.canonical",
+      "fixture": "fixtures/wave2/terminator-dup.info",
+      "requirement": "M1-TF-015",
+      "description": "Canonical rewrite accepts duplicate terminator and later sections.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-missing.canonical",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-015",
+      "description": "Missing terminator hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-terminator-missing.ignore-empty",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-015",
+      "description": "Ignore-empty recovery for missing terminator yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-unknown-tags.canonical",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-016",
+      "description": "TD and unknown tags hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-unknown-tags.ignore-format",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips TD/unknown tags and retains DA data.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-leading-ws-tag.canonical",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-016",
+      "description": "Leading whitespace before known tag hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-leading-ws-tag.ignore-format",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips leading-space tag and yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-case-change.canonical",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-016",
+      "description": "Case-changed known tag hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-case-change.ignore-format",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips case-changed tag and yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
         "--add-tracefile",
         "input.info",
         "--output-file",
