@@ -196,6 +196,90 @@ class InstallationContractTests(unittest.TestCase):
         with self.assertRaises(contract.InstallationContractError):
             self.validate(document)
 
+    def test_case_records_binding_is_required(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document.pop("oracle_case_records")
+        with self.assertRaises(contract.InstallationContractError):
+            self.validate(document)
+
+    def test_case_records_sha_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["oracle_case_records"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(contract.InstallationContractError, "oracle_case_records"):
+            self.validate(document)
+
+    def test_case_summary_order_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["oracle_case_summaries"] = list(reversed(document["oracle_case_summaries"]))
+        with self.assertRaisesRegex(contract.InstallationContractError, "oracle_case_summaries"):
+            self.validate(document)
+
+    def test_case_summary_facts_hash_drift_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["oracle_case_summaries"][0]["facts_sha256"] = "0" * 64
+        with self.assertRaisesRegex(contract.InstallationContractError, "oracle_case_summaries"):
+            self.validate(document)
+
+    def test_case_record_product_evidence_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["oracle_case_records"]["product_compatibility_evidence"] = True
+        with self.assertRaises(contract.InstallationContractError):
+            self.validate(document)
+
+    def test_case_records_execution_promotion_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["oracle_case_records"]["execution_status"] = "captured"
+        with self.assertRaises(contract.InstallationContractError):
+            self.validate(document)
+
+    def test_independent_case_facts_hash_is_bound(self) -> None:
+        records = contract.load_case_records()
+        self.assertEqual(len(records["cases"]), 13)
+        for case in records["cases"]:
+            facts_bytes = contract.canonical_json(case["independent_facts"]).encode("ascii")
+            self.assertEqual(case["facts_sha256"], contract.sha256_bytes(facts_bytes))
+
+    def test_refreshed_case_records_hash_without_bytes_is_rejected(self) -> None:
+        # Mutating only the committed binding while the artifact stays fixed must fail closed.
+        document = copy.deepcopy(self.committed)
+        original = document["oracle_case_records"]["sha256"]
+        document["oracle_case_records"]["sha256"] = "a" * 64
+        self.assertNotEqual(original, document["oracle_case_records"]["sha256"])
+        with self.assertRaisesRegex(contract.InstallationContractError, "oracle_case_records"):
+            self.validate(document)
+
+    def test_case_facts_type_sensitive_equality(self) -> None:
+        left = {"asset_count": 7, "optional": False}
+        right_bool_as_int = {"asset_count": 7, "optional": 0}
+        right_float = {"asset_count": 7.0, "optional": False}
+        self.assertTrue(contract.json_values_equal(left, {"asset_count": 7, "optional": False}))
+        self.assertFalse(contract.json_values_equal(left, right_bool_as_int))
+        self.assertFalse(contract.json_values_equal(left, right_float))
+
+    def test_report_asset_case_binds_four_observations(self) -> None:
+        records = contract.load_case_records()
+        report = next(case for case in records["cases"] if case["id"] == "INST-REPORT-ASSET-001")
+        self.assertEqual(len(report["observation_ids"]), 4)
+        self.assertEqual(report["independent_facts"]["observation_count"], 4)
+        self.assertEqual(report["independent_facts"]["asset_count"], 7)
+        self.assertEqual(len(report["independent_facts"]["observations"]), 4)
+
+    def test_layout_case_binds_tree_partition(self) -> None:
+        records = contract.load_case_records()
+        layout = next(case for case in records["cases"] if case["id"] == "INST-LAYOUT-001")
+        self.assertEqual(layout["independent_facts"]["tree_entry_count"], 321)
+        self.assertEqual(layout["independent_facts"]["support_script_count"], 23)
+        self.assertFalse(layout["independent_facts"]["directory_entries_retained"])
+
+    def test_missing_evidence_gap_for_executable_lifecycle_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["known_evidence_gaps"] = [
+            gap for gap in document["known_evidence_gaps"]
+            if "executable install/uninstall lifecycle" not in gap
+        ]
+        with self.assertRaisesRegex(contract.InstallationContractError, "known_evidence_gaps"):
+            self.validate(document)
+
 
 if __name__ == "__main__":
     unittest.main()

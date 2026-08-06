@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "caseRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_status": {
+          "const": "oracle_reference"
+        },
+        "execution_status": {
+          "const": "planned"
+        },
+        "facts_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "failure_contract_ids": {
+          "items": {
+            "pattern": "^INST-[A-Z0-9-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "family": {
+          "enum": [
+            "layout",
+            "lifecycle",
+            "failure",
+            "asset",
+            "license"
+          ]
+        },
+        "id": {
+          "pattern": "^INST-[A-Z0-9-]+$",
+          "type": "string"
+        },
+        "independent_facts": {
+          "type": "object"
+        },
+        "layout_contract_ids": {
+          "items": {
+            "pattern": "^INST-[A-Z0-9-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "observation_ids": {
+          "items": {
+            "pattern": "^installation\\.asset-observation\\.",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_closure_ids": {
+          "items": {
+            "pattern": "^installation\\.",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "role",
+        "evidence_status",
+        "execution_status",
+        "product_evidence",
+        "source_closure_ids",
+        "layout_contract_ids",
+        "failure_contract_ids",
+        "observation_ids",
+        "independent_facts",
+        "facts_sha256"
+      ],
+      "type": "object"
+    },
+    "productEvidence": {
+      "maxItems": 0,
+      "type": "array"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/Gujiassh/ferricov/compat/installation/oracle-case-records.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "case_count": {
+      "const": 13
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/caseRecord"
+      },
+      "maxItems": 13,
+      "minItems": 13,
+      "type": "array"
+    },
+    "evidence_status": {
+      "const": "oracle_reference"
+    },
+    "execution_status": {
+      "const": "planned"
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    }
+  },
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "evidence_status",
+    "execution_status",
+    "product_compatibility_evidence",
+    "case_count",
+    "cases"
+  ],
+  "title": "Ferricov LCOV 2.5 Installation Oracle Case Records",
+  "type": "object"
+}
