@@ -1,0 +1,15 @@
+After installation, the LCOV documentation can be found in both ``man`` and
+``html`` formats.
+
+  - **man**:
+       $ export MANPATH=$MANPATH:$LCOV_HOME/share/lcov/man
+       $ man lcov # or 'man genhtml', 'man llvm2lcov', etc.
+
+  - **html**
+       point your browser to ``$LCOV_HOME/share/lcov/html/index.html``
+
+To run the LCOV regression test suite on your installation::
+
+    $ cp -r $LCOV_HOME/share/test path/to/myTestDir
+    $ cd path/to/myTestDir
+    $ make [COVERAGE=1]

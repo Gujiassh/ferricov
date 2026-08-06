@@ -1,0 +1,30 @@
+# TOPDIR == root of test directory - either build dir or copied from share/lcov
+TOPDIR       := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+# TESTDIR == path to this particular testcase
+TESTDIR      := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
+ifeq ($(LCOV_HOME),)
+ROOT_DIR = $(realpath $(TOPDIR)/..)
+else
+ROOT_DIR := $(LCOV_HOME)
+endif
+BINDIR = $(ROOT_DIR)/bin
+
+ifneq (,$(wildcard $(ROOT_DIR)/scripts))
+SCRIPTDIR := $(ROOT_DIR)/scripts
+else
+SCRIPTDIR := $(ROOT_DIR)/share/lcov/support-scripts
+endif
+---
+export LCOV_TOOL := $(EXEC_COVER) $(BINDIR)/lcov
+export GENHTML_TOOL := $(EXEC_COVER) $(BINDIR)/genhtml
+export GENINFO_TOOL := $(EXEC_COVER) $(BINDIR)/geninfo
+export PERL2LCOV_TOOL := $(EXEC_COVER) $(BINDIR)/perl2lcov
+export LLVM2LCOV_TOOL := $(EXEC_COVER) $(BINDIR)/llvm2lcov
+export PY2LCOV_TOOL := $(PYCOVER) $(BINDIR)/py2lcov
+export XML2LCOV_TOOL := $(PYCOVER) $(BINDIR)/xml2lcov
+export SPREADSHEET_TOOL := $(PYCOVER) $(SCRIPTDIR)/spreadsheet.py
+unset_path_guess=/usr/local/share/lcov/bin
+ls: cannot access '/usr/local/share/lcov/bin': No such file or directory
+with LCOV_HOME=/usr/local tools at bin
+/usr/local/bin/lcov

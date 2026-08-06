@@ -1,0 +1,41 @@
+PARTIAL_EXIT=2
+INSTALL_COUNT=35
+PARTIAL_FILES=18
+/tmp/partial/usr/local/bin/gendesc
+/tmp/partial/usr/local/bin/genhtml
+/tmp/partial/usr/local/bin/geninfo
+/tmp/partial/usr/local/bin/genpng
+/tmp/partial/usr/local/bin/lcov
+/tmp/partial/usr/local/bin/llvm2lcov
+/tmp/partial/usr/local/bin/perl2lcov
+/tmp/partial/usr/local/bin/py2lcov
+/tmp/partial/usr/local/bin/xml2lcov
+/tmp/partial/usr/local/bin/xml2lcovutil.py
+/tmp/partial/usr/local/share/lcov/support-scripts/P4version.pm
+/tmp/partial/usr/local/share/lcov/support-scripts/analyzeInfoFiles
+/tmp/partial/usr/local/share/lcov/support-scripts/annotateutil.pm
+/tmp/partial/usr/local/share/lcov/support-scripts/batchGitVersion.pm
+/tmp/partial/usr/local/share/lcov/support-scripts/context.pm
+/tmp/partial/usr/local/share/lcov/support-scripts/criteria
+/tmp/partial/usr/local/share/lcov/support-scripts/criteria.pm
+/tmp/partial/usr/local/share/lcov/support-scripts/get_signature
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/p4annotate.pm: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/p4udiff
+induced failure at install count=30 args=-m 755 scripts/p4udiff /tmp/partial/usr/local/share/lcov/support-scripts/p4udiff
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/p4udiff: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/select.pm
+induced failure at install count=31 args=-m 755 scripts/select.pm /tmp/partial/usr/local/share/lcov/support-scripts/select.pm
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/select.pm: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/simplify.pm
+induced failure at install count=32 args=-m 755 scripts/simplify.pm /tmp/partial/usr/local/share/lcov/support-scripts/simplify.pm
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/simplify.pm: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/spreadsheet.py
+induced failure at install count=33 args=-m 755 scripts/spreadsheet.py /tmp/partial/usr/local/share/lcov/support-scripts/spreadsheet.py
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/spreadsheet.py: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/threshold.pm
+induced failure at install count=34 args=-m 755 scripts/threshold.pm /tmp/partial/usr/local/share/lcov/support-scripts/threshold.pm
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/threshold.pm: No such file or directory
+  INSTALL /tmp/partial/usr/local/share/lcov/support-scripts/unreach.pm
+induced failure at install count=35 args=-m 755 scripts/unreach.pm /tmp/partial/usr/local/share/lcov/support-scripts/unreach.pm
+Error: cannot stat /tmp/partial/usr/local/share/lcov/support-scripts/unreach.pm: No such file or directory
+make: *** [Makefile:138: install] Error 2

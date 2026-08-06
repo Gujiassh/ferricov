@@ -62,7 +62,55 @@ EXPECTED_SAMPLE_METADATA_HASHES = {
 
 CASE_RECORDS_PATH = Path(__file__).with_name("oracle-case-records.json")
 CASE_RECORDS_SCHEMA_PATH = Path(__file__).with_name("oracle-case-records.schema.json")
-EXPECTED_CASE_RECORDS_SHA256 = "e2c3de1c85574c5b524fa2ccf9b36cd94b4e19f73f6cab67d593654fa9699932"
+EXPECTED_CASE_RECORDS_SHA256 = "0ffbdc5c4690bf2a435a9a6443a7549dd23c3a53b6c3d9d97e3de8a5d8267fcd"
+
+WAVE2_DIR = Path(__file__).with_name("wave2")
+WAVE2_CAPTURE_PATH = WAVE2_DIR / "oracle-capture.json"
+WAVE2_DIRECTORY_LOCK = WAVE2_DIR / "installed-directories.lock"
+EXPECTED_WAVE2_DIRECTORY_COUNT = 57
+EXPECTED_WAVE2_DIRECTORY_MODE = "755"
+EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256 = (
+    "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+)
+EXPECTED_WAVE2_CAPTURE_SHA256 = (
+    "313c67010eeb5e5db7d04f1b73c2df43d5e199653ff2344cce21605f203ce8de"
+)
+EXPECTED_WAVE2_ARTIFACT_HASHES = {
+    "compat/installation/wave2/config.txt":
+        "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319",
+    "compat/installation/wave2/dirty.txt":
+        "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a",
+    "compat/installation/wave2/docfail.txt":
+        "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552",
+    "compat/installation/wave2/docpath.txt":
+        "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1",
+    "compat/installation/wave2/installed-directories.lock":
+        "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+    "compat/installation/wave2/installed-tree-directories.sh":
+        "e16713b25dcd71651cf9d2f5ea63b0df87aa0ae201979c70be500f7e1d0da557",
+    "compat/installation/wave2/interp.txt":
+        "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae",
+    "compat/installation/wave2/license.txt":
+        "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f",
+    "compat/installation/wave2/oracle-capture.json":
+        "313c67010eeb5e5db7d04f1b73c2df43d5e199653ff2344cce21605f203ce8de",
+    "compat/installation/wave2/oracle-image.pin":
+        "15c13f2784af77c8f7b703c5eba4b0d05b274e904470f01e534d0f2f043c70ba",
+    "compat/installation/wave2/partial.txt":
+        "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb",
+    "compat/installation/wave2/relative.txt":
+        "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2",
+    "compat/installation/wave2/report-assets.txt":
+        "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0",
+    "compat/installation/wave2/space.txt":
+        "e141144ea0dd1846a6591ad5416d290aa8b9f9491c51781604dde73f8f0f69eb",
+    "compat/installation/wave2/stage-summary.txt":
+        "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b",
+    "compat/installation/wave2/testrun.txt":
+        "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5",
+    "compat/installation/wave2/uninstall.txt":
+        "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e",
+}
 
 LAYOUT_IDS = (
     "INST-PATHS-001",
@@ -241,19 +289,19 @@ EXPECTED_ASSETS = (
 )
 
 EVIDENCE_GAPS = (
-    "directory entries and directory modes are not retained by installed-tree.sh",
-    "staged DESTDIR versus embedded PREFIX behavior",
-    "interpreter override and shebang fixup behavior",
-    "fresh-install HOME, LCOV_HOME, and explicit configuration precedence",
-    "uninstall man residue and foreign sentinel safety",
-    "injected partial-install failure and rollback policy",
-    "relative, empty, space-containing, and platform-specific install roots",
-    "dirty working-tree enumeration and untracked asset admission",
-    "documentation builder/theme failure and source-tree cleanup",
-    "installed test execution with unset and explicit LCOV_HOME",
-    "README path mismatches and distribution license manifest",
-    "report asset variants, optional updown generation, and HTML reference checks",
-    "executable install/uninstall lifecycle capture for the 13 INST cases",
+    "baseline installed-tree.lock still excludes directory rows; wave2 companion lock retains 57 directory modes",
+    "staged DESTDIR installs omit the image-only legacy /usr/local/man symlink",
+    "optional genhtml updown variants and HTML-reference qualification remain open",
+    "space-containing DESTDIR failure is observed on this GNU/Linux install path only",
+    "empty PREFIX/DESTDIR combinations beyond absolute-path rejection remain lightly sampled",
+    "no multi-platform install root matrix beyond the pinned x86_64 Linux Oracle image",
+    "packaging/RPM distribution license policy remains uncaptured",
+    "no Ferricov product installer, uninstall, or report-renderer compatibility evidence",
+    "M1 parser/model installation surfaces remain blocked",
+    "wave2 captures are Oracle-reference only and keep execution_status=planned",
+    "directory companion is not verified inside the Docker image build diff against installed-tree.lock",
+    "induced partial-install uses a fake install wrapper rather than native Makefile fault injection points",
+    "config discovery probe replicates lcovutil search order without exercising every genhtml/lcov consumer path",
 )
 
 
@@ -325,6 +373,7 @@ def artifact_bindings() -> list[dict[str, str]]:
                     f"retained {label} drift: {relative} expected={expected} actual={actual}"
                 )
             result.append({"path": relative, "sha256": actual})
+    result.extend(wave2_artifact_bindings())
     return result
 
 
@@ -678,6 +727,99 @@ def expected_report_observation_facts() -> list[dict[str, Any]]:
     return observations
 
 
+
+def wave2_capture_document() -> dict[str, Any]:
+    if not WAVE2_CAPTURE_PATH.is_file():
+        raise InstallationContractError("installation wave2 capture document is missing")
+    actual = sha256_file(WAVE2_CAPTURE_PATH)
+    if actual != EXPECTED_WAVE2_CAPTURE_SHA256:
+        raise InstallationContractError(
+            f"installation wave2 capture drift: expected={EXPECTED_WAVE2_CAPTURE_SHA256} actual={actual}"
+        )
+    document = load_json(WAVE2_CAPTURE_PATH)
+    if document.get("product_compatibility_evidence") is not False:
+        raise InstallationContractError("installation wave2 capture claims product compatibility")
+    if document.get("evidence_status") != "oracle_reference" or document.get("execution_status") != "planned":
+        raise InstallationContractError("installation wave2 capture evidence status drift")
+    if document.get("case_count") != 13 or len(document.get("cases", [])) != 13:
+        raise InstallationContractError("installation wave2 capture must cover 13 cases")
+    return document
+
+
+def wave2_directory_companion() -> dict[str, Any]:
+    if not WAVE2_DIRECTORY_LOCK.is_file():
+        raise InstallationContractError("installation wave2 directory lock is missing")
+    actual = sha256_file(WAVE2_DIRECTORY_LOCK)
+    if actual != EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256:
+        raise InstallationContractError(
+            "installation wave2 directory lock drift: "
+            f"expected={EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256} actual={actual}"
+        )
+    rows = []
+    for raw in WAVE2_DIRECTORY_LOCK.read_text(encoding="ascii").splitlines():
+        fields = raw.split("\t")
+        if len(fields) != 4:
+            raise InstallationContractError("wave2 directory lock has a malformed row")
+        kind, mode, identity, path = fields
+        if kind != "directory" or mode != EXPECTED_WAVE2_DIRECTORY_MODE or identity != ".":
+            raise InstallationContractError(f"wave2 directory lock invalid row: {raw}")
+        parsed_path = PurePosixPath(path)
+        if (
+            not parsed_path.is_absolute()
+            or parsed_path.parts[:3] != ("/", "usr", "local")
+            or ".." in parsed_path.parts
+            or parsed_path.as_posix() != path
+        ):
+            raise InstallationContractError(f"wave2 directory path invalid: {path}")
+        rows.append({"kind": kind, "mode": mode, "identity": identity, "path": path})
+    if len(rows) != EXPECTED_WAVE2_DIRECTORY_COUNT:
+        raise InstallationContractError(
+            f"wave2 directory lock must contain {EXPECTED_WAVE2_DIRECTORY_COUNT} entries"
+        )
+    paths = [row["path"] for row in rows]
+    if paths != sorted(paths):
+        raise InstallationContractError("wave2 directory paths are not lexicographic")
+    if len(set(paths)) != len(paths):
+        raise InstallationContractError("wave2 directory lock has duplicate paths")
+    return {
+        "path": "compat/installation/wave2/installed-directories.lock",
+        "sha256": actual,
+        "entry_count": len(rows),
+        "mode": EXPECTED_WAVE2_DIRECTORY_MODE,
+        "paths": paths,
+    }
+
+
+def wave2_artifact_bindings() -> list[dict[str, str]]:
+    result = []
+    for relative, expected in EXPECTED_WAVE2_ARTIFACT_HASHES.items():
+        path = ROOT / relative
+        actual = sha256_file(path)
+        if actual != expected:
+            raise InstallationContractError(
+                f"wave2 artifact drift: {relative} expected={expected} actual={actual}"
+            )
+        result.append({"path": relative, "sha256": actual})
+    return result
+
+
+def capture_artifact_for_case(case_id: str, capture_doc: dict[str, Any]) -> dict[str, str]:
+    for case in capture_doc["cases"]:
+        if case["id"] != case_id:
+            continue
+        cap = case["capture"]
+        if case_id == "INST-LAYOUT-001":
+            return {
+                "path": cap["directory_companion_path"],
+                "sha256": cap["directory_companion_sha256"],
+            }
+        if case_id == "INST-PATH-001":
+            relative = cap["artifacts"]["relative"]
+            return {"path": relative["path"], "sha256": relative["sha256"]}
+        return {"path": cap["artifact"], "sha256": cap["artifact_sha256"]}
+    raise InstallationContractError(f"wave2 capture missing case: {case_id}")
+
+
 def expected_case_independent_facts(
     case_id: str,
     upstream_root: Path,
@@ -710,8 +852,14 @@ def expected_case_independent_facts(
     report_observation_facts = expected_report_observation_facts()
 
     if case_id == "INST-LAYOUT-001":
+        directory = wave2_directory_companion()
         return {
             "bin_names": bin_names,
+            "directory_companion_entry_count": directory["entry_count"],
+            "directory_companion_mode": directory["mode"],
+            "directory_companion_path": directory["path"],
+            "directory_companion_retained": True,
+            "directory_companion_sha256": directory["sha256"],
             "directory_entries_retained": False,
             "file_count": tree["file_count"],
             "group_counts": {name: len(values) for name, values in grouped.items()},
@@ -735,66 +883,82 @@ def expected_case_independent_facts(
             "tree_entry_count": tree["entry_count"],
         }
     if case_id == "INST-STAGE-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "compiled_paths_retain_prefix_without_destdir": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "payload_under_destdir": True,
             "requires_absolute_destdir_prefix": True,
             "source_bindings": [mk_vars, install_payload],
         }
     if case_id == "INST-INTERP-001":
+        capture_doc = wave2_capture_document()
         return {
             "advertised_override_effective": False,
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "env_shebang_excluded_from_rewrite": True,
             "install_passes_fixinterp": False,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "source_bindings": [fixup, install_payload],
         }
     if case_id == "INST-CONFIG-DISCOVERY-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "compiled_prefix_alone_selects_system_file": False,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "search_order": ["$HOME/.lcovrc", "$LCOV_HOME/etc/lcovrc"],
             "source_bindings": [config_discovery],
             "stops_after_first_readable": True,
         }
     if case_id == "INST-UNINSTALL-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "foreign_sentinels_removed": True,
             "isolated_root_required": True,
             "man_uninstall_enumerates_source_glob": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "recursive_removal_targets": ["lib/lcov", "share/lcov"],
             "source_bindings": [man_install, uninstall],
         }
     if case_id == "INST-PARTIAL-001":
+        capture_doc = wave2_capture_document()
         return {
-            "oracle_execution_status": "not_captured",
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
+            "oracle_execution_status": "captured",
             "partial_payload_possible": True,
             "rollback": False,
             "source_bindings": [install_payload],
             "transactional": False,
         }
     if case_id == "INST-DOC-FAIL-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "doc_finished_is_hard_prerequisite": True,
             "install_cleans_source_example_and_tests": True,
             "missing_sphinx_or_theme_fails_before_payload": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "source_bindings": [install_doc, docs_build, docs_config],
         }
     if case_id == "INST-PATH-001":
+        capture_doc = wave2_capture_document()
         return {
-            "oracle_execution_status": "not_captured",
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
+            "oracle_execution_status": "captured",
             "relative_roots_rejected": True,
             "requires_absolute_destdir_prefix": True,
             "source_bindings": [mk_vars, install_payload],
             "space_containing_paths_platform_sensitive": True,
         }
     if case_id == "INST-DIRTY-ASSET-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "examples_and_tests_from_working_tree": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "retained_support_script_count": 23,
             "retained_support_script_names": support_script_names,
             "scripts_from_dynamic_ls": True,
@@ -802,14 +966,17 @@ def expected_case_independent_facts(
             "untracked_ordinary_files_can_enter_install": True,
         }
     if case_id == "INST-TEST-RUN-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "explicit_lcov_home_required_for_installed_tests": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "retained_test_entry_count": 205,
             "source_bindings": [test_runtime, test_paths, test_readme],
             "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": True,
         }
     if case_id == "INST-DOC-PATH-001":
+        capture_doc = wave2_capture_document()
         return {
             "actual_retained_roots": {
                 "bin": "/usr/local/bin",
@@ -820,8 +987,9 @@ def expected_case_independent_facts(
                 "scripts": "/usr/local/share/lcov/support-scripts",
                 "tests": "/usr/local/share/lcov/tests",
             },
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "documentation_mismatch_must_be_recorded": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "source_bindings": [readme_paths, mk_vars],
             "truth_source": "installed_tree_filesystem_evidence",
         }
@@ -843,20 +1011,25 @@ def expected_case_independent_facts(
                 raise InstallationContractError("report observation id drift")
             if expected_obs["asset_count"] != retained_obs["asset_count"]:
                 raise InstallationContractError("report observation asset_count drift")
+        capture_doc = wave2_capture_document()
         return {
             "asset_count": 7,
             "assets_are_runtime_not_install_payload": True,
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "observation_count": 4,
             "observations": report_observation_facts,
             "optional_updown_and_html_reference_qualification_open": True,
+            "oracle_execution_status": "captured",
             "runtime_assets": assets,
             "source_bindings": [asset_names, asset_generation, asset_writers],
         }
     if case_id == "INST-LICENSE-001":
+        capture_doc = wave2_capture_document()
         return {
+            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
             "copying_in_install_payload": False,
             "copying_in_source_archive_manifest": True,
-            "oracle_execution_status": "not_captured",
+            "oracle_execution_status": "captured",
             "retained_tree_contains_copying": any("COPYING" in entry["path"] for entry in entries),
             "source_bindings": [dist_manifest, install_payload],
             "upstream_omission_is_not_permission_to_omit": True,
@@ -1086,6 +1259,14 @@ def validate_case_records_against_contract(
         if case["id"] != "INST-LAYOUT-001":
             if not isinstance(source_bindings, list) or not source_bindings:
                 raise InstallationContractError(f"installation case source_bindings missing: {case['id']}")
+            capture_artifact = facts.get("capture_artifact")
+            if not isinstance(capture_artifact, dict):
+                raise InstallationContractError(f"installation case capture_artifact missing: {case['id']}")
+            expected_capture = capture_artifact_for_case(case["id"], wave2_capture_document())
+            if not json_values_equal(capture_artifact, expected_capture):
+                raise InstallationContractError(f"installation case capture_artifact drift: {case['id']}")
+            if facts.get("oracle_execution_status") != "captured":
+                raise InstallationContractError(f"installation case capture status drift: {case['id']}")
             for binding in source_bindings:
                 if not isinstance(binding, dict):
                     raise InstallationContractError(f"installation case source binding shape drift: {case['id']}")
@@ -1111,6 +1292,17 @@ def validate_case_records_against_contract(
                 raise InstallationContractError("INST-LAYOUT-001 tree_entry_count drift")
             if facts["manifest_sha256"] != tree["manifest_sha256"]:
                 raise InstallationContractError("INST-LAYOUT-001 manifest_sha256 drift")
+            directory = wave2_directory_companion()
+            if facts.get("directory_companion_retained") is not True:
+                raise InstallationContractError("INST-LAYOUT-001 directory companion not retained")
+            if facts.get("directory_entries_retained") is not False:
+                raise InstallationContractError("INST-LAYOUT-001 baseline directory claim drift")
+            if facts.get("directory_companion_entry_count") != directory["entry_count"]:
+                raise InstallationContractError("INST-LAYOUT-001 directory companion count drift")
+            if facts.get("directory_companion_sha256") != directory["sha256"]:
+                raise InstallationContractError("INST-LAYOUT-001 directory companion hash drift")
+            if facts.get("directory_companion_path") != directory["path"]:
+                raise InstallationContractError("INST-LAYOUT-001 directory companion path drift")
 
         if case["id"] == "INST-REPORT-ASSET-001":
             if case["observation_ids"] != retained_observation_ids:
@@ -1206,6 +1398,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
                 len(EXPECTED_ARTIFACT_HASHES)
                 + len(EXPECTED_ASSET_SAMPLE_HASHES)
                 + len(EXPECTED_SAMPLE_METADATA_HASHES)
+                + len(EXPECTED_WAVE2_ARTIFACT_HASHES)
                 + 1
             ),
             "source_closures": len(closures),

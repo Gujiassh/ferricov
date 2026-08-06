@@ -4,7 +4,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "7893b71b7ace2ff7a04c361b57b7be1935f2775763330b99bd9eb1da355f91bf",
+      "facts_sha256": "484b0780e2cabbf14521ed28abccd8513a737104daa54f522a87c9e59519137a",
       "failure_contract_ids": [],
       "family": "layout",
       "id": "INST-LAYOUT-001",
@@ -21,6 +21,11 @@
           "xml2lcov",
           "xml2lcovutil.py"
         ],
+        "directory_companion_entry_count": 57,
+        "directory_companion_mode": "755",
+        "directory_companion_path": "compat/installation/wave2/installed-directories.lock",
+        "directory_companion_retained": true,
+        "directory_companion_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
         "directory_entries_retained": false,
         "file_count": 320,
         "group_counts": {
@@ -109,13 +114,17 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "9fe790c93478cc35700718392aa69e0a2255a2c82007e21a4370d1477cf6e80e",
+      "facts_sha256": "812be1d3cc5d0824094732775d2e2ad626ec5ff87ae28bd1eb333ab217235b6b",
       "failure_contract_ids": [],
       "family": "lifecycle",
       "id": "INST-STAGE-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/stage-summary.txt",
+          "sha256": "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b"
+        },
         "compiled_paths_retain_prefix_without_destdir": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "payload_under_destdir": true,
         "requires_absolute_destdir_prefix": true,
         "source_bindings": [
@@ -151,7 +160,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "0061d7bc8b9a5f58e272fcd3012d7bfddd3cb22b832b15dc09b52592503313dc",
+      "facts_sha256": "073875607f703ea7becfcc8d4cd6f5828199def23e30fe3c8ec547d21ebc3366",
       "failure_contract_ids": [
         "INST-INTERP-001"
       ],
@@ -159,9 +168,13 @@
       "id": "INST-INTERP-001",
       "independent_facts": {
         "advertised_override_effective": false,
+        "capture_artifact": {
+          "path": "compat/installation/wave2/interp.txt",
+          "sha256": "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae"
+        },
         "env_shebang_excluded_from_rewrite": true,
         "install_passes_fixinterp": false,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "source_bindings": [
           {
             "line_count": 51,
@@ -193,15 +206,19 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "81a5cdb567c516c2ad69803d2cfd324b45bf3fa7e4a34215783757051a01e2aa",
+      "facts_sha256": "4c23ebbc2a2303fc52755f3d7bfeb96bebac43802452ee94c222762a232af278",
       "failure_contract_ids": [
         "INST-CONFIG-DISCOVERY-001"
       ],
       "family": "failure",
       "id": "INST-CONFIG-DISCOVERY-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/config.txt",
+          "sha256": "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319"
+        },
         "compiled_prefix_alone_selects_system_file": false,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "search_order": [
           "$HOME/.lcovrc",
           "$LCOV_HOME/etc/lcovrc"
@@ -231,17 +248,21 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "a0b42c40d9f76ca242009aaeeb3b2eecde3c91f1b89befaea190705933716482",
+      "facts_sha256": "4a8ed3279ec861cac790cd79add546df7e9d016fc6b0632cda3b4f47d811efcf",
       "failure_contract_ids": [
         "INST-UNINSTALL-001"
       ],
       "family": "failure",
       "id": "INST-UNINSTALL-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/uninstall.txt",
+          "sha256": "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e"
+        },
         "foreign_sentinels_removed": true,
         "isolated_root_required": true,
         "man_uninstall_enumerates_source_glob": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "recursive_removal_targets": [
           "lib/lcov",
           "share/lcov"
@@ -279,14 +300,18 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "478530a73fd0e6a5570e7addf5ddfe49e6d9b4fc5181dcf6d2d4d5ca34544874",
+      "facts_sha256": "75f6aba168ec23eaf0a33f7ab524eb5e5e7a6a8238a2115d4d36492104e9c668",
       "failure_contract_ids": [
         "INST-PARTIAL-001"
       ],
       "family": "failure",
       "id": "INST-PARTIAL-001",
       "independent_facts": {
-        "oracle_execution_status": "not_captured",
+        "capture_artifact": {
+          "path": "compat/installation/wave2/partial.txt",
+          "sha256": "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb"
+        },
+        "oracle_execution_status": "captured",
         "partial_payload_possible": true,
         "rollback": false,
         "source_bindings": [
@@ -312,17 +337,21 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "3da7a22388d7ccc9a79bbd675271433c126d05eebf22ea0b850d6607ac34589f",
+      "facts_sha256": "440326736fef8f6a6bcec74667d4e885f81d5d853c44466661c24d3563b6c17f",
       "failure_contract_ids": [
         "INST-DOC-FAIL-001"
       ],
       "family": "failure",
       "id": "INST-DOC-FAIL-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/docfail.txt",
+          "sha256": "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552"
+        },
         "doc_finished_is_hard_prerequisite": true,
         "install_cleans_source_example_and_tests": true,
         "missing_sphinx_or_theme_fails_before_payload": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "source_bindings": [
           {
             "line_count": 66,
@@ -363,14 +392,18 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "80110c8d0620652c4fe3be37892defa875345dc76a20542f1d89f3a17f63ac99",
+      "facts_sha256": "96aac021d9f375633b536d4dbbcfa70a743b244ca876a7e0f773c1f9a6f452ab",
       "failure_contract_ids": [
         "INST-PATH-001"
       ],
       "family": "failure",
       "id": "INST-PATH-001",
       "independent_facts": {
-        "oracle_execution_status": "not_captured",
+        "capture_artifact": {
+          "path": "compat/installation/wave2/relative.txt",
+          "sha256": "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2"
+        },
+        "oracle_execution_status": "captured",
         "relative_roots_rejected": true,
         "requires_absolute_destdir_prefix": true,
         "source_bindings": [
@@ -407,15 +440,19 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "453c9f3f9f4bd887e2d7f93064426919f741b2539dca4e2eeb144815b712b72e",
+      "facts_sha256": "f86e701eaea2acddcfe0ebb2a068161611ae3b6e5c1cad684079f4bb0c0061c3",
       "failure_contract_ids": [
         "INST-DIRTY-ASSET-001"
       ],
       "family": "failure",
       "id": "INST-DIRTY-ASSET-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/dirty.txt",
+          "sha256": "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a"
+        },
         "examples_and_tests_from_working_tree": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "retained_support_script_count": 23,
         "retained_support_script_names": [
           "P4version.pm",
@@ -478,15 +515,19 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "368eb0eddde1636284e021e6035accaa32a325783d3e8995c89faeb3c697228c",
+      "facts_sha256": "24ab7ba138ab7681d797c19cc0453c6ee2be1c08a49708f6b690c3c625373514",
       "failure_contract_ids": [
         "INST-TEST-RUN-001"
       ],
       "family": "failure",
       "id": "INST-TEST-RUN-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/testrun.txt",
+          "sha256": "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5"
+        },
         "explicit_lcov_home_required_for_installed_tests": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "retained_test_entry_count": 205,
         "source_bindings": [
           {
@@ -529,7 +570,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "3ee4121b7987339cf74a47834a5fc358848106337e14de9eefada02aa87d0694",
+      "facts_sha256": "91f6c0f3bd2f99853c13f17898394b146fd79409819760fe8c74995074e10b1d",
       "failure_contract_ids": [
         "INST-DOC-PATH-001"
       ],
@@ -545,8 +586,12 @@
           "scripts": "/usr/local/share/lcov/support-scripts",
           "tests": "/usr/local/share/lcov/tests"
         },
+        "capture_artifact": {
+          "path": "compat/installation/wave2/docpath.txt",
+          "sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1"
+        },
         "documentation_mismatch_must_be_recorded": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "source_bindings": [
           {
             "line_count": 15,
@@ -582,13 +627,17 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "37a6486d3923901130b0a8c92d04069c1f180820b975009e55cf417c4cbf79ee",
+      "facts_sha256": "5e83bab964e62e1cf3d848eda7a0661063891310602ae120712b7539020550af",
       "failure_contract_ids": [],
       "family": "asset",
       "id": "INST-REPORT-ASSET-001",
       "independent_facts": {
         "asset_count": 7,
         "assets_are_runtime_not_install_payload": true,
+        "capture_artifact": {
+          "path": "compat/installation/wave2/report-assets.txt",
+          "sha256": "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0"
+        },
         "observation_count": 4,
         "observations": [
           {
@@ -785,6 +834,7 @@
           }
         ],
         "optional_updown_and_html_reference_qualification_open": true,
+        "oracle_execution_status": "captured",
         "runtime_assets": [
           {
             "bytes": 24155,
@@ -883,16 +933,20 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "b05925378764860f97b7fef5d4ed52d63565000054de2b76c9175939da91be1c",
+      "facts_sha256": "c695d7bb3f1699ffea9681db459ad2fcdd74fa729b24236e6bad69854b08e9d2",
       "failure_contract_ids": [
         "INST-LICENSE-001"
       ],
       "family": "license",
       "id": "INST-LICENSE-001",
       "independent_facts": {
+        "capture_artifact": {
+          "path": "compat/installation/wave2/license.txt",
+          "sha256": "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f"
+        },
         "copying_in_install_payload": false,
         "copying_in_source_archive_manifest": true,
-        "oracle_execution_status": "not_captured",
+        "oracle_execution_status": "captured",
         "retained_tree_contains_copying": false,
         "source_bindings": [
           {
