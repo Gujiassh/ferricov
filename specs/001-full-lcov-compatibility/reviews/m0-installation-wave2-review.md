@@ -162,3 +162,8 @@ Harness:
 - Executable identity hashes the open `/proc/<pid>/exe` FD at exec-stop; no post-exit reopen or sentinel digests.
 - Ptrace SETOPTIONS/CONT failures kill+reap; fault-injected tests cover CONT/SETOPTIONS/hash/replacement.
 - Multi-target replace backups all old targets and fully rolls back on Python exception (not crash-atomic).
+
+
+## Cross-clone stability
+
+Retained captures omit `EXECUTABLE_ST_DEV`/`EXECUTABLE_ST_INO`. Executable identity is path + open-FD content hash only; two clean clone full recaptures are byte-identical without normalizers.

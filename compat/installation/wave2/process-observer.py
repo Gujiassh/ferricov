@@ -73,10 +73,12 @@ def resolve_cwd(pid: int) -> str:
     return os.readlink(f"/proc/{pid}/cwd")
 
 
-def hash_open_exe_fd(pid: int) -> tuple[str, int, int]:
-    """Open /proc/<pid>/exe and hash the open inode/FD before continue.
+def hash_open_exe_fd(pid: int) -> str:
+    """Open /proc/<pid>/exe and hash the open FD content before continue.
 
-    Returns (sha256_hex, st_dev, st_ino). Never falls back to a sentinel digest.
+    Returns sha256_hex of the executable bytes. Device/inode numbers are
+    intentionally not returned or persisted: they are container-local and
+    break cross-clone strict replay. Never falls back to a sentinel digest.
     """
     fault = os.environ.get(FAULT_ENV, "")
     if fault == "hash_open":
@@ -84,7 +86,8 @@ def hash_open_exe_fd(pid: int) -> tuple[str, int, int]:
     path = f"/proc/{pid}/exe"
     fd = os.open(path, os.O_RDONLY | os.O_CLOEXEC)
     try:
-        st = os.fstat(fd)
+        # fstat is used only to prove the FD is open; st_dev/st_ino are not persisted.
+        os.fstat(fd)
         if fault == "hash_read":
             raise OSError(13, "injected hash_read fault")
         h = hashlib.sha256()
@@ -93,7 +96,7 @@ def hash_open_exe_fd(pid: int) -> tuple[str, int, int]:
             if not chunk:
                 break
             h.update(chunk)
-        return h.hexdigest(), int(st.st_dev), int(st.st_ino)
+        return h.hexdigest()
     finally:
         os.close(fd)
 
@@ -212,8 +215,6 @@ def main(argv: list[str] | None = None) -> int:
     observed_cwd = ""
     observed_argv: list[str] = []
     exec_sha = ""
-    exec_dev = 0
-    exec_ino = 0
     exec_seen = False
     exit_status = None
     sig_num = None
@@ -317,7 +318,8 @@ def main(argv: list[str] | None = None) -> int:
                         observed_cwd = resolve_cwd(child_pid)
                         observed_argv = read_cmdline(child_pid)
                         # Hash the open /proc/<pid>/exe FD while still stopped.
-                        exec_sha, exec_dev, exec_ino = hash_open_exe_fd(child_pid)
+                        # Do not persist st_dev/st_ino: they vary across Docker clones.
+                        exec_sha = hash_open_exe_fd(child_pid)
                         exec_seen = True
                         # Arm fault injection for the post-exec continue only.
                         ptrace._post_exec_ready = True  # type: ignore[attr-defined]
@@ -432,8 +434,6 @@ def main(argv: list[str] | None = None) -> int:
             f"WORKDIR={observed_cwd}",
             f"EXECUTABLE_PATH={observed_exe}",
             f"EXECUTABLE_SHA256={exec_sha}",
-            f"EXECUTABLE_ST_DEV={exec_dev}",
-            f"EXECUTABLE_ST_INO={exec_ino}",
             f"WAIT_STATUS_RAW={wait_code if wait_code is not None else -1}",
             f"QUALIFICATION={args.qualification or 'none'}",
             f"TIMEOUT_SECONDS={timeout_sec}",
@@ -443,8 +443,6 @@ def main(argv: list[str] | None = None) -> int:
         meta_lines = [
             f"EXECUTABLE_PATH={observed_exe}",
             f"EXECUTABLE_SHA256={exec_sha}",
-            f"EXECUTABLE_ST_DEV={exec_dev}",
-            f"EXECUTABLE_ST_INO={exec_ino}",
             f"WORKDIR={observed_cwd}",
             f"TIMEOUT_SECONDS={timeout_sec}",
             f"DECLARED_ARGV0={subject[0]}",

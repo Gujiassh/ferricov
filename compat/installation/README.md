@@ -77,3 +77,6 @@ Wave-2 captures use `process-observer.py` (ptrace exec-stop) for live exe/argv/c
 
 
 Executable identity is hashed from the open `/proc/<pid>/exe` file descriptor at post-exec ptrace stop. Recapture replacement of cases/index/directory-lock is transactionally rolled back on Python exceptions (not crash-atomic). Runner qualification captures are production-loaded via `validate_wave2_runner_qualification()`.
+
+
+Executable identity retains path + content hash from the open `/proc/<pid>/exe` FD only. Container-local device/inode numbers are never persisted in status/meta/capture surfaces so cross-clone strict replay remains byte-stable.
