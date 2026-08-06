@@ -62,7 +62,7 @@ EXPECTED_SAMPLE_METADATA_HASHES = {
 
 CASE_RECORDS_PATH = Path(__file__).with_name("oracle-case-records.json")
 CASE_RECORDS_SCHEMA_PATH = Path(__file__).with_name("oracle-case-records.schema.json")
-EXPECTED_CASE_RECORDS_SHA256 = "b988fd0beeb19f14d35e5abfc5cf9d24b4c10a8509a4762ac704f1a2ac39b59e"
+EXPECTED_CASE_RECORDS_SHA256 = "fdc58dc60defc4dd21183ff4490116c83624b751a92c9dfd7f1f3600811f3036"
 
 WAVE2_DIR = Path(__file__).with_name("wave2")
 WAVE2_CAPTURE_PATH = WAVE2_DIR / "oracle-capture.json"
@@ -75,10 +75,10 @@ EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256 = (
     "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
 )
 EXPECTED_WAVE2_CAPTURE_SHA256 = (
-    "634103a64ee3b76ffb592eee282baba7cfb4ce7d0afbfde2c742a28cd7fd185e"
+    "3c4f2f350be30be9ac854e6ac6775cda12d46444672cd4f24dfea6f1f5fc95ea"
 )
 EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = (
-    "256d5876ef2db80586239256160486adb65023563c29a497d45e04c31687b73c"
+    "f98a4be57d031db3f12363ec671ae1f2a09032b7642a306641170d52a63ee3c2"
 )
 EXPECTED_WAVE2_ORACLE_IMAGE_ID = (
     "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
@@ -90,7 +90,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/capture-driver.sh":
         "cb9986e3a22508822b3d1f4e2d8c86cdaaa11f8ef8aa9626eff27a3ae8c1858e",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json":
-        "60ca1d5e66f3d43e3ee57f7629f4b1fe714c5fa244f79b5dadb994f468d197a7",
+        "ee6640171261f735d10b5d7d5c29031ed815ce74adb35c9b5d75d6d99a97a5e8",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/cleanup.log":
@@ -98,7 +98,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/meta.env":
-        "68415192eb23fcfb23365e1987bb9b45510a72f0f42bca1397e3baec1be5637e",
+        "e3b55f885bd88544c2a5de3a8918b2197c02da4b6bb8951a26c887aba56628d6",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-argv.json":
         "343e16d808c1bf21b38b59e5f56193039b1fe3bb8b2db503ecea4a93603fa701",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-children.json":
@@ -106,9 +106,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/run-meta.env":
-        "3a1b62538dbf08b7f0e9ab9792f20ce59fc757e5d30d5c548d83e368e42f9bfa",
+        "3393ff77f91e61846f922fc4d4335b373ce18fbe7f77ef9229ad07739c69544b",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/status.env":
-        "0869790fc1196de1a267a17f14991ee7b129d36eb6a7338342c0d4e2168a2014",
+        "9b3f3db104aac507d72c1b01d4a5d207002a197502682647b4ba7b2547caa400",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stdout.bin":
@@ -116,7 +116,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/tree-effects.json":
         "2d1284c7c5b9893a807c74266b83c7ce9c10e390901048fe2ab13a17f68408a2",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json":
-        "92d51b4adfe853fc06da8ae2b54012db38c9a82677c9b714f2204866d6c61b99",
+        "051dedf9fd188e60a226f074fb69aa976c11176fabf1f625532f44b044dfa0bd",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/cleanup.log":
@@ -126,7 +126,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/meta.env":
-        "8bcb0c09099fa8a205c72a9f7c1eff101a9bf601f5b6a42bc82a15546f8fabac",
+        "9c34dfe2192de85e080ed6790f103a865d623396833732c43849bd9c281c698e",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/observed-argv.json":
         "a2be4e32a13288eaa130078c88897a762f5f40f01198cf78531872b12d32e769",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/observed-children.json":
@@ -134,9 +134,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/status.env":
-        "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4",
+        "bcfef7e0e8267ab2fabc1f1ea7bf72c9e3e8067764602fd6ecf189e37b487f57",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stderr.bin":
         "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stdout.bin":
@@ -144,7 +144,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/tree-effects.json":
         "5867610e4434b68faf72e679fba975deba287f1e8316e8af25fe63823215dd22",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json":
-        "77c0e5b0fd51291288623894cc04437404b4e53e525399471ef37187893b2139",
+        "8d271840a215fa73a9bc8ca231c215d486b34d1b7bffce101d2087dda0afa6df",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/cleanup.log":
@@ -152,7 +152,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/meta.env":
-        "1613a68f09c2aa49365ef8633a15b56b876bf02c9150dac4a38adb6c5f857e67",
+        "7ed0d7158321462309e553561684284298c93f069b407ba093ca61651ed6552e",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/observed-argv.json":
         "c47f9d9a85008f3f7c4040318023c2562275d5d04bf42fbcef154f7af5097a64",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/observed-children.json":
@@ -160,9 +160,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/run-meta.env":
-        "a5383b60663c8dd28d5af7c433e37840340de968d4f0c9456946820b44b53868",
+        "3d03689098ddfdc095342eed018da749a0e58f88311665efce99dcd15e2aec0f",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/status.env":
-        "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f",
+        "be4539fb86989ce8f7c4ba40c97a8a94814492284f98bb3172f36035f00956ae",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/stderr.bin":
         "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de",
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/stdout.bin":
@@ -170,7 +170,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-FAIL-001/tree-effects.json":
         "52459946c102e3859cb822891f5e5c1fad41f680e2a000f1695daef2e50e4da9",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json":
-        "a778debb0ccf8a957175d75c7b32176d9173122ce181bb3f2554021fe7e9eff3",
+        "aa9710ddd67b178e8d5de9baca1b2437262bce8dbc629bccc40b04046162c49c",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/cleanup.log":
@@ -178,7 +178,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-PATH-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/meta.env":
-        "d1e82a25682ff8f65bd810c6671f9b9132cdd626a85a608a645763461087c6b8",
+        "865e0cae76debc51d04e756a8baa01b85a43011b244114cb171c100837cf3d15",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/observed-argv.json":
         "0cf1ce4ee559ba8a603e8f1b601f85743a74a552acc4303ed77ec78523e02b97",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/observed-children.json":
@@ -186,9 +186,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-PATH-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/run-meta.env":
-        "62a8ea19e931c8b7cf601cc056d9660ab6b7fa3e88f31d683a0636cbb7e54a53",
+        "5118e7d352c15524c57bf4d58c1418b40b44793584bfd24b6bef12f813a7cea1",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/status.env":
-        "c5c6c711978eaab0c5dd4958ad6b57f9456a14f4bcf31bb113e900b478d10a1a",
+        "c6e18f0c1a5c66cb89fdc1164b8ebadd498fcc27b7efff9b03ed67f0bd7293e1",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/INST-DOC-PATH-001/stdout.bin":
@@ -196,7 +196,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-DOC-PATH-001/tree-effects.json":
         "581b0f8fe9c600a74d3c2d615acf7bf6de45bd1d313d706d14d9e407cd87ab11",
     "compat/installation/wave2/cases/INST-INTERP-001/capture.json":
-        "33dbe4398eb75534e53d3264ebf6ebae2fae49d1f5bc396284b122104e449d80",
+        "079b6136143d1b08fc5017bfa6059b95ea4bbfb1db8b63e99b3fc27c156987da",
     "compat/installation/wave2/cases/INST-INTERP-001/clean-env.env":
         "10d4cc4b0ccc7b30a5cf1283b889680d12519077a244be94bb943e9d7b79ec75",
     "compat/installation/wave2/cases/INST-INTERP-001/cleanup.log":
@@ -206,7 +206,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-INTERP-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-INTERP-001/meta.env":
-        "f033c0f3832d38beea68a07e763f0954578000485d768df556a7987f8d8cd802",
+        "5b1beb4854d3b9ac5bb182662191f17d161bdaddff90873ea18a4aec185aa7f7",
     "compat/installation/wave2/cases/INST-INTERP-001/observation.txt":
         "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae",
     "compat/installation/wave2/cases/INST-INTERP-001/observed-argv.json":
@@ -216,9 +216,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-INTERP-001/observed-env.env":
         "10d4cc4b0ccc7b30a5cf1283b889680d12519077a244be94bb943e9d7b79ec75",
     "compat/installation/wave2/cases/INST-INTERP-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-INTERP-001/status.env":
-        "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4",
+        "bcfef7e0e8267ab2fabc1f1ea7bf72c9e3e8067764602fd6ecf189e37b487f57",
     "compat/installation/wave2/cases/INST-INTERP-001/stderr.bin":
         "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
     "compat/installation/wave2/cases/INST-INTERP-001/stdout.bin":
@@ -226,7 +226,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-INTERP-001/tree-effects.json":
         "5b7c77c785a607ac78817102c536ff2b3387d76c7be015453532f0e0d9e8ec0f",
     "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json":
-        "ff6c298c726559d889ee6dcb806d26dfb32fc4a2a693b7a5975d0d17e475c748",
+        "5848e9e0ad63c40c517dfcce28d782bffb3ead4c81b34b7886e12f83c56353eb",
     "compat/installation/wave2/cases/INST-LAYOUT-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-LAYOUT-001/cleanup.log":
@@ -236,7 +236,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LAYOUT-001/installed-directories.lock":
         "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
     "compat/installation/wave2/cases/INST-LAYOUT-001/meta.env":
-        "54aed9206464e09e87a9261e48a74c5a360473ed8a2eef86a8651f4858e75b51",
+        "926b83e2774a7a096e96d8b82fab60e666a84945f8caa1112e7be477f1980095",
     "compat/installation/wave2/cases/INST-LAYOUT-001/observed-argv.json":
         "01ee064044bf24cd51f5522809af88433d99fcd8b304ceb1739751d71e263de1",
     "compat/installation/wave2/cases/INST-LAYOUT-001/observed-children.json":
@@ -244,9 +244,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LAYOUT-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-LAYOUT-001/run-meta.env":
-        "3d6018c4e1f966ca0a4827b1659e715e9e073d7edad9a7b92c8ad1cfcb247ddd",
+        "c3ebd1478338dd65ab237d2cc66a1d1ca220f079795ee2e1a28e179b51811efc",
     "compat/installation/wave2/cases/INST-LAYOUT-001/status.env":
-        "3328fe76ef7b3bbc290dd90fe3029aafdbf0b308cefaab3d3fae1cd061814876",
+        "ecc5e153526370c5d99528ed4b2d34ff19682afee15ad4502f32315cd23d64f0",
     "compat/installation/wave2/cases/INST-LAYOUT-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/INST-LAYOUT-001/stdout.bin":
@@ -254,7 +254,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LAYOUT-001/tree-effects.json":
         "378e66e5e239309f8f9da9b52a99c85cc34ba2d943eda3bf022e45963b317044",
     "compat/installation/wave2/cases/INST-LICENSE-001/capture.json":
-        "794c10d3abd8c0f1d757335058d40e68f64d847bc6c0b758fe0b5326da662368",
+        "ddd99047e81b17343b9a795f11aa25deccdd4b6b4be0c7363322f625b147a768",
     "compat/installation/wave2/cases/INST-LICENSE-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-LICENSE-001/cleanup.log":
@@ -264,7 +264,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LICENSE-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-LICENSE-001/meta.env":
-        "dc34d7ffe8c34649afb616519e44516fb21408513c50a338f0bea09e8e0535b4",
+        "d6f6404d3f7fe4301bc7e683ecfc10e567374a5267c38e16d3f28bb8e3447884",
     "compat/installation/wave2/cases/INST-LICENSE-001/observation.txt":
         "b514c0103dc918f11ef5409e532d481f384f7cf6d0fe60e3eef21cece8f95b5e",
     "compat/installation/wave2/cases/INST-LICENSE-001/observed-argv.json":
@@ -274,9 +274,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LICENSE-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-LICENSE-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-LICENSE-001/status.env":
-        "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4",
+        "bcfef7e0e8267ab2fabc1f1ea7bf72c9e3e8067764602fd6ecf189e37b487f57",
     "compat/installation/wave2/cases/INST-LICENSE-001/stderr.bin":
         "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
     "compat/installation/wave2/cases/INST-LICENSE-001/stdout.bin":
@@ -284,7 +284,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-LICENSE-001/tree-effects.json":
         "afecb058af9a1a49fe33534e6aa56b13a57e75de06534bc4cc6678767b6b3015",
     "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json":
-        "c62500042f6c27c770d92b8c857bb5db8bc702926e25043b17131efb5928f28b",
+        "6a1fea7356154c4101cdee519770706a9ee269c272c21e5ef58dea4ad5fe06cb",
     "compat/installation/wave2/cases/INST-PARTIAL-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PARTIAL-001/cleanup.log":
@@ -294,7 +294,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PARTIAL-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-PARTIAL-001/meta.env":
-        "04b971378be931ed41692ea563d578fb7a17b55cb696ca8d1c8323728050e42e",
+        "eda5347d7f72318a5ff898a6ded55fe66cef72f0ffc4dd92774e774fd77267aa",
     "compat/installation/wave2/cases/INST-PARTIAL-001/observed-argv.json":
         "99e01ffaabc29b9dab4e2784d90ce569a0107b59304590e4626b6cbcc1acc87e",
     "compat/installation/wave2/cases/INST-PARTIAL-001/observed-children.json":
@@ -302,9 +302,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PARTIAL-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PARTIAL-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-PARTIAL-001/status.env":
-        "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f",
+        "d3b3cfde78e4ac89c7e85ba588ab41a3481122bb92b10bbf0205c2ad1de1e4de",
     "compat/installation/wave2/cases/INST-PARTIAL-001/stderr.bin":
         "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b",
     "compat/installation/wave2/cases/INST-PARTIAL-001/stdout.bin":
@@ -312,9 +312,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PARTIAL-001/tree-effects.json":
         "6d45f6ffcd44c0ea83efbfa8adbd65ca680c4dc571d14f0e60d45cf09070ba0a",
     "compat/installation/wave2/cases/INST-PATH-001/capture.json":
-        "ad921517cd7ac74e6ac8d7dfb9602ee62ac73688ab31a24976e1d95f9e045664",
+        "3b4e9524630f77e30c5003b1f6816e4efe597c81b23a502baf5698e632e278a6",
     "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json":
-        "e2f9df0fc88f5792e512c762030948726daaa71ae70114f239013ba01fed90a2",
+        "39777d2e2ba2df35f283742de9d143e9982617054f43c86ee200ebc6e6aa70d9",
     "compat/installation/wave2/cases/INST-PATH-001/relative/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PATH-001/relative/cleanup.log":
@@ -324,7 +324,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/relative/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-PATH-001/relative/meta.env":
-        "b8b1c84bb96bb3811232af85b5f2e5f7b609e2d58885704e107bf0b0961fa980",
+        "194ce7d599c05beaef2b41463fa9fb7dc6a747c785652618bbdb128033a2f34b",
     "compat/installation/wave2/cases/INST-PATH-001/relative/observed-argv.json":
         "12e40b7f8e84ba53e02ec53bfa25097e5b2c76cf9278eb654313020622dff5e5",
     "compat/installation/wave2/cases/INST-PATH-001/relative/observed-children.json":
@@ -332,9 +332,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/relative/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PATH-001/relative/run-meta.env":
-        "d7488fe2ee27d391fd42f62dfc1d502b839c6e1772ebabf4725d353feaca4235",
+        "f8d52f1ca7d829b71fd8844891d0761e2230a1b2279def5009a0e19c46a8774d",
     "compat/installation/wave2/cases/INST-PATH-001/relative/status.env":
-        "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f",
+        "23bd26585a45db12de8ade94b7bbff282199eaa5a9613e3de604d2d78baa9ae1",
     "compat/installation/wave2/cases/INST-PATH-001/relative/stderr.bin":
         "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732",
     "compat/installation/wave2/cases/INST-PATH-001/relative/stdout.bin":
@@ -342,7 +342,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/relative/tree-effects.json":
         "fb67a85d82f30c0af3347dee2f2b87f5bde0a2689b94ef8288eb5049dd2836fc",
     "compat/installation/wave2/cases/INST-PATH-001/space/capture.json":
-        "a2bab341ed2590e53a7f65eae7894da480c647bce18fcb22923225052756e112",
+        "71131bb6f3eebb59a52fedea6aa15767f2ba6e8d1d6422f08e1c2f09372da609",
     "compat/installation/wave2/cases/INST-PATH-001/space/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PATH-001/space/cleanup.log":
@@ -352,7 +352,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/space/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-PATH-001/space/meta.env":
-        "6c676d146d9a8006d19e69a5ff6529ecb6e2c070052ba12cdb22b9e9d3120cbb",
+        "087c1f54e6e939627e0e492de98a7abefb72868f75beeead99d3a837c96082af",
     "compat/installation/wave2/cases/INST-PATH-001/space/observed-argv.json":
         "022c1b693129c4c52730e0f188e2789d315750785f5db89ef5ae477145731d96",
     "compat/installation/wave2/cases/INST-PATH-001/space/observed-children.json":
@@ -360,9 +360,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/space/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-PATH-001/space/run-meta.env":
-        "a5383b60663c8dd28d5af7c433e37840340de968d4f0c9456946820b44b53868",
+        "3d03689098ddfdc095342eed018da749a0e58f88311665efce99dcd15e2aec0f",
     "compat/installation/wave2/cases/INST-PATH-001/space/status.env":
-        "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f",
+        "be4539fb86989ce8f7c4ba40c97a8a94814492284f98bb3172f36035f00956ae",
     "compat/installation/wave2/cases/INST-PATH-001/space/stderr.bin":
         "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de",
     "compat/installation/wave2/cases/INST-PATH-001/space/stdout.bin":
@@ -370,7 +370,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-PATH-001/space/tree-effects.json":
         "1463d804b0012be616bc7f1c310e3390c4b83d3d9762f79950ed0a367cca93f7",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json":
-        "b457d4683cc242fc2d4c8c515b92803410b5eea563e27152aa380da752eea72a",
+        "34771ad11ba2d3e1b0e31dfcb1ac099b8572ea99c66bccdc328aacce30500f46",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/cleanup.log":
@@ -378,7 +378,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/meta.env":
-        "6e9cd95f7b2bb91032d1bea8e6ea55d87e8638a232d40689190d5fab8c24c1cb",
+        "c5559b194a7757808530a80eed4c03ac76a1aa876d6c51587e8e2d2429c4ffc0",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-argv.json":
         "eb26c367b6f9930c211dd75f179dba72138c16f72ee83c8c9f7e6df945a2772b",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-children.json":
@@ -386,9 +386,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/run-meta.env":
-        "62a8ea19e931c8b7cf601cc056d9660ab6b7fa3e88f31d683a0636cbb7e54a53",
+        "5118e7d352c15524c57bf4d58c1418b40b44793584bfd24b6bef12f813a7cea1",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/status.env":
-        "c5c6c711978eaab0c5dd4958ad6b57f9456a14f4bcf31bb113e900b478d10a1a",
+        "c6e18f0c1a5c66cb89fdc1164b8ebadd498fcc27b7efff9b03ed67f0bd7293e1",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stdout.bin":
@@ -396,7 +396,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-REPORT-ASSET-001/tree-effects.json":
         "7df7fd8f3a53dff56583d8fb73b02bf7e1aabb549902e9ae73f12424206df4b6",
     "compat/installation/wave2/cases/INST-STAGE-001/capture.json":
-        "b677eed63296050860284e840c73a701b7cdf018f0a48909ff740db34ce6a3c5",
+        "776ac4d1c208cfbdd9ae9e65eee642d606816ef7faddc4991c4eb1a36410e37f",
     "compat/installation/wave2/cases/INST-STAGE-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-STAGE-001/cleanup.log":
@@ -406,7 +406,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-STAGE-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-STAGE-001/meta.env":
-        "71bac395d84a2042426d89eb571cb714b20f0d85cbd87007ad0278717b146465",
+        "b03ab5160d1291ae8ba0a4080ae2fda27ee09ca536546794377ae08b0b839a31",
     "compat/installation/wave2/cases/INST-STAGE-001/observed-argv.json":
         "e8e0fc52571cfbabdd40674d119b4c72e01dbd70d38bced12b50c9e6738c62b6",
     "compat/installation/wave2/cases/INST-STAGE-001/observed-children.json":
@@ -414,9 +414,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-STAGE-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-STAGE-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-STAGE-001/status.env":
-        "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4",
+        "bcfef7e0e8267ab2fabc1f1ea7bf72c9e3e8067764602fd6ecf189e37b487f57",
     "compat/installation/wave2/cases/INST-STAGE-001/stderr.bin":
         "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
     "compat/installation/wave2/cases/INST-STAGE-001/stdout.bin":
@@ -424,7 +424,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-STAGE-001/tree-effects.json":
         "f91656248548da17a7a894a4c0db3a40c0948c1199d843c1716828ef5788c4e9",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json":
-        "dd00dea92670923108044d9dcc6f4355593dbf86f6c32870cd053be81232f0ae",
+        "1c0b65db3dc8ce02663f3a6c2cd6da2f0cc7d4c488c488f3fdc3ccf83118376f",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/cleanup.log":
@@ -432,7 +432,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-TEST-RUN-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/meta.env":
-        "903bb74ec5e5e89e1acafe1d53c3ea3b7b05eeb19844ff01ecfacdd7dabce33f",
+        "4fa91e27a0dc1749e303920d202ccb6124d96d44905ee88d5a18b2cb74c10524",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/observed-argv.json":
         "5b0e4a5619fde08d8b64ec8b35b7169b29d4e029de0d14cf9c7be148630438d9",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/observed-children.json":
@@ -440,9 +440,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-TEST-RUN-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/run-meta.env":
-        "c328c565585ceb63e92c2faf2958d814a9ed97e1ec9a1c8ca20374d4403e2ade",
+        "53581d2bdf3ab8e8e7b881d1a58f85f6b18ac32543b6c5a408224d7aad00aaa8",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/status.env":
-        "fd3b26ad752d6ae7d5d05dfe27af29b382cf7fd39485565e14d118b376eeff17",
+        "bf050117b017fd1aea7309cfa08610bb4d03252395c5ba64d372d172040d9002",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/stderr.bin":
         "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f",
     "compat/installation/wave2/cases/INST-TEST-RUN-001/stdout.bin":
@@ -450,7 +450,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-TEST-RUN-001/tree-effects.json":
         "996385e15d3d180ef69dd2757712a2fb251bc8c86144ac008ac2842da0d460e3",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json":
-        "9d55f5aceefd233bcadf997d7d1e11bafdaf046d86825058506fac54f8354779",
+        "9c559da11845bdbd0fe74be39cea1099b2018cf3583fa4bc33fcb701dfb6ec50",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/cleanup.log":
@@ -462,7 +462,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-UNINSTALL-001/install.log":
         "f59b021f62f0f49ba8afcc8c70e38ba6a97d938ef2b2934f3cf1900d35084c96",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/meta.env":
-        "b9baddff1ca714deabce1a62b7816865798bbc6b32248b6fbeb58fb84b378b07",
+        "eef16626153771cd71389ee0bd2e633170f81e3e4e50e5f8c123ef7d4ff5fc5b",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-argv.json":
         "0fd741d1f5015373814d2dacdd7a2783e483120335db3c4298500977c25cef03",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-children.json":
@@ -470,9 +470,9 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/run-meta.env":
-        "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089",
+        "63b6bdaf9408d8cb03667bb8cc9444e787c4e0ddd7f6286d31f72fd33647c879",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/status.env":
-        "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4",
+        "bcfef7e0e8267ab2fabc1f1ea7bf72c9e3e8067764602fd6ecf189e37b487f57",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/stderr.bin":
         "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8",
     "compat/installation/wave2/cases/INST-UNINSTALL-001/stdout.bin":
@@ -480,7 +480,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/INST-UNINSTALL-001/tree-effects.json":
         "7ba4a9e7c5d8f0d8c59ee3304c3fcce437c3e33c322d6b2dee6923e1da0b430c",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/capture.json":
-        "b1706568bc09b543a783e69cd2a22687d5beed3982592302eb993849ad90e84b",
+        "01a2512d50a0cf77ea1768db0d4624762bb06d319afd7ed71fc3c12a6cbc9e07",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/cleanup.log":
@@ -488,7 +488,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/meta.env":
-        "fef8527ac244b751c496383dd888b45c5796c01c7570390b25839afbc23d455d",
+        "e9dc1fe6894fbcf0ab0de9e7abd17c57cd5a28d609d5ecd6c79b9ac9f92262a0",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/observed-argv.json":
         "676c6c95feb69f09c7bef9dd69096af132bcd9350c1ff7f4ec429e9cbc3ff666",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/observed-children.json":
@@ -496,17 +496,17 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/run-meta.env":
-        "a7e7a24e203eea8719cb99dc958b207b3c6c5148abd0e0910e3f0aa34f1e1dc3",
+        "5344ab69e563932d01faea58c01d5ae0f47550bf5cdf675f8bed019af98e8a0e",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/status.env":
-        "6c090583410935f9e8e3fcfabb85d5d33f18859dd9635d62bec01c9f20ba123f",
+        "e9054555cbadfd6e056d967513bcf982fbce61a36258a3181ea8b57113538442",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/stdout.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/tree-effects.json":
-        "21e027edbbfb77dc5f593fbc100c09e36d99f4298a3ad88d7fc4c5ba2c8ae06d",
+        "84bba5041ee702fa9396c69eb62176f7e4a40ab0a69ff8c46216e92d80514726",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/capture.json":
-        "4319cca8652b19d83d9707961c4bd2f112875fff1d6b20831fb981fea5f65251",
+        "b0636821f3e57a7ca63669bb9e281f9ce2c288552ac3076f4b42c6cc6ba54b68",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/clean-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/cleanup.log":
@@ -514,7 +514,7 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/host-observer.txt":
         "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/meta.env":
-        "3423a96d9e08fe418f68be6ee1ef6cce2b644647bafd99e173b590fb2add4fcb",
+        "84e5d1356e559587e446b84e3824ed41ca9cf3568cfde1eade92eb8452f49998",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-argv.json":
         "676c6c95feb69f09c7bef9dd69096af132bcd9350c1ff7f4ec429e9cbc3ff666",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-children.json":
@@ -522,31 +522,31 @@ EXPECTED_WAVE2_ARTIFACT_HASHES = {
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-env.env":
         "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/run-meta.env":
-        "0db86c7ce11b13f2af71fbd6521903d6af8c112de6037c7eb8c512925fa66762",
+        "8b14f3455e23868872ea15b7af9e3dacadab49640dfac939ae25067ed78458b8",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/status.env":
-        "73ae9caf3247328fa1ca19dddfe3576d7fb1e4d578122bea84f0f8e4a1c8bbee",
+        "e2e126b0c94107da96552826574a872a06addf35edda10f5d36f1f443597f40f",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/stderr.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/stdout.bin":
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/tree-effects.json":
-        "21e027edbbfb77dc5f593fbc100c09e36d99f4298a3ad88d7fc4c5ba2c8ae06d",
+        "84bba5041ee702fa9396c69eb62176f7e4a40ab0a69ff8c46216e92d80514726",
     "compat/installation/wave2/expected-case-table.json":
-        "256d5876ef2db80586239256160486adb65023563c29a497d45e04c31687b73c",
+        "f98a4be57d031db3f12363ec671ae1f2a09032b7642a306641170d52a63ee3c2",
     "compat/installation/wave2/installed-directories.lock":
         "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
     "compat/installation/wave2/installed-tree-directories.sh":
         "e16713b25dcd71651cf9d2f5ea63b0df87aa0ae201979c70be500f7e1d0da557",
     "compat/installation/wave2/oracle-capture.json":
-        "634103a64ee3b76ffb592eee282baba7cfb4ce7d0afbfde2c742a28cd7fd185e",
+        "3c4f2f350be30be9ac854e6ac6775cda12d46444672cd4f24dfea6f1f5fc95ea",
     "compat/installation/wave2/oracle-case-capture.schema.json":
         "457523cb98604b38e761017c2c2fd133ae42732070cfc5d308f39afb55142771",
     "compat/installation/wave2/oracle-image.pin":
         "f22fdba249a35092246f20148f7a49b8e3ffb74d5512268e63f12d17c31c51a1",
     "compat/installation/wave2/process-observer.py":
-        "d9753d8627cf392fdbbdc00fb2d91bf93764c7f1324b84e7846323035affee2f",
+        "ac9379f4f3b2bf78914c6fa67337598f7f0c8eabda7b032691328cbac73f58fd",
     "compat/installation/wave2/recapture.py":
-        "e46e5920dc740eff368bd51289d3e6abe9c612860a4d2268ec9f13aa2de625f8",
+        "2a4023ac1738e5a2a0e66ecd530a56fdd90cd1432f9f153bf694aedca9093ce4",
 }
 
 LAYOUT_IDS = (
@@ -1239,6 +1239,24 @@ def recompute_observation_sha256(record: dict[str, Any]) -> str:
     return sha256_bytes(canonical_json(observation_material(record)).encode("ascii"))
 
 
+def _bind_capture_artifact_file(art: dict[str, Any], *, label: str) -> None:
+    rel = art.get("path")
+    if not isinstance(rel, str) or not rel.startswith("compat/installation/wave2/cases/"):
+        raise InstallationContractError(f"wave2 artifact path prefix invalid ({label}): {rel}")
+    if ".." in PurePosixPath(rel).parts:
+        raise InstallationContractError(f"wave2 artifact path traversal ({label}): {rel}")
+    art_path = ROOT / rel
+    if not art_path.is_file():
+        raise InstallationContractError(f"wave2 artifact missing ({label}): {rel}")
+    actual = sha256_file(art_path)
+    if actual != art.get("sha256"):
+        raise InstallationContractError(
+            f"wave2 artifact drift ({label}): {rel} expected={art.get('sha256')} actual={actual}"
+        )
+    if art_path.stat().st_size != art.get("bytes"):
+        raise InstallationContractError(f"wave2 artifact size drift ({label}): {rel}")
+
+
 def load_case_capture_record(relative_path: str) -> dict[str, Any]:
     path = ROOT / relative_path
     if not path.is_file():
@@ -1252,17 +1270,21 @@ def load_case_capture_record(relative_path: str) -> dict[str, Any]:
     recomputed = recompute_observation_sha256(record)
     if recomputed != record.get("observation_sha256"):
         raise InstallationContractError(f"wave2 observation hash drift: {relative_path}")
-    # Bind raw stdout/stderr bytes
+    # Bind raw stdout/stderr bytes and every extra artifact reference.
     for key in ("stdout_bin", "stderr_bin"):
-        art = record["artifacts"][key]
-        art_path = ROOT / art["path"]
-        actual = sha256_file(art_path)
-        if actual != art["sha256"]:
+        _bind_capture_artifact_file(record["artifacts"][key], label=f"{relative_path}:{key}")
+    for extra in record["artifacts"].get("extra") or []:
+        _bind_capture_artifact_file(extra, label=f"{relative_path}:extra:{extra.get('name')}")
+    # Artifact paths must stay under the case tree rooted at the capture directory
+    # (or a direct child for dual-part parents such as INST-PATH-001).
+    capture_dir = PurePosixPath(relative_path).parent.as_posix()
+    case_root = capture_dir
+    for art in [record["artifacts"]["stdout_bin"], record["artifacts"]["stderr_bin"], *(record["artifacts"].get("extra") or [])]:
+        art_path = PurePosixPath(art["path"]).as_posix()
+        if not (art_path.startswith(case_root + "/") or PurePosixPath(art_path).parent.as_posix() == case_root):
             raise InstallationContractError(
-                f"wave2 raw {key} drift: {art['path']} expected={art['sha256']} actual={actual}"
+                f"wave2 capture artifact outside case tree: capture={relative_path} artifact={art_path}"
             )
-        if art_path.stat().st_size != art["bytes"]:
-            raise InstallationContractError(f"wave2 raw {key} size drift: {art['path']}")
     return record
 
 
@@ -1561,6 +1583,77 @@ def capture_artifact_for_case(case_id: str, capture_doc: dict[str, Any] | None =
     return binding
 
 
+def validate_wave2_runner_qualification(index: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Production-load and recompute both runner qualification captures."""
+    document = index if index is not None else wave2_capture_document()
+    rows = document.get("runner_qualification")
+    if not isinstance(rows, list) or len(rows) != 2:
+        raise InstallationContractError("wave2 runner_qualification must contain exactly 2 rows")
+    expected_ids = ["INST-RUNNER-SIGNAL-001", "INST-RUNNER-TIMEOUT-001"]
+    by_id = {row.get("id"): row for row in rows}
+    if list(by_id) != expected_ids and set(by_id) != set(expected_ids):
+        # order flexible but membership exact
+        if set(by_id) != set(expected_ids):
+            raise InstallationContractError(f"wave2 runner ids drift: {sorted(by_id)}")
+    bindings: list[dict[str, Any]] = []
+    for case_id in expected_ids:
+        row = by_id[case_id]
+        expected_path = f"compat/installation/wave2/cases/_runner/{case_id}/capture.json"
+        if row.get("capture_path") != expected_path:
+            raise InstallationContractError(
+                f"wave2 runner capture_path drift: {case_id} expected={expected_path} actual={row.get('capture_path')}"
+            )
+        record = load_case_capture_record(expected_path)
+        if record.get("oracle_execution_status") != "captured":
+            raise InstallationContractError(f"wave2 runner not captured: {case_id}")
+        if record.get("case_id") != case_id:
+            raise InstallationContractError(f"wave2 runner case_id drift: {case_id}")
+        # Lifecycle semantics
+        if case_id == "INST-RUNNER-SIGNAL-001":
+            if record["process"]["signal"] is None or record["process"]["timed_out"]:
+                raise InstallationContractError(f"wave2 runner signal semantics drift: {case_id}")
+            if record["process"]["exit_status"] is not None:
+                raise InstallationContractError(f"wave2 runner signal exit must be null: {case_id}")
+            if int(record["invocation"]["timeout_seconds"]) != 30:
+                raise InstallationContractError(f"wave2 runner signal timeout_seconds drift: {case_id}")
+        if case_id == "INST-RUNNER-TIMEOUT-001":
+            if not record["process"]["timed_out"] or record["process"]["signal"] is None:
+                raise InstallationContractError(f"wave2 runner timeout semantics drift: {case_id}")
+            if record["process"]["exit_status"] is not None:
+                raise InstallationContractError(f"wave2 runner timeout exit must be null: {case_id}")
+            if int(record["invocation"]["timeout_seconds"]) != 1:
+                raise InstallationContractError(
+                    f"wave2 runner timeout_seconds must match 1s deadline: got {record['invocation']['timeout_seconds']}"
+                )
+        if row.get("observation_sha256") != record["observation_sha256"]:
+            raise InstallationContractError(f"wave2 runner index observation drift: {case_id}")
+        if row.get("signal") != record["process"]["signal"]:
+            raise InstallationContractError(f"wave2 runner index signal drift: {case_id}")
+        if bool(row.get("timed_out")) != bool(record["process"]["timed_out"]):
+            raise InstallationContractError(f"wave2 runner index timed_out drift: {case_id}")
+        if row.get("host_observer_code") != record["process"]["host_observer_code"]:
+            raise InstallationContractError(f"wave2 runner index host_observer_code drift: {case_id}")
+        # Recompute observation already done inside load; also require non-sentinel exe hash
+        exe = record["identity"]["executable_sha256"]
+        if not re.fullmatch(r"[0-9a-f]{64}", exe or "") or exe in {"0" * 64, "f" * 64}:
+            raise InstallationContractError(f"wave2 runner executable hash invalid: {case_id}")
+        bindings.append(
+            {
+                "id": case_id,
+                "path": expected_path,
+                "sha256": sha256_file(ROOT / expected_path),
+                "observation_sha256": record["observation_sha256"],
+                "stdout_sha256": record["artifacts"]["stdout_bin"]["sha256"],
+                "stderr_sha256": record["artifacts"]["stderr_bin"]["sha256"],
+                "timeout_seconds": record["invocation"]["timeout_seconds"],
+                "signal": record["process"]["signal"],
+                "timed_out": record["process"]["timed_out"],
+                "executable_sha256": exe,
+            }
+        )
+    return bindings
+
+
 def validate_wave2_captures_against_expected() -> None:
     index = wave2_capture_document()
     table = wave2_expected_table()
@@ -1577,6 +1670,8 @@ def validate_wave2_captures_against_expected() -> None:
         if indexed.get("capture_path") != row["capture_path"]:
             raise InstallationContractError(f"wave2 index path drift: {case_id}")
         capture_binding_for_case(case_id)
+    # Runner qualification is outside the 13-case table but must still production-load.
+    validate_wave2_runner_qualification(index)
 
 
 def expected_case_independent_facts(

@@ -153,3 +153,12 @@ Harness:
 - Not an evaluated gate promotion
 - Not a packaging or distribution certification
 - Not an authorization to change public Suite/Result APIs
+
+
+## Final-review-3 rework
+
+- Runner captures use `cases/_runner/...` artifact paths and production `validate_wave2_runner_qualification()`.
+- Timeout runner declares `timeout_seconds=1` matching run-meta deadline.
+- Executable identity hashes the open `/proc/<pid>/exe` FD at exec-stop; no post-exit reopen or sentinel digests.
+- Ptrace SETOPTIONS/CONT failures kill+reap; fault-injected tests cover CONT/SETOPTIONS/hash/replacement.
+- Multi-target replace backups all old targets and fully rolls back on Python exception (not crash-atomic).
