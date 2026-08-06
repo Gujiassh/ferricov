@@ -2189,12 +2189,41 @@ def wave1_observations() -> list[dict[str, Any]]:
 
 
 
-def is_wave2_directory_marker(path: Path) -> bool:
-    """Git cannot retain empty directories; markers keep fixture dirs trackable.
+WAVE2_EMPTYHOME_FIXTURE = "emptyhome"
+WAVE2_EMPTYHOME_MARKER_NAME = ".gitkeep"
 
-    Markers are not part of Oracle fixture content hashes.
+
+def skip_wave2_emptyhome_marker(
+    path: Path,
+    *,
+    root: Path,
+    context: str,
+) -> bool:
+    """Return True only for zero-byte emptyhome/.gitkeep under root.
+
+    Fail closed for nonzero marker content, `.keep`, or markers outside
+    emptyhome so future fixture/file-tree bytes cannot be silently dropped.
     """
-    return path.name in {".gitkeep", ".keep"}
+    if path.name not in {WAVE2_EMPTYHOME_MARKER_NAME, ".keep"}:
+        return False
+    rel = path.relative_to(root).as_posix()
+    allowed_rel = f"{WAVE2_EMPTYHOME_FIXTURE}/{WAVE2_EMPTYHOME_MARKER_NAME}"
+    # When root is the emptyhome fixture directory itself, relative path is .gitkeep.
+    if root.name == WAVE2_EMPTYHOME_FIXTURE:
+        allowed_here = rel == WAVE2_EMPTYHOME_MARKER_NAME
+    else:
+        allowed_here = rel == allowed_rel
+    if path.name == ".keep" or not allowed_here:
+        raise DiagnosticsContractError(
+            "wave2 directory marker only allowed as zero-byte "
+            f"emptyhome/.gitkeep ({context}): {rel}"
+        )
+    data = path.read_bytes()
+    if data != b"":
+        raise DiagnosticsContractError(
+            f"wave2 emptyhome/.gitkeep must be zero bytes ({context}): {rel}"
+        )
+    return True
 
 
 def merge_wave2_env(extra: dict[str, str] | None) -> dict[str, str]:
@@ -2211,9 +2240,13 @@ def wave2_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
         if not src.exists():
             raise DiagnosticsContractError(f"missing wave2 fixture: {name}")
         if src.is_dir():
-            # Empty directories are retained in Git via directory markers only.
+            # Empty directories are retained in Git via emptyhome/.gitkeep only.
             for path in sorted(src.rglob("*")):
-                if not path.is_file() or is_wave2_directory_marker(path):
+                if not path.is_file():
+                    continue
+                if skip_wave2_emptyhome_marker(
+                    path, root=src, context=f"fixture:{name}"
+                ):
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()
@@ -2264,7 +2297,11 @@ def recompute_wave2_file_tree(
     try:
         entries = []
         for path in sorted(case_dir.rglob("*")):
-            if not path.is_file() or is_wave2_directory_marker(path):
+            if not path.is_file():
+                continue
+            if skip_wave2_emptyhome_marker(
+                path, root=case_dir, context=f"case:{case_dir.name}"
+            ):
                 continue
             rel = path.relative_to(case_dir).as_posix()
             if rel.startswith("reference/") or rel == "result.json":
