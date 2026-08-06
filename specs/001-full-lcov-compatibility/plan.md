@@ -146,10 +146,10 @@ starts.
 **Current status:** in progress. The schema-aware v2 inventory, all command,
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
-reproducible Oracle build and execution-manifest lane are established. M0 is not complete: 170 behavior-planning gaps, 52 unbound diagnostic/parallel
-identities, writer/converter tracefile blockers, executable installation
-lifecycle evidence, compiler capture qualification, and release platform
-evidence remain. The 148-case M0 CLI/configuration correctness baseline is
+reproducible Oracle build and execution-manifest lane are established. M0 is not complete: 170 behavior-planning gaps, 12 unbound diagnostic/parallel
+identities, the incomplete `M1-TF-045`/`052`/`061` semantic corpora, tracefile
+product/fuzz boundaries, executable installation lifecycle review, compiler
+capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
 product compatibility. Forty public CLI primary entries covered by that
 contract now have reviewed planning bindings to 154 exact suite cases. Eight
@@ -167,23 +167,27 @@ fail-closed environment contract now reviews 19 named variables, one dynamic inp
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 124 fixtures, 21
-per-record malformed inputs, and 254 reference-only Oracle observations. It
-closes the reader/framing/state wave1 and wave2 slices while preserving the
-TF-030 matrix and registry; writer/converter and product-boundary blockers
-remain open and product compatibility evidence remains false.
+15 reader matcher lines, all 18 writer emission lines, 137 fixtures, 21
+per-record malformed inputs, and 271 reference-only Oracle observations. It
+retains the TF-030 and reader/framing/state closures and adds exact
+writer/converter/transport mappings for `M1-TF-041..044`, `046`, `050`, `051`,
+and `060`. `M1-TF-045`, `052`, `061`, `063`, and `064` remain unbound, and
+product compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
-command exit policies. It retains 169 Oracle observations, including fully
-recaptured wave1 provenance; 19 of 71 diagnostic/parallel identities have
-exact bindings and 52 remain planned. Product compatibility evidence remains
-false.
+command exit policies. It retains 204 Oracle observations: the prior 201 are
+unchanged and three writer-transport fatal references are added. Fifty-nine of
+71 diagnostic/parallel identities have exact bindings and 12 remain planned
+and unbound. Product compatibility evidence remains false.
 The separate installation contract binds the 321-entry installed tree to nine
 exhaustive payload groups and 15 source closures. Canonical paths, SHA-256
 file identities, the legacy man symlink, and strict case-record ID/facts
-bindings fail closed. All 13 installation cases remain planned Oracle
-references; executable lifecycle, directory-mode, platform-path, and product
-evidence remain open.
+bindings fail closed. Wave2 adds replayable pinned-Docker envelopes for all 13
+planned Oracle-reference cases, both relative/space PATH parts, complete tree
+rows, observed clean env and live process provenance, timeout/signal/cleanup
+facts, and two runner qualifications; the 57-entry directory/mode companion
+is retained separately. Product evidence remains empty and these captures do
+not authorize an installer implementation.
 The Oracle-only model algebra contract now binds 157 cases across 27 fixtures
 to seven coverage-model decision rows (`M1-MD-010..014`, `017`, and `019`) with
 sealed independent observation facts. `M1-MD-020`, `M1-TF-063`, and

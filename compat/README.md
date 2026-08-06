@@ -84,11 +84,14 @@ reference closure, nine ignore/keep-going/message-control rules, four
 unclassified failure surfaces, and ten command exit policies. The `branch`
 class remains accepted but has no production emitter.
 
-Its 53 retained observations bind exact startup, parser, configuration, fatal,
-and one-ignore outcomes without claiming product evidence. The retained
+Its 204 retained observations bind exact startup, parser, configuration, fatal,
+and one-ignore outcomes without claiming product evidence. This includes 26
+wave1 and 32 wave2 Docker observations plus three writer-transport fatal
+references; the prior 201 observations remain unchanged. The retained
 `geninfo` startup observation is explicitly an environment intercept because a
-read-only `/tmp` blocks the true no-argument path. All 71 diagnostic and
-parallel case identities remain planned. See
+read-only `/tmp` blocks the true no-argument path. Fifty-nine of 71 diagnostic
+and parallel case identities have exact bindings; the remaining 12 stay
+planned and unbound. See
 [`diagnostics/README.md`](diagnostics/README.md) for regeneration and mutation
 test commands.
 
@@ -99,15 +102,18 @@ binds the complete 321-entry Oracle installed-tree lock to nine exhaustive
 payload groups and 15 pinned source closures. It requires canonical,
 lexicographically ordered absolute paths under `/usr/local`, SHA-256 file
 identities, the exact `/usr/local/man -> share/man` symlink, and 13 planned
-installation case identities. Directory entries are not retained by the tree
-recorder and remain an explicit gap.
+installation case identities. Wave2 retains replayable pinned-Docker envelopes
+for all 13 cases, complete tree rows, both relative/space PATH parts, observed
+clean env and live process provenance, timeout/signal/cleanup facts, and two
+runner qualifications. The 57 directory/mode companion is retained separately.
 
 Four retained `genhtml` benchmark samples contain the same seven generated CSS
 and PNG assets with exact byte counts and hashes. Each output tree is bound
 through its retained sample metadata, and duplicate runtime asset paths are
-rejected. These observations remain `oracle_reference`; they do not prove report
-rendering or Ferricov product compatibility. See [`installation/README.md`](installation/README.md) for
-regeneration and mutation test commands.
+rejected. All installation observations remain `oracle_reference` and planned;
+they do not prove report rendering, an installer implementation, or Ferricov
+product compatibility. See [`installation/README.md`](installation/README.md)
+for regeneration and mutation test commands.
 
 ## Oracle Correctness Baseline
 

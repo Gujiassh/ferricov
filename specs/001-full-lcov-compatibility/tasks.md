@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 184 Oracle observations.
+  standalone fail-closed contract bound to 271 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -72,15 +72,13 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 93 retained fixtures,
-and 21 per-record malformed fixtures. Its 184 Oracle observations are
-reference-only. Exact mappings cover `M1-TF-007`, `M1-TF-009`, `M1-TF-011`,
-`M1-TF-013`, `M1-TF-021`, `M1-TF-022`, `M1-TF-024`, `M1-TF-025`, `M1-TF-026`,
-`M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is mapped through
-the 56-row four-family exact atom matrix with row-level semantic validators.
-The remaining 18 named tracefile blockers keep the complete grammar and M1
-readiness tasks open. Product compatibility evidence remains false and M1
-implementation remains unauthorized.
+15 reader matcher lines, all 18 writer emission lines, 137 retained fixtures,
+and 21 per-record malformed fixtures. Its 271 Oracle observations are
+reference-only. Exact writer mappings now cover 14 cases for `M1-TF-041..044`,
+`046`, `050`, `051`, and `060`; `M1-TF-045`, `052`, and `061` remain
+observational-only gaps, while `M1-TF-063` and `064` remain product/fuzz
+boundaries. Product compatibility evidence remains false and M1 implementation
+remains unauthorized.
 
 The TF-030 exact numeric matrix module defined in
 `reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been implemented on
@@ -95,20 +93,21 @@ direct-upstream-provenance gaps. The audit rework is specified in
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 121 retained observations are
-reference-only; the `geninfo` startup observation is explicitly classified as
-a read-only temporary-directory intercept. All 71 diagnostic and parallel
-case IDs remain planned, so ignore-two, warning promotion, converter traps,
-parallel behavior, and product compatibility remain open.
+surfaces, and ten command exit policies. Its 204 retained observations are
+reference-only; the previous 201 observations remain unchanged and three
+writer-transport fatal references are added. Fifty-nine of 71 diagnostic and
+parallel case IDs have exact bindings; the remaining 12 stay planned and
+unbound, and product compatibility remains open.
 
 The separate installation contract binds all 321 retained tree entries to nine
 exhaustive groups and 15 pinned source closures. It preserves 320
 SHA-256-identified files, the exact legacy manpage symlink, canonical ordered
-paths, and exact mode counts while recording that directory entries are absent
-from the retained tree. All 13 installation cases remain planned. Four report
-samples bind their output trees through sample metadata and retain the same
-seven runtime assets as reference-only Oracle evidence; packaging and product
-compatibility remain open.
+paths, exact mode counts, and a separate 57-entry directory/mode companion.
+Wave2 retains replayable pinned-Docker envelopes for all 13 planned cases,
+both relative/space PATH parts, complete tree rows, observed clean env and live
+process provenance, timeout/signal/cleanup facts, and two runner qualifications.
+All cases remain Oracle reference-only and planned; packaging, installer
+implementation, and product compatibility remain open.
 
 The separate resource contract executes 13 controlled scale profiles against
 the immutable Oracle with branch and MC/DC summaries enabled. Every profile
@@ -126,21 +125,14 @@ single-run bounded observations rather than performance distributions. No
 Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
-Behavior planning covers all 531 public entries with primary plans.
-One hundred seven public primary plans are reviewed, including 40 CLI entries bound
-to 154 exact suite cases while retaining planning-only evidence status. All four
-required critical interaction domains now have reviewed members and reciprocal
-cases. Eight configuration-semantic slices bind 67 exact cases and review six
-more primary targets. Four tracefile CLI primary plans cover add-tracefile,
-output-file, no-function-coverage, and mcdc-coverage from exact retained
-reference observations and reviewed upstream planning sources. They keep
-`evidence_status=none` with empty evidence and suite arrays. The current M0 gate
-also includes 17 source-bound small-tool CLI plans with no executable suite or
-product evidence. Seventeen source-bound `lcovrc` configuration plans also
-have no executable suite or product evidence. The current M0 gate reports 424
-gaps, all public entries without reviewed primary cases.
-The raw Oracle correctness baseline is complete and replayed, but it remains
-reference-only evidence and does not unlock product parity.
+Behavior planning covers all 531 public entries with primary plans. Three
+hundred sixty-one substantive primary plans are reviewed with fixed source and
+interaction bindings; 170 explicit M0 gaps remain. Forty CLI entries bind 154
+exact suite cases, eight configuration slices bind 67 cases, and the tracefile,
+small-tool, and `lcovrc` slices remain planning-only. Product evidence stays
+empty and the current M0 readiness gate remains blocked. The raw Oracle
+correctness baseline is complete and replayed, but remains reference-only and
+does not unlock product parity.
 
 ## M0 TF-030 Audit Rework
 

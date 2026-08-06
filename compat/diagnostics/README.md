@@ -15,9 +15,10 @@ The generated contract freezes:
   suppression, summary, and command exit-folding controls;
 - parser, raw Perl, native Python, and early dependency failure surfaces;
 - all 71 planned diagnostic and parallel case identities;
-- 121 retained historical Oracle references from correctness and tracefile
-  baselines; and
-- 26 wave1 diagnostics Oracle references under `compat/diagnostics/wave1/`.
+- 146 retained historical Oracle references from correctness and tracefile
+  baselines;
+- 26 wave1 diagnostics Oracle references under `compat/diagnostics/wave1/`; and
+- 32 wave2 diagnostics Oracle references under `compat/diagnostics/wave2/`.
 
 ## Wave1 Oracle references
 
@@ -95,9 +96,11 @@ stdin, fail-closed named-container cleanup, execution manifests, independent
 raw stream/tree facts, mutation rejection). Case-local environment extras remain
 declared clean-env variables rather than ambient host inheritance.
 
-Wave2 binds 30 planned identities across 32 observations and intentionally
-leaves the geninfo child watchdog/Ferricov pair matrix, signal/unknown-child/
-parent-death/fork-retry/corrupt-payload paths unbound and `planned`.
+Wave2 binds 30 planned identities across 32 observations. Across historical,
+wave1, and wave2 references, 59 of 71 planned diagnostic/parallel identities
+are exactly bound. The remaining 12 geninfo-child watchdog/Ferricov pair,
+signal/unknown-child/parent-death/fork-retry/corrupt-payload paths stay unbound
+and `planned`.
 
 Regenerate wave2 only after an intentional reviewed capture change against the
 pinned Oracle image:

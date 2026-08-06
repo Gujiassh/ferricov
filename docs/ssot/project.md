@@ -96,27 +96,30 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 124 fixtures, 21 per-record malformed inputs, and 254
-  retained Oracle observations, including VER, state-ownership, function,
-  branch, numeric/error/checksum probes, TF-030 exact numeric evidence,
-  tracefile wave1 semantic cases, and reader/framing/state wave2 cases. Exact
-  structured mappings remain reference-only and product compatibility evidence
-  remains false; writer/converter and product-boundary blockers remain open.
-  M1 implementation remains unauthorized.
+  emission lines, 137 fixtures, 21 per-record malformed inputs, and 271
+  retained Oracle observations. Reader/framing/state and
+  writer/converter/transport mappings remain Oracle references only. Fourteen
+  writer cases exactly bind `M1-TF-041..044`, `046`, `050`, `051`, and `060`;
+  `045`, `052`, `061`, `063`, and `064` remain unbound, product compatibility
+  evidence remains false, and M1 implementation remains unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
-  rules, four unclassified surfaces, ten command exit policies, and 169
-  retained Oracle observations. Twenty-six wave1 cases were fully recaptured
-  with clean environment, stdin, cleanup, executable/version, and package
-  provenance; 19 of 71 diagnostic/parallel identities have exact wave1
-  bindings, 52 remain planned, and product evidence remains empty.
+  rules, four unclassified surfaces, ten command exit policies, and 204
+  retained Oracle observations. Twenty-six wave1 and 32 wave2 cases retain
+  full capture provenance; three writer-transport failures add references
+  without changing the prior 201 observations. Fifty-nine of 71
+  diagnostic/parallel identities have exact bindings, 12 remain planned and
+  unbound, and product evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry
   installed tree to nine exhaustive payload groups and 15 pinned source
   closures. Paths, file SHA-256 identities, the legacy man symlink, and the
-  13 case-record ID/facts schema bind fail closed. All 13 installation cases
-  remain planned/oracle-reference with no product evidence; lifecycle,
-  directory-mode, platform-path, and executable installer evidence remain
-  open.
+  13 case-record ID/facts schema bind fail closed. Wave2 adds replayable
+  pinned-Docker Oracle-reference envelopes for all 13 cases, both relative and
+  space PATH parts, complete tree rows, live executable/argv/cwd/wait facts,
+  clean env, timeout/signal/cleanup, and two runner qualifications. The
+  57-entry directory/mode companion is retained separately. All cases remain
+  planned with product evidence empty; this does not authorize an installer
+  implementation.
 - `compat/resources/v2.5.json` defines 13 controlled scale profiles for the
   immutable Oracle. It binds exact source-scoped input shape, branch/MC/DC
   summary semantics and stream hashes, six harness/schema artifacts, raw
