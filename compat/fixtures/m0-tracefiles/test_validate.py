@@ -1140,6 +1140,97 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             list(TF030_CASE_IDS),
         )
 
+
+    def test_override_cases_manifest_mutation_is_rejected_before_docker(self) -> None:
+        """Overridden --cases must match pinned bytes; self-hash refresh still rejects."""
+        import copy
+        import io
+        import json
+        import tempfile
+        from contextlib import redirect_stderr, redirect_stdout
+        from pathlib import Path
+        from unittest import mock
+
+        import capture_oracle
+        from corpus_tf030 import TF030_CASE_IDS
+
+        cases_path = Path(__file__).resolve().parent / "oracle-cases.json"
+        trusted_raw = cases_path.read_bytes()
+        self.assertEqual(
+            hashlib.sha256(trusted_raw).hexdigest(),
+            capture_oracle.EXPECTED_CASES_SHA256,
+        )
+        trusted = capture_oracle.validate_cases_request(cases_path)
+        self.assertEqual(trusted, trusted_raw)
+
+        document = json.loads(trusted_raw.decode("ascii"))
+        target_id = TF030_CASE_IDS[0]
+        mutated = copy.deepcopy(document)
+        for case in mutated["cases"]:
+            if case["id"] == target_id:
+                # Keep trusted TF-030 id while rewriting capture definition.
+                case["fixture"] = "fixtures/wave1/comments-core.info"
+                case["expected_exit"] = 0
+                case["description"] = "mutated override under trusted TF-030 id"
+                case["argv"] = ["lcov", "--add-tracefile", "input.info", "--output-file", "output.info"]
+                case["output_file"] = "output.info"
+                case["expected_output_exists"] = True
+                break
+        else:
+            self.fail(f"missing TF-030 case {target_id}")
+
+        # Refresh any self-describing hash fields if present (fail-closed even then).
+        poisoned_bytes = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
+        if "cases_sha256" in mutated:
+            mutated["cases_sha256"] = hashlib.sha256(poisoned_bytes).hexdigest()
+            poisoned_bytes = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
+        self.assertNotEqual(
+            hashlib.sha256(poisoned_bytes).hexdigest(),
+            capture_oracle.EXPECTED_CASES_SHA256,
+        )
+
+        with tempfile.TemporaryDirectory(prefix="ferricov-cases-auth-") as tmp:
+            tmp_path = Path(tmp)
+            poisoned_cases = tmp_path / "oracle-cases.mutated.json"
+            poisoned_cases.write_bytes(poisoned_bytes)
+            with self.assertRaises(SystemExit) as path_err:
+                capture_oracle.validate_cases_request(poisoned_cases)
+            self.assertIn("oracle-cases byte identity mismatch", str(path_err.exception))
+
+            output_path = tmp_path / "out.json"
+            argv = [
+                "capture_oracle.py",
+                "--cases",
+                str(poisoned_cases),
+                "--merge-into",
+                str(capture_oracle.CANONICAL_BASELINE_PATH),
+                "--output",
+                str(output_path),
+            ]
+            for case_id in TF030_CASE_IDS:
+                argv.extend(["--case-id", case_id])
+
+            inspect_image = mock.Mock(side_effect=AssertionError("inspect_image called"))
+            inspect_program = mock.Mock(side_effect=AssertionError("inspect_program called"))
+            with mock.patch.object(capture_oracle, "inspect_image", inspect_image), mock.patch.object(
+                capture_oracle, "inspect_program", inspect_program
+            ), mock.patch("sys.argv", argv), self.assertRaises(SystemExit) as err:
+                buf_out, buf_err = io.StringIO(), io.StringIO()
+                with redirect_stdout(buf_out), redirect_stderr(buf_err):
+                    capture_oracle.main()
+            self.assertIn("oracle-cases byte identity mismatch", str(err.exception))
+            inspect_image.assert_not_called()
+            inspect_program.assert_not_called()
+            self.assertFalse(output_path.exists())
+
+        # Canonical basename alone is never trusted; content pin still rejects.
+        with tempfile.TemporaryDirectory(prefix="ferricov-cases-path-") as tmp:
+            alias = Path(tmp) / "oracle-cases.json"
+            alias.write_bytes(poisoned_bytes)
+            with self.assertRaises(SystemExit) as alias_err:
+                capture_oracle.validate_cases_request(alias)
+            self.assertIn("oracle-cases byte identity mismatch", str(alias_err.exception))
+
     def test_merge_into_validation_runs_before_docker_inspect(self) -> None:
         """Invalid merge inputs must reject before inspect_image/inspect_program."""
         import importlib
