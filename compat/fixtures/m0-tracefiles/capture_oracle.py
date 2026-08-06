@@ -17,7 +17,9 @@ import generate
 
 ROOT = Path(__file__).resolve().parent
 CANONICAL_BASELINE_PATH = ROOT / "oracle-baseline.json"
+CANONICAL_CASES_PATH = ROOT / "oracle-cases.json"
 EXPECTED_MERGE_BASELINE_SHA256 = "c1f3617304918ab82ea84c8f5d6d8cfd2cd11be84e622eb0b8ee0b36506790b3"
+EXPECTED_CASES_SHA256 = "4edb30cf0462cd72abcc8b523b71f76e9002d9ae6c9e0c83b99e3f025f22b78a"
 RAW_OUTPUT_LIMIT = 256 * 1024
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
@@ -244,6 +246,25 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
 
 
 
+def validate_cases_request(cases: Path) -> bytes:
+    """Reject untrusted oracle-cases inputs and return trusted case-document bytes.
+
+    Overrides of --cases are allowed only when the file bytes independently match
+    the pinned canonical oracle-cases digest. Path alone is never trusted.
+    The returned bytes are the single source used for later case selection so a
+    mutation between hash validation and parse cannot change capture inputs.
+    """
+    cases_path = cases.resolve()
+    raw = cases_path.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != EXPECTED_CASES_SHA256:
+        raise SystemExit(
+            "oracle-cases byte identity mismatch: "
+            f"expected {EXPECTED_CASES_SHA256}, got {digest}"
+        )
+    return raw
+
+
 def validate_merge_into_request(
     merge_into: Path,
     selected_case_ids: list[str],
@@ -354,9 +375,9 @@ def main() -> int:
     if not MODEL_INSPECTOR.is_file():
         raise SystemExit(f"missing model inspector: {MODEL_INSPECTOR}")
 
-    # Parse selection and validate merge inputs before any Docker introspection.
-    cases_raw = args.cases.read_bytes()
-    cases_document = strict_json_loads_ascii(cases_raw, "oracle cases")
+    # Authenticate cases document and validate merge inputs before Docker.
+    trusted_cases_bytes = validate_cases_request(args.cases)
+    cases_document = strict_json_loads_ascii(trusted_cases_bytes, "oracle cases")
     if not isinstance(cases_document.get("cases"), list):
         raise SystemExit("oracle cases: cases must be an array")
     selected_cases = select_oracle_cases(
@@ -364,6 +385,7 @@ def main() -> int:
         list(args.case_id),
         list(args.case_prefix),
     )
+    cases_raw = trusted_cases_bytes
     trusted_merge_bytes: bytes | None = None
     if args.merge_into is not None:
         trusted_merge_bytes = validate_merge_into_request(
