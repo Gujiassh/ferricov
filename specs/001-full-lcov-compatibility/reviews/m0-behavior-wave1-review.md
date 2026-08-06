@@ -1,83 +1,93 @@
-# M0 Behavior Contract Wave 1 Review
+# M0 Behavior Contract Wave 1 Repair Review
 
 ## Scope
 
-Close the remaining public primary planning gaps in the behavior contract without
-claiming Ferricov product compatibility or implementing parser/model code.
+Repair the rejected Wave 1 status-only primary "closure". Build substantive
+source-bound planned case groups where pinned LCOV v2.5 inventory sources and
+reviewed public-behavior upstream drivers support them. Keep unbound drafts
+explicitly unreviewed. Do not claim product compatibility.
 
 Pinned Oracle identity:
 
 - upstream release: `v2.5`
 - upstream commit: `74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5`
 
-Owned paths in this lane:
+Owned paths:
 
 - `compat/behavior/**`
-- `compat/schema/behavior-*.json` (unchanged schema contracts)
+- `compat/schema/behavior-*.json` (no schema field expansion required)
 - `specs/001-full-lcov-compatibility/reviews/m0-behavior-wave1-review.md`
 
-## Baseline
+## Why the previous Wave 1 was rejected
 
-Before this wave:
+The first Wave 1 commit flipped `review_status` and description text for 424
+public skeletons without:
 
-- public inventory entries: `531`
-- reviewed primary coverage: `107`
-- uncovered public entries: `424`
-- generated skeletons: `424`
-- `m0-ready` rejected on uncovered public primary plans
+- concrete argv/config/input boundaries
+- behavior_groups / interaction substance
+- suite or upstream planning identity
+- readiness rules that require those fields
 
-## Implementation
+That made `m0-ready` pass mechanically while planning debt remained.
 
-Authored twelve wave1 primary fragments that replace every remaining generated
-skeleton with a source-bound, manually curated planning case:
+## Repair model
 
-| Fragment | Targets | Surface |
-| --- | ---: | --- |
-| `m0-genhtml-wave1-primary-a/b/c.json` | 90 | cli |
-| `m0-geninfo-wave1-primary-a/b.json` | 55 | cli |
-| `m0-lcov-wave1-primary-a/b.json` | 61 | cli |
-| `m0-llvm2lcov-wave1-primary.json` | 42 | cli |
-| `m0-perl2lcov-wave1-primary.json` | 42 | cli |
-| `m0-lcovrc-wave1-primary-a/b/c.json` | 134 | config |
+For every residual public entry:
 
-Each wave1 case keeps:
+1. Derive a concrete boundary from pinned inventory source lines:
+   - CLI options: Getopt parser token and value arity (`flag`, `string`, `integer`, ...)
+   - config keys: `lcovrc` assignment form
+   - support scripts: invocation/input boundary
+2. If one or more reviewed `public_behavior` upstream tests mention the exact
+   option/key and contribute behavior groups, author a **reviewed substantive**
+   plan with:
+   - `behavior_groups`
+   - `upstream_tests`
+   - concrete description boundary
+   - `evidence_status=none`, empty `suite_cases` / `evidence`
+3. Otherwise author an **unreviewed unbound** plan with the same concrete
+   boundary language and no suite/upstream claim.
 
-- `origin=manually_curated`
-- `review_status=reviewed`
-- `evidence_status=none`
-- empty `suite_cases`, `evidence`, and `upstream_tests`
-- exact inventory-projected `source_references` only
+Readiness now counts only substantive reviewed plans:
 
-No differential result, suite binding, or product pass/fail claim was added.
+- suite-bound plans (`evidence_status=planned` with suite_cases), or
+- reviewed plans with both `behavior_groups` and `upstream_tests`
 
-## After
+Hollow reviewed acceptance plans are rejected by validation.
 
-- public inventory entries: `531`
-- reviewed primary coverage: `531`
-- uncovered public entries: `0`
-- generated skeletons: `0`
-- `m0-ready` primary planning gate: pass
-- case evidence remains planning-only (`none=523`, `planned=48`, `pass=0`, `fail=0`)
+## Honest counts
+
+| Metric | False Wave1 after 818debd | After substantive repair |
+| --- | ---: | ---: |
+| public inventory entries | 531 | 531 |
+| reviewed primary coverage (status-only) | 531 | n/a |
+| substantive reviewed primary coverage | inflated to 531 | **361** |
+| uncovered public entries | 0 (false) | **170** |
+| wave1-repair reviewed substantive cases | n/a | 301 |
+| wave1-repair unbound unreviewed cases | n/a | 170 |
+| product pass/fail evidence | 0 | 0 |
+
+The 361 substantive total includes pre-existing suite-bound CLI/config plans
+plus the 301 newly repaired source-bound upstream-linked cases.
 
 ## Validation
 
 - `python3 compat/behavior/generate.py --check`
 - `python3 compat/behavior/validate.py --mode current`
-- `python3 compat/behavior/validate.py --mode m0-ready`
+- `python3 compat/behavior/validate.py --mode m0-ready` (fails with 170 honest gaps)
 - `python3 -m unittest compat.behavior.test_validate`
-- `python3 compat/verify.py --skip-oracle` (when available in this worktree)
+- mutation: dropping `upstream_tests` or `behavior_groups` from a reviewed
+  wave1-repair case is rejected as non-substantive
 
-## Residual Risks
+## Residual gaps
 
-- Wave1 closes primary planning coverage only. Runtime option effects, config
-  precedence, interaction semantics, and executable suite bindings remain open.
-- Empty generated inventory buckets are intentional placeholders after full
-  authored primary coverage; they still participate in deterministic regeneration.
-- Product compatibility evidence remains intentionally false/absent.
+170 public entries remain without substantive reviewed primary plans because no
+exact compatibility suite and no reviewed public-behavior upstream driver can
+be honestly bound yet. Their unbound drafts remain in-tree as explicit debt.
 
-## Explicit Non-Goals
+## Non-goals
 
-- No Ferricov Rust parser/model implementation
-- No M1 unlock
-- No edits to tracefile/diagnostics/installation/resources contracts
-- No shared tasks/README/docs/ssot updates outside this lane review note
+- No Ferricov Rust parser/model
+- No product compatibility evidence
+- No shared tasks/README/docs/ssot edits outside this lane review note
+- No push

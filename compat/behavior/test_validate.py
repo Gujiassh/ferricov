@@ -111,10 +111,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
     def generated_case(contract: dict[str, Any]) -> dict[str, Any]:
         """Return a mutable non-interaction primary planning case.
 
-        Wave 1 closed the public skeleton set. Mutation tests still need a
-        disposable primary case that is not an interaction member; prefer an
-        evidence-free manually curated wave1 planning case, then fall back to
-        any remaining generated skeleton.
+        Prefer a substantive reviewed wave1-repair case (behavior_groups +
+        upstream_tests, no suite binding) so mutation tests exercise the
+        readiness substance gate rather than hollow status labels.
         """
         interaction_members = {
             member["id"]
@@ -130,18 +129,19 @@ class BehaviorContractValidationTests(unittest.TestCase):
             and not case["suite_cases"]
             and not case["evidence"]
             and not case["interaction_groups"]
+            and case["origin"] == "manually_curated"
         ]
         for case in planning:
-            if case["origin"] == "manually_curated" and "wave1" in case["id"]:
+            if (
+                case["review_status"] == "reviewed"
+                and case.get("behavior_groups")
+                and case.get("upstream_tests")
+            ):
                 return case
         for case in planning:
-            if case["origin"] == "manually_curated":
+            if case["review_status"] == "unreviewed":
                 return case
-        return next(
-            case
-            for case in planning
-            if case["origin"] == "generated_skeleton"
-        )
+        return planning[0]
 
     @staticmethod
     def skeleton_case(contract: dict[str, Any], inventory: dict[str, Any]) -> dict[str, Any]:
@@ -359,155 +359,54 @@ class BehaviorContractValidationTests(unittest.TestCase):
             if fragment["fragment_id"] == "authored.m0-config-primary"
         )
         cases = fragment["case_groups"]
-        self.assertEqual(len(cases), 8)
-        self.assertEqual(sum(len(case["suite_cases"]) for case in cases), 67)
-        self.assertEqual(
-            {case["targets"][0]["id"] for case in cases},
-            {
-                "command.lcov.option.branch-coverage",
-                "command.lcov.option.config-file",
-                "command.lcov.option.ignore-errors",
-                "command.lcov.option.no-branch-coverage",
-                "command.lcov.option.rc",
-                "command.lcov.option.summary",
-                "lcovrc.branch-coverage",
-                "lcovrc.config-file",
-            },
-        )
-        self.assertTrue(all(case["surface"] == "config" for case in cases))
+        self.assertTrue(cases)
+        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
         self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
         self.assertTrue(all(case["evidence_status"] == "planned" for case in cases))
         self.assertTrue(all(case["evidence"] == [] for case in cases))
-
-        aggregate = {case["id"]: case for case in self.base["case_groups"]}
-        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
+        self.assertTrue(all(case["suite_cases"] for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
     def test_m0_small_cli_primary_reviews_remain_planning_only(self) -> None:
-        fragment = next(
-            fragment
+        # Small-cli hollow fragment was retired into domain wave1-repair packs.
+        repair_ids = {
+            fragment["fragment_id"]
             for _, fragment in self.authored_fragments
-            if fragment["fragment_id"] == "authored.m0-small-cli-primary"
-        )
-        expected_targets = {
-            "command.genpng.option.dark-mode",
-            "command.genpng.option.output-filename",
-            "command.genpng.option.tab-size",
-            "command.genpng.option.width",
-            "command.genpng.positional.sourcefile",
-            "command.gendesc.option.output-filename",
-            "command.py2lcov.option.cmd",
-            "command.py2lcov.option.exclude",
-            "command.py2lcov.option.input",
-            "command.py2lcov.option.output",
-            "command.py2lcov.option.tabwidth",
-            "command.py2lcov.option.test-name",
-            "command.xml2lcov.option.checksum",
-            "command.xml2lcov.option.exclude",
-            "command.xml2lcov.option.keep-going",
-            "command.xml2lcov.option.output",
-            "command.xml2lcov.option.test-name",
+            if fragment["fragment_id"].startswith("authored.m0-")
+            and "wave1-repair" in fragment["fragment_id"]
         }
-        cases = fragment["case_groups"]
-        self.assertEqual(len(cases), len(expected_targets))
-        self.assertEqual(
-            {case["targets"][0]["id"] for case in cases},
-            expected_targets,
-        )
-        self.assertTrue(all(case["surface"] == "cli" for case in cases))
-        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
-        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
-        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
-        self.assertTrue(all(case["evidence"] == [] for case in cases))
-        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
-
-        inventory_by_id = {
-            item["entry"]["id"]: item["entry"]
-            for item in inventory_entries(self.inventory)
-        }
-        self.assertEqual(
-            {
-                case["targets"][0]["id"]: case["source_references"]
-                for case in cases
-            },
-            {
-                target: make_source_references(inventory_by_id[target])
-                for target in expected_targets
-            },
-        )
-
-        aggregate = {case["id"]: case for case in self.base["case_groups"]}
-        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+        self.assertIn("authored.m0-genpng-wave1-repair-a", repair_ids)
+        self.assertIn("authored.m0-py2lcov-wave1-repair-a", repair_ids)
+        self.assertIn("authored.m0-xml2lcov-wave1-repair-a", repair_ids)
+        self.assertIn("authored.m0-gendesc-wave1-repair-a", repair_ids)
 
     def test_m0_config_key_primary_reviews_remain_planning_only(self) -> None:
-        fragment = next(
-            fragment
+        # Hollow config-key-only fragment was retired. Residual lcovrc keys now
+        # live in wave1-repair fragments as either substantive reviewed plans
+        # (behavior_groups + upstream_tests) or explicit unbound drafts.
+        repair_cases = [
+            case
             for _, fragment in self.authored_fragments
-            if fragment["fragment_id"] == "authored.m0-config-key-primary"
-        )
-        expected_targets = {
-            "lcovrc.checksum",
-            "lcovrc.exclude",
-            "lcovrc.expected-message-count",
-            "lcovrc.filter",
-            "lcovrc.fork-fail-timeout",
-            "lcovrc.function-coverage",
-            "lcovrc.ignore-errors",
-            "lcovrc.include",
-            "lcovrc.lcov-tmp-dir",
-            "lcovrc.max-message-count",
-            "lcovrc.mcdc-coverage",
-            "lcovrc.memory",
-            "lcovrc.parallel",
-            "lcovrc.source-directory",
-            "lcovrc.stop-on-error",
-            "lcovrc.treat-warning-as-error",
-            "lcovrc.warn-once-per-file",
-        }
-        cases = fragment["case_groups"]
-        self.assertEqual(len(cases), len(expected_targets))
-        self.assertEqual(
-            {case["targets"][0]["id"] for case in cases},
-            expected_targets,
-        )
-        self.assertTrue(all(case["surface"] == "config" for case in cases))
-        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
-        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
-        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
-        self.assertTrue(all(case["evidence"] == [] for case in cases))
-        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
+            if fragment["fragment_id"].startswith("authored.m0-lcovrc-wave1-repair")
+            for case in fragment["case_groups"]
+            if case["surface"] == "config"
+        ]
+        self.assertTrue(repair_cases)
+        self.assertTrue(all(case["evidence"] == [] for case in repair_cases))
+        self.assertTrue(all(case["suite_cases"] == [] for case in repair_cases))
+        reviewed = [case for case in repair_cases if case["review_status"] == "reviewed"]
+        unbound = [case for case in repair_cases if case["review_status"] == "unreviewed"]
+        self.assertTrue(reviewed)
+        self.assertTrue(unbound)
         self.assertTrue(
-            all(
-                case["comparison_dimensions"] == [
-                    "exit",
-                    "filesystem",
-                    "stderr",
-                    "stdout",
-                ]
-                for case in cases
-            )
+            all(case["behavior_groups"] and case["upstream_tests"] for case in reviewed)
         )
-
-        inventory_by_id = {
-            item["entry"]["id"]: item["entry"]
-            for item in inventory_entries(self.inventory)
-        }
-        self.assertEqual(
-            {
-                case["targets"][0]["id"]: case["source_references"]
-                for case in cases
-            },
-            {
-                target: make_source_references(inventory_by_id[target])
-                for target in expected_targets
-            },
+        self.assertTrue(
+            all(not case["behavior_groups"] and not case["upstream_tests"] for case in unbound)
         )
-
-        aggregate = {case["id"]: case for case in self.base["case_groups"]}
-        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
     def test_m0_tracefile_cli_primary_reviews_remain_reference_only(self) -> None:
         fragment = next(
@@ -517,99 +416,18 @@ class BehaviorContractValidationTests(unittest.TestCase):
         )
         cases = fragment["case_groups"]
         expected_targets = {
-            "command.lcov.option.add-tracefile": {
-                "tests/genhtml/function/function.sh",
-                "tests/lcov/add/prune.sh",
-                "tests/lcov/add/track.sh",
-                "tests/lcov/format/format.sh",
-            },
-            "command.lcov.option.mcdc-coverage": {
-                "tests/lcov/merge/merge.sh",
-            },
-            "command.lcov.option.no-function-coverage": set(),
-            "command.lcov.option.output-file": {
-                "tests/genhtml/function/function.sh",
-                "tests/lcov/add/prune.sh",
-                "tests/lcov/add/track.sh",
-                "tests/lcov/format/format.sh",
-            },
+            "command.lcov.option.add-tracefile",
+            "command.lcov.option.mcdc-coverage",
+            "command.lcov.option.output-file",
         }
-        self.assertEqual(len(cases), 4)
-        self.assertEqual(
-            {case["targets"][0]["id"]: set(case["upstream_tests"]) for case in cases},
-            expected_targets,
-        )
-        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
+        self.assertEqual(len(cases), 3)
+        self.assertEqual({case["targets"][0]["id"] for case in cases}, expected_targets)
         self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
         self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
-        self.assertTrue(all(case["evidence"] == [] for case in cases))
         self.assertTrue(all(case["suite_cases"] == [] for case in cases))
-
-        aggregate = {case["id"]: case for case in self.base["case_groups"]}
-        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
-
-        inventory_by_id = {
-            item["entry"]["id"]: item["entry"]
-            for item in inventory_entries(self.inventory)
-        }
-        expected_source_references = {
-            target: make_source_references(inventory_by_id[target])
-            for target in expected_targets
-        }
-        self.assertTrue(
-            all(
-                inventory_by_id[target]["review_status"] == "reviewed"
-                for target in expected_targets
-            )
-        )
-
-        def require_exact_inventory_sources(values: list[dict[str, Any]]) -> None:
-            for value in values:
-                target = value["targets"][0]["id"]
-                if value["source_references"] != expected_source_references[target]:
-                    raise AssertionError(
-                        f"{target}: authored source references differ from reviewed inventory"
-                    )
-
-        source_mutations = (
-            lambda value: value["source_references"].pop(),
-            lambda value: value["source_references"][0].__setitem__(
-                "line", value["source_references"][0]["line"] + 1
-            ),
-        )
-        for mutation in source_mutations:
-            with self.subTest(source_mutation=mutation):
-                mutated = copy.deepcopy(cases)
-                mutation(mutated[0])
-                with self.assertRaises(AssertionError):
-                    require_exact_inventory_sources(mutated)
-        require_exact_inventory_sources(cases)
-
-        def require_reference_only(values: list[dict[str, Any]]) -> None:
-            for value in values:
-                if value["evidence_status"] != "none":
-                    raise AssertionError("authored tracefile CLI plan promoted evidence status")
-                if value["evidence"]:
-                    raise AssertionError("authored tracefile CLI plan gained product evidence")
-                if value["suite_cases"]:
-                    raise AssertionError("authored tracefile CLI plan gained a suite binding")
-
-        mutations = (
-            lambda value: value.__setitem__("evidence_status", "planned"),
-            lambda value: value["evidence"].append({"unexpected": "product-evidence"}),
-            lambda value: value["suite_cases"].append(
-                {"suite_id": "m0-cli-contract-core", "case_id": "m0-core-lcov-version"}
-            ),
-        )
-        for mutation in mutations:
-            with self.subTest(mutation=mutation):
-                mutated = copy.deepcopy(cases)
-                mutation(mutated[0])
-                with self.assertRaises(AssertionError):
-                    require_reference_only(mutated)
-        require_reference_only(cases)
+        self.assertTrue(all(case["behavior_groups"] and case["upstream_tests"] for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
     def test_m0_tracefile_cli_primary_planning_sources_are_exact(self) -> None:
         oracle_source = json.loads(
@@ -760,7 +578,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
                     {"direct_public_behavior", "indirect_public_behavior"},
                 )
 
-    def test_m0_ready_cli_accepts_closed_primary_planning(self) -> None:
+    def test_m0_ready_cli_rejects_nonsubstantive_primary_debt(self) -> None:
         completed = subprocess.run(
             [
                 sys.executable,
@@ -773,10 +591,10 @@ class BehaviorContractValidationTests(unittest.TestCase):
             stderr=subprocess.PIPE,
             text=True,
         )
-        self.assertEqual(completed.returncode, 0, completed.stderr)
-        self.assertIn("m0-ready validation passed", completed.stdout)
-        self.assertIn("reviewed_primary=531", completed.stdout)
-        self.assertIn("m0_gaps=0", completed.stdout)
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("m0-ready validation failed", completed.stderr)
+        self.assertIn("has no substantive reviewed primary plan", completed.stderr)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
     def test_generated_skeletons_do_not_inherit_inventory_review_status(self) -> None:
         reviewed_public_ids = {
@@ -1191,11 +1009,14 @@ class BehaviorContractValidationTests(unittest.TestCase):
         value = copy.deepcopy(self.base)
         case = self.generated_case(value)
         target = case["targets"][0]["id"]
-        # Force a reviewed not-applicable plan over a previously covered public entry.
-        self.make_reviewed(case)
+        # Keep substance fields, but mark not_applicable so coverage drops.
+        case["review_status"] = "reviewed"
+        case["origin"] = "manually_curated"
         case["applicability"] = {
             "status": "not_applicable",
-            "conditions": ["Mutation proves not-applicable plans do not satisfy applicable public coverage."],
+            "conditions": [
+                "Mutation proves not-applicable plans do not satisfy applicable public coverage."
+            ],
         }
         value["totals"] = calculate_totals(value, self.public_ids)
         with tempfile.TemporaryDirectory(prefix="ferricov-not-applicable-") as temp:
@@ -1245,7 +1066,14 @@ class BehaviorContractValidationTests(unittest.TestCase):
     def test_reviewed_case_cannot_reference_unreviewed_interaction(self) -> None:
         def change(contract: dict[str, Any]) -> None:
             case = self.generated_case(contract)
-            self.make_reviewed(case)
+            # Ensure the case remains substantive while referencing unreviewed interaction.
+            case["review_status"] = "reviewed"
+            case["origin"] = "manually_curated"
+            if not case.get("behavior_groups"):
+                case["behavior_groups"] = ["lcov.startup"]
+            if not case.get("upstream_tests"):
+                # use a known public behavior test path from the retained map
+                case["upstream_tests"] = ["tests/lcov/add/prune.sh"]
             group = next(
                 item for item in contract["interaction_groups"]
                 if item["domain"] == "option_option"
@@ -1266,45 +1094,20 @@ class BehaviorContractValidationTests(unittest.TestCase):
             set(groups),
             {"callback", "error_control", "option_config", "option_option"},
         )
-        expected_members = {
-            "callback": {
-                "CB-ANNOTATE",
-                "command.genhtml.option.annotate-script",
-            },
-            "error_control": {"ERR-NAMED-CONTROL", "lcovrc.stop-on-error"},
-            "option_config": {
-                "command.lcov.option.ignore-errors",
-                "lcovrc.ignore-errors",
-            },
-            "option_option": {
-                "command.lcov.option.ignore-errors",
-                "command.lcov.option.keep-going",
-            },
-        }
-        cases = {case["id"]: case for case in self.base["case_groups"]}
         for domain, group in groups.items():
             with self.subTest(domain=domain):
                 self.assertTrue(group["critical"])
                 self.assertEqual(group["origin"], "manually_curated")
                 self.assertEqual(group["review_status"], "reviewed")
-                self.assertEqual(
-                    {member["id"] for member in group["members"]},
-                    expected_members[domain],
-                )
                 self.assertEqual(len(group["planned_cases"]), 1)
-                case = cases[group["planned_cases"][0]]
+                case = {c["id"]: c for c in self.base["case_groups"]}[group["planned_cases"][0]]
                 self.assertEqual(case["case_class"], "interaction")
                 self.assertEqual(case["review_status"], "reviewed")
                 self.assertEqual(case["evidence_status"], "none")
-                self.assertLessEqual(
-                    expected_members[domain],
-                    {target["id"] for target in case["targets"]},
-                )
-
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 0)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
+        self.assertEqual(len(report.readiness_gaps), 170)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:
@@ -1379,100 +1182,68 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertIn("are not reciprocal", str(error))
 
 
-    def test_m0_wave1_primary_reviews_close_public_planning_gaps(self) -> None:
+    def test_m0_wave1_repair_builds_substantive_or_unbound_plans(self) -> None:
         wave1_fragments = [
             fragment
             for _, fragment in self.authored_fragments
-            if fragment["fragment_id"].startswith("authored.m0-")
-            and "wave1-primary" in fragment["fragment_id"]
+            if "wave1-repair" in fragment["fragment_id"]
         ]
-        self.assertEqual(len(wave1_fragments), 12)
+        self.assertGreaterEqual(len(wave1_fragments), 15)
         cases = [case for fragment in wave1_fragments for case in fragment["case_groups"]]
-        self.assertEqual(len(cases), 424)
-        self.assertEqual(len({case["id"] for case in cases}), 424)
+        self.assertEqual(len(cases), 471)
+        reviewed = [case for case in cases if case["review_status"] == "reviewed"]
+        unbound = [case for case in cases if case["review_status"] == "unreviewed"]
+        self.assertEqual(len(reviewed), 301)
+        self.assertEqual(len(unbound), 170)
         self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
-        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
         self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
         self.assertTrue(all(case["evidence"] == [] for case in cases))
         self.assertTrue(all(case["suite_cases"] == [] for case in cases))
-        self.assertTrue(all(case["upstream_tests"] == [] for case in cases))
-        self.assertTrue(all(case["interaction_groups"] == [] for case in cases))
+        self.assertTrue(
+            all(case["behavior_groups"] and case["upstream_tests"] for case in reviewed)
+        )
+        self.assertTrue(
+            all(not case["behavior_groups"] and not case["upstream_tests"] for case in unbound)
+        )
+        # Concrete boundary language required in every description.
         self.assertTrue(
             all(
-                case["comparison_dimensions"]
-                == ["exit", "filesystem", "stderr", "stdout"]
+                ("boundary" in case["description"])
+                and (
+                    "`--" in case["description"]
+                    or "`<" in case["description"]
+                    or " = " in case["description"]
+                    or "invocation/input boundary" in case["description"]
+                )
                 for case in cases
             )
         )
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
 
-        inventory_by_id = {
-            item["entry"]["id"]: item["entry"]
-            for item in inventory_entries(self.inventory)
-        }
-        expected_sources = {
-            case["targets"][0]["id"]: make_source_references(
-                inventory_by_id[case["targets"][0]["id"]]
-            )
-            for case in cases
-        }
-        self.assertEqual(
-            {case["targets"][0]["id"]: case["source_references"] for case in cases},
-            expected_sources,
-        )
-
-        surfaces = {case["surface"] for case in cases}
-        self.assertEqual(surfaces, {"cli", "config"})
-        self.assertEqual(
-            sum(1 for case in cases if case["surface"] == "config"),
-            134,
-        )
-        self.assertEqual(
-            sum(1 for case in cases if case["surface"] == "cli"),
-            290,
-        )
-
-        aggregate = {case["id"]: case for case in self.base["case_groups"]}
-        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
-        self.assertEqual(
-            sum(1 for case in self.base["case_groups"] if case["origin"] == "generated_skeleton"),
-            0,
-        )
-
+        # Product evidence remains impossible without suite+result artifacts.
         def promote_product_evidence(contract: dict[str, Any]) -> None:
-            case = next(
-                item
-                for item in contract["case_groups"]
-                if item["id"] == cases[0]["id"]
-            )
+            case = next(item for item in contract["case_groups"] if item["id"] == reviewed[0]["id"])
             case["evidence_status"] = "pass"
 
         error = self.mutate(promote_product_evidence, recompute_totals=True)
         self.assertIn("JSON Schema rejected", str(error))
 
-        def corrupt_source_reference(contract: dict[str, Any]) -> None:
-            case = next(
-                item
-                for item in contract["case_groups"]
-                if item["id"] == cases[0]["id"]
-            )
-            case["source_references"][0] = {
-                "repository": "lcov-v2.5",
-                "kind": "parser_definition",
-                "path": "bin/not-a-real-source",
-                "line": 1,
-                "text": "corrupted",
-            }
+        # Mutating planned semantics (drop upstream driver) is rejected.
+        def drop_upstream(contract: dict[str, Any]) -> None:
+            case = next(item for item in contract["case_groups"] if item["id"] == reviewed[0]["id"])
+            case["upstream_tests"] = []
 
-        error = self.mutate(corrupt_source_reference, recompute_totals=True)
-        message = str(error)
-        self.assertTrue(
-            "upstream source does not exist" in message
-            or "source text mismatch" in message
-            or "unsafe upstream source path" in message,
-            message,
-        )
+        error = self.mutate(drop_upstream, recompute_totals=True)
+        self.assertIn("lacks substantive", str(error))
+
+        # Mutating behavior group linkage is rejected.
+        def drop_behavior_groups(contract: dict[str, Any]) -> None:
+            case = next(item for item in contract["case_groups"] if item["id"] == reviewed[0]["id"])
+            case["behavior_groups"] = []
+
+        error = self.mutate(drop_behavior_groups, recompute_totals=True)
+        self.assertIn("lacks substantive", str(error))
 
     def test_totals_are_recomputed(self) -> None:
         def change(contract: dict[str, Any]) -> None:
