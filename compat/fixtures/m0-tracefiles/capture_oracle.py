@@ -283,7 +283,13 @@ def select_oracle_cases(
     case_ids: list[str],
     case_prefixes: list[str],
 ) -> list[dict[str, object]]:
-    """Select cases while preserving explicit --case-id order and rejecting duplicates."""
+    """Select cases while preserving selector order and rejecting duplicates.
+
+    Explicit --case-id values are resolved in argv order. Each --case-prefix is
+    expanded in caller order; for a prefix, matches are appended in oracle
+    document order. Overlapping selectors, duplicate prefixes, and unmatched
+    prefixes are rejected fail-closed.
+    """
     if not case_ids and not case_prefixes:
         return list(cases)
 
@@ -302,11 +308,12 @@ def select_oracle_cases(
         selected.append(by_id[case_id])
         seen.add(case_id)
 
-    if case_prefixes:
-        for case in cases:
+    for prefix in case_prefixes:
+        matched = [case for case in cases if str(case["id"]).startswith(prefix)]
+        if not matched:
+            raise SystemExit(f"unmatched --case-prefix: {prefix}")
+        for case in matched:
             case_id = str(case["id"])
-            if not any(case_id.startswith(prefix) for prefix in case_prefixes):
-                continue
             if case_id in seen:
                 raise SystemExit(
                     f"duplicate case id from overlapping selectors: {case_id}"

@@ -1078,14 +1078,15 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             self.assertFalse(output_path.exists())
 
     def test_select_oracle_cases_preserves_order_and_rejects_duplicates(self) -> None:
+        import json
+        from pathlib import Path
+
         from capture_oracle import select_oracle_cases
         from corpus_tf030 import TF030_CASE_IDS
 
-        all_cases = list(self.cases_list if hasattr(self, "cases_list") else self.cases.values())
-        # Prefer stable document order from oracle-cases values is unordered dict.
-        import json
-        from pathlib import Path
-        cases_document = json.loads((Path(__file__).resolve().parent / "oracle-cases.json").read_text())
+        cases_document = json.loads(
+            (Path(__file__).resolve().parent / "oracle-cases.json").read_text()
+        )
         all_cases = cases_document["cases"]
 
         ordered_ids = [TF030_CASE_IDS[2], TF030_CASE_IDS[0], TF030_CASE_IDS[5]]
@@ -1099,6 +1100,44 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         # Prefix + overlapping explicit id is a duplicate.
         with self.assertRaises(SystemExit):
             select_oracle_cases(all_cases, [TF030_CASE_IDS[0]], ["numeric-format-atoms.tf030"])
+
+        # Duplicate identical --case-prefix must reject, not silently de-duplicate.
+        with self.assertRaises(SystemExit) as dup_prefix:
+            select_oracle_cases(
+                all_cases,
+                [],
+                ["numeric-format-atoms.tf030", "numeric-format-atoms.tf030"],
+            )
+        self.assertIn("duplicate case id from overlapping selectors", str(dup_prefix.exception))
+
+        # Overlapping prefixes must reject the second prefix's already-seen matches.
+        with self.assertRaises(SystemExit) as overlap_prefix:
+            select_oracle_cases(
+                all_cases,
+                [],
+                ["numeric-format-atoms.tf030", "numeric-format-atoms.tf030-threshold"],
+            )
+        self.assertIn("duplicate case id from overlapping selectors", str(overlap_prefix.exception))
+
+        # Unmatched prefix is fail-closed even when other selectors would match.
+        with self.assertRaises(SystemExit) as unmatched:
+            select_oracle_cases(
+                all_cases,
+                [],
+                ["numeric-format-atoms.tf030", "does-not-match-any-case"],
+            )
+        self.assertIn("unmatched --case-prefix", str(unmatched.exception))
+
+        # Intended two-prefix TF-030 merge selection yields exact registry order.
+        selected_prefixes = select_oracle_cases(
+            all_cases,
+            [],
+            ["numeric-format-atoms.tf030", "numeric-tf030-"],
+        )
+        self.assertEqual(
+            [case["id"] for case in selected_prefixes],
+            list(TF030_CASE_IDS),
+        )
 
     def test_merge_into_validation_runs_before_docker_inspect(self) -> None:
         """Invalid merge inputs must reject before inspect_image/inspect_program."""
