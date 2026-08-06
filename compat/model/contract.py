@@ -21,6 +21,7 @@ CORPUS_ROOT = ROOT / "compat/fixtures/m0-algebra"
 CASES_PATH = CORPUS_ROOT / "oracle-cases.json"
 BASELINE_PATH = CORPUS_ROOT / "oracle-baseline.json"
 FACTS_PATH = CORPUS_ROOT / "expected-facts.json"
+SEALED_PATH = CORPUS_ROOT / "sealed-observation-facts.json"
 MANIFEST_PATH = CORPUS_ROOT / "manifest.json"
 INSPECTOR_PATH = CORPUS_ROOT / "inspect_algebra.pl"
 ORACLE_MANIFEST = ROOT / "compat/manifests/oracle-lcov-v2.5-smoke.json"
@@ -154,6 +155,7 @@ def build_document() -> dict[str, Any]:
         "compat/fixtures/m0-algebra/oracle-cases.json",
         "compat/fixtures/m0-algebra/oracle-baseline.json",
         "compat/fixtures/m0-algebra/expected-facts.json",
+        "compat/fixtures/m0-algebra/sealed-observation-facts.json",
         "compat/fixtures/m0-algebra/manifest.json",
         "compat/fixtures/m0-algebra/inspect_algebra.pl",
         "compat/model/m1-model.json",
@@ -208,14 +210,24 @@ def validate_document(document: dict[str, Any]) -> None:
     if document["fuzz_execution_phase"] != "M1-only":
         raise ModelContractError("fuzz execution phase must remain M1-only")
 
-    # Fail closed on self-hash-only acceptance: independent facts and raw baseline
-    # must both exist and disagree with empty placeholders.
+    # Fail closed on self-hash-only acceptance: sealed projection, independent facts,
+    # and raw baseline must all exist as distinct documents.
     if not FACTS_PATH.is_file() or FACTS_PATH.stat().st_size < 32:
         raise ModelContractError("independent expected facts missing")
+    if not SEALED_PATH.is_file() or SEALED_PATH.stat().st_size < 32:
+        raise ModelContractError("sealed observation facts missing")
     if not BASELINE_PATH.is_file() or BASELINE_PATH.stat().st_size < 32:
         raise ModelContractError("oracle baseline missing")
     if sha256_file(FACTS_PATH) == sha256_file(BASELINE_PATH):
         raise ModelContractError("facts and baseline must be independent documents")
+    if sha256_file(SEALED_PATH) == sha256_file(BASELINE_PATH):
+        raise ModelContractError("sealed projection and baseline must be independent")
+    if sha256_file(SEALED_PATH) == sha256_file(FACTS_PATH):
+        raise ModelContractError("sealed projection and facts must be independent")
+    facts = load_json(FACTS_PATH)
+    sealed_sha = sha256_file(SEALED_PATH)
+    if facts.get("sealed_observation_facts_sha256") != sealed_sha:
+        raise ModelContractError("facts do not bind sealed observation projection hash")
 
 
 def main() -> int:
