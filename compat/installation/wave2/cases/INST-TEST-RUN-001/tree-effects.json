@@ -1,49 +1,1455 @@
 {
   "directory_count": 36,
   "file_count": 205,
-  "paths_sha256": "8ebc003577c7e2eda60ef215d00a66dbb8d3d695f6be12094b949f7dc76f447a",
+  "paths_sha256": "e3b685f5b323e863e29af781ae119e72cbae43460116c1d013c354869161cbfc",
   "root": "/usr/local/share/lcov/tests",
-  "selected_paths": [
-    "/usr/local/share/lcov/tests",
-    "/usr/local/share/lcov/tests/bin",
-    "/usr/local/share/lcov/tests/genhtml",
-    "/usr/local/share/lcov/tests/genhtml/errs",
-    "/usr/local/share/lcov/tests/genhtml/exception",
-    "/usr/local/share/lcov/tests/genhtml/filter",
-    "/usr/local/share/lcov/tests/genhtml/function",
-    "/usr/local/share/lcov/tests/genhtml/insensitive",
-    "/usr/local/share/lcov/tests/genhtml/lambda",
-    "/usr/local/share/lcov/tests/genhtml/relative",
-    "/usr/local/share/lcov/tests/genhtml/simple",
-    "/usr/local/share/lcov/tests/genhtml/synthesize",
-    "/usr/local/share/lcov/tests/lcov",
-    "/usr/local/share/lcov/tests/lcov/add",
-    "/usr/local/share/lcov/tests/lcov/branch",
-    "/usr/local/share/lcov/tests/lcov/coverage",
-    "/usr/local/share/lcov/tests/lcov/demangle",
-    "/usr/local/share/lcov/tests/lcov/errs",
-    "/usr/local/share/lcov/tests/lcov/exception",
-    "/usr/local/share/lcov/tests/lcov/extract",
-    "/usr/local/share/lcov/tests/lcov/follow",
-    "/usr/local/share/lcov/tests/lcov/format",
-    "/usr/local/share/lcov/tests/lcov/gcov-tool",
-    "/usr/local/share/lcov/tests/lcov/initializer",
-    "/usr/local/share/lcov/tests/lcov/lambda",
-    "/usr/local/share/lcov/tests/lcov/mcdc",
-    "/usr/local/share/lcov/tests/lcov/merge",
-    "/usr/local/share/lcov/tests/lcov/misc",
-    "/usr/local/share/lcov/tests/lcov/multiple",
-    "/usr/local/share/lcov/tests/lcov/summary",
-    "/usr/local/share/lcov/tests/llvm2lcov",
-    "/usr/local/share/lcov/tests/perl2lcov",
-    "/usr/local/share/lcov/tests/profiles",
-    "/usr/local/share/lcov/tests/py2lcov",
-    "/usr/local/share/lcov/tests/scripts",
-    "/usr/local/share/lcov/tests/xml2lcov",
-    "/usr/local/share/lcov/tests/genhtml/errs/MsgContext.pm",
-    "/usr/local/share/lcov/tests/genhtml/lambda/lambda.cpp",
-    "/usr/local/share/lcov/tests/lcov/mcdc/test.cpp",
-    "/usr/local/share/lcov/tests/lcov/errs/badFncLine.info"
+  "rows": [
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests"
+    },
+    {
+      "identity": "9777e704535e01d169f23d4bf194d0076c6385ab29a4320534aa43e08f3684c8",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/Makefile"
+    },
+    {
+      "identity": "2cd454cdb7c6fc37d4eab06260699effc46890ee93ceff835268c5edc242831a",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/README.md"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin"
+    },
+    {
+      "identity": "c7664799aab3940710e748add474d7817b0afe745eb8a62df607f5b2be054cbc",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/check_counts"
+    },
+    {
+      "identity": "d159082f63449ff32b5e459cce3eb26b63bfc5978c5d7459f893f62a9f401688",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/checkdeps"
+    },
+    {
+      "identity": "21c78660130010e94f627d016ae5572455838efe48d8cfaa6b5871ead5d2bf22",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/cleantests.py"
+    },
+    {
+      "identity": "d682cd38ac02135832fc8d5da2d01d0df72b8cd268814e3bc3445d59769b05a8",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/common"
+    },
+    {
+      "identity": "d2bf405c5974cfa557f68f1d232040cf5d0e8594b8704c36d0a70a02395faf23",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/common.py"
+    },
+    {
+      "identity": "cdb91f473fe82f6e53b00c17c1f75a6fa26391a56105602f52d4619d9e833072",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/mkinfo"
+    },
+    {
+      "identity": "fcc8980f407a4517e541fb11417f9d47621d7272879027c5c858bcd014c968a2",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/runtests.py"
+    },
+    {
+      "identity": "1fbd7639912563e43d0ddbadaa2d51a83e19bc6d7989b56867624a777f5399b1",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/test_run"
+    },
+    {
+      "identity": "870a93c5b5a8c0d8733e25e37a8b829d98574d2894c397ea46d440d64fe1c31f",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/test_skip"
+    },
+    {
+      "identity": "85f7d6bdb1c48b4f5974c58079f25cb6822420a46ebd76ccdbe142a88d33501b",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/test_worker.py"
+    },
+    {
+      "identity": "69c54aa3e7893e2ccbe00b89a2e1766c13cced9666850f02d59d1f9aad91726b",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/testsuite_exit"
+    },
+    {
+      "identity": "7063b0e5b049bb2a1c63c78246f6bf91c16f4b9973713890895738078282428b",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/bin/testsuite_init"
+    },
+    {
+      "identity": "a7d9b926336cf51651fa45d4d3e0d502778a5017b51d00f2f5db2d65e5c978ba",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/common.mak"
+    },
+    {
+      "identity": "4f0d8af17f6710a9200997e6934ead342611828205e312a6215b536fe08e28b2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/common.tst"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml"
+    },
+    {
+      "identity": "51ce0de2f633c88afc62493516712786fb24694720bf27c93403610728b3d190",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/Makefile"
+    },
+    {
+      "identity": "f85d18a119e57ddd029b5546ccbe0de8d0b78ee63126ba4051f25521dcc9c088",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/demangle.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs"
+    },
+    {
+      "identity": "228417ef4f5c7d426589bbdd5bfbebb0fe8ebad4b7b6a9b3b7ac0ffe804d4614",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/Makefile"
+    },
+    {
+      "identity": "0082e9c61fed780388e0f6e14a21cea2bbdbb50e1c16bf490bd46c2422625da2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/MsgContext.pm"
+    },
+    {
+      "identity": "30d7bce1d2f01edf406b3e2ae4250d35ae73b8470bf4e43ea76a7a310c699c6f",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/genError.pm"
+    },
+    {
+      "identity": "29b7123915ee6e081d5a1710237dcef99732793af7aebf1356ffec1bbd827ff5",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/mcdc_errs.dat"
+    },
+    {
+      "identity": "29906c32802e3d30b99b1e849ef85604e3b8c2832a8c00a0d99efc1e3ca1a6a5",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/missingRestore.pm"
+    },
+    {
+      "identity": "6dce28154e2b817e4004b619b62ca13a608d4418bba7864da99d8643e9256a20",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/msgtest.sh"
+    },
+    {
+      "identity": "c4bb661b601d703a0435be85708af6aee127d452db8fe6231fed862f5846de68",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/parallelFail.pm"
+    },
+    {
+      "identity": "34154c1d5502597eb387db2637df2df7339fce731ab2377409d16781eee0e2d8",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/errs/select.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/exception"
+    },
+    {
+      "identity": "ee6a9000d9763dcf239fe065908362ff41b0da8d37be9f2a6fd540a390b4bde6",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/exception/Makefile"
+    },
+    {
+      "identity": "407e4bb31008b6d40ae7a94f34e1d23961255fd787dd7755dd2144fccf1037f2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/exception/exception.cpp"
+    },
+    {
+      "identity": "b903a2084f751d3af05b775f1bd134c37f29b09d45ee7508ebf54dd87fe8c6be",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/exception/exception.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter"
+    },
+    {
+      "identity": "e68a1d08f17aae1511d9880b8ed1da8c810d2227d6dac231cdded447552498e2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/Makefile"
+    },
+    {
+      "identity": "f38a46c236f150811758822ee40124ab9706f3bc8193d55894b8a545099710a2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/brace.c"
+    },
+    {
+      "identity": "9f279ee892d52417040b28533376cf870e4cd7dbe8f691d829ee4fef4164506c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/brace.info"
+    },
+    {
+      "identity": "b6c76c973fa8787064cbcff7249d41b099f678d7901a825b2f9d4fdff38e2703",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/expr1.c"
+    },
+    {
+      "identity": "4142d7b04ef4d77832ef541f2be5665ff80e724e10f43a6bc5c9d505d3e30f38",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/expr2.c"
+    },
+    {
+      "identity": "91f9afad11b102d041953b746dbc8d0d31c6384c9dc173ba9f4098303e70ff94",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/expr3.c"
+    },
+    {
+      "identity": "9e1974b290f77b5fb06f893c17cf4ff436c27907ea394109d49d2ec46aa8d316",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/expr4.c"
+    },
+    {
+      "identity": "1abecf10ccf48a72b5bf7e30f8b4954508075cc72b6923af4ecf25ff341d0245",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/filter.pl"
+    },
+    {
+      "identity": "384b732573c26741ef827d4b8354b0503702c8d5287d4d4192e1fb481b00cdae",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/multilineTrivial.c"
+    },
+    {
+      "identity": "c160797c7bdb93866177e2f1c74c7f6993ddb5f03b729c1493467aff924a82f2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/multilineTrivial2.c"
+    },
+    {
+      "identity": "c74251ca88da3cf9b70a62041521ee62643117926059bfcdb23c34bf3d5a6336",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/notTrivial1.c"
+    },
+    {
+      "identity": "b30af7e77dfe64b0f28aef5abb58fb2affa9e9414aa9125ee2d1cf1b5e2e4bdb",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/notTrivial2.c"
+    },
+    {
+      "identity": "50dc78e7ebd624e28253a22b583de561313da466a95cbdd71a8c34f1d25ff33c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/notTrivial3.c"
+    },
+    {
+      "identity": "a83359f6cc566702d7d4f988968bb6f78671b1e803e8783f2d3a2b029878bba1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/notTrivial_init.c"
+    },
+    {
+      "identity": "5c9a9de5442e7dddcd6e3b9bd9c3801ab7fba79dca8bdd5520d9cfe7fc0a9cfa",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/notTrivial_multiline.c"
+    },
+    {
+      "identity": "c953ee8a46ae8b588c8d32d4db6ef70da2f0f582171d2417a443a50ee950d98c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/trivial1.c"
+    },
+    {
+      "identity": "1d1081c14898e1988755f2090a5b54c5e6279077f635d13babc73e815f9fe3ba",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/trivial2.c"
+    },
+    {
+      "identity": "a8bf4ea7f27b796c10b1f9bc72eed83e10307f150be501769838a5349a9aca60",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/trivial3.c"
+    },
+    {
+      "identity": "7bd4c9e28f3c3b85ab25b3773e0d1854cf734ca5993557bd96d25b6b1bd48446",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/filter/trivialMethod.c"
+    },
+    {
+      "identity": "085abad376a527dca0fc0f99bc4f2e2e5b3b93ec476059a2b657972a0afb8b1e",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/full.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/function"
+    },
+    {
+      "identity": "d85cad2f62eee5814a98c06a8d6b271cbb280b93d9a2b2e7a8b15e3160d57f39",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/Makefile"
+    },
+    {
+      "identity": "a79080e7477c8bb5d546cf643b3ee247f47325c09f492229c432bd9cca7693b2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_call_current_call.gold"
+    },
+    {
+      "identity": "215e69a77e3cd393e1e5963a51cb447e90af11517265abbeb4b69e5a8176a1c5",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_call_current_call_region.gold"
+    },
+    {
+      "identity": "217739e88af1f87792371fe00885c47e3e6a6f96031f88c70a107e2002cd4679",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_call_current_nocall.gold"
+    },
+    {
+      "identity": "41e66f114410f19c4004dba5b364c46ac31eb30282198d40b62a91fa63b39d7c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_call_current_nocall_region.gold"
+    },
+    {
+      "identity": "7ee59c69bb0b4af80ef97d1eacaeacbb51f5e93f16bc879b7dbdd759406f67c4",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_nocall_current_call.gold"
+    },
+    {
+      "identity": "2ac7e00e85d92001198039511543354297a8d79b790d2a071b657b1ee02dffb1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_nocall_current_call_region.gold"
+    },
+    {
+      "identity": "8b5120555b4a1e0ce426771ca32419b2e49e439c9d518030519d96d81859fae7",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_nocall_current_nocall.gold"
+    },
+    {
+      "identity": "59dcd70fb9ff3bd7663e84008eb0f1473fa4a7cb287a88e0c8f15d1311df7b23",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/baseline_nocall_current_nocall_region.gold"
+    },
+    {
+      "identity": "937cfad1205e3768d6953896c77342fb52b15825ca0da06dfe1ddd33b7153010",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/current.cpp"
+    },
+    {
+      "identity": "d492a9ddf199c86732a26b2c1495732fee63085cb8207878800804b8c3d8f188",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/function.sh"
+    },
+    {
+      "identity": "26a061927de6f33fc11ab6ad3185268ec4a74f9d0fe55bb21c32e30a17f83c46",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/initial.cpp"
+    },
+    {
+      "identity": "6eefe08d209bdebb1e8052d70bd0fd1fd2b68a2ffee248b9607d1f15ca3ee454",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/function/template.cpp"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/insensitive"
+    },
+    {
+      "identity": "86f4a8e8ffe180c4f4fd10b53ee9a91960e4bd1b8d5536a0244e68a5d689ba34",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/insensitive/Makefile"
+    },
+    {
+      "identity": "7dfd71885f56f7f54015188ab7267bd97be0d5f8809e2c5b96e04948d2907e5f",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/insensitive/annotate.sh"
+    },
+    {
+      "identity": "2698024af3acd728fb9178092aee363300cbb1a9baf1ebc0f42f92fa646e6083",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/insensitive/insensitive.sh"
+    },
+    {
+      "identity": "a98a258ac89d1b2b66899d6d52c7080c5e3345c892cde727dad2cb4d696dba57",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/insensitive/version.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/lambda"
+    },
+    {
+      "identity": "e40416bd53bf75bc60305f5b4230d574937af9e1def96f5f1669f7f264bc1ef1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/lambda/Makefile"
+    },
+    {
+      "identity": "0382b41bdf4196738f9909eea9bb1dbd7488b59269d56e1f8a794ea669c62047",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/lambda/lambda.cpp"
+    },
+    {
+      "identity": "dcf6be54d6a03260e6e02f80f71f8ee5722ca7ee6c875eb90ee587fe48dbd30e",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/lambda/lambda.sh"
+    },
+    {
+      "identity": "d78ded40f03034900498ade1f07d63c8a90c1a754be1cdb11091baf577a98359",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/mycppfilt.sh"
+    },
+    {
+      "identity": "6e5f48550d4334abc4a9d7a7b4392b925122aa9197777e0812112fb0f65f251b",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/part1.sh"
+    },
+    {
+      "identity": "b8880fd1ee09d9298d1bf6c751562e9102be39e1d29f24ab1bcc2308a078b5e0",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/part2.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/relative"
+    },
+    {
+      "identity": "1eff781157ef3518fffff4a092e813b3597dbae2ae539db7fbdb9fbc699d387b",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/relative/Makefile"
+    },
+    {
+      "identity": "cd147dfe604081ec7ea17a3e66347afd6e90235b6cc25e1091a6ca38acb67f6b",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/relative/relative.info"
+    },
+    {
+      "identity": "4155b84fca0d0a2f24a782f466f38aa9307a348f710eb97e56308b7d17d501f8",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/relative/relative.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple"
+    },
+    {
+      "identity": "43261b94bd13f98cad79e33467eb41683011eed09c4cd176b51f59d0aecdaf27",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/Makefile"
+    },
+    {
+      "identity": "8fc203c748b7ffffe28c244247eda63c965afd0b8aa9e4a7010e67918ddd7d56",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/annotate.sh"
+    },
+    {
+      "identity": "c38c3700d14bc5c94b2bf16473b86c9ea2f9f65a5545ea54f543c661b657ba5a",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/script.sh"
+    },
+    {
+      "identity": "c31074fbfb9492568b0aaffc486f070e170397e1e4947887ef97a179bfd4be6f",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/simple.cpp"
+    },
+    {
+      "identity": "c1067ac273fdaf482de89d2cca462898ad3af6739c1a9e048336ddcadc2c9e04",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/simple2.cpp"
+    },
+    {
+      "identity": "a8cebbb679127971538aae44aef0bc75a1502b452d4310c19eb5d3d0295800d4",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/simple2.cpp.annotated"
+    },
+    {
+      "identity": "0d6a62d6ca00ea19c4bd3537bcada9ae7290d56a2c59551148790938eaae4b1c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/simple/unreach.cpp"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/synthesize"
+    },
+    {
+      "identity": "6a67c7a2dce773fd6f3511cd2d0fb7db0edfd07d2f0b8f2d8563a851e47bb769",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/genhtml/synthesize/Makefile"
+    },
+    {
+      "identity": "24ed002584644614c5e78b36eb7d04c92ab9c645bd73f13e806a4a1fbbfe918d",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/synthesize/munge.pl"
+    },
+    {
+      "identity": "0238f5cbe3d920d281100759b9b6c621033c774a03282b9a38db5cdf959bb0a4",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/synthesize/munge2.pl"
+    },
+    {
+      "identity": "e4fcddb0c82a504f4692d5268e1018261c3e457c3edb445af0f74b18ea32b8ad",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/synthesize/synthesize.sh"
+    },
+    {
+      "identity": "f1ec388e833eb31e10a7f14ab6aaafaf635a935549d7c77ec703226c1d5c5e65",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/target.sh"
+    },
+    {
+      "identity": "a823d60f44188840aebb7e0d62788a8379fabb4af782ea5e868b094760747e61",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/genhtml/zero.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov"
+    },
+    {
+      "identity": "41b4ded363e79cca3c8f5eee36d712109b5f4a1e66febccc1fcbc6851fdd82c3",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/Makefile"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/add"
+    },
+    {
+      "identity": "526920d2f66316ab74ee4353d6a849eea6716744aef3779a9e592ea350191479",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/add/Makefile"
+    },
+    {
+      "identity": "e024bf05f5df7e7ba1e0589ed8b12074913d6df2329f39e4bcbda5dff41240eb",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/add/prune.sh"
+    },
+    {
+      "identity": "2115abc2e2045413f76a45bf43c02207522ad2961b71f48d1291cb658504dbad",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/add/track.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/branch"
+    },
+    {
+      "identity": "c87247aaafebfb60bd25c0788ee9380c36715ec7441b643dc8cd53c05e5607d5",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/branch/Makefile"
+    },
+    {
+      "identity": "70e54a6577fb77b3490fc176901846842a3b5db4f937be794304670e1243b236",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/branch/branch.cpp"
+    },
+    {
+      "identity": "71e8edf559ac528ed5f28fe3bd2c96b04759a367e669a4637ddbd0f238653028",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/branch/branch.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/coverage"
+    },
+    {
+      "identity": "4a91e2ffa1654854020beb2ce39435a97cf90a57ce93c168d9f72316834a5b07",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/coverage/Makefile"
+    },
+    {
+      "identity": "74ae90c833feab8a24c0aeabd2483cbd089cffc59e19ce6164672cf4930fd840",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/coverage/coverage.sh"
+    },
+    {
+      "identity": "3d27d18409776e58b0bf82b97c048dc573e1d590e0debfbfa9e4e232bc3c86aa",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/coverage/geninfo.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle"
+    },
+    {
+      "identity": "c892151cb9a4c50998e3adabc8da7f7edcdb856b7a3be3edb2794bb058ccb996",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle/Makefile"
+    },
+    {
+      "identity": "a0a3227a2ee0d8000453ee6c2d04d88f96ea46c015bcec38557508d3edfc65cf",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle/demangle.cpp"
+    },
+    {
+      "identity": "9128cdbd5cf43cd881303499897143aa00901963ad4cc03dcec5976990175281",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle/demangle.sh"
+    },
+    {
+      "identity": "09c28a7837f8317660c916110b21f8eddeaf1dbbcd479ed2a858f836c99a1457",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle/simplify.cmd"
+    },
+    {
+      "identity": "b51e4576e7c30e7181e2ff714dba0e7cc6ecd1fd0cbebdf5eadcba26f3ea6450",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/demangle/simplify.pl"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/errs"
+    },
+    {
+      "identity": "5c587b86f98f3db4b7ae3ca37c0c7de460fbc0af1ed7a21f786d4c313f1e0caa",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/Makefile"
+    },
+    {
+      "identity": "9abe95d00d07abeb8a54f6696c38a30cb749ad1d98a7848865e37b272bbf7442",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/badBranchLine.info"
+    },
+    {
+      "identity": "6718c47b2b03f74740d31f6d2fbf939cb0aa2ecad99bbc1bf17108c0321ab479",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/badFncEndLine.info"
+    },
+    {
+      "identity": "04b97c2a04441682ff2b4cd22f89cc89b0d3db36364d64a9c0693e8300bc7162",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/badFncLine.info"
+    },
+    {
+      "identity": "b51132a6184f6b25f770f74e9db09fbfbb6b0bbe769abc6c2b42489147a261e5",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/badLine.info"
+    },
+    {
+      "identity": "39d39503d02babcb89c446265e533f1752248f3764c35b10c8b9da78e0bfc9e6",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/branchNoLine.info"
+    },
+    {
+      "identity": "4edae945c2269f2fd006584b6904b9dea9c759269c13cffc1805118edb860773",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/emptyFileRecord.info"
+    },
+    {
+      "identity": "2a1565976960aaf6a845baa6743340ab13ddb6f731cde6a64cf81a58ba7fb043",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/errs.sh"
+    },
+    {
+      "identity": "c3b1a664bb77f7ff045bdeafefaff323ade84864cbcd4fa78491241aa8b45417",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/exceptionBranch1.info"
+    },
+    {
+      "identity": "16398e468e7e5c179735aaf72bdfc73ddad622cf16b9d9ce9f8184111ac9d041",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/exceptionBranch2.info"
+    },
+    {
+      "identity": "a7a5dd13efb64b184dbb184b048e3a81ec4eb660e7a290f938685a055fc1fa6c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/fncMismatch.info"
+    },
+    {
+      "identity": "70ca6ba0d650ec1c2dcbf7b63d4ee1ede59b802ea67be76e9a6ce4689b7cd366",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/funcNoLine.info"
+    },
+    {
+      "identity": "83e00560bc4b68a60a168c46d717f9d9a6077a911fe22713842def6dfd52a922",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/lineNoBranch.info"
+    },
+    {
+      "identity": "7f7e2e0a1ba068dc8af50b044e5779b18173c093814d57a12bfe06b342d4a4a4",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/lineNoFunc.info"
+    },
+    {
+      "identity": "582766e65c6285951ee5b435d68bc9127389dba4878609d16b1de277d4f4c810",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/errs/noFunc.info"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/exception"
+    },
+    {
+      "identity": "ee6a9000d9763dcf239fe065908362ff41b0da8d37be9f2a6fd540a390b4bde6",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/exception/Makefile"
+    },
+    {
+      "identity": "c89c2a2ffca97f289f57f9c743869ebee7389740642b38ede040610d2a83ba7d",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/exception/example.data"
+    },
+    {
+      "identity": "401568f5135438a0787e2b208bd4d6ab101ff77a2de3bee6763e5da7b979812b",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/exception/exception.cpp"
+    },
+    {
+      "identity": "a2b8228514c2d22b6556ca91e10294d770346e089af1c57a5d6fc77def06c8be",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/exception/exception.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/extract"
+    },
+    {
+      "identity": "7a66ab5b61e0bed3aa8846fc7972517823e620c070934f301c05bf37e2e78edb",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/Makefile"
+    },
+    {
+      "identity": "6c5811d23a8952761239aa873106060af1ce954ca7a2beb9853b56fe814e8490",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/brokenCallback.pm"
+    },
+    {
+      "identity": "0e3aa534f443b952fc4737338c38307b283b14322bccdfa2666036f69aed4665",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/envErr.rc"
+    },
+    {
+      "identity": "e01986aac2d231a6871be1097fc4a0d441737ca3eda81d9d8e80730ec93288dc",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/envVar.rc"
+    },
+    {
+      "identity": "9e63ef123a01f09a393acfbb8713dda05dbb1c51e8bec8335f8e0914bb19cf11",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/extract.cpp"
+    },
+    {
+      "identity": "642e11ee7c359662356fc09fabb66a79c3d542c03e039a4fb30375a5637525c3",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/extract.sh"
+    },
+    {
+      "identity": "9d813741b43868a4b7de132aa20c5707b6fca6b32bfa5dd5625127cd36b755e9",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/fakeResolve.sh"
+    },
+    {
+      "identity": "90ab9c416b1c26c914dcf4d4634f35330fbe53cdd04dda2e2ca8bfed8ff09deb",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/history.sh"
+    },
+    {
+      "identity": "126381fe59000dcda5126cc2f7f96ce8a67c7d321d90a8268c770b166a84b69e",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/list.gold"
+    },
+    {
+      "identity": "b0fc2df8b5447d02c2490fec9cbece2a3cad4cccefc633e606f7a4abba512435",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/list_mcdc.gold"
+    },
+    {
+      "identity": "c7e8fa14567ba92a43d19e41adaec48d43c413e76e85e9005e93f5d442bc85eb",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/testContext.sh"
+    },
+    {
+      "identity": "8facc564e49e4800b05f45282372f6b188674048aef213e834eb031a9906e04a",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/extract/unused.c"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/follow"
+    },
+    {
+      "identity": "38da619d8e397e1d0a5af8746863d3b2b9763401d72b5f5d114c51617f01ac2d",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/follow/Makefile"
+    },
+    {
+      "identity": "4d4a3073c867b5f1034eb9d2c2d196f3dfbddb64f6df33fef1c79a8936adb6f5",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/follow/follow.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/format"
+    },
+    {
+      "identity": "f89e43d5a37ce21bcac615fec0ae4e007be1d07b26fd2a40ffdfa89f42446a42",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/format/Makefile"
+    },
+    {
+      "identity": "e42a8bd718d8d9aa90e952b99ab78044227b4d511ef13e1d3de78a8c75dd0041",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/format/format.info"
+    },
+    {
+      "identity": "3a8b09799b6733200cafea59ee3646c5bd6800748a52413e11ada7c55c508199",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/format/format.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/gcov-tool"
+    },
+    {
+      "identity": "5a4a1b9fe38e4df466c48a84b638141215c77cafbb1f9c151bd18cf22aec9d4a",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/gcov-tool/Makefile"
+    },
+    {
+      "identity": "ec0e18dedbafb1bd2f6c6ec85de26f4bb5727931e8159da3d5ca9caa581b0cad",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/gcov-tool/mygcov.sh"
+    },
+    {
+      "identity": "ea72b38026689f734fe18f7579c8e57eb4a8f3a7c7bfd65cc562ad614ecc52bd",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/gcov-tool/path.sh"
+    },
+    {
+      "identity": "14a0350acd16217b1213dcd00dae8693d8d8217481cc7c9d4981284d7750fed7",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/gcov-tool/test.c"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/initializer"
+    },
+    {
+      "identity": "3bc70ee528afae5b650acdfa9cb2760eef8ffed1347f1c0d57654df516568fc1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/initializer/Makefile"
+    },
+    {
+      "identity": "7cbacfaf346c91e31ddbde957c5632ba0a95deeeda9b56a703a49854326e275e",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/initializer/initializer.cpp"
+    },
+    {
+      "identity": "eddbddda14f775619a3c6c82f3da1b5843eb7e6fcd07ae7aae90eb4eccdc859d",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/initializer/initializer.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/lambda"
+    },
+    {
+      "identity": "e40416bd53bf75bc60305f5b4230d574937af9e1def96f5f1669f7f264bc1ef1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/lambda/Makefile"
+    },
+    {
+      "identity": "07be7449e4c0e7d81cb68469b06b2fe6d67582f49a28dc4a9644f42d3b141dac",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/lambda/lambda.dat"
+    },
+    {
+      "identity": "e5b9741cfa134548982651a297db3f8b83359fc38add97abe074a927097e38b8",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/lambda/lambda.sh"
+    },
+    {
+      "identity": "e486f42df9c494663adb6eea7c39bcf8d313e70437820b890d4b7652c3ee284c",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/lambda/lambda2.dat"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/mcdc"
+    },
+    {
+      "identity": "3913c0986c7ca081293dac3eed8a8e5848c90007ee984b0596343da2c4cd208a",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/mcdc/Makefile"
+    },
+    {
+      "identity": "f7dd7dfd12ab2dde6634f4d7329a045b53fc36a0e494a55efff23f656d458ae9",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/mcdc/main.cpp"
+    },
+    {
+      "identity": "81553d520219394384a3691da76eb58db0fcabedb60a7c60f828ceae1219dc11",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/mcdc/mcdc.sh"
+    },
+    {
+      "identity": "03dd7d356156dfe263df0a76eb3868abd7965aff2b3b333d49be2f3d8c0ce6d4",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/mcdc/test.cpp"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/merge"
+    },
+    {
+      "identity": "714715b11bd1af4855eb4e56710c14baa67ec0dbdf4d0d20f82fcf72896b40ed",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/Makefile"
+    },
+    {
+      "identity": "7b020ceb156047d89d97903f68efe77b847f1a3daa73ba000fc6d812839031da",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/a.dat"
+    },
+    {
+      "identity": "41c4efb61e679e386c0eb38d438773a21bffef49e227ace5376068e1c335cb49",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/a.info"
+    },
+    {
+      "identity": "fb011285a7a6d8296ce81233877c3d807108a9c920f05109b9e98230217ffba9",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/a_subtract_b.gold"
+    },
+    {
+      "identity": "6a7e9cef4a676ac88f34c2bf59567e4f4ca875a77a7274094ad4ca57a8abaadf",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/b.dat"
+    },
+    {
+      "identity": "bb38f3be5c3d53a039af543a4bcbfaea9adbd81a4e5340a1aeca760e04d83444",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/b.info"
+    },
+    {
+      "identity": "bbc914e4a78dae1fff908139d075f65c4ac8b40680da7c6915e859fd07f9adcd",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/b_subtract_a.gold"
+    },
+    {
+      "identity": "5655a0c4934f173cf1ce6398fda745046c053540692ec79a55edda9e42d16b17",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/functionBug_1.dat"
+    },
+    {
+      "identity": "2f05df1a192dffa0fac74ea90ed44de0f562ade4f43a28c3d38e5297e07c74e4",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/functionBug_2.dat"
+    },
+    {
+      "identity": "ac344b4132281982fc4f8b7690956c872f3b5b4949295e1909880cf6ba186bad",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/intersect.gold"
+    },
+    {
+      "identity": "7a984aeb889f170327dbdba6424674303d6b8da5aa610e7f40e4990bb56570b0",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/mcdc.dat"
+    },
+    {
+      "identity": "828ea77b815149b119bf23c7ef7edf6e81102e283e458413dccaf3a68de10957",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/merge/merge.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/misc"
+    },
+    {
+      "identity": "9e0f99e86cc1c628db5231c8ae46f5eae86bc0e7d6668738437ce58f228d22da",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/misc/Makefile"
+    },
+    {
+      "identity": "6f7170ec4ed84e6212c942f968ebd7dd3db9312aa45ce266409bbf26244cf639",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/misc/help.sh"
+    },
+    {
+      "identity": "bafc16975b741ff2fdcc1403ac4dcd66ac7cf271b09272ed07682211b0059078",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/misc/version.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/multiple"
+    },
+    {
+      "identity": "b927faaa483fd9d388836f9e23aca906916f417d219b89efb6d85c54d84a4621",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/multiple/Makefile"
+    },
+    {
+      "identity": "120ebd79c00eddb112858b93de55dba17b08c024f5c1c3c018814ff20c3f159a",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/multiple/multiple.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary"
+    },
+    {
+      "identity": "e6e81eba3287d7ff7679496ba5ea3ca0965a992745cc69d21c1e6d9b8c90a6c1",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/Makefile"
+    },
+    {
+      "identity": "11cec94ebf6034c213e68d99798792ace3a11d4cf84688791253943ae2d702e9",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/concatenated.sh"
+    },
+    {
+      "identity": "3c1fdf50c1ec48ffc435c4131ccb1c7af5679b4f4196f3ba3195db12f51cf545",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/concatenated2.sh"
+    },
+    {
+      "identity": "c4467b9d30b65bbd028f2206c76fe2e3feeefa6dbd34dfb6c59387b3c169c932",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/full.sh"
+    },
+    {
+      "identity": "1c03fa86c6efb8be6a58c05bd02fb2e19f87206eb09e8aee8e9871954a1aae29",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/part1.sh"
+    },
+    {
+      "identity": "d654ae57459f9457ade0609c728c0104aeec705d987fc3d0044c52451d0fa3fa",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/part2.sh"
+    },
+    {
+      "identity": "af649d73eec222ec1ef7102ac5f3b87bf61b179997d90b4d6bf12c4d75d8aa28",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/target.sh"
+    },
+    {
+      "identity": "7719ef171a5fff302dc7cf31a510526645deab0299d98fc5f97975b6b2fc7f1f",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/lcov/summary/zero.sh"
+    },
+    {
+      "identity": "1226afcb7b5cc978c1db090a8212ebc9ccf6b41af17e12ddcdc1bea0e1489082",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/lcovrc"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/llvm2lcov"
+    },
+    {
+      "identity": "4e1a07c280e7c54f26c840721240574e8683142afb6a4eb85f88743ed1b1b513",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/llvm2lcov/Makefile"
+    },
+    {
+      "identity": "83d7a6b0ec08b6dbc9678f6cdc5b1b0ee91f474bf3ef47540d18d9a0ba6ce51e",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/llvm2lcov/llvm2lcov.sh"
+    },
+    {
+      "identity": "7c4c4a2111606c10e30d3053e214320896adfa96d9050a2e47bbea285585aa75",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/llvm2lcov/main.cpp"
+    },
+    {
+      "identity": "ab6e9ce47f5cf466ff0a0e08abf19a36680646c66bbd0ac2e1e8e19b1696c958",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/llvm2lcov/test.h"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/perl2lcov"
+    },
+    {
+      "identity": "4e3c021e8479c3f951366e875ee1288560b42110675249758e9820153c3e9bcb",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/perl2lcov/Makefile"
+    },
+    {
+      "identity": "66c67896d9e82210f98c53da44398287f20e82046b0a2593a3afa1bbdcfde1dc",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/perl2lcov/example.pl"
+    },
+    {
+      "identity": "234f6d0df9710fe91cbacdfaec4178129993464140de2c31be1b093ee8e42973",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/perl2lcov/perltest1.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/profiles"
+    },
+    {
+      "identity": "a2492d637ad84e28315ef58d70961432bedd16b56df59a7b8d7fc2110143d8e6",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/profiles/large"
+    },
+    {
+      "identity": "cecbf0ad0652c23788263bbae1ee9f1bf461e78b083c53aa8a24bc2672f4b71f",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/profiles/medium"
+    },
+    {
+      "identity": "adc07d08956aa9c0300e7294d0252991bc5673f96b4d80a171d17bbbfcd08b11",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/profiles/small"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/py2lcov"
+    },
+    {
+      "identity": "2beb474c0353857363073ed0b57669ac4c1dae10ebdee36cd5819e92c2e3b5aa",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/py2lcov/Makefile"
+    },
+    {
+      "identity": "40a3867c5818ab2466321893137bda71c198f5ab4f8d7684c8f31dae9830e153",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/py2lcov/localmodule.py"
+    },
+    {
+      "identity": "fc00bcd2e851859777ffcbe9e9e87f51417cb55baee279e35240ddbe94a0bc60",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/py2lcov/py2lcov.sh"
+    },
+    {
+      "identity": "e4660b9ede1067209fc0003b6c58083237bfcfb337e8c24d5c0559d655ae25c2",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/py2lcov/test.py"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts"
+    },
+    {
+      "identity": "6e07a4847677f19a0fd3076bd91cb6249472de6dcac75280f31d129842b90278",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/scripts/Makefile"
+    },
+    {
+      "identity": "aed8aef5f93d01764547713e39ab616d0b49b450332c5a2899690dae15f0eeb3",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/batchgitversion_test.sh"
+    },
+    {
+      "identity": "2b86063c17009d18319b3cfe75955d5481ceaf57da7132c6e1e98f11e36e532e",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/gitblame_test.sh"
+    },
+    {
+      "identity": "7c0103d31e0fd5e42e607412a184c9dad7b6b8a32aada8461e0f773f0661d967",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/gitdiff_test.sh"
+    },
+    {
+      "identity": "c5b6ffa1b0962679dbe3543b05c6cda5b5a460498288ec5cdb29b8ca8dc0ea24",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/gitversion_test.sh"
+    },
+    {
+      "identity": "93ee66e88aeefa817bebf77022447cb1ceb8b54fa7fa9f63a990ee6dca1929e6",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/p4annotate_test.sh"
+    },
+    {
+      "identity": "002d290937f9429400ceb2ccde573956ac763308e14d8f0d1a1222d21d2da78a",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/p4udiff_test.sh"
+    },
+    {
+      "identity": "fc892e5ccf22e487fc05fad58526e4d390ee4278779a93d28e774c26ba4ebd72",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/scripts/p4version_test.sh"
+    },
+    {
+      "identity": ".",
+      "kind": "directory",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/xml2lcov"
+    },
+    {
+      "identity": "a6c28f9ff7188f4185cade078450ec3dd6c3077adcbdaf640bcefc5ab71a0d24",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/xml2lcov/Makefile"
+    },
+    {
+      "identity": "ef597d581c33572faf5f315349d981acfefec436436eca319c48eab923a9ad72",
+      "kind": "file",
+      "mode": "644",
+      "path": "/usr/local/share/lcov/tests/xml2lcov/coverage.xml"
+    },
+    {
+      "identity": "99cba3ad0c5a09356bb3805df648be442884d36f33bf69d837f74384b11c124c",
+      "kind": "file",
+      "mode": "755",
+      "path": "/usr/local/share/lcov/tests/xml2lcov/xml2lcov.sh"
+    }
   ],
   "symlink_count": 0
 }

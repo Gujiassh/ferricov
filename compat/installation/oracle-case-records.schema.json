@@ -1526,6 +1526,9 @@
           ],
           "type": "object"
         },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
         "path_order": {
           "const": "lexicographic"
         },
@@ -1571,7 +1574,8 @@
         "directory_companion_mode",
         "directory_companion_path",
         "directory_companion_sha256",
-        "capture_artifact"
+        "capture_artifact",
+        "oracle_execution_status"
       ],
       "type": "object"
     },

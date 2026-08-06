@@ -73,7 +73,7 @@ fi
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Aug  6 14:07:26 2026
+# Make data base, printed on Thu Aug  6 15:03:59 2026
 
 # Variables
 
@@ -131,14 +131,10 @@ COMPILE.mod = $(M2C) $(M2FLAGS) $(MODFLAGS) $(TARGET_ARCH)
 PART1INFO := /usr/local/share/lcov/tests/part1.info
 # default
 .VARIABLES := 
-# environment
-PWD = /usr/local/share/lcov/tests
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # makefile (from 'common.mak', line 36)
 ANNOTATE_SCRIPT = $(SCRIPTDIR)/p4annotate.pm,--verify
-# environment
-HOSTNAME = f85f56819a13
 # environment
 SOURCE_DATE_EPOCH = 1783375223
 # environment
@@ -147,8 +143,6 @@ LCOV_BUILD_DATE = 2026-07-06
 LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
 # makefile (from 'common.mak', line 94)
 V := 
-# environment
-OLDPWD = /work
 # default
 TEXI2DVI = texi2dvi
 # makefile (from 'common.mak', line 81)
@@ -203,8 +197,6 @@ MAKEFILE_LIST := Makefile common.mak
 F77FLAGS = $(FFLAGS)
 # automatic
 @F = $(notdir $@)
-# environment
-SRC_RO = /src-ro
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # default
@@ -243,8 +235,6 @@ LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
 SHELL := /bin/sh
 # default
 LINK.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
-# environment
-SHLVL = 0
 # environment
 MAKELEVEL := 0
 # default
@@ -347,8 +337,6 @@ TARGETINFO := /usr/local/share/lcov/tests/target.info
 CWEAVE = cweave
 # makefile (from 'common.mak', line 63)
 INFOFILES := /usr/local/share/lcov/tests/zero.info /usr/local/share/lcov/tests/full.info /usr/local/share/lcov/tests/target.info /usr/local/share/lcov/tests/part1.info /usr/local/share/lcov/tests/part2.info
-# environment
-_ = /tmp/capture-driver.sh
 # default
 YACC.y = $(YACC) $(YFLAGS)
 # default
@@ -364,11 +352,13 @@ COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
 # makefile (from 'common.mak', line 60)
 PART1COUNTS := /usr/local/share/lcov/tests/part1.counts
 # environment
-HOME = /root
+HOME = /tmp
 # makefile (from 'common.mak', line 17)
 SCRIPTDIR := /usr/local/share/lcov/share/lcov/support-scripts
 # default
 LEX = lex
+# environment
+TERM = dumb
 # makefile (from 'common.mak', line 80)
 LLVM2LCOV_TOOL :=  /usr/local/share/lcov/bin/llvm2lcov
 # default
@@ -398,7 +388,7 @@ COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
 # makefile (from 'common.mak', line 55)
 FULLINFO := /usr/local/share/lcov/tests/full.info
 # variable set hash-table stats:
-# Load=160/1024=16%, Rehash=0, Collisions=22/433=5%
+# Load=155/1024=15%, Rehash=0, Collisions=22/428=5%
 
 # Pattern-specific Variable Values
 
@@ -1886,5 +1876,5 @@ common.mak:
 # strcache performance: lookups = 920 / hit rate = 43%
 # hash-table stats:
 # Load=518/8192=6%, Rehash=0, Collisions=38/920=4%
-# Finished Make data base on Thu Aug  6 14:07:26 2026
+# Finished Make data base on Thu Aug  6 15:03:59 2026
 
