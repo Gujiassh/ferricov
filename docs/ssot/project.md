@@ -96,31 +96,27 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 93 fixtures, 21 per-record malformed inputs, and 184 retained
-  Oracle observations, including VER, state-ownership, function, branch,
-  numeric/error/checksum probes, the TF-030 exact numeric matrix, and 23
-  semantic snapshots. Exact structured mappings cover
-  `M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`,
-  `M1-TF-030`, and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` is now
-  mapped through the 56-row four-family exact atom matrix and row-level
-  semantic validators. The six TF-030 semantic snapshots are independently
-  bound to `compat/fixtures/m0-tracefiles/tf030-semantic-registry.json`, which
-  fixes every row field, scalar projection, stored aggregate/testcase value,
-  and source cache fact by SHA-256; product compatibility evidence remains
-  false, all observations remain reference-only, and M1 implementation remains
-  unauthorized.
+  emission lines, 124 fixtures, 21 per-record malformed inputs, and 254
+  retained Oracle observations, including VER, state-ownership, function,
+  branch, numeric/error/checksum probes, TF-030 exact numeric evidence,
+  tracefile wave1 semantic cases, and reader/framing/state wave2 cases. Exact
+  structured mappings remain reference-only and product compatibility evidence
+  remains false; writer/converter and product-boundary blockers remain open.
+  M1 implementation remains unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
-  rules, four unclassified failure surfaces, ten command exit policies, and 121
-  retained Oracle references. All 71 diagnostic/parallel case IDs remain
-  planned and product evidence remains empty.
+  rules, four unclassified surfaces, ten command exit policies, and 169
+  retained Oracle observations. Twenty-six wave1 cases were fully recaptured
+  with clean environment, stdin, cleanup, executable/version, and package
+  provenance; 19 of 71 diagnostic/parallel identities have exact wave1
+  bindings, 52 remain planned, and product evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry
   installed tree to nine exhaustive payload groups and 15 pinned source
-  closures. Paths, file SHA-256 identities, and the legacy man symlink fail
-  closed. Thirteen installation cases remain planned. Four retained report
-  samples bind their output trees through sample metadata and contain the same
-  seven runtime assets, but all observations remain reference-only and product
-  evidence remains empty.
+  closures. Paths, file SHA-256 identities, the legacy man symlink, and the
+  13 case-record ID/facts schema bind fail closed. All 13 installation cases
+  remain planned/oracle-reference with no product evidence; lifecycle,
+  directory-mode, platform-path, and executable installer evidence remain
+  open.
 - `compat/resources/v2.5.json` defines 13 controlled scale profiles for the
   immutable Oracle. It binds exact source-scoped input shape, branch/MC/DC
   summary semantics and stream hashes, six harness/schema artifacts, raw
@@ -138,12 +134,15 @@ the M0 harness become the permanent integration boundary.
   validates the 13 ordered samples-only trees without emitting retained
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. One hundred seven primary plans and all four
-  required critical interaction domains are reviewed. The callback,
-  error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 424 public primary reviews remain open. The
-  latest 17 source-bound `lcovrc` configuration plans remain planning-only with
-  no suite or product evidence.
+  531 public inventory entries. Fixed source and interaction plan bindings
+  independently seal 363 projections; 361 substantive primary plans are
+  reviewed and 170 explicit M0 gaps remain. Product evidence remains empty and
+  no compatibility claim is made.
+- `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
+  Oracle-only coverage-model algebra contract with 157 cases across 27
+  fixtures, binding rows `M1-MD-010..014`, `M1-MD-017`, and `M1-MD-019` through
+  sealed independent observation facts. `M1-MD-020`, `M1-TF-063`, and
+  `M1-TF-064` remain blocked; this does not authorize Rust model/parser work.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 separates Oracle, compiler capture, and release platform matrices.
