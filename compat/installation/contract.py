@@ -60,6 +60,10 @@ EXPECTED_SAMPLE_METADATA_HASHES = {
         "f86f9774eba770f04da0c94f19caa24ef3730091040950bb811d20cee0d1b847",
 }
 
+CASE_RECORDS_PATH = Path(__file__).with_name("oracle-case-records.json")
+CASE_RECORDS_SCHEMA_PATH = Path(__file__).with_name("oracle-case-records.schema.json")
+EXPECTED_CASE_RECORDS_SHA256 = "e2c3de1c85574c5b524fa2ccf9b36cd94b4e19f73f6cab67d593654fa9699932"
+
 LAYOUT_IDS = (
     "INST-PATHS-001",
     "INST-BIN-001",
@@ -98,6 +102,22 @@ PLANNED_CASE_IDS = (
     "INST-REPORT-ASSET-001",
     "INST-LICENSE-001",
 )
+CASE_RECORD_ORDER = PLANNED_CASE_IDS
+CASE_FAMILY_BY_ID = {
+    "INST-LAYOUT-001": "layout",
+    "INST-STAGE-001": "lifecycle",
+    "INST-INTERP-001": "failure",
+    "INST-CONFIG-DISCOVERY-001": "failure",
+    "INST-UNINSTALL-001": "failure",
+    "INST-PARTIAL-001": "failure",
+    "INST-DOC-FAIL-001": "failure",
+    "INST-PATH-001": "failure",
+    "INST-DIRTY-ASSET-001": "failure",
+    "INST-TEST-RUN-001": "failure",
+    "INST-DOC-PATH-001": "failure",
+    "INST-REPORT-ASSET-001": "asset",
+    "INST-LICENSE-001": "license",
+}
 
 SOURCE_CLOSURES = (
     ("installation.make-variables", "Makefile", 38, 84, "install_variables"),
@@ -152,6 +172,7 @@ EVIDENCE_GAPS = (
     "installed test execution with unset and explicit LCOV_HOME",
     "README path mismatches and distribution license manifest",
     "report asset variants, optional updown generation, and HTML reference checks",
+    "executable install/uninstall lifecycle capture for the 13 INST cases",
 )
 
 
@@ -478,25 +499,209 @@ def validate_benchmark_result() -> dict[str, Any]:
     }
 
 
+
+def json_values_equal(left: object, right: object) -> bool:
+    """Type-sensitive JSON equality: bool is not int, 1 is not 1.0."""
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, dict):
+        if set(left) != set(right):
+            return False
+        return all(json_values_equal(left[key], right[key]) for key in left)
+    if isinstance(left, list):
+        if len(left) != len(right):
+            return False
+        return all(json_values_equal(left_item, right_item) for left_item, right_item in zip(left, right))
+    return left == right
+
+
+def validate_case_records_schema(document: dict[str, Any]) -> None:
+    schema = load_json(CASE_RECORDS_SCHEMA_PATH)
+    try:
+        Draft202012Validator.check_schema(schema)
+    except SchemaError as error:
+        raise InstallationContractError(f"installation case-records schema is invalid: {error.message}") from error
+    errors = sorted(Draft202012Validator(schema).iter_errors(document), key=lambda error: list(error.path))
+    if errors:
+        location = ".".join(str(part) for part in errors[0].path) or "<root>"
+        raise InstallationContractError(
+            f"installation case-records schema failure at {location}: {errors[0].message}"
+        )
+
+
+def load_case_records() -> dict[str, Any]:
+    if not CASE_RECORDS_PATH.is_file():
+        raise InstallationContractError("installation case records are missing")
+    raw = CASE_RECORDS_PATH.read_bytes()
+    actual = sha256_bytes(raw)
+    if actual != EXPECTED_CASE_RECORDS_SHA256:
+        raise InstallationContractError(
+            "installation case-records artifact drift: "
+            f"expected={EXPECTED_CASE_RECORDS_SHA256} actual={actual}"
+        )
+    try:
+        document = json.loads(raw.decode("ascii"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise InstallationContractError("installation case records are not canonical ASCII JSON") from error
+    if not isinstance(document, dict):
+        raise InstallationContractError("installation case records root must be an object")
+    validate_case_records_schema(document)
+    if document.get("product_compatibility_evidence") is not False:
+        raise InstallationContractError("installation case records claim product compatibility")
+    if document.get("evidence_status") != "oracle_reference" or document.get("execution_status") != "planned":
+        raise InstallationContractError("installation case records evidence status drift")
+    cases = document.get("cases")
+    if not isinstance(cases, list) or len(cases) != 13:
+        raise InstallationContractError("installation case records must contain exactly 13 cases")
+    ids = [case.get("id") for case in cases]
+    if ids != list(CASE_RECORD_ORDER):
+        raise InstallationContractError(f"installation case-record order drift: {ids}")
+    for case in cases:
+        if not isinstance(case, dict):
+            raise InstallationContractError("installation case record is not an object")
+        if case.get("family") != CASE_FAMILY_BY_ID[case["id"]]:
+            raise InstallationContractError(f"installation case family drift: {case['id']}")
+        if case.get("product_evidence"):
+            raise InstallationContractError(f"installation case product evidence: {case['id']}")
+        facts = case.get("independent_facts")
+        if not isinstance(facts, dict):
+            raise InstallationContractError(f"installation case facts missing: {case['id']}")
+        facts_bytes = canonical_json(facts).encode("ascii")
+        if case.get("facts_sha256") != sha256_bytes(facts_bytes):
+            raise InstallationContractError(f"installation case facts hash drift: {case['id']}")
+        # closed independent-facts must not self-certify only through nested hashes without identity
+        if "product_compatibility_evidence" in facts and facts["product_compatibility_evidence"] is not False:
+            raise InstallationContractError(f"installation case facts claim product compatibility: {case['id']}")
+    return document
+
+
+def case_records_binding() -> dict[str, Any]:
+    document = load_case_records()
+    return {
+        "path": "compat/installation/oracle-case-records.json",
+        "schema_path": "compat/installation/oracle-case-records.schema.json",
+        "sha256": EXPECTED_CASE_RECORDS_SHA256,
+        "case_count": 13,
+        "evidence_status": "oracle_reference",
+        "execution_status": "planned",
+        "product_compatibility_evidence": False,
+        "case_ids": [case["id"] for case in document["cases"]],
+        "case_fact_sha256s": [
+            {"id": case["id"], "facts_sha256": case["facts_sha256"]}
+            for case in document["cases"]
+        ],
+    }
+
+
+def validate_case_records_against_contract(
+    document: dict[str, Any],
+    tree: dict[str, Any],
+    assets: list[dict[str, Any]],
+    observations: list[dict[str, Any]],
+    closures: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    records = load_case_records()
+    closure_ids = {closure["id"] for closure in closures}
+    layout_ids = set(document["layout_contract_ids"])
+    failure_ids = set(document["failure_contract_ids"])
+    observation_ids = {observation["id"] for observation in observations}
+    asset_by_name = {asset["name"]: asset for asset in assets}
+    summaries = []
+    for case in records["cases"]:
+        for source_id in case["source_closure_ids"]:
+            if source_id not in closure_ids:
+                raise InstallationContractError(f"case source closure unbound: {case['id']}:{source_id}")
+        for layout_id in case["layout_contract_ids"]:
+            if layout_id not in layout_ids:
+                raise InstallationContractError(f"case layout id unbound: {case['id']}:{layout_id}")
+        for failure_id in case["failure_contract_ids"]:
+            if failure_id not in failure_ids:
+                raise InstallationContractError(f"case failure id unbound: {case['id']}:{failure_id}")
+        for observation_id in case["observation_ids"]:
+            if observation_id not in observation_ids:
+                raise InstallationContractError(f"case observation unbound: {case['id']}:{observation_id}")
+        facts = case["independent_facts"]
+        if case["id"] == "INST-LAYOUT-001":
+            if facts.get("tree_entry_count") != tree["entry_count"]:
+                raise InstallationContractError("INST-LAYOUT-001 tree_entry_count drift")
+            if facts.get("manifest_sha256") != tree["manifest_sha256"]:
+                raise InstallationContractError("INST-LAYOUT-001 manifest_sha256 drift")
+            if facts.get("group_counts", {}).get("bin") != 10:
+                raise InstallationContractError("INST-LAYOUT-001 bin group drift")
+            if facts.get("support_script_count") != 23:
+                raise InstallationContractError("INST-LAYOUT-001 support script count drift")
+        if case["id"] == "INST-REPORT-ASSET-001":
+            if facts.get("asset_count") != 7 or facts.get("observation_count") != 4:
+                raise InstallationContractError("INST-REPORT-ASSET-001 asset observation counts drift")
+            if not json_values_equal(facts.get("runtime_assets"), assets):
+                raise InstallationContractError("INST-REPORT-ASSET-001 runtime_assets drift")
+            for observed in facts.get("observations", []):
+                if not isinstance(observed, dict):
+                    raise InstallationContractError("INST-REPORT-ASSET-001 observation shape drift")
+                assets_map = observed.get("assets")
+                if not isinstance(assets_map, dict) or set(assets_map) != set(asset_by_name):
+                    raise InstallationContractError("INST-REPORT-ASSET-001 observation asset set drift")
+                for name, asset in assets_map.items():
+                    expected = asset_by_name[name]
+                    if (
+                        not isinstance(asset, dict)
+                        or asset.get("bytes") != expected["bytes"]
+                        or asset.get("sha256") != expected["sha256"]
+                        or asset.get("status") != "created"
+                    ):
+                        raise InstallationContractError(
+                            f"INST-REPORT-ASSET-001 observation asset identity drift: {name}"
+                        )
+        if case["id"] == "INST-LICENSE-001":
+            if facts.get("copying_in_install_payload") is not False:
+                raise InstallationContractError("INST-LICENSE-001 license payload claim drift")
+            if facts.get("retained_tree_contains_copying") is not False:
+                raise InstallationContractError("INST-LICENSE-001 retained tree license claim drift")
+        summaries.append({
+            "id": case["id"],
+            "family": case["family"],
+            "role": case["role"],
+            "evidence_status": case["evidence_status"],
+            "execution_status": case["execution_status"],
+            "facts_sha256": case["facts_sha256"],
+            "source_closure_count": len(case["source_closure_ids"]),
+            "layout_contract_count": len(case["layout_contract_ids"]),
+            "failure_contract_count": len(case["failure_contract_ids"]),
+            "observation_count": len(case["observation_ids"]),
+            "product_evidence": [],
+        })
+    return summaries
+
+
 def build_document(upstream_root: Path) -> dict[str, Any]:
     tree = installed_tree()
     assets, observations = runtime_assets()
     closures = [source_closure(upstream_root, value) for value in SOURCE_CLOSURES]
-    return {
+    planned = planned_case_ids(upstream_root)
+    bindings = artifact_bindings()
+    case_binding = case_records_binding()
+    bindings.append({"path": case_binding["path"], "sha256": case_binding["sha256"]})
+    document = {
         "schema_version": 1,
         "upstream_release": "v2.5",
         "upstream_commit": UPSTREAM_COMMIT,
-        "scope": "LCOV 2.5 installation layout, build/failure boundaries, retained installed-tree evidence, and report asset references",
-        "artifact_bindings": artifact_bindings(),
+        "scope": (
+            "LCOV 2.5 installation layout, build/failure boundaries, retained "
+            "installed-tree evidence, report asset references, and exact Oracle "
+            "reference-only case records for the 13 INST identities"
+        ),
+        "artifact_bindings": bindings,
         "oracle_manifest": validate_oracle_manifest(tree),
         "benchmark_result": validate_benchmark_result(),
         "source_closures": closures,
         "installed_tree": tree,
         "layout_contract_ids": list(LAYOUT_IDS),
         "failure_contract_ids": list(FAILURE_IDS),
-        "planned_case_ids": planned_case_ids(upstream_root),
+        "planned_case_ids": planned,
         "planned_case_evidence_status": "planned",
         "planned_case_product_evidence": [],
+        "oracle_case_records": case_binding,
+        "oracle_case_summaries": [],
         "runtime_assets": assets,
         "runtime_asset_observations": observations,
         "oracle_observation_evidence_status": "oracle_reference",
@@ -507,6 +712,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
                 len(EXPECTED_ARTIFACT_HASHES)
                 + len(EXPECTED_ASSET_SAMPLE_HASHES)
                 + len(EXPECTED_SAMPLE_METADATA_HASHES)
+                + 1
             ),
             "source_closures": len(closures),
             "source_lines": sum(closure["line_count"] for closure in closures),
@@ -515,11 +721,16 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             "layout_contract_ids": len(LAYOUT_IDS),
             "failure_contract_ids": len(FAILURE_IDS),
             "planned_cases": len(PLANNED_CASE_IDS),
+            "oracle_case_records": 13,
             "runtime_assets": len(assets),
             "runtime_asset_observations": len(observations),
         },
         "product_compatibility_evidence": False,
     }
+    document["oracle_case_summaries"] = validate_case_records_against_contract(
+        document, tree, assets, observations, closures
+    )
+    return document
 
 
 def validate_schema(document: dict[str, Any]) -> None:
@@ -551,14 +762,21 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
     for key in (
         "upstream_commit", "artifact_bindings", "oracle_manifest", "benchmark_result", "source_closures",
         "installed_tree", "layout_contract_ids", "failure_contract_ids", "planned_case_ids",
+        "oracle_case_records", "oracle_case_summaries",
         "runtime_assets", "runtime_asset_observations", "known_evidence_gaps", "totals",
     ):
-        if document[key] != expected[key]:
+        if not json_values_equal(document.get(key), expected[key]):
             raise InstallationContractError(f"installation contract drift: {key}")
     if document["planned_case_evidence_status"] != "planned" or document["planned_case_product_evidence"]:
         raise InstallationContractError("installation planned cases claim evidence")
     if document["oracle_observation_evidence_status"] != "oracle_reference" or document["oracle_observation_product_evidence"]:
         raise InstallationContractError("installation Oracle references claim product evidence")
+    if document.get("oracle_case_records", {}).get("evidence_status") != "oracle_reference":
+        raise InstallationContractError("installation case records claim non-reference evidence")
+    if document.get("oracle_case_records", {}).get("execution_status") != "planned":
+        raise InstallationContractError("installation case records claim execution evidence")
+    if document.get("oracle_case_records", {}).get("product_compatibility_evidence"):
+        raise InstallationContractError("installation case records claim product compatibility")
     if document["product_compatibility_evidence"]:
         raise InstallationContractError("installation contract claims product compatibility")
 
@@ -584,6 +802,7 @@ def main() -> int:
         f"groups={document['totals']['installed_tree_groups']} "
         f"source_closures={document['totals']['source_closures']} "
         f"planned_cases={document['totals']['planned_cases']} "
+        f"oracle_case_records={document['totals']['oracle_case_records']} "
         f"runtime_assets={document['totals']['runtime_assets']} "
         f"asset_observations={document['totals']['runtime_asset_observations']} "
         "product_compatibility=false"

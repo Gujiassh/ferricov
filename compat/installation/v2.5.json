@@ -43,6 +43,10 @@
     {
       "path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-warmup-000/sample.json",
       "sha256": "f86f9774eba770f04da0c94f19caa24ef3730091040950bb811d20cee0d1b847"
+    },
+    {
+      "path": "compat/installation/oracle-case-records.json",
+      "sha256": "e2c3de1c85574c5b524fa2ccf9b36cd94b4e19f73f6cab67d593654fa9699932"
     }
   ],
   "benchmark_result": {
@@ -217,7 +221,8 @@
     "documentation builder/theme failure and source-tree cleanup",
     "installed test execution with unset and explicit LCOV_HOME",
     "README path mismatches and distribution license manifest",
-    "report asset variants, optional updown generation, and HTML reference checks"
+    "report asset variants, optional updown generation, and HTML reference checks",
+    "executable install/uninstall lifecycle capture for the 13 INST cases"
   ],
   "layout_contract_ids": [
     "INST-PATHS-001",
@@ -229,6 +234,255 @@
     "INST-EXAMPLE-001",
     "INST-CONFIG-001",
     "INST-REPORT-ASSET-001"
+  ],
+  "oracle_case_records": {
+    "case_count": 13,
+    "case_fact_sha256s": [
+      {
+        "facts_sha256": "7893b71b7ace2ff7a04c361b57b7be1935f2775763330b99bd9eb1da355f91bf",
+        "id": "INST-LAYOUT-001"
+      },
+      {
+        "facts_sha256": "9fe790c93478cc35700718392aa69e0a2255a2c82007e21a4370d1477cf6e80e",
+        "id": "INST-STAGE-001"
+      },
+      {
+        "facts_sha256": "0061d7bc8b9a5f58e272fcd3012d7bfddd3cb22b832b15dc09b52592503313dc",
+        "id": "INST-INTERP-001"
+      },
+      {
+        "facts_sha256": "81a5cdb567c516c2ad69803d2cfd324b45bf3fa7e4a34215783757051a01e2aa",
+        "id": "INST-CONFIG-DISCOVERY-001"
+      },
+      {
+        "facts_sha256": "a0b42c40d9f76ca242009aaeeb3b2eecde3c91f1b89befaea190705933716482",
+        "id": "INST-UNINSTALL-001"
+      },
+      {
+        "facts_sha256": "478530a73fd0e6a5570e7addf5ddfe49e6d9b4fc5181dcf6d2d4d5ca34544874",
+        "id": "INST-PARTIAL-001"
+      },
+      {
+        "facts_sha256": "3da7a22388d7ccc9a79bbd675271433c126d05eebf22ea0b850d6607ac34589f",
+        "id": "INST-DOC-FAIL-001"
+      },
+      {
+        "facts_sha256": "80110c8d0620652c4fe3be37892defa875345dc76a20542f1d89f3a17f63ac99",
+        "id": "INST-PATH-001"
+      },
+      {
+        "facts_sha256": "453c9f3f9f4bd887e2d7f93064426919f741b2539dca4e2eeb144815b712b72e",
+        "id": "INST-DIRTY-ASSET-001"
+      },
+      {
+        "facts_sha256": "368eb0eddde1636284e021e6035accaa32a325783d3e8995c89faeb3c697228c",
+        "id": "INST-TEST-RUN-001"
+      },
+      {
+        "facts_sha256": "3ee4121b7987339cf74a47834a5fc358848106337e14de9eefada02aa87d0694",
+        "id": "INST-DOC-PATH-001"
+      },
+      {
+        "facts_sha256": "37a6486d3923901130b0a8c92d04069c1f180820b975009e55cf417c4cbf79ee",
+        "id": "INST-REPORT-ASSET-001"
+      },
+      {
+        "facts_sha256": "b05925378764860f97b7fef5d4ed52d63565000054de2b76c9175939da91be1c",
+        "id": "INST-LICENSE-001"
+      }
+    ],
+    "case_ids": [
+      "INST-LAYOUT-001",
+      "INST-STAGE-001",
+      "INST-INTERP-001",
+      "INST-CONFIG-DISCOVERY-001",
+      "INST-UNINSTALL-001",
+      "INST-PARTIAL-001",
+      "INST-DOC-FAIL-001",
+      "INST-PATH-001",
+      "INST-DIRTY-ASSET-001",
+      "INST-TEST-RUN-001",
+      "INST-DOC-PATH-001",
+      "INST-REPORT-ASSET-001",
+      "INST-LICENSE-001"
+    ],
+    "evidence_status": "oracle_reference",
+    "execution_status": "planned",
+    "path": "compat/installation/oracle-case-records.json",
+    "product_compatibility_evidence": false,
+    "schema_path": "compat/installation/oracle-case-records.schema.json",
+    "sha256": "e2c3de1c85574c5b524fa2ccf9b36cd94b4e19f73f6cab67d593654fa9699932"
+  },
+  "oracle_case_summaries": [
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "7893b71b7ace2ff7a04c361b57b7be1935f2775763330b99bd9eb1da355f91bf",
+      "failure_contract_count": 0,
+      "family": "layout",
+      "id": "INST-LAYOUT-001",
+      "layout_contract_count": 8,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "installed_tree_partition",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "9fe790c93478cc35700718392aa69e0a2255a2c82007e21a4370d1477cf6e80e",
+      "failure_contract_count": 0,
+      "family": "lifecycle",
+      "id": "INST-STAGE-001",
+      "layout_contract_count": 1,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "staged_root_versus_prefix",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "0061d7bc8b9a5f58e272fcd3012d7bfddd3cb22b832b15dc09b52592503313dc",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-INTERP-001",
+      "layout_contract_count": 0,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "interpreter_fixup_ineffective",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "81a5cdb567c516c2ad69803d2cfd324b45bf3fa7e4a34215783757051a01e2aa",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-CONFIG-DISCOVERY-001",
+      "layout_contract_count": 1,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "config_discovery_precedence",
+      "source_closure_count": 1
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "a0b42c40d9f76ca242009aaeeb3b2eecde3c91f1b89befaea190705933716482",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-UNINSTALL-001",
+      "layout_contract_count": 1,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "uninstall_residue_and_recursive_removal",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "478530a73fd0e6a5570e7addf5ddfe49e6d9b4fc5181dcf6d2d4d5ca34544874",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-PARTIAL-001",
+      "layout_contract_count": 0,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "non_transactional_install_loops",
+      "source_closure_count": 1
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "3da7a22388d7ccc9a79bbd675271433c126d05eebf22ea0b850d6607ac34589f",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-DOC-FAIL-001",
+      "layout_contract_count": 0,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "documentation_prerequisite_before_payload",
+      "source_closure_count": 3
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "80110c8d0620652c4fe3be37892defa875345dc76a20542f1d89f3a17f63ac99",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-PATH-001",
+      "layout_contract_count": 1,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "install_root_path_variants",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "453c9f3f9f4bd887e2d7f93064426919f741b2539dca4e2eeb144815b712b72e",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-DIRTY-ASSET-001",
+      "layout_contract_count": 2,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "dynamic_working_tree_enumeration",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "368eb0eddde1636284e021e6035accaa32a325783d3e8995c89faeb3c697228c",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-TEST-RUN-001",
+      "layout_contract_count": 0,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "installed_test_runtime_paths",
+      "source_closure_count": 3
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "3ee4121b7987339cf74a47834a5fc358848106337e14de9eefada02aa87d0694",
+      "failure_contract_count": 1,
+      "family": "failure",
+      "id": "INST-DOC-PATH-001",
+      "layout_contract_count": 2,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "documented_path_mismatch",
+      "source_closure_count": 2
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "37a6486d3923901130b0a8c92d04069c1f180820b975009e55cf417c4cbf79ee",
+      "failure_contract_count": 0,
+      "family": "asset",
+      "id": "INST-REPORT-ASSET-001",
+      "layout_contract_count": 1,
+      "observation_count": 4,
+      "product_evidence": [],
+      "role": "runtime_report_assets",
+      "source_closure_count": 3
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "b05925378764860f97b7fef5d4ed52d63565000054de2b76c9175939da91be1c",
+      "failure_contract_count": 1,
+      "family": "license",
+      "id": "INST-LICENSE-001",
+      "layout_contract_count": 0,
+      "observation_count": 0,
+      "product_evidence": [],
+      "role": "distribution_license_manifest",
+      "source_closure_count": 2
+    }
   ],
   "oracle_manifest": {
     "evidence_scope": "environment_smoke",
@@ -346,7 +600,7 @@
     }
   ],
   "schema_version": 1,
-  "scope": "LCOV 2.5 installation layout, build/failure boundaries, retained installed-tree evidence, and report asset references",
+  "scope": "LCOV 2.5 installation layout, build/failure boundaries, retained installed-tree evidence, report asset references, and exact Oracle reference-only case records for the 13 INST identities",
   "source_closures": [
     {
       "id": "installation.make-variables",
@@ -485,11 +739,12 @@
     }
   ],
   "totals": {
-    "artifact_bindings": 11,
+    "artifact_bindings": 12,
     "failure_contract_ids": 10,
     "installed_tree_entries": 321,
     "installed_tree_groups": 9,
     "layout_contract_ids": 9,
+    "oracle_case_records": 13,
     "planned_cases": 13,
     "runtime_asset_observations": 4,
     "runtime_assets": 7,
