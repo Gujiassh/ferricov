@@ -68,7 +68,7 @@ validation largely trusted index/result self-hashes. The repair adds:
 ## Contract totals after repair
 
 - planned cases: 71 (still `planned`; no product evidence)
-- oracle observations: 147 total
+- oracle observations: 169 total (147 diagnostics wave1/base references plus 22 trace wave1/wave2 error and recovery observations)
   - 121 historical correctness/tracefile references
   - 26 wave1 diagnostics references
 - product_compatibility_evidence: false

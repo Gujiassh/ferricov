@@ -167,7 +167,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave1_observations"], 26)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 147)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 169)
         planned = []
         for entry in wave1:
             for planned_id in entry["planned_case_ids"]:
