@@ -29,13 +29,25 @@
         "bytes": 316,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-PARTIAL-001/observed-children.json",
-        "sha256": "35eaa72ce83b197638b1ddbe24ac3406c0ab6c04fac5bbd4d0e74645fc7d5242"
+        "sha256": "94351781c5d31e69f4f1b2a22c8cea4b7704f20bfff635ea034815eb7ba7a410"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-PARTIAL-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 222,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/status.env",
+        "sha256": "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/run-meta.env",
+        "sha256": "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089"
       }
     ],
     "stderr_bin": {
@@ -243,7 +255,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -272,7 +284,7 @@
     "timeout_seconds": 600,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "903a69888ee697c0f5d6d4f09c7e738e24206798ba9774d8be0181c85a3b20e9",
+  "observation_sha256": "22a865b1c4508f7e4dca1ffd0086dcee957afc1723fa91e5c2a643e01d0bff3d",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
@@ -291,7 +303,7 @@
       }
     ],
     "exit_status": 2,
-    "host_observer_code": 2,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

@@ -71,3 +71,6 @@ export LCOV_SOURCE_ROOT=/tmp/lcov-upstream-reference
 python3 compat/installation/wave2/recapture.py
 # then regenerate contract hashes/document under review
 ```
+
+
+Wave-2 captures use `process-observer.py` (ptrace exec-stop) for live exe/argv/cwd/wait evidence, transactional recapture staging, and retained runner qualification probes under `wave2/cases/_runner/`.

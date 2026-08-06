@@ -27,6 +27,7 @@ WAVE2 = Path(__file__).resolve().parent
 CASE_SCHEMA = WAVE2 / "oracle-case-capture.schema.json"
 DRIVER = WAVE2 / "capture-driver.sh"
 DIR_RECORDER = WAVE2 / "installed-tree-directories.sh"
+PROCESS_OBSERVER = WAVE2 / "process-observer.py"
 PIN_INV = ROOT / "compat/upstream/python-objects.inv"
 PIN_PY = ROOT / "compat/upstream/pin-intersphinx.py"
 UPSTREAM = Path(os.environ.get("LCOV_SOURCE_ROOT", "/tmp/lcov-upstream-reference"))
@@ -206,6 +207,32 @@ CASE_SPECS: list[dict[str, Any]] = [
     },
 ]
 
+# Retained runner-qualification probes (signal + timeout). Not part of the
+# 13 INST product case catalog; stored under cases/_runner/ and indexed
+# separately so lifecycle paths have executable Oracle evidence.
+RUNNER_SPECS: list[dict[str, Any]] = [
+    {
+        "id": "INST-RUNNER-SIGNAL-001",
+        "driver_case": "INST-RUNNER-SIGNAL-001",
+        "timeout_seconds": 30,
+        "fixture_setup": ["ptrace supervisor force SIGTERM after exec"],
+        "cleanup": ["none_required"],
+        "environment_mode": "clean_explicit",
+        "requires_source": False,
+        "qualification": "signal",
+    },
+    {
+        "id": "INST-RUNNER-TIMEOUT-001",
+        "driver_case": "INST-RUNNER-TIMEOUT-001",
+        "timeout_seconds": 5,
+        "fixture_setup": ["ptrace supervisor enforce 1s deadline on sleep"],
+        "cleanup": ["none_required"],
+        "environment_mode": "clean_explicit",
+        "requires_source": False,
+        "qualification": "timeout",
+    },
+]
+
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -308,14 +335,18 @@ def parse_status(path: Path) -> dict[str, Any]:
     exit_status = int(exit_raw) if exit_raw not in ("", "None") else None
     signal_raw = values.get("SIGNAL", "")
     signal = int(signal_raw) if signal_raw not in ("", "None") else None
+    # Inner subject wait code (not host docker rc).
     host_raw = values.get("HOST_OBSERVER_CODE", "")
-    host_code = int(host_raw) if host_raw not in ("",) else -1
+    subject_wait = int(host_raw) if host_raw not in ("",) else -1
     return {
         "exit_status": exit_status,
         "signal": signal,
         "timed_out": values.get("TIMED_OUT", "0") == "1",
-        "host_observer_code": host_code,
+        "subject_wait_code": subject_wait,
         "workdir": values.get("WORKDIR", ""),
+        "executable_path": values.get("EXECUTABLE_PATH", ""),
+        "executable_sha256": values.get("EXECUTABLE_SHA256", ""),
+        "qualification": values.get("QUALIFICATION", "none"),
     }
 
 
@@ -425,14 +456,18 @@ def docker_run(
         "-v",
         f"{DIR_RECORDER}:/tmp/installed-tree-directories.sh:ro",
         "-v",
+        f"{PROCESS_OBSERVER}:/tmp/process-observer.py:ro",
+        "-v",
         f"{out_dir}:/out",
         # Do not pass ambient host env; only SRC_RO mount path for prepare_src.
         "-e",
         "SRC_RO=/src-ro",
+        "-e",
+        "OBSERVER=/tmp/process-observer.py",
         image_id,
         "bash",
         "-lc",
-        f"chmod +x /tmp/capture-driver.sh /tmp/installed-tree-directories.sh; "
+        f"chmod +x /tmp/capture-driver.sh /tmp/installed-tree-directories.sh /tmp/process-observer.py; "
         f"/tmp/capture-driver.sh {case_id} /out; "
         f"chmod -R a+rwX /out || true",
     ]
@@ -479,6 +514,72 @@ def artifact_ref(rel_path: str, path: Path) -> dict[str, Any]:
     }
 
 
+def path_has_dotdot(value: str) -> bool:
+    return ".." in Path(value).parts
+
+
+def semantic_validate_record(record: dict[str, Any]) -> None:
+    """Fail-closed semantic checks beyond JSON Schema."""
+    if record.get("oracle_execution_status") != "captured":
+        return
+    for key in (
+        record["identity"]["executable_path"],
+        record["invocation"]["working_directory"],
+        record["file_tree_effects"]["root"],
+    ):
+        if not str(key).startswith("/") or path_has_dotdot(str(key)):
+            raise SystemExit(f"{record['case_id']}: unsafe path {key!r}")
+    for art in (
+        record["artifacts"]["stdout_bin"],
+        record["artifacts"]["stderr_bin"],
+        *record["artifacts"].get("extra", []),
+    ):
+        p = art["path"]
+        if not p.startswith("compat/installation/wave2/cases/"):
+            raise SystemExit(f"{record['case_id']}: artifact prefix drift {p}")
+        if path_has_dotdot(p):
+            raise SystemExit(f"{record['case_id']}: artifact traversal {p}")
+    for row in record["file_tree_effects"]["rows"]:
+        if not row["path"].startswith("/") or path_has_dotdot(row["path"]):
+            raise SystemExit(f"{record['case_id']}: tree row path {row['path']}")
+        if row["kind"] == "file" and not re.fullmatch(r"[0-9a-f]{64}", row["identity"]):
+            raise SystemExit(f"{record['case_id']}: file row identity must be sha256")
+        if row["kind"] == "directory" and row["identity"] != ".":
+            raise SystemExit(f"{record['case_id']}: directory identity must be .")
+    tree = record["file_tree_effects"]
+    files = sum(1 for r in tree["rows"] if r["kind"] == "file")
+    dirs = sum(1 for r in tree["rows"] if r["kind"] == "directory")
+    links = sum(1 for r in tree["rows"] if r["kind"] == "symlink")
+    if files != tree["file_count"] or dirs != tree["directory_count"] or links != tree["symlink_count"]:
+        raise SystemExit(f"{record['case_id']}: tree count/rows inconsistency")
+    children = record["process"]["child_processes_observed"]
+    if not children:
+        raise SystemExit(f"{record['case_id']}: captured children must be nonempty")
+    for child in children:
+        outs = [
+            child["exit_status"] is not None,
+            child["signal"] is not None,
+            bool(child["timed_out"]),
+        ]
+        # Exactly one valid outcome shape: exit XOR signal, timeout requires signal+null exit.
+        if child["timed_out"]:
+            if child["signal"] is None or child["exit_status"] is not None:
+                raise SystemExit(f"{record['case_id']}: timed-out child shape invalid")
+        else:
+            if (child["exit_status"] is None) == (child["signal"] is None):
+                raise SystemExit(f"{record['case_id']}: child must have exactly one of exit/signal")
+    proc = record["process"]
+    if proc["timed_out"]:
+        if proc["signal"] is None or proc["exit_status"] is not None:
+            raise SystemExit(f"{record['case_id']}: timed-out process shape invalid")
+    else:
+        if (proc["exit_status"] is None) == (proc["signal"] is None):
+            raise SystemExit(f"{record['case_id']}: process must have exactly one of exit/signal")
+    # declared env must equal observed env (clean-env attestation).
+    if record["environment"]["variables"] != record["environment"]["observed_variables"]:
+        raise SystemExit(f"{record['case_id']}: declared/observed environment mismatch")
+
+
 def build_record(
     *,
     case_id: str,
@@ -501,25 +602,23 @@ def build_record(
     children = parse_children(out_dir / "observed-children.json")
     cleanup = parse_cleanup(out_dir / "cleanup.log", list(spec["cleanup"]))
 
-    # Executable identity from observed meta (actual hashed binary).
-    exec_path = ""
-    exec_sha = "0" * 64
+    # Live process evidence from status (ptrace observer) preferred over meta.
+    exec_path = status.get("executable_path") or ""
+    exec_sha = status.get("executable_sha256") or ""
     meta = out_dir / "meta.env"
-    if meta.is_file():
+    if (not exec_path or not exec_sha) and meta.is_file():
         for line in meta.read_text(encoding="utf-8", errors="replace").splitlines():
-            if line.startswith("EXECUTABLE_PATH="):
+            if line.startswith("EXECUTABLE_PATH=") and not exec_path:
                 exec_path = line.split("=", 1)[1]
-            if line.startswith("EXECUTABLE_SHA256="):
+            if line.startswith("EXECUTABLE_SHA256=") and not exec_sha:
                 exec_sha = line.split("=", 1)[1]
 
     cwd = status.get("workdir") or ""
-    if not cwd.startswith("/"):
-        # Prefer meta WORKDIR if status missing.
-        if meta.is_file():
-            for line in meta.read_text(encoding="utf-8", errors="replace").splitlines():
-                if line.startswith("WORKDIR="):
-                    cwd = line.split("=", 1)[1]
-                    break
+    if not cwd.startswith("/") and meta.is_file():
+        for line in meta.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("WORKDIR="):
+                cwd = line.split("=", 1)[1]
+                break
 
     extra: list[dict[str, Any]] = []
     for name in (
@@ -532,6 +631,8 @@ def build_record(
         "observed-argv.json",
         "observed-children.json",
         "host-observer.txt",
+        "status.env",
+        "run-meta.env",
     ):
         p = out_dir / name
         if p.is_file():
@@ -549,45 +650,31 @@ def build_record(
         and stdout_path.is_file()
         and stderr_path.is_file()
         and bool(observed_argv)
+        and bool(children)
         and exec_path.startswith("/")
+        and bool(re.fullmatch(r"[0-9a-f]{64}", exec_sha or ""))
         and exec_sha != "0" * 64
         and cwd.startswith("/")
+        and not path_has_dotdot(exec_path)
+        and not path_has_dotdot(cwd)
         and "rows" in tree
+        and not path_has_dotdot(tree.get("root", ""))
     )
-    if host_note == "host_timeout":
-        # Host deadline fired; if driver did not emit timed_out, mark process.
-        if not status.get("timed_out"):
-            status["timed_out"] = True
-            status["signal"] = status.get("signal") or 15
-            status["exit_status"] = None
-
+    # Host docker observer code is the actual docker run rc (outer), not inner wait.
     process = {
         "exit_status": status["exit_status"],
         "signal": status["signal"],
         "timed_out": bool(status["timed_out"]),
-        "host_observer_code": status.get("host_observer_code", docker_rc),
+        "host_observer_code": int(docker_rc),
         "child_processes_observed": children,
     }
+    if host_note == "host_timeout" and not process["timed_out"]:
+        process["timed_out"] = True
+        process["signal"] = process["signal"] or 15
+        process["exit_status"] = None
 
-    # Declared variables subset from observed env (clean env attestation).
-    declared_keys = [
-        "PATH",
-        "HOME",
-        "TERM",
-        "LANG",
-        "LC_ALL",
-        "TZ",
-        "PYTHONHASHSEED",
-        "SOURCE_DATE_EPOCH",
-        "LCOV_BUILD_DATE",
-        "BUILD_DATE",
-        "VERSION",
-        "RELEASE",
-        "LCOV_PERL",
-    ]
-    declared_vars = {k: observed_env[k] for k in declared_keys if k in observed_env}
-    if not declared_vars:
-        declared_vars = dict(observed_env)
+    # Declared variables MUST equal observed clean env (no subset filtering that drifts).
+    declared_vars = dict(observed_env)
 
     record: dict[str, Any] = {
         "schema_version": 1,
@@ -601,9 +688,9 @@ def build_record(
             "docker_runtime": docker_runtime,
             "upstream_commit": upstream_commit,
             "upstream_release": "v2.5",
-            "executable_path": exec_path or "/usr/bin/false",
-            "executable_sha256": exec_sha if exec_sha != "0" * 64 else "f" * 64,
-            "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+            "executable_path": exec_path if exec_path.startswith("/") else "/usr/bin/false",
+            "executable_sha256": exec_sha if re.fullmatch(r"[0-9a-f]{64}", exec_sha or "") else "f" * 64,
+            "capture_host_tool": "compat/installation/wave2/process-observer.py",
         },
         "invocation": {
             "argv": observed_argv or ["missing"],
@@ -614,8 +701,8 @@ def build_record(
         },
         "environment": {
             "mode": spec["environment_mode"],
-            "variables": declared_vars,
-            "observed_variables": observed_env if observed_env else declared_vars,
+            "variables": declared_vars if declared_vars else {"PATH": "/usr/bin"},
+            "observed_variables": declared_vars if declared_vars else {"PATH": "/usr/bin"},
         },
         "process": process,
         "artifacts": {
@@ -629,13 +716,22 @@ def build_record(
     if not captured:
         record["not_captured_reason"] = (
             f"docker_rc={docker_rc}; host_note={host_note}; "
-            "missing observed argv/status/stdout/stderr/executable/tree rows"
+            "missing live observed argv/status/stdout/stderr/executable/children/tree rows"
         )
-        # Ensure schema-valid placeholders for not_captured
         if record["identity"]["executable_sha256"] == "0" * 64:
             record["identity"]["executable_sha256"] = "f" * 64
         if not record["identity"]["executable_path"].startswith("/"):
             record["identity"]["executable_path"] = "/usr/bin/false"
+        if not record["process"]["child_processes_observed"]:
+            record["process"]["child_processes_observed"] = [
+                {
+                    "command": "missing",
+                    "argv": ["missing"],
+                    "exit_status": 1,
+                    "signal": None,
+                    "timed_out": False,
+                }
+            ]
     record["observation_sha256"] = observation_hash(record)
     return record
 
@@ -645,6 +741,7 @@ def validate_record(record: dict[str, Any]) -> None:
 
     schema = json.loads(CASE_SCHEMA.read_text(encoding="utf-8"))
     Draft202012Validator(schema).validate(record)
+    semantic_validate_record(record)
     recomputed = observation_hash(record)
     if recomputed != record["observation_sha256"]:
         raise SystemExit(f"observation hash drift for {record['case_id']}")
@@ -697,27 +794,24 @@ def verify_against_expected(
         raise SystemExit(f"{prefix}: signal drift")
 
     # Optional pinned stream/observation hashes (immutable once authored).
+    # No hash-drift override may leave invalid committed captures.
     if row.get("observation_sha256") and row["observation_sha256"] != record["observation_sha256"]:
-        # Soft during first re-author cycle: print, do not fail recapture when
-        # FERRICOV_WAVE2_ALLOW_HASH_DRIFT=1 is set for intentional refresh.
-        if os.environ.get("FERRICOV_WAVE2_ALLOW_HASH_DRIFT") != "1":
-            raise SystemExit(
-                f"{prefix}: observation hash drift "
-                f"expected={row['observation_sha256']} actual={record['observation_sha256']}"
-            )
-        print(f"WARN {prefix}: observation hash drift (allowed)", flush=True)
+        raise SystemExit(
+            f"{prefix}: observation hash drift "
+            f"expected={row['observation_sha256']} actual={record['observation_sha256']}"
+        )
     if row.get("stdout_sha256"):
         actual = record["artifacts"]["stdout_bin"]["sha256"]
         if actual != row["stdout_sha256"]:
-            if os.environ.get("FERRICOV_WAVE2_ALLOW_HASH_DRIFT") != "1":
-                raise SystemExit(f"{prefix}: stdout hash drift")
-            print(f"WARN {prefix}: stdout hash drift (allowed)", flush=True)
+            raise SystemExit(f"{prefix}: stdout hash drift expected={row['stdout_sha256']} actual={actual}")
     if row.get("stderr_sha256"):
         actual = record["artifacts"]["stderr_bin"]["sha256"]
         if actual != row["stderr_sha256"]:
-            if os.environ.get("FERRICOV_WAVE2_ALLOW_HASH_DRIFT") != "1":
-                raise SystemExit(f"{prefix}: stderr hash drift")
-            print(f"WARN {prefix}: stderr hash drift (allowed)", flush=True)
+            raise SystemExit(f"{prefix}: stderr hash drift expected={row['stderr_sha256']} actual={actual}")
+    if "executable_sha256" in row and row["executable_sha256"] != record["identity"]["executable_sha256"]:
+        raise SystemExit(f"{prefix}: executable hash drift")
+    if "host_observer_code" in row and record["process"]["host_observer_code"] != row["host_observer_code"]:
+        raise SystemExit(f"{prefix}: host_observer_code drift")
 
 
 def expected_row_map(table: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -730,261 +824,372 @@ def main() -> int:
     upstream_commit = verify_upstream_commit()
     image_id, docker_runtime = resolve_image_and_runtime()
 
-    if not DRIVER.is_file():
-        print(f"driver missing: {DRIVER}", file=sys.stderr)
+    if not DRIVER.is_file() or not PROCESS_OBSERVER.is_file():
+        print(f"driver/observer missing", file=sys.stderr)
         return 2
 
     # Preserve expected table mtime/bytes: never open for write.
     expected_bytes = EXPECTED_TABLE.read_bytes()
     expected_sha_before = sha256_bytes(expected_bytes)
 
-    if OUT_ROOT.exists():
-        shutil.rmtree(OUT_ROOT)
-    OUT_ROOT.mkdir(parents=True)
+    # Transactional staging: capture into temp tree, fully validate, then atomic replace.
+    staging_parent = WAVE2 / ".capture-staging"
+    staging_parent.mkdir(parents=True, exist_ok=True)
+    staging = staging_parent / f"run-{uuid.uuid4().hex}"
+    if staging.exists():
+        shutil.rmtree(staging)
+    staging.mkdir(parents=True)
+    staging_cases = staging / "cases"
+    staging_cases.mkdir()
+    staging_index = staging / "oracle-capture.json"
+    staging_dir_lock = staging / "installed-directories.lock"
 
     records: list[dict[str, Any]] = []
     index_rows: list[dict[str, Any]] = []
+    runner_rows: list[dict[str, Any]] = []
 
-    for spec in CASE_SPECS:
-        case_id = spec["id"]
-        if case_id not in expected_by_id:
-            raise SystemExit(f"expected table missing case {case_id}")
-        row = expected_by_id[case_id]
-        print(f"capturing {case_id}...", flush=True)
+    try:
+        for spec in CASE_SPECS:
+            case_id = spec["id"]
+            if case_id not in expected_by_id:
+                raise SystemExit(f"expected table missing case {case_id}")
+            row = expected_by_id[case_id]
+            print(f"capturing {case_id}...", flush=True)
 
-        if spec.get("dual"):
-            part_records = []
-            for part in spec["parts"]:
-                part_id = part["part_id"]
-                out_dir = OUT_ROOT / case_id / part_id
-                docker_rc, host_note = docker_run(
-                    part["driver_case"], out_dir, part["timeout_seconds"], image_id
-                )
-                record = build_record(
-                    case_id=case_id,
-                    part_id=part_id,
-                    spec=part,
-                    out_dir=out_dir,
-                    docker_rc=docker_rc,
-                    host_note=host_note,
-                    image_id=image_id,
-                    docker_runtime=docker_runtime,
-                    upstream_commit=upstream_commit,
-                )
-                validate_record(record)
-                # Dual parts: verify against nested expected part if present.
-                part_row = row
-                if isinstance(row.get("parts"), dict) and part_id in row["parts"]:
-                    part_row = {**row, **row["parts"][part_id]}
-                verify_against_expected(case_id, record, part_row, part=part_id)
-                write_json(out_dir / "capture.json", record)
-                part_records.append(record)
-                print(
-                    f"  part {part_id}: status={record['oracle_execution_status']} "
-                    f"exit={record['process']['exit_status']} docker_rc={docker_rc}",
-                    flush=True,
-                )
+            if spec.get("dual"):
+                part_records = []
+                for part in spec["parts"]:
+                    part_id = part["part_id"]
+                    out_dir = staging_cases / case_id / part_id
+                    docker_rc, host_note = docker_run(
+                        part["driver_case"], out_dir, part["timeout_seconds"], image_id
+                    )
+                    record = build_record(
+                        case_id=case_id,
+                        part_id=part_id,
+                        spec=part,
+                        out_dir=out_dir,
+                        docker_rc=docker_rc,
+                        host_note=host_note,
+                        image_id=image_id,
+                        docker_runtime=docker_runtime,
+                        upstream_commit=upstream_commit,
+                    )
+                    validate_record(record)
+                    part_row = row
+                    if isinstance(row.get("parts"), dict) and part_id in row["parts"]:
+                        part_row = {**row, **row["parts"][part_id]}
+                    verify_against_expected(case_id, record, part_row, part=part_id)
+                    write_json(out_dir / "capture.json", record)
+                    part_records.append(record)
+                    print(
+                        f"  part {part_id}: status={record['oracle_execution_status']} "
+                        f"exit={record['process']['exit_status']} docker_rc={docker_rc}",
+                        flush=True,
+                    )
 
-            both = all(r["oracle_execution_status"] == "captured" for r in part_records)
-            # Parent aggregates dual observed parts (no synthetic executed argv).
-            parent = {
-                "schema_version": 1,
-                "case_id": case_id,
-                "oracle_execution_status": "captured" if both else "not_captured",
-                "evidence_status": "oracle_reference",
-                "execution_status": "planned",
-                "product_compatibility_evidence": False,
-                "identity": {
-                    **part_records[0]["identity"],
-                    # Parent identity executable is make (both parts).
-                },
-                "invocation": {
-                    "argv": part_records[0]["invocation"]["argv"],
-                    "working_directory": part_records[0]["invocation"]["working_directory"],
-                    "fixture_setup": [
-                        "relative DESTDIR probe",
-                        "space-containing DESTDIR probe",
-                    ],
-                    "timeout_seconds": 300,
-                    "cleanup": [
-                        part_records[0]["invocation"]["cleanup"][0]
-                        if part_records[0]["invocation"]["cleanup"]
-                        else "rm -rf /tmp/src",
-                        part_records[1]["invocation"]["cleanup"][0]
-                        if part_records[1]["invocation"]["cleanup"]
-                        else "rm -rf '/tmp/destdir space'",
-                    ],
-                },
-                "environment": part_records[0]["environment"],
-                "process": {
-                    "exit_status": part_records[0]["process"]["exit_status"],
-                    "signal": part_records[0]["process"]["signal"],
-                    "timed_out": False,
-                    "host_observer_code": part_records[0]["process"]["host_observer_code"],
-                    "child_processes_observed": [
-                        {
-                            "command": " ".join(part_records[0]["invocation"]["argv"]),
-                            "argv": part_records[0]["invocation"]["argv"],
-                            "exit_status": part_records[0]["process"]["exit_status"],
-                            "signal": part_records[0]["process"]["signal"],
-                            "timed_out": part_records[0]["process"]["timed_out"],
-                        },
-                        {
-                            "command": " ".join(part_records[1]["invocation"]["argv"]),
-                            "argv": part_records[1]["invocation"]["argv"],
-                            "exit_status": part_records[1]["process"]["exit_status"],
-                            "signal": part_records[1]["process"]["signal"],
-                            "timed_out": part_records[1]["process"]["timed_out"],
-                        },
-                    ],
-                },
-                "artifacts": {
-                    "stdout_bin": part_records[0]["artifacts"]["stdout_bin"],
-                    "stderr_bin": part_records[0]["artifacts"]["stderr_bin"],
-                    "extra": [
-                        {
-                            "name": "relative_capture",
-                            "path": f"compat/installation/wave2/cases/{case_id}/relative/capture.json",
-                            "sha256": sha256_file(OUT_ROOT / case_id / "relative" / "capture.json"),
-                            "bytes": (OUT_ROOT / case_id / "relative" / "capture.json").stat().st_size,
-                        },
-                        {
-                            "name": "space_capture",
-                            "path": f"compat/installation/wave2/cases/{case_id}/space/capture.json",
-                            "sha256": sha256_file(OUT_ROOT / case_id / "space" / "capture.json"),
-                            "bytes": (OUT_ROOT / case_id / "space" / "capture.json").stat().st_size,
-                        },
-                        {
-                            "name": "relative_stdout",
-                            "path": part_records[0]["artifacts"]["stdout_bin"]["path"],
-                            "sha256": part_records[0]["artifacts"]["stdout_bin"]["sha256"],
-                            "bytes": part_records[0]["artifacts"]["stdout_bin"]["bytes"],
-                        },
-                        {
-                            "name": "relative_stderr",
-                            "path": part_records[0]["artifacts"]["stderr_bin"]["path"],
-                            "sha256": part_records[0]["artifacts"]["stderr_bin"]["sha256"],
-                            "bytes": part_records[0]["artifacts"]["stderr_bin"]["bytes"],
-                        },
-                        {
-                            "name": "space_stdout",
-                            "path": part_records[1]["artifacts"]["stdout_bin"]["path"],
-                            "sha256": part_records[1]["artifacts"]["stdout_bin"]["sha256"],
-                            "bytes": part_records[1]["artifacts"]["stdout_bin"]["bytes"],
-                        },
-                        {
-                            "name": "space_stderr",
-                            "path": part_records[1]["artifacts"]["stderr_bin"]["path"],
-                            "sha256": part_records[1]["artifacts"]["stderr_bin"]["sha256"],
-                            "bytes": part_records[1]["artifacts"]["stderr_bin"]["bytes"],
-                        },
-                    ],
-                },
-                "file_tree_effects": part_records[0]["file_tree_effects"],
-                "observation_sha256": "0" * 64,
-            }
-            if not both:
-                parent["not_captured_reason"] = "one or both path probes failed to capture"
-            parent["observation_sha256"] = observation_hash(parent)
-            validate_record(parent)
-            verify_against_expected(case_id, parent, row)
-            write_json(OUT_ROOT / case_id / "capture.json", parent)
-            records.append(parent)
+                both = all(r["oracle_execution_status"] == "captured" for r in part_records)
+                parent = {
+                    "schema_version": 1,
+                    "case_id": case_id,
+                    "oracle_execution_status": "captured" if both else "not_captured",
+                    "evidence_status": "oracle_reference",
+                    "execution_status": "planned",
+                    "product_compatibility_evidence": False,
+                    "identity": {
+                        **part_records[0]["identity"],
+                    },
+                    "invocation": {
+                        "argv": part_records[0]["invocation"]["argv"],
+                        "working_directory": part_records[0]["invocation"]["working_directory"],
+                        "fixture_setup": [
+                            "relative DESTDIR probe",
+                            "space-containing DESTDIR probe",
+                        ],
+                        "timeout_seconds": 300,
+                        "cleanup": [
+                            part_records[0]["invocation"]["cleanup"][0]
+                            if part_records[0]["invocation"]["cleanup"]
+                            else "rm -rf /tmp/src",
+                            part_records[1]["invocation"]["cleanup"][0]
+                            if part_records[1]["invocation"]["cleanup"]
+                            else "rm -rf '/tmp/destdir space'",
+                        ],
+                    },
+                    "environment": part_records[0]["environment"],
+                    "process": {
+                        "exit_status": part_records[0]["process"]["exit_status"],
+                        "signal": part_records[0]["process"]["signal"],
+                        "timed_out": False,
+                        "host_observer_code": part_records[0]["process"]["host_observer_code"],
+                        "child_processes_observed": [
+                            {
+                                "command": " ".join(part_records[0]["invocation"]["argv"]),
+                                "argv": part_records[0]["invocation"]["argv"],
+                                "exit_status": part_records[0]["process"]["exit_status"],
+                                "signal": part_records[0]["process"]["signal"],
+                                "timed_out": part_records[0]["process"]["timed_out"],
+                            },
+                            {
+                                "command": " ".join(part_records[1]["invocation"]["argv"]),
+                                "argv": part_records[1]["invocation"]["argv"],
+                                "exit_status": part_records[1]["process"]["exit_status"],
+                                "signal": part_records[1]["process"]["signal"],
+                                "timed_out": part_records[1]["process"]["timed_out"],
+                            },
+                        ],
+                    },
+                    "artifacts": {
+                        "stdout_bin": part_records[0]["artifacts"]["stdout_bin"],
+                        "stderr_bin": part_records[0]["artifacts"]["stderr_bin"],
+                        "extra": [
+                            {
+                                "name": "relative_capture",
+                                "path": f"compat/installation/wave2/cases/{case_id}/relative/capture.json",
+                                "sha256": sha256_file(staging_cases / case_id / "relative" / "capture.json"),
+                                "bytes": (staging_cases / case_id / "relative" / "capture.json").stat().st_size,
+                            },
+                            {
+                                "name": "space_capture",
+                                "path": f"compat/installation/wave2/cases/{case_id}/space/capture.json",
+                                "sha256": sha256_file(staging_cases / case_id / "space" / "capture.json"),
+                                "bytes": (staging_cases / case_id / "space" / "capture.json").stat().st_size,
+                            },
+                            {
+                                "name": "relative_stdout",
+                                "path": part_records[0]["artifacts"]["stdout_bin"]["path"],
+                                "sha256": part_records[0]["artifacts"]["stdout_bin"]["sha256"],
+                                "bytes": part_records[0]["artifacts"]["stdout_bin"]["bytes"],
+                            },
+                            {
+                                "name": "relative_stderr",
+                                "path": part_records[0]["artifacts"]["stderr_bin"]["path"],
+                                "sha256": part_records[0]["artifacts"]["stderr_bin"]["sha256"],
+                                "bytes": part_records[0]["artifacts"]["stderr_bin"]["bytes"],
+                            },
+                            {
+                                "name": "space_stdout",
+                                "path": part_records[1]["artifacts"]["stdout_bin"]["path"],
+                                "sha256": part_records[1]["artifacts"]["stdout_bin"]["sha256"],
+                                "bytes": part_records[1]["artifacts"]["stdout_bin"]["bytes"],
+                            },
+                            {
+                                "name": "space_stderr",
+                                "path": part_records[1]["artifacts"]["stderr_bin"]["path"],
+                                "sha256": part_records[1]["artifacts"]["stderr_bin"]["sha256"],
+                                "bytes": part_records[1]["artifacts"]["stderr_bin"]["bytes"],
+                            },
+                        ],
+                    },
+                    "file_tree_effects": part_records[0]["file_tree_effects"],
+                    "observation_sha256": "0" * 64,
+                }
+                if not both:
+                    parent["not_captured_reason"] = "one or both path probes failed to capture"
+                parent["observation_sha256"] = observation_hash(parent)
+                validate_record(parent)
+                verify_against_expected(case_id, parent, row)
+                write_json(staging_cases / case_id / "capture.json", parent)
+                records.append(parent)
+                index_rows.append(
+                    {
+                        "id": case_id,
+                        "oracle_execution_status": parent["oracle_execution_status"],
+                        "capture_path": f"compat/installation/wave2/cases/{case_id}/capture.json",
+                        "observation_sha256": parent["observation_sha256"],
+                    }
+                )
+                continue
+
+            out_dir = staging_cases / case_id
+            docker_rc, host_note = docker_run(
+                spec["driver_case"], out_dir, spec["timeout_seconds"], image_id
+            )
+            record = build_record(
+                case_id=case_id,
+                part_id=None,
+                spec=spec,
+                out_dir=out_dir,
+                docker_rc=docker_rc,
+                host_note=host_note,
+                image_id=image_id,
+                docker_runtime=docker_runtime,
+                upstream_commit=upstream_commit,
+            )
+            validate_record(record)
+            verify_against_expected(case_id, record, row)
+            write_json(out_dir / "capture.json", record)
+            records.append(record)
             index_rows.append(
                 {
                     "id": case_id,
-                    "oracle_execution_status": parent["oracle_execution_status"],
+                    "oracle_execution_status": record["oracle_execution_status"],
                     "capture_path": f"compat/installation/wave2/cases/{case_id}/capture.json",
-                    "observation_sha256": parent["observation_sha256"],
+                    "observation_sha256": record["observation_sha256"],
                 }
             )
-            continue
+            print(
+                f"  status={record['oracle_execution_status']} "
+                f"exit={record['process']['exit_status']} "
+                f"signal={record['process']['signal']} "
+                f"docker_rc={docker_rc} exe={record['identity']['executable_path']}",
+                flush=True,
+            )
 
-        out_dir = OUT_ROOT / case_id
-        docker_rc, host_note = docker_run(
-            spec["driver_case"], out_dir, spec["timeout_seconds"], image_id
-        )
-        record = build_record(
-            case_id=case_id,
-            part_id=None,
-            spec=spec,
-            out_dir=out_dir,
-            docker_rc=docker_rc,
-            host_note=host_note,
-            image_id=image_id,
-            docker_runtime=docker_runtime,
-            upstream_commit=upstream_commit,
-        )
-        validate_record(record)
-        verify_against_expected(case_id, record, row)
-        write_json(out_dir / "capture.json", record)
-        records.append(record)
-        index_rows.append(
-            {
-                "id": case_id,
-                "oracle_execution_status": record["oracle_execution_status"],
-                "capture_path": f"compat/installation/wave2/cases/{case_id}/capture.json",
-                "observation_sha256": record["observation_sha256"],
-            }
-        )
-        print(
-            f"  status={record['oracle_execution_status']} "
-            f"exit={record['process']['exit_status']} docker_rc={docker_rc}",
-            flush=True,
-        )
+        # Runner qualification probes (signal + timeout) retained under _runner/.
+        for spec in RUNNER_SPECS:
+            case_id = spec["id"]
+            print(f"capturing runner {case_id}...", flush=True)
+            out_dir = staging_cases / "_runner" / case_id
+            docker_rc, host_note = docker_run(
+                spec["driver_case"], out_dir, spec["timeout_seconds"], image_id
+            )
+            record = build_record(
+                case_id=case_id,
+                part_id=None,
+                spec=spec,
+                out_dir=out_dir,
+                docker_rc=docker_rc,
+                host_note=host_note,
+                image_id=image_id,
+                docker_runtime=docker_runtime,
+                upstream_commit=upstream_commit,
+            )
+            # Rewrite artifact paths to _runner location already set via case_id.
+            validate_record(record)
+            write_json(out_dir / "capture.json", record)
+            runner_rows.append(
+                {
+                    "id": case_id,
+                    "oracle_execution_status": record["oracle_execution_status"],
+                    "capture_path": f"compat/installation/wave2/cases/_runner/{case_id}/capture.json",
+                    "observation_sha256": record["observation_sha256"],
+                    "timed_out": record["process"]["timed_out"],
+                    "signal": record["process"]["signal"],
+                    "exit_status": record["process"]["exit_status"],
+                    "host_observer_code": record["process"]["host_observer_code"],
+                }
+            )
+            print(
+                f"  runner status={record['oracle_execution_status']} "
+                f"timed_out={record['process']['timed_out']} "
+                f"signal={record['process']['signal']} "
+                f"exit={record['process']['exit_status']} docker_rc={docker_rc}",
+                flush=True,
+            )
 
-    layout_lock = OUT_ROOT / "INST-LAYOUT-001" / "installed-directories.lock"
-    if layout_lock.is_file():
-        (WAVE2 / "installed-directories.lock").write_bytes(layout_lock.read_bytes())
+        layout_lock = staging_cases / "INST-LAYOUT-001" / "installed-directories.lock"
+        if layout_lock.is_file():
+            staging_dir_lock.write_bytes(layout_lock.read_bytes())
+        elif (WAVE2 / "installed-directories.lock").is_file():
+            staging_dir_lock.write_bytes((WAVE2 / "installed-directories.lock").read_bytes())
+        else:
+            raise SystemExit("directory companion lock missing after layout capture")
 
-    index = {
-        "schema_version": 1,
-        "wave": 2,
-        "capture_format": "replayable_case_records_v1",
-        "upstream_release": "v2.5",
-        "upstream_commit": upstream_commit,
-        "oracle_image_id": image_id,
-        "docker_runtime": docker_runtime,
-        "evidence_status": "oracle_reference",
-        "execution_status": "planned",
-        "product_compatibility_evidence": False,
-        "case_count": 13,
-        "cases": index_rows,
-        "directory_companion": {
-            "path": "compat/installation/wave2/installed-directories.lock",
-            "sha256": sha256_file(WAVE2 / "installed-directories.lock"),
-            "entry_count": len(
-                (WAVE2 / "installed-directories.lock").read_text().splitlines()
-            ),
-            "mode": "755",
-            "recorder": "compat/installation/wave2/installed-tree-directories.sh",
-            "baseline_unchanged": True,
-        },
-        "known_gaps": [
-            "baseline installed-tree.lock still excludes directory rows",
-            "staged DESTDIR installs omit image-only /usr/local/man symlink",
-            "optional genhtml updown/HTML-reference qualification remains open",
-            "space-containing DESTDIR behavior is GNU/Linux-path specific",
-            "partial install uses fake install wrapper",
-            "no multi-platform matrix beyond pinned x86_64 Linux image",
-            "no Ferricov product installer evidence",
-            "M1 parser/model installation surfaces remain blocked",
-        ],
-    }
-    idx_sha = write_json(CAPTURE_INDEX, index)
+        index = {
+            "schema_version": 1,
+            "wave": 2,
+            "capture_format": "replayable_case_records_v1",
+            "upstream_release": "v2.5",
+            "upstream_commit": upstream_commit,
+            "oracle_image_id": image_id,
+            "docker_runtime": docker_runtime,
+            "evidence_status": "oracle_reference",
+            "execution_status": "planned",
+            "product_compatibility_evidence": False,
+            "case_count": 13,
+            "cases": index_rows,
+            "runner_qualification": runner_rows,
+            "directory_companion": {
+                "path": "compat/installation/wave2/installed-directories.lock",
+                "sha256": sha256_file(staging_dir_lock),
+                "entry_count": len(staging_dir_lock.read_text().splitlines()),
+                "mode": "755",
+                "recorder": "compat/installation/wave2/installed-tree-directories.sh",
+                "baseline_unchanged": True,
+            },
+            "known_gaps": [
+                "baseline installed-tree.lock still excludes directory rows",
+                "staged DESTDIR installs omit image-only /usr/local/man symlink",
+                "optional genhtml updown/HTML-reference qualification remains open",
+                "space-containing DESTDIR behavior is GNU/Linux-path specific",
+                "partial install uses fake install wrapper",
+                "no multi-platform matrix beyond pinned x86_64 Linux image",
+                "no Ferricov product installer evidence",
+                "M1 parser/model installation surfaces remain blocked",
+            ],
+        }
+        idx_sha = write_json(staging_index, index)
 
-    # Fail closed: expected table must be byte-identical (never rewritten).
-    expected_sha_after = sha256_bytes(EXPECTED_TABLE.read_bytes())
-    if expected_sha_after != expected_sha_before:
-        raise SystemExit("FATAL: expected-case-table.json was modified during recapture")
+        expected_sha_after = sha256_bytes(EXPECTED_TABLE.read_bytes())
+        if expected_sha_after != expected_sha_before:
+            raise SystemExit("FATAL: expected-case-table.json was modified during recapture")
 
-    print("index", idx_sha)
-    print("expected_table_sha_unchanged", expected_sha_before)
-    captured = sum(1 for r in index_rows if r["oracle_execution_status"] == "captured")
-    print(f"captured={captured}/13")
-    for row in index_rows:
-        print(row["id"], row["oracle_execution_status"], row["observation_sha256"][:12])
-    return 0 if captured == 13 else 1
+        captured = sum(1 for r in index_rows if r["oracle_execution_status"] == "captured")
+        if captured != 13:
+            raise SystemExit(f"not all cases captured: {captured}/13")
+        if len(runner_rows) != 2 or any(r["oracle_execution_status"] != "captured" for r in runner_rows):
+            raise SystemExit("runner qualification probes not captured")
+        # Require real lifecycle outcomes on qualification probes.
+        sig = next(r for r in runner_rows if r["id"] == "INST-RUNNER-SIGNAL-001")
+        tout = next(r for r in runner_rows if r["id"] == "INST-RUNNER-TIMEOUT-001")
+        if sig["signal"] is None or sig["timed_out"]:
+            raise SystemExit(f"signal probe did not observe signal termination: {sig}")
+        if not tout["timed_out"] or tout["signal"] is None:
+            raise SystemExit(f"timeout probe did not observe timeout: {tout}")
+
+        # Atomic replace of committed capture tree only after full success.
+        final_cases = OUT_ROOT
+        final_index = CAPTURE_INDEX
+        final_lock = WAVE2 / "installed-directories.lock"
+        backup = staging_parent / f"backup-{uuid.uuid4().hex}"
+        backup.mkdir()
+        if final_cases.exists():
+            shutil.move(str(final_cases), str(backup / "cases"))
+        if final_index.exists():
+            shutil.move(str(final_index), str(backup / "oracle-capture.json"))
+        if final_lock.exists():
+            shutil.move(str(final_lock), str(backup / "installed-directories.lock"))
+        try:
+            shutil.move(str(staging_cases), str(final_cases))
+            shutil.move(str(staging_index), str(final_index))
+            shutil.move(str(staging_dir_lock), str(final_lock))
+        except Exception:
+            # Attempt restore on replace failure.
+            if (backup / "cases").exists() and not final_cases.exists():
+                shutil.move(str(backup / "cases"), str(final_cases))
+            if (backup / "oracle-capture.json").exists() and not final_index.exists():
+                shutil.move(str(backup / "oracle-capture.json"), str(final_index))
+            if (backup / "installed-directories.lock").exists() and not final_lock.exists():
+                shutil.move(str(backup / "installed-directories.lock"), str(final_lock))
+            raise
+        shutil.rmtree(backup, ignore_errors=True)
+        shutil.rmtree(staging, ignore_errors=True)
+
+        print("index", idx_sha)
+        print("expected_table_sha_unchanged", expected_sha_before)
+        print(f"captured={captured}/13")
+        for row in index_rows:
+            print(row["id"], row["oracle_execution_status"], row["observation_sha256"][:12])
+        for row in runner_rows:
+            print(
+                row["id"],
+                row["oracle_execution_status"],
+                f"signal={row['signal']}",
+                f"timed_out={row['timed_out']}",
+                row["observation_sha256"][:12],
+            )
+        return 0
+    except BaseException:
+        # Strict failure: leave committed tree untouched; discard staging.
+        # Catch BaseException so SystemExit from verify_against_expected also cleans up.
+        shutil.rmtree(staging, ignore_errors=True)
+        try:
+            if staging_parent.is_dir() and not any(staging_parent.iterdir()):
+                staging_parent.rmdir()
+        except OSError:
+            pass
+        raise
 
 
 if __name__ == "__main__":

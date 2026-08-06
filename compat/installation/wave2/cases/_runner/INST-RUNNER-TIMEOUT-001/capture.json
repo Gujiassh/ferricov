@@ -1,0 +1,218 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 13,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/cleanup.log",
+        "sha256": "6338824994cb575f7d0af9d95201e110bf1fbaa0bf3966ce8b2fa739a5cc5d4a"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 22,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-argv.json",
+        "sha256": "676c6c95feb69f09c7bef9dd69096af132bcd9350c1ff7f4ec429e9cbc3ff666"
+      },
+      {
+        "bytes": 151,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-children.json",
+        "sha256": "263f300ea2b98446112de42924a77c9f6174d88605df8e7beba7bc52586d7b44"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 227,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/status.env",
+        "sha256": "73ae9caf3247328fa1ca19dddfe3576d7fb1e4d578122bea84f0f8e4a1c8bbee"
+      },
+      {
+        "bytes": 187,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/run-meta.env",
+        "sha256": "0db86c7ce11b13f2af71fbd6521903d6af8c112de6037c7eb8c512925fa66762"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "case_id": "INST-RUNNER-TIMEOUT-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 2,
+    "file_count": 10,
+    "paths_sha256": "7c5130e61e0dc90ca27dc0762650b9ca66ea8ab0f01a2bfb288de5d6a23cd06e",
+    "root": "/tmp",
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "777",
+        "path": "/tmp"
+      },
+      {
+        "identity": "fa289d84c9f66e526960c0ae8f17faf4bfa01a93cbb781ea5d5d390bd73e6a4d",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/build-inputs.lock"
+      },
+      {
+        "identity": "cb9986e3a22508822b3d1f4e2d8c86cdaaa11f8ef8aa9626eff27a3ae8c1858e",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/capture-driver.sh"
+      },
+      {
+        "identity": "e16713b25dcd71651cf9d2f5ea63b0df87aa0ae201979c70be500f7e1d0da557",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/installed-tree-directories.sh"
+      },
+      {
+        "identity": "75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/installed-tree.lock"
+      },
+      {
+        "identity": "bf6187ae6086dbff40d0769b821956e75d4f2b790407033c21e1adfb7a6484db",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/installed-tree.sh"
+      },
+      {
+        "identity": "e41c5a77487657a65e03309ac262a25088e8c020c20a630ed8ae5a3f1e0946b6",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/oracle-packages.full.lock"
+      },
+      {
+        "identity": "b93cc7792a7e197c4ee81d1e7c6256d2b8b8f3097a71e266755d421f598ad89e",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/oracle-packages.lock"
+      },
+      {
+        "identity": "421d0befd1d081284a8fd1ab9e4ad5378f823816fef0f69f8c5c49d15f9f79f0",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/pin-intersphinx.py"
+      },
+      {
+        "identity": "d9753d8627cf392fdbbdc00fb2d91bf93764c7f1324b84e7846323035affee2f",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/process-observer.py"
+      },
+      {
+        "identity": "fca4a9b72cf08f39c5bd42509ca21f031389ee68faf4cb13c31f71a1fa60a3dc",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/python-objects.inv"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "700",
+        "path": "/tmp/tmp.rKOUmwS8TU"
+      }
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
+    "docker_runtime": "29.1.3",
+    "executable_path": "/usr/bin/sleep",
+    "executable_sha256": "4add4bb89d8ca0e3b1bd861130ddd7ae0fd9617a8055de0a38c8d2ca1ac95723",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "sleep",
+      "30"
+    ],
+    "cleanup": [
+      "cleanup:none"
+    ],
+    "fixture_setup": [
+      "ptrace supervisor enforce 1s deadline on sleep"
+    ],
+    "timeout_seconds": 5,
+    "working_directory": "/tmp"
+  },
+  "observation_sha256": "3547c1c1b6b362824bcf5c95e5d6866bd51111dd5d962b6bab9a0bab1c97aa57",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "argv": [
+          "sleep",
+          "30"
+        ],
+        "command": "sleep 30",
+        "exit_status": null,
+        "signal": 15,
+        "timed_out": true
+      }
+    ],
+    "exit_status": null,
+    "host_observer_code": 0,
+    "signal": 15,
+    "timed_out": true
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

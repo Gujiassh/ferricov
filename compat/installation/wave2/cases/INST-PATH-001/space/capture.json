@@ -29,13 +29,25 @@
         "bytes": 267,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-PATH-001/space/observed-children.json",
-        "sha256": "8e16499c5e6c854c86c52f1200728f15eafa290ee53098b4996381065d1347f8"
+        "sha256": "7a0d967a43a129e07110cedc8a18a7d9585c0ffe9f319772a62eff31a3e157ef"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-PATH-001/space/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 222,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/space/status.env",
+        "sha256": "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/space/run-meta.env",
+        "sha256": "a5383b60663c8dd28d5af7c433e37840340de968d4f0c9456946820b44b53868"
       }
     ],
     "stderr_bin": {
@@ -99,7 +111,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -124,7 +136,7 @@
     "timeout_seconds": 300,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "994af555f111135317ef839d6b4f64819a635b555f5f4e4273f253d93ee76ae1",
+  "observation_sha256": "65304828d0687bb0906fd4f34573cc000086a267b1e764fad0536179fb5f34d4",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
@@ -142,7 +154,7 @@
       }
     ],
     "exit_status": 2,
-    "host_observer_code": 2,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

@@ -621,6 +621,186 @@ class InstallationContractTests(unittest.TestCase):
         with self.assertRaises(Exception):
             Draft202012Validator(schema).validate(record)
 
+    def test_wave2_schema_rejects_reviewer_twelve_invalid_shapes(self) -> None:
+        """Reviewer verbatim negative probe: 12 invalid captured shapes must fail."""
+        from jsonschema import Draft202012Validator
+        import copy
+
+        schema = contract.wave2_case_capture_schema()
+        base = contract.load_json(self._stage_capture_path())
+        validator = Draft202012Validator(schema)
+
+        def mutate(mutator):
+            rec = copy.deepcopy(base)
+            mutator(rec)
+            errors = list(validator.iter_errors(rec))
+            # Also enforce semantic_validate when schema alone might lag.
+            semantic_fail = False
+            try:
+                # Import semantic checker from recapture.
+                import importlib.util
+                from pathlib import Path as P
+                mod_path = contract.ROOT / "compat/installation/wave2/recapture.py"
+                spec = importlib.util.spec_from_file_location("wave2_recapture", mod_path)
+                mod = importlib.util.module_from_spec(spec)
+                assert spec.loader is not None
+                spec.loader.exec_module(mod)
+                try:
+                    mod.semantic_validate_record(rec)
+                except SystemExit:
+                    semantic_fail = True
+            except Exception:
+                semantic_fail = True
+            self.assertTrue(
+                bool(errors) or semantic_fail,
+                "invalid shape accepted by schema and semantic checks",
+            )
+
+        # 1 prefix-preserving artifact traversal
+        mutate(lambda r: r["artifacts"]["stdout_bin"].__setitem__(
+            "path", "compat/installation/wave2/cases/../../../../etc/passwd"
+        ))
+        # 2 extra-artifact traversal
+        def m2(r):
+            r.setdefault("artifacts", {}).setdefault("extra", [])
+            if not r["artifacts"]["extra"]:
+                r["artifacts"]["extra"] = [{
+                    "name": "x",
+                    "path": "compat/installation/wave2/cases/foo",
+                    "sha256": "a" * 64,
+                    "bytes": 0,
+                }]
+            r["artifacts"]["extra"][0]["path"] = (
+                "compat/installation/wave2/cases/../../../../etc/passwd"
+            )
+        mutate(m2)
+        # 3 executable .. traversal
+        mutate(lambda r: r["identity"].__setitem__("executable_path", "/usr/bin/../etc/passwd"))
+        # 4 cwd .. traversal
+        mutate(lambda r: r["invocation"].__setitem__("working_directory", "/tmp/../etc"))
+        # 5 tree-root .. traversal
+        mutate(lambda r: r["file_tree_effects"].__setitem__("root", "/tmp/../etc"))
+        # 6 tree-row .. traversal
+        def m6(r):
+            if r["file_tree_effects"]["rows"]:
+                r["file_tree_effects"]["rows"][0]["path"] = "/tmp/../etc/passwd"
+            else:
+                r["file_tree_effects"]["rows"] = [{
+                    "kind": "file",
+                    "mode": "644",
+                    "identity": "a" * 64,
+                    "path": "/tmp/../etc/passwd",
+                }]
+        mutate(m6)
+        # 7 empty captured child list
+        mutate(lambda r: r["process"].__setitem__("child_processes_observed", []))
+        # 8 child with no exit/signal/timeout outcome
+        def m8(r):
+            r["process"]["child_processes_observed"] = [{
+                "command": "x",
+                "argv": ["x"],
+                "exit_status": None,
+                "signal": None,
+                "timed_out": False,
+            }]
+        mutate(m8)
+        # 9 timed-out child with exit and no signal
+        def m9(r):
+            r["process"]["child_processes_observed"] = [{
+                "command": "x",
+                "argv": ["x"],
+                "exit_status": 1,
+                "signal": None,
+                "timed_out": True,
+            }]
+            r["process"]["timed_out"] = True
+            r["process"]["signal"] = 15
+            r["process"]["exit_status"] = None
+        mutate(m9)
+        # 10 empty rows with nonzero counts
+        def m10(r):
+            r["file_tree_effects"]["rows"] = []
+            r["file_tree_effects"]["file_count"] = 3
+            r["file_tree_effects"]["directory_count"] = 1
+            r["file_tree_effects"]["symlink_count"] = 0
+        mutate(m10)
+        # 11 file row with non-hash identity
+        def m11(r):
+            r["file_tree_effects"]["rows"] = [{
+                "kind": "file",
+                "mode": "644",
+                "identity": "not-a-hash",
+                "path": "/tmp/x",
+            }]
+            r["file_tree_effects"]["file_count"] = 1
+            r["file_tree_effects"]["directory_count"] = 0
+            r["file_tree_effects"]["symlink_count"] = 0
+        mutate(m11)
+        # 12 declared/observed environment mismatch
+        def m12(r):
+            r["environment"]["variables"] = dict(r["environment"]["observed_variables"])
+            r["environment"]["variables"]["MUTATED"] = "1"
+        mutate(m12)
+
+    def test_wave2_host_observer_code_is_docker_rc_not_inner_status(self) -> None:
+        """host_observer_code must equal host docker rc artifact, not subject wait."""
+        stage = contract.load_json(self._stage_capture_path())
+        host = (
+            contract.ROOT
+            / "compat/installation/wave2/cases/INST-STAGE-001/host-observer.txt"
+        )
+        text = host.read_text(encoding="utf-8")
+        rc_line = [ln for ln in text.splitlines() if ln.startswith("rc=")][0]
+        docker_rc = int(rc_line.split("=", 1)[1])
+        self.assertEqual(stage["process"]["host_observer_code"], docker_rc)
+
+    def test_wave2_runner_qualification_signal_and_timeout_are_retained(self) -> None:
+        sig = contract.load_json(
+            contract.ROOT
+            / "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/capture.json"
+        )
+        tout = contract.load_json(
+            contract.ROOT
+            / "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/capture.json"
+        )
+        self.assertEqual(sig["process"]["signal"], 15)
+        self.assertFalse(sig["process"]["timed_out"])
+        self.assertIsNone(sig["process"]["exit_status"])
+        self.assertTrue(tout["process"]["timed_out"])
+        self.assertIsNotNone(tout["process"]["signal"])
+        self.assertIsNone(tout["process"]["exit_status"])
+        self.assertGreaterEqual(len(sig["process"]["child_processes_observed"]), 1)
+        self.assertGreaterEqual(len(tout["process"]["child_processes_observed"]), 1)
+
+    def test_wave2_layout_and_interp_exe_match_observed_argv0_resolution(self) -> None:
+        layout = contract.load_json(
+            contract.ROOT / "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json"
+        )
+        interp = contract.load_json(
+            contract.ROOT / "compat/installation/wave2/cases/INST-INTERP-001/capture.json"
+        )
+        # No contradiction: LAYOUT subject is sh/dash, not find.
+        self.assertEqual(layout["invocation"]["argv"][0], "/bin/sh")
+        self.assertTrue(layout["identity"]["executable_path"].endswith("dash") or
+                        layout["identity"]["executable_path"].endswith("sh"))
+        # INTERP subject is make with LCOV_PERL in env, not env argv0.
+        self.assertEqual(interp["invocation"]["argv"][0], "make")
+        self.assertTrue(interp["identity"]["executable_path"].endswith("make"))
+        self.assertIn("LCOV_PERL", interp["environment"]["observed_variables"])
+
+    def test_wave2_test_run_is_deterministic_make_n_info(self) -> None:
+        rec = contract.load_json(
+            contract.ROOT / "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json"
+        )
+        self.assertEqual(rec["invocation"]["argv"], ["make", "-n", "info"])
+        self.assertEqual(rec["process"]["exit_status"], 0)
+        # No wall-clock database dump markers from make -np.
+        stdout = (
+            contract.ROOT / "compat/installation/wave2/cases/INST-TEST-RUN-001/stdout.bin"
+        ).read_bytes()
+        self.assertNotIn(b"# Make data base", stdout)
+
+
     def test_wave2_expected_table_not_self_authenticated_by_observation_refresh(self) -> None:
         """Refreshing capture observation alone must not satisfy expected table."""
         path = self._stage_capture_path()

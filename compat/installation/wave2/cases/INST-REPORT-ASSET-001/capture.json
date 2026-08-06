@@ -23,13 +23,25 @@
         "bytes": 205,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-children.json",
-        "sha256": "6c0f221580f986c317bf22dd3ee0a43e67fe539d5886a70c0780aeea25415d19"
+        "sha256": "606445e53ece487a0b3a723d790e627642d2b632027725f41386d2bb6603229e"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 228,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/status.env",
+        "sha256": "c5c6c711978eaab0c5dd4958ad6b57f9456a14f4bcf31bb113e900b478d10a1a"
+      },
+      {
+        "bytes": 201,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/run-meta.env",
+        "sha256": "62a8ea19e931c8b7cf601cc056d9660ab6b7fa3e88f31d683a0636cbb7e54a53"
       }
     ],
     "stderr_bin": {
@@ -183,9 +195,9 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
-    "executable_path": "/usr/bin/python3",
+    "executable_path": "/usr/bin/python3.11",
     "executable_sha256": "6d972cf21be56fe3c947ab6ba257ff8d08c342dd2714442986791bd9a6dfabfe",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
     "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
@@ -206,7 +218,7 @@
     "timeout_seconds": 60,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "413fe2d903b2bbca9a2d380b2dfea953ac85d4009480be319e2d7eed3be1a4fd",
+  "observation_sha256": "f267ca9a21efa192a57cf461bb5efadcf4246ca1a2f36dd583e10837e25ecc5f",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
