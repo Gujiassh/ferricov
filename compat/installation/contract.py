@@ -1078,6 +1078,10 @@ def validate_case_records_against_contract(
                 raise InstallationContractError(f"case observation unbound: {case['id']}:{observation_id}")
 
         facts = case["independent_facts"]
+        # INST-LAYOUT-001 exception: nested source_bindings are intentionally
+        # absent. Source identity is bound only via top-level source_closure_ids
+        # plus tree partition facts regenerated from the pinned installed-tree
+        # lock. All other cases require nested source_bindings digests.
         source_bindings = facts.get("source_bindings", [])
         if case["id"] != "INST-LAYOUT-001":
             if not isinstance(source_bindings, list) or not source_bindings:
