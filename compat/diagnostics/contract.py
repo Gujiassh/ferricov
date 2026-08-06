@@ -2188,6 +2188,15 @@ def wave1_observations() -> list[dict[str, Any]]:
 
 
 
+
+def is_wave2_directory_marker(path: Path) -> bool:
+    """Git cannot retain empty directories; markers keep fixture dirs trackable.
+
+    Markers are not part of Oracle fixture content hashes.
+    """
+    return path.name in {".gitkeep", ".keep"}
+
+
 def merge_wave2_env(extra: dict[str, str] | None) -> dict[str, str]:
     env = dict(WAVE2_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES)
     if extra:
@@ -2202,8 +2211,9 @@ def wave2_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
         if not src.exists():
             raise DiagnosticsContractError(f"missing wave2 fixture: {name}")
         if src.is_dir():
+            # Empty directories are retained in Git via directory markers only.
             for path in sorted(src.rglob("*")):
-                if not path.is_file():
+                if not path.is_file() or is_wave2_directory_marker(path):
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()
@@ -2254,7 +2264,7 @@ def recompute_wave2_file_tree(
     try:
         entries = []
         for path in sorted(case_dir.rglob("*")):
-            if not path.is_file():
+            if not path.is_file() or is_wave2_directory_marker(path):
                 continue
             rel = path.relative_to(case_dir).as_posix()
             if rel.startswith("reference/") or rel == "result.json":

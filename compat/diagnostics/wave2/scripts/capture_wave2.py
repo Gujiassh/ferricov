@@ -892,7 +892,7 @@ def stage(work: Path, fixtures: list[str], chmod_map: dict[str, int] | None) -> 
 def file_tree(work: Path) -> list[dict[str, Any]]:
     entries = []
     for path in sorted(work.rglob("*")):
-        if not path.is_file():
+        if not path.is_file() or path.name in {".gitkeep", ".keep"}:
             continue
         rel = path.relative_to(work).as_posix()
         if rel.startswith("reference/") or rel in {"result.json"}:
@@ -927,7 +927,7 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
         src = FIXTURES / name
         if src.is_dir():
             for path in sorted(src.rglob("*")):
-                if not path.is_file():
+                if not path.is_file() or path.name in {".gitkeep", ".keep"}:
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()
@@ -1072,6 +1072,11 @@ def main() -> int:
     noread = FIXTURES / "noread.rc"
     if not noread.exists():
         noread.write_text("# unreadable config placeholder\n", encoding="utf-8")
+    emptyhome = FIXTURES / "emptyhome"
+    emptyhome.mkdir(parents=True, exist_ok=True)
+    gitkeep = emptyhome / ".gitkeep"
+    if not gitkeep.exists():
+        gitkeep.write_bytes(b"")
 
     base_env = dict(BASE_DECLARED_COMMAND_ENV)
     probe_effective_command_environment(base_env)

@@ -831,5 +831,69 @@ class DiagnosticsContractTests(unittest.TestCase):
 
 
 
+    def test_wave2_emptyhome_fixture_is_git_reproducible(self) -> None:
+        """Empty-directory fixtures must survive clean Git checkouts.
+
+        Git does not track empty directories. wave2 retains emptyhome via a
+        tracked directory marker that is excluded from Oracle fixture/file-tree
+        hashes, so a clean tree without preexisting empty dirs still validates.
+        """
+        fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
+        self.assertTrue(fixture_dir.is_dir(), "emptyhome fixture directory missing")
+        marker = fixture_dir / ".gitkeep"
+        self.assertTrue(
+            marker.is_file(),
+            "emptyhome must be retained with tracked .gitkeep marker",
+        )
+        # Marker is not part of Oracle fixture content bindings.
+        bindings = contract.wave2_fixture_bindings(["emptyhome"])
+        self.assertEqual(bindings, [])
+        # Case bindings still list emptyhome as a staged fixture name.
+        expected = contract.WAVE2_EXPECTED_CASE_BY_ID["diag-env-lcov-home"]
+        self.assertIn("emptyhome", expected["fixtures"])
+        # Independent of any leftover case-local emptyhome directory.
+        case_empty = contract.WAVE2_ROOT / "cases" / "diag-env-lcov-home" / "emptyhome"
+        if case_empty.exists():
+            # If present, it may be empty or marker-only; tree recompute must ignore markers.
+            tree = contract.recompute_wave2_file_tree(
+                contract.WAVE2_ROOT / "cases" / "diag-env-lcov-home"
+            )
+            self.assertNotIn(
+                "emptyhome/.gitkeep",
+                [entry["path"] for entry in tree],
+            )
+        # Document still binds wave2 observation for the empty-home case.
+        wave2 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"] == "diagnostics-wave2:diag-env-lcov-home"
+        ]
+        self.assertEqual(len(wave2), 1)
+        self.assertIn("emptyhome", wave2[0]["fixtures"])
+
+
+    def test_wave2_missing_emptyhome_fixture_is_rejected(self) -> None:
+        """Missing emptyhome fixture directory fails closed (clean checkout without marker)."""
+        import shutil
+        import tempfile
+        from unittest import mock
+
+        fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
+        self.assertTrue(fixture_dir.is_dir())
+        # Simulate a clean tree where Git dropped the empty directory entirely.
+        with tempfile.TemporaryDirectory(prefix="emptyhome-backup-") as tmp:
+            backup = Path(tmp) / "emptyhome"
+            shutil.copytree(fixture_dir, backup)
+            shutil.rmtree(fixture_dir)
+            try:
+                with self.assertRaisesRegex(
+                    contract.DiagnosticsContractError,
+                    "missing wave2 fixture: emptyhome",
+                ):
+                    contract.wave2_fixture_bindings(["emptyhome"])
+            finally:
+                shutil.copytree(backup, fixture_dir)
+
+
 if __name__ == "__main__":
     unittest.main()
