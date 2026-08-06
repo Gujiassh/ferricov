@@ -46,10 +46,15 @@ claims.
    `e2c3de1c85574c5b524fa2ccf9b36cd94b4e19f73f6cab67d593654fa9699932`.
 5. Each case binds independent facts through a type-sensitive facts hash; hash
    refresh alone without matching trusted bytes is rejected.
-6. `INST-REPORT-ASSET-001` binds four sample observations and seven asset
+6. Case independent facts are regenerated from pinned upstream source closures
+   and installed-tree partition evidence, then compared field-by-field with
+   type-sensitive equality. Nested source digests, layout names, report
+   artifact paths/hashes, sample metadata, and observation IDs cannot drift
+   under refreshed self-hashes.
+7. `INST-REPORT-ASSET-001` binds four sample observations and seven asset
    identities with exact bytes and SHA-256 digests.
-7. Case records cannot claim product evidence or captured execution.
-8. Known evidence gaps now explicitly include executable install/uninstall
+8. Case records cannot claim product evidence or captured execution.
+9. Known evidence gaps now explicitly include executable install/uninstall
    lifecycle capture for the 13 INST cases.
 
 ## Evidence
@@ -68,10 +73,31 @@ git diff --check
 Observed:
 
 - installation contract generation/validation: pass;
-- unittest: 34 pass, including reverse mutations for case-record binding,
-  facts-hash drift, order drift, execution promotion, product evidence, and
-  type-sensitive JSON equality;
+- unittest: 38 pass, including reverse mutations for case-record binding,
+  facts-hash drift, order drift, execution promotion, product evidence,
+  type-sensitive JSON equality, and fail-closed independent-facts rebinding
+  after self-hash refresh;
 - product compatibility evidence: false.
+
+## Fail-Closed Semantic Binding Repair
+
+Independent review rejected self-hash-only case-record acceptance. This lane
+now regenerates expected case records from pinned upstream closures and the
+installed-tree lock, then compares every retained case against that independent
+oracle:
+
+1. `oracle-case-records.schema.json` closes `independent_facts` per family with
+   `additionalProperties: false` and exact nested shapes for source bindings and
+   report observations.
+2. `contract.py` rebuilds expected source bindings, layout partition facts,
+   failure claims, report artifact paths/hashes/sample metadata, and
+   observation IDs from pinned inputs before accepting retained records.
+3. Reverse mutations that refresh `facts_sha256` / case-records SHA-256 after
+   changing nested source digests, report `artifact_path`, layout
+   `support_script_names`, or report observation mapping all reject.
+
+Statuses remain `execution_status=planned`, `evidence_status=oracle_reference`,
+and root `product_compatibility_evidence=false`.
 
 ## Residual Risk
 

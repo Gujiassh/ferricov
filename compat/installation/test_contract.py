@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import importlib.util
 import os
 import tempfile
@@ -279,6 +280,104 @@ class InstallationContractTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(contract.InstallationContractError, "known_evidence_gaps"):
             self.validate(document)
+
+    def _rewrite_case_records(self, mutate) -> tuple[bytes, str]:
+        backup = contract.CASE_RECORDS_PATH.read_bytes()
+        records = json.loads(backup.decode("ascii"))
+        mutate(records)
+        for case in records["cases"]:
+            facts_bytes = contract.canonical_json(case["independent_facts"]).encode("ascii")
+            case["facts_sha256"] = contract.sha256_bytes(facts_bytes)
+        raw = contract.canonical_json(records).encode("ascii")
+        contract.CASE_RECORDS_PATH.write_bytes(raw)
+        return backup, contract.sha256_bytes(raw)
+
+    def test_layout_support_script_names_mutation_rejects_after_hash_refresh(self) -> None:
+        backup = contract.CASE_RECORDS_PATH.read_bytes()
+        expected = contract.EXPECTED_CASE_RECORDS_SHA256
+        try:
+            def mutate(records: dict[str, object]) -> None:
+                layout = next(case for case in records["cases"] if case["id"] == "INST-LAYOUT-001")
+                layout["independent_facts"]["support_script_names"] = ["mutated-script.py"]
+                layout["independent_facts"]["support_script_count"] = 1
+
+            _backup, refreshed = self._rewrite_case_records(mutate)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = refreshed
+            with self.assertRaisesRegex(
+                contract.InstallationContractError,
+                "independent_facts mismatch|support_script_names|case records drift",
+            ):
+                contract.validate_document(contract.build_document(UPSTREAM_ROOT), UPSTREAM_ROOT)
+        finally:
+            contract.CASE_RECORDS_PATH.write_bytes(backup)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = expected
+
+    def test_nested_source_digest_mutation_rejects_after_hash_refresh(self) -> None:
+        backup = contract.CASE_RECORDS_PATH.read_bytes()
+        expected = contract.EXPECTED_CASE_RECORDS_SHA256
+        try:
+            def mutate(records: dict[str, object]) -> None:
+                stage = next(case for case in records["cases"] if case["id"] == "INST-STAGE-001")
+                stage["independent_facts"]["source_bindings"][0]["sha256"] = "0" * 64
+                stage["independent_facts"]["source_bindings"][0]["text_sha256"] = "0" * 64
+
+            _backup, refreshed = self._rewrite_case_records(mutate)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = refreshed
+            with self.assertRaisesRegex(
+                contract.InstallationContractError,
+                "source binding digest drift|independent_facts mismatch|case records drift",
+            ):
+                contract.validate_document(contract.build_document(UPSTREAM_ROOT), UPSTREAM_ROOT)
+        finally:
+            contract.CASE_RECORDS_PATH.write_bytes(backup)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = expected
+
+    def test_report_artifact_path_mutation_rejects_after_hash_refresh(self) -> None:
+        backup = contract.CASE_RECORDS_PATH.read_bytes()
+        expected = contract.EXPECTED_CASE_RECORDS_SHA256
+        try:
+            def mutate(records: dict[str, object]) -> None:
+                report = next(case for case in records["cases"] if case["id"] == "INST-REPORT-ASSET-001")
+                # Swap first observation path onto the second retained sample path.
+                report["independent_facts"]["observations"][0]["artifact_path"] = (
+                    "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/"
+                    "report-genhtml-default-measured-001/output-tree.json"
+                )
+
+            _backup, refreshed = self._rewrite_case_records(mutate)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = refreshed
+            with self.assertRaisesRegex(
+                contract.InstallationContractError,
+                "artifact_path|independent_facts mismatch|case records drift",
+            ):
+                contract.validate_document(contract.build_document(UPSTREAM_ROOT), UPSTREAM_ROOT)
+        finally:
+            contract.CASE_RECORDS_PATH.write_bytes(backup)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = expected
+
+    def test_report_observation_mapping_mutation_rejects_after_hash_refresh(self) -> None:
+        backup = contract.CASE_RECORDS_PATH.read_bytes()
+        expected = contract.EXPECTED_CASE_RECORDS_SHA256
+        try:
+            def mutate(records: dict[str, object]) -> None:
+                report = next(case for case in records["cases"] if case["id"] == "INST-REPORT-ASSET-001")
+                report["observation_ids"][0] = (
+                    "installation.asset-observation.report-genhtml-default-measured-001"
+                )
+                report["independent_facts"]["observations"][0]["id"] = (
+                    "installation.asset-observation.report-genhtml-default-measured-001"
+                )
+
+            _backup, refreshed = self._rewrite_case_records(mutate)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = refreshed
+            with self.assertRaisesRegex(
+                contract.InstallationContractError,
+                "observation|independent_facts mismatch|case records drift",
+            ):
+                contract.validate_document(contract.build_document(UPSTREAM_ROOT), UPSTREAM_ROOT)
+        finally:
+            contract.CASE_RECORDS_PATH.write_bytes(backup)
+            contract.EXPECTED_CASE_RECORDS_SHA256 = expected
 
 
 if __name__ == "__main__":
