@@ -4,54 +4,54 @@
       {
         "bytes": 13,
         "name": "cleanup.log",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/cleanup.log",
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/cleanup.log",
         "sha256": "6338824994cb575f7d0af9d95201e110bf1fbaa0bf3966ce8b2fa739a5cc5d4a"
       },
       {
         "bytes": 229,
         "name": "observed-env.env",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-env.env",
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-env.env",
         "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
       },
       {
         "bytes": 22,
         "name": "observed-argv.json",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-argv.json",
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-argv.json",
         "sha256": "676c6c95feb69f09c7bef9dd69096af132bcd9350c1ff7f4ec429e9cbc3ff666"
       },
       {
         "bytes": 151,
         "name": "observed-children.json",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/observed-children.json",
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/observed-children.json",
         "sha256": "263f300ea2b98446112de42924a77c9f6174d88605df8e7beba7bc52586d7b44"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/host-observer.txt",
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
       },
       {
-        "bytes": 227,
+        "bytes": 292,
         "name": "status.env",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/status.env",
-        "sha256": "73ae9caf3247328fa1ca19dddfe3576d7fb1e4d578122bea84f0f8e4a1c8bbee"
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/status.env",
+        "sha256": "e2e126b0c94107da96552826574a872a06addf35edda10f5d36f1f443597f40f"
       },
       {
-        "bytes": 187,
+        "bytes": 234,
         "name": "run-meta.env",
-        "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/run-meta.env",
-        "sha256": "0db86c7ce11b13f2af71fbd6521903d6af8c112de6037c7eb8c512925fa66762"
+        "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/run-meta.env",
+        "sha256": "8b14f3455e23868872ea15b7af9e3dacadab49640dfac939ae25067ed78458b8"
       }
     ],
     "stderr_bin": {
       "bytes": 0,
-      "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/stderr.bin",
+      "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/stderr.bin",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "stdout_bin": {
       "bytes": 0,
-      "path": "compat/installation/wave2/cases/INST-RUNNER-TIMEOUT-001/stdout.bin",
+      "path": "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/stdout.bin",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   },
@@ -92,7 +92,7 @@
   "file_tree_effects": {
     "directory_count": 2,
     "file_count": 10,
-    "paths_sha256": "7c5130e61e0dc90ca27dc0762650b9ca66ea8ab0f01a2bfb288de5d6a23cd06e",
+    "paths_sha256": "893935fb4d68aedd6380b442a71a4f48fb05880afc161e40ec8fae27c63daedf",
     "root": "/tmp",
     "rows": [
       {
@@ -150,7 +150,7 @@
         "path": "/tmp/pin-intersphinx.py"
       },
       {
-        "identity": "d9753d8627cf392fdbbdc00fb2d91bf93764c7f1324b84e7846323035affee2f",
+        "identity": "ac9379f4f3b2bf78914c6fa67337598f7f0c8eabda7b032691328cbac73f58fd",
         "kind": "file",
         "mode": "755",
         "path": "/tmp/process-observer.py"
@@ -190,10 +190,10 @@
     "fixture_setup": [
       "ptrace supervisor enforce 1s deadline on sleep"
     ],
-    "timeout_seconds": 5,
+    "timeout_seconds": 1,
     "working_directory": "/tmp"
   },
-  "observation_sha256": "3547c1c1b6b362824bcf5c95e5d6866bd51111dd5d962b6bab9a0bab1c97aa57",
+  "observation_sha256": "fe437d98532b8d8abb846a9ba9ef0a94c71e4178be4f745693df96043c2d4c4e",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [

@@ -755,13 +755,14 @@ class InstallationContractTests(unittest.TestCase):
         self.assertEqual(stage["process"]["host_observer_code"], docker_rc)
 
     def test_wave2_runner_qualification_signal_and_timeout_are_retained(self) -> None:
-        sig = contract.load_json(
-            contract.ROOT
-            / "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/capture.json"
+        bindings = contract.validate_wave2_runner_qualification()
+        by_id = {b["id"]: b for b in bindings}
+        self.assertEqual(set(by_id), {"INST-RUNNER-SIGNAL-001", "INST-RUNNER-TIMEOUT-001"})
+        sig = contract.load_case_capture_record(
+            "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/capture.json"
         )
-        tout = contract.load_json(
-            contract.ROOT
-            / "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/capture.json"
+        tout = contract.load_case_capture_record(
+            "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/capture.json"
         )
         self.assertEqual(sig["process"]["signal"], 15)
         self.assertFalse(sig["process"]["timed_out"])
@@ -769,6 +770,15 @@ class InstallationContractTests(unittest.TestCase):
         self.assertTrue(tout["process"]["timed_out"])
         self.assertIsNotNone(tout["process"]["signal"])
         self.assertIsNone(tout["process"]["exit_status"])
+        self.assertEqual(int(sig["invocation"]["timeout_seconds"]), 30)
+        self.assertEqual(int(tout["invocation"]["timeout_seconds"]), 1)
+        # All artifact refs must live under cases/_runner/<id>/
+        for rec, cid in ((sig, "INST-RUNNER-SIGNAL-001"), (tout, "INST-RUNNER-TIMEOUT-001")):
+            prefix = f"compat/installation/wave2/cases/_runner/{cid}/"
+            self.assertTrue(rec["artifacts"]["stdout_bin"]["path"].startswith(prefix))
+            self.assertTrue(rec["artifacts"]["stderr_bin"]["path"].startswith(prefix))
+            for extra in rec["artifacts"].get("extra") or []:
+                self.assertTrue(extra["path"].startswith(prefix), extra["path"])
         self.assertGreaterEqual(len(sig["process"]["child_processes_observed"]), 1)
         self.assertGreaterEqual(len(tout["process"]["child_processes_observed"]), 1)
 
@@ -800,6 +810,247 @@ class InstallationContractTests(unittest.TestCase):
         ).read_bytes()
         self.assertNotIn(b"# Make data base", stdout)
 
+
+
+    def test_wave2_observer_ptrace_faults_reap_and_fail_closed(self) -> None:
+        """SETOPTIONS/CONT faults must fail quickly without leaving live/stopped children."""
+        import os
+        import subprocess
+        import tempfile
+        import time
+        from pathlib import Path
+
+        obs = contract.ROOT / "compat/installation/wave2/process-observer.py"
+        for fault in ("setoptions", "cont_initial", "cont_post_exec"):
+            td = Path(tempfile.mkdtemp(prefix="obs-fault-"))
+            envf = td / "env.env"
+            envf.write_text("PATH=/usr/bin:/bin\nHOME=/tmp\nLANG=C\nLC_ALL=C\n", encoding="utf-8")
+            cmd = [
+                "python3",
+                str(obs),
+                "--workdir",
+                "/tmp",
+                "--timeout-seconds",
+                "2",
+                "--stdout",
+                str(td / "out"),
+                "--stderr",
+                str(td / "err"),
+                "--status",
+                str(td / "status"),
+                "--observed-argv",
+                str(td / "argv.json"),
+                "--observed-children",
+                str(td / "children.json"),
+                "--meta",
+                str(td / "meta"),
+                "--observed-env",
+                str(td / "oenv"),
+                "--env-file",
+                str(envf),
+                "--",
+                "sleep",
+                "30",
+            ]
+            env = os.environ.copy()
+            env["FERRICOV_WAVE2_OBSERVER_FAULT"] = fault
+            t0 = time.monotonic()
+            proc = subprocess.run(cmd, env=env, capture_output=True, text=True)
+            dt = time.monotonic() - t0
+            self.assertEqual(proc.returncode, 2, fault)
+            self.assertLess(dt, 2.5, f"{fault} hung dt={dt}")
+            # No status with sentinel hash.
+            if (td / "status").is_file():
+                self.assertNotIn("f" * 64, (td / "status").read_text(encoding="utf-8"))
+
+    def test_wave2_observer_hash_permission_and_replacement_race(self) -> None:
+        """Hash open/read faults fail closed; replacement race keeps executed inode hash."""
+        import hashlib
+        import os
+        import shutil
+        import subprocess
+        import tempfile
+        import threading
+        import time
+        from pathlib import Path
+
+        obs = contract.ROOT / "compat/installation/wave2/process-observer.py"
+
+        def _run(fault: str) -> subprocess.CompletedProcess:
+            td = Path(tempfile.mkdtemp(prefix="obs-hash-"))
+            envf = td / "env.env"
+            envf.write_text("PATH=/usr/bin:/bin\nHOME=/tmp\nLANG=C\nLC_ALL=C\n", encoding="utf-8")
+            env = os.environ.copy()
+            env["FERRICOV_WAVE2_OBSERVER_FAULT"] = fault
+            return subprocess.run(
+                [
+                    "python3",
+                    str(obs),
+                    "--workdir",
+                    "/tmp",
+                    "--timeout-seconds",
+                    "2",
+                    "--stdout",
+                    str(td / "out"),
+                    "--stderr",
+                    str(td / "err"),
+                    "--status",
+                    str(td / "status"),
+                    "--observed-argv",
+                    str(td / "argv.json"),
+                    "--observed-children",
+                    str(td / "children.json"),
+                    "--meta",
+                    str(td / "meta"),
+                    "--observed-env",
+                    str(td / "oenv"),
+                    "--env-file",
+                    str(envf),
+                    "--",
+                    "/bin/true",
+                ],
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+
+        for fault in ("hash_open", "hash_read"):
+            proc = _run(fault)
+            self.assertEqual(proc.returncode, 3, fault)
+            self.assertNotIn("ffffffff", proc.stdout + proc.stderr)
+
+        # Replacement race: hash open FD of sleep_copy before replace with true.
+        td = Path(tempfile.mkdtemp(prefix="obs-race-"))
+        sleep_copy = td / "sleep_copy"
+        shutil.copy2("/usr/bin/sleep", sleep_copy)
+        sleep_copy.chmod(0o755)
+        sleep_hash = hashlib.sha256(sleep_copy.read_bytes()).hexdigest()
+        true_hash = hashlib.sha256(Path("/usr/bin/true").read_bytes()).hexdigest()
+        envf = td / "env.env"
+        envf.write_text("PATH=/usr/bin:/bin\nHOME=/tmp\nLANG=C\nLC_ALL=C\n", encoding="utf-8")
+        result: dict[str, object] = {}
+
+        def launch() -> None:
+            proc = subprocess.run(
+                [
+                    "python3",
+                    str(obs),
+                    "--workdir",
+                    str(td),
+                    "--timeout-seconds",
+                    "5",
+                    "--stdout",
+                    str(td / "out"),
+                    "--stderr",
+                    str(td / "err"),
+                    "--status",
+                    str(td / "status"),
+                    "--observed-argv",
+                    str(td / "argv.json"),
+                    "--observed-children",
+                    str(td / "children.json"),
+                    "--meta",
+                    str(td / "meta"),
+                    "--observed-env",
+                    str(td / "oenv"),
+                    "--env-file",
+                    str(envf),
+                    "--",
+                    str(sleep_copy),
+                    "3",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            result["rc"] = proc.returncode
+
+        thr = threading.Thread(target=launch)
+        thr.start()
+        time.sleep(0.25)
+        tmp = td / "true_tmp"
+        shutil.copy2("/usr/bin/true", tmp)
+        os.replace(tmp, sleep_copy)
+        thr.join(timeout=10)
+        self.assertEqual(result.get("rc"), 0)
+        status = (td / "status").read_text(encoding="utf-8")
+        recorded = [ln.split("=", 1)[1] for ln in status.splitlines() if ln.startswith("EXECUTABLE_SHA256=")][0]
+        self.assertEqual(recorded, sleep_hash)
+        self.assertNotEqual(recorded, true_hash)
+
+    def test_wave2_replace_boundary_faults_fully_roll_back(self) -> None:
+        """Forced failure at cases/index/lock install restores prior retained set."""
+        import hashlib
+        import importlib.util
+        import os
+        import shutil
+        import tempfile
+        from pathlib import Path
+
+        wave2 = contract.ROOT / "compat/installation/wave2"
+        mod_path = wave2 / "recapture.py"
+        spec = importlib.util.spec_from_file_location("wave2_recapture_tx", mod_path)
+        mod = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(mod)
+
+        def fingerprint(root: Path) -> str:
+            h = hashlib.sha256()
+            for rel in ("cases", "oracle-capture.json", "installed-directories.lock"):
+                p = root / rel
+                if p.is_dir():
+                    for f in sorted(p.rglob("*")):
+                        if f.is_file():
+                            h.update(f.relative_to(root).as_posix().encode())
+                            h.update(f.read_bytes())
+                elif p.is_file():
+                    h.update(rel.encode())
+                    h.update(p.read_bytes())
+            return h.hexdigest()
+
+        for boundary in ("cases", "oracle-capture.json", "installed-directories.lock"):
+            td = Path(tempfile.mkdtemp(prefix="tx-"))
+            # Build mini retained set
+            (td / "cases" / "X").mkdir(parents=True)
+            (td / "cases" / "X" / "a.txt").write_text("old-cases\n", encoding="utf-8")
+            (td / "oracle-capture.json").write_text('{"old":true}\n', encoding="utf-8")
+            (td / "installed-directories.lock").write_text("old-lock\n", encoding="utf-8")
+            before = fingerprint(td)
+            staging_parent = td / ".capture-staging"
+            staging = staging_parent / "run"
+            staging.mkdir(parents=True)
+            staged_cases = staging / "cases"
+            staged_index = staging / "oracle-capture.json"
+            staged_lock = staging / "installed-directories.lock"
+            (staged_cases / "Y").mkdir(parents=True)
+            (staged_cases / "Y" / "b.txt").write_text("new-cases-MUTATED\n", encoding="utf-8")
+            staged_index.write_text('{"new":true}\n', encoding="utf-8")
+            staged_lock.write_text("new-lock\n", encoding="utf-8")
+            env_key = "FERRICOV_WAVE2_REPLACE_FAULT"
+            old = os.environ.get(env_key)
+            os.environ[env_key] = boundary
+            try:
+                with self.assertRaises(RuntimeError):
+                    mod.commit_replace_targets(
+                        [
+                            (staged_cases, td / "cases", "cases"),
+                            (staged_index, td / "oracle-capture.json", "oracle-capture.json"),
+                            (staged_lock, td / "installed-directories.lock", "installed-directories.lock"),
+                        ],
+                        staging_parent=staging_parent,
+                    )
+            finally:
+                if old is None:
+                    os.environ.pop(env_key, None)
+                else:
+                    os.environ[env_key] = old
+            after = fingerprint(td)
+            self.assertEqual(before, after, f"boundary={boundary}")
+            # No stranded backup-* dirs
+            leftovers = list(staging_parent.glob("backup-*")) if staging_parent.exists() else []
+            self.assertEqual(leftovers, [], f"stranded backup at {boundary}: {leftovers}")
+            # Old content restored
+            self.assertEqual((td / "cases" / "X" / "a.txt").read_text(encoding="utf-8"), "old-cases\n")
+            self.assertFalse((td / "cases" / "Y").exists())
 
     def test_wave2_expected_table_not_self_authenticated_by_observation_refresh(self) -> None:
         """Refreshing capture observation alone must not satisfy expected table."""

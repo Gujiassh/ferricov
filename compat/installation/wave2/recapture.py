@@ -224,7 +224,7 @@ RUNNER_SPECS: list[dict[str, Any]] = [
     {
         "id": "INST-RUNNER-TIMEOUT-001",
         "driver_case": "INST-RUNNER-TIMEOUT-001",
-        "timeout_seconds": 5,
+        "timeout_seconds": 1,
         "fixture_setup": ["ptrace supervisor enforce 1s deadline on sleep"],
         "cleanup": ["none_required"],
         "environment_mode": "clean_explicit",
@@ -591,8 +591,12 @@ def build_record(
     image_id: str,
     docker_runtime: str,
     upstream_commit: str,
+    artifact_rel_root: str | None = None,
 ) -> dict[str, Any]:
-    rel_root = f"compat/installation/wave2/cases/{case_id}" + (f"/{part_id}" if part_id else "")
+    if artifact_rel_root is not None:
+        rel_root = artifact_rel_root.rstrip("/")
+    else:
+        rel_root = f"compat/installation/wave2/cases/{case_id}" + (f"/{part_id}" if part_id else "")
     stdout_path = out_dir / "stdout.bin"
     stderr_path = out_dir / "stderr.bin"
     status = parse_status(out_dir / "status.env")
@@ -689,7 +693,7 @@ def build_record(
             "upstream_commit": upstream_commit,
             "upstream_release": "v2.5",
             "executable_path": exec_path if exec_path.startswith("/") else "/usr/bin/false",
-            "executable_sha256": exec_sha if re.fullmatch(r"[0-9a-f]{64}", exec_sha or "") else "f" * 64,
+            "executable_sha256": exec_sha if re.fullmatch(r"[0-9a-f]{64}", exec_sha or "") and exec_sha not in {"0"*64, "f"*64} else "0" * 64,
             "capture_host_tool": "compat/installation/wave2/process-observer.py",
         },
         "invocation": {
@@ -808,7 +812,7 @@ def verify_against_expected(
         actual = record["artifacts"]["stderr_bin"]["sha256"]
         if actual != row["stderr_sha256"]:
             raise SystemExit(f"{prefix}: stderr hash drift expected={row['stderr_sha256']} actual={actual}")
-    if "executable_sha256" in row and row["executable_sha256"] != record["identity"]["executable_sha256"]:
+    if row.get("executable_sha256") and row["executable_sha256"] != record["identity"]["executable_sha256"]:
         raise SystemExit(f"{prefix}: executable hash drift")
     if "host_observer_code" in row and record["process"]["host_observer_code"] != row["host_observer_code"]:
         raise SystemExit(f"{prefix}: host_observer_code drift")
@@ -816,6 +820,83 @@ def verify_against_expected(
 
 def expected_row_map(table: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {case["id"]: case for case in table["cases"]}
+
+
+def _inject_replace_fault(boundary: str) -> None:
+    """Optional test hook: FERRICOV_WAVE2_REPLACE_FAULT=cases|index|lock."""
+    fault = os.environ.get("FERRICOV_WAVE2_REPLACE_FAULT", "").strip()
+    if fault and fault == boundary:
+        raise RuntimeError(f"injected replace fault at boundary={boundary}")
+
+
+def commit_replace_targets(
+    moves: list[tuple[Path, Path, str]],
+    *,
+    staging_parent: Path,
+) -> None:
+    """Backup old targets, install staged targets, full rollback on any failure.
+
+    moves: list of (staged_source, final_destination, boundary_name)
+    Does not claim crash-atomic multi-file semantics; Python exception path is
+    transactional: either all new targets land or every old target is restored
+    and no backup directory remains stranded.
+    """
+    backup = staging_parent / f"backup-{uuid.uuid4().hex}"
+    backup.mkdir(parents=True, exist_ok=False)
+    backed: list[tuple[Path, Path]] = []  # (backup_path, final_path)
+    installed: list[Path] = []
+    try:
+        # Phase 1: move every existing final target into backup.
+        for _src, final, name in moves:
+            if final.exists() or final.is_symlink():
+                dest = backup / name
+                shutil.move(str(final), str(dest))
+                backed.append((dest, final))
+        # Phase 2: install staged sources into final locations with per-boundary faults.
+        for src, final, name in moves:
+            _inject_replace_fault(name)
+            if not src.exists():
+                raise FileNotFoundError(f"staged source missing for {name}: {src}")
+            # Ensure parent exists for file targets.
+            final.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(src), str(final))
+            installed.append(final)
+        # Success: drop backup.
+        shutil.rmtree(backup, ignore_errors=True)
+    except BaseException:
+        # Remove any partially installed new targets.
+        for path in reversed(installed):
+            try:
+                if path.is_dir() and not path.is_symlink():
+                    shutil.rmtree(path, ignore_errors=True)
+                elif path.exists() or path.is_symlink():
+                    path.unlink(missing_ok=True)  # type: ignore[call-arg]
+            except TypeError:
+                # Python <3.8 fallback not needed on 3.11, but keep safe.
+                try:
+                    if path.exists() or path.is_symlink():
+                        path.unlink()
+                except OSError:
+                    pass
+            except OSError:
+                pass
+        # Restore every backed-up old target.
+        for bak, final in backed:
+            try:
+                if final.exists() or final.is_symlink():
+                    if final.is_dir() and not final.is_symlink():
+                        shutil.rmtree(final, ignore_errors=True)
+                    else:
+                        try:
+                            final.unlink()
+                        except OSError:
+                            pass
+                shutil.move(str(bak), str(final))
+            except OSError as restore_exc:
+                print(f"rollback restore failed for {final}: {restore_exc}", file=sys.stderr)
+        shutil.rmtree(backup, ignore_errors=True)
+        raise
+
 
 
 def main() -> int:
@@ -1054,8 +1135,8 @@ def main() -> int:
                 image_id=image_id,
                 docker_runtime=docker_runtime,
                 upstream_commit=upstream_commit,
+                artifact_rel_root=f"compat/installation/wave2/cases/_runner/{case_id}",
             )
-            # Rewrite artifact paths to _runner location already set via case_id.
             validate_record(record)
             write_json(out_dir / "capture.json", record)
             runner_rows.append(
@@ -1138,32 +1219,20 @@ def main() -> int:
         if not tout["timed_out"] or tout["signal"] is None:
             raise SystemExit(f"timeout probe did not observe timeout: {tout}")
 
-        # Atomic replace of committed capture tree only after full success.
+        # Transactional multi-target replace (Python failure-path only; not crash-atomic).
+        # Backup every old target first, install staged targets, and on any exception
+        # remove partial new targets then restore every old target. No stranded backup.
         final_cases = OUT_ROOT
         final_index = CAPTURE_INDEX
         final_lock = WAVE2 / "installed-directories.lock"
-        backup = staging_parent / f"backup-{uuid.uuid4().hex}"
-        backup.mkdir()
-        if final_cases.exists():
-            shutil.move(str(final_cases), str(backup / "cases"))
-        if final_index.exists():
-            shutil.move(str(final_index), str(backup / "oracle-capture.json"))
-        if final_lock.exists():
-            shutil.move(str(final_lock), str(backup / "installed-directories.lock"))
-        try:
-            shutil.move(str(staging_cases), str(final_cases))
-            shutil.move(str(staging_index), str(final_index))
-            shutil.move(str(staging_dir_lock), str(final_lock))
-        except Exception:
-            # Attempt restore on replace failure.
-            if (backup / "cases").exists() and not final_cases.exists():
-                shutil.move(str(backup / "cases"), str(final_cases))
-            if (backup / "oracle-capture.json").exists() and not final_index.exists():
-                shutil.move(str(backup / "oracle-capture.json"), str(final_index))
-            if (backup / "installed-directories.lock").exists() and not final_lock.exists():
-                shutil.move(str(backup / "installed-directories.lock"), str(final_lock))
-            raise
-        shutil.rmtree(backup, ignore_errors=True)
+        commit_replace_targets(
+            [
+                (staging_cases, final_cases, "cases"),
+                (staging_index, final_index, "oracle-capture.json"),
+                (staging_dir_lock, final_lock, "installed-directories.lock"),
+            ],
+            staging_parent=staging_parent,
+        )
         shutil.rmtree(staging, ignore_errors=True)
 
         print("index", idx_sha)
