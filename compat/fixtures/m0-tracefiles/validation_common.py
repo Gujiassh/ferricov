@@ -612,14 +612,16 @@ def assert_writer_non_utf8_observational(output: bytes, label: str) -> None:
 
 # ---------------------------------------------------------------------------
 # Wave3 semantic closures (M1-TF-045 / 052 / 061)
-# Independently fixed expected tables; group-completeness is mandatory for
-# requirement binding. Validators must fail on reordered/lost records,
-# field-byte changes, member omission, and identity swaps.
+# Exact bindings require independent input/source models, not output-only
+# self-parse or duplicated constants. Group completeness is mandatory.
 # ---------------------------------------------------------------------------
 
-# M1-TF-045: parse-write-parse across four corpora (canonical, legacy,
-# permissive, ignored-error). Expected outputs are the Oracle rewrite bytes
-# fixed independently of free-form case labels.
+import re as _re
+import xml.etree.ElementTree as _ET
+
+# M1-TF-045: parse-write-parse across four corpora. Each member binds an
+# independent semantic model derived from the actual input fixture bytes, then
+# compares that model with the model obtained by parsing the rewritten output.
 TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     "canonical": {
         "case_id": "writer-fixedpoint.canonical",
@@ -630,29 +632,7 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
             b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
             b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
         ),
-        "section_facts": {
-            "tn": b"s",
-            "sf": b"src/s.c",
-            "ver": None,
-            "functions": [(b"0", b"1", b"1")],
-            "aliases": [(b"0", b"1", b"f")],
-            "branches": [(b"1", b"0", b"e", b"1"), (b"1", b"0", b"e2", b"0")],
-            "mcdc": [
-                (b"1", b"1", b"t", b"1", b"0", b"c"),
-                (b"1", b"1", b"f", b"0", b"0", b"c"),
-            ],
-            "das": [(b"1", b"1", None), (b"2", b"0", None)],
-            "summaries": {
-                "FNF": b"1",
-                "FNH": b"1",
-                "BRF": b"2",
-                "BRH": b"1",
-                "MCF": b"2",
-                "MCH": b"1",
-                "LF": b"2",
-                "LH": b"1",
-            },
-        },
+        "kind": "current",
     },
     "legacy": {
         "case_id": "legacy.canonical",
@@ -665,24 +645,7 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
             b"DA:10,4\nDA:20,1\nDA:30,0\n"
             b"LF:3\nLH:2\nend_of_record\n"
         ),
-        "section_facts": {
-            "tn": b"legacy",
-            "sf": b"src/legacy.c",
-            "ver": None,
-            "functions": [(b"0", b"10", b"20"), (b"1", b"30", b"30")],
-            "aliases": [
-                (b"0", b"4", b"legacy_main"),
-                (b"1", b"0", b"legacy_helper"),
-            ],
-            "branches": [],
-            "mcdc": [],
-            "das": [
-                (b"10", b"4", None),
-                (b"20", b"1", None),
-                (b"30", b"0", None),
-            ],
-            "summaries": {"FNF": b"2", "FNH": b"1", "LF": b"3", "LH": b"2"},
-        },
+        "kind": "legacy",
     },
     "permissive": {
         "case_id": "permissive-prefix.canonical",
@@ -690,33 +653,13 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
         "expected_output": (
             b"TN:,diff\nSF:src/permissive.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
         ),
-        "section_facts": {
-            "tn": b",diff",
-            "sf": b"src/permissive.c",
-            "ver": None,
-            "functions": [],
-            "aliases": [],
-            "branches": [],
-            "mcdc": [],
-            "das": [(b"1", b"1", None)],
-            "summaries": {"LF": b"1", "LH": b"1"},
-        },
+        "kind": "permissive",
     },
     "ignored_error": {
         "case_id": "wave2-unknown-tags.ignore-format",
         "fixture_path": "fixtures/wave2/unknown-tags.info",
         "expected_output": b"TN:u\nSF:src/u.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
-        "section_facts": {
-            "tn": b"u",
-            "sf": b"src/u.c",
-            "ver": None,
-            "functions": [],
-            "aliases": [],
-            "branches": [],
-            "mcdc": [],
-            "das": [(b"1", b"1", None)],
-            "summaries": {"LF": b"1", "LH": b"1"},
-        },
+        "kind": "ignored_error",
     },
 }
 TF045_REQUIRED_MEMBERS = frozenset(TF045_CORPUS_MEMBERS)
@@ -724,20 +667,9 @@ TF045_CASE_IDS = frozenset(
     str(member["case_id"]) for member in TF045_CORPUS_MEMBERS.values()
 )
 
-# M1-TF-052: converter input semantic facts (authored from XML/Python sources
-# independently of LCOV output) bound to rewrite output section model.
-TF052_SOURCE_FACTS: dict[str, object] = {
-    "xml_filename": b"mod.py",
-    "xml_testname": b"xml",
-    "method_name": b"foo",
-    "method_line": b"1",
-    "method_hits": b"3",
-    "line_hits": ((b"1", b"3"), (b"2", b"1")),
-    "branch_line": b"1",
-    "branch_coverage_taken": 1,
-    "branch_coverage_total": 2,
-    "python_def_name": b"foo",
-}
+# Converter source artifact paths (authoritative inputs for M1-TF-052).
+TF052_XML_PATH = "fixtures/writer/coverage.xml"
+TF052_PYTHON_PATH = "fixtures/writer/mod.py"
 TF052_REWRITE_CASE_ID = "converter-coverage.canonical-rewrite"
 TF052_DIRECT_CASE_ID = "converter-coverage.xml2lcov"
 TF052_REQUIRED_CASE_IDS = frozenset({TF052_REWRITE_CASE_ID, TF052_DIRECT_CASE_ID})
@@ -747,16 +679,15 @@ TF052_EXPECTED_REWRITE = (
     b"DA:1,3\nDA:2,1\nLF:2\nLH:2\nend_of_record\n"
 )
 
-# M1-TF-061: invalid/non-ASCII byte matrix across TN, SF, function alias,
-# branch expression, MC/DC expression/condition, and VER. TN is sanitized by
-# Oracle (non-word bytes -> '_'); other fields retain raw bytes. Current-form
-# function identity is carried by FNA alias bytes (FNL is index/range only).
+# M1-TF-061: invalid/non-ASCII byte matrix. Function *name* identity is the
+# current-form FNA alias field (FNL carries index/range only). Legacy FN-name
+# non-ASCII is out of scope for this matrix (and remains unbound for M1-TF-010).
 TF061_CASE_ID = "bytes-non-utf8.canonical"
 TF061_REQUIRED_FIELDS = frozenset(
     {
         "tn",
         "sf",
-        "function_alias",
+        "function_name",
         "branch_expression",
         "mcdc_expression",
         "mcdc_condition",
@@ -766,10 +697,10 @@ TF061_REQUIRED_FIELDS = frozenset(
 TF061_FIELD_EXPECTED: dict[str, bytes] = {
     "tn": b"test__",  # input TN:test-\xff sanitized
     "sf": b"src/path-\xfe.c",
-    "function_alias": b"alias-\xfc",
+    "function_name": b"alias-\xfc",
     "branch_expression": b"branch-\xfb",
     "mcdc_expression": b"mcdc-\xfa",
-    "mcdc_condition": b"0",  # condition index on both senses
+    "mcdc_condition": b"0",
     "ver": b"revision-\xfd",
 }
 TF061_EXPECTED_OUTPUT = (
@@ -781,31 +712,231 @@ TF061_EXPECTED_OUTPUT = (
 )
 
 
-def _section_model_matches(section: dict[str, object], facts: dict[str, object], label: str) -> None:
-    require(section["tn"] == facts["tn"], f"{label}: TN drift {section['tn']!r}")
-    require(section["sf"] == facts["sf"], f"{label}: SF drift {section['sf']!r}")
-    require(section.get("ver") == facts.get("ver"), f"{label}: VER drift")
-    require(section["functions"] == facts["functions"], f"{label}: functions drift")
-    require(section["aliases"] == facts["aliases"], f"{label}: aliases drift")
-    require(section["branches"] == facts["branches"], f"{label}: branches drift")
-    require(section["mcdc"] == facts["mcdc"], f"{label}: mcdc drift")
-    require(section["das"] == facts["das"], f"{label}: DA drift")
-    require(section["summaries"] == facts["summaries"], f"{label}: summaries drift")
+def parse_input_semantic_model(data: bytes) -> list[dict[str, object]]:
+    """Derive an independent input semantic model from raw fixture bytes.
+
+    Supports current records, legacy FN/FNDA, KF path aliases, and unknown tags.
+    This is intentionally separate from output-only parse_tracefile_sections so
+    parse-write-parse compares two independently obtained models.
+    """
+    sections: list[dict[str, object]] = []
+    current: dict[str, object] | None = None
+    for raw_line in data.splitlines():
+        line = raw_line
+        if line.startswith(b"#"):
+            continue
+        if line.startswith(b"TN:"):
+            if current is not None:
+                sections.append(current)
+            current = {
+                "tn": line[3:],
+                "sf": None,
+                "ver": None,
+                "legacy_functions": [],  # (start, end|None, name)
+                "legacy_counts": [],  # (count, name)
+                "functions": [],
+                "aliases": [],
+                "branches": [],
+                "mcdc": [],
+                "das": [],  # (line, count, checksum|None) raw
+                "summaries": {},
+                "unknown_tags": [],
+                "forbidden_tags": [],
+                "ordered_detail_tags": [],  # for reorder mutation surface
+            }
+            continue
+        if current is None:
+            continue
+        if line.startswith(b"SF:"):
+            current["sf"] = line[3:]
+            current["ordered_detail_tags"].append("SF")
+        elif line.startswith(b"KF:"):
+            current["sf"] = line[3:]
+            current["forbidden_tags"].append(b"KF")
+            current["ordered_detail_tags"].append("KF")
+        elif line.startswith(b"VER:"):
+            current["ver"] = line[4:]
+            current["ordered_detail_tags"].append("VER")
+        elif line.startswith(b"FN:"):
+            body = line[3:]
+            parts = body.split(b",")
+            if len(parts) == 3:
+                current["legacy_functions"].append((parts[0], parts[1], parts[2]))
+            elif len(parts) == 2:
+                current["legacy_functions"].append((parts[0], None, parts[1]))
+            current["ordered_detail_tags"].append("FN")
+        elif line.startswith(b"FNDA:"):
+            body = line[5:]
+            parts = body.split(b",", 1)
+            if len(parts) == 2:
+                current["legacy_counts"].append((parts[0], parts[1]))
+            current["ordered_detail_tags"].append("FNDA")
+        elif line.startswith(b"FNL:"):
+            parts = line[4:].split(b",")
+            if len(parts) == 3:
+                current["functions"].append((parts[0], parts[1], parts[2]))
+            current["ordered_detail_tags"].append("FNL")
+        elif line.startswith(b"FNA:"):
+            parts = line[4:].split(b",", 2)
+            if len(parts) == 3:
+                current["aliases"].append((parts[0], parts[1], parts[2]))
+            current["ordered_detail_tags"].append("FNA")
+        elif line.startswith(b"BRDA:"):
+            parts = line[5:].split(b",")
+            if len(parts) >= 4:
+                current["branches"].append((parts[0], parts[1], parts[2], parts[3]))
+            current["ordered_detail_tags"].append("BRDA")
+        elif line.startswith(b"MCDC:"):
+            parts = line[5:].split(b",", 5)
+            if len(parts) == 6:
+                current["mcdc"].append(tuple(parts))
+            current["ordered_detail_tags"].append("MCDC")
+        elif line.startswith(b"DA:"):
+            body = line[3:]
+            if b"," in body:
+                line_no, rest = body.split(b",", 1)
+                if b"," in rest:
+                    count, checksum = rest.split(b",", 1)
+                else:
+                    count, checksum = rest, None
+                current["das"].append((line_no, count, checksum))
+            current["ordered_detail_tags"].append("DA")
+        elif line.startswith(
+            (b"FNF:", b"FNH:", b"BRF:", b"BRH:", b"MCF:", b"MCH:", b"LF:", b"LH:")
+        ):
+            tag, value = line.split(b":", 1)
+            current["summaries"][tag.decode("ascii")] = value
+            current["ordered_detail_tags"].append(tag.decode("ascii"))
+        elif line == b"end_of_record" or line.startswith(b"end_of_record"):
+            sections.append(current)
+            current = None
+        elif b":" in line:
+            tag = line.split(b":", 1)[0]
+            if _re.match(br"^[A-Za-z]+$", tag):
+                current["unknown_tags"].append(tag)
+                current["ordered_detail_tags"].append(tag.decode("ascii"))
+    if current is not None:
+        sections.append(current)
+    return sections
+
+
+def load_tf045_input_model(member_name: str, label: str) -> dict[str, object]:
+    require(member_name in TF045_CORPUS_MEMBERS, f"{label}: unknown TF-045 member")
+    member = TF045_CORPUS_MEMBERS[member_name]
+    path = ROOT / str(member["fixture_path"])
+    require(path.is_file(), f"{label}: missing input fixture {path}")
+    sections = parse_input_semantic_model(path.read_bytes())
+    require(len(sections) == 1, f"{label}: input section count for {member_name}")
+    return sections[0]
+
+
+def _da_line_hits(das: list[object]) -> list[tuple[bytes, bytes]]:
+    result: list[tuple[bytes, bytes]] = []
+    for entry in das:
+        require(isinstance(entry, tuple) and len(entry) >= 2, "DA entry shape")
+        result.append((entry[0], entry[1]))  # type: ignore[index]
+    return result
+
+
+def assert_tf045_input_to_output_preservation(
+    input_model: dict[str, object],
+    output_sections: list[dict[str, object]],
+    member_name: str,
+    label: str,
+) -> None:
+    """Compare independent input model with parsed rewritten output model."""
+    require(len(output_sections) == 1, f"{label}: output section count")
+    out = output_sections[0]
+    kind = str(TF045_CORPUS_MEMBERS[member_name]["kind"])
+
+    if kind == "current":
+        require(out["tn"] == input_model["tn"], f"{label}: TN not preserved")
+        require(out["sf"] == input_model["sf"], f"{label}: SF not preserved")
+        require(out["functions"] == input_model["functions"], f"{label}: FNL not preserved")
+        require(out["aliases"] == input_model["aliases"], f"{label}: FNA not preserved")
+        require(out["branches"] == input_model["branches"], f"{label}: BRDA not preserved")
+        require(out["mcdc"] == input_model["mcdc"], f"{label}: MCDC not preserved")
+        require(
+            _da_line_hits(out["das"]) == _da_line_hits(input_model["das"]),  # type: ignore[arg-type]
+            f"{label}: DA line/hits not preserved",
+        )
+        return
+
+    if kind == "legacy":
+        require(out["tn"] == input_model["tn"], f"{label}: TN not preserved")
+        require(out["sf"] == input_model["sf"], f"{label}: SF not preserved")
+        # Legacy FN/FNDA rewrite into current FNL/FNA preserving names/ranges/counts.
+        legacy_fns = list(input_model["legacy_functions"])  # type: ignore[arg-type]
+        legacy_counts = {name: count for count, name in input_model["legacy_counts"]}  # type: ignore[misc]
+        require(len(out["functions"]) == len(legacy_fns), f"{label}: function count rewrite")
+        require(len(out["aliases"]) == len(legacy_fns), f"{label}: alias count rewrite")
+        for index, (start, end, name) in enumerate(legacy_fns):
+            out_fn = out["functions"][index]
+            out_alias = out["aliases"][index]
+            require(out_fn[0] == str(index).encode("ascii"), f"{label}: index rewrite")
+            require(out_fn[1] == start, f"{label}: start rewrite for {name!r}")
+            expected_end = end if end is not None else start
+            require(out_fn[2] == expected_end, f"{label}: end rewrite for {name!r}")
+            require(out_alias[0] == str(index).encode("ascii"), f"{label}: alias index")
+            require(out_alias[2] == name, f"{label}: name rewrite for {name!r}")
+            require(
+                out_alias[1] == legacy_counts.get(name),
+                f"{label}: count rewrite for {name!r}",
+            )
+        require(
+            _da_line_hits(out["das"]) == _da_line_hits(input_model["das"]),  # type: ignore[arg-type]
+            f"{label}: DA line/hits not preserved",
+        )
+        require(not out["branches"] and not out["mcdc"], f"{label}: invented branch/mcdc")
+        # M1-TF-010 remains unbound: this fixture has no comma-name / repeated-def /
+        # unknown-name probes, so we only prove the rewrite facts present here.
+        return
+
+    if kind == "permissive":
+        # Oracle trims TN after first comma-word boundary for this fixture.
+        require(out["tn"] == b",diff", f"{label}: permissive TN rewrite {out['tn']!r}")
+        require(input_model["tn"].startswith(b",diff"), f"{label}: input TN anchor")
+        require(out["sf"] == input_model["sf"], f"{label}: KF->SF path not preserved")
+        require(b"KF" in input_model["forbidden_tags"], f"{label}: expected KF input")  # type: ignore[operator]
+        require(
+            _da_line_hits(out["das"]) == [(b"1", b"1")],
+            f"{label}: DA hits not preserved",
+        )
+        require(not out["functions"] and not out["aliases"], f"{label}: invented functions")
+        return
+
+    if kind == "ignored_error":
+        require(out["tn"] == input_model["tn"], f"{label}: TN not preserved")
+        require(out["sf"] == input_model["sf"], f"{label}: SF not preserved")
+        require(
+            _da_line_hits(out["das"]) == _da_line_hits(input_model["das"]),  # type: ignore[arg-type]
+            f"{label}: DA not preserved",
+        )
+        require(input_model["unknown_tags"], f"{label}: expected unknown tags in input")
+        require(b"TD:" not in TF045_CORPUS_MEMBERS[member_name]["expected_output"], f"{label}: internal")  # type: ignore[operator]
+        # Unknown tags must not appear as retained function/branch/mcdc inventing.
+        require(not out["functions"] and not out["branches"] and not out["mcdc"], f"{label}: invented records")
+        return
+
+    raise ValueError(f"{label}: unknown member kind {kind}")
 
 
 def assert_tf045_member_semantics(output: bytes, member_name: str, label: str) -> None:
-    """Validate one M1-TF-045 corpus member against the independent expected table."""
+    """Validate one M1-TF-045 member via input-model -> output-model parse-write-parse."""
     require(member_name in TF045_CORPUS_MEMBERS, f"{label}: unknown TF-045 member {member_name}")
     member = TF045_CORPUS_MEMBERS[member_name]
     expected = member["expected_output"]
     require(isinstance(expected, (bytes, bytearray)), f"{label}: expected_output type")
     require(output == expected, f"{label}: parse-write output drift for {member_name}")
-    sections = parse_tracefile_sections(output)
-    require(len(sections) == 1, f"{label}: section count for {member_name}")
-    _section_model_matches(sections[0], member["section_facts"], f"{label}.{member_name}")
-    # parse-write-parse: re-parse of rewrite must equal the same section model
+
+    input_model = load_tf045_input_model(member_name, f"{label}.input")
+    output_sections = parse_tracefile_sections(output)
+    assert_tf045_input_to_output_preservation(
+        input_model, output_sections, member_name, f"{label}.pwp"
+    )
+    # Second parse of the rewritten output must reproduce the same output model.
     reparsed = parse_tracefile_sections(output)
-    require(reparsed == sections, f"{label}: parse-write-parse model drift for {member_name}")
+    require(reparsed == output_sections, f"{label}: second-parse model drift for {member_name}")
 
 
 def assert_tf045_group_completeness(
@@ -831,52 +962,120 @@ def assert_tf045_group_completeness(
     require(present == TF045_REQUIRED_MEMBERS, f"{label}: incomplete corpus group {present!r}")
 
 
-def assert_tf052_source_to_output_semantics(output: bytes, label: str) -> None:
-    """Bind converter XML/Python source facts to rewritten LCOV section model.
+def derive_tf052_source_facts() -> dict[str, object]:
+    """Parse converter source artifacts into independent semantic facts.
 
-    Does not use substring-only claims: every source fact is checked against
-    the structured section model and the independent expected rewrite bytes.
+    Facts come only from fixtures/writer/coverage.xml and fixtures/writer/mod.py.
+    They are not copied from LCOV output snapshots.
     """
-    require(output == TF052_EXPECTED_REWRITE, f"{label}: rewrite snapshot drift")
+    xml_path = ROOT / TF052_XML_PATH
+    py_path = ROOT / TF052_PYTHON_PATH
+    require(xml_path.is_file(), f"M1-TF-052: missing XML source {xml_path}")
+    require(py_path.is_file(), f"M1-TF-052: missing Python source {py_path}")
+
+    root = _ET.fromstring(xml_path.read_bytes())
+    cls = root.find(".//class")
+    require(cls is not None, "M1-TF-052: XML class missing")
+    filename = cls.get("filename")
+    require(isinstance(filename, str) and filename, "M1-TF-052: XML filename missing")
+
+    methods = list(cls.findall("methods/method"))
+    require(len(methods) == 1, "M1-TF-052: expected one method in XML")
+    method = methods[0]
+    method_name = method.get("name")
+    require(isinstance(method_name, str) and method_name, "M1-TF-052: method name missing")
+    method_lines = list(method.findall("lines/line"))
+    require(method_lines, "M1-TF-052: method lines missing")
+    method_line = method_lines[0].get("number")
+    method_hits = method_lines[0].get("hits")
+    require(method_line and method_hits, "M1-TF-052: method line/hits missing")
+
+    line_hits: list[tuple[bytes, bytes]] = []
+    branch_line: bytes | None = None
+    branch_taken = 0
+    branch_total = 0
+    for line in cls.findall("lines/line"):
+        number = line.get("number")
+        hits = line.get("hits")
+        require(number and hits, "M1-TF-052: line number/hits missing")
+        line_hits.append((number.encode("ascii"), hits.encode("ascii")))
+        if line.get("branch") == "true":
+            branch_line = number.encode("ascii")
+            coverage = line.get("condition-coverage") or ""
+            match = _re.search(r"\((\d+)/(\d+)\)", coverage)
+            require(match is not None, f"M1-TF-052: branch coverage parse failed: {coverage!r}")
+            branch_taken = int(match.group(1))
+            branch_total = int(match.group(2))
+
+    require(branch_line is not None, "M1-TF-052: branch line missing in XML")
+    require(branch_total > 0, "M1-TF-052: branch total missing")
+
+    py_text = py_path.read_text(encoding="utf-8")
+    py_defs = _re.findall(r"def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(", py_text)
+    require(py_defs, "M1-TF-052: no Python def names in mod.py")
+    require(
+        method_name in py_defs,
+        f"M1-TF-052: XML method {method_name!r} not among Python defs {py_defs!r}",
+    )
+
+    return {
+        "xml_filename": filename.encode("ascii"),
+        "xml_testname": b"xml",  # from converter argv -t xml (case binding)
+        "method_name": method_name.encode("ascii"),
+        "method_line": method_line.encode("ascii"),
+        "method_hits": method_hits.encode("ascii"),
+        "line_hits": tuple(line_hits),
+        "branch_line": branch_line,
+        "branch_coverage_taken": branch_taken,
+        "branch_coverage_total": branch_total,
+        "python_def_names": tuple(name.encode("ascii") for name in py_defs),
+        "python_def_name": method_name.encode("ascii"),
+    }
+
+
+def assert_tf052_output_matches_source(
+    output: bytes,
+    source_facts: dict[str, object],
+    label: str,
+    *,
+    require_canonical_order: bool,
+) -> None:
+    """Compare one converter output path against independently derived source facts."""
     sections = parse_tracefile_sections(output)
     require(len(sections) == 1, f"{label}: section count")
     section = sections[0]
-    require(section["tn"] == TF052_SOURCE_FACTS["xml_testname"], f"{label}: TN from -t")
-    require(section["sf"] == TF052_SOURCE_FACTS["xml_filename"], f"{label}: SF from XML filename")
+    require(section["tn"] == source_facts["xml_testname"], f"{label}: TN from -t")
+    require(section["sf"] == source_facts["xml_filename"], f"{label}: SF from XML filename")
     require(
         section["functions"]
-        == [(b"0", TF052_SOURCE_FACTS["method_line"], TF052_SOURCE_FACTS["method_line"])],
+        == [(b"0", source_facts["method_line"], source_facts["method_line"])],
         f"{label}: function range from method line",
     )
     require(
         section["aliases"]
-        == [
-            (
-                b"0",
-                TF052_SOURCE_FACTS["method_hits"],
-                TF052_SOURCE_FACTS["method_name"],
-            )
-        ],
+        == [(b"0", source_facts["method_hits"], source_facts["method_name"])],
         f"{label}: alias name/hits from method",
     )
     require(
-        section["aliases"][0][2] == TF052_SOURCE_FACTS["python_def_name"],
+        section["aliases"][0][2] == source_facts["python_def_name"],
         f"{label}: alias must match Python def name",
     )
+    require(
+        section["aliases"][0][2] in source_facts["python_def_names"],  # type: ignore[operator]
+        f"{label}: alias not in Python def set",
+    )
     expected_branches = [
-        (TF052_SOURCE_FACTS["branch_line"], b"0", b"0", b"1"),
-        (TF052_SOURCE_FACTS["branch_line"], b"0", b"1", b"0"),
+        (source_facts["branch_line"], b"0", b"0", b"1"),
+        (source_facts["branch_line"], b"0", b"1", b"0"),
     ]
     require(section["branches"] == expected_branches, f"{label}: branch identity from condition-coverage")
     require(
-        len(section["branches"]) == TF052_SOURCE_FACTS["branch_coverage_total"],
+        len(section["branches"]) == source_facts["branch_coverage_total"],
         f"{label}: branch total",
     )
     taken = sum(1 for branch in section["branches"] if branch[3] not in (b"0", b"-", b""))
-    require(taken == TF052_SOURCE_FACTS["branch_coverage_taken"], f"{label}: branch taken count")
-    expected_das = [
-        (line, hits, None) for line, hits in TF052_SOURCE_FACTS["line_hits"]
-    ]
+    require(taken == source_facts["branch_coverage_taken"], f"{label}: branch taken count")
+    expected_das = [(line, hits, None) for line, hits in source_facts["line_hits"]]  # type: ignore[misc]
     require(section["das"] == expected_das, f"{label}: DA hits from XML lines")
     require(not section["mcdc"], f"{label}: converters must not invent MC/DC")
     require(
@@ -888,28 +1087,20 @@ def assert_tf052_source_to_output_semantics(output: bytes, label: str) -> None:
         and section["summaries"].get("FNH") == b"1",
         f"{label}: recomputed summaries",
     )
-    # Canonical family order after lcov rewrite: FNL before BRDA before DA.
-    fnl_at = output.find(b"\nFNL:")
-    brda_at = output.find(b"\nBRDA:")
-    da_at = output.find(b"\nDA:")
-    require(0 <= fnl_at < brda_at < da_at, f"{label}: canonical family order")
-    # parse-write snapshot stability
-    require(
-        parse_tracefile_sections(output) == sections,
-        f"{label}: parse-write-parse snapshot drift",
+    if require_canonical_order:
+        fnl_at = output.find(b"\nFNL:")
+        brda_at = output.find(b"\nBRDA:")
+        da_at = output.find(b"\nDA:")
+        require(0 <= fnl_at < brda_at < da_at, f"{label}: canonical family order")
+
+
+def assert_tf052_source_to_output_semantics(output: bytes, label: str) -> None:
+    """Bind rewrite output to independently derived XML/Python source facts."""
+    require(output == TF052_EXPECTED_REWRITE, f"{label}: rewrite snapshot drift")
+    source_facts = derive_tf052_source_facts()
+    assert_tf052_output_matches_source(
+        output, source_facts, label, require_canonical_order=True
     )
-
-
-def assert_tf052_direct_preserves_semantics(direct: bytes, rewrite: bytes, label: str) -> None:
-    """Direct converter output and canonical rewrite must share semantic model."""
-    direct_sections = parse_tracefile_sections(direct)
-    rewrite_sections = parse_tracefile_sections(rewrite)
-    require(len(direct_sections) == 1 and len(rewrite_sections) == 1, f"{label}: section count")
-    dsec, rsec = direct_sections[0], rewrite_sections[0]
-    for key in ("tn", "sf", "functions", "aliases", "branches", "mcdc", "das"):
-        require(dsec[key] == rsec[key], f"{label}: direct/rewrite {key} semantic loss")
-    # Summaries may differ in emission order but must match values.
-    require(dsec["summaries"] == rsec["summaries"], f"{label}: summary semantic loss")
 
 
 def assert_tf052_group_completeness(
@@ -925,28 +1116,35 @@ def assert_tf052_group_completeness(
             observation.get("output", {}).get("exists") is True,
             f"{label}: {case_id} missing output",
         )
+    source_facts = derive_tf052_source_facts()
     rewrite = decode_output(
         observed_by_id[TF052_REWRITE_CASE_ID]["output"], f"{label}.rewrite"
     )
     direct = decode_output(
         observed_by_id[TF052_DIRECT_CASE_ID]["output"], f"{label}.direct"
     )
-    assert_tf052_source_to_output_semantics(rewrite, f"{label}.rewrite")
-    assert_tf052_direct_preserves_semantics(direct, rewrite, f"{label}.no-loss")
+    # Both paths independently compared to the same source facts (not only to each other).
+    assert_tf052_output_matches_source(
+        rewrite, source_facts, f"{label}.rewrite", require_canonical_order=True
+    )
+    assert_tf052_output_matches_source(
+        direct, source_facts, f"{label}.direct", require_canonical_order=False
+    )
+    require(rewrite == TF052_EXPECTED_REWRITE, f"{label}: rewrite snapshot drift")
 
 
 def extract_tf061_field_bytes(output: bytes) -> dict[str, bytes]:
     sections = parse_tracefile_sections(output)
     require(len(sections) == 1, "M1-TF-061: section count")
     section = sections[0]
-    require(section["aliases"], "M1-TF-061: missing function alias")
+    require(section["aliases"], "M1-TF-061: missing function name (FNA)")
     require(section["branches"], "M1-TF-061: missing branch expression")
     require(section["mcdc"], "M1-TF-061: missing MC/DC expression")
     require(section["ver"] is not None, "M1-TF-061: missing VER")
     return {
         "tn": section["tn"],
         "sf": section["sf"],
-        "function_alias": section["aliases"][0][2],
+        "function_name": section["aliases"][0][2],
         "branch_expression": section["branches"][0][2],
         "mcdc_expression": section["mcdc"][0][5],
         "mcdc_condition": section["mcdc"][0][4],
@@ -962,16 +1160,14 @@ def assert_tf061_field_matrix(output: bytes, label: str) -> None:
     for field_name, expected in TF061_FIELD_EXPECTED.items():
         actual = fields[field_name]
         require(actual == expected, f"{label}: {field_name} byte drift {actual!r} != {expected!r}")
-        if field_name in {"sf", "function_alias", "branch_expression", "mcdc_expression", "ver"}:
-            # non-TN retained fields must keep at least one non-ASCII byte from the fixture
+        if field_name in {"sf", "function_name", "branch_expression", "mcdc_expression", "ver"}:
             require(any(byte > 127 for byte in actual), f"{label}: {field_name} lost non-ASCII")
-    # TN sanitization: non-word input bytes become '_' and must not retain 0xff
     require(b"\xff" not in fields["tn"], f"{label}: TN retained invalid word byte")
     require(fields["tn"] == b"test__", f"{label}: TN sanitization drift")
     sections = parse_tracefile_sections(output)
     require(
-        sections[0]["aliases"] == [(b"0", b"1", TF061_FIELD_EXPECTED["function_alias"])],
-        f"{label}: function alias model",
+        sections[0]["aliases"] == [(b"0", b"1", TF061_FIELD_EXPECTED["function_name"])],
+        f"{label}: function name model",
     )
     require(
         sections[0]["branches"][0]
@@ -987,7 +1183,6 @@ def assert_tf061_field_matrix(output: bytes, label: str) -> None:
         and sections[0]["mcdc"][0][4] == TF061_FIELD_EXPECTED["mcdc_condition"],
         f"{label}: MC/DC condition index/sense",
     )
-    # both senses share the same non-ASCII expression and condition index
     require(
         sections[0]["mcdc"][0][5] == sections[0]["mcdc"][1][5]
         and sections[0]["mcdc"][0][4] == sections[0]["mcdc"][1][4],
@@ -1006,33 +1201,60 @@ def assert_tf061_group_completeness(
     require(observation.get("output", {}).get("exists") is True, f"{label}: missing output")
     output = decode_output(observation["output"], f"{label}.output")
     assert_tf061_field_matrix(output, label)
-    # Every required field member must be present (explicit group check).
     fields = extract_tf061_field_bytes(output)
     missing = TF061_REQUIRED_FIELDS - set(fields)
     require(not missing, f"{label}: missing field members {missing!r}")
 
 
 def mutate_tf045_lost_record(output: bytes) -> bytes:
-    """Drop the first DA record to prove lost-record rejection."""
-    for marker in (b"DA:1,1\n", b"DA:10,4\n", b"DA:1,1\n"):
+    """Drop one DA record so lost-record rejection is exercised for every member."""
+    for marker in (b"DA:1,1\n", b"DA:10,4\n", b"DA:2,0\n", b"DA:20,1\n", b"DA:30,0\n"):
         if marker in output:
             return output.replace(marker, b"", 1)
-    # last resort: drop any DA line
-    import re
-    return re.sub(br"DA:[^\n]*\n", b"", output, count=1)
+    return _re.sub(br"DA:[^\n]*\n", b"", output, count=1)
 
 
 def mutate_tf045_reordered_records(output: bytes) -> bytes:
-    """Swap two DA records when present; otherwise swap FNL/FNA order."""
+    """Reorder real detail records for every corpus member (no SF field fallback)."""
+    # Canonical: swap the two DA records.
     if b"DA:1,1\nDA:2,0\n" in output:
         return output.replace(b"DA:1,1\nDA:2,0\n", b"DA:2,0\nDA:1,1\n", 1)
-    if b"FNL:0,10,20\nFNA:0,4,legacy_main\nFNL:1,30,30\nFNA:1,0,legacy_helper\n" in output:
+    # Legacy: swap the two function groups (FNL/FNA pairs).
+    legacy_pair = (
+        b"FNL:0,10,20\nFNA:0,4,legacy_main\n"
+        b"FNL:1,30,30\nFNA:1,0,legacy_helper\n"
+    )
+    if legacy_pair in output:
         return output.replace(
-            b"FNL:0,10,20\nFNA:0,4,legacy_main\nFNL:1,30,30\nFNA:1,0,legacy_helper\n",
-            b"FNL:1,30,30\nFNA:1,0,legacy_helper\nFNL:0,10,20\nFNA:0,4,legacy_main\n",
+            legacy_pair,
+            b"FNL:1,30,30\nFNA:1,0,legacy_helper\n"
+            b"FNL:0,10,20\nFNA:0,4,legacy_main\n",
             1,
         )
-    return output.replace(b"SF:", b"SF:mut-", 1)
+    # Legacy DA order alternate surface.
+    if b"DA:10,4\nDA:20,1\nDA:30,0\n" in output:
+        return output.replace(
+            b"DA:10,4\nDA:20,1\nDA:30,0\n",
+            b"DA:30,0\nDA:20,1\nDA:10,4\n",
+            1,
+        )
+    # Permissive / ignored-error single-DA outputs: reorder SF before DA vs DA before SF,
+    # or LF/LH summary order — never a field-byte SF mutation.
+    if b"SF:src/permissive.c\nDA:1,1\n" in output:
+        return output.replace(
+            b"SF:src/permissive.c\nDA:1,1\n",
+            b"DA:1,1\nSF:src/permissive.c\n",
+            1,
+        )
+    if b"SF:src/u.c\nDA:1,1\n" in output:
+        return output.replace(
+            b"SF:src/u.c\nDA:1,1\n",
+            b"DA:1,1\nSF:src/u.c\n",
+            1,
+        )
+    if b"LF:1\nLH:1\n" in output:
+        return output.replace(b"LF:1\nLH:1\n", b"LH:1\nLF:1\n", 1)
+    raise ValueError("TF-045 reorder mutation could not find a real reorder surface")
 
 
 def mutate_tf045_field_bytes(output: bytes) -> bytes:
@@ -1054,7 +1276,7 @@ def mutate_tf061_field_bytes(output: bytes, field: str) -> bytes:
         return output.replace(b"TN:test__\n", b"TN:test_x\n", 1)
     if field == "sf":
         return output.replace(b"\xfe", b"x", 1)
-    if field == "function_alias":
+    if field == "function_name":
         return output.replace(b"\xfc", b"y", 1)
     if field == "branch_expression":
         return output.replace(b"\xfb", b"z", 1)

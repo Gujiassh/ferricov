@@ -996,18 +996,10 @@ EXACT_CASE_REQUIREMENTS.update({
     # M1-TF-045 group: canonical member plus legacy/permissive/ignored-error
     # members bound below. Group-completeness is enforced in validation_common.
     "writer-fixedpoint.canonical": {"requirement_ids": ["M1-TF-045"]},
-    "legacy.canonical": {"requirement_ids": ["M1-TF-010", "M1-TF-044", "M1-TF-045"]},
-    "permissive-prefix.canonical": {
-        "requirement_ids": [
-            "M1-TF-004",
-            "M1-TF-006",
-            "M1-TF-008",
-            "M1-TF-012",
-            "M1-TF-015",
-            "M1-TF-044",
-            "M1-TF-045",
-        ]
-    },
+    # M1-TF-010 remains unbound: legacy.info lacks comma-name / repeated-def /
+    # unknown-name probes. This case only contributes to the TF-045 group.
+    "legacy.canonical": {"requirement_ids": ["M1-TF-045"]},
+    "permissive-prefix.canonical": {"requirement_ids": ["M1-TF-045"]},
     "wave2-unknown-tags.ignore-format": {"requirement_ids": ["M1-TF-016", "M1-TF-045"]},
     "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
     "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050", "M1-TF-052"]},
@@ -1449,7 +1441,6 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-007",
             "M1-TF-008",
             "M1-TF-009",
-            "M1-TF-010",
             "M1-TF-011",
             "M1-TF-012",
             "M1-TF-013",

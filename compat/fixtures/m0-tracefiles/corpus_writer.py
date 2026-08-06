@@ -627,7 +627,7 @@ WRITER_EXACT_REQUIREMENTS: dict[str, list[str]] = {
     "writer-forbidden.canonical": ["M1-TF-044"],
     "writer-fixedpoint.canonical": ["M1-TF-045"],
     "writer-fixedpoint.repeated-write": ["M1-TF-046"],
-    "converter-coverage.xml2lcov": ["M1-TF-050"],
+    "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
     "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
     "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],
     "converter-coverage.canonical-rewrite": ["M1-TF-052"],

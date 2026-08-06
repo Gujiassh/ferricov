@@ -424,16 +424,8 @@ class TracefileContractTests(unittest.TestCase):
     def test_wave3_semantic_mappings_are_exact_and_group_scoped(self) -> None:
         expected = {
             "writer-fixedpoint.canonical": ["M1-TF-045"],
-            "legacy.canonical": ["M1-TF-010", "M1-TF-044", "M1-TF-045"],
-            "permissive-prefix.canonical": [
-                "M1-TF-004",
-                "M1-TF-006",
-                "M1-TF-008",
-                "M1-TF-012",
-                "M1-TF-015",
-                "M1-TF-044",
-                "M1-TF-045",
-            ],
+            "legacy.canonical": ["M1-TF-045"],
+            "permissive-prefix.canonical": ["M1-TF-045"],
             "wave2-unknown-tags.ignore-format": ["M1-TF-016", "M1-TF-045"],
             "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
             "converter-coverage.canonical-rewrite": ["M1-TF-052"],
@@ -444,6 +436,11 @@ class TracefileContractTests(unittest.TestCase):
             with self.subTest(case_id=case_id):
                 self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
                 self.assertNotIn("m0_decision_ids", targets[case_id])
+        # M1-TF-010 must remain unbound without comma-name/repeated-def/unknown-name probes.
+        self.assertNotIn(
+            "M1-TF-010",
+            self.committed["totals"]["exact_executable_requirement_ids"],
+        )
         # SF-only writer non-utf8 remains observational; matrix is on bytes-non-utf8.
         writer_non_utf8 = targets["writer-non-utf8.canonical"]
         self.assertNotIn("requirement_ids", writer_non_utf8)
