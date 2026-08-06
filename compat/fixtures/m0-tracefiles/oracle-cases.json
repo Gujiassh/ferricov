@@ -4052,8 +4052,8 @@
     {
       "id": "writer-fixedpoint.canonical",
       "fixture": "fixtures/writer/fixedpoint.info",
-      "requirement": "observational-fixedpoint-single-corpus",
-      "description": "Observational single-corpus fixed-point rewrite; not full M1-TF-045 evidence.",
+      "requirement": "M1-TF-045",
+      "description": "Canonical corpus member of M1-TF-045 parse-write-parse group (with legacy/permissive/ignored-error).",
       "argv": [
         "lcov",
         "--branch-coverage",
@@ -4141,8 +4141,8 @@
     {
       "id": "converter-coverage.canonical-rewrite",
       "fixture": "fixtures/writer/coverage.xml",
-      "requirement": "observational-converter-rewrite",
-      "description": "Observational converter-to-canonical rewrite; not full M1-TF-052 semantic no-loss evidence.",
+      "requirement": "M1-TF-052",
+      "description": "Converter output parsed and canonically rewritten without semantic loss (XML/Python source facts bound).",
       "argv": [
         "sh",
         "-c",

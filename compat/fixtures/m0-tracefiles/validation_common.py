@@ -609,6 +609,464 @@ def assert_writer_non_utf8_observational(output: bytes, label: str) -> None:
     require(output == b"TN:x\nSF:src/\xff.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", f"{label}: exact rewrite")
 
 
+
+# ---------------------------------------------------------------------------
+# Wave3 semantic closures (M1-TF-045 / 052 / 061)
+# Independently fixed expected tables; group-completeness is mandatory for
+# requirement binding. Validators must fail on reordered/lost records,
+# field-byte changes, member omission, and identity swaps.
+# ---------------------------------------------------------------------------
+
+# M1-TF-045: parse-write-parse across four corpora (canonical, legacy,
+# permissive, ignored-error). Expected outputs are the Oracle rewrite bytes
+# fixed independently of free-form case labels.
+TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
+    "canonical": {
+        "case_id": "writer-fixedpoint.canonical",
+        "fixture_path": "fixtures/writer/fixedpoint.info",
+        "expected_output": (
+            b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+            b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+            b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+            b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
+        ),
+        "section_facts": {
+            "tn": b"s",
+            "sf": b"src/s.c",
+            "ver": None,
+            "functions": [(b"0", b"1", b"1")],
+            "aliases": [(b"0", b"1", b"f")],
+            "branches": [(b"1", b"0", b"e", b"1"), (b"1", b"0", b"e2", b"0")],
+            "mcdc": [
+                (b"1", b"1", b"t", b"1", b"0", b"c"),
+                (b"1", b"1", b"f", b"0", b"0", b"c"),
+            ],
+            "das": [(b"1", b"1", None), (b"2", b"0", None)],
+            "summaries": {
+                "FNF": b"1",
+                "FNH": b"1",
+                "BRF": b"2",
+                "BRH": b"1",
+                "MCF": b"2",
+                "MCH": b"1",
+                "LF": b"2",
+                "LH": b"1",
+            },
+        },
+    },
+    "legacy": {
+        "case_id": "legacy.canonical",
+        "fixture_path": "fixtures/legacy.info",
+        "expected_output": (
+            b"TN:legacy\nSF:src/legacy.c\n"
+            b"FNL:0,10,20\nFNA:0,4,legacy_main\n"
+            b"FNL:1,30,30\nFNA:1,0,legacy_helper\n"
+            b"FNF:2\nFNH:1\n"
+            b"DA:10,4\nDA:20,1\nDA:30,0\n"
+            b"LF:3\nLH:2\nend_of_record\n"
+        ),
+        "section_facts": {
+            "tn": b"legacy",
+            "sf": b"src/legacy.c",
+            "ver": None,
+            "functions": [(b"0", b"10", b"20"), (b"1", b"30", b"30")],
+            "aliases": [
+                (b"0", b"4", b"legacy_main"),
+                (b"1", b"0", b"legacy_helper"),
+            ],
+            "branches": [],
+            "mcdc": [],
+            "das": [
+                (b"10", b"4", None),
+                (b"20", b"1", None),
+                (b"30", b"0", None),
+            ],
+            "summaries": {"FNF": b"2", "FNH": b"1", "LF": b"3", "LH": b"2"},
+        },
+    },
+    "permissive": {
+        "case_id": "permissive-prefix.canonical",
+        "fixture_path": "fixtures/permissive-prefix.info",
+        "expected_output": (
+            b"TN:,diff\nSF:src/permissive.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
+        ),
+        "section_facts": {
+            "tn": b",diff",
+            "sf": b"src/permissive.c",
+            "ver": None,
+            "functions": [],
+            "aliases": [],
+            "branches": [],
+            "mcdc": [],
+            "das": [(b"1", b"1", None)],
+            "summaries": {"LF": b"1", "LH": b"1"},
+        },
+    },
+    "ignored_error": {
+        "case_id": "wave2-unknown-tags.ignore-format",
+        "fixture_path": "fixtures/wave2/unknown-tags.info",
+        "expected_output": b"TN:u\nSF:src/u.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
+        "section_facts": {
+            "tn": b"u",
+            "sf": b"src/u.c",
+            "ver": None,
+            "functions": [],
+            "aliases": [],
+            "branches": [],
+            "mcdc": [],
+            "das": [(b"1", b"1", None)],
+            "summaries": {"LF": b"1", "LH": b"1"},
+        },
+    },
+}
+TF045_REQUIRED_MEMBERS = frozenset(TF045_CORPUS_MEMBERS)
+TF045_CASE_IDS = frozenset(
+    str(member["case_id"]) for member in TF045_CORPUS_MEMBERS.values()
+)
+
+# M1-TF-052: converter input semantic facts (authored from XML/Python sources
+# independently of LCOV output) bound to rewrite output section model.
+TF052_SOURCE_FACTS: dict[str, object] = {
+    "xml_filename": b"mod.py",
+    "xml_testname": b"xml",
+    "method_name": b"foo",
+    "method_line": b"1",
+    "method_hits": b"3",
+    "line_hits": ((b"1", b"3"), (b"2", b"1")),
+    "branch_line": b"1",
+    "branch_coverage_taken": 1,
+    "branch_coverage_total": 2,
+    "python_def_name": b"foo",
+}
+TF052_REWRITE_CASE_ID = "converter-coverage.canonical-rewrite"
+TF052_DIRECT_CASE_ID = "converter-coverage.xml2lcov"
+TF052_REQUIRED_CASE_IDS = frozenset({TF052_REWRITE_CASE_ID, TF052_DIRECT_CASE_ID})
+TF052_EXPECTED_REWRITE = (
+    b"TN:xml\nSF:mod.py\nFNL:0,1,1\nFNA:0,3,foo\nFNF:1\nFNH:1\n"
+    b"BRDA:1,0,0,1\nBRDA:1,0,1,0\nBRF:2\nBRH:1\n"
+    b"DA:1,3\nDA:2,1\nLF:2\nLH:2\nend_of_record\n"
+)
+
+# M1-TF-061: invalid/non-ASCII byte matrix across TN, SF, function alias,
+# branch expression, MC/DC expression/condition, and VER. TN is sanitized by
+# Oracle (non-word bytes -> '_'); other fields retain raw bytes. Current-form
+# function identity is carried by FNA alias bytes (FNL is index/range only).
+TF061_CASE_ID = "bytes-non-utf8.canonical"
+TF061_REQUIRED_FIELDS = frozenset(
+    {
+        "tn",
+        "sf",
+        "function_alias",
+        "branch_expression",
+        "mcdc_expression",
+        "mcdc_condition",
+        "ver",
+    }
+)
+TF061_FIELD_EXPECTED: dict[str, bytes] = {
+    "tn": b"test__",  # input TN:test-\xff sanitized
+    "sf": b"src/path-\xfe.c",
+    "function_alias": b"alias-\xfc",
+    "branch_expression": b"branch-\xfb",
+    "mcdc_expression": b"mcdc-\xfa",
+    "mcdc_condition": b"0",  # condition index on both senses
+    "ver": b"revision-\xfd",
+}
+TF061_EXPECTED_OUTPUT = (
+    b"TN:test__\nSF:src/path-\xfe.c\nVER:revision-\xfd\n"
+    b"FNL:0,1,1\nFNA:0,1,alias-\xfc\nFNF:1\nFNH:1\n"
+    b"BRDA:1,0,branch-\xfb,1\nBRDA:1,0,other,0\nBRF:2\nBRH:1\n"
+    b"MCDC:1,1,t,1,0,mcdc-\xfa\nMCDC:1,1,f,0,0,mcdc-\xfa\nMCF:2\nMCH:1\n"
+    b"DA:1,1\nLF:1\nLH:1\nend_of_record\n"
+)
+
+
+def _section_model_matches(section: dict[str, object], facts: dict[str, object], label: str) -> None:
+    require(section["tn"] == facts["tn"], f"{label}: TN drift {section['tn']!r}")
+    require(section["sf"] == facts["sf"], f"{label}: SF drift {section['sf']!r}")
+    require(section.get("ver") == facts.get("ver"), f"{label}: VER drift")
+    require(section["functions"] == facts["functions"], f"{label}: functions drift")
+    require(section["aliases"] == facts["aliases"], f"{label}: aliases drift")
+    require(section["branches"] == facts["branches"], f"{label}: branches drift")
+    require(section["mcdc"] == facts["mcdc"], f"{label}: mcdc drift")
+    require(section["das"] == facts["das"], f"{label}: DA drift")
+    require(section["summaries"] == facts["summaries"], f"{label}: summaries drift")
+
+
+def assert_tf045_member_semantics(output: bytes, member_name: str, label: str) -> None:
+    """Validate one M1-TF-045 corpus member against the independent expected table."""
+    require(member_name in TF045_CORPUS_MEMBERS, f"{label}: unknown TF-045 member {member_name}")
+    member = TF045_CORPUS_MEMBERS[member_name]
+    expected = member["expected_output"]
+    require(isinstance(expected, (bytes, bytearray)), f"{label}: expected_output type")
+    require(output == expected, f"{label}: parse-write output drift for {member_name}")
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: section count for {member_name}")
+    _section_model_matches(sections[0], member["section_facts"], f"{label}.{member_name}")
+    # parse-write-parse: re-parse of rewrite must equal the same section model
+    reparsed = parse_tracefile_sections(output)
+    require(reparsed == sections, f"{label}: parse-write-parse model drift for {member_name}")
+
+
+def assert_tf045_group_completeness(
+    observed_by_id: dict[str, dict[str, object]],
+    decode_output,
+    label: str = "M1-TF-045",
+) -> None:
+    """Fail unless every required corpus member is present and semantically valid."""
+    present = set()
+    for member_name, member in TF045_CORPUS_MEMBERS.items():
+        case_id = str(member["case_id"])
+        require(case_id in observed_by_id, f"{label}: missing corpus case {case_id}")
+        observation = observed_by_id[case_id]
+        require(observation.get("exit_status") == 0, f"{label}: {case_id} exit")
+        output_identity = observation.get("output")
+        require(
+            isinstance(output_identity, dict) and output_identity.get("exists") is True,
+            f"{label}: {case_id} missing output",
+        )
+        output = decode_output(output_identity, f"{label}.{case_id}")
+        assert_tf045_member_semantics(output, member_name, f"{label}.{case_id}")
+        present.add(member_name)
+    require(present == TF045_REQUIRED_MEMBERS, f"{label}: incomplete corpus group {present!r}")
+
+
+def assert_tf052_source_to_output_semantics(output: bytes, label: str) -> None:
+    """Bind converter XML/Python source facts to rewritten LCOV section model.
+
+    Does not use substring-only claims: every source fact is checked against
+    the structured section model and the independent expected rewrite bytes.
+    """
+    require(output == TF052_EXPECTED_REWRITE, f"{label}: rewrite snapshot drift")
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: section count")
+    section = sections[0]
+    require(section["tn"] == TF052_SOURCE_FACTS["xml_testname"], f"{label}: TN from -t")
+    require(section["sf"] == TF052_SOURCE_FACTS["xml_filename"], f"{label}: SF from XML filename")
+    require(
+        section["functions"]
+        == [(b"0", TF052_SOURCE_FACTS["method_line"], TF052_SOURCE_FACTS["method_line"])],
+        f"{label}: function range from method line",
+    )
+    require(
+        section["aliases"]
+        == [
+            (
+                b"0",
+                TF052_SOURCE_FACTS["method_hits"],
+                TF052_SOURCE_FACTS["method_name"],
+            )
+        ],
+        f"{label}: alias name/hits from method",
+    )
+    require(
+        section["aliases"][0][2] == TF052_SOURCE_FACTS["python_def_name"],
+        f"{label}: alias must match Python def name",
+    )
+    expected_branches = [
+        (TF052_SOURCE_FACTS["branch_line"], b"0", b"0", b"1"),
+        (TF052_SOURCE_FACTS["branch_line"], b"0", b"1", b"0"),
+    ]
+    require(section["branches"] == expected_branches, f"{label}: branch identity from condition-coverage")
+    require(
+        len(section["branches"]) == TF052_SOURCE_FACTS["branch_coverage_total"],
+        f"{label}: branch total",
+    )
+    taken = sum(1 for branch in section["branches"] if branch[3] not in (b"0", b"-", b""))
+    require(taken == TF052_SOURCE_FACTS["branch_coverage_taken"], f"{label}: branch taken count")
+    expected_das = [
+        (line, hits, None) for line, hits in TF052_SOURCE_FACTS["line_hits"]
+    ]
+    require(section["das"] == expected_das, f"{label}: DA hits from XML lines")
+    require(not section["mcdc"], f"{label}: converters must not invent MC/DC")
+    require(
+        section["summaries"].get("LF") == b"2"
+        and section["summaries"].get("LH") == b"2"
+        and section["summaries"].get("BRF") == b"2"
+        and section["summaries"].get("BRH") == b"1"
+        and section["summaries"].get("FNF") == b"1"
+        and section["summaries"].get("FNH") == b"1",
+        f"{label}: recomputed summaries",
+    )
+    # Canonical family order after lcov rewrite: FNL before BRDA before DA.
+    fnl_at = output.find(b"\nFNL:")
+    brda_at = output.find(b"\nBRDA:")
+    da_at = output.find(b"\nDA:")
+    require(0 <= fnl_at < brda_at < da_at, f"{label}: canonical family order")
+    # parse-write snapshot stability
+    require(
+        parse_tracefile_sections(output) == sections,
+        f"{label}: parse-write-parse snapshot drift",
+    )
+
+
+def assert_tf052_direct_preserves_semantics(direct: bytes, rewrite: bytes, label: str) -> None:
+    """Direct converter output and canonical rewrite must share semantic model."""
+    direct_sections = parse_tracefile_sections(direct)
+    rewrite_sections = parse_tracefile_sections(rewrite)
+    require(len(direct_sections) == 1 and len(rewrite_sections) == 1, f"{label}: section count")
+    dsec, rsec = direct_sections[0], rewrite_sections[0]
+    for key in ("tn", "sf", "functions", "aliases", "branches", "mcdc", "das"):
+        require(dsec[key] == rsec[key], f"{label}: direct/rewrite {key} semantic loss")
+    # Summaries may differ in emission order but must match values.
+    require(dsec["summaries"] == rsec["summaries"], f"{label}: summary semantic loss")
+
+
+def assert_tf052_group_completeness(
+    observed_by_id: dict[str, dict[str, object]],
+    decode_output,
+    label: str = "M1-TF-052",
+) -> None:
+    for case_id in TF052_REQUIRED_CASE_IDS:
+        require(case_id in observed_by_id, f"{label}: missing case {case_id}")
+        observation = observed_by_id[case_id]
+        require(observation.get("exit_status") == 0, f"{label}: {case_id} exit")
+        require(
+            observation.get("output", {}).get("exists") is True,
+            f"{label}: {case_id} missing output",
+        )
+    rewrite = decode_output(
+        observed_by_id[TF052_REWRITE_CASE_ID]["output"], f"{label}.rewrite"
+    )
+    direct = decode_output(
+        observed_by_id[TF052_DIRECT_CASE_ID]["output"], f"{label}.direct"
+    )
+    assert_tf052_source_to_output_semantics(rewrite, f"{label}.rewrite")
+    assert_tf052_direct_preserves_semantics(direct, rewrite, f"{label}.no-loss")
+
+
+def extract_tf061_field_bytes(output: bytes) -> dict[str, bytes]:
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, "M1-TF-061: section count")
+    section = sections[0]
+    require(section["aliases"], "M1-TF-061: missing function alias")
+    require(section["branches"], "M1-TF-061: missing branch expression")
+    require(section["mcdc"], "M1-TF-061: missing MC/DC expression")
+    require(section["ver"] is not None, "M1-TF-061: missing VER")
+    return {
+        "tn": section["tn"],
+        "sf": section["sf"],
+        "function_alias": section["aliases"][0][2],
+        "branch_expression": section["branches"][0][2],
+        "mcdc_expression": section["mcdc"][0][5],
+        "mcdc_condition": section["mcdc"][0][4],
+        "ver": section["ver"],
+    }
+
+
+def assert_tf061_field_matrix(output: bytes, label: str) -> None:
+    """Validate the full non-ASCII/invalid-UTF-8 field matrix for M1-TF-061."""
+    require(output == TF061_EXPECTED_OUTPUT, f"{label}: output snapshot drift")
+    fields = extract_tf061_field_bytes(output)
+    require(set(fields) == TF061_REQUIRED_FIELDS, f"{label}: field group incomplete {set(fields)!r}")
+    for field_name, expected in TF061_FIELD_EXPECTED.items():
+        actual = fields[field_name]
+        require(actual == expected, f"{label}: {field_name} byte drift {actual!r} != {expected!r}")
+        if field_name in {"sf", "function_alias", "branch_expression", "mcdc_expression", "ver"}:
+            # non-TN retained fields must keep at least one non-ASCII byte from the fixture
+            require(any(byte > 127 for byte in actual), f"{label}: {field_name} lost non-ASCII")
+    # TN sanitization: non-word input bytes become '_' and must not retain 0xff
+    require(b"\xff" not in fields["tn"], f"{label}: TN retained invalid word byte")
+    require(fields["tn"] == b"test__", f"{label}: TN sanitization drift")
+    sections = parse_tracefile_sections(output)
+    require(
+        sections[0]["aliases"] == [(b"0", b"1", TF061_FIELD_EXPECTED["function_alias"])],
+        f"{label}: function alias model",
+    )
+    require(
+        sections[0]["branches"][0]
+        == (b"1", b"0", TF061_FIELD_EXPECTED["branch_expression"], b"1"),
+        f"{label}: branch identity/expression model",
+    )
+    require(
+        sections[0]["mcdc"][0][5] == TF061_FIELD_EXPECTED["mcdc_expression"],
+        f"{label}: MC/DC expression model",
+    )
+    require(
+        sections[0]["mcdc"][0][2] in (b"t", b"f")
+        and sections[0]["mcdc"][0][4] == TF061_FIELD_EXPECTED["mcdc_condition"],
+        f"{label}: MC/DC condition index/sense",
+    )
+    # both senses share the same non-ASCII expression and condition index
+    require(
+        sections[0]["mcdc"][0][5] == sections[0]["mcdc"][1][5]
+        and sections[0]["mcdc"][0][4] == sections[0]["mcdc"][1][4],
+        f"{label}: MC/DC condition pair coherence",
+    )
+
+
+def assert_tf061_group_completeness(
+    observed_by_id: dict[str, dict[str, object]],
+    decode_output,
+    label: str = "M1-TF-061",
+) -> None:
+    require(TF061_CASE_ID in observed_by_id, f"{label}: missing case {TF061_CASE_ID}")
+    observation = observed_by_id[TF061_CASE_ID]
+    require(observation.get("exit_status") == 0, f"{label}: exit")
+    require(observation.get("output", {}).get("exists") is True, f"{label}: missing output")
+    output = decode_output(observation["output"], f"{label}.output")
+    assert_tf061_field_matrix(output, label)
+    # Every required field member must be present (explicit group check).
+    fields = extract_tf061_field_bytes(output)
+    missing = TF061_REQUIRED_FIELDS - set(fields)
+    require(not missing, f"{label}: missing field members {missing!r}")
+
+
+def mutate_tf045_lost_record(output: bytes) -> bytes:
+    """Drop the first DA record to prove lost-record rejection."""
+    for marker in (b"DA:1,1\n", b"DA:10,4\n", b"DA:1,1\n"):
+        if marker in output:
+            return output.replace(marker, b"", 1)
+    # last resort: drop any DA line
+    import re
+    return re.sub(br"DA:[^\n]*\n", b"", output, count=1)
+
+
+def mutate_tf045_reordered_records(output: bytes) -> bytes:
+    """Swap two DA records when present; otherwise swap FNL/FNA order."""
+    if b"DA:1,1\nDA:2,0\n" in output:
+        return output.replace(b"DA:1,1\nDA:2,0\n", b"DA:2,0\nDA:1,1\n", 1)
+    if b"FNL:0,10,20\nFNA:0,4,legacy_main\nFNL:1,30,30\nFNA:1,0,legacy_helper\n" in output:
+        return output.replace(
+            b"FNL:0,10,20\nFNA:0,4,legacy_main\nFNL:1,30,30\nFNA:1,0,legacy_helper\n",
+            b"FNL:1,30,30\nFNA:1,0,legacy_helper\nFNL:0,10,20\nFNA:0,4,legacy_main\n",
+            1,
+        )
+    return output.replace(b"SF:", b"SF:mut-", 1)
+
+
+def mutate_tf045_field_bytes(output: bytes) -> bytes:
+    return output.replace(b"SF:", b"SF:X", 1)
+
+
+def mutate_tf052_identity_swap(output: bytes) -> bytes:
+    """Swap method alias identity with a different name."""
+    return output.replace(b"FNA:0,3,foo\n", b"FNA:0,3,bar\n", 1)
+
+
+def mutate_tf052_member_omission(output: bytes) -> bytes:
+    """Omit one DA line record."""
+    return output.replace(b"DA:2,1\n", b"", 1)
+
+
+def mutate_tf061_field_bytes(output: bytes, field: str) -> bytes:
+    if field == "tn":
+        return output.replace(b"TN:test__\n", b"TN:test_x\n", 1)
+    if field == "sf":
+        return output.replace(b"\xfe", b"x", 1)
+    if field == "function_alias":
+        return output.replace(b"\xfc", b"y", 1)
+    if field == "branch_expression":
+        return output.replace(b"\xfb", b"z", 1)
+    if field == "mcdc_expression":
+        return output.replace(b"\xfa", b"w", 1)
+    if field == "mcdc_condition":
+        return output.replace(b",0,mcdc-", b",1,mcdc-", 1)
+    if field == "ver":
+        return output.replace(b"\xfd", b"v", 1)
+    raise ValueError(f"unknown TF-061 field {field}")
+
+
 def assert_identity_self_hash(identity: dict[str, object], label: str) -> None:
     """Require identity base64/size/sha are self-consistent and reject mutated hashes."""
     verify_identity(identity, label)
