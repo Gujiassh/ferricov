@@ -1179,11 +1179,17 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         else:
             self.fail(f"missing TF-030 case {target_id}")
 
-        # Refresh any self-describing hash fields if present (fail-closed even then).
+        # Exercise a real self-hash-like metadata field: mutate case content, then
+        # inject/refresh cases_sha256 over the mutated document so authentication
+        # cannot be bypassed by self-describing hashes.
+        self.assertNotIn("cases_sha256", document)
+        body_without_hash = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
+        mutated["cases_sha256"] = hashlib.sha256(body_without_hash).hexdigest()
+        poisoned_with_hash = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
+        # Refresh the self-hash after the metadata field itself is present.
+        mutated["cases_sha256"] = hashlib.sha256(poisoned_with_hash).hexdigest()
         poisoned_bytes = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
-        if "cases_sha256" in mutated:
-            mutated["cases_sha256"] = hashlib.sha256(poisoned_bytes).hexdigest()
-            poisoned_bytes = (json.dumps(mutated, indent=2, sort_keys=True) + "\n").encode("ascii")
+        self.assertEqual(mutated["cases_sha256"], hashlib.sha256(poisoned_with_hash).hexdigest())
         self.assertNotEqual(
             hashlib.sha256(poisoned_bytes).hexdigest(),
             capture_oracle.EXPECTED_CASES_SHA256,
@@ -1230,6 +1236,7 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as alias_err:
                 capture_oracle.validate_cases_request(alias)
             self.assertIn("oracle-cases byte identity mismatch", str(alias_err.exception))
+
 
     def test_merge_into_validation_runs_before_docker_inspect(self) -> None:
         """Invalid merge inputs must reject before inspect_image/inspect_program."""

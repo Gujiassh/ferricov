@@ -98,5 +98,4 @@ Fix:
 - `capture_oracle.validate_cases_request()` binds `--cases` to pinned digest `EXPECTED_CASES_SHA256` (canonical `oracle-cases.json` bytes).
 - Overrides are allowed only when content independently matches that digest; path/basename alone is never trusted.
 - Capture/merge uses the trusted cases bytes only; authentication runs before Docker inspect.
-- Reverse mutation: `test_override_cases_manifest_mutation_is_rejected_before_docker` rewrites a TF-030 case definition under a trusted id, refreshes any self-hash fields, and proves rejection before Docker.
-
+- Reverse mutation: `test_override_cases_manifest_mutation_is_rejected_before_docker` rewrites a TF-030 case definition under a trusted id, injects a refreshed `cases_sha256` self-hash metadata field over the mutated bytes, and proves rejection before Docker.
