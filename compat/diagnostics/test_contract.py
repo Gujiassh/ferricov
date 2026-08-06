@@ -6,6 +6,8 @@ import os
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 
 DIAGNOSTICS_ROOT = Path(__file__).resolve().parent
 UPSTREAM_ROOT = Path(
@@ -365,6 +367,114 @@ class DiagnosticsContractTests(unittest.TestCase):
                 contract.build_document(UPSTREAM_ROOT)
         finally:
             path.write_bytes(original)
+
+    def test_oracle_observation_unknown_field_is_rejected_by_schema(self) -> None:
+        schema = contract.load_json(contract.SCHEMA_PATH)
+        root_schema = {
+            "$schema": schema.get(
+                "$schema", "https://json-schema.org/draft/2020-12/schema"
+            ),
+            "$defs": schema["$defs"],
+            "$ref": "#/$defs/oracleObservation",
+        }
+        probe = {
+            "id": "correctness:probe-unknown-field",
+            "kind": "startup_boundary",
+            "planned_case_ids": [],
+            "exit_status": 1,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "observation_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "unknown_field": "must-fail",
+        }
+        errors = list(Draft202012Validator(root_schema).iter_errors(probe))
+        self.assertTrue(errors)
+        self.assertTrue(
+            any(
+                error.validator == "additionalProperties"
+                or "additional properties" in error.message
+                for error in errors
+            )
+        )
+        document = copy.deepcopy(self.committed)
+        document["oracle_observations"][0]["unknown_field"] = "must-fail"
+        with self.assertRaisesRegex(
+            contract.DiagnosticsContractError,
+            "schema failure|additional",
+        ):
+            self.validate(document)
+
+    def test_wave1_environment_metadata_refresh_is_rejected(self) -> None:
+        path = (
+            contract.WAVE1_ROOT
+            / "cases"
+            / "diag-noargs-geninfo-writable"
+            / "result.json"
+        )
+        original = path.read_bytes()
+        try:
+            document = contract.load_json(path)
+            mutated = dict(document["effective_environment_variables"])
+            mutated["EXTRA_HOST_LEAK"] = "1"
+            document["effective_environment_variables"] = mutated
+            path.write_text(contract.canonical_json(document))
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "effective environment|environment policy|observation hash|retained diagnostics artifact|wave1",
+            ):
+                contract.build_document(UPSTREAM_ROOT)
+        finally:
+            path.write_bytes(original)
+
+    def test_wave1_cleanup_outcome_refresh_is_rejected(self) -> None:
+        path = (
+            contract.WAVE1_ROOT
+            / "cases"
+            / "diag-ignore0-format-da"
+            / "result.json"
+        )
+        original = path.read_bytes()
+        try:
+            document = contract.load_json(path)
+            document["cleanup_outcome"] = {
+                **document["cleanup_outcome"],
+                "container_absent": False,
+                "direct_child_reaped": False,
+            }
+            path.write_text(contract.canonical_json(document))
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "cleanup outcome|container_absent|direct_child_reaped|observation hash|retained diagnostics artifact|wave1",
+            ):
+                contract.build_document(UPSTREAM_ROOT)
+        finally:
+            path.write_bytes(original)
+
+    def test_wave1_cleanup_and_environment_are_bound_independently(self) -> None:
+        wave1 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:")
+        ]
+        self.assertEqual(len(wave1), 26)
+        for entry in wave1:
+            self.assertEqual(entry["cleanup"], contract.WAVE1_CLEANUP)
+            self.assertEqual(
+                entry["effective_environment_variables"],
+                contract.WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
+            )
+            self.assertEqual(
+                entry["environment_policy"],
+                contract.WAVE1_ENVIRONMENT_POLICY,
+            )
+            self.assertTrue(entry["cleanup_outcome"]["direct_child_reaped"])
+            self.assertIs(entry["cleanup_outcome"]["container_absent"], True)
+            self.assertIsNone(entry["cleanup_outcome"]["process_group_empty"])
+            self.assertTrue(entry["cleanup_outcome"]["named_container_removed"])
+            self.assertFalse(
+                entry["environment_policy"]["inherits_host_environment"]
+            )
 
 
 if __name__ == "__main__":

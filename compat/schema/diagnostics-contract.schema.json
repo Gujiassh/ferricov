@@ -360,7 +360,7 @@
     },
     "oracleObservation": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "id",
         "kind",
@@ -455,6 +455,84 @@
         },
         "cleanup": {
           "type": "string"
+        },
+        "cleanup_outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy",
+            "direct_child_reaped",
+            "process_group_empty",
+            "container_absent",
+            "named_container_removed",
+            "container_name"
+          ],
+          "properties": {
+            "policy": {
+              "type": "string"
+            },
+            "direct_child_reaped": {
+              "type": "boolean"
+            },
+            "process_group_empty": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "container_absent": {
+              "type": "boolean"
+            },
+            "named_container_removed": {
+              "type": "boolean"
+            },
+            "container_name": {
+              "type": "string"
+            }
+          }
+        },
+        "effective_environment_variables": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "environment_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "inherits_host_environment",
+            "declared_variables",
+            "effective_environment_variables",
+            "reviewed_exclusions"
+          ],
+          "properties": {
+            "mode": {
+              "type": "string"
+            },
+            "inherits_host_environment": {
+              "type": "boolean"
+            },
+            "declared_variables": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "effective_environment_variables": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "reviewed_exclusions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "file_tree_semantics": {
           "type": "string"

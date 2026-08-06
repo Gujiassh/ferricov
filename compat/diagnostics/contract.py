@@ -40,7 +40,7 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
         "d9383f3e0bc7218806818c024dcb97744cf27816901b6afb9e1ff726fbb4e94e",
     "compat/diagnostics/wave1/result.json":
-        "4ff53ab7c96d448ab944264e7c53fb2568fa1f28f004831b41caf1d082c08788",
+        "990decc9be2a1090348c46fc162d64d9d6fd6ac2fa9bc9ae0f722516255a92ea",
 }
 
 
@@ -50,22 +50,42 @@ WAVE1_PINNED_IMAGE = (
 )
 WAVE1_FILE_TREE_SEMANTICS = "workspace_including_inputs"
 WAVE1_TIMEOUT_SECONDS = 30
-WAVE1_CLEANUP = "remove_case_workdir_before_capture"
+WAVE1_CLEANUP = (
+    "remove_case_workdir_before_capture_and_force_remove_named_container"
+)
+WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES = {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+}
+WAVE1_ENVIRONMENT_POLICY = {
+    "mode": "declared_clean_env",
+    "inherits_host_environment": False,
+    "declared_variables": WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
+    "effective_environment_variables": WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
+    "reviewed_exclusions": [
+        "host process environment is not inherited; only declared Docker -e values are applied"
+    ],
+}
+WAVE1_CLEANUP_OUTCOME_TEMPLATE = {
+    "policy": WAVE1_CLEANUP,
+    "direct_child_reaped": True,
+    "process_group_empty": None,
+    "container_absent": True,
+    "named_container_removed": True,
+}
 WAVE1_EXECUTION_ENVIRONMENT = {
     "docker_image": WAVE1_PINNED_IMAGE,
     "network": "none",
     "user": "1000:1000",
     "workdir": "/work",
-    "env": {
-        "HOME": "/work",
-        "LANG": "C",
-        "LC_ALL": "C",
-        "TZ": "UTC",
-        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    },
+    "env": WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
     "tmpfs": ["/tmp:rw,exec,mode=1777"],
     "timeout_seconds": WAVE1_TIMEOUT_SECONDS,
     "cleanup": WAVE1_CLEANUP,
+    "environment_policy": WAVE1_ENVIRONMENT_POLICY,
 }
 
 # Independent expected identity for every wave1 case. These facts are not derived
@@ -1011,10 +1031,38 @@ def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]
         raise DiagnosticsContractError(
             f"wave1 execution environment drift: {case_id}"
         )
+    if document.get("effective_environment_variables") != WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES:
+        raise DiagnosticsContractError(
+            f"wave1 effective environment drift: {case_id}"
+        )
+    if document.get("environment_policy") != WAVE1_ENVIRONMENT_POLICY:
+        raise DiagnosticsContractError(
+            f"wave1 environment policy drift: {case_id}"
+        )
     if document.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
         raise DiagnosticsContractError(f"wave1 timeout drift: {case_id}")
     if document.get("cleanup") != WAVE1_CLEANUP:
         raise DiagnosticsContractError(f"wave1 cleanup policy drift: {case_id}")
+    expected_cleanup = {
+        **WAVE1_CLEANUP_OUTCOME_TEMPLATE,
+        "container_name": f"ferricov-diag-wave1-{case_id}",
+    }
+    if document.get("cleanup_outcome") != expected_cleanup:
+        raise DiagnosticsContractError(
+            f"wave1 cleanup outcome drift: {case_id}"
+        )
+    if not document.get("cleanup_outcome", {}).get("direct_child_reaped"):
+        raise DiagnosticsContractError(
+            f"wave1 cleanup missing direct_child_reaped: {case_id}"
+        )
+    if document.get("cleanup_outcome", {}).get("container_absent") is not True:
+        raise DiagnosticsContractError(
+            f"wave1 cleanup missing container_absent: {case_id}"
+        )
+    if document.get("cleanup_outcome", {}).get("process_group_empty") is not None:
+        raise DiagnosticsContractError(
+            f"wave1 cleanup invalid process_group claim: {case_id}"
+        )
     if document.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
         raise DiagnosticsContractError(
             f"wave1 file-tree semantics drift: {case_id}"
@@ -1088,6 +1136,14 @@ def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]
         "timeout_seconds": WAVE1_TIMEOUT_SECONDS,
         "timed_out": False,
         "cleanup": WAVE1_CLEANUP,
+        "cleanup_outcome": {
+            **WAVE1_CLEANUP_OUTCOME_TEMPLATE,
+            "container_name": f"ferricov-diag-wave1-{case_id}",
+        },
+        "effective_environment_variables": dict(
+            WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
+        ),
+        "environment_policy": WAVE1_ENVIRONMENT_POLICY,
         "file_tree_semantics": WAVE1_FILE_TREE_SEMANTICS,
         "exit_status": expected["expected_exit"],
         "stdout_sha256": stdout_hash,
@@ -1113,6 +1169,12 @@ def wave1_observations() -> list[dict[str, Any]]:
         raise DiagnosticsContractError("wave1 index timeout drift")
     if index.get("execution_environment") != WAVE1_EXECUTION_ENVIRONMENT:
         raise DiagnosticsContractError("wave1 index execution environment drift")
+    if index.get("effective_environment_variables") != WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES:
+        raise DiagnosticsContractError("wave1 index effective environment drift")
+    if index.get("environment_policy") != WAVE1_ENVIRONMENT_POLICY:
+        raise DiagnosticsContractError("wave1 index environment policy drift")
+    if index.get("cleanup") != WAVE1_CLEANUP:
+        raise DiagnosticsContractError("wave1 index cleanup policy drift")
     if index.get("case_count") != WAVE1_EXPECTED_CASE_COUNT:
         raise DiagnosticsContractError("wave1 case count drift")
     if len(index.get("cases", [])) != WAVE1_EXPECTED_CASE_COUNT:
@@ -1414,6 +1476,22 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         if entry.get("cleanup") != WAVE1_CLEANUP:
             raise DiagnosticsContractError(
                 f"wave1 observation cleanup drift: {expected['id']}"
+            )
+        expected_cleanup = {
+            **WAVE1_CLEANUP_OUTCOME_TEMPLATE,
+            "container_name": f"ferricov-diag-wave1-{expected['id']}",
+        }
+        if entry.get("cleanup_outcome") != expected_cleanup:
+            raise DiagnosticsContractError(
+                f"wave1 observation cleanup outcome drift: {expected['id']}"
+            )
+        if entry.get("effective_environment_variables") != WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES:
+            raise DiagnosticsContractError(
+                f"wave1 observation effective environment drift: {expected['id']}"
+            )
+        if entry.get("environment_policy") != WAVE1_ENVIRONMENT_POLICY:
+            raise DiagnosticsContractError(
+                f"wave1 observation environment policy drift: {expected['id']}"
             )
         if entry.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
             raise DiagnosticsContractError(

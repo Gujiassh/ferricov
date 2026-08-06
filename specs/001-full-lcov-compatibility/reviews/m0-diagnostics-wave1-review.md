@@ -27,6 +27,12 @@ validation largely trusted index/result self-hashes. The repair adds:
    keep-going cases plus a separate structural boundary case.
 8. Reverse mutations for raw stdout/stderr, file-tree content, nested metadata,
    converter identity, and index order.
+9. Schema `oracleObservation.additionalProperties=false` with every supported
+   field enumerated; direct unknown-field schema probe rejects independently.
+10. Declared clean environment identity retained and independently compared;
+    host inheritance is false with reviewed exclusions.
+11. Timeout path force-removes named containers and retains verified cleanup
+    outcomes; contract rejects evidence without confirmed cleanup.
 
 ## Delivered
 
