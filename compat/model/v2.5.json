@@ -1,0 +1,1922 @@
+{
+  "artifact_bindings": [
+    {
+      "path": "compat/fixtures/m0-algebra/oracle-cases.json",
+      "sha256": "8736af4dac8e64fbfc18177604d739956be9a3368f0455701a5a63c98c8194c9"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/oracle-baseline.json",
+      "sha256": "e95d1bc39f8770df051704302951ee10c2788cc8b40ab9b057b84dc5a55a2083"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/expected-facts.json",
+      "sha256": "c067a1d10f50aade3d7bf098625060efff32c3234995567f533d91baecc1114f"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/manifest.json",
+      "sha256": "16a1d2f508a4fef492d6870e9be8be1877dd2419c7c8a88c1b9593ab49acc16f"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/inspect_algebra.pl",
+      "sha256": "32a4c1bb250d50090893c6fe811e34a1fea84f11692e471e20f93e2cd216b25a"
+    },
+    {
+      "path": "compat/model/m1-model.json",
+      "sha256": "487822152043f7e0756921b51905d742ffb3ff7381794408bf3bf0c0d84f7912"
+    }
+  ],
+  "blocked_case_ids": [
+    "M1-MD-020",
+    "M1-TF-063",
+    "M1-TF-064"
+  ],
+  "bound_case_ids": [
+    "M1-MD-010",
+    "M1-MD-011",
+    "M1-MD-012",
+    "M1-MD-013",
+    "M1-MD-014",
+    "M1-MD-017",
+    "M1-MD-019"
+  ],
+  "case_count": 157,
+  "contract_id": "m0-model-algebra-v1",
+  "executable_bindings": [
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.union.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.union.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.intersect.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.intersect.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.difference.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.difference.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.union-rev.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.union-rev.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.intersect-rev.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.intersect-rev.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.difference-rev.cli",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md010-line.difference-rev.semantic",
+      "model_row": "M1-MD-010",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.union.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.union.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.intersect.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.intersect.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.difference.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.difference.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.union-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.union-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.intersect-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.intersect-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.difference-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function.difference-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.union.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.union.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.intersect.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.intersect.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.difference.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.difference.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.union-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.union-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.intersect-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.intersect-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.difference-rev.cli",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md011-function-rep.difference-rev.semantic",
+      "model_row": "M1-MD-011",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.union.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.union.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.intersect.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.intersect.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.difference.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.difference.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.union-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.union-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.intersect-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.intersect-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.difference-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch.difference-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.union.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.union.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.intersect.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.intersect.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.difference.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.difference.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.union-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.union-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.intersect-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.intersect-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.difference-rev.cli",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md012-branch-cache.difference-rev.semantic",
+      "model_row": "M1-MD-012",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.union.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.union.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.intersect.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.intersect.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.difference.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.difference.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.union-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.union-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.intersect-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.intersect-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.difference-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc.difference-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.union.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.union.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.intersect.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.intersect.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.difference.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.difference.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.union-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.union-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.intersect-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.intersect-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.difference-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-expr.difference-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 1,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.union.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 255,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.union.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 1,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.intersect.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 255,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.intersect.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.difference.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.difference.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.union-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.union-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.intersect-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.intersect-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.difference-rev.cli",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-MCDC-VECTOR-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md013-mcdc-vector.difference-rev.semantic",
+      "model_row": "M1-MD-013",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.union.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.union.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.intersect.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.intersect.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.difference.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.difference.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.union-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.union-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.intersect-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.intersect-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.difference-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-LINE-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-line.difference-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.union.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.union.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.intersect.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.intersect.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.difference.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.difference.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.union-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.union-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.intersect-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.intersect-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.difference-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-FUNCTION-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-function.difference-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.union.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.union.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.intersect.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.intersect.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.difference.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.difference.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.union-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.union-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.intersect-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.intersect-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.difference-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-BRANCH-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-branch.difference-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.union.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.union.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.intersect.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.intersect.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.difference.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.difference.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.union-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.union-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.intersect-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.intersect-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.difference-rev.cli",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md014-testcase-mcdc.difference-rev.semantic",
+      "model_row": "M1-MD-014",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-current.load.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-current.rewrite.cli",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-current.rewrite.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-legacy.load.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-legacy.rewrite.cli",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-legacy.rewrite.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-permissive.load.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-permissive.rewrite.cli",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md017-permissive.rewrite.semantic",
+      "model_row": "M1-MD-017",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-015",
+        "M1-TF-023"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md019-repeated-close.summary.cli",
+      "model_row": "M1-MD-019",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-015",
+        "M1-TF-023",
+        "M1-PROP-NONSERIAL-001"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md019-repeated-close.semantic",
+      "model_row": "M1-MD-019",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-015",
+        "M1-TF-023"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md019-repeated-close.rewrite.cli",
+      "model_row": "M1-MD-019",
+      "phase": "oracle_baseline",
+      "runner": "lcov"
+    },
+    {
+      "binding_ids": [
+        "M1-TF-015"
+      ],
+      "expected_exit": 0,
+      "ferricov_parity_status": "blocked",
+      "id": "md019-repeated-terminator.semantic",
+      "model_row": "M1-MD-019",
+      "phase": "oracle_baseline",
+      "runner": "inspect_algebra.pl"
+    }
+  ],
+  "fixture_count": 27,
+  "fuzz_execution_phase": "M1-only",
+  "harness_artifacts": [
+    {
+      "path": "compat/model/contract.py",
+      "sha256": "68023c297f49a0761a8f10f4fa2b20753ee5a2f72fdb3fd14b0b35f4a9527440"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/generate.py",
+      "sha256": "8254d68cfe143310af5049b397613aa928b9633eea849440174ed7e631f2f799"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/capture_oracle.py",
+      "sha256": "2919015a4dc66fbcc66153893a52e69d8aacd04b72a45d6c67017bb1735bcd76"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/validate.py",
+      "sha256": "d11dc79613cf34bef81f1894d0de45c83ed63c7696e1c4c4630fb0d3b919802a"
+    },
+    {
+      "path": "compat/fixtures/m0-algebra/inspect_algebra.pl",
+      "sha256": "32a4c1bb250d50090893c6fe811e34a1fea84f11692e471e20f93e2cd216b25a"
+    },
+    {
+      "path": "compat/schema/model-contract.schema.json",
+      "sha256": "25345c4aa5c6f7f62cb1b0d43fe7dc0a17dbf4476d490d10ebb7505b95a5cdf6"
+    }
+  ],
+  "independent_facts_path": "compat/fixtures/m0-algebra/expected-facts.json",
+  "model_rows": [
+    {
+      "bindings": [
+        "M1-ALG-LINE-001",
+        "M1-PROP-ALGEBRA-001"
+      ],
+      "id": "M1-MD-010",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-ALG-FUNCTION-001",
+        "M1-ALG-FUNCTION-REP-001"
+      ],
+      "id": "M1-MD-011",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-ALG-BRANCH-001",
+        "M1-ALG-BRANCH-CACHE-001"
+      ],
+      "id": "M1-MD-012",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-ALG-MCDC-001",
+        "M1-ALG-MCDC-VECTOR-001",
+        "M1-ALG-MCDC-EXPR-001"
+      ],
+      "id": "M1-MD-013",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-ALG-TESTCASE-LINE-001",
+        "M1-ALG-TESTCASE-FUNCTION-001",
+        "M1-ALG-TESTCASE-BRANCH-001",
+        "M1-ALG-TESTCASE-MCDC-001"
+      ],
+      "id": "M1-MD-014",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-TF-045",
+        "M1-TF-052",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "id": "M1-MD-017",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-TF-015",
+        "M1-TF-023",
+        "M1-PROP-NONSERIAL-001"
+      ],
+      "id": "M1-MD-019",
+      "status": "oracle_bound"
+    },
+    {
+      "bindings": [
+        "M1-TF-063",
+        "M1-TF-064"
+      ],
+      "id": "M1-MD-020",
+      "reason": "adversarial fuzz execution remains M1-only",
+      "status": "blocked"
+    }
+  ],
+  "observation_count": 157,
+  "oracle_identity": {
+    "image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "lcov_path": "/usr/local/bin/lcov",
+    "lcov_sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252",
+    "manifest_id": "oracle-lcov-v2.5-image-smoke",
+    "manifest_path": "compat/manifests/oracle-lcov-v2.5-smoke.json",
+    "manifest_sha256": "a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+    "network": "none",
+    "product_compatibility_evidence": false,
+    "user": "root"
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "scope": "Executable M0 Oracle coverage-model algebra and property evidence for M1-MD-010..014, M1-MD-017, and M1-MD-019 against the pinned LCOV v2.5 image.",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}
