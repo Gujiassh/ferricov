@@ -51,7 +51,12 @@ Wave1 validation is fail-closed:
   and retains verified cleanup outcomes; `docker ps` observer failures fail
   closed and are never treated as absence;
 - contract schema enumerates every supported `oracleObservation` field with
-  `additionalProperties: false` so unknown fields fail independently.
+  `additionalProperties: false` so unknown fields fail independently;
+- every wave1 case retains an `execution_manifest` with locale/timezone,
+  invoked executable hashes, Perl/Python/compiler versions, and package
+  availability (or explicit not_applicable);
+- capture launchers always pass `stdin=subprocess.DEVNULL`; env/manifest
+  probes use try/finally force-remove cleanup on timeout/error.
 
 Wave1 observations remain `oracle_reference` only and do **not** set
 `product_compatibility_evidence`.

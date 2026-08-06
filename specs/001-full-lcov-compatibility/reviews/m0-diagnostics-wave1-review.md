@@ -94,3 +94,9 @@ Ferricov executable.
 - `container_absent` fails closed on nonzero/timeout/`OSError` docker ps observer results.
 - Oracle command environment is produced by in-container `env -i` with only declared variables; effective env is probed and retained, not assumed from constants alone.
 - All 26 wave1 cases were recaptured on pinned image after these capture fixes.
+
+## Provenance / stdin / probe-cleanup rework
+
+- env probe and manifest probe use try/finally force_remove_container on TimeoutExpired/OSError.
+- all docker launchers pass stdin=subprocess.DEVNULL.
+- all 26 cases retain normative execution_manifest provenance and were recaptured on the pinned image.

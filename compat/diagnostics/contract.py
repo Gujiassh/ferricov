@@ -40,7 +40,7 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
         "d9383f3e0bc7218806818c024dcb97744cf27816901b6afb9e1ff726fbb4e94e",
     "compat/diagnostics/wave1/result.json":
-        "8849b6fb27ffd41a7798f48add1cc52ebd7d03945e277bd0be8b19b558fbde57",
+        "abfda945b02bb3a31543a2501619fa19f38fac89b42d7e5f845c209c339cd454",
 }
 
 
@@ -97,7 +97,52 @@ WAVE1_EXECUTION_ENVIRONMENT = {
     "cleanup": WAVE1_CLEANUP,
     "environment_policy": WAVE1_ENVIRONMENT_POLICY,
     "docker_cli_host_env": WAVE1_DOCKER_CLI_HOST_ENV,
+    "stdin": "subprocess.DEVNULL",
 }
+
+WAVE1_STDIN = "subprocess.DEVNULL"
+# Filled/verified against recaptured wave1 index; validators require exact match
+# of locale/timezone/runtime/package/executable provenance independently of
+# observation self-hashes.
+WAVE1_EXECUTION_MANIFEST_BASE: dict[str, Any] = {'command_wrapper': ['env', '-i'],
+ 'effective_environment_variables': {'HOME': '/work',
+                                     'LANG': 'C',
+                                     'LC_ALL': 'C',
+                                     'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+                                     'TZ': 'UTC'},
+ 'executables': {'geninfo': {'availability': 'available',
+                             'path': '/usr/local/bin/geninfo',
+                             'sha256': 'sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8'},
+                 'lcov': {'availability': 'available',
+                          'path': '/usr/local/bin/lcov',
+                          'sha256': 'sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252'},
+                 'llvm2lcov': {'availability': 'available',
+                               'path': '/usr/local/bin/llvm2lcov',
+                               'sha256': 'sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654'},
+                 'perl2lcov': {'availability': 'available',
+                               'path': '/usr/local/bin/perl2lcov',
+                               'sha256': 'sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b'},
+                 'py2lcov': {'availability': 'available',
+                             'path': '/usr/local/bin/py2lcov',
+                             'sha256': 'sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da'},
+                 'xml2lcov': {'availability': 'available',
+                              'path': '/usr/local/bin/xml2lcov',
+                              'sha256': 'sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae'}},
+ 'image': 'sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7',
+ 'lc_all': 'C',
+ 'locale': 'C',
+ 'package_availability': {'g++': 'available:4:12.2.0-3',
+                          'gcc': 'available:4:12.2.0-3',
+                          'llvm': 'not_applicable',
+                          'perl': 'available:5.36.0-7+deb12u3',
+                          'python3': 'available:3.11.2-1+b1'},
+ 'runtime_versions': {'compiler': 'gcc (Debian 12.2.0-14+deb12u1) 12.2.0',
+                      'perl': 'v5.36.0',
+                      'python': '3.11.2'},
+ 'schema_version': 1,
+ 'stdin': 'subprocess.DEVNULL',
+ 'timezone': 'UTC',
+ 'upstream_commit': '74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5'}
 
 # Independent expected identity for every wave1 case. These facts are not derived
 # from observation self-hashes; validators recompute stdout/stderr/file-tree from
@@ -1065,6 +1110,39 @@ def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]
         raise DiagnosticsContractError(
             f"wave1 host env inheritance claim drift: {case_id}"
         )
+    if document.get("execution_environment", {}).get("stdin") != WAVE1_STDIN:
+        raise DiagnosticsContractError(f"wave1 stdin policy drift: {case_id}")
+    manifest = document.get("execution_manifest")
+    if not isinstance(manifest, dict):
+        raise DiagnosticsContractError(
+            f"wave1 missing execution_manifest provenance: {case_id}"
+        )
+    if WAVE1_EXECUTION_MANIFEST_BASE is None:
+        raise DiagnosticsContractError("wave1 execution_manifest base is not bound")
+    expected_manifest = {
+        **WAVE1_EXECUTION_MANIFEST_BASE,
+        "invoked_command": expected["argv"][0],
+        "invoked_executable": {
+            "name": expected["argv"][0],
+            "path": WAVE1_EXECUTION_MANIFEST_BASE["executables"][expected["argv"][0]][
+                "path"
+            ],
+            "sha256": WAVE1_EXECUTION_MANIFEST_BASE["executables"][expected["argv"][0]][
+                "sha256"
+            ],
+        },
+        "invoked_argv": list(expected["argv"]),
+    }
+    if manifest != expected_manifest:
+        raise DiagnosticsContractError(
+            f"wave1 execution_manifest provenance drift: {case_id}"
+        )
+    if case.get("execution_manifest") != expected_manifest:
+        raise DiagnosticsContractError(
+            f"wave1 index execution_manifest drift: {case_id}"
+        )
+    if case.get("stdin") != WAVE1_STDIN:
+        raise DiagnosticsContractError(f"wave1 index stdin drift: {case_id}")
     if document.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
         raise DiagnosticsContractError(f"wave1 timeout drift: {case_id}")
     if document.get("cleanup") != WAVE1_CLEANUP:
@@ -1170,6 +1248,21 @@ def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]
             WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
         ),
         "environment_policy": WAVE1_ENVIRONMENT_POLICY,
+        "stdin": WAVE1_STDIN,
+        "execution_manifest": {
+            **WAVE1_EXECUTION_MANIFEST_BASE,
+            "invoked_command": expected["argv"][0],
+            "invoked_executable": {
+                "name": expected["argv"][0],
+                "path": WAVE1_EXECUTION_MANIFEST_BASE["executables"][
+                    expected["argv"][0]
+                ]["path"],
+                "sha256": WAVE1_EXECUTION_MANIFEST_BASE["executables"][
+                    expected["argv"][0]
+                ]["sha256"],
+            },
+            "invoked_argv": list(expected["argv"]),
+        },
         "file_tree_semantics": WAVE1_FILE_TREE_SEMANTICS,
         "exit_status": expected["expected_exit"],
         "stdout_sha256": stdout_hash,
@@ -1201,6 +1294,10 @@ def wave1_observations() -> list[dict[str, Any]]:
         raise DiagnosticsContractError("wave1 index environment policy drift")
     if index.get("cleanup") != WAVE1_CLEANUP:
         raise DiagnosticsContractError("wave1 index cleanup policy drift")
+    if index.get("stdin") != WAVE1_STDIN:
+        raise DiagnosticsContractError("wave1 index stdin policy drift")
+    if index.get("execution_manifest") != WAVE1_EXECUTION_MANIFEST_BASE:
+        raise DiagnosticsContractError("wave1 index execution_manifest drift")
     if index.get("case_count") != WAVE1_EXPECTED_CASE_COUNT:
         raise DiagnosticsContractError("wave1 case count drift")
     if len(index.get("cases", [])) != WAVE1_EXPECTED_CASE_COUNT:
@@ -1518,6 +1615,28 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         if entry.get("environment_policy") != WAVE1_ENVIRONMENT_POLICY:
             raise DiagnosticsContractError(
                 f"wave1 observation environment policy drift: {expected['id']}"
+            )
+        if entry.get("stdin") != WAVE1_STDIN:
+            raise DiagnosticsContractError(
+                f"wave1 observation stdin drift: {expected['id']}"
+            )
+        expected_manifest = {
+            **WAVE1_EXECUTION_MANIFEST_BASE,
+            "invoked_command": expected["argv"][0],
+            "invoked_executable": {
+                "name": expected["argv"][0],
+                "path": WAVE1_EXECUTION_MANIFEST_BASE["executables"][
+                    expected["argv"][0]
+                ]["path"],
+                "sha256": WAVE1_EXECUTION_MANIFEST_BASE["executables"][
+                    expected["argv"][0]
+                ]["sha256"],
+            },
+            "invoked_argv": list(expected["argv"]),
+        }
+        if entry.get("execution_manifest") != expected_manifest:
+            raise DiagnosticsContractError(
+                f"wave1 observation execution_manifest drift: {expected['id']}"
             )
         if entry.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
             raise DiagnosticsContractError(
