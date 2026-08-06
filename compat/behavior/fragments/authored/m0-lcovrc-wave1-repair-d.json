@@ -1,0 +1,914 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.coverage-rates",
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options",
+        "lcov.summary"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.profile as a source-bound config-key boundary for lcovrc: input form `profile = <value>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh, tests/genhtml/target.sh, tests/lcov/summary/target.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.profile",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1159,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.profile",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/genhtml/target.sh",
+        "tests/lcov/summary/target.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.python-file-extensions: config-key boundary `python_file_extensions = <py>` from `#python_file_extensions = py`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.python-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 106,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1152,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.python-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.resolve-script as a source-bound config-key boundary for lcovrc: input form `resolve_script = <path_to_my_executable>` from parser/config text `#resolve_script = path_to_my_executable`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.resolve-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 440,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1178,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.resolve-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.retain-unreachable-coverpoints-if-executed as a source-bound config-key boundary for lcovrc: input form `retain_unreachable_coverpoints_if_executed = <value>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.retain-unreachable-coverpoints-if-executed",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1138,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.retain-unreachable-coverpoints-if-executed",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.rtl-file-extensions: config-key boundary `rtl_file_extensions = <v,vh,sv,vhd?>` from `#rtl_file_extensions = v,vh,sv,vhd?`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.rtl-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 93,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1149,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.rtl-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.scope-regexp as a source-bound config-key boundary for lcovrc: input form `scope_regexp = <value>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.scope-regexp",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7213,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.scope-regexp",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.select-script: config-key boundary `select_script = <value>` from `# select_script = path_to_exe | callback_parameter`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.select-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7204,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 361,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.select-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.simplify-function: config-key boundary `simplify_function = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.simplify-function",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7205,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.simplify-function",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.add-and-prune"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.sort-input as a source-bound config-key boundary for lcovrc: input form `sort_input = <0|1>` from parser/config text `#sort_input = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/add/prune.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.sort-input",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 485,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1198,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.sort-input",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/add/prune.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.source-directory: config-key boundary `source_directory = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.source-directory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1166,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.source-directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.split-char: config-key boundary `split_char = <,>` from `#split_char = ,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.split-char",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 476,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1190,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.split-char",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.stop-on-error as a source-bound config-key boundary for lcovrc: input form `stop_on_error = <0|1>` from parser/config text `#stop_on_error = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.stop-on-error",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 75,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1145,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.stop-on-error",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "lcov.capture-and-filter",
+        "lcov.demangling"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.substitute as a source-bound config-key boundary for lcovrc: input form `substitute = <s#/.libs##g>` from parser/config text `#substitute = s#/.libs##g`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/demangle/demangle.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.substitute",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 408,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 410,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1173,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.substitute",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/demangle/demangle.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.suppress-function-aliases: config-key boundary `suppress_function_aliases = <0|1>` from `#suppress_function_aliases = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.suppress-function-aliases",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7193,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 219,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.suppress-function-aliases",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.treat-warning-as-error as a source-bound config-key boundary for lcovrc: input form `treat_warning_as_error = <0|1>` from parser/config text `#treat_warning_as_error = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.treat-warning-as-error",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 80,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1146,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.treat-warning-as-error",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.trivial-function-threshold: config-key boundary `trivial_function_threshold = <int>` from `#trivial_function_threshold = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.trivial-function-threshold",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 229,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1120,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.trivial-function-threshold",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.truncate-owner-table as a source-bound config-key boundary for lcovrc: input form `truncate_owner_table = <top,directory,file>` from parser/config text `# truncate_owner_table = top,directory,file`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.truncate-owner-table",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7209,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 384,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.truncate-owner-table",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.unreachable-script: config-key boundary `unreachable_script = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.unreachable-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1184,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.unreachable-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for lcovrc.version-script: config-key boundary `version_script = <path_to_my_executable>` from `#version_script = path_to_my_executable`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.version-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 433,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1177,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.version-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.tracefile-synthesis"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.warn-once-per-file as a source-bound config-key boundary for lcovrc: input form `warn_once_per_file = <0|1>` from parser/config text `#warn_once_per_file = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/synthesize/synthesize.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.warn-once-per-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 84,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1147,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.warn-once-per-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/synthesize/synthesize.sh"
+      ]
+    }
+  ],
+  "description": "Reviewed and unbound source-bound lcovrc primary plans with concrete key/value boundaries and upstream drivers where available; no product evidence. Part 4.",
+  "fragment_id": "authored.m0-lcovrc-wave1-repair-d",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

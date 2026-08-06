@@ -60,6 +60,18 @@ class GenerationError(Exception):
     """Raised when fragment authoring or deterministic generation is invalid."""
 
 
+
+def case_is_substantive_plan(case: dict[str, Any]) -> bool:
+    """Mirror validate.case_is_substantive_plan for deterministic totals."""
+    if case.get("review_status") != "reviewed":
+        return False
+    if case.get("applicability", {}).get("status") == "not_applicable":
+        return False
+    if case.get("suite_cases"):
+        return True
+    return bool(case.get("behavior_groups")) and bool(case.get("upstream_tests"))
+
+
 def load_object(path: Path, label: str) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -400,8 +412,7 @@ def calculate_totals(contract: dict[str, Any], public_ids: set[str]) -> dict[str
     primary_reviewed = {
         target["id"]
         for case in cases
-        if case["review_status"] == "reviewed"
-        and case["applicability"]["status"] != "not_applicable"
+        if case_is_substantive_plan(case)
         for target in case["targets"]
         if target["role"] == "primary" and target["id"] in public_ids
     }

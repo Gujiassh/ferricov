@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "coverage.mcdc",
+        "genhtml.diagnostics-and-config",
+        "genhtml.exception-differential",
+        "genhtml.function-differential",
+        "genhtml.path-case",
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.genhtml.option.version-script as a source-bound cli-option boundary for genhtml: input form `--version-script <value>` from parser/config text `\"version-script=s\"  => \\@lcovutil::extractVersionScript,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/exception/exception.sh, tests/genhtml/function/function.sh, tests/genhtml/insensitive/insensitive.sh, tests/genhtml/simple/script.sh, tests/lcov/mcdc/mcdc.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.option.version-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 61,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 204,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 464,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 470,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 472,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 609,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 817,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 898,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1049,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1417,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1495,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1673,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1676,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1682,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1685,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 28,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1238,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.version-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/exception/exception.sh",
+        "tests/genhtml/function/function.sh",
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/mcdc/mcdc.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for command.genhtml.positional.tracefile-pattern: cli-positional boundary `<tracefile_pattern>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.positional.tracefile-pattern",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7456,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.positional.tracefile-pattern",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed and unbound source-bound genhtml primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 4.",
+  "fragment_id": "authored.m0-genhtml-wave1-repair-d",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

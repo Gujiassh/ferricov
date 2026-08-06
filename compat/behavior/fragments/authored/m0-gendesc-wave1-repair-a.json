@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for command.gendesc.option.output-filename: cli-option boundary `--output-filename <value>` from `if (!GetOptions(\"output-filename=s\" => \\$output_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.gendesc.option.output-filename",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 70,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 19,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 57,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/gendesc.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.gendesc.option.output-filename",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed and unbound source-bound gendesc primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 1.",
+  "fragment_id": "authored.m0-gendesc-wave1-repair-a",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

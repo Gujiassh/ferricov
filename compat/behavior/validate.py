@@ -62,6 +62,24 @@ def require(condition: bool, message: str) -> None:
         raise ValidationError(message)
 
 
+
+def case_is_substantive_plan(case: dict[str, Any]) -> bool:
+    """Return True when a reviewed case has real planning substance.
+
+    Status labels alone do not count. A primary plan is substantive only when
+    it either binds at least one compatibility suite case, or binds both a
+    behavior group and a reviewed public-behavior upstream driver. Empty
+    description-only reviews are intentional residual debt.
+    """
+    if case.get("review_status") != "reviewed":
+        return False
+    if case.get("applicability", {}).get("status") == "not_applicable":
+        return False
+    if case.get("suite_cases"):
+        return True
+    return bool(case.get("behavior_groups")) and bool(case.get("upstream_tests"))
+
+
 def load_object(path: Path, label: str) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -749,11 +767,24 @@ def validate_contract(
         primary_targets = [target["id"] for target in targets if target["role"] == "primary"]
         require(bool(primary_targets), f"{case['id']}: at least one primary target is required")
         primary_any.update(set(primary_targets) & public_ids)
-        if (
-            case["review_status"] == "reviewed"
-            and case["applicability"]["status"] != "not_applicable"
-        ):
+        if case_is_substantive_plan(case):
             primary_reviewed.update(set(primary_targets) & public_ids)
+        elif (
+            case["review_status"] == "reviewed"
+            and case["origin"] == "manually_curated"
+            and case["case_class"] == "acceptance"
+            and case["applicability"]["status"] != "not_applicable"
+            and not case.get("suite_cases")
+            and not (case.get("behavior_groups") and case.get("upstream_tests"))
+        ):
+            # Fail closed for authored public acceptance plans: review_status
+            # alone is not enough. Normative reviewed_import audit cases keep
+            # their existing subject/import validation path.
+            require(
+                False,
+                f"{case['id']}: reviewed acceptance plan lacks substantive "
+                "suite_cases or behavior_groups+upstream_tests",
+            )
 
         for field in ("behavior_groups", "interaction_groups", "comparison_dimensions", "upstream_tests"):
             require(case[field] == sorted(set(case[field])), f"{case['id']}.{field} must be sorted and unique")
@@ -851,7 +882,7 @@ def validate_contract(
     require(contract["totals"] == expected_totals, f"contract totals mismatch: expected {expected_totals}, found {contract['totals']}")
 
     gaps = [
-        f"public entry {identifier} has no reviewed primary case group"
+        f"public entry {identifier} has no substantive reviewed primary plan"
         for identifier in sorted(public_ids - primary_reviewed)
     ]
     for domain in REQUIRED_INTERACTION_DOMAINS:

@@ -7,6 +7,166 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.genhtml.option.output-directory as a source-bound cli-option boundary for genhtml: input form `--output-directory <value>` from parser/config text `\"output-directory|o=s\" => \\$output_directory,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.option.output-directory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7220,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 24,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 466,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1109,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 22,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.output-directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options",
+        "lcov.demangling"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.genhtml.option.parallel as a source-bound cli-option boundary for genhtml: input form `--parallel[=<int>]` from parser/config text `\"parallel|j:i\"      => \\$lcovutil::maxParallelism,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh, tests/lcov/demangle/demangle.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.option.parallel",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 87,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 419,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1028,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1387,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1405,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1463,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1549,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 53,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1283,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.parallel",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/demangle/demangle.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
       "behavior_groups": [],
       "case_class": "acceptance",
       "comparison_dimensions": [
@@ -15,13 +175,137 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.preserve parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Unbound source-bound plan for command.genhtml.option.precision: cli-option boundary `--precision <int>` from `\"precision=i\"       => \\$lcovutil::default_precision,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.option.precision",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7266,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 49,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1561,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 80,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.precision",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.function-differential",
+        "genhtml.path-case",
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.genhtml.option.prefix as a source-bound cli-option boundary for genhtml: input form `--prefix <value>` from parser/config text `\"prefix|p=s\"        => \\@opt_dir_prefix,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/function/function.sh, tests/genhtml/insensitive/insensitive.sh, tests/genhtml/simple/script.sh, tests/genhtml/synthesize/synthesize.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genhtml.option.prefix",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7247,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 30,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1177,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 39,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.prefix",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/function/function.sh",
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/genhtml/synthesize/synthesize.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for command.genhtml.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.preserve",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "reviewed",
+      "review_status": "unreviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -63,7 +347,10 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -71,7 +358,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.profile parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.profile as a source-bound cli-option boundary for genhtml: input form `--profile[=<value>]` from parser/config text `\"profile:s\"              => \\$lcovutil::profile,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.profile",
@@ -124,14 +411,22 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "support-script.batch-git-version",
+        "support-script.git-annotation",
+        "support-script.git-diff",
+        "support-script.git-version"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -139,7 +434,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.quiet parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.quiet as a source-bound cli-option boundary for genhtml: input form `--quiet` from parser/config text `\"quiet|q+\"    => \\$quiet,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/scripts/batchgitversion_test.sh, tests/scripts/gitblame_test.sh, tests/scripts/gitdiff_test.sh, tests/scripts/gitversion_test.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.quiet",
@@ -186,14 +481,21 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/scripts/batchgitversion_test.sh",
+        "tests/scripts/gitblame_test.sh",
+        "tests/scripts/gitdiff_test.sh",
+        "tests/scripts/gitversion_test.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -201,7 +503,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.resolve-script parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.resolve-script as a source-bound cli-option boundary for genhtml: input form `--resolve-script <value>` from parser/config text `'resolve-script=s'     => \\@lcovutil::resolveCallback,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.resolve-script",
@@ -260,14 +562,19 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.function-differential",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -275,7 +582,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.save parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.save as a source-bound cli-option boundary for genhtml: input form `--save` from parser/config text `'save'              => \\$save,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/function/function.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.save",
@@ -316,14 +623,20 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -331,7 +644,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.select-script parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.select-script as a source-bound cli-option boundary for genhtml: input form `--select-script <value>` from parser/config text `\"select-script=s\"   => \\@SummaryInfo::selectCallbackScript,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.select-script",
@@ -378,14 +691,19 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -393,7 +711,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.serialize parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.serialize as a source-bound cli-option boundary for genhtml: input form `--serialize <value>` from parser/config text `'serialize=s'       => \\$serialize,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.serialize",
@@ -428,14 +746,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -443,7 +765,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-details parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.show-details as a source-bound cli-option boundary for genhtml: input form `--show-details` from parser/config text `\"show-details|s\"    => \\$show_details,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-details",
@@ -484,14 +806,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -499,7 +825,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-navigation parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.show-navigation as a source-bound cli-option boundary for genhtml: input form `--show-navigation` from parser/config text `\"show-navigation\"   => \\$show_tla,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-navigation",
@@ -552,14 +878,19 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.path-case",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -567,7 +898,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-noncode parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.show-noncode as a source-bound cli-option boundary for genhtml: input form `--show-noncode` from parser/config text `'show-noncode'      => \\$show_nonCodeOwners,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/insensitive/insensitive.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-noncode",
@@ -614,14 +945,22 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.path-case",
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -629,7 +968,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-owners parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.show-owners as a source-bound cli-option boundary for genhtml: input form `--show-owners[=<value>]` from parser/config text `'show-owners:s'     => \\$show_ownerBins,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/insensitive/insensitive.sh, tests/genhtml/simple/script.sh, tests/genhtml/synthesize/synthesize.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-owners",
@@ -676,14 +1015,23 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/genhtml/synthesize/synthesize.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.function-differential",
+        "genhtml.lambda-display",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -691,7 +1039,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-proportion parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.show-proportion as a source-bound cli-option boundary for genhtml: input form `--show-proportion` from parser/config text `\"show-proportion\"   => \\$show_functionProportions,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/function/function.sh, tests/genhtml/lambda/lambda.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-proportion",
@@ -720,7 +1068,11 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh",
+        "tests/genhtml/lambda/lambda.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
@@ -735,13 +1087,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.show-zero-columns parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Unbound source-bound plan for command.genhtml.option.show-zero-columns: cli-option boundary `--show-zero-columns` from `'show-zero-columns' => \\$show_zeroTlaColumns,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.show-zero-columns",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "reviewed",
+      "review_status": "unreviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -789,7 +1141,9 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -797,7 +1151,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.simplified-colors parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.simplified-colors as a source-bound cli-option boundary for genhtml: input form `--simplified-colors` from parser/config text `'simplified-colors' => \\$show_simplifiedColors,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.simplified-colors",
@@ -844,14 +1198,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -859,7 +1217,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.simplify-script parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.simplify-script as a source-bound cli-option boundary for genhtml: input form `--simplify-script <value>` from parser/config text `\"simplify-script=s\" => \\@simplifyFunctionScript,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.simplify-script",
@@ -912,14 +1270,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.add-and-prune"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -927,7 +1289,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.sort-input parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.sort-input as a source-bound cli-option boundary for genhtml: input form `--sort-input` from parser/config text `'sort-input'        => \\$lcovutil::sort_inputs,);`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/add/prune.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.sort-input",
@@ -962,7 +1324,9 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/lcov/add/prune.sh"
+      ]
     },
     {
       "applicability": {
@@ -977,13 +1341,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.sort-tables parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Unbound source-bound plan for command.genhtml.option.sort-tables: cli-option boundary `--sort-tables` from `\"sort-tables\"       => \\$sort_tables,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.sort-tables",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "reviewed",
+      "review_status": "unreviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -1031,7 +1395,9 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1039,7 +1405,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.source-directory parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.source-directory as a source-bound cli-option boundary for genhtml: input form `--source-directory <value>` from parser/config text `'source-directory=s'    =>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.source-directory",
@@ -1086,14 +1452,20 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.path-case",
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1101,7 +1473,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.substitute parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.substitute as a source-bound cli-option boundary for genhtml: input form `--substitute <value>` from parser/config text `\"substitute=s\"      => \\@lcovutil::file_subst_patterns,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/insensitive/insensitive.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.substitute",
@@ -1154,7 +1526,11 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
@@ -1169,13 +1545,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.suppress-aliases parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Unbound source-bound plan for command.genhtml.option.suppress-aliases: cli-option boundary `--suppress-aliases` from `\"suppress-aliases\"  => \\$suppress_function_aliases,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.suppress-aliases",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "reviewed",
+      "review_status": "unreviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -1225,13 +1601,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.synthesize-missing parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Unbound source-bound plan for command.genhtml.option.synthesize-missing: cli-option boundary `--synthesize-missing` from `'synthesize-missing'   => \\$synthesizeMissingFile,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.synthesize-missing",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "reviewed",
+      "review_status": "unreviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -1279,7 +1655,9 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "geninfo.capture-cli"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1287,7 +1665,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.tempdir parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.tempdir as a source-bound cli-option boundary for genhtml: input form `--tempdir <value>` from parser/config text `our %argCommon = (\"tempdir=s\"         => \\$tempdirname,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/coverage/geninfo.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.tempdir",
@@ -1328,14 +1706,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/lcov/coverage/geninfo.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1343,7 +1725,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.title parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.title as a source-bound cli-option boundary for genhtml: input form `--title <value>` from parser/config text `\"title|t=s\"            => \\$test_title,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.title",
@@ -1384,14 +1766,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1399,7 +1785,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.unreachable-script parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.unreachable-script as a source-bound cli-option boundary for genhtml: input form `--unreachable-script <value>` from parser/config text `'unreachable-script=s' =>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.unreachable-script",
@@ -1452,14 +1838,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1467,7 +1857,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.validate parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.validate as a source-bound cli-option boundary for genhtml: input form `--validate` from parser/config text `'validate'          => \\$validateHTML,);`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.validate",
@@ -1502,14 +1892,19 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
     },
     {
       "applicability": {
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
+      "behavior_groups": [
+        "genhtml.coverage-rates",
+        "genhtml.demangling"
+      ],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
@@ -1517,7 +1912,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Review command.genhtml.option.verbose parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
+      "description": "Plan command.genhtml.option.verbose as a source-bound cli-option boundary for genhtml: input form `--verbose` from parser/config text `\"verbose|v+\"  => \\$lcovutil::verbose,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/demangle.sh, tests/genhtml/full.sh, tests/genhtml/part1.sh, tests/genhtml/part2.sh, tests/genhtml/target.sh, tests/genhtml/zero.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.verbose",
@@ -1558,183 +1953,18 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Review command.genhtml.option.version-script parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.genhtml.option.version-script",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "reviewed",
-      "source_references": [
-        {
-          "kind": "manual_candidate",
-          "line": 61,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 204,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 464,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 470,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 472,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 609,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 817,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 898,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1049,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1417,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1495,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1673,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1676,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1682,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1685,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 28,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "parser_definition",
-          "line": 1238,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.genhtml.option.version-script",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Review command.genhtml.positional.tracefile-pattern parser and value boundary from pinned source inventory; runtime option effects remain unexecuted through the retained suite map. This is a source-bound planning case without an exact executable suite; no Ferricov differential evidence or compatibility pass is claimed.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.genhtml.positional.tracefile-pattern",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "reviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 7456,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.genhtml.positional.tracefile-pattern",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
+      "upstream_tests": [
+        "tests/genhtml/demangle.sh",
+        "tests/genhtml/full.sh",
+        "tests/genhtml/part1.sh",
+        "tests/genhtml/part2.sh",
+        "tests/genhtml/target.sh",
+        "tests/genhtml/zero.sh"
+      ]
     }
   ],
-  "description": "Reviewed planning-only primary cases for remaining public genhtml options and positionals; source-bound parser boundaries only, no product evidence. Part 3/3 of the wave1 genhtml primary planning batch.",
-  "fragment_id": "authored.m0-genhtml-wave1-primary-c",
+  "description": "Reviewed and unbound source-bound genhtml primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 3.",
+  "fragment_id": "authored.m0-genhtml-wave1-repair-c",
   "fragment_type": "authored",
   "interaction_groups": [],
   "schema_version": 1,
