@@ -978,18 +978,28 @@ snapshot.
 
 ### Case And Evidence Manifest Boundary
 
-The canonical executable manifest is planned at
-`compat/cases/m1-model.json`. It MUST bind each `M1-MD-*` decision and every
-listed property/algebra/fuzz case to an exact runner, operand fixture hashes,
-command, environment, source anchors, expected semantic snapshot schema, status,
-and evidence directory. That manifest does not yet exist, so all model rows
-remain `blocked`.
+The canonical executable catalog is retained at
+`compat/model/m1-model.json`, with the fail-closed contract at
+`compat/model/v2.5.json` and the owned corpus under
+`compat/fixtures/m0-algebra/`. It binds each Oracle-executed `M1-MD-*` decision
+and every listed algebra/property case to an exact runner, operand fixture
+hashes, command/argv, environment, expected exit, stream/output identities, and
+independent expected facts. Product-compatibility evidence remains false.
 
-The current `compat/fixtures/m0-tracefiles/oracle-cases.json` contains
-free-form `requirement` labels and CLI stream/output captures. It has no
-executable `M1-MD-*` definitions, does not validate compound requirement
-coverage, and does not retain aggregate plus four independent testcase-family
-semantic snapshots. It is useful source evidence but cannot close a model row.
+M0 Oracle baseline status for the algebra/property rows is:
+
+- Oracle-bound: `M1-MD-010`, `M1-MD-011`, `M1-MD-012`, `M1-MD-013`,
+  `M1-MD-014`, `M1-MD-017`, `M1-MD-019` (157 cases, 27 fixtures).
+- Blocked: `M1-MD-020` with `M1-TF-063` and `M1-TF-064`
+  (`fuzz_execution_phase=M1-only`).
+- Intentionally rejected Oracle outcomes are retained for
+  `M1-ALG-MCDC-VECTOR-001`: long-then-short MC/DC vector union/intersect hard
+  fails with `Can't call method "expression" on an undefined value` (CLI exit
+  `1`, in-process/semantic exit `255`); reverse order succeeds; difference
+  succeeds.
+
+The current `compat/fixtures/m0-tracefiles/oracle-cases.json` remains useful
+tracefile source evidence but does not own the algebra/property rows above.
 
 Each manifest entry has two independent phase states:
 

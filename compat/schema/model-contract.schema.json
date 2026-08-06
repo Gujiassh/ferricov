@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Gujiassh/ferricov/compat/schema/model-contract.schema.json",
+  "title": "Ferricov M0 Coverage-Model Algebra Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "upstream_release",
+    "upstream_commit",
+    "scope",
+    "oracle_identity",
+    "artifact_bindings",
+    "model_rows",
+    "bound_case_ids",
+    "blocked_case_ids",
+    "executable_bindings",
+    "fixture_count",
+    "case_count",
+    "observation_count",
+    "fuzz_execution_phase",
+    "product_compatibility_evidence",
+    "independent_facts_path",
+    "harness_artifacts"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "contract_id": { "const": "m0-model-algebra-v1" },
+    "upstream_release": { "const": "v2.5" },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "scope": { "type": "string", "minLength": 1 },
+    "oracle_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_path",
+        "manifest_sha256",
+        "manifest_id",
+        "image_sha256",
+        "lcov_path",
+        "lcov_sha256",
+        "user",
+        "network",
+        "product_compatibility_evidence"
+      ],
+      "properties": {
+        "manifest_path": { "type": "string", "minLength": 1 },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "manifest_id": { "type": "string", "minLength": 1 },
+        "image_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "lcov_path": { "type": "string", "minLength": 1 },
+        "lcov_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "user": { "type": "string", "minLength": 1 },
+        "network": { "const": "none" },
+        "product_compatibility_evidence": { "const": false }
+      }
+    },
+    "artifact_bindings": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "model_rows": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "bindings"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^M1-MD-[0-9]{3}$"
+          },
+          "status": {
+            "enum": ["oracle_bound", "blocked"]
+          },
+          "bindings": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "bound_case_ids": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "string",
+        "pattern": "^M1-MD-[0-9]{3}$"
+      }
+    },
+    "blocked_case_ids": {
+      "const": ["M1-MD-020", "M1-TF-063", "M1-TF-064"]
+    },
+    "executable_bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "model_row",
+          "binding_ids",
+          "runner",
+          "phase",
+          "expected_exit",
+          "ferricov_parity_status"
+        ],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "model_row": {
+            "type": "string",
+            "pattern": "^M1-MD-[0-9]{3}$"
+          },
+          "binding_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "runner": { "type": "string", "minLength": 1 },
+          "phase": { "const": "oracle_baseline" },
+          "expected_exit": { "type": "integer" },
+          "ferricov_parity_status": { "const": "blocked" }
+        }
+      }
+    },
+    "fixture_count": { "type": "integer", "minimum": 1 },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "observation_count": { "type": "integer", "minimum": 1 },
+    "fuzz_execution_phase": { "const": "M1-only" },
+    "product_compatibility_evidence": { "const": false },
+    "independent_facts_path": {
+      "const": "compat/fixtures/m0-algebra/expected-facts.json"
+    },
+    "harness_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  }
+}
