@@ -17,7 +17,7 @@ import generate
 
 ROOT = Path(__file__).resolve().parent
 CANONICAL_BASELINE_PATH = ROOT / "oracle-baseline.json"
-EXPECTED_MERGE_BASELINE_SHA256 = "b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e"
+EXPECTED_MERGE_BASELINE_SHA256 = "c1f3617304918ab82ea84c8f5d6d8cfd2cd11be84e622eb0b8ee0b36506790b3"
 RAW_OUTPUT_LIMIT = 256 * 1024
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"

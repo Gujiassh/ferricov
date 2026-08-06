@@ -38,6 +38,7 @@ from validation_common import (
     verify_identity,
 )
 from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
+from corpus_wave1 import WAVE1_CASE_IDS, WAVE1_FIXTURE_IDS
 from validation_numeric import (
     ADDED_CASE_ARGV,
     ADDED_OUTPUT_EXPECTATIONS,
@@ -171,6 +172,7 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
         "branches-expression-merge-left", "branches-expression-merge-right",
         "branches-order-gaps", "branches-noncontiguous", "branches-interleave",
         "branches-sort-signatures",
+        *WAVE1_FIXTURE_IDS,
         "scale-medium", "scale-large",
     }
     by_id = {fixture.id: fixture for fixture in fixtures}
@@ -258,6 +260,26 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     require(b"BRDA:10,0,e,1\n" in by_id["branches-noncontiguous"].data, "noncontiguous line reuse missing")
     require(b"BRDA:10,1,c,1\n" in by_id["branches-interleave"].data, "interleave second block missing")
     require(b"BRDA:10,e2,e0,1\n" in by_id["branches-sort-signatures"].data, "sort exception signature missing")
+    require(b"# leading column-zero comment\n" in by_id["wave1-comments-core"].data, "wave1 comments leading missing")
+    require(b"# trailing column-zero comment\n" in by_id["wave1-comments-core"].data, "wave1 comments trailing missing")
+    require(b" # leading-space hash is not a comment\n" in by_id["wave1-comments-leading-space"].data, "wave1 leading-space comment missing")
+    require(by_id["wave1-comments-leading-space"].oracle_default == "reject", "wave1 leading-space must reject")
+    require(b"TN:\n" in by_id["wave1-tn-names"].data, "wave1 empty TN missing")
+    require(b"TN:has space\n" in by_id["wave1-tn-names"].data, "wave1 space TN missing")
+    require(b"TN:one\n" in by_id["wave1-tn-forget"].data and b"TN:two\n" in by_id["wave1-tn-forget"].data, "wave1 forget TN missing")
+    require(b"SF:./src/sf-dot.c\n" in by_id["wave1-sf-paths"].data, "wave1 ./ SF path missing")
+    require(b"SF:/abs/src/sf-abs.c\n" in by_id["wave1-sf-paths"].data, "wave1 abs SF path missing")
+    require(by_id["wave1-sf-empty"].data == b"TN:sf_empty\nSF:\nDA:1,1\nend_of_record\n", "wave1 empty SF fixture drift")
+    require(by_id["wave1-sf-empty"].oracle_default == "reject", "wave1 empty SF must reject")
+    require(by_id["wave1-sf-whitespace"].oracle_default == "reject", "wave1 whitespace SF must reject")
+    require(b"MCDC:2,0,t,1,0,a && b\n" in by_id["wave1-mcdc-core"].data, "wave1 mcdc group2 missing")
+    require(b"MCDC:3,1,t,2,0,a,b\n" in by_id["wave1-mcdc-core"].data, "wave1 mcdc repeated sense missing")
+    require(b"MCDC:1,U1,t,1,0,cond\n" in by_id["wave1-mcdc-u-modes"].data, "wave1 mcdc U missing")
+    require(b"DA:1,1\nFNL:0,1,1\n" in by_id["wave1-order-permuted"].data, "wave1 order permutation missing")
+    require(by_id["wave1-repeat-same-tn"].data.count(b"TN:rep\n") == 2, "wave1 same-TN repeat missing")
+    require(b"TN:a\n" in by_id["wave1-repeat-diff-tn-mcdc"].data and b"TN:b\n" in by_id["wave1-repeat-diff-tn-mcdc"].data, "wave1 diff-TN mcdc missing")
+    require(b"FNL:0,1,1\n" in by_id["wave1-features-all"].data and b"BRDA:1,0,e,1\n" in by_id["wave1-features-all"].data, "wave1 features records missing")
+    require(b"FNF:999\n" in by_id["wave1-summary-payloads"].data and b"LF:333\n" in by_id["wave1-summary-payloads"].data, "wave1 summary junk missing")
     require(by_id["branches-malformed-tail"].oracle_default == "reject", "malformed-tail must reject")
     require(
         by_id["branches-malformed-tail-empty-taken"].oracle_default == "reject",
@@ -586,6 +608,92 @@ def validate_branches_expression_merge_snapshot(document: dict[str, object]) -> 
 
 
 
+
+def validate_wave1_mcdc_core_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 mcdc snapshot kind")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 mcdc source count")
+    source = sources[0]
+    require(source.get("filename") == "src/mcdc-core.c", "wave1 mcdc filename")
+    mcdc = source["aggregate"]["mcdc"]
+    # Oracle counts each sense occupancy in found/hit for this fixture shape.
+    require(mcdc["found"] == 12 and mcdc["hit"] == 4, f"wave1 mcdc totals found={mcdc['found']} hit={mcdc['hit']}")
+    lines = mcdc["lines"]
+    require(set(lines) == {"1", "2", "3"}, f"wave1 mcdc lines {set(lines)}")
+    g1 = lines["1"]["groups"]["1"]
+    require(len(g1) == 1, "wave1 mcdc line1 group size")
+    require(g1[0]["expression"] == "x" and g1[0]["true_count"] == 1 and g1[0]["false_count"] == 0, "wave1 mcdc line1 counts")
+    # Group size is encoded as the groups map key; indices 0 and 1 both exist.
+    require(set(lines["2"]["groups"]) == {"0", "1"}, f"wave1 mcdc line2 group keys {set(lines['2']['groups'])}")
+    g2_0 = lines["2"]["groups"]["0"]
+    g2_1 = lines["2"]["groups"]["1"]
+    require(len(g2_0) == 2 and len(g2_1) == 2, "wave1 mcdc line2 group sizes")
+    require(g2_0[0]["expression"] == "a && b" and g2_0[1]["expression"] == "a && b", "wave1 mcdc line2 expressions")
+    g3 = lines["3"]["groups"]["1"]
+    require(len(g3) == 1 and g3[0]["expression"] == "a,b", "wave1 mcdc line3 expression")
+    require(g3[0]["true_count"] == 3 and g3[0]["false_count"] == 0, "wave1 mcdc line3 repeated sense")
+
+
+def validate_wave1_order_snapshot(document: dict[str, object], case_id: str) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", f"{case_id} kind")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, f"{case_id} source count")
+    source = sources[0]
+    require(source.get("filename") == "src/order.c", f"{case_id} filename")
+    agg = source["aggregate"]
+    require(agg["line"]["lines"].get("1") == 1, f"{case_id} line count")
+    require(agg["function"]["found"] == 1 and agg["function"]["hit"] == 1, f"{case_id} function totals")
+    require(agg["branch"]["found"] == 2 and agg["branch"]["hit"] == 1, f"{case_id} branch totals")
+    require(agg["mcdc"]["found"] == 2 and agg["mcdc"]["hit"] == 1, f"{case_id} mcdc totals")
+    fn = agg["function"]["functions"]["1"]
+    require(fn["aliases"].get("f") == 1 and fn["start"] == 1 and fn["end"] == 1, f"{case_id} function shape")
+    br = agg["branch"]["lines"]["1"]["blocks"][0]["elements"]
+    require(len(br) == 2 and br[0]["expr"] == "e" and br[1]["expr"] == "e2", f"{case_id} branch exprs")
+    mcdc = agg["mcdc"]["lines"]["1"]["groups"]["1"][0]
+    require(mcdc["expression"] == "c" and mcdc["true_count"] == 1 and mcdc["false_count"] == 0, f"{case_id} mcdc shape")
+
+
+def validate_wave1_repeat_same_tn_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 repeat-same kind")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 repeat-same source count")
+    source = sources[0]
+    require(source.get("filename") == "src/repeat.c", "wave1 repeat-same filename")
+    agg = source["aggregate"]
+    # Observed Oracle additive same-TN merge for this fixture shape.
+    require(agg["line"]["lines"].get("1") == 3 and agg["line"]["lines"].get("2") == 1, f"wave1 repeat-same line add {agg['line']['lines']}")
+    require(agg["function"]["functions"]["1"]["aliases"].get("f") == 4, f"wave1 repeat-same function add {agg['function']['functions']['1']['aliases']}")
+    blocks = agg["branch"]["lines"]["1"]["blocks"]
+    require(len(blocks) == 2, "wave1 repeat-same branch block count")
+    require(agg["branch"]["found"] == 4 and agg["branch"]["hit"] == 3, "wave1 repeat-same branch totals")
+    # first block retains e taken=2 / e2 taken=0 after additive merge of first section pair counts
+    e0 = blocks[0]["elements"]
+    require(e0[0]["expr"] == "e" and e0[0]["taken"] == 2 and e0[1]["expr"] == "e2" and e0[1]["taken"] == 0, "wave1 repeat-same block0")
+
+
+def validate_wave1_repeat_diff_tn_mcdc_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 repeat-diff kind")
+    sources = document.get("sources")
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 repeat-diff source count")
+    source = sources[0]
+    require(source.get("filename") == "src/repeat-mcdc.c", "wave1 repeat-diff filename")
+    agg = source["aggregate"]
+    require(agg["line"]["lines"].get("1") == 2, "wave1 repeat-diff line add")
+    require(agg["mcdc"]["found"] == 4 and agg["mcdc"]["hit"] == 3, f"wave1 repeat-diff mcdc totals {agg['mcdc']['found']}/{agg['mcdc']['hit']}")
+    agg_m = agg["mcdc"]["lines"]["1"]["groups"]["1"][0]
+    require(agg_m["expression"] == "c" and agg_m["true_count"] == 2 and agg_m["false_count"] == 1, "wave1 repeat-diff aggregate mcdc")
+    tc_line = source["testcases"]["line"]
+    require(set(tc_line) == {"a", "b"}, f"wave1 repeat-diff testcases {set(tc_line)}")
+    require(tc_line["a"]["lines"].get("1") == 1 and tc_line["b"]["lines"].get("1") == 1, "wave1 repeat-diff per-tn lines")
+    tc_mcdc = source["testcases"]["mcdc"]
+    require(set(tc_mcdc) == {"a", "b"}, "wave1 repeat-diff mcdc testcases")
+    a = tc_mcdc["a"]["lines"]["1"]["groups"]["1"][0]
+    b = tc_mcdc["b"]["lines"]["1"]["groups"]["1"][0]
+    # Observed Oracle ownership: TN a keeps its counts; TN b reflects cumulative/additive ownership shape.
+    require(a["true_count"] == 1 and a["false_count"] == 0, f"wave1 repeat-diff TN a mcdc {a}")
+    require(b["true_count"] == 2 and b["false_count"] == 1, f"wave1 repeat-diff TN b mcdc {b}")
+
+
 def validate_semantic_snapshot_observation(case: dict[str, object], observation: dict[str, object]) -> None:
     require(case.get("runner") == MODEL_INSPECTOR_NAME, f"{case['id']}: runner must be inspect_model.pl")
     require(observation.get("runner") == MODEL_INSPECTOR_NAME, f"{case['id']}: baseline runner missing")
@@ -647,6 +755,16 @@ def validate_semantic_snapshot_observation(case: dict[str, object], observation:
         validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
     elif case["id"] == "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot":
         validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
+    elif case["id"] == "wave1-mcdc-core.semantic-snapshot":
+        validate_wave1_mcdc_core_snapshot(document)
+    elif case["id"] == "wave1-order-canonical.semantic-snapshot":
+        validate_wave1_order_snapshot(document, case_id=case["id"])
+    elif case["id"] == "wave1-order-permuted.semantic-snapshot":
+        validate_wave1_order_snapshot(document, case_id=case["id"])
+    elif case["id"] == "wave1-repeat-same-tn.semantic-snapshot":
+        validate_wave1_repeat_same_tn_snapshot(document)
+    elif case["id"] == "wave1-repeat-diff-tn-mcdc.semantic-snapshot":
+        validate_wave1_repeat_diff_tn_mcdc_snapshot(document)
     else:
         raise ValueError(f"unexpected semantic snapshot case: {case['id']}")
 
@@ -1364,6 +1482,69 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
         ],
         f"branch-records case closure drift: {branch_case_ids}",
     )
+    wave1_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "wave1-tracefile"]
+    require(
+        [fixture.id for fixture in wave1_fixtures] == list(WAVE1_FIXTURE_IDS),
+        f"wave1 fixture closure drift: {[fixture.id for fixture in wave1_fixtures]}",
+    )
+    wave1_case_ids = [case["id"] for case in cases if case["id"].startswith("wave1-")]
+    require(
+        wave1_case_ids == list(WAVE1_CASE_IDS),
+        f"wave1 case closure drift: {wave1_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        if not str(case["id"]).startswith("wave1-"):
+            continue
+        if case["id"] == "wave1-comments-core.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 comments canonical")
+            require(b"#" not in output_bytes, "wave1 comments must not be retained on write")
+            require(b"TN:comment_core\nSF:src/comment-core.c\nDA:1,1\n" in output_bytes, "wave1 comments body missing")
+        if case["id"] == "wave1-tn-names.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 tn names canonical")
+            require(b"TN:\n" in output_bytes, "wave1 empty TN rewrite missing")
+            require(b"TN:has_space\n" in output_bytes, "wave1 sanitized TN missing")
+            require(b"TN:has space\n" not in output_bytes, "wave1 unsanitized TN leaked")
+        if case["id"] == "wave1-tn-forget.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 forget canonical")
+            require(
+                output_bytes == b"TN:\nSF:src/tn-forget.c\nDA:1,3\nLF:1\nLH:1\nend_of_record\n",
+                "wave1 forget rewrite drift",
+            )
+        if case["id"] == "wave1-order-permuted.canonical":
+            right = decode_identity(observation["output"], "wave1 order permuted")
+            require(b"FNL:0,1,1\nFNA:0,1,f\n" in right, "wave1 order rewrite function missing")
+            require(b"BRDA:1,0,e,1\n" in right and b"MCDC:1,1,t,1,0,c\n" in right, "wave1 order rewrite branch/mcdc missing")
+            require(b"DA:1,1\n" in right, "wave1 order rewrite DA missing")
+        if case["id"] == "wave1-features-all.default-function-only":
+            output_bytes = decode_identity(observation["output"], "wave1 features default")
+            require(b"FNL:" in output_bytes and b"BRDA:" not in output_bytes and b"MCDC:" not in output_bytes, "wave1 default feature filter drift")
+        if case["id"] == "wave1-features-all.all-enabled":
+            output_bytes = decode_identity(observation["output"], "wave1 features all")
+            require(b"FNL:" in output_bytes and b"BRDA:" in output_bytes and b"MCDC:" in output_bytes, "wave1 all-enabled filter drift")
+        if case["id"] == "wave1-features-all.lines-only":
+            output_bytes = decode_identity(observation["output"], "wave1 features lines")
+            require(b"FNL:" not in output_bytes and b"BRDA:" not in output_bytes and b"MCDC:" not in output_bytes, "wave1 lines-only filter drift")
+            require(b"DA:1,1\n" in output_bytes, "wave1 lines-only DA missing")
+        if case["id"] == "wave1-summary-payloads.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 summary canonical")
+            require(b"FNF:999" not in output_bytes and b"LF:333" not in output_bytes, "wave1 junk summary retained")
+            require(b"BRF:2\nBRH:1\n" in output_bytes, "wave1 recomputed branch summary missing")
+            require(b"MCF:2\nMCH:1\n" in output_bytes, "wave1 recomputed mcdc summary missing")
+            require(b"LF:2\nLH:1\n" in output_bytes, "wave1 recomputed line summary missing")
+        if case["id"] == "wave1-mcdc-u-modes.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 mcdc U default")
+            require(b"MCDC:1,U1,t,1,0,cond\n" in output_bytes, "wave1 U retention missing")
+        if case["id"] == "wave1-mcdc-u-modes.clear-unreachable":
+            output_bytes = decode_identity(observation["output"], "wave1 mcdc U clear")
+            require(b"MCDC:1,1,t,1,0,cond\n" in output_bytes, "wave1 U clear rewrite missing")
+            require(b",U1," not in output_bytes, "wave1 U mark retained under clear mode")
+        if case["id"] == "wave1-repeat-same-tn.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 repeat same")
+            require(b"DA:1,2\n" in output_bytes and b"FNA:0,3,f\n" in output_bytes, "wave1 same-TN additive rewrite missing")
+        if case["id"] == "wave1-repeat-diff-tn-mcdc.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 repeat diff")
+            require(b"TN:a\n" in output_bytes and b"TN:b\n" in output_bytes, "wave1 diff-TN sections missing")
+
     numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
     require(
         [fixture.id for fixture in numeric_fixtures] == list(NUMERIC_FIXTURE_IDS),

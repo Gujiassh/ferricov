@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import base64
 import copy
+import json
 import hashlib
 import os
 import subprocess
@@ -1191,8 +1192,165 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
         )
         parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
-        self.assertEqual(len(parsed["cases"]), 184)
+        self.assertEqual(len(parsed["cases"]), 217)
 
+
+
+
+
+class Wave1TracefileMutationTests(unittest.TestCase):
+    """Independent reverse mutations for wave-1 M0 Oracle evidence."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        from validate import (
+            validate_wave1_mcdc_core_snapshot,
+            validate_wave1_order_snapshot,
+            validate_wave1_repeat_diff_tn_mcdc_snapshot,
+            validate_wave1_repeat_same_tn_snapshot,
+        )
+
+        cls.validate_wave1_mcdc_core_snapshot = staticmethod(validate_wave1_mcdc_core_snapshot)
+        cls.validate_wave1_order_snapshot = staticmethod(validate_wave1_order_snapshot)
+        cls.validate_wave1_repeat_same_tn_snapshot = staticmethod(validate_wave1_repeat_same_tn_snapshot)
+        cls.validate_wave1_repeat_diff_tn_mcdc_snapshot = staticmethod(validate_wave1_repeat_diff_tn_mcdc_snapshot)
+        cls.baseline = strict_json_loads_ascii((ROOT / "oracle-baseline.json").read_bytes(), "oracle-baseline.json")
+        cls.cases = {case["id"]: case for case in cls.baseline["cases"]}
+        cls.case_defs = {
+            case["id"]: case
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+        }
+
+    def _snapshot(self, case_id: str) -> dict:
+        observation = self.cases[case_id]
+        raw = base64.b64decode(observation["stdout"]["base64"])
+        return json.loads(raw.decode("ascii"))
+
+    def test_wave1_case_and_fixture_closure(self) -> None:
+        from corpus_wave1 import WAVE1_CASE_IDS, WAVE1_FIXTURE_IDS
+        import generate
+
+        fixture_ids = [fixture.id for fixture in generate.build_fixtures() if fixture.group == "wave1-tracefile"]
+        self.assertEqual(fixture_ids, list(WAVE1_FIXTURE_IDS))
+        case_ids = [
+            case["id"]
+            for case in strict_json_loads_ascii((ROOT / "oracle-cases.json").read_bytes(), "oracle-cases.json")["cases"]
+            if case["id"].startswith("wave1-")
+        ]
+        self.assertEqual(case_ids, list(WAVE1_CASE_IDS))
+        for case_id in WAVE1_CASE_IDS:
+            self.assertIn(case_id, self.cases)
+            self.assertEqual(self.cases[case_id]["exit_status"], self.case_defs[case_id]["expected_exit"])
+
+    def test_wave1_mcdc_core_snapshot_mutations_are_rejected(self) -> None:
+        document = self._snapshot("wave1-mcdc-core.semantic-snapshot")
+        self.validate_wave1_mcdc_core_snapshot(document)
+        mutations = []
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["mcdc"]["found"] = 8
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["mcdc"]["lines"]["3"]["groups"]["1"][0]["true_count"] = 1
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["mcdc"]["lines"]["2"]["groups"].pop("0")
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["filename"] = "src/other.c"
+        mutations.append(mutated)
+        for index, document in enumerate(mutations):
+            with self.subTest(index=index):
+                with self.assertRaises(ValueError):
+                    self.validate_wave1_mcdc_core_snapshot(document)
+
+    def test_wave1_order_snapshots_match_and_reject_drift(self) -> None:
+        left = self._snapshot("wave1-order-canonical.semantic-snapshot")
+        right = self._snapshot("wave1-order-permuted.semantic-snapshot")
+        self.validate_wave1_order_snapshot(left, "wave1-order-canonical.semantic-snapshot")
+        self.validate_wave1_order_snapshot(right, "wave1-order-permuted.semantic-snapshot")
+        self.assertEqual(left["sources"][0]["aggregate"], right["sources"][0]["aggregate"])
+        mutated = copy.deepcopy(left)
+        mutated["sources"][0]["aggregate"]["branch"]["found"] = 1
+        with self.assertRaises(ValueError):
+            self.validate_wave1_order_snapshot(mutated, "wave1-order-canonical.semantic-snapshot")
+        mutated = copy.deepcopy(left)
+        mutated["sources"][0]["aggregate"]["mcdc"]["lines"]["1"]["groups"]["1"][0]["expression"] = "x"
+        with self.assertRaises(ValueError):
+            self.validate_wave1_order_snapshot(mutated, "wave1-order-canonical.semantic-snapshot")
+
+    def test_wave1_repeat_same_tn_mutations_are_rejected(self) -> None:
+        document = self._snapshot("wave1-repeat-same-tn.semantic-snapshot")
+        self.validate_wave1_repeat_same_tn_snapshot(document)
+        mutations = []
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["line"]["lines"]["1"] = 2
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["function"]["functions"]["1"]["aliases"]["f"] = 3
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["branch"]["lines"]["1"]["blocks"].pop()
+        mutations.append(mutated)
+        for index, document in enumerate(mutations):
+            with self.subTest(index=index):
+                with self.assertRaises(ValueError):
+                    self.validate_wave1_repeat_same_tn_snapshot(document)
+
+    def test_wave1_repeat_diff_tn_mcdc_mutations_are_rejected(self) -> None:
+        document = self._snapshot("wave1-repeat-diff-tn-mcdc.semantic-snapshot")
+        self.validate_wave1_repeat_diff_tn_mcdc_snapshot(document)
+        mutations = []
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["testcases"]["mcdc"]["b"]["lines"]["1"]["groups"]["1"][0]["true_count"] = 1
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["testcases"]["line"].pop("b")
+        mutations.append(mutated)
+        mutated = copy.deepcopy(document)
+        mutated["sources"][0]["aggregate"]["mcdc"]["hit"] = 2
+        mutations.append(mutated)
+        for index, document in enumerate(mutations):
+            with self.subTest(index=index):
+                with self.assertRaises(ValueError):
+                    self.validate_wave1_repeat_diff_tn_mcdc_snapshot(document)
+
+    def test_wave1_rewrite_output_independent_facts(self) -> None:
+        from validate import decode_identity
+
+        checks = {
+            "wave1-comments-core.canonical": lambda output: b"#" not in output and b"DA:1,1\n" in output,
+            "wave1-tn-forget.canonical": lambda output: output
+            == b"TN:\nSF:src/tn-forget.c\nDA:1,3\nLF:1\nLH:1\nend_of_record\n",
+            "wave1-features-all.lines-only": lambda output: b"FNL:" not in output
+            and b"BRDA:" not in output
+            and b"MCDC:" not in output,
+            "wave1-summary-payloads.canonical": lambda output: b"FNF:999" not in output
+            and b"BRF:2\nBRH:1\n" in output
+            and b"MCF:2\nMCH:1\n" in output,
+            "wave1-mcdc-u-modes.clear-unreachable": lambda output: b",U1," not in output
+            and b"MCDC:1,1,t,1,0,cond\n" in output,
+            "wave1-repeat-same-tn.canonical": lambda output: b"DA:1,2\n" in output and b"FNA:0,3,f\n" in output,
+        }
+        for case_id, predicate in checks.items():
+            observation = self.cases[case_id]
+            output = decode_identity(observation["output"], case_id)
+            self.assertTrue(predicate(output), case_id)
+            # reverse: mutate an independent fact so the predicate must fail
+            if case_id == "wave1-features-all.lines-only":
+                poisoned = output + b"FNL:0,1,1\n"
+            elif case_id == "wave1-mcdc-u-modes.clear-unreachable":
+                poisoned = output.replace(b"MCDC:1,1,t,1,0,cond\n", b"MCDC:1,U1,t,1,0,cond\n", 1)
+            elif case_id == "wave1-summary-payloads.canonical":
+                poisoned = output.replace(b"BRF:2\n", b"BRF:9\n", 1)
+            elif case_id == "wave1-comments-core.canonical":
+                poisoned = b"# leaked\n" + output
+            elif case_id == "wave1-tn-forget.canonical":
+                poisoned = output.replace(b"DA:1,3\n", b"DA:1,1\n", 1)
+            elif case_id == "wave1-repeat-same-tn.canonical":
+                poisoned = output.replace(b"FNA:0,3,f\n", b"FNA:0,1,f\n", 1)
+            else:
+                poisoned = output + b"#mut\n"
+            self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")
 
 
 if __name__ == "__main__":

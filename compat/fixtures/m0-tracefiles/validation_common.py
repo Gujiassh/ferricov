@@ -37,6 +37,11 @@ SEMANTIC_SNAPSHOT_CASE_IDS = (
     "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
     "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
     "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
+    "wave1-mcdc-core.semantic-snapshot",
+    "wave1-order-canonical.semantic-snapshot",
+    "wave1-order-permuted.semantic-snapshot",
+    "wave1-repeat-same-tn.semantic-snapshot",
+    "wave1-repeat-diff-tn-mcdc.semantic-snapshot",
 )
 SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
     "state-late-tn-mcdc.semantic-snapshot": (),
@@ -142,6 +147,11 @@ SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("WARNING", "excessive"),
         ("WARNING", "negative"),
     ),
+    "wave1-mcdc-core.semantic-snapshot": (),
+    "wave1-order-canonical.semantic-snapshot": (),
+    "wave1-order-permuted.semantic-snapshot": (),
+    "wave1-repeat-same-tn.semantic-snapshot": (),
+    "wave1-repeat-diff-tn-mcdc.semantic-snapshot": (),
 }
 def require(condition: bool, message: str) -> None:
     if not condition:
