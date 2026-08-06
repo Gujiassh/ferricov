@@ -456,6 +456,11 @@ def assert_writer_order_semantics(output: bytes, label: str) -> None:
     require(sections[2]["sf"] == b"src/z.c" and sections[2]["ver"] == b"v1", f"{label}: z section path/ver")
     aliases = sections[2]["aliases"]
     require(aliases == [(b"0", b"2", b"za"), (b"0", b"1", b"zb")], f"{label}: alias order/count {aliases!r}")
+    branches = sections[2]["branches"]
+    require(
+        branches == [(b"2", b"0", b"e", b"1"), (b"2", b"0", b"e2", b"0")],
+        f"{label}: BRDA order/content drift {branches!r}",
+    )
     mcdc = sections[2]["mcdc"]
     require(mcdc and mcdc[0][2] == b"t" and mcdc[1][2] == b"f", f"{label}: mcdc sense order")
     require(sections[0]["summaries"].get("FNF") == b"1", f"{label}: recomputed FNF missing")
@@ -540,9 +545,35 @@ def assert_xml2lcov_semantics(output: bytes, label: str) -> None:
 
 def assert_py2lcov_no_functions_semantics(output: bytes, label: str) -> None:
     sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: section count")
     require(sections[0]["tn"] == b"py" and sections[0]["sf"] == b"mod.py", f"{label}: header")
-    require(len(sections[0]["functions"]) == 1 and len(sections[0]["aliases"]) == 1, f"{label}: derived extra")
+    require(
+        sections[0]["branches"] == [(b"1", b"0", b"0", b"1"), (b"1", b"0", b"1", b"0")],
+        f"{label}: BRDA order/content drift {sections[0]['branches']!r}",
+    )
+    require(sections[0]["functions"] == [(b"0", b"1", b"1")], f"{label}: functions")
+    require(sections[0]["aliases"] == [(b"0", b"3", b"foo")], f"{label}: aliases")
+    require(sections[0]["das"] == [(b"1", b"3", None), (b"2", b"1", None)], f"{label}: DA")
     require(not sections[0]["mcdc"], f"{label}: unexpected MC/DC")
+    # Direct py2lcov family/record order is BRDA block, then FNL/FNA, then DA.
+    brda0_at = output.find(b"\nBRDA:1,0,0,1\n")
+    brda1_at = output.find(b"\nBRDA:1,0,1,0\n")
+    fnl_at = output.find(b"\nFNL:")
+    fna_at = output.find(b"\nFNA:")
+    da_at = output.find(b"\nDA:")
+    require(
+        0 <= brda0_at < brda1_at < fnl_at < fna_at < da_at,
+        f"{label}: direct family/record order drift",
+    )
+    require(
+        sections[0]["summaries"].get("LF") == b"2"
+        and sections[0]["summaries"].get("LH") == b"2"
+        and sections[0]["summaries"].get("BRF") == b"2"
+        and sections[0]["summaries"].get("BRH") == b"1"
+        and sections[0]["summaries"].get("FNF") == b"1"
+        and sections[0]["summaries"].get("FNH") == b"1",
+        f"{label}: converter summaries",
+    )
 
 
 def assert_py2lcov_with_functions_semantics(output: bytes, label: str) -> None:

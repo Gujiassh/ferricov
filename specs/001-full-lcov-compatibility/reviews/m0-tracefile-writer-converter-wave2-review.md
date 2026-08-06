@@ -25,8 +25,8 @@ Not modified: crates, behavior/diagnostics/installation lanes, shared `tasks.md`
 | Writer fixtures | 13 under `fixtures/writer/` |
 | Writer oracle cases | 17 (`WRITER_CASE_IDS`) |
 | Total fixtures / cases | 137 / 271 |
-| Baseline file SHA-256 | `69312253531ac9ba999b9e3f5b111a593b5cbb864e148db2fe9030ffe660ad48` |
-| Cases SHA-256 | `4cec83ca3ae22ee90dfb5f693a6bb1b01006775feae6774efe76b386ead1a15d` |
+| Baseline file SHA-256 | `94787d0820a228e716954961fb7c611af807721e3a547b65cec5ae4dcb89fb4a` |
+| Cases SHA-256 | `3b31382fc6239fb447fd92f8d21694a6957e3c0472ef227baf12da31b7ee5503` |
 | Manifest SHA-256 | `e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a` |
 | TF-030 registry SHA-256 | `bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c` (unchanged) |
 | Oracle pin | LCOV v2.5 `74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5`, image `sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e` |
