@@ -6,6 +6,36 @@
         "name": "installed-directories.lock",
         "path": "compat/installation/wave2/cases/INST-LAYOUT-001/installed-directories.lock",
         "sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+      },
+      {
+        "bytes": 13,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/cleanup.log",
+        "sha256": "6338824994cb575f7d0af9d95201e110bf1fbaa0bf3966ce8b2fa739a5cc5d4a"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 67,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/observed-argv.json",
+        "sha256": "304d7396d707db8ce266786310e68c4e80765921728612fd97beef9e6f7b251d"
+      },
+      {
+        "bytes": 240,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/observed-children.json",
+        "sha256": "9fe95225e75895bebb11b5e5b450c1880578643528129e198ca8437e38d91c93"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
       }
     ],
     "stderr_bin": {
@@ -22,9 +52,33 @@
   "case_id": "INST-LAYOUT-001",
   "environment": {
     "mode": "clean_explicit",
-    "variables": {
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
       "LC_ALL": "C",
-      "TZ": "UTC"
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
     }
   },
   "evidence_status": "oracle_reference",
@@ -34,52 +88,355 @@
     "file_count": 0,
     "paths_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
     "root": "/usr/local",
-    "selected_paths": [
-      "/usr/local",
-      "/usr/local/bin",
-      "/usr/local/etc",
-      "/usr/local/lib",
-      "/usr/local/lib/lcov",
-      "/usr/local/share",
-      "/usr/local/share/lcov",
-      "/usr/local/share/lcov/example",
-      "/usr/local/share/lcov/example/methods",
-      "/usr/local/share/lcov/html",
-      "/usr/local/share/lcov/html/_sources",
-      "/usr/local/share/lcov/html/_sources/man",
-      "/usr/local/share/lcov/html/_static",
-      "/usr/local/share/lcov/html/_static/css",
-      "/usr/local/share/lcov/html/_static/fonts",
-      "/usr/local/share/lcov/html/_static/js",
-      "/usr/local/share/lcov/html/man",
-      "/usr/local/share/lcov/support-scripts",
-      "/usr/local/share/lcov/tests",
-      "/usr/local/share/lcov/tests/bin",
-      "/usr/local/share/lcov/tests/genhtml",
-      "/usr/local/share/lcov/tests/genhtml/errs",
-      "/usr/local/share/lcov/tests/genhtml/exception",
-      "/usr/local/share/lcov/tests/genhtml/filter",
-      "/usr/local/share/lcov/tests/genhtml/function",
-      "/usr/local/share/lcov/tests/genhtml/insensitive",
-      "/usr/local/share/lcov/tests/genhtml/lambda",
-      "/usr/local/share/lcov/tests/genhtml/relative",
-      "/usr/local/share/lcov/tests/genhtml/simple",
-      "/usr/local/share/lcov/tests/genhtml/synthesize",
-      "/usr/local/share/lcov/tests/lcov",
-      "/usr/local/share/lcov/tests/lcov/add",
-      "/usr/local/share/lcov/tests/lcov/branch",
-      "/usr/local/share/lcov/tests/lcov/coverage",
-      "/usr/local/share/lcov/tests/lcov/demangle",
-      "/usr/local/share/lcov/tests/lcov/errs",
-      "/usr/local/share/lcov/tests/lcov/exception",
-      "/usr/local/share/lcov/tests/lcov/extract",
-      "/usr/local/share/lcov/tests/lcov/follow",
-      "/usr/local/share/lcov/tests/lcov/format"
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/bin"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/etc"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/lib"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/lib/lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/example"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/example/methods"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_sources"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_sources/man"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_static"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_static/css"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_static/fonts"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/_static/js"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/html/man"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/support-scripts"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/bin"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/errs"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/exception"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/filter"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/function"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/insensitive"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/lambda"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/relative"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/simple"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/genhtml/synthesize"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/add"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/branch"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/coverage"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/demangle"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/errs"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/exception"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/extract"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/follow"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/format"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/gcov-tool"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/initializer"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/lambda"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/mcdc"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/merge"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/misc"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/multiple"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/lcov/summary"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/llvm2lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/perl2lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/profiles"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/py2lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/scripts"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/lcov/tests/xml2lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/man"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/man/man1"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/usr/local/share/man/man5"
+      }
     ],
     "symlink_count": 0
   },
   "identity": {
     "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/find",
     "executable_sha256": "c703b94ad3448bccc79cda80520964c8d371918a39eecc27f8d60f4e8891770a",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
@@ -93,7 +450,7 @@
       "/usr/local"
     ],
     "cleanup": [
-      "none_required_read_only_payload_scan"
+      "cleanup:none"
     ],
     "fixture_setup": [
       "use pinned image installed payload under /usr/local",
@@ -102,11 +459,24 @@
     "timeout_seconds": 60,
     "working_directory": "/"
   },
-  "observation_sha256": "a8220a0242a525ffb226a8d9ce10fa6e8c3a20f8b1dc8e7f69a2119f649c772e",
+  "observation_sha256": "217ca6e82a65cc109140a2afc062c9ee784a92fd911a88f2560158d41663066d",
   "oracle_execution_status": "captured",
   "process": {
-    "child_processes_observed": [],
+    "child_processes_observed": [
+      {
+        "argv": [
+          "sh",
+          "/tmp/installed-tree-directories.sh",
+          "/usr/local"
+        ],
+        "command": "sh /tmp/installed-tree-directories.sh /usr/local",
+        "exit_status": 0,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
     "exit_status": 0,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

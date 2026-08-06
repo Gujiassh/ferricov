@@ -1,6 +1,37 @@
 {
   "artifacts": {
-    "extra": [],
+    "extra": [
+      {
+        "bytes": 61,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/cleanup.log",
+        "sha256": "62e382b5fd53aac121e6271b7f9a3ea2d478b92f7d14bd99ee35ee5762c609fc"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 39,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-argv.json",
+        "sha256": "343e16d808c1bf21b38b59e5f56193039b1fe3bb8b2db503ecea4a93603fa701"
+      },
+      {
+        "bytes": 185,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/observed-children.json",
+        "sha256": "22abdb138a3c1c39d703429bf0bec96539eac03c32543cd7d77d51880456f156"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      }
+    ],
     "stderr_bin": {
       "bytes": 0,
       "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stderr.bin",
@@ -15,8 +46,33 @@
   "case_id": "INST-CONFIG-DISCOVERY-001",
   "environment": {
     "mode": "clean_override",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
     "variables": {
-      "LC_ALL": "C"
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
     }
   },
   "evidence_status": "oracle_reference",
@@ -24,16 +80,27 @@
   "file_tree_effects": {
     "directory_count": 1,
     "file_count": 1,
-    "paths_sha256": "44e5531100cbfabbeae6b6bf3bb801a1f25e8bfadfe6b4e3bd2efe84ef79c8f2",
+    "paths_sha256": "b527f642e71878a7690e45915847b36fa319e207b1295ab9729265ca502ba050",
     "root": "/tmp/h1",
-    "selected_paths": [
-      "/tmp/h1",
-      "/tmp/h1/.lcovrc"
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/h1"
+      },
+      {
+        "identity": "e0201878dd7a3244763d1b0c0fca22e36d5e053ef1b8490aa3a547bf3d35ae1e",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/h1/.lcovrc"
+      }
     ],
     "symlink_count": 0
   },
   "identity": {
     "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/perl",
     "executable_sha256": "f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
@@ -46,7 +113,9 @@
       "/tmp/config-probe.pl"
     ],
     "cleanup": [
-      "rm -rf /tmp/h1 /tmp/lh /tmp/config-probe.pl"
+      "removed:/tmp/h1",
+      "removed:/tmp/lh",
+      "removed:/tmp/config-probe.pl"
     ],
     "fixture_setup": [
       "create /tmp/h1/.lcovrc and /tmp/lh/etc/lcovrc",
@@ -55,11 +124,23 @@
     "timeout_seconds": 60,
     "working_directory": "/tmp"
   },
-  "observation_sha256": "483f902094be68628ae04419e667e80a7fd197307485767f5a3973c39b11c24f",
+  "observation_sha256": "90d53d3696efa18cc5deab23fa43cbc34e18fab2441f2f0ebc147cde1ad05565",
   "oracle_execution_status": "captured",
   "process": {
-    "child_processes_observed": [],
+    "child_processes_observed": [
+      {
+        "argv": [
+          "perl",
+          "/tmp/config-probe.pl"
+        ],
+        "command": "perl /tmp/config-probe.pl",
+        "exit_status": 0,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
     "exit_status": 0,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

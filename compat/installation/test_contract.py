@@ -490,6 +490,158 @@ class InstallationContractTests(unittest.TestCase):
                 contract.WAVE2_EXPECTED_TABLE_PATH
             )
 
+    def _stage_capture_path(self) -> Path:
+        return contract.ROOT / "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+
+    def _co_mutate_stage_capture(self, mutator) -> None:
+        """Mutate STAGE capture and refresh observation + artifact hash table entry.
+
+        Independent expected table is NOT updated. Binding must reject the co-mutation.
+        """
+        path = self._stage_capture_path()
+        backup = path.read_bytes()
+        rel = "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+        old_hash = contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel]
+        mode = path.stat().st_mode
+        try:
+            try:
+                path.chmod(mode | 0o200)
+            except OSError:
+                pass
+            record = json.loads(backup.decode("ascii"))
+            mutator(record)
+            # Recompute observation hash as a co-mutator would after changing material.
+            record["observation_sha256"] = contract.recompute_observation_sha256(record)
+            path.write_bytes(contract.canonical_json(record).encode("ascii"))
+            contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = contract.sha256_file(path)
+            with self.assertRaises(contract.InstallationContractError):
+                contract.capture_binding_for_case("INST-STAGE-001")
+        finally:
+            try:
+                path.chmod(mode | 0o200)
+            except OSError:
+                pass
+            path.write_bytes(backup)
+            try:
+                path.chmod(mode)
+            except OSError:
+                pass
+            contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = old_hash
+
+    def test_wave2_env_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["environment"]["observed_variables"]["MUTATED"] = "1"
+            record["environment"]["variables"]["MUTATED"] = "1"
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_cwd_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["invocation"]["working_directory"] = "/tmp/mutated-cwd"
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_timeout_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["invocation"]["timeout_seconds"] = 1
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_cleanup_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["invocation"]["cleanup"] = ["rm -rf /tmp/mutated"]
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_exe_hash_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["identity"]["executable_sha256"] = "a" * 64
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_signal_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["process"]["signal"] = 15
+            record["process"]["exit_status"] = None
+            record["process"]["timed_out"] = False
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_child_status_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            kids = record["process"]["child_processes_observed"]
+            if kids:
+                kids[0]["exit_status"] = 99
+            else:
+                record["process"]["child_processes_observed"] = [
+                    {
+                        "command": "mutated",
+                        "argv": ["mutated"],
+                        "exit_status": 99,
+                        "signal": None,
+                        "timed_out": False,
+                    }
+                ]
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_tree_paths_co_mutation_is_rejected(self) -> None:
+        def mutate(record: dict) -> None:
+            record["file_tree_effects"]["paths_sha256"] = "b" * 64
+            # keep row count consistent but change hash
+        self._co_mutate_stage_capture(mutate)
+
+    def test_wave2_capture_schema_rejects_zero_executable_hash(self) -> None:
+        schema = contract.wave2_case_capture_schema()
+        record = contract.load_json(self._stage_capture_path())
+        record["identity"]["executable_sha256"] = "0" * 64
+        with self.assertRaises(Exception):
+            Draft202012Validator(schema).validate(record)
+
+    def test_wave2_capture_schema_rejects_relative_cwd(self) -> None:
+        schema = contract.wave2_case_capture_schema()
+        record = contract.load_json(self._stage_capture_path())
+        record["invocation"]["working_directory"] = "relative/cwd"
+        with self.assertRaises(Exception):
+            Draft202012Validator(schema).validate(record)
+
+    def test_wave2_capture_schema_rejects_null_exit_without_signal(self) -> None:
+        schema = contract.wave2_case_capture_schema()
+        record = contract.load_json(self._stage_capture_path())
+        record["process"]["exit_status"] = None
+        record["process"]["signal"] = None
+        record["process"]["timed_out"] = False
+        with self.assertRaises(Exception):
+            Draft202012Validator(schema).validate(record)
+
+    def test_wave2_capture_schema_rejects_escaping_artifact_path(self) -> None:
+        schema = contract.wave2_case_capture_schema()
+        record = contract.load_json(self._stage_capture_path())
+        record["artifacts"]["stdout_bin"]["path"] = "../escape.bin"
+        with self.assertRaises(Exception):
+            Draft202012Validator(schema).validate(record)
+
+    def test_wave2_capture_schema_rejects_missing_tree_rows(self) -> None:
+        schema = contract.wave2_case_capture_schema()
+        record = contract.load_json(self._stage_capture_path())
+        del record["file_tree_effects"]["rows"]
+        with self.assertRaises(Exception):
+            Draft202012Validator(schema).validate(record)
+
+    def test_wave2_expected_table_not_self_authenticated_by_observation_refresh(self) -> None:
+        """Refreshing capture observation alone must not satisfy expected table."""
+        path = self._stage_capture_path()
+        backup = path.read_bytes()
+        rel = "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+        old_hash = contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel]
+        try:
+            record = json.loads(backup.decode("ascii"))
+            record["environment"]["observed_variables"]["X"] = "y"
+            record["observation_sha256"] = contract.recompute_observation_sha256(record)
+            path.write_bytes(contract.canonical_json(record).encode("ascii"))
+            contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = contract.sha256_file(path)
+            # Even if we also refreshed expected observation (self-auth attack),
+            # argv/env keys/exe still bind; here we only refresh capture, table fixed.
+            with self.assertRaises(contract.InstallationContractError):
+                contract.capture_binding_for_case("INST-STAGE-001")
+        finally:
+            path.write_bytes(backup)
+            contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = old_hash
+
+
     def _rewrite_case_records(self, mutate) -> tuple[bytes, str]:
         backup = contract.CASE_RECORDS_PATH.read_bytes()
         records = json.loads(backup.decode("ascii"))

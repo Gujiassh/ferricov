@@ -12,6 +12,36 @@
         "name": "install.log",
         "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/install.log",
         "sha256": "f59b021f62f0f49ba8afcc8c70e38ba6a97d938ef2b2934f3cf1900d35084c96"
+      },
+      {
+        "bytes": 45,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/cleanup.log",
+        "sha256": "409c7b2802faf81bbced07db77c50bf81daae1fc0564012f4cd993e7bef32ed0"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 84,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-argv.json",
+        "sha256": "0fd741d1f5015373814d2dacdd7a2783e483120335db3c4298500977c25cef03"
+      },
+      {
+        "bytes": 273,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-children.json",
+        "sha256": "6cbfec5cbc8545dbd2807f218713b862a3cf60b97e23dd52f9665ff3b8b27206"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
       }
     ],
     "stderr_bin": {
@@ -28,11 +58,32 @@
   "case_id": "INST-UNINSTALL-001",
   "environment": {
     "mode": "clean_explicit",
-    "variables": {
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
       "LCOV_BUILD_DATE": "2026-07-06",
       "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
       "RELEASE": "beta",
       "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
       "VERSION": "2.5"
     }
   },
@@ -41,19 +92,45 @@
   "file_tree_effects": {
     "directory_count": 4,
     "file_count": 1,
-    "paths_sha256": "ca2721d287761c161abe281750887c2239e126064d82d71ea3afe9e3206af5c7",
+    "paths_sha256": "28d1c4f04262e315efea725a97f6c87583f73b75f8e7bffb2405edb5c0031457",
     "root": "/tmp/destdir-uninst",
-    "selected_paths": [
-      "/tmp/destdir-uninst",
-      "/tmp/destdir-uninst/usr",
-      "/tmp/destdir-uninst/usr/local",
-      "/tmp/destdir-uninst/usr/local/etc",
-      "/tmp/destdir-uninst/usr/local/etc/foreign.conf"
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr/local"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr/local/etc"
+      },
+      {
+        "identity": "98f059308e647d8fe178114f3f6796e3408bb08ba05c25dc01b25fb7426810ee",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/destdir-uninst/usr/local/etc/foreign.conf"
+      }
     ],
     "symlink_count": 0
   },
   "identity": {
     "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
@@ -68,7 +145,8 @@
       "PREFIX=/usr/local"
     ],
     "cleanup": [
-      "rm -rf /tmp/destdir-uninst /tmp/src"
+      "removed:/tmp/destdir-uninst",
+      "removed:/tmp/src"
     ],
     "fixture_setup": [
       "install full payload into DESTDIR",
@@ -77,11 +155,25 @@
     "timeout_seconds": 600,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "b6de0f576e1e9a959d882da9c903f1c2f42040dc1b549c48d38bf533a33edd3a",
+  "observation_sha256": "f29849268d059cdcab021ced97c7df64b153d25a0fb776eec787f43402df84fb",
   "oracle_execution_status": "captured",
   "process": {
-    "child_processes_observed": [],
+    "child_processes_observed": [
+      {
+        "argv": [
+          "make",
+          "uninstall",
+          "DESTDIR=/tmp/destdir-uninst",
+          "PREFIX=/usr/local"
+        ],
+        "command": "make uninstall DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local",
+        "exit_status": 0,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
     "exit_status": 0,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

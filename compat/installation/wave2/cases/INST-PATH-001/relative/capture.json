@@ -6,6 +6,36 @@
         "name": "doc.log",
         "path": "compat/installation/wave2/cases/INST-PATH-001/relative/doc.log",
         "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      },
+      {
+        "bytes": 17,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/cleanup.log",
+        "sha256": "2e744442a3bc798fc378fc80b1a3d30e570cbb156283b45b33f1a058a1179925"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 71,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-argv.json",
+        "sha256": "12e40b7f8e84ba53e02ec53bfa25097e5b2c76cf9278eb654313020622dff5e5"
+      },
+      {
+        "bytes": 247,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-children.json",
+        "sha256": "7b5eae30718098af9f82b884ebdbd8d18d96671e074e51dd4c2b2b7686ae785c"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
       }
     ],
     "stderr_bin": {
@@ -22,11 +52,32 @@
   "case_id": "INST-PATH-001:relative",
   "environment": {
     "mode": "clean_explicit",
-    "variables": {
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
       "LCOV_BUILD_DATE": "2026-07-06",
       "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
       "RELEASE": "beta",
       "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
       "VERSION": "2.5"
     }
   },
@@ -37,11 +88,12 @@
     "file_count": 0,
     "paths_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "root": "/tmp/src/rel-dest",
-    "selected_paths": [],
+    "rows": [],
     "symlink_count": 0
   },
   "identity": {
     "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
@@ -56,7 +108,7 @@
       "PREFIX=/usr/local"
     ],
     "cleanup": [
-      "rm -rf /tmp/src"
+      "removed:/tmp/src"
     ],
     "fixture_setup": [
       "relative DESTDIR=rel-dest"
@@ -64,11 +116,25 @@
     "timeout_seconds": 120,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "405564b73f717c8a9039908ebad8921abf9c3e940847ec76bc1ea4fba77747a4",
+  "observation_sha256": "325e41f27798285651d50385d7ab8eb6f52d83ba1ac06fee338643e4a4699d33",
   "oracle_execution_status": "captured",
   "process": {
-    "child_processes_observed": [],
+    "child_processes_observed": [
+      {
+        "argv": [
+          "make",
+          "install",
+          "DESTDIR=rel-dest",
+          "PREFIX=/usr/local"
+        ],
+        "command": "make install DESTDIR=rel-dest PREFIX=/usr/local",
+        "exit_status": 2,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
     "exit_status": 2,
+    "host_observer_code": 2,
     "signal": null,
     "timed_out": false
   },
