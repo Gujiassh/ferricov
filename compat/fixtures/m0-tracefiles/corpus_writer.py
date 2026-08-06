@@ -457,7 +457,7 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
         _lcov_write(
             "writer-fixedpoint.canonical",
             "fixtures/writer/fixedpoint.info",
-            "M1-TF-045",
+            "observational-blocked-tf045",
             "Observational single-write fixedpoint capture for blocked M1-TF-045 (true two-write round-trip not bound).",
             branch_mcdc,
         ),

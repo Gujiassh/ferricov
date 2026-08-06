@@ -31,8 +31,8 @@ DEFAULT_UPSTREAM_ROOT = Path(
 
 EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/manifest.json": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "cceb0c6b1def041162398f16bad88358a2bd076716ac16ec372e3edf522a1b00",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "0c95e634e637f09b6a235c8945917b70f1a5135f9ae19c1f88e7f4fee457a208",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "e8e40b6097083e2a4c61e0c04f61c1136d89aa5147f5c7e956ab1589f7ba5d84",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "6551d0422cb31b896209edf319246164f837cf696b7ad037032e4ebcfeb9c612",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }

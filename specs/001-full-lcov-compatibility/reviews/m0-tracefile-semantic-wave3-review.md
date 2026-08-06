@@ -22,7 +22,7 @@ Not modified: crates, shared `tasks.md`, docs/ssot, resource observations/produc
 
 | Requirement | Status | Evidence |
 | --- | --- | --- |
-| M1-TF-045 | **Blocked / observational** | No true two-write Docker round-trip cases bound; retained single-write captures and validators (input model + second parse of same output) are insufficient for exact claim |
+| M1-TF-045 | **Blocked / observational** | No true two-write Docker round-trip cases bound; free-form case label is `observational-blocked-tf045` (not `M1-TF-045`); retained single-write captures and validators are insufficient for exact claim |
 | M1-TF-052 | **Exact** | `derive_tf052_source_facts()` from `coverage.xml`/`mod.py`; both `converter-coverage.xml2lcov` and `converter-coverage.canonical-rewrite` independently compared to source facts (review-2 PASS) |
 | M1-TF-061 | **Exact (scoped)** | `bytes-non-utf8.canonical` current-form FNA alias as function-name cell + TN/SF/BRDA/MC/DC/VER; legacy FN-name non-ASCII out of scope with M1-TF-010 |
 | M1-TF-010 | **Blocked** | No comma-name / repeated-def / unknown-name probes |
