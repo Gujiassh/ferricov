@@ -74,6 +74,36 @@ pinned Oracle image:
 python3 compat/diagnostics/wave1/scripts/capture_wave1.py
 ```
 
+## Wave2 Oracle references
+
+`compat/diagnostics/wave2/` retains a second bounded executable Oracle batch for
+the remaining high-priority diagnostics and parallel gaps that are executable on
+the pinned image without claiming Ferricov product compatibility:
+
+- registry reserved-class acceptance and singular ignore-prefix / POSIX profile;
+- environment clean/precedence/allowlist/LCOV_HOME/LCOV_VALIDATE/show-location;
+- config discovery/explicit/include/unknown-key/env-expand/early-error;
+- raw Perl, Python traceback, and GD-present genpng dependency path;
+- callback finalize and cleanup/package lifecycle diagnostics;
+- parallel child exit, callback state/lifecycle, missing payload, message log,
+  memory admission/fallback, capture status, and partial-commit control.
+
+Wave2 reuses the accepted wave1 provenance contract (clean `env -i`, DEVNULL
+stdin, fail-closed named-container cleanup, execution manifests, independent
+raw stream/tree facts, mutation rejection). Case-local environment extras remain
+declared clean-env variables rather than ambient host inheritance.
+
+Wave2 binds 30 planned identities across 32 observations and intentionally
+leaves the geninfo child watchdog/Ferricov pair matrix, signal/unknown-child/
+parent-death/fork-retry/corrupt-payload paths unbound and `planned`.
+
+Regenerate wave2 only after an intentional reviewed capture change against the
+pinned Oracle image:
+
+```sh
+python3 compat/diagnostics/wave2/scripts/capture_wave2.py
+```
+
 ## Validate
 
 Validate against a clean pinned upstream checkout:

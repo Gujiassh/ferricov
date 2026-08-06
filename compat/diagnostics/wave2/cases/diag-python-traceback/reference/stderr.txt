@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/usr/local/bin/py2lcov", line 205, in <module>
+    main()
+  File "/usr/local/bin/py2lcov", line 178, in main
+    p.process_xml_file(f)
+  File "/usr/local/bin/xml2lcovutil.py", line 145, in process_xml_file
+    tree = ET.parse(xml_file)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/xml/etree/ElementTree.py", line 1218, in parse
+    tree.parse(source, parser)
+  File "/usr/lib/python3.11/xml/etree/ElementTree.py", line 580, in parse
+    self._root = parser._parse_whole(source)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+xml.etree.ElementTree.ParseError: syntax error: line 1, column 0

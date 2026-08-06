@@ -167,7 +167,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave1_observations"], 26)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 169)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 201)
         planned = []
         for entry in wave1:
             for planned_id in entry["planned_case_ids"]:
@@ -672,6 +672,163 @@ class DiagnosticsContractTests(unittest.TestCase):
                 manifest["invoked_executable"]["sha256"],
                 base["executables"][entry["argv"][0]]["sha256"],
             )
+
+
+    def test_wave2_observation_count_and_planned_ids_are_bound(self) -> None:
+        wave2 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave2:")
+        ]
+        self.assertEqual(len(wave2), contract.WAVE2_EXPECTED_CASE_COUNT)
+        self.assertEqual(self.committed["totals"]["wave2_observations"], 32)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 201)
+        planned = []
+        for entry in wave2:
+            for planned_id in entry["planned_case_ids"]:
+                if planned_id not in planned:
+                    planned.append(planned_id)
+        self.assertEqual(planned, contract.WAVE2_EXPECTED_PLANNED_IDS)
+        self.assertEqual(len(planned), 30)
+
+    def test_wave2_product_promotion_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["product_compatibility_evidence"] = True
+        with self.assertRaises(contract.DiagnosticsContractError):
+            self.validate(document)
+
+    def test_wave2_raw_stdout_refresh_is_rejected(self) -> None:
+        path = (
+            contract.WAVE2_ROOT
+            / "cases"
+            / "diag-registry-branch-accept"
+            / "reference"
+            / "stdout.bin"
+        )
+        original = path.read_bytes()
+        try:
+            path.write_bytes(original + b"\n#mutated\n")
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "stdout hash drift|Oracle observation identity drift|retained diagnostics artifact drift|wave2",
+            ):
+                self.validate(copy.deepcopy(self.committed))
+        finally:
+            path.write_bytes(original)
+
+    def test_wave2_raw_stderr_refresh_is_rejected(self) -> None:
+        path = (
+            contract.WAVE2_ROOT
+            / "cases"
+            / "diag-ignore-prefix-posix-lcov"
+            / "reference"
+            / "stderr.bin"
+        )
+        original = path.read_bytes()
+        try:
+            path.write_bytes(original + b"\n#mutated\n")
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "stderr hash drift|Oracle observation identity drift|retained diagnostics artifact drift|wave2",
+            ):
+                self.validate(copy.deepcopy(self.committed))
+        finally:
+            path.write_bytes(original)
+
+    def test_wave2_identity_swap_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        wave2 = [
+            entry
+            for entry in document["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave2:")
+        ]
+        # Swap distinct non-empty stderr hashes when available; otherwise swap exits.
+        candidates = [
+            entry for entry in wave2 if entry["stderr_sha256"] != ("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+        ]
+        if len(candidates) >= 2 and candidates[0]["stderr_sha256"] != candidates[1]["stderr_sha256"]:
+            first, second = candidates[0], candidates[1]
+            first["stderr_sha256"], second["stderr_sha256"] = (
+                second["stderr_sha256"],
+                first["stderr_sha256"],
+            )
+        else:
+            first, second = wave2[0], wave2[1]
+            first["exit_status"], second["exit_status"] = (
+                second["exit_status"],
+                first["exit_status"],
+            )
+        with self.assertRaisesRegex(
+            contract.DiagnosticsContractError,
+            "Oracle observation identity drift",
+        ):
+            self.validate(document)
+
+    def test_wave2_ferricov_planned_ids_remain_unbound(self) -> None:
+        ferricov = [
+            planned_id
+            for planned_id in self.committed["planned_case_ids"]
+            if planned_id.endswith("-FERRICOV-001")
+        ]
+        self.assertGreaterEqual(len(ferricov), 3)
+        bound = {
+            planned_id
+            for entry in self.committed["oracle_observations"]
+            for planned_id in entry.get("planned_case_ids", [])
+        }
+        for planned_id in ferricov:
+            self.assertNotIn(planned_id, bound)
+
+    def test_wave2_execution_manifest_provenance_is_bound(self) -> None:
+        wave2 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave2:")
+        ]
+        self.assertEqual(len(wave2), 32)
+        base = contract.WAVE2_EXECUTION_MANIFEST_BASE
+        for entry in wave2:
+            manifest = entry["execution_manifest"]
+            self.assertEqual(manifest["image"], contract.WAVE2_PINNED_IMAGE)
+            self.assertEqual(manifest["upstream_commit"], contract.UPSTREAM_COMMIT)
+            self.assertEqual(manifest["locale"], "C")
+            self.assertEqual(manifest["timezone"], "UTC")
+            self.assertEqual(manifest["stdin"], contract.WAVE2_STDIN)
+            self.assertEqual(manifest["command_wrapper"], ["env", "-i"])
+            self.assertEqual(
+                manifest["runtime_versions"], base["runtime_versions"]
+            )
+            self.assertEqual(
+                manifest["package_availability"], base["package_availability"]
+            )
+            command = entry["argv"][0]
+            self.assertEqual(manifest["invoked_command"], command)
+            self.assertEqual(
+                manifest["invoked_executable"]["sha256"],
+                base["executables"][command]["sha256"],
+            )
+
+    def test_wave2_cleanup_and_environment_are_bound_independently(self) -> None:
+        wave2 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave2:")
+        ]
+        self.assertEqual(len(wave2), 32)
+        for entry in wave2:
+            self.assertEqual(entry["cleanup"], contract.WAVE2_CLEANUP)
+            self.assertEqual(entry["stdin"], contract.WAVE2_STDIN)
+            self.assertTrue(entry["cleanup_outcome"]["container_absent"])
+            self.assertTrue(entry["cleanup_outcome"]["direct_child_reaped"])
+            self.assertIsNone(entry["cleanup_outcome"]["process_group_empty"])
+            self.assertFalse(
+                entry["environment_policy"]["inherits_host_environment"]
+            )
+            self.assertEqual(
+                entry["environment_policy"]["command_wrapper"], ["env", "-i"]
+            )
+
+
 
 
 if __name__ == "__main__":

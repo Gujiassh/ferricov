@@ -1,0 +1,9 @@
+lcov: ERROR: (missing) 'missing.info' found from pattern 'missing.info' is not a readable file
+	(use "lcov --ignore-errors missing ..." to bypass this error)
+Trace begun at /usr/local/lib/lcov/lcovutil.pm line 644
+lcovutil::_msg_handler('(missing) \'missing.info\' found from pattern \'missing.info\' is not a readable file^J^I(use "lcov --ignore-errors missing ..." to bypass this error)^J', 2) called at /usr/local/lib/lcov/lcovutil.pm line 671
+lcovutil::die_handler('(missing) \'missing.info\' found from pattern \'missing.info\' is not a readable file^J^I(use "lcov --ignore-errors missing ..." to bypass this error)^J') called at /usr/local/lib/lcov/lcovutil.pm line 2367
+lcovutil::ignorable_error(17, '\'missing.info\' found from pattern \'missing.info\' is not a readable file') called at /usr/local/lib/lcov/lcovutil.pm line 9734
+AggregateTraces::find_from_glob('missing.info') called at /usr/local/bin/lcov line 1577
+main::add_traces at /usr/local/bin/lcov line 411
+eval {...} at /usr/local/bin/lcov line 362

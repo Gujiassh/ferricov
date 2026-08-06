@@ -41,6 +41,8 @@ EXPECTED_ARTIFACT_HASHES = {
         "20e4bc440d855d7c773bd37087c318a852e850534f3c7f71ab847f9291053a28",
     "compat/diagnostics/wave1/result.json":
         "abfda945b02bb3a31543a2501619fa19f38fac89b42d7e5f845c209c339cd454",
+    "compat/diagnostics/wave2/result.json":
+        "e66f0155c68fbe5d7d1ba8d103e1889b5a147247838832811e68b7869a329bdc",
 }
 
 
@@ -631,6 +633,867 @@ WAVE1_EXPECTED_CASES: list[dict[str, Any]] = [
 ]
 
 WAVE1_EXPECTED_CASE_BY_ID = {entry["id"]: entry for entry in WAVE1_EXPECTED_CASES}
+
+WAVE2_ROOT = Path(__file__).with_name("wave2")
+WAVE2_INDEX = WAVE2_ROOT / "result.json"
+WAVE2_EXPECTED_CASE_COUNT = 32
+WAVE2_PINNED_IMAGE = WAVE1_PINNED_IMAGE
+WAVE2_FILE_TREE_SEMANTICS = WAVE1_FILE_TREE_SEMANTICS
+WAVE2_TIMEOUT_SECONDS = WAVE1_TIMEOUT_SECONDS
+WAVE2_CLEANUP = WAVE1_CLEANUP
+WAVE2_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES = WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
+WAVE2_DOCKER_CLI_HOST_ENV = WAVE1_DOCKER_CLI_HOST_ENV
+WAVE2_STDIN = WAVE1_STDIN
+WAVE2_CLEANUP_OUTCOME_TEMPLATE = WAVE1_CLEANUP_OUTCOME_TEMPLATE
+
+WAVE2_ENVIRONMENT_POLICY_TEMPLATE = {
+    "mode": "in_container_env_dash_i_clean",
+    "inherits_host_environment": False,
+    "command_wrapper": ["env", "-i"],
+    "reviewed_exclusions": [
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+        "case-local env extras are still declared clean-env variables, never ambient host inheritance",
+    ],
+}
+
+WAVE2_EXECUTION_ENVIRONMENT_TEMPLATE = {
+    "docker_image": WAVE2_PINNED_IMAGE,
+    "network": "none",
+    "user": "1000:1000",
+    "workdir": "/work",
+    "tmpfs": ["/tmp:rw,exec,mode=1777"],
+    "timeout_seconds": WAVE2_TIMEOUT_SECONDS,
+    "cleanup": WAVE2_CLEANUP,
+    "docker_cli_host_env": WAVE2_DOCKER_CLI_HOST_ENV,
+}
+
+WAVE2_EXECUTION_MANIFEST_BASE: dict[str, Any] = {
+    "command_wrapper": [
+        "env",
+        "-i"
+    ],
+    "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+    },
+    "executables": {
+        "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+        },
+        "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+        },
+        "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+        },
+        "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+        },
+        "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+        },
+        "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+        },
+        "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+        },
+        "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+        },
+        "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+        },
+        "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+        }
+    },
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "lc_all": "C",
+    "locale": "C",
+    "package_availability": {
+        "g++": "available:4:12.2.0-3",
+        "gcc": "available:4:12.2.0-3",
+        "llvm": "not_applicable",
+        "perl": "available:5.36.0-7+deb12u3",
+        "python3": "available:3.11.2-1+b1"
+    },
+    "runtime_versions": {
+        "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+        "perl": "v5.36.0",
+        "python": "3.11.2"
+    },
+    "schema_version": 1,
+    "stdin": "subprocess.DEVNULL",
+    "timezone": "UTC",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}
+
+WAVE2_EXPECTED_PLANNED_IDS = [
+    "DIAG-REGISTRY-001",
+    "DIAG-IGNORE-PREFIX-PROFILE-001",
+    "DIAG-ENV-POSIX-PROFILE-001",
+    "DIAG-ENV-CLEAN-001",
+    "DIAG-ENV-SHOW-LOCATION-001",
+    "DIAG-ENV-PRECEDENCE-001",
+    "DIAG-ENV-LCOV-HOME-001",
+    "DIAG-CONFIG-DISCOVERY-001",
+    "DIAG-ENV-LCOV-VALIDATE-001",
+    "DIAG-ENV-ALLOWLIST-001",
+    "DIAG-CONFIG-EXPLICIT-001",
+    "DIAG-CONFIG-INCLUDE-001",
+    "DIAG-CONFIG-EARLY-ERROR-001",
+    "DIAG-CONFIG-UNKNOWN-KEY-001",
+    "DIAG-CONFIG-ENV-EXPAND-001",
+    "DIAG-RAW-PERL-001",
+    "DIAG-PYTHON-TRACEBACK-001",
+    "DIAG-DEPENDENCY-GENPNG-001",
+    "DIAG-CALLBACK-FINALIZE-FAIL-001",
+    "DIAG-CALLBACK-CLEANUP-001",
+    "PAR-CHILD-EXIT-001",
+    "PAR-CALLBACK-LIFECYCLE-FAIL-001",
+    "PAR-CALLBACK-STATE-001",
+    "PAR-PAYLOAD-MISSING-001",
+    "PAR-MSG-LOG-001",
+    "PAR-MESSAGE-ORDER-001",
+    "PAR-MEMORY-ADMISSION-001",
+    "PAR-MEMORY-FALLBACK-001",
+    "PAR-LCOV-CAPTURE-STATUS-001",
+    "PAR-PARTIAL-COMMIT-001"
+]
+
+WAVE2_EXPECTED_CASES: list[dict[str, Any]] = [
+    {
+        "id": "diag-registry-branch-accept",
+        "kind": "registry_control",
+        "planned_case_ids": [
+            "DIAG-REGISTRY-001"
+        ],
+        "argv": [
+            "lcov",
+            "--ignore-errors",
+            "branch",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-ignore-prefix-default-lcov",
+        "kind": "ignore_prefix_profile",
+        "planned_case_ids": [
+            "DIAG-IGNORE-PREFIX-PROFILE-001"
+        ],
+        "argv": [
+            "lcov",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-ignore-prefix-posix-lcov",
+        "kind": "ignore_prefix_profile",
+        "planned_case_ids": [
+            "DIAG-IGNORE-PREFIX-PROFILE-001",
+            "DIAG-ENV-POSIX-PROFILE-001"
+        ],
+        "argv": [
+            "lcov",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-env-posix-genhtml",
+        "kind": "env_posix_profile",
+        "planned_case_ids": [
+            "DIAG-ENV-POSIX-PROFILE-001"
+        ],
+        "argv": [
+            "genhtml",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-env-posix-geninfo",
+        "kind": "env_posix_profile",
+        "planned_case_ids": [
+            "DIAG-ENV-POSIX-PROFILE-001"
+        ],
+        "argv": [
+            "geninfo",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-env-posix-perl2lcov",
+        "kind": "env_posix_profile",
+        "planned_case_ids": [
+            "DIAG-ENV-POSIX-PROFILE-001"
+        ],
+        "argv": [
+            "perl2lcov",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-env-posix-llvm2lcov",
+        "kind": "env_posix_profile",
+        "planned_case_ids": [
+            "DIAG-ENV-POSIX-PROFILE-001"
+        ],
+        "argv": [
+            "llvm2lcov",
+            "--ignore-error",
+            "empty",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-env-clean-lcov-version",
+        "kind": "env_clean_control",
+        "planned_case_ids": [
+            "DIAG-ENV-CLEAN-001"
+        ],
+        "argv": [
+            "lcov",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-env-show-location-1",
+        "kind": "env_show_location",
+        "planned_case_ids": [
+            "DIAG-ENV-SHOW-LOCATION-001",
+            "DIAG-ENV-PRECEDENCE-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "missing.info",
+            "--output-file",
+            "o.info"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_SHOW_LOCATION": "1"
+        }
+    },
+    {
+        "id": "diag-env-show-location-2",
+        "kind": "env_show_location",
+        "planned_case_ids": [
+            "DIAG-ENV-SHOW-LOCATION-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "missing.info",
+            "--output-file",
+            "o.info"
+        ],
+        "fixtures": [],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_SHOW_LOCATION": "2"
+        }
+    },
+    {
+        "id": "diag-env-lcov-home",
+        "kind": "env_lcov_home",
+        "planned_case_ids": [
+            "DIAG-ENV-LCOV-HOME-001",
+            "DIAG-CONFIG-DISCOVERY-001"
+        ],
+        "argv": [
+            "lcov",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "emptyhome",
+            "lcovhome"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {
+            "HOME": "/work/emptyhome",
+            "LCOV_HOME": "/work/lcovhome"
+        }
+    },
+    {
+        "id": "diag-env-lcov-validate-present",
+        "kind": "env_lcov_validate",
+        "planned_case_ids": [
+            "DIAG-ENV-LCOV-VALIDATE-001",
+            "DIAG-ENV-PRECEDENCE-001"
+        ],
+        "argv": [
+            "genhtml",
+            "sample.info",
+            "-o",
+            "out_validate",
+            "--synthesize-missing"
+        ],
+        "fixtures": [
+            "sample.info",
+            "sample.c"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {
+            "LCOV_VALIDATE": "1"
+        }
+    },
+    {
+        "id": "diag-env-allowlist-posixly",
+        "kind": "env_allowlist",
+        "planned_case_ids": [
+            "DIAG-ENV-ALLOWLIST-001"
+        ],
+        "argv": [
+            "lcov",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {
+            "POSIXLY_CORRECT": "1"
+        }
+    },
+    {
+        "id": "diag-config-discovery-home",
+        "kind": "config_discovery",
+        "planned_case_ids": [
+            "DIAG-CONFIG-DISCOVERY-001"
+        ],
+        "argv": [
+            "lcov",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "home"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {
+            "HOME": "/work/home"
+        }
+    },
+    {
+        "id": "diag-config-explicit",
+        "kind": "config_explicit",
+        "planned_case_ids": [
+            "DIAG-CONFIG-EXPLICIT-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "explicit.rc",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "explicit.rc"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-config-include",
+        "kind": "config_include",
+        "planned_case_ids": [
+            "DIAG-CONFIG-INCLUDE-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "outer.rc",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "line-only.info",
+            "--output-file",
+            "out.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "outer.rc",
+            "nested.rc"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-config-include-loop",
+        "kind": "config_early_error",
+        "planned_case_ids": [
+            "DIAG-CONFIG-INCLUDE-001",
+            "DIAG-CONFIG-EARLY-ERROR-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "loop.rc",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "loop.rc"
+        ],
+        "expected_exit": 25,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-config-unknown-key-file",
+        "kind": "config_unknown_key",
+        "planned_case_ids": [
+            "DIAG-CONFIG-UNKNOWN-KEY-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "unknown-key.rc",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "unknown-key.rc"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-config-env-expand-missing",
+        "kind": "config_env_expand",
+        "planned_case_ids": [
+            "DIAG-CONFIG-ENV-EXPAND-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "env-missing.rc",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "env-missing.rc"
+        ],
+        "expected_exit": 255,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-config-early-unreadable",
+        "kind": "config_early_error",
+        "planned_case_ids": [
+            "DIAG-CONFIG-EARLY-ERROR-001"
+        ],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "noread.rc",
+            "--list",
+            "line-only.info"
+        ],
+        "fixtures": [
+            "line-only.info",
+            "noread.rc"
+        ],
+        "expected_exit": 13,
+        "timed_out": False,
+        "env": {},
+        "chmod": {
+            "noread.rc": 0
+        }
+    },
+    {
+        "id": "diag-raw-perl-die",
+        "kind": "raw_perl_boundary",
+        "planned_case_ids": [
+            "DIAG-RAW-PERL-001"
+        ],
+        "argv": [
+            "perl",
+            "-e",
+            "use lib '/usr/local/lib/lcov'; require lcovutil; die 'raw-perl-boundary';"
+        ],
+        "fixtures": [],
+        "expected_exit": 255,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-python-traceback",
+        "kind": "python_traceback_boundary",
+        "planned_case_ids": [
+            "DIAG-PYTHON-TRACEBACK-001"
+        ],
+        "argv": [
+            "py2lcov",
+            "--output",
+            "out.info",
+            "bad.xml"
+        ],
+        "fixtures": [
+            "bad.xml"
+        ],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-dependency-genpng-present",
+        "kind": "dependency_genpng",
+        "planned_case_ids": [
+            "DIAG-DEPENDENCY-GENPNG-001"
+        ],
+        "argv": [
+            "genpng",
+            "--version"
+        ],
+        "fixtures": [],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-callback-finalize-fail",
+        "kind": "callback_finalize",
+        "planned_case_ids": [
+            "DIAG-CALLBACK-FINALIZE-FAIL-001"
+        ],
+        "argv": [
+            "genhtml",
+            "sample.info",
+            "-o",
+            "out_finalize",
+            "--simplify-script",
+            "./parallelFail.pm,start,save,restore",
+            "--synthesize-missing"
+        ],
+        "fixtures": [
+            "sample.info",
+            "sample.c",
+            "parallelFail.pm"
+        ],
+        "expected_exit": 25,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "diag-callback-cleanup-missing-restore",
+        "kind": "callback_cleanup",
+        "planned_case_ids": [
+            "DIAG-CALLBACK-CLEANUP-001"
+        ],
+        "argv": [
+            "genhtml",
+            "sample.info",
+            "-o",
+            "out_cleanup",
+            "--simplify-script",
+            "./missingRestore.pm",
+            "--synthesize-missing",
+            "--parallel",
+            "2"
+        ],
+        "fixtures": [
+            "sample.info",
+            "sample.c",
+            "missingRestore.pm"
+        ],
+        "expected_exit": 255,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1"
+        }
+    },
+    {
+        "id": "par-child-exit-callback-start",
+        "kind": "parallel_child_exit",
+        "planned_case_ids": [
+            "PAR-CHILD-EXIT-001",
+            "PAR-CALLBACK-LIFECYCLE-FAIL-001"
+        ],
+        "argv": [
+            "genhtml",
+            "sample.info",
+            "-o",
+            "out_child",
+            "--simplify-script",
+            "./parallelFail.pm",
+            "--synthesize-missing",
+            "--parallel",
+            "2"
+        ],
+        "fixtures": [
+            "sample.info",
+            "sample.c",
+            "parallelFail.pm"
+        ],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1"
+        }
+    },
+    {
+        "id": "par-callback-state-save-fail",
+        "kind": "parallel_callback_state",
+        "planned_case_ids": [
+            "PAR-CALLBACK-STATE-001",
+            "PAR-CALLBACK-LIFECYCLE-FAIL-001",
+            "PAR-PAYLOAD-MISSING-001"
+        ],
+        "argv": [
+            "genhtml",
+            "sample.info",
+            "-o",
+            "out_save",
+            "--simplify-script",
+            "./parallelFail.pm,start",
+            "--synthesize-missing",
+            "--parallel",
+            "2"
+        ],
+        "fixtures": [
+            "sample.info",
+            "sample.c",
+            "parallelFail.pm"
+        ],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1"
+        }
+    },
+    {
+        "id": "par-msg-log-parallel",
+        "kind": "parallel_message_log",
+        "planned_case_ids": [
+            "PAR-MSG-LOG-001",
+            "PAR-MESSAGE-ORDER-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--parallel",
+            "2",
+            "--msg-log",
+            "messages.log",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info"
+        ],
+        "fixtures": [
+            "a.info",
+            "b.info"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "par-memory-admission-package",
+        "kind": "parallel_memory",
+        "planned_case_ids": [
+            "PAR-MEMORY-ADMISSION-001",
+            "PAR-MEMORY-FALLBACK-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--memory",
+            "1",
+            "--parallel",
+            "2",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info"
+        ],
+        "fixtures": [
+            "a.info",
+            "b.info"
+        ],
+        "expected_exit": 255,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "par-memory-fallback-ignore-package",
+        "kind": "parallel_memory",
+        "planned_case_ids": [
+            "PAR-MEMORY-FALLBACK-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--memory",
+            "1",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "package",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info"
+        ],
+        "fixtures": [
+            "a.info",
+            "b.info"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "par-lcov-capture-status",
+        "kind": "parallel_capture_status",
+        "planned_case_ids": [
+            "PAR-LCOV-CAPTURE-STATUS-001"
+        ],
+        "argv": [
+            "lcov",
+            "--capture",
+            "--directory",
+            "/work/no-such-dir",
+            "--output-file",
+            "cap.info"
+        ],
+        "fixtures": [],
+        "expected_exit": 9,
+        "timed_out": False,
+        "env": {}
+    },
+    {
+        "id": "par-partial-commit-control",
+        "kind": "parallel_partial_commit",
+        "planned_case_ids": [
+            "PAR-PARTIAL-COMMIT-001"
+        ],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--parallel",
+            "2",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info"
+        ],
+        "fixtures": [
+            "a.info",
+            "b.info"
+        ],
+        "expected_exit": 0,
+        "timed_out": False,
+        "env": {}
+    }
+]
+
+WAVE2_EXPECTED_CASE_BY_ID = {entry["id"]: entry for entry in WAVE2_EXPECTED_CASES}
+
 
 EXPECTED_REGISTRY = (
     ("annotate", "ERROR_ANNOTATE_SCRIPT"),
@@ -1324,6 +2187,355 @@ def wave1_observations() -> list[dict[str, Any]]:
     return result
 
 
+
+def merge_wave2_env(extra: dict[str, str] | None) -> dict[str, str]:
+    env = dict(WAVE2_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES)
+    if extra:
+        env.update(extra)
+    return env
+
+
+def wave2_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
+    result = []
+    for name in fixtures:
+        src = WAVE2_ROOT / "fixtures" / name
+        if not src.exists():
+            raise DiagnosticsContractError(f"missing wave2 fixture: {name}")
+        if src.is_dir():
+            for path in sorted(src.rglob("*")):
+                if not path.is_file():
+                    continue
+                rel = f"{name}/{path.relative_to(src).as_posix()}"
+                data = path.read_bytes()
+                result.append(
+                    {
+                        "path": rel,
+                        "bytes": len(data),
+                        "sha256": sha256_bytes(data),
+                    }
+                )
+        else:
+            data = src.read_bytes()
+            result.append(
+                {
+                    "path": name,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                }
+            )
+    return result
+
+
+def recompute_wave2_file_tree(
+    case_dir: Path,
+    chmod_map: dict[str, int] | None = None,
+) -> list[dict[str, Any]]:
+    """Rebuild retained non-reference file tree.
+
+    Git only preserves the executable bit, so intentional unreadable capture
+    fixtures (mode 0o000) are re-applied from the expected case table before
+    hashing. Modes are restored afterward so the working tree is unchanged.
+    """
+    applied: list[tuple[Path, int]] = []
+    if chmod_map:
+        for rel, mode in chmod_map.items():
+            path = case_dir / rel
+            if not path.exists():
+                raise DiagnosticsContractError(
+                    f"wave2 chmod target missing: {case_dir.name}:{rel}"
+                )
+            previous = path.stat().st_mode & 0o777
+            # Ensure we can read current mode bits before tightening permissions.
+            if previous == 0:
+                path.chmod(0o600)
+                previous = path.stat().st_mode & 0o777
+            path.chmod(mode)
+            applied.append((path, previous))
+    try:
+        entries = []
+        for path in sorted(case_dir.rglob("*")):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(case_dir).as_posix()
+            if rel.startswith("reference/") or rel == "result.json":
+                continue
+            try:
+                data = path.read_bytes()
+            except PermissionError:
+                entries.append(
+                    {
+                        "path": rel,
+                        "bytes": None,
+                        "sha256": None,
+                        "unreadable": True,
+                        "mode": oct(path.stat().st_mode & 0o777),
+                    }
+                )
+                continue
+            entries.append(
+                {
+                    "path": rel,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                }
+            )
+        return entries
+    finally:
+        for path, previous in reversed(applied):
+            path.chmod(previous)
+
+
+def wave2_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]:
+    case_id = expected["id"]
+    if case.get("id") != case_id:
+        raise DiagnosticsContractError(f"wave2 index case id drift: {case_id}")
+    case_dir = WAVE2_ROOT / "cases" / case_id
+    path = case_dir / "result.json"
+    document = load_json(path)
+
+    if document.get("case_id") != case_id:
+        raise DiagnosticsContractError(f"wave2 case id mismatch: {case_id}")
+    if document.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError(f"wave2 case claims product evidence: {case_id}")
+    if document.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError(
+            f"wave2 case evidence status is not oracle_reference: {case_id}"
+        )
+    if document.get("image") != WAVE2_PINNED_IMAGE:
+        raise DiagnosticsContractError(f"wave2 case image drift: {case_id}")
+    if document.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError(f"wave2 case upstream drift: {case_id}")
+
+    case_env = merge_wave2_env(expected.get("env"))
+    environment_policy = {
+        **WAVE2_ENVIRONMENT_POLICY_TEMPLATE,
+        "declared_variables": dict(case_env),
+        "effective_environment_variables": dict(case_env),
+    }
+    execution_environment = {
+        **WAVE2_EXECUTION_ENVIRONMENT_TEMPLATE,
+        "env": dict(case_env),
+        "environment_policy": environment_policy,
+        "stdin": WAVE2_STDIN,
+    }
+    if document.get("execution_environment") != execution_environment:
+        raise DiagnosticsContractError(
+            f"wave2 execution environment drift: {case_id}"
+        )
+    if document.get("effective_environment_variables") != case_env:
+        raise DiagnosticsContractError(
+            f"wave2 effective environment drift: {case_id}"
+        )
+    if document.get("environment_policy") != environment_policy:
+        raise DiagnosticsContractError(
+            f"wave2 environment policy drift: {case_id}"
+        )
+    if document.get("execution_environment", {}).get("stdin") != WAVE2_STDIN:
+        raise DiagnosticsContractError(f"wave2 stdin policy drift: {case_id}")
+
+    command = expected["argv"][0]
+    expected_manifest = {
+        **WAVE2_EXECUTION_MANIFEST_BASE,
+        "effective_environment_variables": dict(case_env),
+        "invoked_command": command,
+        "invoked_executable": {
+            "name": command,
+            "path": WAVE2_EXECUTION_MANIFEST_BASE["executables"][command]["path"],
+            "sha256": WAVE2_EXECUTION_MANIFEST_BASE["executables"][command]["sha256"],
+        },
+        "invoked_argv": list(expected["argv"]),
+    }
+    manifest = document.get("execution_manifest")
+    if not isinstance(manifest, dict):
+        raise DiagnosticsContractError(
+            f"wave2 missing execution_manifest provenance: {case_id}"
+        )
+    if manifest != expected_manifest:
+        raise DiagnosticsContractError(
+            f"wave2 execution_manifest provenance drift: {case_id}"
+        )
+    if case.get("execution_manifest") != expected_manifest:
+        raise DiagnosticsContractError(
+            f"wave2 index execution_manifest drift: {case_id}"
+        )
+    if case.get("stdin") != WAVE2_STDIN:
+        raise DiagnosticsContractError(f"wave2 index stdin drift: {case_id}")
+    if document.get("timeout_seconds") != WAVE2_TIMEOUT_SECONDS:
+        raise DiagnosticsContractError(f"wave2 timeout drift: {case_id}")
+    if document.get("cleanup") != WAVE2_CLEANUP:
+        raise DiagnosticsContractError(f"wave2 cleanup policy drift: {case_id}")
+    expected_cleanup = {
+        **WAVE2_CLEANUP_OUTCOME_TEMPLATE,
+        "container_name": f"ferricov-diag-wave2-{case_id}",
+    }
+    if document.get("cleanup_outcome") != expected_cleanup:
+        raise DiagnosticsContractError(
+            f"wave2 cleanup outcome drift: {case_id}"
+        )
+    if not document.get("cleanup_outcome", {}).get("direct_child_reaped"):
+        raise DiagnosticsContractError(
+            f"wave2 cleanup missing direct_child_reaped: {case_id}"
+        )
+    if document.get("cleanup_outcome", {}).get("container_absent") is not True:
+        raise DiagnosticsContractError(
+            f"wave2 cleanup missing container_absent: {case_id}"
+        )
+    if document.get("cleanup_outcome", {}).get("process_group_empty") is not None:
+        raise DiagnosticsContractError(
+            f"wave2 cleanup invalid process_group claim: {case_id}"
+        )
+    if document.get("file_tree_semantics") != WAVE2_FILE_TREE_SEMANTICS:
+        raise DiagnosticsContractError(
+            f"wave2 file-tree semantics drift: {case_id}"
+        )
+    if document.get("timed_out") is not False:
+        raise DiagnosticsContractError(f"wave2 timed_out claim drift: {case_id}")
+    if document.get("kind") != expected["kind"] or case.get("kind") != expected["kind"]:
+        raise DiagnosticsContractError(f"wave2 kind drift: {case_id}")
+    if (
+        document.get("planned_case_ids") != expected["planned_case_ids"]
+        or case.get("planned_case_ids") != expected["planned_case_ids"]
+    ):
+        raise DiagnosticsContractError(f"wave2 planned-case binding drift: {case_id}")
+    if document.get("argv") != expected["argv"] or case.get("argv") != expected["argv"]:
+        raise DiagnosticsContractError(f"wave2 argv drift: {case_id}")
+    if (
+        document.get("fixtures") != expected["fixtures"]
+        or case.get("fixtures") != expected["fixtures"]
+    ):
+        raise DiagnosticsContractError(f"wave2 fixture list drift: {case_id}")
+    if document.get("command") != expected["argv"][0]:
+        raise DiagnosticsContractError(f"wave2 command drift: {case_id}")
+    if document.get("exit_status") != expected["expected_exit"]:
+        raise DiagnosticsContractError(f"wave2 expected exit drift: {case_id}")
+    if case.get("exit_status") != expected["expected_exit"]:
+        raise DiagnosticsContractError(f"wave2 index exit drift: {case_id}")
+
+    stdout_path = case_dir / "reference" / "stdout.bin"
+    stderr_path = case_dir / "reference" / "stderr.bin"
+    if not stdout_path.is_file() or not stderr_path.is_file():
+        raise DiagnosticsContractError(f"wave2 missing raw stream artifacts: {case_id}")
+    stdout = stdout_path.read_bytes()
+    stderr = stderr_path.read_bytes()
+    stdout_hash = sha256_bytes(stdout)
+    stderr_hash = sha256_bytes(stderr)
+    if document.get("stdout_sha256") != stdout_hash or case.get("stdout_sha256") != stdout_hash:
+        raise DiagnosticsContractError(f"wave2 stdout hash drift: {case_id}")
+    if document.get("stderr_sha256") != stderr_hash or case.get("stderr_sha256") != stderr_hash:
+        raise DiagnosticsContractError(f"wave2 stderr hash drift: {case_id}")
+    if document.get("stdout_bytes") != len(stdout):
+        raise DiagnosticsContractError(f"wave2 stdout byte-count drift: {case_id}")
+    if document.get("stderr_bytes") != len(stderr):
+        raise DiagnosticsContractError(f"wave2 stderr byte-count drift: {case_id}")
+
+    expected_fixtures = wave2_fixture_bindings(expected["fixtures"])
+    if document.get("fixture_bindings") != expected_fixtures:
+        raise DiagnosticsContractError(f"wave2 fixture binding drift: {case_id}")
+
+    recomputed_tree = recompute_wave2_file_tree(case_dir, expected.get("chmod"))
+    recomputed_tree_hash = file_tree_sha256(recomputed_tree)
+    if document.get("file_tree") != recomputed_tree:
+        raise DiagnosticsContractError(f"wave2 file-tree content drift: {case_id}")
+    if (
+        document.get("file_tree_sha256") != recomputed_tree_hash
+        or case.get("file_tree_sha256") != recomputed_tree_hash
+    ):
+        raise DiagnosticsContractError(f"wave2 file-tree hash drift: {case_id}")
+
+    observation_hash = sha256_file(path)
+    if case.get("observation_sha256") != observation_hash:
+        raise DiagnosticsContractError(f"wave2 observation hash drift: {case_id}")
+
+    return {
+        "id": f"diagnostics-wave2:{case_id}",
+        "kind": expected["kind"],
+        "planned_case_ids": list(expected["planned_case_ids"]),
+        "argv": list(expected["argv"]),
+        "fixtures": list(expected["fixtures"]),
+        "image": WAVE2_PINNED_IMAGE,
+        "upstream_commit": UPSTREAM_COMMIT,
+        "timeout_seconds": WAVE2_TIMEOUT_SECONDS,
+        "timed_out": False,
+        "cleanup": WAVE2_CLEANUP,
+        "cleanup_outcome": {
+            **WAVE2_CLEANUP_OUTCOME_TEMPLATE,
+            "container_name": f"ferricov-diag-wave2-{case_id}",
+        },
+        "effective_environment_variables": dict(case_env),
+        "environment_policy": environment_policy,
+        "stdin": WAVE2_STDIN,
+        "execution_manifest": expected_manifest,
+        "file_tree_semantics": WAVE2_FILE_TREE_SEMANTICS,
+        "exit_status": expected["expected_exit"],
+        "stdout_sha256": stdout_hash,
+        "stderr_sha256": stderr_hash,
+        "output_sha256": recomputed_tree_hash,
+        "observation_sha256": observation_hash,
+    }
+
+
+def wave2_observations() -> list[dict[str, Any]]:
+    index = load_json(WAVE2_INDEX)
+    if index.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError("wave2 index claims product compatibility")
+    if index.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError("wave2 index evidence status drift")
+    if index.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError("wave2 upstream commit drift")
+    if index.get("image") != WAVE2_PINNED_IMAGE:
+        raise DiagnosticsContractError("wave2 image identity drift")
+    if index.get("file_tree_semantics") != WAVE2_FILE_TREE_SEMANTICS:
+        raise DiagnosticsContractError("wave2 index file-tree semantics drift")
+    if index.get("timeout_seconds") != WAVE2_TIMEOUT_SECONDS:
+        raise DiagnosticsContractError("wave2 index timeout drift")
+    base_env = dict(WAVE2_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES)
+    environment_policy = {
+        **WAVE2_ENVIRONMENT_POLICY_TEMPLATE,
+        "declared_variables": dict(base_env),
+        "effective_environment_variables": dict(base_env),
+    }
+    execution_environment = {
+        **WAVE2_EXECUTION_ENVIRONMENT_TEMPLATE,
+        "env": dict(base_env),
+        "environment_policy": environment_policy,
+        "stdin": WAVE2_STDIN,
+    }
+    if index.get("execution_environment") != execution_environment:
+        raise DiagnosticsContractError("wave2 index execution environment drift")
+    if index.get("effective_environment_variables") != base_env:
+        raise DiagnosticsContractError("wave2 index effective environment drift")
+    if index.get("environment_policy") != environment_policy:
+        raise DiagnosticsContractError("wave2 index environment policy drift")
+    if index.get("cleanup") != WAVE2_CLEANUP:
+        raise DiagnosticsContractError("wave2 index cleanup policy drift")
+    if index.get("stdin") != WAVE2_STDIN:
+        raise DiagnosticsContractError("wave2 index stdin policy drift")
+    if index.get("execution_manifest") != WAVE2_EXECUTION_MANIFEST_BASE:
+        raise DiagnosticsContractError("wave2 index execution_manifest drift")
+    if index.get("case_count") != WAVE2_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave2 case count drift")
+    if len(index.get("cases", [])) != WAVE2_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave2 case list length drift")
+
+    expected_ids = [entry["id"] for entry in WAVE2_EXPECTED_CASES]
+    actual_ids = [case["id"] for case in index["cases"]]
+    if actual_ids != expected_ids:
+        raise DiagnosticsContractError("wave2 case id set/order drift")
+
+    planned_seen: list[str] = []
+    for expected in WAVE2_EXPECTED_CASES:
+        for planned_id in expected["planned_case_ids"]:
+            if planned_id not in planned_seen:
+                planned_seen.append(planned_id)
+    if planned_seen != WAVE2_EXPECTED_PLANNED_IDS:
+        raise DiagnosticsContractError("wave2 planned-id coverage set drift")
+
+    result = []
+    for case, expected in zip(index["cases"], WAVE2_EXPECTED_CASES):
+        result.append(wave2_case(case, expected))
+    return result
+
+
 def oracle_observations() -> list[dict[str, Any]]:
     result = []
     startup_case_to_command = {case: command for command, case in STARTUP_CASES.items()}
@@ -1368,6 +2580,7 @@ def oracle_observations() -> list[dict[str, Any]]:
         result.append(entry)
 
     result.extend(wave1_observations())
+    result.extend(wave2_observations())
     return result
 
 
@@ -1395,12 +2608,12 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "oracle_observation_evidence_status": "oracle_reference",
         "oracle_observation_product_evidence": [],
         "known_evidence_gaps": [
-            "parallel worker failure, signals, payload, and parent-death paths",
-            "forced-parallel and child lifecycle callback failures",
-            "environment discovery and POSIX singular-ignore profile matrix",
-            "callback finalize and cleanup diagnostics",
-            "converter keep-going paths with richer multi-error conversion corpora",
-            "full 71-case executable acceptance suite beyond wave1 reference bindings",
+            "geninfo parallel child stop/keep/ignore Oracle watchdog and Ferricov-approved pair matrix",
+            "child signal identity, unknown-child, parent-death, fork-retry exhaustion, and corrupt-payload paths",
+            "dependency-masked genpng image pair for GD-absent branch",
+            "richer multi-error converter corpora beyond current keep-going traps",
+            "full 71-case executable acceptance suite beyond wave1+wave2 reference bindings",
+            "Ferricov product differential for all oracle_reference diagnostics observations",
         ],
         "totals": {
             "categories": len(categories),
@@ -1434,6 +2647,9 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             ),
             "wave1_observations": sum(
                 entry["id"].startswith("diagnostics-wave1:") for entry in observations
+            ),
+            "wave2_observations": sum(
+                entry["id"].startswith("diagnostics-wave2:") for entry in observations
             ),
         },
         "product_compatibility_evidence": False,
@@ -1700,6 +2916,115 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         raise DiagnosticsContractError("converter boundary exit drift")
     if boundary["fixtures"] != ["broken-no-sources.xml"]:
         raise DiagnosticsContractError("converter boundary fixture drift")
+
+    wave2_ids = [
+        entry["id"]
+        for entry in document["oracle_observations"]
+        if entry["id"].startswith("diagnostics-wave2:")
+    ]
+    expected_wave2_ids = [
+        f"diagnostics-wave2:{entry['id']}" for entry in WAVE2_EXPECTED_CASES
+    ]
+    if wave2_ids != expected_wave2_ids:
+        raise DiagnosticsContractError("wave2 observation id set/order drift")
+    wave2_planned: list[str] = []
+    for entry in document["oracle_observations"]:
+        if not entry["id"].startswith("diagnostics-wave2:"):
+            continue
+        for planned_id in entry["planned_case_ids"]:
+            if planned_id not in wave2_planned:
+                wave2_planned.append(planned_id)
+    if wave2_planned != WAVE2_EXPECTED_PLANNED_IDS:
+        raise DiagnosticsContractError("wave2 planned-id coverage set drift")
+    for entry, expected in zip(
+        [
+            item
+            for item in document["oracle_observations"]
+            if item["id"].startswith("diagnostics-wave2:")
+        ],
+        WAVE2_EXPECTED_CASES,
+    ):
+        if entry["kind"] != expected["kind"]:
+            raise DiagnosticsContractError(
+                f"wave2 observation kind drift: {expected['id']}"
+            )
+        if entry["planned_case_ids"] != expected["planned_case_ids"]:
+            raise DiagnosticsContractError(
+                f"wave2 observation planned-case drift: {expected['id']}"
+            )
+        if entry.get("argv") != expected["argv"]:
+            raise DiagnosticsContractError(
+                f"wave2 observation argv drift: {expected['id']}"
+            )
+        if entry.get("fixtures") != expected["fixtures"]:
+            raise DiagnosticsContractError(
+                f"wave2 observation fixtures drift: {expected['id']}"
+            )
+        if entry["exit_status"] != expected["expected_exit"]:
+            raise DiagnosticsContractError(
+                f"wave2 observation exit drift: {expected['id']}"
+            )
+        if entry.get("image") != WAVE2_PINNED_IMAGE:
+            raise DiagnosticsContractError(
+                f"wave2 observation image drift: {expected['id']}"
+            )
+        if entry.get("upstream_commit") != UPSTREAM_COMMIT:
+            raise DiagnosticsContractError(
+                f"wave2 observation upstream drift: {expected['id']}"
+            )
+        if entry.get("timeout_seconds") != WAVE2_TIMEOUT_SECONDS:
+            raise DiagnosticsContractError(
+                f"wave2 observation timeout drift: {expected['id']}"
+            )
+        if entry.get("timed_out") is not False:
+            raise DiagnosticsContractError(
+                f"wave2 observation timed_out drift: {expected['id']}"
+            )
+        if entry.get("cleanup") != WAVE2_CLEANUP:
+            raise DiagnosticsContractError(
+                f"wave2 observation cleanup drift: {expected['id']}"
+            )
+        expected_cleanup = {
+            **WAVE2_CLEANUP_OUTCOME_TEMPLATE,
+            "container_name": f"ferricov-diag-wave2-{expected['id']}",
+        }
+        if entry.get("cleanup_outcome") != expected_cleanup:
+            raise DiagnosticsContractError(
+                f"wave2 observation cleanup outcome drift: {expected['id']}"
+            )
+        case_env = merge_wave2_env(expected.get("env"))
+        if entry.get("effective_environment_variables") != case_env:
+            raise DiagnosticsContractError(
+                f"wave2 observation effective environment drift: {expected['id']}"
+            )
+        if entry.get("stdin") != WAVE2_STDIN:
+            raise DiagnosticsContractError(
+                f"wave2 observation stdin drift: {expected['id']}"
+            )
+        if entry.get("file_tree_semantics") != WAVE2_FILE_TREE_SEMANTICS:
+            raise DiagnosticsContractError(
+                f"wave2 observation file-tree semantics drift: {expected['id']}"
+            )
+    # Explicit residual: Ferricov-only planned IDs remain planned with no product claim.
+    ferricov_planned = [
+        planned_id
+        for planned_id in document["planned_case_ids"]
+        if planned_id.endswith("-FERRICOV-001")
+    ]
+    if not ferricov_planned:
+        raise DiagnosticsContractError("missing Ferricov-parity planned residual IDs")
+    for planned_id in ferricov_planned:
+        if any(
+            planned_id in entry.get("planned_case_ids", [])
+            for entry in document["oracle_observations"]
+        ):
+            raise DiagnosticsContractError(
+                f"Ferricov-parity planned ID must remain unbound: {planned_id}"
+            )
+    if document["planned_case_evidence_status"] != "planned":
+        raise DiagnosticsContractError("planned diagnostic case claims evidence")
+    if document["product_compatibility_evidence"]:
+        raise DiagnosticsContractError("diagnostics contract claims product compatibility")
 
 
 def main() -> int:
