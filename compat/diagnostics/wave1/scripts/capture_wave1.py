@@ -632,10 +632,7 @@ def command_env_assignments() -> list[str]:
     return [f"{key}={value}" for key, value in sorted(DECLARED_COMMAND_ENV.items())]
 
 
-def probe_effective_command_environment() -> dict[str, str]:
-    """Observe the exact environment the Oracle command wrapper produces."""
-    container_name = "ferricov-diag-wave1-env-probe"
-    force_remove_container(container_name, direct_child_reaped=True)
+def docker_run_base(container_name: str, *, with_work: Path | None = None) -> list[str]:
     cmd = [
         "docker",
         "run",
@@ -649,21 +646,61 @@ def probe_effective_command_environment() -> dict[str, str]:
         EXECUTION_ENVIRONMENT["workdir"],
         "--tmpfs",
         EXECUTION_ENVIRONMENT["tmpfs"][0],
-        IMAGE,
+    ]
+    if with_work is not None:
+        cmd.extend(["-v", f"{with_work}:/work:rw"])
+    cmd.append(IMAGE)
+    return cmd
+
+
+def run_docker_checked(
+    cmd: list[str],
+    *,
+    timeout: int = TIMEOUT_SECONDS,
+) -> subprocess.CompletedProcess[bytes]:
+    return subprocess.run(
+        cmd,
+        check=False,
+        capture_output=True,
+        timeout=timeout,
+        env=DOCKER_CLI_HOST_ENV,
+        stdin=subprocess.DEVNULL,
+    )
+
+
+def probe_effective_command_environment() -> dict[str, str]:
+    """Observe the exact environment the Oracle command wrapper produces.
+
+    Always force-removes the probe container and verifies absence, including
+    on TimeoutExpired/OSError paths.
+    """
+    container_name = "ferricov-diag-wave1-env-probe"
+    force_remove_container(container_name, direct_child_reaped=True)
+    cmd = [
+        *docker_run_base(container_name),
         "env",
         "-i",
         *command_env_assignments(),
         "env",
         "-0",
     ]
-    completed = subprocess.run(
-        cmd,
-        check=False,
-        capture_output=True,
-        timeout=TIMEOUT_SECONDS,
-        env=DOCKER_CLI_HOST_ENV,
-    )
-    force_remove_container(container_name, direct_child_reaped=True)
+    completed: subprocess.CompletedProcess[bytes] | None = None
+    try:
+        try:
+            completed = run_docker_checked(cmd)
+        except subprocess.TimeoutExpired as error:
+            raise Wave1CaptureError(
+                "effective environment probe timed out"
+            ) from error
+        except OSError as error:
+            raise Wave1CaptureError(
+                f"effective environment probe failed to execute: {error}"
+            ) from error
+    finally:
+        force_remove_container(container_name, direct_child_reaped=True)
+
+    if completed is None:
+        raise Wave1CaptureError("effective environment probe produced no result")
     if completed.returncode != 0:
         raise Wave1CaptureError(
             "failed to probe effective command environment: "
@@ -674,9 +711,7 @@ def probe_effective_command_environment() -> dict[str, str]:
         if not entry:
             continue
         if b"=" not in entry:
-            raise Wave1CaptureError(
-                f"malformed env probe entry: {entry!r}"
-            )
+            raise Wave1CaptureError(f"malformed env probe entry: {entry!r}")
         key, value = entry.split(b"=", 1)
         effective[key.decode("ascii")] = value.decode("ascii")
     if effective != DECLARED_COMMAND_ENV:
@@ -687,9 +722,182 @@ def probe_effective_command_environment() -> dict[str, str]:
     return effective
 
 
+def _decode_probe_text(data: bytes) -> str:
+    text = data.decode("utf-8", "replace").strip()
+    return text
+
+
+def probe_execution_manifest(
+    effective_environment_variables: dict[str, str],
+) -> dict[str, Any]:
+    """Capture normative execution-manifest provenance from the pinned image."""
+    container_name = "ferricov-diag-wave1-manifest-probe"
+    force_remove_container(container_name, direct_child_reaped=True)
+
+    # Single probe script: locale/timezone, runtime versions, package availability,
+    # and sha256 of every wave1-invoked executable path.
+    probe_script = r"""
+set -eu
+printf 'LOCALE=%s\n' "${LANG:-}"
+printf 'LC_ALL=%s\n' "${LC_ALL:-}"
+printf 'TZ=%s\n' "${TZ:-}"
+printf 'PERL=%s\n' "$(perl -e 'print $^V' 2>/dev/null || true)"
+printf 'PYTHON=%s\n' "$(python3 -c 'import sys; print(sys.version.split()[0])' 2>/dev/null || true)"
+if command -v gcc >/dev/null 2>&1; then
+  printf 'COMPILER=%s\n' "$(gcc --version | head -n1)"
+else
+  printf 'COMPILER=not_applicable\n'
+fi
+if command -v dpkg-query >/dev/null 2>&1; then
+  for pkg in perl python3 gcc g++; do
+    if dpkg-query -W -f='${Package} ${Version}\n' "$pkg" >/dev/null 2>&1; then
+      ver="$(dpkg-query -W -f='${Version}' "$pkg")"
+      printf 'PKG_%s=available:%s\n' "$pkg" "$ver"
+    else
+      printf 'PKG_%s=not_applicable\n' "$pkg"
+    fi
+  done
+  if dpkg-query -W -f='${Package}\n' llvm >/dev/null 2>&1 || command -v llvm-cov >/dev/null 2>&1; then
+    printf 'PKG_llvm=available\n'
+  else
+    printf 'PKG_llvm=not_applicable\n'
+  fi
+else
+  printf 'PKG_perl=not_applicable\n'
+  printf 'PKG_python3=not_applicable\n'
+  printf 'PKG_gcc=not_applicable\n'
+  printf 'PKG_g++=not_applicable\n'
+  printf 'PKG_llvm=not_applicable\n'
+fi
+for tool in geninfo lcov perl2lcov llvm2lcov py2lcov xml2lcov; do
+  path="$(command -v "$tool" || true)"
+  if [ -n "$path" ] && [ -f "$path" ]; then
+    sum="$(sha256sum "$path" | awk '{print $1}')"
+    printf 'EXE_%s=%s %s\n' "$tool" "$path" "$sum"
+  else
+    printf 'EXE_%s=not_applicable\n' "$tool"
+  fi
+done
+"""
+    cmd = [
+        *docker_run_base(container_name),
+        "env",
+        "-i",
+        *command_env_assignments(),
+        "sh",
+        "-c",
+        probe_script,
+    ]
+    completed: subprocess.CompletedProcess[bytes] | None = None
+    try:
+        try:
+            completed = run_docker_checked(cmd, timeout=60)
+        except subprocess.TimeoutExpired as error:
+            raise Wave1CaptureError("execution-manifest probe timed out") from error
+        except OSError as error:
+            raise Wave1CaptureError(
+                f"execution-manifest probe failed to execute: {error}"
+            ) from error
+    finally:
+        force_remove_container(container_name, direct_child_reaped=True)
+
+    if completed is None:
+        raise Wave1CaptureError("execution-manifest probe produced no result")
+    if completed.returncode != 0:
+        raise Wave1CaptureError(
+            "failed to probe execution manifest: "
+            f"rc={completed.returncode} stderr={completed.stderr!r}"
+        )
+
+    fields: dict[str, str] = {}
+    for line in _decode_probe_text(completed.stdout).splitlines():
+        if "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        fields[key] = value
+
+    executables: dict[str, Any] = {}
+    for tool in ("geninfo", "lcov", "perl2lcov", "llvm2lcov", "py2lcov", "xml2lcov"):
+        raw = fields.get(f"EXE_{tool}", "not_applicable")
+        if raw == "not_applicable":
+            executables[tool] = {
+                "path": None,
+                "sha256": None,
+                "availability": "not_applicable",
+            }
+        else:
+            path_text, digest = raw.split(" ", 1)
+            executables[tool] = {
+                "path": path_text,
+                "sha256": f"sha256:{digest}",
+                "availability": "available",
+            }
+
+    package_availability = {
+        "perl": fields.get("PKG_perl", "not_applicable"),
+        "python3": fields.get("PKG_python3", "not_applicable"),
+        "gcc": fields.get("PKG_gcc", "not_applicable"),
+        "g++": fields.get("PKG_g++", "not_applicable"),
+        "llvm": fields.get("PKG_llvm", "not_applicable"),
+    }
+
+    compiler = fields.get("COMPILER", "not_applicable")
+    if not compiler:
+        compiler = "not_applicable"
+
+    manifest = {
+        "schema_version": 1,
+        "image": IMAGE,
+        "upstream_commit": UPSTREAM_COMMIT,
+        "locale": fields.get("LOCALE") or fields.get("LC_ALL") or "C",
+        "lc_all": fields.get("LC_ALL") or "C",
+        "timezone": fields.get("TZ") or "UTC",
+        "stdin": "subprocess.DEVNULL",
+        "command_wrapper": ["env", "-i"],
+        "effective_environment_variables": dict(effective_environment_variables),
+        "runtime_versions": {
+            "perl": fields.get("PERL") or "not_applicable",
+            "python": fields.get("PYTHON") or "not_applicable",
+            "compiler": compiler,
+        },
+        "package_availability": package_availability,
+        "executables": executables,
+    }
+    # Fail closed if any wave1-invoked tool is missing.
+    for tool in ("geninfo", "lcov", "perl2lcov", "llvm2lcov", "py2lcov", "xml2lcov"):
+        if executables[tool]["availability"] != "available":
+            raise Wave1CaptureError(f"required wave1 executable unavailable: {tool}")
+    if manifest["locale"] != "C" or manifest["lc_all"] != "C":
+        raise Wave1CaptureError(
+            f"locale provenance drift: locale={manifest['locale']!r} lc_all={manifest['lc_all']!r}"
+        )
+    if manifest["timezone"] != "UTC":
+        raise Wave1CaptureError(f"timezone provenance drift: {manifest['timezone']!r}")
+    return manifest
+
+
+def case_execution_manifest(
+    spec: dict[str, Any],
+    base_manifest: dict[str, Any],
+) -> dict[str, Any]:
+    command = spec["argv"][0]
+    executable = base_manifest["executables"][command]
+    return {
+        **base_manifest,
+        "invoked_command": command,
+        "invoked_executable": {
+            "name": command,
+            "path": executable["path"],
+            "sha256": executable["sha256"],
+        },
+        "invoked_argv": list(spec["argv"]),
+    }
+
+
 def run_case(
     spec: dict[str, Any],
     effective_environment_variables: dict[str, str],
+    base_manifest: dict[str, Any],
 ) -> dict[str, Any]:
     work = CASES / spec["id"]
     if work.exists():
@@ -700,22 +908,9 @@ def run_case(
     container_name = f"ferricov-diag-wave1-{spec['id']}"
     force_remove_container(container_name, direct_child_reaped=True)
     # Oracle command runs under in-container env -i with only declared variables.
+    # stdin is always DEVNULL so the launcher cannot hang waiting for input.
     cmd = [
-        "docker",
-        "run",
-        "--name",
-        container_name,
-        "--rm",
-        "--network=none",
-        "-u",
-        EXECUTION_ENVIRONMENT["user"],
-        "-w",
-        EXECUTION_ENVIRONMENT["workdir"],
-        "--tmpfs",
-        EXECUTION_ENVIRONMENT["tmpfs"][0],
-        "-v",
-        f"{work}:/work:rw",
-        IMAGE,
+        *docker_run_base(container_name, with_work=work),
         "env",
         "-i",
         *command_env_assignments(),
@@ -725,6 +920,7 @@ def run_case(
         cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        stdin=subprocess.DEVNULL,
         env=DOCKER_CLI_HOST_ENV,
     )
     timed_out = False
@@ -767,7 +963,9 @@ def run_case(
     execution_environment = {
         **EXECUTION_ENVIRONMENT,
         "environment_policy": environment_policy,
+        "stdin": "subprocess.DEVNULL",
     }
+    execution_manifest = case_execution_manifest(spec, base_manifest)
     result = {
         "case_id": spec["id"],
         "kind": spec["kind"],
@@ -779,6 +977,7 @@ def run_case(
         "image": IMAGE,
         "upstream_commit": UPSTREAM_COMMIT,
         "execution_environment": execution_environment,
+        "execution_manifest": execution_manifest,
         "effective_environment_variables": dict(effective_environment_variables),
         "environment_policy": environment_policy,
         "timeout_seconds": TIMEOUT_SECONDS,
@@ -803,6 +1002,7 @@ def run_case(
     print(
         f"CASE {spec['id']} exit={exit_status} timed_out={timed_out} "
         f"cleanup_absent={cleanup_outcome['container_absent']} "
+        f"exe={execution_manifest['invoked_executable']['sha256'][:19]} "
         f"env_keys={sorted(effective_environment_variables)} "
         f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}",
         flush=True,
@@ -812,8 +1012,10 @@ def run_case(
 
 def main() -> int:
     effective_environment_variables = probe_effective_command_environment()
+    base_manifest = probe_execution_manifest(effective_environment_variables)
     results = [
-        run_case(spec, effective_environment_variables) for spec in CASE_SPECS
+        run_case(spec, effective_environment_variables, base_manifest)
+        for spec in CASE_SPECS
     ]
     environment_policy = {
         **ENVIRONMENT_POLICY,
@@ -822,6 +1024,7 @@ def main() -> int:
     execution_environment = {
         **EXECUTION_ENVIRONMENT,
         "environment_policy": environment_policy,
+        "stdin": "subprocess.DEVNULL",
     }
     index = {
         "schema_version": 1,
@@ -833,9 +1036,11 @@ def main() -> int:
         "file_tree_semantics": FILE_TREE_SEMANTICS,
         "timeout_seconds": TIMEOUT_SECONDS,
         "execution_environment": execution_environment,
+        "execution_manifest": base_manifest,
         "effective_environment_variables": dict(effective_environment_variables),
         "environment_policy": environment_policy,
         "cleanup": CLEANUP_POLICY,
+        "stdin": "subprocess.DEVNULL",
         "case_count": len(results),
         "cases": [
             {
@@ -858,6 +1063,8 @@ def main() -> int:
                     "effective_environment_variables"
                 ],
                 "environment_policy": result["environment_policy"],
+                "execution_manifest": result["execution_manifest"],
+                "stdin": "subprocess.DEVNULL",
             }
             for result in results
         ],
@@ -866,7 +1073,9 @@ def main() -> int:
     print(
         f"WAVE1_INDEX cases={len(results)} "
         f"sha256={sha256_file(WAVE_ROOT / 'result.json')} "
-        f"effective_env={sorted(effective_environment_variables)}",
+        f"effective_env={sorted(effective_environment_variables)} "
+        f"perl={base_manifest['runtime_versions']['perl']} "
+        f"python={base_manifest['runtime_versions']['python']}",
         flush=True,
     )
     return 0

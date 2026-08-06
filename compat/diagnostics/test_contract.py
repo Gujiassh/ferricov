@@ -537,6 +537,142 @@ class DiagnosticsContractTests(unittest.TestCase):
                 "EXTRA_HOST_LEAK", entry["effective_environment_variables"]
             )
 
+    def test_env_probe_timeout_still_force_removes_container(self) -> None:
+        import importlib.util
+
+        capture_path = contract.WAVE1_ROOT / "scripts" / "capture_wave1.py"
+        spec = importlib.util.spec_from_file_location(
+            "ferricov_diag_wave1_capture_timeout", capture_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load wave1 capture module")
+        capture = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(capture)
+
+        calls: list[str] = []
+
+        def fake_force(name: str, *, direct_child_reaped: bool) -> dict:
+            calls.append(name)
+            return {
+                "policy": capture.CLEANUP_POLICY,
+                "direct_child_reaped": True,
+                "process_group_empty": None,
+                "container_absent": True,
+                "named_container_removed": True,
+                "container_name": name,
+            }
+
+        with patch.object(capture, "force_remove_container", side_effect=fake_force):
+            with patch.object(
+                capture,
+                "run_docker_checked",
+                side_effect=capture.subprocess.TimeoutExpired(
+                    cmd=["docker"], timeout=30
+                ),
+            ):
+                with self.assertRaises(capture.Wave1CaptureError) as raised:
+                    capture.probe_effective_command_environment()
+        self.assertIn("timed out", str(raised.exception))
+        # pre-clean + finally cleanup
+        self.assertGreaterEqual(calls.count("ferricov-diag-wave1-env-probe"), 2)
+
+    def test_env_probe_oserror_still_force_removes_container(self) -> None:
+        import importlib.util
+
+        capture_path = contract.WAVE1_ROOT / "scripts" / "capture_wave1.py"
+        spec = importlib.util.spec_from_file_location(
+            "ferricov_diag_wave1_capture_oserror", capture_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load wave1 capture module")
+        capture = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(capture)
+
+        calls: list[str] = []
+
+        def fake_force(name: str, *, direct_child_reaped: bool) -> dict:
+            calls.append(name)
+            return {
+                "policy": capture.CLEANUP_POLICY,
+                "direct_child_reaped": True,
+                "process_group_empty": None,
+                "container_absent": True,
+                "named_container_removed": True,
+                "container_name": name,
+            }
+
+        with patch.object(capture, "force_remove_container", side_effect=fake_force):
+            with patch.object(
+                capture,
+                "run_docker_checked",
+                side_effect=OSError("docker missing"),
+            ):
+                with self.assertRaises(capture.Wave1CaptureError):
+                    capture.probe_effective_command_environment()
+        self.assertGreaterEqual(calls.count("ferricov-diag-wave1-env-probe"), 2)
+
+    def test_capture_launchers_use_stdin_devnull(self) -> None:
+        import importlib.util
+        import inspect
+
+        capture_path = contract.WAVE1_ROOT / "scripts" / "capture_wave1.py"
+        source = capture_path.read_text(encoding="utf-8")
+        self.assertIn("stdin=subprocess.DEVNULL", source)
+        # Both helper run and Popen must pin stdin.
+        self.assertIn("def run_docker_checked", source)
+        self.assertGreaterEqual(source.count("stdin=subprocess.DEVNULL"), 2)
+        spec = importlib.util.spec_from_file_location(
+            "ferricov_diag_wave1_capture_stdin", capture_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load wave1 capture module")
+        capture = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(capture)
+        self.assertIn(
+            "stdin=subprocess.DEVNULL",
+            inspect.getsource(capture.run_docker_checked),
+        )
+        self.assertIn(
+            "stdin=subprocess.DEVNULL",
+            inspect.getsource(capture.run_case),
+        )
+
+    def test_wave1_execution_manifest_provenance_is_bound(self) -> None:
+        wave1 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:")
+        ]
+        self.assertEqual(len(wave1), 26)
+        base = contract.WAVE1_EXECUTION_MANIFEST_BASE
+        self.assertIsNotNone(base)
+        assert base is not None
+        self.assertEqual(base["locale"], "C")
+        self.assertEqual(base["lc_all"], "C")
+        self.assertEqual(base["timezone"], "UTC")
+        self.assertEqual(base["stdin"], "subprocess.DEVNULL")
+        self.assertEqual(base["command_wrapper"], ["env", "-i"])
+        self.assertIn("perl", base["runtime_versions"])
+        self.assertIn("python", base["runtime_versions"])
+        self.assertIn("compiler", base["runtime_versions"])
+        for tool in ("geninfo", "lcov", "perl2lcov", "llvm2lcov", "py2lcov", "xml2lcov"):
+            self.assertEqual(base["executables"][tool]["availability"], "available")
+            self.assertTrue(
+                str(base["executables"][tool]["sha256"]).startswith("sha256:")
+            )
+        for entry in wave1:
+            self.assertEqual(entry["stdin"], "subprocess.DEVNULL")
+            manifest = entry["execution_manifest"]
+            self.assertEqual(manifest["locale"], "C")
+            self.assertEqual(manifest["timezone"], "UTC")
+            self.assertEqual(
+                manifest["invoked_command"], entry["argv"][0]
+            )
+            self.assertEqual(
+                manifest["invoked_executable"]["sha256"],
+                base["executables"][entry["argv"][0]]["sha256"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

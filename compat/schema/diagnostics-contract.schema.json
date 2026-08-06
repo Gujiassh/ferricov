@@ -543,6 +543,156 @@
         },
         "file_tree_semantics": {
           "type": "string"
+        },
+        "stdin": {
+          "type": "string"
+        },
+        "execution_manifest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_version",
+            "image",
+            "upstream_commit",
+            "locale",
+            "lc_all",
+            "timezone",
+            "stdin",
+            "command_wrapper",
+            "effective_environment_variables",
+            "runtime_versions",
+            "package_availability",
+            "executables",
+            "invoked_command",
+            "invoked_executable",
+            "invoked_argv"
+          ],
+          "properties": {
+            "schema_version": {
+              "type": "integer"
+            },
+            "image": {
+              "type": "string"
+            },
+            "upstream_commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "locale": {
+              "type": "string"
+            },
+            "lc_all": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "stdin": {
+              "type": "string"
+            },
+            "command_wrapper": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "effective_environment_variables": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "runtime_versions": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "perl",
+                "python",
+                "compiler"
+              ],
+              "properties": {
+                "perl": {
+                  "type": "string"
+                },
+                "python": {
+                  "type": "string"
+                },
+                "compiler": {
+                  "type": "string"
+                }
+              }
+            },
+            "package_availability": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "executables": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path",
+                  "sha256",
+                  "availability"
+                ],
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "availability": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "invoked_command": {
+              "type": "string"
+            },
+            "invoked_executable": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "invoked_argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },

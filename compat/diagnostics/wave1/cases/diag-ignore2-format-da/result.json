@@ -100,12 +100,93 @@
       ]
     },
     "network": "none",
+    "stdin": "subprocess.DEVNULL",
     "timeout_seconds": 30,
     "tmpfs": [
       "/tmp:rw,exec,mode=1777"
     ],
     "user": "1000:1000",
     "workdir": "/work"
+  },
+  "execution_manifest": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "executables": {
+      "geninfo": {
+        "availability": "available",
+        "path": "/usr/local/bin/geninfo",
+        "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+      },
+      "lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/lcov",
+        "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+      },
+      "llvm2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/llvm2lcov",
+        "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+      },
+      "perl2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/perl2lcov",
+        "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+      },
+      "py2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/py2lcov",
+        "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+      },
+      "xml2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/xml2lcov",
+        "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+      }
+    },
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "invoked_argv": [
+      "lcov",
+      "--no-function-coverage",
+      "--ignore-errors",
+      "format,format",
+      "--add-tracefile",
+      "malformed-da.info",
+      "--output-file",
+      "out.info"
+    ],
+    "invoked_command": "lcov",
+    "invoked_executable": {
+      "name": "lcov",
+      "path": "/usr/local/bin/lcov",
+      "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+    },
+    "lc_all": "C",
+    "locale": "C",
+    "package_availability": {
+      "g++": "available:4:12.2.0-3",
+      "gcc": "available:4:12.2.0-3",
+      "llvm": "not_applicable",
+      "perl": "available:5.36.0-7+deb12u3",
+      "python3": "available:3.11.2-1+b1"
+    },
+    "runtime_versions": {
+      "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+      "perl": "v5.36.0",
+      "python": "3.11.2"
+    },
+    "schema_version": 1,
+    "stdin": "subprocess.DEVNULL",
+    "timezone": "UTC",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
   },
   "exit_status": 0,
   "file_tree": [
