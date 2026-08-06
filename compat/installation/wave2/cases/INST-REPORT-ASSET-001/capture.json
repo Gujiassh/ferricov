@@ -1,0 +1,81 @@
+{
+  "artifacts": {
+    "extra": [],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 132,
+      "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stdout.bin",
+      "sha256": "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4"
+    }
+  },
+  "case_id": "INST-REPORT-ASSET-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LC_ALL": "C"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 1,
+    "file_count": 15,
+    "paths_sha256": "f92e8e48c695508e31e04705ff89a80744d20131ebd0434b9cf7784f1eed01b2",
+    "root": "/tmp/src/bin",
+    "selected_paths": [
+      "/tmp/src/bin",
+      "/tmp/src/bin/xml2lcovutil.py",
+      "/tmp/src/bin/lcov",
+      "/tmp/src/bin/checkstyle.sh",
+      "/tmp/src/bin/get_version.sh",
+      "/tmp/src/bin/genhtml",
+      "/tmp/src/bin/py2lcov",
+      "/tmp/src/bin/llvm2lcov",
+      "/tmp/src/bin/genpng",
+      "/tmp/src/bin/xml2lcov",
+      "/tmp/src/bin/fix.pl",
+      "/tmp/src/bin/gendesc",
+      "/tmp/src/bin/geninfo",
+      "/tmp/src/bin/copy_dates.sh",
+      "/tmp/src/bin/perl2lcov",
+      "/tmp/src/bin/get_changes.sh"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/python3",
+    "executable_sha256": "6d972cf21be56fe3c947ab6ba257ff8d08c342dd2714442986791bd9a6dfabfe",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "python3",
+      "-"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/src"
+    ],
+    "fixture_setup": [
+      "scan bin/genhtml for retained report assets"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "4b820ee9bbe29e36d3a81ffe0bce426ae8ef9664560a71570ab21538a217e9f1",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

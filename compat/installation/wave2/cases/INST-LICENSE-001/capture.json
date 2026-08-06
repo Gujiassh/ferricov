@@ -1,0 +1,125 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 134,
+        "name": "observation.txt",
+        "path": "compat/installation/wave2/cases/INST-LICENSE-001/observation.txt",
+        "sha256": "b514c0103dc918f11ef5409e532d481f384f7cf6d0fe60e3eef21cece8f95b5e"
+      },
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-LICENSE-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 49,
+      "path": "compat/installation/wave2/cases/INST-LICENSE-001/stderr.bin",
+      "sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c"
+    },
+    "stdout_bin": {
+      "bytes": 4247,
+      "path": "compat/installation/wave2/cases/INST-LICENSE-001/stdout.bin",
+      "sha256": "72b6c461f512ef6e7a0c8d2839f4e00c352c1ddd983fc11a5dd599d6269ff4b6"
+    }
+  },
+  "case_id": "INST-LICENSE-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 59,
+    "file_count": 320,
+    "paths_sha256": "999527b69a6e55310fd46f5326c9d5e552da185ee144ed662e8ef7f951ac89f6",
+    "root": "/tmp/destdir-lic",
+    "selected_paths": [
+      "/tmp/destdir-lic",
+      "/tmp/destdir-lic/usr",
+      "/tmp/destdir-lic/usr/local",
+      "/tmp/destdir-lic/usr/local/bin",
+      "/tmp/destdir-lic/usr/local/etc",
+      "/tmp/destdir-lic/usr/local/lib",
+      "/tmp/destdir-lic/usr/local/lib/lcov",
+      "/tmp/destdir-lic/usr/local/share",
+      "/tmp/destdir-lic/usr/local/share/lcov",
+      "/tmp/destdir-lic/usr/local/share/lcov/example",
+      "/tmp/destdir-lic/usr/local/share/lcov/example/methods",
+      "/tmp/destdir-lic/usr/local/share/lcov/html",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_sources",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_sources/man",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_static",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_static/css",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_static/fonts",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/_static/js",
+      "/tmp/destdir-lic/usr/local/share/lcov/html/man",
+      "/tmp/destdir-lic/usr/local/share/lcov/support-scripts",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/bin",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/errs",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/exception",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/filter",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/function",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/insensitive",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/lambda",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/relative",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/simple",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/genhtml/synthesize",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/add",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/branch",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/coverage",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/demangle",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/errs",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/exception",
+      "/tmp/destdir-lic/usr/local/share/lcov/tests/lcov/extract"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=/tmp/destdir-lic",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/destdir-lic /tmp/src"
+    ],
+    "fixture_setup": [
+      "install payload",
+      "observe COPYING in source vs payload"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "64d7216546238b7f67d985acbe51b4df63d87e1e950c0acb977b2d729c676ca0",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

@@ -1,0 +1,105 @@
+{
+  "artifacts": {
+    "extra": [],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-DOC-PATH-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 245,
+      "path": "compat/installation/wave2/cases/INST-DOC-PATH-001/stdout.bin",
+      "sha256": "5ff7679291315f27f6ef621f97225fafc9829b52daedb10d4a8e87f20dc25ffa"
+    }
+  },
+  "case_id": "INST-DOC-PATH-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LC_ALL": "C"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 127,
+    "file_count": 388,
+    "paths_sha256": "f0fe878eebaedf7b5675bc2935f5b23598e60915c1c7cfba2106cfae2d5d3f67",
+    "root": "/tmp/src",
+    "selected_paths": [
+      "/tmp/src",
+      "/tmp/src/.git",
+      "/tmp/src/.git/branches",
+      "/tmp/src/.git/hooks",
+      "/tmp/src/.git/info",
+      "/tmp/src/.git/logs",
+      "/tmp/src/.git/logs/refs",
+      "/tmp/src/.git/logs/refs/heads",
+      "/tmp/src/.git/logs/refs/remotes",
+      "/tmp/src/.git/logs/refs/remotes/origin",
+      "/tmp/src/.git/objects",
+      "/tmp/src/.git/objects/09",
+      "/tmp/src/.git/objects/0b",
+      "/tmp/src/.git/objects/0e",
+      "/tmp/src/.git/objects/0f",
+      "/tmp/src/.git/objects/13",
+      "/tmp/src/.git/objects/14",
+      "/tmp/src/.git/objects/15",
+      "/tmp/src/.git/objects/16",
+      "/tmp/src/.git/objects/18",
+      "/tmp/src/.git/objects/1f",
+      "/tmp/src/.git/objects/20",
+      "/tmp/src/.git/objects/28",
+      "/tmp/src/.git/objects/2b",
+      "/tmp/src/.git/objects/2f",
+      "/tmp/src/.git/objects/30",
+      "/tmp/src/.git/objects/31",
+      "/tmp/src/.git/objects/32",
+      "/tmp/src/.git/objects/34",
+      "/tmp/src/.git/objects/3b",
+      "/tmp/src/.git/objects/3c",
+      "/tmp/src/.git/objects/3e",
+      "/tmp/src/.git/objects/45",
+      "/tmp/src/.git/objects/46",
+      "/tmp/src/.git/objects/4c",
+      "/tmp/src/.git/objects/53",
+      "/tmp/src/.git/objects/56",
+      "/tmp/src/.git/objects/59",
+      "/tmp/src/.git/objects/62",
+      "/tmp/src/.git/objects/64"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/python3",
+    "executable_sha256": "6d972cf21be56fe3c947ab6ba257ff8d08c342dd2714442986791bd9a6dfabfe",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "python3",
+      "-"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/src"
+    ],
+    "fixture_setup": [
+      "extract README.rst path claims vs retained roots"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "2a33efe18b870ac39762aa95722a7bdb67da94200e6b1aa9f1775917ab8e0e09",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

@@ -62,10 +62,12 @@ EXPECTED_SAMPLE_METADATA_HASHES = {
 
 CASE_RECORDS_PATH = Path(__file__).with_name("oracle-case-records.json")
 CASE_RECORDS_SCHEMA_PATH = Path(__file__).with_name("oracle-case-records.schema.json")
-EXPECTED_CASE_RECORDS_SHA256 = "0ffbdc5c4690bf2a435a9a6443a7549dd23c3a53b6c3d9d97e3de8a5d8267fcd"
+EXPECTED_CASE_RECORDS_SHA256 = "eedb11c562ad5cae5069de5242bb3d74e361f2579c2626952f2723aef2056fbf"
 
 WAVE2_DIR = Path(__file__).with_name("wave2")
 WAVE2_CAPTURE_PATH = WAVE2_DIR / "oracle-capture.json"
+WAVE2_EXPECTED_TABLE_PATH = WAVE2_DIR / "expected-case-table.json"
+WAVE2_CASE_CAPTURE_SCHEMA_PATH = WAVE2_DIR / "oracle-case-capture.schema.json"
 WAVE2_DIRECTORY_LOCK = WAVE2_DIR / "installed-directories.lock"
 EXPECTED_WAVE2_DIRECTORY_COUNT = 57
 EXPECTED_WAVE2_DIRECTORY_MODE = "755"
@@ -73,43 +75,226 @@ EXPECTED_WAVE2_DIRECTORY_LOCK_SHA256 = (
     "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
 )
 EXPECTED_WAVE2_CAPTURE_SHA256 = (
-    "313c67010eeb5e5db7d04f1b73c2df43d5e199653ff2344cce21605f203ce8de"
+    "95486a522510dd6642654d6121d6efe2b8d34b61fa7ad1108f9f7e8527f09912"
 )
+EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = (
+    "887a1b2c00010dc75779e4c33ff6cac2b2e1f74785d4c19f0fb9bcc6d69a5613"
+)
+EXPECTED_WAVE2_ORACLE_IMAGE_ID = (
+    "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
+)
+EXPECTED_WAVE2_UPSTREAM_COMMIT = UPSTREAM_COMMIT
 EXPECTED_WAVE2_ARTIFACT_HASHES = {
-    "compat/installation/wave2/config.txt":
-        "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319",
-    "compat/installation/wave2/dirty.txt":
-        "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a",
-    "compat/installation/wave2/docfail.txt":
-        "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552",
-    "compat/installation/wave2/docpath.txt":
-        "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1",
+    "compat/installation/wave2/capture-driver.sh":
+        "015c74ee3b55eadc8c29e09ed5e3ab168ea1d339515434b29293ba1c75da5d8a",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json":
+        "016952431284493f2f86ec76f7964f54ca68f57abee8eda8623647bbf7fd5bec",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/meta.env":
+        "6e89f26d3027015fb14f9737db0594760edc9a0de5da6cca715c58b1777d834e",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/status.env":
+        "28ca9a10eef3b3dd4fe813e451598206c25260cd398126ccce85540991bada4a",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stderr.bin":
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stdout.bin":
+        "370b73f4fa66265c73a96aa256ff91c82c552b688860de4b1b94190582ca7438",
+    "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/tree-effects.json":
+        "69ac13df3d4a331f3927eddfa233f705dc5431d3910b678b2e1659bf077ae9b1",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json":
+        "b43b40373561ed284d235b0b75c15da5f51b3cba221901190e95f63a879c2ecf",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/meta.env":
+        "d45074860fd8b03afde758799f87a868a253571263c79f30ad0851f74795cc54",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/status.env":
+        "6489f99841e985d3e4e6a96fffefa73eafbaf3505eabd5b6649520c27894c1b0",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stderr.bin":
+        "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stdout.bin":
+        "fd43b7b1eb74da0952f026b075c706cb0bea78b396d3cde437efb5080a07362d",
+    "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/tree-effects.json":
+        "c30047705f2ebf5dc8ca4ad37966cf028338169a17f92f6820db08035c04388f",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json":
+        "a3e7a2771aba9b40a72a02c43dcf61d4796c1a69bdbea5718a736fe2a3400cfe",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/meta.env":
+        "3730a13740abbf10db5c4dd7861aad9719f1eecded0d77a691b5fa1b87185978",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/status.env":
+        "951c295f679c28d2d5f061d1b3b504e0f9515bc6b4913f075300bfeb33859ddb",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/stderr.bin":
+        "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/stdout.bin":
+        "23f07f060f3cb14c91561f1bbb69f4daac6830bd3b7afafa3cc61530d1ae5fa5",
+    "compat/installation/wave2/cases/INST-DOC-FAIL-001/tree-effects.json":
+        "50b83c56c28d74f5d94ef5823d67da4c07098af2cf87dfb353c5c9fb1d469933",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json":
+        "1ba5cb2d51ddc00fb2c9a5df23ff7f5b659a548dd6b97c50414bf38c8b8791bb",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/meta.env":
+        "27c0261c47542b0f606c0806094741e85e07e892d72f606862644762e4646ef7",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/status.env":
+        "81971744e8572dbfd0866e303b7a6ea8f680d2689d986ae70f7826fa5af35c7d",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/stderr.bin":
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/stdout.bin":
+        "5ff7679291315f27f6ef621f97225fafc9829b52daedb10d4a8e87f20dc25ffa",
+    "compat/installation/wave2/cases/INST-DOC-PATH-001/tree-effects.json":
+        "b6d0e5f02d96c5f676384e8d5549baa66461ec6907c5bb640913e62512db0e7a",
+    "compat/installation/wave2/cases/INST-INTERP-001/capture.json":
+        "f64436697766ba67d85e1ecb9dbc63f44aa2c34660edb490ff5b760cd837f6a7",
+    "compat/installation/wave2/cases/INST-INTERP-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-INTERP-001/meta.env":
+        "202699a2fe0a7f3aa92ba186929a3c8724dd314bcfd741fc2618f89f130f0d14",
+    "compat/installation/wave2/cases/INST-INTERP-001/observation.txt":
+        "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae",
+    "compat/installation/wave2/cases/INST-INTERP-001/status.env":
+        "cc201d52ba1bc0c7ef5d8379d953afdbe2e1ce795e419a91e12c20975a9f0f63",
+    "compat/installation/wave2/cases/INST-INTERP-001/stderr.bin":
+        "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+    "compat/installation/wave2/cases/INST-INTERP-001/stdout.bin":
+        "8ec59dcdae9493a815f7a3c6a10ac29ef94ab765845dba30c05849a4589c826a",
+    "compat/installation/wave2/cases/INST-INTERP-001/tree-effects.json":
+        "27b0970f9b2b1140bdfb46c521bf67ce02a528c9088d918264e3a9943119cd6b",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json":
+        "f04eee977b116ebd5df14c9bfa6ca9554a87e985b4c7313b20093fc4624b1a65",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/installed-directories.lock":
+        "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/meta.env":
+        "e80dd1630fc3e05662decc3f2a8869e1d3d8341f9313b1c09bb2b2f3655620bf",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/status.env":
+        "99dda817b00697e846de0bda4368f8f0e00a392737900ada576d2369dee9362f",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/stderr.bin":
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/stdout.bin":
+        "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+    "compat/installation/wave2/cases/INST-LAYOUT-001/tree-effects.json":
+        "4660ceb4dee5c70d01fee26a41d128f7bad61f326e334737559d78454bd0fb25",
+    "compat/installation/wave2/cases/INST-LICENSE-001/capture.json":
+        "13c496c17cb9202d80d964e5e174ac1989fe69146d35b4c942096e335701c2de",
+    "compat/installation/wave2/cases/INST-LICENSE-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-LICENSE-001/meta.env":
+        "757d0351b9aa189c2714f55c7ff5401c81a82e17ac0315747184cd593eb51a65",
+    "compat/installation/wave2/cases/INST-LICENSE-001/observation.txt":
+        "b514c0103dc918f11ef5409e532d481f384f7cf6d0fe60e3eef21cece8f95b5e",
+    "compat/installation/wave2/cases/INST-LICENSE-001/status.env":
+        "2c9792625fb9a3aecf989d04c759eb4465b45989a536522c4a9bc93cdfbbb474",
+    "compat/installation/wave2/cases/INST-LICENSE-001/stderr.bin":
+        "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+    "compat/installation/wave2/cases/INST-LICENSE-001/stdout.bin":
+        "72b6c461f512ef6e7a0c8d2839f4e00c352c1ddd983fc11a5dd599d6269ff4b6",
+    "compat/installation/wave2/cases/INST-LICENSE-001/tree-effects.json":
+        "228e1be2e885d0b2dc167792f21e611348c9e0505e2fff1fd3fa747cefbe11aa",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json":
+        "079e9a9234f3fd29f28b20ab529718eec43f6dff85d675e987bdffd9bf42487a",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/meta.env":
+        "1926b4e1e637970b0bd23b21d02cb1a41cc0e0f987e84e8dac7ff78bd3b448fc",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/status.env":
+        "2d078196640b3a8bfa4809e06828112087fb964e872c567402314b9ad052353a",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/stderr.bin":
+        "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/stdout.bin":
+        "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e",
+    "compat/installation/wave2/cases/INST-PARTIAL-001/tree-effects.json":
+        "668223b50a067e86db62e7ddc153f5f0fe1bdc29e41f43ba278b37e8087c90e5",
+    "compat/installation/wave2/cases/INST-PATH-001/capture.json":
+        "665cac3ad7184587da58d571ebe3b6c3b5e7c376bf8f7af0a729cb377602f7e3",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json":
+        "892b8b39dadda11c6dc31169fcac7013ed301f1611e4398623a96be26485b087",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/meta.env":
+        "2ea9b34df2d56ef1c0ddfefd2dcdf1f57f2a1d63287e7db32068996b4949dbed",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/status.env":
+        "6534b5c95bc1de401873087d892baa543adf7479c51318f420657d7d30cb65ff",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/stderr.bin":
+        "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/stdout.bin":
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compat/installation/wave2/cases/INST-PATH-001/relative/tree-effects.json":
+        "136511d420b1d2c9ae4b57097ff5a7d0a67c40a79d77e0094f1dc0646c4423b6",
+    "compat/installation/wave2/cases/INST-PATH-001/space/capture.json":
+        "4cf56d41ecdbf4bd2b549f041fad6f876b0ffc36e349e2cd257b701f09aaf36d",
+    "compat/installation/wave2/cases/INST-PATH-001/space/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-PATH-001/space/meta.env":
+        "a4baa0bb22513890191a775d526daa76725ee645046a5d3e0030c1b33c691b10",
+    "compat/installation/wave2/cases/INST-PATH-001/space/status.env":
+        "0d79681706dc70bc99f820710ce8b0c1d68f0a6111b215913f7670f0138f1ffd",
+    "compat/installation/wave2/cases/INST-PATH-001/space/stderr.bin":
+        "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de",
+    "compat/installation/wave2/cases/INST-PATH-001/space/stdout.bin":
+        "9c1c2bc44beb089ff7103020c5b19be6da066add6f6edf8687779e3fc0cb9aa5",
+    "compat/installation/wave2/cases/INST-PATH-001/space/tree-effects.json":
+        "9114f3208996897c393092c90d1db35e08eacf15002b7bbcb9126eabff5c6306",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json":
+        "921997a2007cf9b75b294aa3272cc86bff7375cd311a6d02bd35dd9c37b7573b",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/meta.env":
+        "be3d852c44ae1b9565707e27347b48953fa6be1601085339845e071176becbc7",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/status.env":
+        "1f876a4cf058d200d22016f58ad0d8ee281cebe1969fe40697cbb9c3eea6cbbf",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stderr.bin":
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stdout.bin":
+        "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4",
+    "compat/installation/wave2/cases/INST-REPORT-ASSET-001/tree-effects.json":
+        "f1454feea38c19c84280fc27cd62055cc238d624510b8884261ad6cba8602e29",
+    "compat/installation/wave2/cases/INST-STAGE-001/capture.json":
+        "7934ceb7a72b694b4b5213d5269e4d521e4db84a8ec54e4977dde2820c19f44b",
+    "compat/installation/wave2/cases/INST-STAGE-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-STAGE-001/meta.env":
+        "44db1adf80a93d2715775dc276385c7554dea523b5561b9996cd7fccf85b5e2d",
+    "compat/installation/wave2/cases/INST-STAGE-001/status.env":
+        "a944a6bfaa60ff56b53f6513812d5e3037637db0f56baca7b462002485f17858",
+    "compat/installation/wave2/cases/INST-STAGE-001/stderr.bin":
+        "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+    "compat/installation/wave2/cases/INST-STAGE-001/stdout.bin":
+        "34c78bff707e0e956b39f2845519e78979b1c68bef4ad78c93884b91322b9e4e",
+    "compat/installation/wave2/cases/INST-STAGE-001/tree-effects.json":
+        "3b8e6330e7843510ee45f54699a4fad5f87d280e1bdf13af788cbb543735cac3",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json":
+        "5643da0c7064a22d3f9a6d5fb9bc47968685fa5b482417a929cf5afc2b7696ff",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/meta.env":
+        "d49e9cf0eaf104e1bb04e65a2c69ce4b4f0e4c84c897b585346e1317d8efad02",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/status.env":
+        "7d895f842471011806229221cbeefdf86e9140f6dcb1955735129b6003d29a94",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/stderr.bin":
+        "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/stdout.bin":
+        "63a8729a754a36302e3aa56bde963ccb4c0fc2a3cdeb2290867ece1eaf9ca5d6",
+    "compat/installation/wave2/cases/INST-TEST-RUN-001/tree-effects.json":
+        "46774f7381074efbddebadc99c05cca38a62ec86b84749e5124c7e8ed76a5014",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json":
+        "8ab56978ef87621272cf0053abe1b4f3f475fcadfa5bcb5ef59912a78ed7cac9",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/doc.log":
+        "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/install.log":
+        "f59b021f62f0f49ba8afcc8c70e38ba6a97d938ef2b2934f3cf1900d35084c96",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/meta.env":
+        "b613d0bc11ea5582bcd196507d9cbedd434320716ba1776490260c078bf30f05",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/status.env":
+        "68390fad01f2192451610247a81e6d2dbbc90a7081165ca7dee05a973b185fcf",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/stderr.bin":
+        "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/stdout.bin":
+        "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3",
+    "compat/installation/wave2/cases/INST-UNINSTALL-001/tree-effects.json":
+        "88f1e2c48e6984d4fe3737e1d9eac5d841ef196a0802a4e13af775c193552b5e",
+    "compat/installation/wave2/expected-case-table.json":
+        "887a1b2c00010dc75779e4c33ff6cac2b2e1f74785d4c19f0fb9bcc6d69a5613",
     "compat/installation/wave2/installed-directories.lock":
         "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
     "compat/installation/wave2/installed-tree-directories.sh":
         "e16713b25dcd71651cf9d2f5ea63b0df87aa0ae201979c70be500f7e1d0da557",
-    "compat/installation/wave2/interp.txt":
-        "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae",
-    "compat/installation/wave2/license.txt":
-        "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f",
     "compat/installation/wave2/oracle-capture.json":
-        "313c67010eeb5e5db7d04f1b73c2df43d5e199653ff2344cce21605f203ce8de",
+        "95486a522510dd6642654d6121d6efe2b8d34b61fa7ad1108f9f7e8527f09912",
+    "compat/installation/wave2/oracle-case-capture.schema.json":
+        "5b4bae7eebd1634ef6ad6ff9e58f11ecbf9750fea64f45a7f8d47e09fc4697e4",
     "compat/installation/wave2/oracle-image.pin":
-        "15c13f2784af77c8f7b703c5eba4b0d05b274e904470f01e534d0f2f043c70ba",
-    "compat/installation/wave2/partial.txt":
-        "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb",
-    "compat/installation/wave2/relative.txt":
-        "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2",
-    "compat/installation/wave2/report-assets.txt":
-        "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0",
-    "compat/installation/wave2/space.txt":
-        "e141144ea0dd1846a6591ad5416d290aa8b9f9491c51781604dde73f8f0f69eb",
-    "compat/installation/wave2/stage-summary.txt":
-        "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b",
-    "compat/installation/wave2/testrun.txt":
-        "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5",
-    "compat/installation/wave2/uninstall.txt":
-        "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e",
+        "f22fdba249a35092246f20148f7a49b8e3ffb74d5512268e63f12d17c31c51a1",
+    "compat/installation/wave2/recapture.py":
+        "64e279b21e207e64a3aaea84d04ec73b1d2a4a5fe6bca35a346f2db22670c287",
 }
 
 LAYOUT_IDS = (
@@ -293,15 +478,15 @@ EVIDENCE_GAPS = (
     "staged DESTDIR installs omit the image-only legacy /usr/local/man symlink",
     "optional genhtml updown variants and HTML-reference qualification remain open",
     "space-containing DESTDIR failure is observed on this GNU/Linux install path only",
-    "empty PREFIX/DESTDIR combinations beyond absolute-path rejection remain lightly sampled",
+    "induced partial-install uses a fake install wrapper rather than native Makefile fault injection points",
     "no multi-platform install root matrix beyond the pinned x86_64 Linux Oracle image",
     "packaging/RPM distribution license policy remains uncaptured",
     "no Ferricov product installer, uninstall, or report-renderer compatibility evidence",
     "M1 parser/model installation surfaces remain blocked",
     "wave2 captures are Oracle-reference only and keep execution_status=planned",
     "directory companion is not verified inside the Docker image build diff against installed-tree.lock",
-    "induced partial-install uses a fake install wrapper rather than native Makefile fault injection points",
-    "config discovery probe replicates lcovutil search order without exercising every genhtml/lcov consumer path",
+    "config discovery probe mirrors lcovutil search order without executing every consumer binary path",
+    "report-asset capture scans genhtml symbols and does not execute HTML rendering",
 )
 
 
@@ -728,6 +913,7 @@ def expected_report_observation_facts() -> list[dict[str, Any]]:
 
 
 
+
 def wave2_capture_document() -> dict[str, Any]:
     if not WAVE2_CAPTURE_PATH.is_file():
         raise InstallationContractError("installation wave2 capture document is missing")
@@ -743,7 +929,96 @@ def wave2_capture_document() -> dict[str, Any]:
         raise InstallationContractError("installation wave2 capture evidence status drift")
     if document.get("case_count") != 13 or len(document.get("cases", [])) != 13:
         raise InstallationContractError("installation wave2 capture must cover 13 cases")
+    if document.get("capture_format") != "replayable_case_records_v1":
+        raise InstallationContractError("installation wave2 capture format drift")
+    if document.get("oracle_image_id") != EXPECTED_WAVE2_ORACLE_IMAGE_ID:
+        raise InstallationContractError("installation wave2 capture image id drift")
+    if document.get("upstream_commit") != EXPECTED_WAVE2_UPSTREAM_COMMIT:
+        raise InstallationContractError("installation wave2 capture upstream commit drift")
     return document
+
+
+def wave2_expected_table() -> dict[str, Any]:
+    if not WAVE2_EXPECTED_TABLE_PATH.is_file():
+        raise InstallationContractError("installation wave2 expected case table is missing")
+    actual = sha256_file(WAVE2_EXPECTED_TABLE_PATH)
+    if actual != EXPECTED_WAVE2_EXPECTED_TABLE_SHA256:
+        raise InstallationContractError(
+            "installation wave2 expected table drift: "
+            f"expected={EXPECTED_WAVE2_EXPECTED_TABLE_SHA256} actual={actual}"
+        )
+    table = load_json(WAVE2_EXPECTED_TABLE_PATH)
+    if table.get("product_compatibility_evidence") is not False:
+        raise InstallationContractError("wave2 expected table claims product compatibility")
+    if table.get("evidence_status") != "oracle_reference" or table.get("execution_status") != "planned":
+        raise InstallationContractError("wave2 expected table status drift")
+    if table.get("oracle_image_id") != EXPECTED_WAVE2_ORACLE_IMAGE_ID:
+        raise InstallationContractError("wave2 expected table image id drift")
+    if table.get("upstream_commit") != EXPECTED_WAVE2_UPSTREAM_COMMIT:
+        raise InstallationContractError("wave2 expected table upstream commit drift")
+    cases = table.get("cases")
+    if not isinstance(cases, list) or len(cases) != 13:
+        raise InstallationContractError("wave2 expected table must contain 13 cases")
+    ids = [case.get("id") for case in cases]
+    if ids != list(PLANNED_CASE_IDS):
+        raise InstallationContractError("wave2 expected table case order drift")
+    return table
+
+
+def wave2_case_capture_schema() -> dict[str, Any]:
+    if not WAVE2_CASE_CAPTURE_SCHEMA_PATH.is_file():
+        raise InstallationContractError("wave2 case capture schema missing")
+    return load_json(WAVE2_CASE_CAPTURE_SCHEMA_PATH)
+
+
+def observation_material(record: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "artifacts": record["artifacts"],
+        "case_id": record["case_id"],
+        "environment": record["environment"],
+        "file_tree_effects": record["file_tree_effects"],
+        "identity": record["identity"],
+        "invocation": record["invocation"],
+        "process": record["process"],
+    }
+
+
+def recompute_observation_sha256(record: dict[str, Any]) -> str:
+    return sha256_bytes(canonical_json(observation_material(record)).encode("ascii"))
+
+
+def load_case_capture_record(relative_path: str) -> dict[str, Any]:
+    path = ROOT / relative_path
+    if not path.is_file():
+        raise InstallationContractError(f"wave2 case capture missing: {relative_path}")
+    record = load_json(path)
+    validate_against_schema(record, wave2_case_capture_schema(), label="wave2 case capture")
+    if record.get("product_compatibility_evidence") is not False:
+        raise InstallationContractError(f"wave2 case capture product claim: {relative_path}")
+    if record.get("evidence_status") != "oracle_reference" or record.get("execution_status") != "planned":
+        raise InstallationContractError(f"wave2 case capture status drift: {relative_path}")
+    recomputed = recompute_observation_sha256(record)
+    if recomputed != record.get("observation_sha256"):
+        raise InstallationContractError(f"wave2 observation hash drift: {relative_path}")
+    # Bind raw stdout/stderr bytes
+    for key in ("stdout_bin", "stderr_bin"):
+        art = record["artifacts"][key]
+        art_path = ROOT / art["path"]
+        actual = sha256_file(art_path)
+        if actual != art["sha256"]:
+            raise InstallationContractError(
+                f"wave2 raw {key} drift: {art['path']} expected={art['sha256']} actual={actual}"
+            )
+        if art_path.stat().st_size != art["bytes"]:
+            raise InstallationContractError(f"wave2 raw {key} size drift: {art['path']}")
+    return record
+
+
+def validate_against_schema(document: dict[str, Any], schema: dict[str, Any], *, label: str) -> None:
+    try:
+        Draft202012Validator(schema).validate(document)
+    except Exception as exc:  # noqa: BLE001 - surface validator detail
+        raise InstallationContractError(f"{label} schema failure: {exc}") from exc
 
 
 def wave2_directory_companion() -> dict[str, Any]:
@@ -757,7 +1032,7 @@ def wave2_directory_companion() -> dict[str, Any]:
         )
     rows = []
     for raw in WAVE2_DIRECTORY_LOCK.read_text(encoding="ascii").splitlines():
-        fields = raw.split("\t")
+        fields = raw.split("	")
         if len(fields) != 4:
             raise InstallationContractError("wave2 directory lock has a malformed row")
         kind, mode, identity, path = fields
@@ -803,21 +1078,115 @@ def wave2_artifact_bindings() -> list[dict[str, str]]:
     return result
 
 
-def capture_artifact_for_case(case_id: str, capture_doc: dict[str, Any]) -> dict[str, str]:
-    for case in capture_doc["cases"]:
-        if case["id"] != case_id:
-            continue
-        cap = case["capture"]
-        if case_id == "INST-LAYOUT-001":
-            return {
-                "path": cap["directory_companion_path"],
-                "sha256": cap["directory_companion_sha256"],
-            }
-        if case_id == "INST-PATH-001":
-            relative = cap["artifacts"]["relative"]
-            return {"path": relative["path"], "sha256": relative["sha256"]}
-        return {"path": cap["artifact"], "sha256": cap["artifact_sha256"]}
-    raise InstallationContractError(f"wave2 capture missing case: {case_id}")
+def expected_row_for_case(case_id: str) -> dict[str, Any]:
+    for case in wave2_expected_table()["cases"]:
+        if case["id"] == case_id:
+            return case
+    raise InstallationContractError(f"wave2 expected table missing case: {case_id}")
+
+
+def capture_binding_for_case(case_id: str) -> dict[str, Any]:
+    """Independent expected-table binding; does not trust capture JSON alone."""
+    row = expected_row_for_case(case_id)
+    if row.get("oracle_image_id") != EXPECTED_WAVE2_ORACLE_IMAGE_ID:
+        raise InstallationContractError(f"wave2 expected image drift: {case_id}")
+    if row.get("upstream_commit") != EXPECTED_WAVE2_UPSTREAM_COMMIT:
+        raise InstallationContractError(f"wave2 expected upstream drift: {case_id}")
+    if case_id == "INST-PATH-001":
+        rel = load_case_capture_record(
+            "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json"
+        )
+        space = load_case_capture_record(
+            "compat/installation/wave2/cases/INST-PATH-001/space/capture.json"
+        )
+        parent = load_case_capture_record(row["capture_path"])
+        if parent.get("oracle_execution_status") != row["oracle_execution_status"]:
+            raise InstallationContractError(f"wave2 path parent status drift: {case_id}")
+        if parent.get("observation_sha256") != row["observation_sha256"]:
+            raise InstallationContractError(f"wave2 path parent observation drift: {case_id}")
+        # Cross-check dual raw artifacts against expected table
+        if rel["artifacts"]["stdout_bin"]["sha256"] != row["stdout_sha256"]:
+            raise InstallationContractError("wave2 path relative stdout drift")
+        if rel["artifacts"]["stderr_bin"]["sha256"] != row["stderr_sha256"]:
+            raise InstallationContractError("wave2 path relative stderr drift")
+        if space["artifacts"]["stdout_bin"]["sha256"] != row["space_stdout_sha256"]:
+            raise InstallationContractError("wave2 path space stdout drift")
+        if space["artifacts"]["stderr_bin"]["sha256"] != row["space_stderr_sha256"]:
+            raise InstallationContractError("wave2 path space stderr drift")
+        return {
+            "relative": {
+                "path": "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json",
+                "sha256": sha256_file(
+                    ROOT / "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json"
+                ),
+                "observation_sha256": rel["observation_sha256"],
+                "stdout_sha256": rel["artifacts"]["stdout_bin"]["sha256"],
+                "stderr_sha256": rel["artifacts"]["stderr_bin"]["sha256"],
+            },
+            "space": {
+                "path": "compat/installation/wave2/cases/INST-PATH-001/space/capture.json",
+                "sha256": sha256_file(
+                    ROOT / "compat/installation/wave2/cases/INST-PATH-001/space/capture.json"
+                ),
+                "observation_sha256": space["observation_sha256"],
+                "stdout_sha256": space["artifacts"]["stdout_bin"]["sha256"],
+                "stderr_sha256": space["artifacts"]["stderr_bin"]["sha256"],
+            },
+        }
+
+    record = load_case_capture_record(row["capture_path"])
+    if record.get("oracle_execution_status") != row["oracle_execution_status"]:
+        raise InstallationContractError(f"wave2 case status drift: {case_id}")
+    if record.get("observation_sha256") != row["observation_sha256"]:
+        raise InstallationContractError(f"wave2 observation table drift: {case_id}")
+    if record["artifacts"]["stdout_bin"]["sha256"] != row["stdout_sha256"]:
+        raise InstallationContractError(f"wave2 stdout table drift: {case_id}")
+    if record["artifacts"]["stderr_bin"]["sha256"] != row["stderr_sha256"]:
+        raise InstallationContractError(f"wave2 stderr table drift: {case_id}")
+    if row.get("expected_exit_status") is not None:
+        if record["process"]["exit_status"] != row["expected_exit_status"]:
+            raise InstallationContractError(f"wave2 exit status drift: {case_id}")
+    if record["invocation"]["argv"] != row["argv"]:
+        raise InstallationContractError(f"wave2 argv drift: {case_id}")
+    if record["identity"]["oracle_image_id"] != EXPECTED_WAVE2_ORACLE_IMAGE_ID:
+        raise InstallationContractError(f"wave2 record image drift: {case_id}")
+    if record["identity"]["upstream_commit"] != EXPECTED_WAVE2_UPSTREAM_COMMIT:
+        raise InstallationContractError(f"wave2 record upstream drift: {case_id}")
+    return {
+        "path": row["capture_path"],
+        "sha256": sha256_file(ROOT / row["capture_path"]),
+        "observation_sha256": row["observation_sha256"],
+        "stdout_sha256": row["stdout_sha256"],
+        "stderr_sha256": row["stderr_sha256"],
+    }
+
+
+def capture_artifact_for_case(case_id: str, capture_doc: dict[str, Any] | None = None) -> dict[str, Any]:
+    del capture_doc  # independent expected table is authoritative
+    binding = capture_binding_for_case(case_id)
+    if case_id == "INST-PATH-001":
+        # Parent-facing single artifact remains the dual relative envelope for compatibility
+        # with non-path call sites; path facts use capture_artifacts instead.
+        return binding["relative"]
+    return binding
+
+
+def validate_wave2_captures_against_expected() -> None:
+    index = wave2_capture_document()
+    table = wave2_expected_table()
+    index_by_id = {case["id"]: case for case in index["cases"]}
+    for row in table["cases"]:
+        case_id = row["id"]
+        if case_id not in index_by_id:
+            raise InstallationContractError(f"wave2 index missing case: {case_id}")
+        indexed = index_by_id[case_id]
+        if indexed.get("oracle_execution_status") != row["oracle_execution_status"]:
+            raise InstallationContractError(f"wave2 index status drift: {case_id}")
+        if indexed.get("observation_sha256") != row["observation_sha256"]:
+            raise InstallationContractError(f"wave2 index observation drift: {case_id}")
+        if indexed.get("capture_path") != row["capture_path"]:
+            raise InstallationContractError(f"wave2 index path drift: {case_id}")
+        capture_binding_for_case(case_id)
 
 
 def expected_case_independent_facts(
@@ -859,6 +1228,7 @@ def expected_case_independent_facts(
             "directory_companion_mode": directory["mode"],
             "directory_companion_path": directory["path"],
             "directory_companion_retained": True,
+            "capture_artifact": capture_binding_for_case(case_id),
             "directory_companion_sha256": directory["sha256"],
             "directory_entries_retained": False,
             "file_count": tree["file_count"],
@@ -944,9 +1314,8 @@ def expected_case_independent_facts(
             "source_bindings": [install_doc, docs_build, docs_config],
         }
     if case_id == "INST-PATH-001":
-        capture_doc = wave2_capture_document()
         return {
-            "capture_artifact": capture_artifact_for_case(case_id, capture_doc),
+            "capture_artifacts": capture_binding_for_case(case_id),
             "oracle_execution_status": "captured",
             "relative_roots_rejected": True,
             "requires_absolute_destdir_prefix": True,
@@ -1259,12 +1628,24 @@ def validate_case_records_against_contract(
         if case["id"] != "INST-LAYOUT-001":
             if not isinstance(source_bindings, list) or not source_bindings:
                 raise InstallationContractError(f"installation case source_bindings missing: {case['id']}")
-            capture_artifact = facts.get("capture_artifact")
-            if not isinstance(capture_artifact, dict):
-                raise InstallationContractError(f"installation case capture_artifact missing: {case['id']}")
-            expected_capture = capture_artifact_for_case(case["id"], wave2_capture_document())
-            if not json_values_equal(capture_artifact, expected_capture):
-                raise InstallationContractError(f"installation case capture_artifact drift: {case['id']}")
+            if case["id"] == "INST-PATH-001":
+                capture_artifacts = facts.get("capture_artifacts")
+                expected_capture = capture_binding_for_case(case["id"])
+                if not json_values_equal(capture_artifacts, expected_capture):
+                    raise InstallationContractError(
+                        f"installation case capture_artifacts drift: {case['id']}"
+                    )
+            else:
+                capture_artifact = facts.get("capture_artifact")
+                if not isinstance(capture_artifact, dict):
+                    raise InstallationContractError(
+                        f"installation case capture_artifact missing: {case['id']}"
+                    )
+                expected_capture = capture_binding_for_case(case["id"])
+                if not json_values_equal(capture_artifact, expected_capture):
+                    raise InstallationContractError(
+                        f"installation case capture_artifact drift: {case['id']}"
+                    )
             if facts.get("oracle_execution_status") != "captured":
                 raise InstallationContractError(f"installation case capture status drift: {case['id']}")
             for binding in source_bindings:
@@ -1303,6 +1684,9 @@ def validate_case_records_against_contract(
                 raise InstallationContractError("INST-LAYOUT-001 directory companion hash drift")
             if facts.get("directory_companion_path") != directory["path"]:
                 raise InstallationContractError("INST-LAYOUT-001 directory companion path drift")
+            expected_layout_capture = capture_binding_for_case("INST-LAYOUT-001")
+            if not json_values_equal(facts.get("capture_artifact"), expected_layout_capture):
+                raise InstallationContractError("INST-LAYOUT-001 capture_artifact drift")
 
         if case["id"] == "INST-REPORT-ASSET-001":
             if case["observation_ids"] != retained_observation_ids:

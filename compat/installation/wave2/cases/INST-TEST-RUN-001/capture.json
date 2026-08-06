@@ -1,0 +1,109 @@
+{
+  "artifacts": {
+    "extra": [],
+    "stderr_bin": {
+      "bytes": 54,
+      "path": "compat/installation/wave2/cases/INST-TEST-RUN-001/stderr.bin",
+      "sha256": "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f"
+    },
+    "stdout_bin": {
+      "bytes": 50012,
+      "path": "compat/installation/wave2/cases/INST-TEST-RUN-001/stdout.bin",
+      "sha256": "63a8729a754a36302e3aa56bde963ccb4c0fc2a3cdeb2290867ece1eaf9ca5d6"
+    }
+  },
+  "case_id": "INST-TEST-RUN-001",
+  "environment": {
+    "mode": "clean_empty",
+    "variables": {
+      "LC_ALL": "C"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 36,
+    "file_count": 205,
+    "paths_sha256": "8ebc003577c7e2eda60ef215d00a66dbb8d3d695f6be12094b949f7dc76f447a",
+    "root": "/usr/local/share/lcov/tests",
+    "selected_paths": [
+      "/usr/local/share/lcov/tests",
+      "/usr/local/share/lcov/tests/bin",
+      "/usr/local/share/lcov/tests/genhtml",
+      "/usr/local/share/lcov/tests/genhtml/errs",
+      "/usr/local/share/lcov/tests/genhtml/exception",
+      "/usr/local/share/lcov/tests/genhtml/filter",
+      "/usr/local/share/lcov/tests/genhtml/function",
+      "/usr/local/share/lcov/tests/genhtml/insensitive",
+      "/usr/local/share/lcov/tests/genhtml/lambda",
+      "/usr/local/share/lcov/tests/genhtml/relative",
+      "/usr/local/share/lcov/tests/genhtml/simple",
+      "/usr/local/share/lcov/tests/genhtml/synthesize",
+      "/usr/local/share/lcov/tests/lcov",
+      "/usr/local/share/lcov/tests/lcov/add",
+      "/usr/local/share/lcov/tests/lcov/branch",
+      "/usr/local/share/lcov/tests/lcov/coverage",
+      "/usr/local/share/lcov/tests/lcov/demangle",
+      "/usr/local/share/lcov/tests/lcov/errs",
+      "/usr/local/share/lcov/tests/lcov/exception",
+      "/usr/local/share/lcov/tests/lcov/extract",
+      "/usr/local/share/lcov/tests/lcov/follow",
+      "/usr/local/share/lcov/tests/lcov/format",
+      "/usr/local/share/lcov/tests/lcov/gcov-tool",
+      "/usr/local/share/lcov/tests/lcov/initializer",
+      "/usr/local/share/lcov/tests/lcov/lambda",
+      "/usr/local/share/lcov/tests/lcov/mcdc",
+      "/usr/local/share/lcov/tests/lcov/merge",
+      "/usr/local/share/lcov/tests/lcov/misc",
+      "/usr/local/share/lcov/tests/lcov/multiple",
+      "/usr/local/share/lcov/tests/lcov/summary",
+      "/usr/local/share/lcov/tests/llvm2lcov",
+      "/usr/local/share/lcov/tests/perl2lcov",
+      "/usr/local/share/lcov/tests/profiles",
+      "/usr/local/share/lcov/tests/py2lcov",
+      "/usr/local/share/lcov/tests/scripts",
+      "/usr/local/share/lcov/tests/xml2lcov",
+      "/usr/local/share/lcov/tests/genhtml/errs/MsgContext.pm",
+      "/usr/local/share/lcov/tests/genhtml/lambda/lambda.cpp",
+      "/usr/local/share/lcov/tests/lcov/mcdc/test.cpp",
+      "/usr/local/share/lcov/tests/lcov/errs/badFncLine.info"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "env",
+      "-u",
+      "LCOV_HOME",
+      "make",
+      "-np"
+    ],
+    "cleanup": [
+      "none_required_read_only"
+    ],
+    "fixture_setup": [
+      "use installed tests in pinned image",
+      "unset LCOV_HOME"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/usr/local/share/lcov/tests"
+  },
+  "observation_sha256": "cff9f15184859ca6581531fb6d21a198986d626420305753bc7635e4703ee26d",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

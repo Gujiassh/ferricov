@@ -1,0 +1,119 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2335,
+        "name": "relative_capture",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json",
+        "sha256": "892b8b39dadda11c6dc31169fcac7013ed301f1611e4398623a96be26485b087"
+      },
+      {
+        "bytes": 2400,
+        "name": "space_capture",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/space/capture.json",
+        "sha256": "4cf56d41ecdbf4bd2b549f041fad6f876b0ffc36e349e2cd257b701f09aaf36d"
+      },
+      {
+        "bytes": 0,
+        "name": "relative_stdout",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 83,
+        "name": "relative_stderr",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stderr.bin",
+        "sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732"
+      },
+      {
+        "bytes": 1539,
+        "name": "space_stdout",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/space/stdout.bin",
+        "sha256": "9c1c2bc44beb089ff7103020c5b19be6da066add6f6edf8687779e3fc0cb9aa5"
+      },
+      {
+        "bytes": 1530,
+        "name": "space_stderr",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/space/stderr.bin",
+        "sha256": "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 83,
+      "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stderr.bin",
+      "sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732"
+    },
+    "stdout_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "case_id": "INST-PATH-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 0,
+    "file_count": 0,
+    "paths_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "root": "/tmp/src/rel-dest",
+    "selected_paths": [],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "dual",
+      "relative",
+      "and",
+      "space",
+      "path",
+      "probes"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/src '/tmp/destdir space'"
+    ],
+    "fixture_setup": [
+      "relative DESTDIR probe",
+      "space-containing DESTDIR probe"
+    ],
+    "timeout_seconds": 300,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "067df640acc0359c295cf9e2cb2153b0a46d78df66fe48ddea54bb42023644b5",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "command": "make install DESTDIR=rel-dest PREFIX=/usr/local",
+        "exit_status": 2
+      },
+      {
+        "command": "make install DESTDIR=/tmp/destdir space PREFIX=/usr/local",
+        "exit_status": 2
+      }
+    ],
+    "exit_status": 2,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

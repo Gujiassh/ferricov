@@ -1,0 +1,74 @@
+{
+  "artifacts": {
+    "extra": [],
+    "stderr_bin": {
+      "bytes": 116,
+      "path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/stderr.bin",
+      "sha256": "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de"
+    },
+    "stdout_bin": {
+      "bytes": 87,
+      "path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/stdout.bin",
+      "sha256": "23f07f060f3cb14c91561f1bbb69f4daac6830bd3b7afafa3cc61530d1ae5fa5"
+    }
+  },
+  "case_id": "INST-DOC-FAIL-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 1,
+    "file_count": 0,
+    "paths_sha256": "a9cec6c4fd25e1d0132f8b1d6be9ee48d0016bda6bb5656b5da32378e5665b83",
+    "root": "/tmp/docfail",
+    "selected_paths": [
+      "/tmp/docfail"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=/tmp/docfail",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "restore sphinx-build",
+      "rm -rf /tmp/docfail /tmp/src"
+    ],
+    "fixture_setup": [
+      "hide /usr/bin/sphinx-build",
+      "remove doc_finished and docs/_build"
+    ],
+    "timeout_seconds": 300,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "91d9f41818c2e009a6edd05a3e67a90cb7ef058c709a45d44d07c9587344585b",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 2,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

@@ -307,19 +307,34 @@ class InstallationContractTests(unittest.TestCase):
     def test_wave2_case_captures_are_bound_and_remain_planned(self) -> None:
         records = contract.load_case_records()
         capture = contract.wave2_capture_document()
+        table = contract.wave2_expected_table()
         self.assertEqual(capture["evidence_status"], "oracle_reference")
         self.assertEqual(capture["execution_status"], "planned")
         self.assertIs(capture["product_compatibility_evidence"], False)
+        self.assertEqual(capture["capture_format"], "replayable_case_records_v1")
+        self.assertEqual(len(table["cases"]), 13)
         for case in records["cases"]:
             self.assertEqual(case["execution_status"], "planned")
             self.assertEqual(case["evidence_status"], "oracle_reference")
             self.assertEqual(case["product_evidence"], [])
-            if case["id"] == "INST-LAYOUT-001":
-                continue
             facts = case["independent_facts"]
+            if case["id"] == "INST-PATH-001":
+                self.assertEqual(facts["oracle_execution_status"], "captured")
+                expected = contract.capture_binding_for_case(case["id"])
+                self.assertEqual(facts["capture_artifacts"], expected)
+                self.assertIn("relative", facts["capture_artifacts"])
+                self.assertIn("space", facts["capture_artifacts"])
+                continue
+            if case["id"] == "INST-LAYOUT-001":
+                expected = contract.capture_binding_for_case(case["id"])
+                self.assertEqual(facts["capture_artifact"], expected)
+                continue
             self.assertEqual(facts["oracle_execution_status"], "captured")
-            expected = contract.capture_artifact_for_case(case["id"], capture)
+            expected = contract.capture_binding_for_case(case["id"])
             self.assertEqual(facts["capture_artifact"], expected)
+            self.assertIn("observation_sha256", facts["capture_artifact"])
+            self.assertIn("stdout_sha256", facts["capture_artifact"])
+            self.assertIn("stderr_sha256", facts["capture_artifact"])
 
     def test_wave2_artifact_drift_is_rejected(self) -> None:
         expected = contract.EXPECTED_WAVE2_CAPTURE_SHA256
@@ -329,6 +344,151 @@ class InstallationContractTests(unittest.TestCase):
                 contract.wave2_capture_document()
         finally:
             contract.EXPECTED_WAVE2_CAPTURE_SHA256 = expected
+
+    def test_wave2_expected_table_image_co_mutation_is_rejected(self) -> None:
+        backup = contract.WAVE2_EXPECTED_TABLE_PATH.read_bytes()
+        try:
+            table = json.loads(backup.decode("ascii"))
+            table["oracle_image_id"] = "sha256:" + ("a" * 64)
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(contract.canonical_json(table).encode("ascii"))
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+            with self.assertRaisesRegex(contract.InstallationContractError, "image"):
+                contract.wave2_expected_table()
+        finally:
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(backup)
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+
+    def test_wave2_expected_table_upstream_co_mutation_is_rejected(self) -> None:
+        backup = contract.WAVE2_EXPECTED_TABLE_PATH.read_bytes()
+        try:
+            table = json.loads(backup.decode("ascii"))
+            table["upstream_commit"] = "0" * 40
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(contract.canonical_json(table).encode("ascii"))
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+            with self.assertRaisesRegex(contract.InstallationContractError, "upstream"):
+                contract.wave2_expected_table()
+        finally:
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(backup)
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+
+    def test_wave2_exit_status_co_mutation_is_rejected(self) -> None:
+        backup = contract.WAVE2_EXPECTED_TABLE_PATH.read_bytes()
+        try:
+            table = json.loads(backup.decode("ascii"))
+            for case in table["cases"]:
+                if case["id"] == "INST-STAGE-001":
+                    case["expected_exit_status"] = 99
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(contract.canonical_json(table).encode("ascii"))
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+            with self.assertRaisesRegex(contract.InstallationContractError, "exit status"):
+                contract.capture_binding_for_case("INST-STAGE-001")
+        finally:
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(backup)
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+
+    def test_wave2_argv_co_mutation_is_rejected(self) -> None:
+        backup = contract.WAVE2_EXPECTED_TABLE_PATH.read_bytes()
+        try:
+            table = json.loads(backup.decode("ascii"))
+            for case in table["cases"]:
+                if case["id"] == "INST-STAGE-001":
+                    case["argv"] = ["make", "install", "DESTDIR=/tmp/mutated"]
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(contract.canonical_json(table).encode("ascii"))
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+            with self.assertRaisesRegex(contract.InstallationContractError, "argv"):
+                contract.capture_binding_for_case("INST-STAGE-001")
+        finally:
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(backup)
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+
+    def _mutate_path_bytes(self, path: Path, mutator) -> None:
+        """Mutate a bound artifact with chmod restore; preserves original bytes on exit.
+
+        Capture envelopes may be root-owned after Docker if normalization was skipped.
+        Tests must still exercise real path binding (not temp-path stubs) without
+        weakening sha256 co-mutation checks.
+        """
+        backup = path.read_bytes()
+        mode = path.stat().st_mode
+        try:
+            try:
+                path.chmod(mode | 0o200)
+            except OSError:
+                pass
+            mutator(path, backup)
+        finally:
+            try:
+                path.chmod(mode | 0o200)
+            except OSError:
+                pass
+            path.write_bytes(backup)
+            try:
+                path.chmod(mode)
+            except OSError:
+                pass
+
+    def test_wave2_raw_stdout_byte_mutation_is_rejected(self) -> None:
+        path = contract.ROOT / "compat/installation/wave2/cases/INST-STAGE-001/stdout.bin"
+
+        def mutate(target: Path, backup: bytes) -> None:
+            target.write_bytes(backup + b"\nmutated\n")
+            with self.assertRaisesRegex(contract.InstallationContractError, "stdout"):
+                contract.capture_binding_for_case("INST-STAGE-001")
+
+        self._mutate_path_bytes(path, mutate)
+
+    def test_wave2_observation_hash_mutation_is_rejected(self) -> None:
+        path = contract.ROOT / "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+        rel = "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+        old_hash = contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel]
+
+        def mutate(target: Path, backup: bytes) -> None:
+            record = json.loads(backup.decode("ascii"))
+            record["observation_sha256"] = "0" * 64
+            target.write_bytes(contract.canonical_json(record).encode("ascii"))
+            # Refresh artifact hash table entry so binding reaches observation check
+            # rather than failing earlier on static artifact_bindings drift.
+            contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = contract.sha256_file(target)
+            try:
+                with self.assertRaisesRegex(contract.InstallationContractError, "observation"):
+                    contract.capture_binding_for_case("INST-STAGE-001")
+            finally:
+                contract.EXPECTED_WAVE2_ARTIFACT_HASHES[rel] = old_hash
+
+        self._mutate_path_bytes(path, mutate)
+
+    def test_wave2_status_promotion_in_expected_table_is_rejected(self) -> None:
+        backup = contract.WAVE2_EXPECTED_TABLE_PATH.read_bytes()
+        try:
+            table = json.loads(backup.decode("ascii"))
+            table["execution_status"] = "executed"
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(contract.canonical_json(table).encode("ascii"))
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
+            with self.assertRaisesRegex(contract.InstallationContractError, "status"):
+                contract.wave2_expected_table()
+        finally:
+            contract.WAVE2_EXPECTED_TABLE_PATH.write_bytes(backup)
+            contract.EXPECTED_WAVE2_EXPECTED_TABLE_SHA256 = contract.sha256_file(
+                contract.WAVE2_EXPECTED_TABLE_PATH
+            )
 
     def _rewrite_case_records(self, mutate) -> tuple[bytes, str]:
         backup = contract.CASE_RECORDS_PATH.read_bytes()

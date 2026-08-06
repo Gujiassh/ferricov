@@ -1,0 +1,115 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2934,
+        "name": "installed-directories.lock",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/installed-directories.lock",
+        "sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-LAYOUT-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 2934,
+      "path": "compat/installation/wave2/cases/INST-LAYOUT-001/stdout.bin",
+      "sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+    }
+  },
+  "case_id": "INST-LAYOUT-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LC_ALL": "C",
+      "TZ": "UTC"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 57,
+    "file_count": 0,
+    "paths_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+    "root": "/usr/local",
+    "selected_paths": [
+      "/usr/local",
+      "/usr/local/bin",
+      "/usr/local/etc",
+      "/usr/local/lib",
+      "/usr/local/lib/lcov",
+      "/usr/local/share",
+      "/usr/local/share/lcov",
+      "/usr/local/share/lcov/example",
+      "/usr/local/share/lcov/example/methods",
+      "/usr/local/share/lcov/html",
+      "/usr/local/share/lcov/html/_sources",
+      "/usr/local/share/lcov/html/_sources/man",
+      "/usr/local/share/lcov/html/_static",
+      "/usr/local/share/lcov/html/_static/css",
+      "/usr/local/share/lcov/html/_static/fonts",
+      "/usr/local/share/lcov/html/_static/js",
+      "/usr/local/share/lcov/html/man",
+      "/usr/local/share/lcov/support-scripts",
+      "/usr/local/share/lcov/tests",
+      "/usr/local/share/lcov/tests/bin",
+      "/usr/local/share/lcov/tests/genhtml",
+      "/usr/local/share/lcov/tests/genhtml/errs",
+      "/usr/local/share/lcov/tests/genhtml/exception",
+      "/usr/local/share/lcov/tests/genhtml/filter",
+      "/usr/local/share/lcov/tests/genhtml/function",
+      "/usr/local/share/lcov/tests/genhtml/insensitive",
+      "/usr/local/share/lcov/tests/genhtml/lambda",
+      "/usr/local/share/lcov/tests/genhtml/relative",
+      "/usr/local/share/lcov/tests/genhtml/simple",
+      "/usr/local/share/lcov/tests/genhtml/synthesize",
+      "/usr/local/share/lcov/tests/lcov",
+      "/usr/local/share/lcov/tests/lcov/add",
+      "/usr/local/share/lcov/tests/lcov/branch",
+      "/usr/local/share/lcov/tests/lcov/coverage",
+      "/usr/local/share/lcov/tests/lcov/demangle",
+      "/usr/local/share/lcov/tests/lcov/errs",
+      "/usr/local/share/lcov/tests/lcov/exception",
+      "/usr/local/share/lcov/tests/lcov/extract",
+      "/usr/local/share/lcov/tests/lcov/follow",
+      "/usr/local/share/lcov/tests/lcov/format"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/find",
+    "executable_sha256": "c703b94ad3448bccc79cda80520964c8d371918a39eecc27f8d60f4e8891770a",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "sh",
+      "/tmp/installed-tree-directories.sh",
+      "/usr/local"
+    ],
+    "cleanup": [
+      "none_required_read_only_payload_scan"
+    ],
+    "fixture_setup": [
+      "use pinned image installed payload under /usr/local",
+      "mount wave2 directory companion recorder"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/"
+  },
+  "observation_sha256": "a8220a0242a525ffb226a8d9ce10fa6e8c3a20f8b1dc8e7f69a2119f649c772e",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

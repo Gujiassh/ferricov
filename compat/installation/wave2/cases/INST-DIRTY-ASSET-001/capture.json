@@ -1,0 +1,119 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 49,
+      "path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stderr.bin",
+      "sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c"
+    },
+    "stdout_bin": {
+      "bytes": 4427,
+      "path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/stdout.bin",
+      "sha256": "fd43b7b1eb74da0952f026b075c706cb0bea78b396d3cde437efb5080a07362d"
+    }
+  },
+  "case_id": "INST-DIRTY-ASSET-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 59,
+    "file_count": 321,
+    "paths_sha256": "6c19af843487489b707a28a21c3c50661b1bb3be69d13b875d53b8f21a31f31d",
+    "root": "/tmp/destdir-dirty",
+    "selected_paths": [
+      "/tmp/destdir-dirty",
+      "/tmp/destdir-dirty/usr",
+      "/tmp/destdir-dirty/usr/local",
+      "/tmp/destdir-dirty/usr/local/bin",
+      "/tmp/destdir-dirty/usr/local/etc",
+      "/tmp/destdir-dirty/usr/local/lib",
+      "/tmp/destdir-dirty/usr/local/lib/lcov",
+      "/tmp/destdir-dirty/usr/local/share",
+      "/tmp/destdir-dirty/usr/local/share/lcov",
+      "/tmp/destdir-dirty/usr/local/share/lcov/example",
+      "/tmp/destdir-dirty/usr/local/share/lcov/example/methods",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_sources",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_sources/man",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_static",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_static/css",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_static/fonts",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/_static/js",
+      "/tmp/destdir-dirty/usr/local/share/lcov/html/man",
+      "/tmp/destdir-dirty/usr/local/share/lcov/support-scripts",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/bin",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/errs",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/exception",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/filter",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/function",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/insensitive",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/lambda",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/relative",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/simple",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/genhtml/synthesize",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/add",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/branch",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/coverage",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/demangle",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/errs",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/exception",
+      "/tmp/destdir-dirty/usr/local/share/lcov/tests/lcov/extract"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=/tmp/destdir-dirty",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/destdir-dirty /tmp/src"
+    ],
+    "fixture_setup": [
+      "create untracked scripts/zz_dirty_wave2_sentinel",
+      "build docs then install"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "1f3108b719d4fc13055052dcdc873b367d1da6e2e6edf636dbca9928db42459c",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

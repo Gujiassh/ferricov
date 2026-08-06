@@ -1,0 +1,105 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 3588,
+      "path": "compat/installation/wave2/cases/INST-PARTIAL-001/stderr.bin",
+      "sha256": "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b"
+    },
+    "stdout_bin": {
+      "bytes": 3142,
+      "path": "compat/installation/wave2/cases/INST-PARTIAL-001/stdout.bin",
+      "sha256": "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e"
+    }
+  },
+  "case_id": "INST-PARTIAL-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 7,
+    "file_count": 18,
+    "paths_sha256": "cfb913f766074b06201199867e3eaf9616368b383a8fab9d1beb92e4a7412965",
+    "root": "/tmp/partial",
+    "selected_paths": [
+      "/tmp/partial",
+      "/tmp/partial/usr",
+      "/tmp/partial/usr/local",
+      "/tmp/partial/usr/local/bin",
+      "/tmp/partial/usr/local/share",
+      "/tmp/partial/usr/local/share/lcov",
+      "/tmp/partial/usr/local/share/lcov/support-scripts",
+      "/tmp/partial/usr/local/bin/genpng",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/analyzeInfoFiles",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/batchGitVersion.pm",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/context.pm",
+      "/tmp/partial/usr/local/bin/py2lcov",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/criteria",
+      "/tmp/partial/usr/local/bin/xml2lcovutil.py",
+      "/tmp/partial/usr/local/bin/llvm2lcov",
+      "/tmp/partial/usr/local/bin/xml2lcov",
+      "/tmp/partial/usr/local/bin/genhtml",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/get_signature",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/criteria.pm",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/annotateutil.pm",
+      "/tmp/partial/usr/local/share/lcov/support-scripts/P4version.pm",
+      "/tmp/partial/usr/local/bin/lcov",
+      "/tmp/partial/usr/local/bin/geninfo",
+      "/tmp/partial/usr/local/bin/gendesc",
+      "/tmp/partial/usr/local/bin/perl2lcov"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=/tmp/partial",
+      "PREFIX=/usr/local",
+      "INSTALL=/tmp/fake-install"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/partial /tmp/src /tmp/fake-install /tmp/install-count"
+    ],
+    "fixture_setup": [
+      "build docs",
+      "install fake install wrapper that fails after count>20"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "1fd200b68c7db51ab7a8e0c54cd433c16a1f56207edeec8190d8ff04a8e0f481",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 2,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

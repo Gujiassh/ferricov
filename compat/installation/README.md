@@ -27,6 +27,24 @@ independent-fact Oracle references only; every case remains
 `oracle_execution_status=captured` observation artifacts for each identity while
 keeping product compatibility evidence false.
 
+## Wave-2 replayable captures
+
+Wave-2 replaces curated text summaries with replayable per-case envelopes:
+
+- Host orchestrator: `wave2/recapture.py`
+- In-container driver: `wave2/capture-driver.sh`
+- Strict per-case schema: `wave2/oracle-case-capture.schema.json`
+- Capture index: `wave2/oracle-capture.json` (`capture_format=replayable_case_records_v1`)
+- Independent expected table: `wave2/expected-case-table.json` (authoritative;
+  contract does not trust capture JSON alone)
+- Envelopes: `wave2/cases/INST-*/` with raw `stdout.bin`/`stderr.bin`,
+  `status.env`/`meta.env`, `tree-effects.json`, and `capture.json`
+- `INST-PATH-001` retains dual `relative/` and `space/` envelopes
+
+After each Docker run, `recapture.py` rewrites capture files byte-for-byte as
+the invoking user so reverse-mutation tests can restore originals without sudo
+and without changing observation hashes.
+
 Validate against a clean pinned checkout:
 
 ```sh
@@ -43,4 +61,13 @@ export LCOV_SOURCE_ROOT=/tmp/lcov-upstream-reference
 python3 compat/installation/contract.py \
   --upstream-root "$LCOV_SOURCE_ROOT" \
   --write
+```
+
+Replay captures (pinned image + upstream) only when intentionally refreshing
+Oracle envelopes:
+
+```sh
+export LCOV_SOURCE_ROOT=/tmp/lcov-upstream-reference
+python3 compat/installation/wave2/recapture.py
+# then regenerate contract hashes/document under review
 ```

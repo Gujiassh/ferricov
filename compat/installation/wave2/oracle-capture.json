@@ -1,387 +1,84 @@
 {
-  "artifacts": {
-    "compat/installation/wave2/config.txt": {
-      "bytes": 635,
-      "sha256": "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319"
-    },
-    "compat/installation/wave2/dirty.txt": {
-      "bytes": 82,
-      "sha256": "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a"
-    },
-    "compat/installation/wave2/docfail.txt": {
-      "bytes": 234,
-      "sha256": "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552"
-    },
-    "compat/installation/wave2/docpath.txt": {
-      "bytes": 478,
-      "sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1"
-    },
-    "compat/installation/wave2/installed-directories.lock": {
-      "bytes": 2934,
-      "sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
-    },
-    "compat/installation/wave2/installed-tree-directories.sh": {
-      "bytes": 1291,
-      "sha256": "e16713b25dcd71651cf9d2f5ea63b0df87aa0ae201979c70be500f7e1d0da557"
-    },
-    "compat/installation/wave2/interp.txt": {
-      "bytes": 109,
-      "sha256": "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae"
-    },
-    "compat/installation/wave2/license.txt": {
-      "bytes": 146,
-      "sha256": "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f"
-    },
-    "compat/installation/wave2/oracle-image.pin": {
-      "bytes": 230,
-      "sha256": "15c13f2784af77c8f7b703c5eba4b0d05b274e904470f01e534d0f2f043c70ba"
-    },
-    "compat/installation/wave2/partial.txt": {
-      "bytes": 2919,
-      "sha256": "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb"
-    },
-    "compat/installation/wave2/relative.txt": {
-      "bytes": 94,
-      "sha256": "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2"
-    },
-    "compat/installation/wave2/report-assets.txt": {
-      "bytes": 667,
-      "sha256": "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0"
-    },
-    "compat/installation/wave2/space.txt": {
-      "bytes": 1045,
-      "sha256": "e141144ea0dd1846a6591ad5416d290aa8b9f9491c51781604dde73f8f0f69eb"
-    },
-    "compat/installation/wave2/stage-summary.txt": {
-      "bytes": 3747,
-      "sha256": "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b"
-    },
-    "compat/installation/wave2/testrun.txt": {
-      "bytes": 1140,
-      "sha256": "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5"
-    },
-    "compat/installation/wave2/uninstall.txt": {
-      "bytes": 1535,
-      "sha256": "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e"
-    }
-  },
-  "baseline_installed_tree_lock": {
-    "directory_entries_retained": false,
-    "entry_count": 321,
-    "path": "compat/upstream/installed-tree.lock",
-    "sha256": "75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24"
-  },
+  "capture_format": "replayable_case_records_v1",
   "case_count": 13,
   "cases": [
     {
-      "capture": {
-        "baseline_file_symlink_entries": 321,
-        "baseline_recorder_unchanged": true,
-        "capture_kind": "directory_mode_companion",
-        "directory_companion_path": "compat/installation/wave2/installed-directories.lock",
-        "directory_companion_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
-        "directory_entries_retained_in_baseline_lock": false,
-        "directory_entry_count": 57,
-        "directory_mode_uniform": "755",
-        "directory_paths": [
-          "/usr/local",
-          "/usr/local/bin",
-          "/usr/local/etc",
-          "/usr/local/lib",
-          "/usr/local/lib/lcov",
-          "/usr/local/share",
-          "/usr/local/share/lcov",
-          "/usr/local/share/lcov/example",
-          "/usr/local/share/lcov/example/methods",
-          "/usr/local/share/lcov/html",
-          "/usr/local/share/lcov/html/_sources",
-          "/usr/local/share/lcov/html/_sources/man",
-          "/usr/local/share/lcov/html/_static",
-          "/usr/local/share/lcov/html/_static/css",
-          "/usr/local/share/lcov/html/_static/fonts",
-          "/usr/local/share/lcov/html/_static/js",
-          "/usr/local/share/lcov/html/man",
-          "/usr/local/share/lcov/support-scripts",
-          "/usr/local/share/lcov/tests",
-          "/usr/local/share/lcov/tests/bin",
-          "/usr/local/share/lcov/tests/genhtml",
-          "/usr/local/share/lcov/tests/genhtml/errs",
-          "/usr/local/share/lcov/tests/genhtml/exception",
-          "/usr/local/share/lcov/tests/genhtml/filter",
-          "/usr/local/share/lcov/tests/genhtml/function",
-          "/usr/local/share/lcov/tests/genhtml/insensitive",
-          "/usr/local/share/lcov/tests/genhtml/lambda",
-          "/usr/local/share/lcov/tests/genhtml/relative",
-          "/usr/local/share/lcov/tests/genhtml/simple",
-          "/usr/local/share/lcov/tests/genhtml/synthesize",
-          "/usr/local/share/lcov/tests/lcov",
-          "/usr/local/share/lcov/tests/lcov/add",
-          "/usr/local/share/lcov/tests/lcov/branch",
-          "/usr/local/share/lcov/tests/lcov/coverage",
-          "/usr/local/share/lcov/tests/lcov/demangle",
-          "/usr/local/share/lcov/tests/lcov/errs",
-          "/usr/local/share/lcov/tests/lcov/exception",
-          "/usr/local/share/lcov/tests/lcov/extract",
-          "/usr/local/share/lcov/tests/lcov/follow",
-          "/usr/local/share/lcov/tests/lcov/format",
-          "/usr/local/share/lcov/tests/lcov/gcov-tool",
-          "/usr/local/share/lcov/tests/lcov/initializer",
-          "/usr/local/share/lcov/tests/lcov/lambda",
-          "/usr/local/share/lcov/tests/lcov/mcdc",
-          "/usr/local/share/lcov/tests/lcov/merge",
-          "/usr/local/share/lcov/tests/lcov/misc",
-          "/usr/local/share/lcov/tests/lcov/multiple",
-          "/usr/local/share/lcov/tests/lcov/summary",
-          "/usr/local/share/lcov/tests/llvm2lcov",
-          "/usr/local/share/lcov/tests/perl2lcov",
-          "/usr/local/share/lcov/tests/profiles",
-          "/usr/local/share/lcov/tests/py2lcov",
-          "/usr/local/share/lcov/tests/scripts",
-          "/usr/local/share/lcov/tests/xml2lcov",
-          "/usr/local/share/man",
-          "/usr/local/share/man/man1",
-          "/usr/local/share/man/man5"
-        ],
-        "include_directories_default": false,
-        "oracle_execution_status": "captured",
-        "recorder": "compat/installation/wave2/installed-tree-directories.sh"
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json",
       "id": "INST-LAYOUT-001",
-      "product_evidence": []
+      "observation_sha256": "a8220a0242a525ffb226a8d9ce10fa6e8c3a20f8b1dc8e7f69a2119f649c772e",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/stage-summary.txt",
-        "artifact_sha256": "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b",
-        "capture_kind": "staged_destdir_install",
-        "compiled_paths_retain_prefix_without_destdir": true,
-        "observed_bin_path": "/usr/local/bin",
-        "observed_lib_path": "/usr/local/lib/lcov",
-        "oracle_execution_status": "captured",
-        "payload_under_destdir": true,
-        "requires_absolute_destdir_prefix": true,
-        "staged_file_count": 320,
-        "staged_symlink_count": 0
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-STAGE-001/capture.json",
       "id": "INST-STAGE-001",
-      "product_evidence": []
+      "observation_sha256": "dbd70295c1b6aa5b149e8a551666fe8c6f20dc2cf10091aba0fafc3715ed2537",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "advertised_override_effective": false,
-        "artifact": "compat/installation/wave2/interp.txt",
-        "artifact_sha256": "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae",
-        "capture_kind": "interpreter_override_install",
-        "custom_interpreter_matches": 0,
-        "env_shebang_excluded_from_rewrite": true,
-        "install_passes_fixinterp": false,
-        "observed_shebangs": {
-          "lcov": "#!/usr/bin/env perl",
-          "py2lcov": "#!/usr/bin/env python3",
-          "xml2lcovutil.py": "#!/usr/bin/env python3"
-        },
-        "oracle_execution_status": "captured"
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-INTERP-001/capture.json",
       "id": "INST-INTERP-001",
-      "product_evidence": []
+      "observation_sha256": "bec765f49fd4d490d76bf3699a39ade61a77f60546f4aaf34f744c6e8f28ca16",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/config.txt",
-        "artifact_sha256": "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319",
-        "capture_kind": "config_search_order_probe",
-        "compiled_prefix_alone_selects_system_file": false,
-        "observations": {
-          "both_home_first": "/tmp/h1/.lcovrc",
-          "empty_both": "none",
-          "home_only": "/tmp/h1/.lcovrc",
-          "lcov_home_only": "/tmp/lh/etc/lcovrc"
-        },
-        "oracle_execution_status": "captured",
-        "search_order": [
-          "$HOME/.lcovrc",
-          "$LCOV_HOME/etc/lcovrc"
-        ],
-        "stops_after_first_readable": true
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json",
       "id": "INST-CONFIG-DISCOVERY-001",
-      "product_evidence": []
+      "observation_sha256": "483f902094be68628ae04419e667e80a7fd197307485767f5a3973c39b11c24f",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/uninstall.txt",
-        "artifact_sha256": "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e",
-        "capture_kind": "isolated_destdir_uninstall",
-        "foreign_sentinels_removed": true,
-        "isolated_root_required": true,
-        "man_uninstall_enumerates_source_glob": true,
-        "oracle_execution_status": "captured",
-        "recursive_removal_targets": [
-          "lib/lcov",
-          "share/lcov"
-        ],
-        "remaining_files_after_uninstall": [
-          "/tmp/destdir-uninst/usr/local/etc/lcovrc",
-          "/tmp/destdir-uninst/usr/local/share/man/man1/extra.1"
-        ],
-        "uninstall_exit_status": 2
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json",
       "id": "INST-UNINSTALL-001",
-      "product_evidence": []
+      "observation_sha256": "b6de0f576e1e9a959d882da9c903f1c2f42040dc1b549c48d38bf533a33edd3a",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/partial.txt",
-        "artifact_sha256": "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb",
-        "capture_kind": "induced_install_loop_failure",
-        "oracle_execution_status": "captured",
-        "partial_exit_status": 2,
-        "partial_file_count": 18,
-        "partial_payload_possible": true,
-        "rollback": false,
-        "transactional": false
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json",
       "id": "INST-PARTIAL-001",
-      "product_evidence": []
+      "observation_sha256": "1fd200b68c7db51ab7a8e0c54cd433c16a1f56207edeec8190d8ff04a8e0f481",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/docfail.txt",
-        "artifact_sha256": "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552",
-        "capture_kind": "missing_sphinx_before_payload",
-        "doc_finished_is_hard_prerequisite": true,
-        "docfail_exit_status": 2,
-        "install_cleans_source_example_and_tests": true,
-        "missing_sphinx_or_theme_fails_before_payload": true,
-        "oracle_execution_status": "captured",
-        "payload_file_count_on_failure": 0
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json",
       "id": "INST-DOC-FAIL-001",
-      "product_evidence": []
+      "observation_sha256": "91d9f41818c2e009a6edd05a3e67a90cb7ef058c709a45d44d07c9587344585b",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifacts": {
-          "relative": {
-            "path": "compat/installation/wave2/relative.txt",
-            "sha256": "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2"
-          },
-          "space": {
-            "path": "compat/installation/wave2/space.txt",
-            "sha256": "e141144ea0dd1846a6591ad5416d290aa8b9f9491c51781604dde73f8f0f69eb"
-          }
-        },
-        "capture_kind": "relative_and_space_path_probes",
-        "oracle_execution_status": "captured",
-        "relative_exit_status": 2,
-        "relative_roots_rejected": true,
-        "requires_absolute_destdir_prefix": true,
-        "space_containing_paths_platform_sensitive": true,
-        "space_exit_status": 2,
-        "space_file_count": 0
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-PATH-001/capture.json",
       "id": "INST-PATH-001",
-      "product_evidence": []
+      "observation_sha256": "067df640acc0359c295cf9e2cb2153b0a46d78df66fe48ddea54bb42023644b5",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/dirty.txt",
-        "artifact_sha256": "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a",
-        "capture_kind": "untracked_script_admission",
-        "dirty_sentinel_present_in_payload": true,
-        "examples_and_tests_from_working_tree": true,
-        "oracle_execution_status": "captured",
-        "retained_support_script_count": 23,
-        "scripts_from_dynamic_ls": true,
-        "untracked_ordinary_files_can_enter_install": true
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json",
       "id": "INST-DIRTY-ASSET-001",
-      "product_evidence": []
+      "observation_sha256": "1f3108b719d4fc13055052dcdc873b367d1da6e2e6edf636dbca9928db42459c",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/testrun.txt",
-        "artifact_sha256": "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5",
-        "capture_kind": "installed_test_path_resolution",
-        "explicit_lcov_home_required_for_installed_tests": true,
-        "observed_missing_path_without_lcov_home": "/usr/local/share/lcov/bin",
-        "oracle_execution_status": "captured",
-        "retained_test_entry_count": 205,
-        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": true
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json",
       "id": "INST-TEST-RUN-001",
-      "product_evidence": []
+      "observation_sha256": "cff9f15184859ca6581531fb6d21a198986d626420305753bc7635e4703ee26d",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "actual_man_root": "/usr/local/share/man",
-        "actual_tests_root": "/usr/local/share/lcov/tests",
-        "artifact": "compat/installation/wave2/docpath.txt",
-        "artifact_sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1",
-        "capture_kind": "readme_vs_filesystem_paths",
-        "documentation_mismatch_must_be_recorded": true,
-        "oracle_execution_status": "captured",
-        "readme_documents_share_lcov_man": true,
-        "readme_documents_share_test": true,
-        "truth_source": "installed_tree_filesystem_evidence"
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json",
       "id": "INST-DOC-PATH-001",
-      "product_evidence": []
+      "observation_sha256": "2a33efe18b870ac39762aa95722a7bdb67da94200e6b1aa9f1775917ab8e0e09",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/report-assets.txt",
-        "artifact_sha256": "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0",
-        "capture_kind": "retained_report_sample_binding",
-        "gap": "optional updown generation variants and HTML-reference qualification remain open",
-        "optional_updown_and_html_reference_qualification_open": true,
-        "oracle_execution_status": "captured",
-        "retained_observation_count": 4,
-        "retained_sample_asset_count": 7,
-        "source_asset_names_observed": true
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json",
       "id": "INST-REPORT-ASSET-001",
-      "product_evidence": []
+      "observation_sha256": "4b820ee9bbe29e36d3a81ffe0bce426ae8ef9664560a71570ab21538a217e9f1",
+      "oracle_execution_status": "captured"
     },
     {
-      "capture": {
-        "artifact": "compat/installation/wave2/license.txt",
-        "artifact_sha256": "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f",
-        "capture_kind": "copying_presence_probe",
-        "copying_in_install_payload": false,
-        "copying_in_source_archive_manifest": true,
-        "oracle_execution_status": "captured",
-        "retained_tree_contains_copying": false,
-        "upstream_omission_is_not_permission_to_omit": true
-      },
-      "evidence_status": "oracle_reference",
-      "execution_status": "planned",
+      "capture_path": "compat/installation/wave2/cases/INST-LICENSE-001/capture.json",
       "id": "INST-LICENSE-001",
-      "product_evidence": []
+      "observation_sha256": "64d7216546238b7f67d985acbe51b4df63d87e1e950c0acb977b2d729c676ca0",
+      "oracle_execution_status": "captured"
     }
   ],
   "directory_companion": {
@@ -389,18 +86,20 @@
     "entry_count": 57,
     "mode": "755",
     "path": "compat/installation/wave2/installed-directories.lock",
-    "recorder": "compat/installation/wave2/installed-tree-directories.sh (baseline compat/upstream/installed-tree.sh remains file/symlink-only)",
+    "recorder": "compat/installation/wave2/installed-tree-directories.sh",
     "sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
   },
   "evidence_status": "oracle_reference",
   "execution_status": "planned",
   "known_gaps": [
-    "baseline installed-tree.lock still excludes directory rows; companion lock is wave2-only",
-    "staged DESTDIR installs do not create the legacy /usr/local/man symlink (image-only)",
-    "optional genhtml updown variants and HTML-reference checks remain open",
-    "space-containing DESTDIR failure observed on this GNU/Linux install path only",
-    "no Ferricov product installer/uninstall/report renderer evidence",
-    "M1/parser/model remains blocked"
+    "baseline installed-tree.lock still excludes directory rows",
+    "staged DESTDIR installs omit image-only /usr/local/man symlink",
+    "optional genhtml updown/HTML-reference qualification remains open",
+    "space-containing DESTDIR behavior is GNU/Linux-path specific",
+    "partial install uses fake install wrapper",
+    "no multi-platform matrix beyond pinned x86_64 Linux image",
+    "no Ferricov product installer evidence",
+    "M1 parser/model installation surfaces remain blocked"
   ],
   "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
   "product_compatibility_evidence": false,
