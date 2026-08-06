@@ -44,11 +44,12 @@ Wave1 validation is fail-closed:
   directories rather than trusting observation self-hashes alone;
 - file-tree semantics are explicitly
   `workspace_including_inputs` (inputs + outputs under the case workdir);
-- capture uses a declared clean environment only (no host-env inheritance)
-  and retains effective environment identity plus reviewed exclusions;
-- timeout path stops/removes the named Docker container and retains verified
-  cleanup outcomes (`direct_child_reaped`, `container_absent`,
-  `process_group_empty=null` for Docker);
+- capture runs the Oracle command under in-container `env -i` with only the
+  declared clean variables, probes/retains the exact effective command
+  environment, and does not inherit ambient host PATH/HOME;
+- timeout path kills the docker CLI child, force-removes the named container,
+  and retains verified cleanup outcomes; `docker ps` observer failures fail
+  closed and are never treated as absence;
 - contract schema enumerates every supported `oracleObservation` field with
   `additionalProperties: false` so unknown fields fail independently.
 

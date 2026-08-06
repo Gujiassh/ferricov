@@ -14,7 +14,7 @@
     },
     {
       "path": "compat/diagnostics/wave1/result.json",
-      "sha256": "990decc9be2a1090348c46fc162d64d9d6fd6ac2fa9bc9ae0f722516255a92ea"
+      "sha256": "8849b6fb27ffd41a7798f48add1cc52ebd7d03945e277bd0be8b19b558fbde57"
     }
   ],
   "categories": [
@@ -2621,6 +2621,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2636,9 +2640,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 255,
@@ -2647,7 +2653,7 @@
       "id": "diagnostics-wave1:diag-noargs-geninfo-writable",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "startup_boundary",
-      "observation_sha256": "d9b799d48b18416063a548be8d8cc2c9e657780276b50c504217e88a75c2c065",
+      "observation_sha256": "8e625b5bb7157d37b31e62e1cc8839384633c2b31834fd8813ab9598a7da357c",
       "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "planned_case_ids": [
         "DIAG-NOARGS-GENINFO-001"
@@ -2684,6 +2690,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2699,9 +2709,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -2712,7 +2724,7 @@
       "id": "diagnostics-wave1:diag-ignore0-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_fatal",
-      "observation_sha256": "d6347364d8abfe20e5a3e73b8944939ccbe4b7ae86b7fcbc9d7f04a0cb922fc0",
+      "observation_sha256": "8fcbecd9e9a6231cbf706108014c90f4603cb4d003be97ae7b876cc7833cb29c",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-ERROR-001"
@@ -2751,6 +2763,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2766,9 +2782,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -2779,7 +2797,7 @@
       "id": "diagnostics-wave1:diag-ignore1-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_one",
-      "observation_sha256": "4ae6f01130c333473c63f71c031ab3d542a987b86fd42c3a313e1bbcc2925a2a",
+      "observation_sha256": "fc33448cb18a25725362362dcf6a657eaa301ff94a44b00a77b81592be7d2234",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-WARN-001"
@@ -2818,6 +2836,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2833,9 +2855,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -2846,7 +2870,7 @@
       "id": "diagnostics-wave1:diag-ignore2-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_two",
-      "observation_sha256": "59fa78388ae8fce6e9383327ed4c6abc4e4000e951f66b3b216835552b460fd3",
+      "observation_sha256": "d41e5a4572dcf351125fcd9df3e5485f6969de289d30ff1525896a56c0f26921",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-SILENT-001"
@@ -2884,6 +2908,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2899,9 +2927,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -2912,7 +2942,7 @@
       "id": "diagnostics-wave1:diag-keep-going-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "keep_going_control",
-      "observation_sha256": "5576730d949c60af988219e6a97467469d7d53b2d38fde3ae234d02896897e5b",
+      "observation_sha256": "8cb9fb4ba5abcde0bae9692b3e8849d428b3c1cf57b62bda2c6df5bc227a8e32",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-KEEP-GOING-001"
@@ -2951,6 +2981,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -2966,9 +3000,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 2,
@@ -2979,7 +3015,7 @@
       "id": "diagnostics-wave1:diag-ignore-unknown",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_unknown_control",
-      "observation_sha256": "e975de67f65aaa1a4990a2d04b9b06b58e5e3490fc31c57b0a311a6dbedcd423",
+      "observation_sha256": "abf05935027279d6c2b0b8776a978f0bc86b002585f9707aa7c89efc46a2aaa9",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-UNKNOWN-001"
@@ -3020,6 +3056,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3035,9 +3075,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -3049,7 +3091,7 @@
       "id": "diagnostics-wave1:diag-ignore-precedence-cli-replaces-rc",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_precedence_control",
-      "observation_sha256": "3abc2a92e2372e92cee2d5ab369969aff6c5a8a3ab396fbf7e7c5e95cb50ada7",
+      "observation_sha256": "cdb2d843988f39b40106cd1c70c412531a1ea20813d6f03401a3b4fb8b002e5d",
       "output_sha256": "83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768",
       "planned_case_ids": [
         "DIAG-IGNORE-PRECEDENCE-001"
@@ -3086,6 +3128,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3101,9 +3147,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3114,7 +3162,7 @@
       "id": "diagnostics-wave1:diag-warning0-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "9a626cd91c3a086a49e498a482caa9ed4227c15be585260e27a2c128c4003044",
+      "observation_sha256": "74082d1c5a9ac9d409c0f59d1f8ef5b49ba2c00ff35cb7d5f93e16ff1a59d9d6",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3153,6 +3201,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3168,9 +3220,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3181,7 +3235,7 @@
       "id": "diagnostics-wave1:diag-warning1-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "94c73d1a653fe07cadac1d5b3eb01a24dddc355121ab145816743d5c97205d9a",
+      "observation_sha256": "d3f7b830ea1927d45072ac80a50ece1dc7c181ea061d167b8143d3cda75dd25c",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3220,6 +3274,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3235,9 +3293,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3248,7 +3308,7 @@
       "id": "diagnostics-wave1:diag-warning2-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "4d24441294578a9e5d27d63524d8ab0378c7ae2083bf542f7a8032dbe48ff16d",
+      "observation_sha256": "885e5153f80b81384956c34781ecb18eb587aa322f273d25589412b35ce0d21a",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3287,6 +3347,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3302,9 +3366,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -3316,7 +3382,7 @@
       "id": "diagnostics-wave1:diag-promote0-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "4b9ca1fa87b3deca5d0fb7a196cad97017920999622c72a9673f7c858a22c7ca",
+      "observation_sha256": "382467b31ba7230c49b59fd48e8c2ff94e4dadc062a54c5ecfe887b44b66266b",
       "output_sha256": "b4dfdcdf5c46197aa8bc133d41d5abe5535195064ff40d2807121d3e96940f66",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3357,6 +3423,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3372,9 +3442,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3386,7 +3458,7 @@
       "id": "diagnostics-wave1:diag-promote1-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "f742511fb3bda3f2af62fefba72c30ce17721217fad843bc4a063622deb799ca",
+      "observation_sha256": "79cd2b1a18a3c4230d30c94d3ea2810ff64dee8637ee9cdecc5c7a80ac0b9f24",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3427,6 +3499,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3442,9 +3518,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3456,7 +3534,7 @@
       "id": "diagnostics-wave1:diag-promote2-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "06f4b06b1e2c992ad7027b60895197652b52a5804f8bbffff3479a3ea6846b43",
+      "observation_sha256": "afef405cf079677001e0d408e3e7687215026c698fbe1b4e935e45c424f092fc",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3496,6 +3574,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3511,9 +3593,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -3525,7 +3609,7 @@
       "id": "diagnostics-wave1:diag-max-messages-format",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_suppression_control",
-      "observation_sha256": "b9a883ef543be122fb36811d566efa394e9a312c7008273eb7b58a3ee2086e7e",
+      "observation_sha256": "6b0b8c8924b7b045b507ec044898ade1275573265bbcfbb68b592afae2d594d2",
       "output_sha256": "887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2",
       "planned_case_ids": [
         "DIAG-MAX-MESSAGES-001"
@@ -3566,6 +3650,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3581,9 +3669,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 2,
@@ -3595,7 +3685,7 @@
       "id": "diagnostics-wave1:diag-expected-count-file-false",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "5e0487a0ba0af01fcec55b2a05603090b5a1ec69807073c496eada9c499efbad",
+      "observation_sha256": "af98bfbf02add11fdb16a37e62811e07f400d9ca791ff96d98b14a85d352b7e4",
       "output_sha256": "cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
@@ -3636,6 +3726,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3651,9 +3745,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3665,7 +3761,7 @@
       "id": "diagnostics-wave1:diag-expected-count-file-true",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "33f3a6a812b343780a41ac0978bba5ab2dd1e4ab601aaeeb1d6752a7b398eeb3",
+      "observation_sha256": "6d5cd9af894dcf7760921aecd8cce64a599270fc2a5e967b9f2104bee3ce167e",
       "output_sha256": "09cea71a84988458146e664daf29341aee571fece58593fb6a9052be33caaf83",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
@@ -3706,6 +3802,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3721,9 +3821,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3735,7 +3837,7 @@
       "id": "diagnostics-wave1:diag-expected-count-manual-file",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "5a70074f814ccda1554872e76ce0ff73c79dd4fc65f3b179ebb7077dcfde7d55",
+      "observation_sha256": "0886cd796fc9fa8be4636eb8c8a48f228f703823ceee15d7b701a8f216acf5dd",
       "output_sha256": "bc053bf36047d2d9d99372bdd0264945c6e2779d7c46e8a788b0682a717a846a",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-FILE-001"
@@ -3774,6 +3876,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3789,9 +3895,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 2,
@@ -3802,7 +3910,7 @@
       "id": "diagnostics-wave1:diag-expected-count-manual-rc",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "8a34d1c50428606e86022a6a58ac9820667a953ce6375d22c141b7bcb9e33159",
+      "observation_sha256": "d4591266063a9763ba91c67ea49a7aa8f79c80d6b48f85a1a3c7f47e40077d2d",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-RC-001"
@@ -3843,6 +3951,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3858,9 +3970,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3871,7 +3985,7 @@
       "id": "diagnostics-wave1:diag-message-log",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_log_control",
-      "observation_sha256": "b93b1314e213d6596bdf5b2645a583d865e22e37c802a8fd16a21d601fdc7342",
+      "observation_sha256": "27549d55e708a140ba27f4b61469bcb2a8004af51a5220d34284607db811c29e",
       "output_sha256": "14198c4562b2fa2943da53842dd4e1c6d869099ae0e2744d89dd14f4dbf8180b",
       "planned_case_ids": [
         "DIAG-MESSAGE-LOG-001"
@@ -3907,6 +4021,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3922,9 +4040,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3935,7 +4055,7 @@
       "id": "diagnostics-wave1:diag-perl2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "44142726689b4dbc7b4a2de7b3bd2a1b5b67d7197e6849b921a0c3f90a6579f6",
+      "observation_sha256": "55c5c0c74335c39c695dbf5b3b592ca1f4fbc339b754db40dc380fae6e9fd471",
       "output_sha256": "52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906",
       "planned_case_ids": [
         "DIAG-PERL2LCOV-KEEP-001"
@@ -3971,6 +4091,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -3986,9 +4110,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -3999,7 +4125,7 @@
       "id": "diagnostics-wave1:diag-llvm2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "5f6537f2b7f47a44789715e4a000a04a8eddb2e370ed0ac9b7b197378cffd3d6",
+      "observation_sha256": "1d218c2a6e85ab0c5c644c44b6b64fec35962b9d3634dac64c71cc423a490c48",
       "output_sha256": "6d5a3c51751d1bca9c73e0619763456bef9cc234bc26578170fcfdf0a8fcd545",
       "planned_case_ids": [
         "DIAG-LLVM2LCOV-KEEP-001"
@@ -4035,6 +4161,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -4050,9 +4180,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -4063,7 +4195,7 @@
       "id": "diagnostics-wave1:diag-py2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "8fa4027026bb65cb24ea14a7159813c7e7019e74e5512bafbb366494e988fd04",
+      "observation_sha256": "cea1a39c53de7958e1290b181f475b449306c1f6f026b0d7a92b69d3b6f7c02e",
       "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
       "planned_case_ids": [
         "DIAG-PY2LCOV-KEEP-001"
@@ -4099,6 +4231,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -4114,9 +4250,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -4127,7 +4265,7 @@
       "id": "diagnostics-wave1:diag-xml2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "59aa6f34e615defb8a35202e50937a078349a0be9b5d504d8ef41fc29f3ac4b7",
+      "observation_sha256": "04e0afbaed4c9967d9a42ee41f333b5dc910b5318616bd4d68af3a444946cb87",
       "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
       "planned_case_ids": [
         "DIAG-XML2LCOV-KEEP-001"
@@ -4163,6 +4301,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -4178,9 +4320,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 1,
@@ -4191,7 +4335,7 @@
       "id": "diagnostics-wave1:diag-converter-keep-boundary",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "1110e2f7a7da8f20426af379555a21bf8113494c1d8f5b7161022eff2ea99b1e",
+      "observation_sha256": "f81d13b75fb2b52903afd755712a0e4fe916da40145a3154d0737657b81cd274",
       "output_sha256": "ca83adba43eedc6bc3dae4e3308257762c49eb64c23f79503525bfdbddea5074",
       "planned_case_ids": [
         "DIAG-CONVERTER-KEEP-BOUNDARY-001"
@@ -4232,6 +4376,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -4247,9 +4395,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -4261,7 +4411,7 @@
       "id": "diagnostics-wave1:par-serial-parity-parallel1",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "1868b49a1ee7a2caa13a5dd3dd99a0bc7e0889d35a315c20fa7acacf67b31922",
+      "observation_sha256": "ed3e4cf9acd2d0ff00908d5e417b2a3eb5522c74fe802bac8dc2460784d5262e",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
@@ -4302,6 +4452,10 @@
         "TZ": "UTC"
       },
       "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
         "declared_variables": {
           "HOME": "/work",
           "LANG": "C",
@@ -4317,9 +4471,11 @@
           "TZ": "UTC"
         },
         "inherits_host_environment": false,
-        "mode": "declared_clean_env",
+        "mode": "in_container_env_dash_i_clean",
         "reviewed_exclusions": [
-          "host process environment is not inherited; only declared Docker -e values are applied"
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
         ]
       },
       "exit_status": 0,
@@ -4331,7 +4487,7 @@
       "id": "diagnostics-wave1:par-serial-parity-parallel2",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "2154d3fb951c58cd4dd2cf0a1ced3235113642e322db90d09eb4845997732fda",
+      "observation_sha256": "5f97872648630497cba440e9fcd4f769923269e0384f7f87c936cd2b73c43e76",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
