@@ -120,7 +120,7 @@ A fresh read-only Critical reviewer must independently inspect the resulting
 diff and reproduce the reverse mutations before this rework is accepted.
 
 
-## Additional Blocker: selective merge integrity (fourth audit)
+## Additional Blocker: selective merge integrity (fourth/fifth audit)
 
 The fourth independent Critical audit found that `capture_oracle.py --merge-into`
 could accept an untrusted retained baseline copy: a temp/mutated file with
@@ -128,7 +128,7 @@ refreshed local observation self-hashes could still be used as the merge target,
 and partial or non-TF-030 selections could replace retained observations outside
 the 15 TF-030 cases.
 
-### Required repair
+### Required repair (implemented; pending next audit)
 
 1. Before any Docker capture or merge write, require `--merge-into` to resolve to
    the canonical `compat/fixtures/m0-tracefiles/oracle-baseline.json` path.
@@ -142,10 +142,18 @@ the 15 TF-030 cases.
 5. Add reverse coverage that mutates one non-TF-030 stdout, refreshes its local
    hash, invokes selective TF-030 `--merge-into`, and proves rejection before any
    output is accepted.
+6. Move all `--merge-into` validation before `inspect_image` / `inspect_program`.
+7. Preserve explicit `--case-id` order; reject duplicate and out-of-order merge
+   selections against exact `list(TF030_CASE_IDS)`.
+8. Bind merge parse to the single trusted baseline byte snapshot returned by
+   hash validation (do not re-read merge path for parse).
 
 ### Acceptance status
 
-This blocker is an Oracle capture/tooling integrity issue, not Ferricov product
-compatibility evidence. `product_compatibility_evidence` remains false and M1
-remains blocked. Final acceptance still requires a subsequent independent
-Critical audit after the merge-integrity repair lands.
+Merge-integrity repair is implemented on the branch: validation runs before any
+Docker introspection, selection preserves explicit `--case-id` order and rejects
+duplicates, and merge parsing uses the single trusted baseline byte snapshot
+returned by hash validation. This remains an Oracle capture/tooling integrity
+issue, not Ferricov product compatibility evidence.
+`product_compatibility_evidence` remains false and M1 remains blocked. Final
+acceptance still requires the next independent Critical audit.

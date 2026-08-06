@@ -158,6 +158,9 @@ reference-only evidence and does not unlock product parity.
   `PERL_PERTURB_KEYS=0`) on case defs, capture, observations, and registry.
 - [x] Harden TF-030 selective `--merge-into` against untrusted retained baseline
   copies (canonical path + fixed baseline SHA-256 + exact 15 TF-030 ids).
+- [x] Move TF-030 `--merge-into` validation before Docker inspect and bind
+  merge parse to trusted baseline bytes; preserve ordered duplicate-free
+  `--case-id` selection.
 - [ ] Next independent Critical audit remains required before acceptance.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness

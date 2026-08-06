@@ -55,16 +55,16 @@ Pinned Oracle identity:
 
 ## Current Audit Decision
 
-**Rework implemented; pending next independent Critical audit.** Prior audit
-rework items remain in place. The fourth independent Critical audit found that
-`capture_oracle.py --merge-into` could accept an untrusted retained baseline
-copy (temp/mutated file with refreshed local self-hashes) and could merge a
-partial/non-TF-030 selection. The branch now requires the canonical baseline
-path, fixed baseline byte hash
-`b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`, and an exact
-15-case TF-030 selection before any Docker capture/merge, with reverse coverage
-proving rejection of poisoned retained evidence. This review does **not** mark
-the branch final-accepted; another independent Critical audit remains required.
+**Rework implemented; pending next independent Critical audit.** The fifth
+independent Critical audit found residual merge-tool issues: merge validation
+ran after Docker image/program introspection, explicit `--case-id` order was
+collapsed through a set, and merge parsing re-read the baseline path after hash
+validation. The branch now validates merge inputs before any Docker calls,
+preserves argv order while rejecting duplicates/out-of-order TF-030 merge
+selections, and parses only the trusted baseline bytes returned by hash
+validation. This review does **not** mark the branch final-accepted; another
+independent Critical audit remains required.
+
 
 ## Independent Review Matrix
 
@@ -104,11 +104,12 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Merge-integrity hardening is implemented for TF-030 selective recapture
-  (`--merge-into` requires canonical baseline path + fixed SHA-256
-  `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e` + exact
-  15 TF-030 ids). Final acceptance still requires the next independent Critical
-  audit; this document does not claim final acceptance.
+- Merge-tool hardening is implemented: pre-Docker validation, ordered duplicate-
+  free TF-030 selection, and single trusted-bytes merge parse against fixed
+  baseline SHA-256
+  `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`. Final
+  acceptance still requires the next independent Critical audit; this document
+  does not claim final acceptance.
 - The remaining 18 named blockers and broader M1 readiness tasks remain open.
 
 ## Verification

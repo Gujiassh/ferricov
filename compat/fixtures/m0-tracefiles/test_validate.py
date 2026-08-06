@@ -985,8 +985,10 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
 
 
 
+
     def test_merge_into_rejects_mutated_retained_baseline(self) -> None:
         """Selective TF-030 merge must not accept a mutated retained baseline copy."""
+        import base64
         import json
         import subprocess
         import tempfile
@@ -1002,9 +1004,9 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         baseline_path = CANONICAL_BASELINE_PATH
         raw = baseline_path.read_bytes()
         self.assertEqual(hashlib.sha256(raw).hexdigest(), EXPECTED_MERGE_BASELINE_SHA256)
+        trusted = validate_merge_into_request(baseline_path, list(TF030_CASE_IDS))
+        self.assertEqual(trusted, raw)
 
-        # Helper accepts only canonical path + exact TF-030 selection.
-        validate_merge_into_request(baseline_path, list(TF030_CASE_IDS))
         with self.assertRaises(SystemExit):
             validate_merge_into_request(baseline_path, list(TF030_CASE_IDS)[:14])
         with self.assertRaises(SystemExit):
@@ -1012,16 +1014,21 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
                 baseline_path,
                 list(TF030_CASE_IDS) + ["numeric-format-atoms.ignore-all.canonical"],
             )
+        # Out-of-order exact-set selection must reject.
+        reordered = list(TF030_CASE_IDS)
+        reordered[0], reordered[1] = reordered[1], reordered[0]
+        with self.assertRaises(SystemExit):
+            validate_merge_into_request(baseline_path, reordered)
+        # Duplicate explicit IDs must reject even if first 15 unique would match.
+        duplicated = list(TF030_CASE_IDS)
+        duplicated[3] = duplicated[2]
+        with self.assertRaises(SystemExit):
+            validate_merge_into_request(baseline_path, duplicated)
 
         document = json.loads(raw.decode("ascii"))
-        # Mutate one non-TF030 observation and refresh its local stdout hash so a
-        # self-hash-only check would still pass.
         non_tf = next(case for case in document["cases"] if case["id"] not in TF030_CASE_IDS)
         mutated_stdout = dict(non_tf["stdout"])
-        original_b64 = mutated_stdout.get("base64")
-        self.assertIsInstance(original_b64, str)
-        import base64
-        original_bytes = base64.b64decode(original_b64)
+        original_bytes = base64.b64decode(mutated_stdout["base64"])
         poisoned = original_bytes + b"\n#mutated-retained-evidence\n"
         mutated_stdout["base64"] = base64.b64encode(poisoned).decode("ascii")
         mutated_stdout["sha256"] = hashlib.sha256(poisoned).hexdigest()
@@ -1037,17 +1044,9 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
                 hashlib.sha256(poisoned_bytes).hexdigest(),
                 EXPECTED_MERGE_BASELINE_SHA256,
             )
-            # Path must be canonical; temp copy is rejected before Docker/merge.
             with self.assertRaises(SystemExit) as path_err:
                 validate_merge_into_request(poisoned_baseline, list(TF030_CASE_IDS))
             self.assertIn("canonical baseline path", str(path_err.exception))
-
-            # Even if path is ignored, byte identity of mutated content must fail.
-            # Simulate by writing over a non-canonical path check via direct hash.
-            self.assertNotEqual(
-                hashlib.sha256(poisoned_baseline.read_bytes()).hexdigest(),
-                EXPECTED_MERGE_BASELINE_SHA256,
-            )
 
             output_path = tmp_path / "merged-out.json"
             cmd = [
@@ -1077,6 +1076,83 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
                 msg=combined,
             )
             self.assertFalse(output_path.exists())
+
+    def test_select_oracle_cases_preserves_order_and_rejects_duplicates(self) -> None:
+        from capture_oracle import select_oracle_cases
+        from corpus_tf030 import TF030_CASE_IDS
+
+        all_cases = list(self.cases_list if hasattr(self, "cases_list") else self.cases.values())
+        # Prefer stable document order from oracle-cases values is unordered dict.
+        import json
+        from pathlib import Path
+        cases_document = json.loads((Path(__file__).resolve().parent / "oracle-cases.json").read_text())
+        all_cases = cases_document["cases"]
+
+        ordered_ids = [TF030_CASE_IDS[2], TF030_CASE_IDS[0], TF030_CASE_IDS[5]]
+        selected = select_oracle_cases(all_cases, ordered_ids, [])
+        self.assertEqual([case["id"] for case in selected], ordered_ids)
+
+        with self.assertRaises(SystemExit):
+            select_oracle_cases(all_cases, [TF030_CASE_IDS[0], TF030_CASE_IDS[0]], [])
+        with self.assertRaises(SystemExit):
+            select_oracle_cases(all_cases, ["does-not-exist"], [])
+        # Prefix + overlapping explicit id is a duplicate.
+        with self.assertRaises(SystemExit):
+            select_oracle_cases(all_cases, [TF030_CASE_IDS[0]], ["numeric-format-atoms.tf030"])
+
+    def test_merge_into_validation_runs_before_docker_inspect(self) -> None:
+        """Invalid merge inputs must reject before inspect_image/inspect_program."""
+        import importlib
+        import io
+        import tempfile
+        from contextlib import redirect_stderr, redirect_stdout
+        from pathlib import Path
+        from unittest import mock
+
+        import capture_oracle
+        from corpus_tf030 import TF030_CASE_IDS
+
+        with tempfile.TemporaryDirectory(prefix="ferricov-pre-docker-") as tmp:
+            tmp_path = Path(tmp)
+            poisoned = tmp_path / "oracle-baseline.mutated.json"
+            poisoned.write_bytes(b'{"schema_version":1,"cases":[]}\n')
+            output_path = tmp_path / "out.json"
+            argv = [
+                "capture_oracle.py",
+                "--cases",
+                str(Path(__file__).resolve().parent / "oracle-cases.json"),
+                "--merge-into",
+                str(poisoned),
+                "--output",
+                str(output_path),
+            ]
+            for case_id in TF030_CASE_IDS:
+                argv.extend(["--case-id", case_id])
+
+            inspect_image = mock.Mock(side_effect=AssertionError("inspect_image called"))
+            inspect_program = mock.Mock(side_effect=AssertionError("inspect_program called"))
+            with mock.patch.object(capture_oracle, "inspect_image", inspect_image), mock.patch.object(
+                capture_oracle, "inspect_program", inspect_program
+            ), mock.patch("sys.argv", argv), self.assertRaises(SystemExit) as err:
+                buf_out, buf_err = io.StringIO(), io.StringIO()
+                with redirect_stdout(buf_out), redirect_stderr(buf_err):
+                    capture_oracle.main()
+            self.assertIn("canonical baseline path", str(err.exception))
+            inspect_image.assert_not_called()
+            inspect_program.assert_not_called()
+            self.assertFalse(output_path.exists())
+
+        # Trusted-bytes binding: validate returns the exact bytes later parsed.
+        trusted = capture_oracle.validate_merge_into_request(
+            capture_oracle.CANONICAL_BASELINE_PATH,
+            list(TF030_CASE_IDS),
+        )
+        self.assertEqual(
+            hashlib.sha256(trusted).hexdigest(),
+            capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
+        )
+        parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
+        self.assertEqual(len(parsed["cases"]), 184)
 
 
 
