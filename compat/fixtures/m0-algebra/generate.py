@@ -295,7 +295,7 @@ def build_cases() -> list[dict[str, Any]]:
             case(
                 f"md017-{name}.load.semantic",
                 model_row="M1-MD-017",
-                binding_ids=["M1-TF-045", "M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
+                binding_ids=["M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
                 property_ids=["M1-PROP-ROUNDTRIP-001"],
                 description=f"parse semantic snapshot for {name}",
                 argv=[
@@ -318,7 +318,7 @@ def build_cases() -> list[dict[str, Any]]:
             case(
                 f"md017-{name}.rewrite.cli",
                 model_row="M1-MD-017",
-                binding_ids=["M1-TF-045", "M1-TF-052"],
+                binding_ids=["M1-TF-052"],
                 property_ids=["M1-PROP-ROUNDTRIP-001"],
                 description=f"canonical rewrite for {name}",
                 argv=[
@@ -339,7 +339,7 @@ def build_cases() -> list[dict[str, Any]]:
             case(
                 f"md017-{name}.rewrite.semantic",
                 model_row="M1-MD-017",
-                binding_ids=["M1-TF-045", "M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
+                binding_ids=["M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
                 property_ids=["M1-PROP-ROUNDTRIP-001"],
                 description=f"parse-write-parse semantic snapshot for {name}",
                 argv=[
@@ -543,7 +543,7 @@ def build_cases_document() -> dict[str, Any]:
             {
                 "id": "M1-MD-017",
                 "status": "oracle_bound",
-                "bindings": ["M1-TF-045", "M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
+                "bindings": ["M1-TF-052", "M1-PROP-ROUNDTRIP-001"],
             },
             {
                 "id": "M1-MD-019",

@@ -16,6 +16,14 @@ It binds unbound Oracle-side rows:
 - `M1-MD-017` parse-write-parse equality (current/legacy/permissive)
 - `M1-MD-019` repeated close / terminator lifecycle probes
 
+Cross-lane source-reference correction: `M1-TF-045` remains blocked because the
+tracefile lane has no independently captured two-write Docker round trip. The
+model algebra catalog therefore binds `M1-MD-017` through its model property
+and `M1-TF-052` source mapping only; generated case facts, sealed projections,
+and model contracts contain no exact `M1-TF-045` binding. This preserves the
+model row's independent Oracle evidence without promoting the incomplete
+tracefile requirement.
+
 Blocked and unchanged:
 
 - `M1-MD-020`
