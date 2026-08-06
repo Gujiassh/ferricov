@@ -40,8 +40,8 @@
     },
     "artifact_bindings": {
       "type": "array",
-      "minItems": 4,
-      "maxItems": 4,
+      "minItems": 5,
+      "maxItems": 5,
       "items": {
         "$ref": "#/$defs/artifactBinding"
       }
@@ -95,8 +95,8 @@
     },
     "oracle_observations": {
       "type": "array",
-      "minItems": 169,
-      "maxItems": 169,
+      "minItems": 201,
+      "maxItems": 201,
       "items": {
         "$ref": "#/$defs/oracleObservation"
       }
@@ -374,7 +374,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^(correctness|tracefile|diagnostics-wave1):.+$"
+          "pattern": "^(correctness|tracefile|diagnostics-wave1|diagnostics-wave2):.+$"
         },
         "kind": {
           "enum": [
@@ -394,7 +394,32 @@
             "expected_count_control",
             "message_log_control",
             "converter_keep_trap",
-            "parallel_control"
+            "parallel_control",
+            "registry_control",
+            "ignore_prefix_profile",
+            "env_posix_profile",
+            "env_clean_control",
+            "env_show_location",
+            "env_lcov_home",
+            "env_lcov_validate",
+            "env_allowlist",
+            "config_discovery",
+            "config_explicit",
+            "config_include",
+            "config_early_error",
+            "config_unknown_key",
+            "config_env_expand",
+            "raw_perl_boundary",
+            "python_traceback_boundary",
+            "dependency_genpng",
+            "callback_finalize",
+            "callback_cleanup",
+            "parallel_child_exit",
+            "parallel_callback_state",
+            "parallel_message_log",
+            "parallel_memory",
+            "parallel_capture_status",
+            "parallel_partial_commit"
           ]
         },
         "planned_case_ids": {
@@ -713,7 +738,8 @@
         "configuration_observations",
         "named_error_fatal_observations",
         "named_error_ignore_one_observations",
-        "wave1_observations"
+        "wave1_observations",
+        "wave2_observations"
       ],
       "properties": {
         "categories": {
@@ -738,7 +764,9 @@
           "const": 71
         },
         "oracle_observations": {
-          "const": 169
+          "const": 201,
+          "type": "integer",
+          "minimum": 0
         },
         "startup_observations": {
           "const": 11
@@ -756,7 +784,14 @@
           "const": 41
         },
         "wave1_observations": {
-          "const": 26
+          "const": 26,
+          "type": "integer",
+          "minimum": 0
+        },
+        "wave2_observations": {
+          "const": 32,
+          "type": "integer",
+          "minimum": 0
         }
       }
     }

@@ -7,6 +7,12 @@ compat/fixtures/m0-tracefiles/fixtures/bytes/* binary
 # Retained Oracle streams are byte evidence, not formatted text.
 compat/correctness/baselines/**/*.bin binary
 compat/resources/results/**/*.bin binary
+compat/diagnostics/wave1/**/reference/*.bin binary
+compat/diagnostics/wave2/**/reference/*.bin binary
+
+# Wave2 Oracle HTML/text captures retain generator whitespace as evidence.
+compat/diagnostics/wave2/**/reference/*.txt whitespace=-blank-at-eol,-blank-at-eof
+compat/diagnostics/wave2/**/*.html whitespace=-blank-at-eol,-blank-at-eof
 
 # Upstream format.info atoms retain trailing spaces on comment lines.
 compat/fixtures/m0-tracefiles/fixtures/numeric/format-atoms.info whitespace=-blank-at-eol,-blank-at-eof
