@@ -24,14 +24,17 @@ Human-reviewed decisions live under `fragments/authored/`:
 - `m0-tracefile-cli-primary.json`: reviewed reference-only primary plans for
   `lcov` add/output and function/MC/DC coverage controls observed by the retained
   tracefile corpus
+- `m0-*-wave1-primary*.json`: reviewed source-bound primary plans that close the
+  remaining 424 public inventory entries for genhtml/geninfo/lcov/llvm2lcov/
+  perl2lcov CLI surfaces and residual lcovrc keys without product evidence
 
 Machine-generated imports and inventory skeletons live under
 `fragments/generated/`. The generator places inventory entries into eight stable
 hash buckets per command/config/support responsibility domain. Generated files
-are not authoring surfaces and are rewritten from the current inventory.
+are not authoring surfaces and are rewritten from the current inventory. When every public entry has an authored primary case, inventory buckets remain as empty deterministic placeholders so the generator file set stays stable.
 Every fragment is canonical JSON, validates against
 `behavior-contract-fragment.schema.json`, and is limited to 2,000 lines. The
-current largest authored fragment is 1,666 lines, below that limit.
+The current largest authored fragment is 1,994 lines (m0-lcovrc-wave1-primary-b.json), below that limit.
 
 The baseline imports the stable test-map behavior registry, imports reviewed
 callback/install/converter planning from the normative contract, and creates one
@@ -126,8 +129,11 @@ The configuration-key fragment reviews 17 additional `lcovrc` value boundaries
 from exact pinned definitions. These cases also stay `evidence_status=none`
 with empty suite and evidence arrays; downstream command effects, precedence,
 and runtime semantics remain unexecuted.
-`m0-ready` now rejects the remaining 424 public entries without reviewed
-primary case groups.
+Wave 1 authored primary fragments review the remaining 424 public inventory
+entries across `genhtml`, `geninfo`, `lcov`, `llvm2lcov`, `perl2lcov`, and
+`lcovrc`. Those cases stay `evidence_status=none` with empty suite and evidence
+arrays; they close M0 primary planning coverage only and do not claim Ferricov
+product compatibility. `m0-ready` now requires zero uncovered public entries.
 
 ## Evidence Rules
 

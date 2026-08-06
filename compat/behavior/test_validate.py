@@ -18,6 +18,7 @@ REPO_ROOT = BEHAVIOR_DIR.parents[1]
 sys.path.insert(0, str(BEHAVIOR_DIR))
 
 from generate import (  # noqa: E402
+    make_case_skeleton,
     CONTRACT_PATH,
     FRAGMENT_SCHEMA_PATH,
     FRAGMENTS_PATH,
@@ -108,17 +109,54 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
     @staticmethod
     def generated_case(contract: dict[str, Any]) -> dict[str, Any]:
+        """Return a mutable non-interaction primary planning case.
+
+        Wave 1 closed the public skeleton set. Mutation tests still need a
+        disposable primary case that is not an interaction member; prefer an
+        evidence-free manually curated wave1 planning case, then fall back to
+        any remaining generated skeleton.
+        """
         interaction_members = {
             member["id"]
             for group in contract["interaction_groups"]
             for member in group["members"]
         }
-        return next(
+        planning = [
             case
             for case in contract["case_groups"]
+            if case["targets"][0]["id"] not in interaction_members
+            and case["case_class"] == "acceptance"
+            and case["evidence_status"] == "none"
+            and not case["suite_cases"]
+            and not case["evidence"]
+            and not case["interaction_groups"]
+        ]
+        for case in planning:
+            if case["origin"] == "manually_curated" and "wave1" in case["id"]:
+                return case
+        for case in planning:
+            if case["origin"] == "manually_curated":
+                return case
+        return next(
+            case
+            for case in planning
             if case["origin"] == "generated_skeleton"
-            and case["targets"][0]["id"] not in interaction_members
         )
+
+    @staticmethod
+    def skeleton_case(contract: dict[str, Any], inventory: dict[str, Any]) -> dict[str, Any]:
+        """Materialize a generated skeleton over a disposable wave1 primary case."""
+        case = BehaviorContractValidationTests.generated_case(contract)
+        target = case["targets"][0]["id"]
+        item = next(
+            entry
+            for entry in inventory_entries(inventory)
+            if entry["entry"]["id"] == target
+        )
+        skeleton = make_case_skeleton(item)
+        case.clear()
+        case.update(skeleton)
+        return case
 
     @staticmethod
     def make_reviewed(case: dict[str, Any]) -> None:
@@ -343,8 +381,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
 
     def test_m0_small_cli_primary_reviews_remain_planning_only(self) -> None:
         fragment = next(
@@ -468,8 +506,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
 
     def test_m0_tracefile_cli_primary_reviews_remain_reference_only(self) -> None:
         fragment = next(
@@ -509,8 +547,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         aggregate = {case["id"]: case for case in self.base["case_groups"]}
         self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 424)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
 
         inventory_by_id = {
             item["entry"]["id"]: item["entry"]
@@ -722,7 +760,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
                     {"direct_public_behavior", "indirect_public_behavior"},
                 )
 
-    def test_m0_ready_cli_rejects_honest_debt(self) -> None:
+    def test_m0_ready_cli_accepts_closed_primary_planning(self) -> None:
         completed = subprocess.run(
             [
                 sys.executable,
@@ -735,9 +773,10 @@ class BehaviorContractValidationTests(unittest.TestCase):
             stderr=subprocess.PIPE,
             text=True,
         )
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("m0-ready validation failed", completed.stderr)
-        self.assertIn("has no reviewed primary case group", completed.stderr)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertIn("m0-ready validation passed", completed.stdout)
+        self.assertIn("reviewed_primary=531", completed.stdout)
+        self.assertIn("m0_gaps=0", completed.stdout)
 
     def test_generated_skeletons_do_not_inherit_inventory_review_status(self) -> None:
         reviewed_public_ids = {
@@ -747,15 +786,26 @@ class BehaviorContractValidationTests(unittest.TestCase):
             and item["entry"]["applicability"] != "not_applicable"
             and item["entry"]["review_status"] == "reviewed"
         }
+        self.assertTrue(reviewed_public_ids)
         skeletons = [
             case
             for case in self.base["case_groups"]
             if case["origin"] == "generated_skeleton"
-            and case["targets"][0]["id"] in reviewed_public_ids
         ]
-        self.assertTrue(skeletons)
-        self.assertTrue(all(case["review_status"] == "unreviewed" for case in skeletons))
-        self.assertTrue(all(case["evidence_status"] == "none" for case in skeletons))
+        # Wave 1 replaces every public skeleton with authored planning cases.
+        self.assertEqual(skeletons, [])
+
+        sample_id = sorted(reviewed_public_ids)[0]
+        item = next(
+            entry
+            for entry in inventory_entries(self.inventory)
+            if entry["entry"]["id"] == sample_id
+        )
+        skeleton = make_case_skeleton(item)
+        self.assertEqual(item["entry"]["review_status"], "reviewed")
+        self.assertEqual(skeleton["review_status"], "unreviewed")
+        self.assertEqual(skeleton["evidence_status"], "none")
+        self.assertEqual(skeleton["origin"], "generated_skeleton")
 
     def test_inventory_relationship_arrays_are_not_behavior_inputs(self) -> None:
         inventory = copy.deepcopy(self.inventory)
@@ -865,7 +915,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
     def test_generated_case_drift_is_rejected(self) -> None:
         def change(contract: dict[str, Any]) -> None:
-            self.generated_case(contract)["description"] += " altered"
+            case = self.skeleton_case(contract, self.inventory)
+            case["description"] += " altered"
 
         error = self.mutate(change)
         self.assertIn("generated case skeleton drift", str(error))
@@ -1139,6 +1190,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
     def test_not_applicable_review_does_not_cover_public_entry(self) -> None:
         value = copy.deepcopy(self.base)
         case = self.generated_case(value)
+        target = case["targets"][0]["id"]
+        # Force a reviewed not-applicable plan over a previously covered public entry.
         self.make_reviewed(case)
         case["applicability"] = {
             "status": "not_applicable",
@@ -1150,11 +1203,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
             report = self.validate_path(path)
         self.assertEqual(
             report.reviewed_primary_coverage,
-            self.base["totals"]["reviewed_primary_coverage"],
+            self.base["totals"]["reviewed_primary_coverage"] - 1,
         )
-        self.assertTrue(
-            any(case["targets"][0]["id"] in gap for gap in report.readiness_gaps)
-        )
+        self.assertTrue(any(target in gap for gap in report.readiness_gaps))
 
     def test_reviewed_interaction_case_must_target_every_member(self) -> None:
         def change(contract: dict[str, Any]) -> None:
@@ -1168,7 +1219,10 @@ class BehaviorContractValidationTests(unittest.TestCase):
             planned_case = next(
                 item
                 for item in contract["case_groups"]
-                if item["origin"] == "generated_skeleton"
+                if item["case_class"] == "acceptance"
+                and item["evidence_status"] == "none"
+                and not item["suite_cases"]
+                and not item["interaction_groups"]
                 and ".option." in item["targets"][0]["id"]
             )
             option = planned_case["targets"][0]["id"]
@@ -1248,8 +1302,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 )
 
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 424)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 107)
+        self.assertEqual(len(report.readiness_gaps), 0)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:
@@ -1322,6 +1377,102 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         error = self.mutate(change, recompute_totals=True)
         self.assertIn("are not reciprocal", str(error))
+
+
+    def test_m0_wave1_primary_reviews_close_public_planning_gaps(self) -> None:
+        wave1_fragments = [
+            fragment
+            for _, fragment in self.authored_fragments
+            if fragment["fragment_id"].startswith("authored.m0-")
+            and "wave1-primary" in fragment["fragment_id"]
+        ]
+        self.assertEqual(len(wave1_fragments), 12)
+        cases = [case for fragment in wave1_fragments for case in fragment["case_groups"]]
+        self.assertEqual(len(cases), 424)
+        self.assertEqual(len({case["id"] for case in cases}), 424)
+        self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
+        self.assertTrue(all(case["review_status"] == "reviewed" for case in cases))
+        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
+        self.assertTrue(all(case["evidence"] == [] for case in cases))
+        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
+        self.assertTrue(all(case["upstream_tests"] == [] for case in cases))
+        self.assertTrue(all(case["interaction_groups"] == [] for case in cases))
+        self.assertTrue(
+            all(
+                case["comparison_dimensions"]
+                == ["exit", "filesystem", "stderr", "stdout"]
+                for case in cases
+            )
+        )
+
+        inventory_by_id = {
+            item["entry"]["id"]: item["entry"]
+            for item in inventory_entries(self.inventory)
+        }
+        expected_sources = {
+            case["targets"][0]["id"]: make_source_references(
+                inventory_by_id[case["targets"][0]["id"]]
+            )
+            for case in cases
+        }
+        self.assertEqual(
+            {case["targets"][0]["id"]: case["source_references"] for case in cases},
+            expected_sources,
+        )
+
+        surfaces = {case["surface"] for case in cases}
+        self.assertEqual(surfaces, {"cli", "config"})
+        self.assertEqual(
+            sum(1 for case in cases if case["surface"] == "config"),
+            134,
+        )
+        self.assertEqual(
+            sum(1 for case in cases if case["surface"] == "cli"),
+            290,
+        )
+
+        aggregate = {case["id"]: case for case in self.base["case_groups"]}
+        self.assertTrue(all(aggregate[case["id"]] == case for case in cases))
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 531)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 0)
+        self.assertEqual(
+            sum(1 for case in self.base["case_groups"] if case["origin"] == "generated_skeleton"),
+            0,
+        )
+
+        def promote_product_evidence(contract: dict[str, Any]) -> None:
+            case = next(
+                item
+                for item in contract["case_groups"]
+                if item["id"] == cases[0]["id"]
+            )
+            case["evidence_status"] = "pass"
+
+        error = self.mutate(promote_product_evidence, recompute_totals=True)
+        self.assertIn("JSON Schema rejected", str(error))
+
+        def corrupt_source_reference(contract: dict[str, Any]) -> None:
+            case = next(
+                item
+                for item in contract["case_groups"]
+                if item["id"] == cases[0]["id"]
+            )
+            case["source_references"][0] = {
+                "repository": "lcov-v2.5",
+                "kind": "parser_definition",
+                "path": "bin/not-a-real-source",
+                "line": 1,
+                "text": "corrupted",
+            }
+
+        error = self.mutate(corrupt_source_reference, recompute_totals=True)
+        message = str(error)
+        self.assertTrue(
+            "upstream source does not exist" in message
+            or "source text mismatch" in message
+            or "unsafe upstream source path" in message,
+            message,
+        )
 
     def test_totals_are_recomputed(self) -> None:
         def change(contract: dict[str, Any]) -> None:
