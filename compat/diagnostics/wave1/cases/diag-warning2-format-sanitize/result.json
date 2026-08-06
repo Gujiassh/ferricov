@@ -10,8 +10,27 @@
     "out.info"
   ],
   "case_id": "diag-warning2-format-sanitize",
+  "cleanup": "remove_case_workdir_before_capture",
   "command": "lcov",
   "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture",
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
   "exit_status": 0,
   "file_tree": [
     {
@@ -25,7 +44,15 @@
       "sha256": "b5cad1c8f48eead99a1e9830fc00c19b1e3813dd02244b43304246a73eb98a42"
     }
   ],
+  "file_tree_semantics": "workspace_including_inputs",
   "file_tree_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
+  "fixture_bindings": [
+    {
+      "bytes": 55,
+      "path": "tn-sanitize.info",
+      "sha256": "b5cad1c8f48eead99a1e9830fc00c19b1e3813dd02244b43304246a73eb98a42"
+    }
+  ],
   "fixtures": [
     "tn-sanitize.info"
   ],
@@ -40,5 +67,7 @@
   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "stdout_bytes": 243,
   "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84",
+  "timed_out": false,
+  "timeout_seconds": 30,
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 }

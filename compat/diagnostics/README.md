@@ -17,7 +17,7 @@ The generated contract freezes:
 - all 71 planned diagnostic and parallel case identities;
 - 121 retained historical Oracle references from correctness and tracefile
   baselines; and
-- 25 wave1 diagnostics Oracle references under `compat/diagnostics/wave1/`.
+- 26 wave1 diagnostics Oracle references under `compat/diagnostics/wave1/`.
 
 ## Wave1 Oracle references
 
@@ -31,11 +31,23 @@ highest-priority remaining diagnostics gaps:
 - warning and warning-promotion ladders;
 - max-message suppression and expected-count spellings;
 - message-log capture;
-- converter keep-going traps and no-input keep-going boundaries; and
+- converter keep-going traps with real conversion inputs;
+- converter keep-going boundary with structural XML failure; and
 - basic `--parallel 1` / `--parallel 2` parity smoke.
 
-Wave1 observations are reference-only. They bind planned case identities to
-exact exit, stdout, stderr, and output-tree hashes, but they do **not** set
+Wave1 validation is fail-closed:
+
+- an independent expected-case table binds all 19 planned IDs to exact case
+  identity (id/kind/argv/fixtures/exit);
+- validators recompute stdout/stderr hashes from committed
+  `reference/*.bin` bytes and recompute the workspace file-tree from case
+  directories rather than trusting observation self-hashes alone;
+- file-tree semantics are explicitly
+  `workspace_including_inputs` (inputs + outputs under the case workdir);
+- capture records pinned image/upstream, timeout, cleanup, and execution
+  environment identity.
+
+Wave1 observations remain `oracle_reference` only and do **not** set
 `product_compatibility_evidence`.
 
 The retained correctness `m0-core-geninfo-startup-control` observation remains a

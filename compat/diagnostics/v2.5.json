@@ -14,7 +14,7 @@
     },
     {
       "path": "compat/diagnostics/wave1/result.json",
-      "sha256": "56e25136c383159d5d9ed7e1229812c4fabfe92315f2be5dd686960e07c156c7"
+      "sha256": "4ff53ab7c96d448ab944264e7c53fb2568fa1f28f004831b41caf1d082c08788"
     }
   ],
   "categories": [
@@ -1142,7 +1142,7 @@
     "forced-parallel and child lifecycle callback failures",
     "environment discovery and POSIX singular-ignore profile matrix",
     "callback finalize and cleanup diagnostics",
-    "converter keep-going success paths with real conversion inputs",
+    "converter keep-going paths with richer multi-error conversion corpora",
     "full 71-case executable acceptance suite beyond wave1 reference bindings"
   ],
   "oracle_observation_evidence_status": "oracle_reference",
@@ -2601,307 +2601,810 @@
       "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
     },
     {
+      "argv": [
+        "geninfo"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 255,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [],
       "id": "diagnostics-wave1:diag-noargs-geninfo-writable",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "startup_boundary",
-      "observation_sha256": "c6e291cf2a34843ff7b5791826ce00544ba63e10845cf1e85842b8cd3787409e",
+      "observation_sha256": "ea5958178d37144f5f2c3ea518a3667b45f5cf89f9a49626d406aaf2933dc487",
       "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "planned_case_ids": [
         "DIAG-NOARGS-GENINFO-001"
       ],
       "stderr_sha256": "7cb6f0570a71b64677014dd751c180642d14c98b30369f640acd3598a5c6d2c7",
-      "stdout_sha256": "b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76"
+      "stdout_sha256": "b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-ignore0-format-da",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_fatal",
-      "observation_sha256": "71e0c7c0f713a346a29a310d967f44978413590e15eb40b3927b31811fcf06a4",
+      "observation_sha256": "8ad9a4f5c8effcfb95e92f97c785079e3324d16193d357af5221a54d54897da2",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-ERROR-001"
       ],
       "stderr_sha256": "7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017",
-      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"
+      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-ignore1-format-da",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_one",
-      "observation_sha256": "b6bef116b238628fc327568119e5fc7453fe6fb3ad40c357c76302c27f45b544",
+      "observation_sha256": "9649af26a99ad62c53e0a0b08b00578725ebef59bbe25287c09875b107848f76",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-WARN-001"
       ],
       "stderr_sha256": "a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b",
-      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"
+      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-ignore2-format-da",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_two",
-      "observation_sha256": "549b3fcfe660529d3be128a11e728e84e374d4da3e2d42fc7161d700b68c15d3",
+      "observation_sha256": "62385cba4c25653a508740e24775665bbd13a922f589fb612d8371f0e60a7325",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-SILENT-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--keep-going",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-keep-going-format-da",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "keep_going_control",
-      "observation_sha256": "df74d063cc72cf17ea0102965eb027a441cfaba7a72b830f3c778e1285e4f1ce",
+      "observation_sha256": "72eef764fb3992efc07c3fe87adf448fe1a8bf337eb8419c57fb80c4bb51686a",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-KEEP-GOING-001"
       ],
       "stderr_sha256": "96d4fdac9c8fdc93c9151fca101fca0025e6f8b6b8c3270d908d728821eb335c",
-      "stdout_sha256": "c460db89e2d3407991c0b16b31a75c19620b6a4ca973b86a854998552112d0c2"
+      "stdout_sha256": "c460db89e2d3407991c0b16b31a75c19620b6a4ca973b86a854998552112d0c2",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "notaclass",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 2,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-ignore-unknown",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_unknown_control",
-      "observation_sha256": "edf5ab7859c2f07557b27d343e6fdc90ef8b234eb16c87d9de5ce36222ddf45b",
+      "observation_sha256": "4b3682ab94e9bd5c484b2e470883c8f03a7777673fb41cb94aafc3a5f716b7d4",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-UNKNOWN-001"
       ],
       "stderr_sha256": "f8eb9ca6c92e2bb1ea75e8239099813b14b909ed4804c629233f56ed0e8a599d",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "ignore-format.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info",
+        "ignore-format.rc"
+      ],
       "id": "diagnostics-wave1:diag-ignore-precedence-cli-replaces-rc",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_precedence_control",
-      "observation_sha256": "54140beb9bb392f3ecc19a6c36b6970a0f79463ca4bf12e918d49f56de6e0fba",
+      "observation_sha256": "96c73818d894284d6bf98b3ddf5293f0eab6df0415b9e18546cb37e0c745072d",
       "output_sha256": "83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768",
       "planned_case_ids": [
         "DIAG-IGNORE-PRECEDENCE-001"
       ],
       "stderr_sha256": "7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017",
-      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"
+      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
       "id": "diagnostics-wave1:diag-warning0-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "74454b859f6f904a5990065382528125705af4fd9aad3068f77140e43e592b82",
+      "observation_sha256": "b07ac38315d3e7328bdc8ed510b6c279b66bdae2af5c1d280e7a8257674169a7",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8",
-      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"
+      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
       "id": "diagnostics-wave1:diag-warning1-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "d2653c74101b542c00608e9ad130b642862c4eedfc3568c33ff3cd0a6c37b8f2",
+      "observation_sha256": "8c0646df644e714b7e924100f6adef3d2739c61a32d1cc14531fe8753154499c",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
       "id": "diagnostics-wave1:diag-warning2-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "073f71cdd7aa396dcfce0148d181b5c68485d23d2394d918bd3e5044fc00bbca",
+      "observation_sha256": "904d99f319748e15c4be64a1517a74117539280cc9690d641e10ba33dee2d22d",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
       "id": "diagnostics-wave1:diag-promote0-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "b11a183198219594fd3ed21ac7cf9d9c2a6a8580f6fbcbd48f0e79d4ac1e582c",
+      "observation_sha256": "04322c1f69757c12f77f480bf7e4db0ceb32809c1383dad39da4347255ef3b4b",
       "output_sha256": "b4dfdcdf5c46197aa8bc133d41d5abe5535195064ff40d2807121d3e96940f66",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "6e60f32ad9cd6f50294f73fcc11e11cb49574b3e970fa9d7956b515ea46ba34e",
-      "stdout_sha256": "4d87b2d0a1c84bdcdf773c1db6105ca9875dc2f3facf757c692fe2e5de800fb9"
+      "stdout_sha256": "4d87b2d0a1c84bdcdf773c1db6105ca9875dc2f3facf757c692fe2e5de800fb9",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
       "id": "diagnostics-wave1:diag-promote1-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "db7fa7108780bc1e06dc9183d2af5dc6cb6983d6dd0bec8cc952359f652db969",
+      "observation_sha256": "3c1162168697c8f566cd127c908cb1be8c44a8e47cbf0c2ea39512dacaa166ab",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8",
-      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"
+      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
       "id": "diagnostics-wave1:diag-promote2-format-sanitize",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "d46f8b1c891bdcd9335897c1c0630459940a2e15ab8a19879ea850645a36cf81",
+      "observation_sha256": "cd71742073f1b826ca51a314903b9b143a64695477ddb7898b73f125761c8bf7",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "maxmsg.rc",
+        "--no-function-coverage",
+        "--keep-going",
+        "--add-tracefile",
+        "many-format.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "many-format.info",
+        "maxmsg.rc"
+      ],
       "id": "diagnostics-wave1:diag-max-messages-format",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_suppression_control",
-      "observation_sha256": "36ed6fdf8b7b47836cab21a0f7e14517e8e996002545386a331e089575cd74d6",
+      "observation_sha256": "0d168f7b79c43c0e97e2a7dc04961ad7f9b6f55a9e492f90440a8f9e766e4447",
       "output_sha256": "887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2",
       "planned_case_ids": [
         "DIAG-MAX-MESSAGES-001"
       ],
       "stderr_sha256": "02b2897582f68eb423eacc9af78e7f4be17ab2dd88c8a0f73d2687fe04e51df1",
-      "stdout_sha256": "460de6340072ee561561a102f2e7c32e6d7e998201dbd534efd777eb0415d24f"
+      "stdout_sha256": "460de6340072ee561561a102f2e7c32e6d7e998201dbd534efd777eb0415d24f",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-count-false.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 2,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-count-false.rc"
+      ],
       "id": "diagnostics-wave1:diag-expected-count-file-false",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "e24b2dc018b72f3ad2dc500b193edb4f9ce021cea9354660ad86860b75c65171",
+      "observation_sha256": "7e79ef5e7c5f781e72231ac06defc5c9a315214f17a133ce6c665229877c9882",
       "output_sha256": "cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
       ],
       "stderr_sha256": "e8a8e26225db126371c014851cda0a06b9ce5a8980c3882922a5f42512e1978e",
-      "stdout_sha256": "52ec83b3ffa310274ea1cb200a29cd9d9d6f6b11420ad158f5bb9bee83c3b80b"
+      "stdout_sha256": "52ec83b3ffa310274ea1cb200a29cd9d9d6f6b11420ad158f5bb9bee83c3b80b",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-count-true.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-count-true.rc"
+      ],
       "id": "diagnostics-wave1:diag-expected-count-file-true",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "dd2b6d6cf25de04918e53b1ae881737c61eae058ec643b26aa8598542f9fe25f",
+      "observation_sha256": "9f720bd519b8204317678790b384ae4ed905fcacd914496bd194beccfb303a25",
       "output_sha256": "09cea71a84988458146e664daf29341aee571fece58593fb6a9052be33caaf83",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-manual.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-manual.rc"
+      ],
       "id": "diagnostics-wave1:diag-expected-count-manual-file",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "0cf70d667b3b1923c5dff3a63378873e5e4c059f6879f5190962a0fd04d06f18",
+      "observation_sha256": "02f12f6dcaa94e9b43c0b74142f597a7f6728cf68f5e8e4b167e833a961429f5",
       "output_sha256": "bc053bf36047d2d9d99372bdd0264945c6e2779d7c46e8a788b0682a717a846a",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-FILE-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--rc",
+        "expect_message_count=format:0",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 2,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-expected-count-manual-rc",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "f3f09f9e43127cb24cb3c3a6711701b22c9d07a212ad7b4f951207eb126b8c3d",
+      "observation_sha256": "24a640a41dfda59cbb06495a87664b57551472b2a0dac96761be07674dd373d8",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-RC-001"
       ],
       "stderr_sha256": "48c11bcdef6b5b75c3755ccc5e92c07c734c3309eb4b5ac5f000cb73a15bafa4",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--msg-log",
+        "messages.log",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "malformed-da.info"
+      ],
       "id": "diagnostics-wave1:diag-message-log",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_log_control",
-      "observation_sha256": "cd8ee0ba8cee85412866b2d21af837f6b8094703008a62c7d64327c706249b6f",
+      "observation_sha256": "3cc33a8331e08821119cf9e05b940bbca492f2a3f8d0f2be6182e6a904d4262e",
       "output_sha256": "14198c4562b2fa2943da53842dd4e1c6d869099ae0e2744d89dd14f4dbf8180b",
       "planned_case_ids": [
         "DIAG-MESSAGE-LOG-001"
       ],
       "stderr_sha256": "a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b",
-      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"
+      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "perl2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "cover_db"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "cover_db"
+      ],
       "id": "diagnostics-wave1:diag-perl2lcov-keep",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "84954692b69cf3ac53e1706090fa03b2a4f637916a0291804299f742f8fad2f9",
-      "output_sha256": "af51e6f040391798c9c0fa24d39320cb4a8ec47bea43630f7c028154a6798025",
+      "observation_sha256": "8454661e9ed8160cd89decbf84c9c488959e7d4fe30acc97d2f6b3999703dab6",
+      "output_sha256": "52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906",
       "planned_case_ids": [
         "DIAG-PERL2LCOV-KEEP-001"
       ],
-      "stderr_sha256": "beabd3f772a3aa71ab0f7094efe46dadd883ebe5034b198cc4f5249e5d05d45c",
-      "stdout_sha256": "dc89c272c1c67fc43e474ebca2ec11bec79f73edf5473f2f0e9b5acf6b68f581"
+      "stderr_sha256": "572cca15f114a15c7d674fc7c945ed07f505efb57e3b1442e2ac301a26d93476",
+      "stdout_sha256": "9a48312d3649cba8f882421ff9ac5303e262b7156fcbc99d0117a30287a96a47",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
-      "exit_status": 2,
-      "id": "diagnostics-wave1:diag-llvm2lcov-keep-boundary",
-      "kind": "converter_keep_trap",
-      "observation_sha256": "8698d546811a1ec4cd2d52cba0feaceb0f11fa5f10fda3ce7c87e869af80e993",
-      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "planned_case_ids": [
-        "DIAG-LLVM2LCOV-KEEP-001",
-        "DIAG-CONVERTER-KEEP-BOUNDARY-001"
+      "argv": [
+        "llvm2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "llvm-keep.json"
       ],
-      "stderr_sha256": "b069fedc2acde579a300835c4b5d901977d3343224acbf25f3d49600110c921c",
-      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "exit_status": 1,
-      "id": "diagnostics-wave1:diag-py2lcov-keep-boundary",
-      "kind": "converter_keep_trap",
-      "observation_sha256": "d20e75ebf642fadaca15e6586dbabba6423315ac3cd6b8528ab6ef8620473e34",
-      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "planned_case_ids": [
-        "DIAG-PY2LCOV-KEEP-001",
-        "DIAG-CONVERTER-KEEP-BOUNDARY-001"
-      ],
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "fe0a2b26ff3089e106fe9066336f3c576df6d024e8af328554e18d35ab0c3c79"
-    },
-    {
-      "exit_status": 1,
-      "id": "diagnostics-wave1:diag-xml2lcov-keep-boundary",
-      "kind": "converter_keep_trap",
-      "observation_sha256": "39dc4283b151fa1b7c5f424272c43841139806f193f3e6fe1e3a779968ef25e8",
-      "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "planned_case_ids": [
-        "DIAG-XML2LCOV-KEEP-001",
-        "DIAG-CONVERTER-KEEP-BOUNDARY-001"
-      ],
-      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "fe0a2b26ff3089e106fe9066336f3c576df6d024e8af328554e18d35ab0c3c79"
-    },
-    {
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "llvm-keep.json"
+      ],
+      "id": "diagnostics-wave1:diag-llvm2lcov-keep",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "45071510a2c84a73f41fe0e346c9da28fe73da1f9121a80c40a7ba20ac85f5bb",
+      "output_sha256": "6d5a3c51751d1bca9c73e0619763456bef9cc234bc26578170fcfdf0a8fcd545",
+      "planned_case_ids": [
+        "DIAG-LLVM2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "4484d422bfebd610e1b5a12bad618959dcb31c152e6dfbba62be5844b5102cad",
+      "stdout_sha256": "25302739f8dabf07027dc263ef042ec2d1d9c05c631b6ec5e2a29353b4017f3f",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "py2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "coverage-keep.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
+      "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "coverage-keep.xml"
+      ],
+      "id": "diagnostics-wave1:diag-py2lcov-keep",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "0d5f0da6620a896e4ef4615c4031b2c587506feda91950dd4837954258151e0b",
+      "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
+      "planned_case_ids": [
+        "DIAG-PY2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "53bf0b384623443b0b5a7cf095c082afd5c28756c2b35db6e8d9c9ffb4777105",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "xml2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "coverage-keep.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
+      "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "coverage-keep.xml"
+      ],
+      "id": "diagnostics-wave1:diag-xml2lcov-keep",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "1bae24913071b56d51211fe8ec860c22b7b548d105a7190fca44672eebfee001",
+      "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
+      "planned_case_ids": [
+        "DIAG-XML2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "15991091cf6482c67d61cdb5411022cdcc31a59322b5206f4c990f48caf8c461",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "xml2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "broken-no-sources.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "broken-no-sources.xml"
+      ],
+      "id": "diagnostics-wave1:diag-converter-keep-boundary",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "7a569ce0532337b68cc75fc2b4e35158c2e3e48667debf3c332822180b6b955e",
+      "output_sha256": "ca83adba43eedc6bc3dae4e3308257762c49eb64c23f79503525bfdbddea5074",
+      "planned_case_ids": [
+        "DIAG-CONVERTER-KEEP-BOUNDARY-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2179ace6576aefb53f790a7856642b3b74e2321d5383ee478169ae6ad797ea3e",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--parallel",
+        "1",
+        "--add-tracefile",
+        "a.info",
+        "--add-tracefile",
+        "b.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
+      "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "a.info",
+        "b.info"
+      ],
       "id": "diagnostics-wave1:par-serial-parity-parallel1",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "2980a2e786cfb17a6ba03dd65ca7718a55f2f81856232d46c388ef91f3fa21fd",
+      "observation_sha256": "5377add90167085faa9be66f77c98d7ab07fecf5e09cab46c4a67f45ba074cce",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "62aa7e9ecf95871ce31f8f4ee08aeabae089d1306dd5622c2a0f301dffc3e08d"
+      "stdout_sha256": "62aa7e9ecf95871ce31f8f4ee08aeabae089d1306dd5622c2a0f301dffc3e08d",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
     {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--parallel",
+        "2",
+        "--add-tracefile",
+        "a.info",
+        "--add-tracefile",
+        "b.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture",
       "exit_status": 0,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "a.info",
+        "b.info"
+      ],
       "id": "diagnostics-wave1:par-serial-parity-parallel2",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "66f5880712a8bb9292b8eb82588b34b8588205cdefe665b69bd5179b1bb5cdc7",
+      "observation_sha256": "0fb536878e8a138433410aa89be26b1fe945dbb1e87a6e967feeec37fccad556",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
       ],
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_sha256": "7e6a75267a07bd5c68f5818f711e9b4dbad504addf95a939ed635c4d7dd9156e"
+      "stdout_sha256": "7e6a75267a07bd5c68f5818f711e9b4dbad504addf95a939ed635c4d7dd9156e",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     }
   ],
   "planned_case_evidence_status": "planned",
@@ -2990,13 +3493,13 @@
     "exit_policies": 10,
     "named_error_fatal_observations": 63,
     "named_error_ignore_one_observations": 35,
-    "oracle_observations": 146,
+    "oracle_observations": 147,
     "parser_observations": 10,
     "planned_cases": 71,
     "reserved_categories": 1,
     "startup_observations": 11,
     "unclassified_surfaces": 4,
-    "wave1_observations": 25
+    "wave1_observations": 26
   },
   "unclassified_surfaces": [
     {

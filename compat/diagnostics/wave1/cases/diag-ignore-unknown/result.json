@@ -10,8 +10,27 @@
     "out.info"
   ],
   "case_id": "diag-ignore-unknown",
+  "cleanup": "remove_case_workdir_before_capture",
   "command": "lcov",
   "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture",
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
   "exit_status": 2,
   "file_tree": [
     {
@@ -20,7 +39,15 @@
       "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
     }
   ],
+  "file_tree_semantics": "workspace_including_inputs",
   "file_tree_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
+  "fixture_bindings": [
+    {
+      "bytes": 94,
+      "path": "malformed-da.info",
+      "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
+    }
+  ],
   "fixtures": [
     "malformed-da.info"
   ],
@@ -35,5 +62,7 @@
   "stderr_sha256": "f8eb9ca6c92e2bb1ea75e8239099813b14b909ed4804c629233f56ed0e8a599d",
   "stdout_bytes": 0,
   "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "timed_out": false,
+  "timeout_seconds": 30,
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 }
