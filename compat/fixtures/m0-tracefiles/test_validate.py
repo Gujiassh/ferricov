@@ -1559,6 +1559,7 @@ class WriterTracefileMutationTests(unittest.TestCase):
         from validate import decode_identity
         from validation_common import (
             assert_converter_rewrite_observational,
+            assert_py2lcov_no_functions_semantics,
             assert_py2lcov_with_functions_semantics,
             assert_writer_comment_semantics,
             assert_writer_fixedpoint_semantics,
@@ -1578,6 +1579,7 @@ class WriterTracefileMutationTests(unittest.TestCase):
             "writer-forbidden.canonical": assert_writer_forbidden_semantics,
             "writer-fixedpoint.canonical": assert_writer_fixedpoint_semantics,
             "converter-coverage.xml2lcov": assert_xml2lcov_semantics,
+            "converter-coverage.py2lcov-no-functions": assert_py2lcov_no_functions_semantics,
             "converter-coverage.py2lcov-with-functions": assert_py2lcov_with_functions_semantics,
             "converter-coverage.canonical-rewrite": assert_converter_rewrite_observational,
             "writer-non-utf8.canonical": assert_writer_non_utf8_observational,
@@ -1587,7 +1589,12 @@ class WriterTracefileMutationTests(unittest.TestCase):
             output = decode_identity(observation["output"], case_id)
             predicate(output, case_id)
             if case_id == "writer-order-core.canonical":
-                poisoned = output.replace(b"FNA:0,2,za\n", b"FNA:0,1,za\n", 1)
+                # reverse the two BRDA records in TN:z; parsed order must fail
+                poisoned = output.replace(
+                    b"BRDA:2,0,e,1\nBRDA:2,0,e2,0\n",
+                    b"BRDA:2,0,e2,0\nBRDA:2,0,e,1\n",
+                    1,
+                )
             elif case_id == "writer-mcdc-groups.canonical":
                 poisoned = output.replace(b"MCDC:1,10,t,1,0,big\n", b"MCDC:1,2,t,1,0,big\n", 1)
             elif case_id == "writer-summaries.canonical":
@@ -1603,6 +1610,13 @@ class WriterTracefileMutationTests(unittest.TestCase):
                 poisoned = output.replace(
                     b"end_of_record\n",
                     b"MCDC:1,1,t,1,0,x\nend_of_record\n",
+                    1,
+                )
+            elif case_id == "converter-coverage.py2lcov-no-functions":
+                # move FNL/FNA between the two BRDA records; family/record order must fail
+                poisoned = output.replace(
+                    b"BRDA:1,0,0,1\nBRDA:1,0,1,0\nFNL:0,1,1\nFNA:0,3,foo\n",
+                    b"BRDA:1,0,0,1\nFNL:0,1,1\nFNA:0,3,foo\nBRDA:1,0,1,0\n",
                     1,
                 )
             elif case_id == "converter-coverage.py2lcov-with-functions":
