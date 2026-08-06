@@ -1,23 +1,23 @@
 """Writer/converter/transport M0 Oracle fixtures and cases.
 
 Exact executable mappings for:
-  M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044, M1-TF-045,
+  M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044,
   M1-TF-046, M1-TF-050, M1-TF-051, M1-TF-052, M1-TF-060.
 
-Wave3 exact semantic closures (multi-corpus / source-bound):
-  M1-TF-045 via writer-fixedpoint.canonical plus legacy / permissive /
-  ignored-error corpora (group-completeness in validation_common).
+Wave3 exact semantic closures (source-bound / field-matrix):
   M1-TF-052 via converter-coverage.canonical-rewrite + xml2lcov direct
   with independent XML/Python source semantic facts.
+  M1-TF-061 on bytes-non-utf8.canonical current-form FNA field matrix.
 
-M1-TF-061 is bound on bytes-non-utf8.canonical (field matrix), not on the
-SF-only writer-non-utf8.canonical observational capture.
+M1-TF-045 remains blocked/observational: retained single-write captures and
+validators do not yet bind true two-write Docker round-trip cases.
 
 Observational-only captures retained without exact mapping:
+  writer-fixedpoint.canonical (and legacy/permissive/ignored-error TF-045 probes),
   writer-non-utf8.canonical (SF-only; matrix lives on bytes-non-utf8).
 
 Oracle evidence only. Product compatibility remains false.
-M1-TF-063 / M1-TF-064 remain blocked.
+M1-TF-010 / M1-TF-045 / M1-TF-063 / M1-TF-064 remain blocked.
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ import io
 from corpus_model import Fixture, ascii_bytes
 
 WRITER_GROUP = "writer-tracefile"
-WRITER_REQUIREMENT_TEXT = "M1-TF-041/042/043/044/045/046/050/051/052/060 (+ observational SF-only 061 writer capture)"
+WRITER_REQUIREMENT_TEXT = "M1-TF-041/042/043/044/046/050/051/052/060 (+ observational TF-045 fixedpoint and SF-only 061 writer capture)"
 
 WRITER_FIXTURE_IDS = (
     "writer-order-core",
@@ -458,7 +458,7 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
             "writer-fixedpoint.canonical",
             "fixtures/writer/fixedpoint.info",
             "M1-TF-045",
-            "Canonical corpus member of M1-TF-045 parse-write-parse group (with legacy/permissive/ignored-error).",
+            "Observational single-write fixedpoint capture for blocked M1-TF-045 (true two-write round-trip not bound).",
             branch_mcdc,
         ),
         _lcov_write(
@@ -625,7 +625,6 @@ WRITER_EXACT_REQUIREMENTS: dict[str, list[str]] = {
     "writer-summaries.canonical": ["M1-TF-042"],
     "writer-comments.canonical": ["M1-TF-043"],
     "writer-forbidden.canonical": ["M1-TF-044"],
-    "writer-fixedpoint.canonical": ["M1-TF-045"],
     "writer-fixedpoint.repeated-write": ["M1-TF-046"],
     "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
     "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],

@@ -31,8 +31,8 @@ DEFAULT_UPSTREAM_ROOT = Path(
 
 EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/manifest.json": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "d5a274ecabdfbb29425092c1ff44cd5be1367a8a26bf38e46b7755978a059cf1",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "eb45db04a984a4833e3556c6bddcfa2e7b0360e72c9d0051ab0c21ca8f3832ba",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "cceb0c6b1def041162398f16bad88358a2bd076716ac16ec372e3edf522a1b00",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "0c95e634e637f09b6a235c8945917b70f1a5135f9ae19c1f88e7f4fee457a208",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }
@@ -993,14 +993,12 @@ EXACT_CASE_REQUIREMENTS.update({
     "writer-summaries.canonical": {"requirement_ids": ["M1-TF-042"]},
     "writer-comments.canonical": {"requirement_ids": ["M1-TF-043"]},
     "writer-forbidden.canonical": {"requirement_ids": ["M1-TF-044"]},
-    # M1-TF-045 group: canonical member plus legacy/permissive/ignored-error
-    # members bound below. Group-completeness is enforced in validation_common.
-    "writer-fixedpoint.canonical": {"requirement_ids": ["M1-TF-045"]},
+    # M1-TF-045 remains blocked/observational: retained single-write captures and
+    # validator probes do not bind an actual second independent write round-trip
+    # for each corpus member. Do not exact-map writer-fixedpoint/legacy/
+    # permissive/ignored-error under M1-TF-045 until true two-write cases exist.
     # M1-TF-010 remains unbound: legacy.info lacks comma-name / repeated-def /
-    # unknown-name probes. This case only contributes to the TF-045 group.
-    "legacy.canonical": {"requirement_ids": ["M1-TF-045"]},
-    "permissive-prefix.canonical": {"requirement_ids": ["M1-TF-045"]},
-    "wave2-unknown-tags.ignore-format": {"requirement_ids": ["M1-TF-016", "M1-TF-045"]},
+    # unknown-name probes.
     "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
     "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050", "M1-TF-052"]},
     "converter-coverage.py2lcov-no-functions": {"requirement_ids": ["M1-TF-051"]},
@@ -1467,7 +1465,6 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-042",
             "M1-TF-043",
             "M1-TF-044",
-            "M1-TF-045",
             "M1-TF-046",
             "M1-TF-050",
             "M1-TF-051",
