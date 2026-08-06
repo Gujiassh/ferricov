@@ -870,7 +870,10 @@ def case_execution_manifest(
 
 
 def skip_wave2_emptyhome_marker(path: Path, *, root: Path, context: str) -> bool:
-    """Skip only zero-byte emptyhome/.gitkeep; reject other markers."""
+    """Skip only regular zero-byte emptyhome/.gitkeep; reject other markers.
+
+    Consult before is_file() so symlink/broken-symlink markers fail closed.
+    """
     if path.name not in {".gitkeep", ".keep"}:
         return False
     rel = path.relative_to(root).as_posix()
@@ -882,6 +885,14 @@ def skip_wave2_emptyhome_marker(path: Path, *, root: Path, context: str) -> bool
         raise SystemExit(
             f"wave2 directory marker only allowed as zero-byte emptyhome/.gitkeep ({context}): {rel}"
         )
+    if path.is_symlink():
+        raise SystemExit(
+            f"wave2 emptyhome/.gitkeep must not be a symlink ({context}): {rel}"
+        )
+    if not path.is_file():
+        raise SystemExit(
+            f"wave2 emptyhome/.gitkeep must be a regular zero-byte file ({context}): {rel}"
+        )
     if path.read_bytes() != b"":
         raise SystemExit(
             f"wave2 emptyhome/.gitkeep must be zero bytes ({context}): {rel}"
@@ -889,13 +900,41 @@ def skip_wave2_emptyhome_marker(path: Path, *, root: Path, context: str) -> bool
     return True
 
 
+def validate_emptyhome_fixture_dir(src: Path, *, context: str) -> None:
+    if not src.is_dir():
+        raise SystemExit(f"wave2 emptyhome fixture missing directory ({context}): {src}")
+    marker = src / ".gitkeep"
+    if marker.exists(follow_symlinks=False) or marker.is_symlink():
+        skip_wave2_emptyhome_marker(marker, root=src, context=context)
+    else:
+        raise SystemExit(f"wave2 emptyhome fixture missing .gitkeep ({context})")
+    extras = [p for p in src.iterdir() if p.name != ".gitkeep"]
+    if extras:
+        raise SystemExit(
+            f"wave2 emptyhome fixture must contain only .gitkeep ({context}): "
+            f"{[p.name for p in extras]}"
+        )
+
+
 def stage(work: Path, fixtures: list[str], chmod_map: dict[str, int] | None) -> None:
+    """Stage fixtures for Oracle execution.
+
+    emptyhome is retained in Git with .gitkeep, but runtime HOME must be empty:
+    validate the source marker then stage an empty directory without copying it.
+    """
     work.mkdir(parents=True)
     for name in fixtures:
         src = FIXTURES / name
         if not src.exists():
             raise SystemExit(f"missing fixture: {name}")
         dest = work / name
+        if name == "emptyhome":
+            validate_emptyhome_fixture_dir(src, context=f"stage-source:{work.name}")
+            dest.mkdir(parents=True)
+            # Do not copy .gitkeep into runtime HOME.
+            if any(dest.iterdir()):
+                raise SystemExit(f"wave2 staged emptyhome is not empty: {dest}")
+            continue
         if src.is_dir():
             shutil.copytree(src, dest)
         else:
@@ -912,9 +951,9 @@ def stage(work: Path, fixtures: list[str], chmod_map: dict[str, int] | None) -> 
 def file_tree(work: Path) -> list[dict[str, Any]]:
     entries = []
     for path in sorted(work.rglob("*")):
-        if not path.is_file():
-            continue
         if skip_wave2_emptyhome_marker(path, root=work, context=f"case:{work.name}"):
+            continue
+        if not path.is_file():
             continue
         rel = path.relative_to(work).as_posix()
         if rel.startswith("reference/") or rel in {"result.json"}:
@@ -948,12 +987,14 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
     for name in fixtures:
         src = FIXTURES / name
         if src.is_dir():
+            if name == "emptyhome":
+                validate_emptyhome_fixture_dir(src, context=f"fixture:{name}")
             for path in sorted(src.rglob("*")):
-                if not path.is_file():
-                    continue
                 if skip_wave2_emptyhome_marker(
                     path, root=src, context=f"fixture:{name}"
                 ):
+                    continue
+                if not path.is_file():
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()

@@ -858,8 +858,11 @@ class DiagnosticsContractTests(unittest.TestCase):
 
         Git does not track empty directories. wave2 retains emptyhome via a
         zero-byte emptyhome/.gitkeep marker that is the only excluded path, so a
-        clean tree without preexisting empty dirs still validates.
+        clean tree without preexisting empty dirs still validates. Capture
+        staging must still present a truly empty runtime HOME directory.
         """
+        import tempfile
+
         fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
         self.assertTrue(fixture_dir.is_dir(), "emptyhome fixture directory missing")
         marker = fixture_dir / ".gitkeep"
@@ -867,6 +870,7 @@ class DiagnosticsContractTests(unittest.TestCase):
             marker.is_file(),
             "emptyhome must be retained with tracked .gitkeep marker",
         )
+        self.assertFalse(marker.is_symlink())
         self.assertEqual(marker.read_bytes(), b"")
         # Marker is not part of Oracle fixture content bindings.
         bindings = contract.wave2_fixture_bindings(["emptyhome"])
@@ -874,22 +878,14 @@ class DiagnosticsContractTests(unittest.TestCase):
         # Case bindings still list emptyhome as a staged fixture name.
         expected = contract.WAVE2_EXPECTED_CASE_BY_ID["diag-env-lcov-home"]
         self.assertIn("emptyhome", expected["fixtures"])
-        # Independent of any leftover case-local emptyhome directory.
-        case_empty = (
-            contract.WAVE2_ROOT / "cases" / "diag-env-lcov-home" / "emptyhome"
-        )
-        if case_empty.exists():
-            # Optional staged case dir may include zero-byte marker only.
-            case_marker = case_empty / ".gitkeep"
-            if not case_marker.is_file():
-                case_marker.write_bytes(b"")
-            tree = contract.recompute_wave2_file_tree(
-                contract.WAVE2_ROOT / "cases" / "diag-env-lcov-home"
-            )
-            self.assertNotIn(
-                "emptyhome/.gitkeep",
-                [entry["path"] for entry in tree],
-            )
+        # Staging removes the Git marker so runtime HOME is empty.
+        with tempfile.TemporaryDirectory(prefix="wave2-stage-emptyhome-") as tmp:
+            work = Path(tmp) / "work"
+            contract.stage_wave2_fixtures(work, expected["fixtures"])
+            staged = work / "emptyhome"
+            self.assertTrue(staged.is_dir())
+            self.assertEqual(list(staged.iterdir()), [])
+            self.assertFalse((staged / ".gitkeep").exists())
         # Document still binds wave2 observation for the empty-home case.
         wave2 = [
             entry
@@ -922,9 +918,6 @@ class DiagnosticsContractTests(unittest.TestCase):
 
     def test_wave2_nonzero_emptyhome_marker_is_rejected(self) -> None:
         """Nonzero emptyhome/.gitkeep content must not be silently ignored."""
-        import shutil
-        import tempfile
-
         marker = contract.WAVE2_ROOT / "fixtures" / "emptyhome" / ".gitkeep"
         original = marker.read_bytes()
         try:
@@ -939,28 +932,21 @@ class DiagnosticsContractTests(unittest.TestCase):
 
     def test_wave2_renamed_emptyhome_marker_is_rejected(self) -> None:
         """`.keep` is not an accepted emptyhome marker and fails closed."""
-        import shutil
-        import tempfile
-
         fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
         keep = fixture_dir / ".keep"
         try:
             keep.write_bytes(b"")
             with self.assertRaisesRegex(
                 contract.DiagnosticsContractError,
-                "directory marker only allowed as zero-byte emptyhome/.gitkeep",
+                r"emptyhome fixture must contain only \.gitkeep|directory marker only allowed as zero-byte emptyhome/\.gitkeep",
             ):
                 contract.wave2_fixture_bindings(["emptyhome"])
         finally:
-            if keep.exists():
+            if keep.exists() or keep.is_symlink():
                 keep.unlink()
 
     def test_wave2_wrong_location_marker_is_rejected(self) -> None:
         """Markers outside emptyhome must not be excluded from fixture hashes."""
-        import shutil
-        import tempfile
-
-        # Place a .gitkeep under a non-emptyhome directory fixture.
         foreign = contract.WAVE2_ROOT / "fixtures" / "lcovhome" / ".gitkeep"
         try:
             foreign.write_bytes(b"")
@@ -969,7 +955,6 @@ class DiagnosticsContractTests(unittest.TestCase):
                 "directory marker only allowed as zero-byte emptyhome/.gitkeep",
             ):
                 contract.wave2_fixture_bindings(["lcovhome"])
-            # Case tree path also rejects misplaced markers.
             case_dir = contract.WAVE2_ROOT / "cases" / "diag-env-lcov-home"
             case_foreign = case_dir / "lcovhome" / ".gitkeep"
             case_foreign.parent.mkdir(parents=True, exist_ok=True)
@@ -981,11 +966,108 @@ class DiagnosticsContractTests(unittest.TestCase):
                 ):
                     contract.recompute_wave2_file_tree(case_dir)
             finally:
-                if case_foreign.exists():
+                if case_foreign.exists() or case_foreign.is_symlink():
                     case_foreign.unlink()
         finally:
-            if foreign.exists():
+            if foreign.exists() or foreign.is_symlink():
                 foreign.unlink()
+
+    def test_wave2_symlink_emptyhome_marker_is_rejected(self) -> None:
+        """Exact-path symlink markers must not bypass emptyhome validation."""
+        import os
+        import tempfile
+
+        fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
+        marker = fixture_dir / ".gitkeep"
+        original = marker.read_bytes()
+        target = fixture_dir / "target-bytes"
+        try:
+            marker.unlink()
+            target.write_bytes(b"")
+            os.symlink(target.name, marker)
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "emptyhome/.gitkeep must not be a symlink",
+            ):
+                contract.wave2_fixture_bindings(["emptyhome"])
+            with tempfile.TemporaryDirectory(prefix="wave2-stage-symlink-") as tmp:
+                with self.assertRaisesRegex(
+                    contract.DiagnosticsContractError,
+                    "emptyhome/.gitkeep must not be a symlink",
+                ):
+                    contract.stage_wave2_fixtures(Path(tmp) / "work", ["emptyhome"])
+        finally:
+            if marker.is_symlink() or marker.exists():
+                marker.unlink()
+            if target.exists():
+                target.unlink()
+            marker.write_bytes(original)
+
+    def test_wave2_broken_symlink_emptyhome_marker_is_rejected(self) -> None:
+        """Broken symlink markers must fail closed before is_file filtering."""
+        import os
+
+        fixture_dir = contract.WAVE2_ROOT / "fixtures" / "emptyhome"
+        marker = fixture_dir / ".gitkeep"
+        original = marker.read_bytes()
+        try:
+            marker.unlink()
+            os.symlink("missing-target-does-not-exist", marker)
+            self.assertTrue(marker.is_symlink())
+            self.assertFalse(marker.exists())
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "emptyhome/.gitkeep must not be a symlink",
+            ):
+                contract.wave2_fixture_bindings(["emptyhome"])
+        finally:
+            if marker.is_symlink() or marker.exists():
+                marker.unlink()
+            marker.write_bytes(original)
+
+    def test_wave2_wrong_location_symlink_marker_is_rejected(self) -> None:
+        """Symlink markers outside emptyhome fail closed rather than being skipped."""
+        import os
+
+        foreign = contract.WAVE2_ROOT / "fixtures" / "lcovhome" / ".gitkeep"
+        try:
+            if foreign.exists() or foreign.is_symlink():
+                foreign.unlink()
+            os.symlink("somewhere", foreign)
+            with self.assertRaisesRegex(
+                contract.DiagnosticsContractError,
+                "directory marker only allowed as zero-byte emptyhome/.gitkeep",
+            ):
+                contract.wave2_fixture_bindings(["lcovhome"])
+        finally:
+            if foreign.exists() or foreign.is_symlink():
+                foreign.unlink()
+
+    def test_wave2_capture_stage_emptyhome_runtime_is_empty(self) -> None:
+        """Capture stage parity: emptyhome runtime dir has zero entries."""
+        import importlib.util
+        import tempfile
+
+        capture_path = (
+            contract.WAVE2_ROOT / "scripts" / "capture_wave2.py"
+        ).resolve()
+        spec = importlib.util.spec_from_file_location(
+            "capture_wave2_stage_test", capture_path
+        )
+        module = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+        expected = contract.WAVE2_EXPECTED_CASE_BY_ID["diag-env-lcov-home"]
+        with tempfile.TemporaryDirectory(prefix="wave2-capture-stage-") as tmp:
+            work = Path(tmp) / "work"
+            module.stage(work, expected["fixtures"], None)
+            staged = work / "emptyhome"
+            self.assertTrue(staged.is_dir())
+            self.assertEqual(list(staged.iterdir()), [])
+            self.assertFalse((staged / ".gitkeep").exists())
+            # Capture fixture bindings also exclude the marker.
+            self.assertEqual(module.fixture_bindings(["emptyhome"]), [])
+
 
 
 if __name__ == "__main__":

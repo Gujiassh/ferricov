@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 import os
 import re
 import subprocess
@@ -2191,6 +2192,7 @@ def wave1_observations() -> list[dict[str, Any]]:
 
 WAVE2_EMPTYHOME_FIXTURE = "emptyhome"
 WAVE2_EMPTYHOME_MARKER_NAME = ".gitkeep"
+WAVE2_DIRECTORY_MARKER_NAMES = {WAVE2_EMPTYHOME_MARKER_NAME, ".keep"}
 
 
 def skip_wave2_emptyhome_marker(
@@ -2199,14 +2201,23 @@ def skip_wave2_emptyhome_marker(
     root: Path,
     context: str,
 ) -> bool:
-    """Return True only for zero-byte emptyhome/.gitkeep under root.
+    """Return True only for a regular zero-byte emptyhome/.gitkeep under root.
 
-    Fail closed for nonzero marker content, `.keep`, or markers outside
-    emptyhome so future fixture/file-tree bytes cannot be silently dropped.
+    Must be consulted for every path before is_file() filtering so symlink and
+    broken-symlink markers cannot bypass validation. Fail closed for:
+    - any symlink marker (including broken)
+    - nonzero marker content
+    - `.keep`
+    - markers outside emptyhome
     """
-    if path.name not in {WAVE2_EMPTYHOME_MARKER_NAME, ".keep"}:
+    if path.name not in WAVE2_DIRECTORY_MARKER_NAMES:
         return False
-    rel = path.relative_to(root).as_posix()
+    try:
+        rel = path.relative_to(root).as_posix()
+    except ValueError as exc:
+        raise DiagnosticsContractError(
+            f"wave2 directory marker outside scan root ({context}): {path}"
+        ) from exc
     allowed_rel = f"{WAVE2_EMPTYHOME_FIXTURE}/{WAVE2_EMPTYHOME_MARKER_NAME}"
     # When root is the emptyhome fixture directory itself, relative path is .gitkeep.
     if root.name == WAVE2_EMPTYHOME_FIXTURE:
@@ -2218,12 +2229,91 @@ def skip_wave2_emptyhome_marker(
             "wave2 directory marker only allowed as zero-byte "
             f"emptyhome/.gitkeep ({context}): {rel}"
         )
+    if path.is_symlink():
+        raise DiagnosticsContractError(
+            f"wave2 emptyhome/.gitkeep must not be a symlink ({context}): {rel}"
+        )
+    if not path.is_file():
+        raise DiagnosticsContractError(
+            "wave2 emptyhome/.gitkeep must be a regular zero-byte file "
+            f"({context}): {rel}"
+        )
     data = path.read_bytes()
     if data != b"":
         raise DiagnosticsContractError(
             f"wave2 emptyhome/.gitkeep must be zero bytes ({context}): {rel}"
         )
     return True
+
+
+def validate_wave2_emptyhome_fixture_dir(src: Path, *, context: str) -> None:
+    """Require trackable emptyhome fixture: only zero-byte regular .gitkeep."""
+    if not src.is_dir():
+        raise DiagnosticsContractError(
+            f"wave2 emptyhome fixture missing directory ({context}): {src}"
+        )
+    marker = src / WAVE2_EMPTYHOME_MARKER_NAME
+    # Explicitly validate marker path even if only a broken symlink exists.
+    if marker.exists(follow_symlinks=False) or marker.is_symlink():
+        skip_wave2_emptyhome_marker(marker, root=src, context=context)
+    else:
+        raise DiagnosticsContractError(
+            f"wave2 emptyhome fixture missing .gitkeep ({context})"
+        )
+    # Reject any extra dirents besides the exact zero-byte .gitkeep marker.
+    extras = [p for p in src.iterdir() if p.name != WAVE2_EMPTYHOME_MARKER_NAME]
+    if extras:
+        raise DiagnosticsContractError(
+            "wave2 emptyhome fixture must contain only .gitkeep "
+            f"({context}): {[p.name for p in extras]}"
+        )
+
+
+def stage_wave2_fixtures(
+    work: Path,
+    fixtures: list[str],
+    chmod_map: dict[str, int] | None = None,
+    *,
+    fixtures_root: Path | None = None,
+) -> None:
+    """Stage fixtures for wave2 execution.
+
+    emptyhome is Git-tracked via zero-byte .gitkeep, but the staged runtime HOME
+    directory must be truly empty: validate the source marker, copy the dir,
+    then remove the marker from the staged tree.
+    """
+    root = fixtures_root if fixtures_root is not None else WAVE2_ROOT / "fixtures"
+    work.mkdir(parents=True, exist_ok=True)
+    for name in fixtures:
+        src = root / name
+        if not src.exists():
+            raise DiagnosticsContractError(f"missing wave2 fixture: {name}")
+        dest = work / name
+        if name == WAVE2_EMPTYHOME_FIXTURE:
+            validate_wave2_emptyhome_fixture_dir(
+                src, context=f"stage-source:{work.name}"
+            )
+            if dest.exists():
+                raise DiagnosticsContractError(
+                    f"wave2 stage destination exists: {dest}"
+                )
+            dest.mkdir(parents=True)
+            # Intentionally do not copy .gitkeep into runtime HOME.
+            if any(dest.iterdir()):
+                raise DiagnosticsContractError(
+                    f"wave2 staged emptyhome is not empty: {dest}"
+                )
+            continue
+        if src.is_dir():
+            shutil.copytree(src, dest)
+        else:
+            shutil.copy2(src, dest)
+    if chmod_map:
+        for rel, mode in chmod_map.items():
+            path = work / rel
+            if not path.exists():
+                path.write_bytes(b"")
+            path.chmod(mode)
 
 
 def merge_wave2_env(extra: dict[str, str] | None) -> dict[str, str]:
@@ -2241,12 +2331,16 @@ def wave2_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
             raise DiagnosticsContractError(f"missing wave2 fixture: {name}")
         if src.is_dir():
             # Empty directories are retained in Git via emptyhome/.gitkeep only.
+            if name == WAVE2_EMPTYHOME_FIXTURE:
+                validate_wave2_emptyhome_fixture_dir(
+                    src, context=f"fixture:{name}"
+                )
             for path in sorted(src.rglob("*")):
-                if not path.is_file():
-                    continue
                 if skip_wave2_emptyhome_marker(
                     path, root=src, context=f"fixture:{name}"
                 ):
+                    continue
+                if not path.is_file():
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()
@@ -2297,11 +2391,11 @@ def recompute_wave2_file_tree(
     try:
         entries = []
         for path in sorted(case_dir.rglob("*")):
-            if not path.is_file():
-                continue
             if skip_wave2_emptyhome_marker(
                 path, root=case_dir, context=f"case:{case_dir.name}"
             ):
+                continue
+            if not path.is_file():
                 continue
             rel = path.relative_to(case_dir).as_posix()
             if rel.startswith("reference/") or rel == "result.json":
