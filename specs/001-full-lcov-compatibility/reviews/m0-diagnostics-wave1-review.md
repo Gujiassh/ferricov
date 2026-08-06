@@ -88,3 +88,9 @@ validation largely trusted index/result self-hashes. The repair adds:
 All wave1 results remain `oracle_reference` only. They must not be promoted to
 Ferricov product compatibility without a later differential against a distinct
 Ferricov executable.
+
+## Recapture rework (fail-closed env/cleanup)
+
+- `container_absent` fails closed on nonzero/timeout/`OSError` docker ps observer results.
+- Oracle command environment is produced by in-container `env -i` with only declared variables; effective env is probed and retained, not assumed from constants alone.
+- All 26 wave1 cases were recaptured on pinned image after these capture fixes.

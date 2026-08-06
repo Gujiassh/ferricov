@@ -505,7 +505,8 @@
             "inherits_host_environment",
             "declared_variables",
             "effective_environment_variables",
-            "reviewed_exclusions"
+            "reviewed_exclusions",
+            "command_wrapper"
           ],
           "properties": {
             "mode": {
@@ -527,6 +528,12 @@
               }
             },
             "reviewed_exclusions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "command_wrapper": {
               "type": "array",
               "items": {
                 "type": "string"

@@ -22,20 +22,32 @@ FILE_TREE_SEMANTICS = "workspace_including_inputs"
 CLEANUP_POLICY = (
     "remove_case_workdir_before_capture_and_force_remove_named_container"
 )
-DECLARED_ENV = {
+# Exact variables applied to the Oracle command via in-container `env -i`.
+# Docker host CLI uses a fixed minimal env; no ambient host PATH/HOME is inherited.
+DECLARED_COMMAND_ENV = {
     "HOME": "/work",
     "LANG": "C",
     "LC_ALL": "C",
     "TZ": "UTC",
     "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 }
+# Fixed host-side env for launching docker CLI only (not the Oracle command env).
+DOCKER_CLI_HOST_ENV = {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+}
 ENVIRONMENT_POLICY = {
-    "mode": "declared_clean_env",
+    "mode": "in_container_env_dash_i_clean",
     "inherits_host_environment": False,
-    "declared_variables": DECLARED_ENV,
-    "effective_environment_variables": DECLARED_ENV,
+    "declared_variables": DECLARED_COMMAND_ENV,
+    "command_wrapper": ["env", "-i"],
     "reviewed_exclusions": [
-        "host process environment is not inherited; only declared Docker -e values are applied"
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
     ],
 }
 EXECUTION_ENVIRONMENT = {
@@ -43,11 +55,12 @@ EXECUTION_ENVIRONMENT = {
     "network": "none",
     "user": "1000:1000",
     "workdir": "/work",
-    "env": DECLARED_ENV,
+    "env": DECLARED_COMMAND_ENV,
     "tmpfs": ["/tmp:rw,exec,mode=1777"],
     "timeout_seconds": TIMEOUT_SECONDS,
     "cleanup": CLEANUP_POLICY,
     "environment_policy": ENVIRONMENT_POLICY,
+    "docker_cli_host_env": DOCKER_CLI_HOST_ENV,
 }
 
 
@@ -542,34 +555,69 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
     return result
 
 
+class Wave1CaptureError(RuntimeError):
+    """Fail-closed capture failure."""
+
+
 def container_absent(name: str) -> bool:
-    observed = subprocess.run(
-        ["docker", "ps", "-a", "--format", "{{.Names}}"],
-        check=False,
-        capture_output=True,
-        text=True,
-        timeout=30,
-    )
-    names = observed.stdout.splitlines() if observed.returncode == 0 else []
+    """Return True only when docker ps succeeds and the named container is absent.
+
+    Observer errors (nonzero docker ps, timeout, empty observer failure) raise.
+    Nonzero ps is never interpreted as an empty/absent list.
+    """
+    try:
+        observed = subprocess.run(
+            ["docker", "ps", "-a", "--format", "{{.Names}}"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            env=DOCKER_CLI_HOST_ENV,
+        )
+    except subprocess.TimeoutExpired as error:
+        raise Wave1CaptureError(
+            f"docker ps observer timed out while checking {name}"
+        ) from error
+    except OSError as error:
+        raise Wave1CaptureError(
+            f"docker ps observer failed to execute while checking {name}: {error}"
+        ) from error
+    if observed.returncode != 0:
+        raise Wave1CaptureError(
+            "docker ps observer failed: "
+            f"rc={observed.returncode} stderr={observed.stderr!r}"
+        )
+    names = [line for line in observed.stdout.splitlines() if line]
     return name not in names
 
 
-def force_remove_container(name: str) -> dict[str, Any]:
-    """Stop/rm named container and verify absence.
+def force_remove_container(name: str, *, direct_child_reaped: bool) -> dict[str, Any]:
+    """Stop/rm named container and verify absence with fail-closed observers.
 
     Docker observations use process_group_empty=null because the host process
     group is not the container process model.
     """
     if not container_absent(name):
-        subprocess.run(
+        removal = subprocess.run(
             ["docker", "rm", "-f", name],
             check=False,
             capture_output=True,
+            text=True,
             timeout=30,
+            env=DOCKER_CLI_HOST_ENV,
         )
+        if removal.returncode != 0 and not container_absent(name):
+            raise Wave1CaptureError(
+                f"docker rm -f failed and container still present: {name} "
+                f"rc={removal.returncode} stderr={removal.stderr!r}"
+            )
     absent = container_absent(name)
     if not absent:
-        raise RuntimeError(f"wave1 container survived cleanup: {name}")
+        raise Wave1CaptureError(f"wave1 container survived cleanup: {name}")
+    if not direct_child_reaped:
+        raise Wave1CaptureError(
+            f"wave1 docker CLI child was not reaped before cleanup confirmation: {name}"
+        )
     return {
         "policy": CLEANUP_POLICY,
         "direct_child_reaped": True,
@@ -580,20 +628,14 @@ def force_remove_container(name: str) -> dict[str, Any]:
     }
 
 
-def run_case(spec: dict[str, Any]) -> dict[str, Any]:
-    work = CASES / spec["id"]
-    if work.exists():
-        shutil.rmtree(work)
-    stage(work, spec["fixtures"])
-    ref = work / "reference"
-    ref.mkdir()
-    container_name = f"ferricov-diag-wave1-{spec['id']}"
-    # Ensure any previous same-named container is gone before launch.
-    force_remove_container(container_name)
-    env_flags: list[str] = []
-    for key, value in DECLARED_ENV.items():
-        env_flags.extend(["-e", f"{key}={value}"])
-    # Deliberate clean/declared environment only: do not pass host env.
+def command_env_assignments() -> list[str]:
+    return [f"{key}={value}" for key, value in sorted(DECLARED_COMMAND_ENV.items())]
+
+
+def probe_effective_command_environment() -> dict[str, str]:
+    """Observe the exact environment the Oracle command wrapper produces."""
+    container_name = "ferricov-diag-wave1-env-probe"
+    force_remove_container(container_name, direct_child_reaped=True)
     cmd = [
         "docker",
         "run",
@@ -605,28 +647,85 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         EXECUTION_ENVIRONMENT["user"],
         "-w",
         EXECUTION_ENVIRONMENT["workdir"],
-        *env_flags,
+        "--tmpfs",
+        EXECUTION_ENVIRONMENT["tmpfs"][0],
+        IMAGE,
+        "env",
+        "-i",
+        *command_env_assignments(),
+        "env",
+        "-0",
+    ]
+    completed = subprocess.run(
+        cmd,
+        check=False,
+        capture_output=True,
+        timeout=TIMEOUT_SECONDS,
+        env=DOCKER_CLI_HOST_ENV,
+    )
+    force_remove_container(container_name, direct_child_reaped=True)
+    if completed.returncode != 0:
+        raise Wave1CaptureError(
+            "failed to probe effective command environment: "
+            f"rc={completed.returncode} stderr={completed.stderr!r}"
+        )
+    effective: dict[str, str] = {}
+    for entry in completed.stdout.split(b"\0"):
+        if not entry:
+            continue
+        if b"=" not in entry:
+            raise Wave1CaptureError(
+                f"malformed env probe entry: {entry!r}"
+            )
+        key, value = entry.split(b"=", 1)
+        effective[key.decode("ascii")] = value.decode("ascii")
+    if effective != DECLARED_COMMAND_ENV:
+        raise Wave1CaptureError(
+            "effective command environment differs from declared clean env: "
+            f"observed={effective!r} declared={DECLARED_COMMAND_ENV!r}"
+        )
+    return effective
+
+
+def run_case(
+    spec: dict[str, Any],
+    effective_environment_variables: dict[str, str],
+) -> dict[str, Any]:
+    work = CASES / spec["id"]
+    if work.exists():
+        shutil.rmtree(work)
+    stage(work, spec["fixtures"])
+    ref = work / "reference"
+    ref.mkdir()
+    container_name = f"ferricov-diag-wave1-{spec['id']}"
+    force_remove_container(container_name, direct_child_reaped=True)
+    # Oracle command runs under in-container env -i with only declared variables.
+    cmd = [
+        "docker",
+        "run",
+        "--name",
+        container_name,
+        "--rm",
+        "--network=none",
+        "-u",
+        EXECUTION_ENVIRONMENT["user"],
+        "-w",
+        EXECUTION_ENVIRONMENT["workdir"],
         "--tmpfs",
         EXECUTION_ENVIRONMENT["tmpfs"][0],
         "-v",
         f"{work}:/work:rw",
         IMAGE,
+        "env",
+        "-i",
+        *command_env_assignments(),
         *spec["argv"],
     ]
-    # Host-side subprocess env is also cleaned to the declared set so capture
-    # identity does not depend on ambient host variables.
-    host_env = {
-        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
-        "HOME": os.environ.get("HOME", "/tmp"),
-        "LANG": "C",
-        "LC_ALL": "C",
-        "TZ": "UTC",
-    }
     proc = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        env=host_env,
+        env=DOCKER_CLI_HOST_ENV,
     )
     timed_out = False
     try:
@@ -635,7 +734,6 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         direct_child_reaped = True
     except subprocess.TimeoutExpired:
         timed_out = True
-        # Kill the docker CLI child first, then force-remove the named container.
         proc.kill()
         try:
             stdout, stderr = proc.communicate(timeout=10)
@@ -647,16 +745,29 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
             proc.kill()
             proc.wait(timeout=10)
             direct_child_reaped = True
-    cleanup_outcome = force_remove_container(container_name)
-    cleanup_outcome["direct_child_reaped"] = direct_child_reaped
+    cleanup_outcome = force_remove_container(
+        container_name, direct_child_reaped=direct_child_reaped
+    )
     if not cleanup_outcome["container_absent"] or not cleanup_outcome["direct_child_reaped"]:
-        raise RuntimeError(f"wave1 cleanup not confirmed: {spec['id']}")
+        raise Wave1CaptureError(f"wave1 cleanup not confirmed: {spec['id']}")
+    if stdout is None:
+        stdout = b""
+    if stderr is None:
+        stderr = b""
     (ref / "stdout.bin").write_bytes(stdout)
     (ref / "stderr.bin").write_bytes(stderr)
     (ref / "stdout.txt").write_text(stdout.decode("utf-8", "replace"))
     (ref / "stderr.txt").write_text(stderr.decode("utf-8", "replace"))
     tree = file_tree(work)
     fixtures = fixture_bindings(spec["fixtures"])
+    environment_policy = {
+        **ENVIRONMENT_POLICY,
+        "effective_environment_variables": dict(effective_environment_variables),
+    }
+    execution_environment = {
+        **EXECUTION_ENVIRONMENT,
+        "environment_policy": environment_policy,
+    }
     result = {
         "case_id": spec["id"],
         "kind": spec["kind"],
@@ -667,9 +778,9 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         "fixture_bindings": fixtures,
         "image": IMAGE,
         "upstream_commit": UPSTREAM_COMMIT,
-        "execution_environment": EXECUTION_ENVIRONMENT,
-        "effective_environment_variables": dict(DECLARED_ENV),
-        "environment_policy": ENVIRONMENT_POLICY,
+        "execution_environment": execution_environment,
+        "effective_environment_variables": dict(effective_environment_variables),
+        "environment_policy": environment_policy,
         "timeout_seconds": TIMEOUT_SECONDS,
         "timed_out": timed_out,
         "cleanup": CLEANUP_POLICY,
@@ -692,13 +803,26 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     print(
         f"CASE {spec['id']} exit={exit_status} timed_out={timed_out} "
         f"cleanup_absent={cleanup_outcome['container_absent']} "
-        f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}"
+        f"env_keys={sorted(effective_environment_variables)} "
+        f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}",
+        flush=True,
     )
     return result
 
 
 def main() -> int:
-    results = [run_case(spec) for spec in CASE_SPECS]
+    effective_environment_variables = probe_effective_command_environment()
+    results = [
+        run_case(spec, effective_environment_variables) for spec in CASE_SPECS
+    ]
+    environment_policy = {
+        **ENVIRONMENT_POLICY,
+        "effective_environment_variables": dict(effective_environment_variables),
+    }
+    execution_environment = {
+        **EXECUTION_ENVIRONMENT,
+        "environment_policy": environment_policy,
+    }
     index = {
         "schema_version": 1,
         "wave": "m0-diagnostics-wave1",
@@ -708,7 +832,10 @@ def main() -> int:
         "evidence_status": "oracle_reference",
         "file_tree_semantics": FILE_TREE_SEMANTICS,
         "timeout_seconds": TIMEOUT_SECONDS,
-        "execution_environment": EXECUTION_ENVIRONMENT,
+        "execution_environment": execution_environment,
+        "effective_environment_variables": dict(effective_environment_variables),
+        "environment_policy": environment_policy,
+        "cleanup": CLEANUP_POLICY,
         "case_count": len(results),
         "cases": [
             {
@@ -737,7 +864,10 @@ def main() -> int:
     }
     (WAVE_ROOT / "result.json").write_text(canonical_json(index))
     print(
-        f"WAVE1_INDEX cases={len(results)} sha256={sha256_file(WAVE_ROOT / 'result.json')}"
+        f"WAVE1_INDEX cases={len(results)} "
+        f"sha256={sha256_file(WAVE_ROOT / 'result.json')} "
+        f"effective_env={sorted(effective_environment_variables)}",
+        flush=True,
     )
     return 0
 

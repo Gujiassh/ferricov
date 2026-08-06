@@ -1,1 +1,123 @@
-{"argv":["geninfo"],"case_id":"diag-noargs-geninfo-writable","cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-noargs-geninfo-writable","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"command":"geninfo","effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"evidence_status":"oracle_reference","execution_environment":{"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","docker_image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","env":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"network":"none","timeout_seconds":30,"tmpfs":["/tmp:rw,exec,mode=1777"],"user":"1000:1000","workdir":"/work"},"exit_status":255,"file_tree":[],"file_tree_semantics":"workspace_including_inputs","file_tree_sha256":"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945","fixture_bindings":[],"fixtures":[],"image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","kind":"startup_boundary","notes":"Writable /tmp and /work; true geninfo no-args path.","planned_case_ids":["DIAG-NOARGS-GENINFO-001"],"product_compatibility_evidence":false,"stderr_bytes":83,"stderr_sha256":"7cb6f0570a71b64677014dd751c180642d14c98b30369f640acd3598a5c6d2c7","stdout_bytes":58,"stdout_sha256":"b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76","timed_out":false,"timeout_seconds":30,"upstream_commit":"74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"}
+{
+  "argv": [
+    "geninfo"
+  ],
+  "case_id": "diag-noargs-geninfo-writable",
+  "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+  "cleanup_outcome": {
+    "container_absent": true,
+    "container_name": "ferricov-diag-wave1-diag-noargs-geninfo-writable",
+    "direct_child_reaped": true,
+    "named_container_removed": true,
+    "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "process_group_empty": null
+  },
+  "command": "geninfo",
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
+  "environment_policy": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "declared_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "inherits_host_environment": false,
+    "mode": "in_container_env_dash_i_clean",
+    "reviewed_exclusions": [
+      "host process environment is not inherited by docker CLI or Oracle command",
+      "Oracle command environment is produced by in-container env -i with only declared_variables",
+      "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+    ]
+  },
+  "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "docker_cli_host_env": {
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "environment_policy": {
+      "command_wrapper": [
+        "env",
+        "-i"
+      ],
+      "declared_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "inherits_host_environment": false,
+      "mode": "in_container_env_dash_i_clean",
+      "reviewed_exclusions": [
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+      ]
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
+  "exit_status": 255,
+  "file_tree": [],
+  "file_tree_semantics": "workspace_including_inputs",
+  "file_tree_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "fixture_bindings": [],
+  "fixtures": [],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "startup_boundary",
+  "notes": "Writable /tmp and /work; true geninfo no-args path.",
+  "planned_case_ids": [
+    "DIAG-NOARGS-GENINFO-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 83,
+  "stderr_sha256": "7cb6f0570a71b64677014dd751c180642d14c98b30369f640acd3598a5c6d2c7",
+  "stdout_bytes": 58,
+  "stdout_sha256": "b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76",
+  "timed_out": false,
+  "timeout_seconds": 30,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

@@ -1,1 +1,157 @@
-{"argv":["lcov","--config-file","ignore-format.rc","--no-function-coverage","--ignore-errors","negative","--add-tracefile","malformed-da.info","--output-file","out.info"],"case_id":"diag-ignore-precedence-cli-replaces-rc","cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore-precedence-cli-replaces-rc","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"command":"lcov","effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"evidence_status":"oracle_reference","execution_environment":{"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","docker_image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","env":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"network":"none","timeout_seconds":30,"tmpfs":["/tmp:rw,exec,mode=1777"],"user":"1000:1000","workdir":"/work"},"exit_status":1,"file_tree":[{"bytes":23,"path":"ignore-format.rc","sha256":"f7ae0aeafdb683f1d673392e38056c615ec97b0eb25a65d0ea26828babaa04a4"},{"bytes":94,"path":"malformed-da.info","sha256":"19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"}],"file_tree_semantics":"workspace_including_inputs","file_tree_sha256":"83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768","fixture_bindings":[{"bytes":94,"path":"malformed-da.info","sha256":"19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"},{"bytes":23,"path":"ignore-format.rc","sha256":"f7ae0aeafdb683f1d673392e38056c615ec97b0eb25a65d0ea26828babaa04a4"}],"fixtures":["malformed-da.info","ignore-format.rc"],"image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","kind":"ignore_precedence_control","notes":"RC ignores format, CLI supplies only negative; format remains fatal.","planned_case_ids":["DIAG-IGNORE-PRECEDENCE-001"],"product_compatibility_evidence":false,"stderr_bytes":276,"stderr_sha256":"7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017","stdout_bytes":90,"stdout_sha256":"8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614","timed_out":false,"timeout_seconds":30,"upstream_commit":"74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"}
+{
+  "argv": [
+    "lcov",
+    "--config-file",
+    "ignore-format.rc",
+    "--no-function-coverage",
+    "--ignore-errors",
+    "negative",
+    "--add-tracefile",
+    "malformed-da.info",
+    "--output-file",
+    "out.info"
+  ],
+  "case_id": "diag-ignore-precedence-cli-replaces-rc",
+  "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+  "cleanup_outcome": {
+    "container_absent": true,
+    "container_name": "ferricov-diag-wave1-diag-ignore-precedence-cli-replaces-rc",
+    "direct_child_reaped": true,
+    "named_container_removed": true,
+    "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "process_group_empty": null
+  },
+  "command": "lcov",
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
+  "environment_policy": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "declared_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "inherits_host_environment": false,
+    "mode": "in_container_env_dash_i_clean",
+    "reviewed_exclusions": [
+      "host process environment is not inherited by docker CLI or Oracle command",
+      "Oracle command environment is produced by in-container env -i with only declared_variables",
+      "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+    ]
+  },
+  "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "docker_cli_host_env": {
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "environment_policy": {
+      "command_wrapper": [
+        "env",
+        "-i"
+      ],
+      "declared_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "inherits_host_environment": false,
+      "mode": "in_container_env_dash_i_clean",
+      "reviewed_exclusions": [
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+      ]
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
+  "exit_status": 1,
+  "file_tree": [
+    {
+      "bytes": 23,
+      "path": "ignore-format.rc",
+      "sha256": "f7ae0aeafdb683f1d673392e38056c615ec97b0eb25a65d0ea26828babaa04a4"
+    },
+    {
+      "bytes": 94,
+      "path": "malformed-da.info",
+      "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
+    }
+  ],
+  "file_tree_semantics": "workspace_including_inputs",
+  "file_tree_sha256": "83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768",
+  "fixture_bindings": [
+    {
+      "bytes": 94,
+      "path": "malformed-da.info",
+      "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
+    },
+    {
+      "bytes": 23,
+      "path": "ignore-format.rc",
+      "sha256": "f7ae0aeafdb683f1d673392e38056c615ec97b0eb25a65d0ea26828babaa04a4"
+    }
+  ],
+  "fixtures": [
+    "malformed-da.info",
+    "ignore-format.rc"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "ignore_precedence_control",
+  "notes": "RC ignores format, CLI supplies only negative; format remains fatal.",
+  "planned_case_ids": [
+    "DIAG-IGNORE-PRECEDENCE-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 276,
+  "stderr_sha256": "7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017",
+  "stdout_bytes": 90,
+  "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614",
+  "timed_out": false,
+  "timeout_seconds": 30,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

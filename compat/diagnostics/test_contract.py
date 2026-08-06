@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import os
 import unittest
+from unittest.mock import patch, MagicMock
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -474,6 +475,66 @@ class DiagnosticsContractTests(unittest.TestCase):
             self.assertTrue(entry["cleanup_outcome"]["named_container_removed"])
             self.assertFalse(
                 entry["environment_policy"]["inherits_host_environment"]
+            )
+
+    def test_container_absent_observer_failure_is_fail_closed(self) -> None:
+        import importlib.util
+
+        capture_path = (
+            contract.WAVE1_ROOT / "scripts" / "capture_wave1.py"
+        )
+        spec = importlib.util.spec_from_file_location(
+            "ferricov_diag_wave1_capture", capture_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load wave1 capture module")
+        capture = importlib.util.module_from_spec(spec)
+        # Avoid executing main; load module body only.
+        spec.loader.exec_module(capture)
+
+        # Nonzero docker ps must never be treated as empty/absent.
+        failed = MagicMock()
+        failed.returncode = 1
+        failed.stdout = ""
+        failed.stderr = "observer boom"
+        with patch.object(capture.subprocess, "run", return_value=failed):
+            with self.assertRaises(capture.Wave1CaptureError) as raised:
+                capture.container_absent("ferricov-diag-wave1-probe")
+        self.assertIn("docker ps observer failed", str(raised.exception))
+
+        # Timeout is also fail-closed.
+        with patch.object(
+            capture.subprocess,
+            "run",
+            side_effect=capture.subprocess.TimeoutExpired(cmd=["docker"], timeout=30),
+        ):
+            with self.assertRaises(capture.Wave1CaptureError) as raised:
+                capture.container_absent("ferricov-diag-wave1-probe")
+        self.assertIn("timed out", str(raised.exception))
+
+    def test_wave1_effective_environment_is_exact_command_env(self) -> None:
+        wave1 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:")
+        ]
+        expected = contract.WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
+        for entry in wave1:
+            self.assertEqual(entry["effective_environment_variables"], expected)
+            self.assertEqual(
+                entry["environment_policy"]["effective_environment_variables"],
+                expected,
+            )
+            self.assertEqual(
+                entry["environment_policy"]["command_wrapper"],
+                ["env", "-i"],
+            )
+            self.assertFalse(
+                entry["environment_policy"]["inherits_host_environment"]
+            )
+            # No ambient host leakage keys.
+            self.assertNotIn(
+                "EXTRA_HOST_LEAK", entry["effective_environment_variables"]
             )
 
 

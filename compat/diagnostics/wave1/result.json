@@ -1,1 +1,1894 @@
-{"case_count":26,"cases":[{"argv":["geninfo"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-noargs-geninfo-writable","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":255,"file_tree_sha256":"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945","fixtures":[],"id":"diag-noargs-geninfo-writable","kind":"startup_boundary","observation_sha256":"d9b799d48b18416063a548be8d8cc2c9e657780276b50c504217e88a75c2c065","path":"cases/diag-noargs-geninfo-writable/result.json","planned_case_ids":["DIAG-NOARGS-GENINFO-001"],"stderr_sha256":"7cb6f0570a71b64677014dd751c180642d14c98b30369f640acd3598a5c6d2c7","stdout_sha256":"b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76"},{"argv":["lcov","--no-function-coverage","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore0-format-da","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3","fixtures":["malformed-da.info"],"id":"diag-ignore0-format-da","kind":"named_error_fatal","observation_sha256":"d6347364d8abfe20e5a3e73b8944939ccbe4b7ae86b7fcbc9d7f04a0cb922fc0","path":"cases/diag-ignore0-format-da/result.json","planned_case_ids":["DIAG-IGNORE-ERROR-001"],"stderr_sha256":"7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017","stdout_sha256":"8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"},{"argv":["lcov","--no-function-coverage","--ignore-errors","format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore1-format-da","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582","fixtures":["malformed-da.info"],"id":"diag-ignore1-format-da","kind":"named_error_ignore_one","observation_sha256":"4ae6f01130c333473c63f71c031ab3d542a987b86fd42c3a313e1bbcc2925a2a","path":"cases/diag-ignore1-format-da/result.json","planned_case_ids":["DIAG-IGNORE-WARN-001"],"stderr_sha256":"a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b","stdout_sha256":"66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"},{"argv":["lcov","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore2-format-da","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582","fixtures":["malformed-da.info"],"id":"diag-ignore2-format-da","kind":"named_error_ignore_two","observation_sha256":"59fa78388ae8fce6e9383327ed4c6abc4e4000e951f66b3b216835552b460fd3","path":"cases/diag-ignore2-format-da/result.json","planned_case_ids":["DIAG-IGNORE-SILENT-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"},{"argv":["lcov","--no-function-coverage","--keep-going","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-keep-going-format-da","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582","fixtures":["malformed-da.info"],"id":"diag-keep-going-format-da","kind":"keep_going_control","observation_sha256":"5576730d949c60af988219e6a97467469d7d53b2d38fde3ae234d02896897e5b","path":"cases/diag-keep-going-format-da/result.json","planned_case_ids":["DIAG-KEEP-GOING-001"],"stderr_sha256":"96d4fdac9c8fdc93c9151fca101fca0025e6f8b6b8c3270d908d728821eb335c","stdout_sha256":"c460db89e2d3407991c0b16b31a75c19620b6a4ca973b86a854998552112d0c2"},{"argv":["lcov","--no-function-coverage","--ignore-errors","notaclass","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore-unknown","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":2,"file_tree_sha256":"1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3","fixtures":["malformed-da.info"],"id":"diag-ignore-unknown","kind":"ignore_unknown_control","observation_sha256":"e975de67f65aaa1a4990a2d04b9b06b58e5e3490fc31c57b0a311a6dbedcd423","path":"cases/diag-ignore-unknown/result.json","planned_case_ids":["DIAG-IGNORE-UNKNOWN-001"],"stderr_sha256":"f8eb9ca6c92e2bb1ea75e8239099813b14b909ed4804c629233f56ed0e8a599d","stdout_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"argv":["lcov","--config-file","ignore-format.rc","--no-function-coverage","--ignore-errors","negative","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-ignore-precedence-cli-replaces-rc","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768","fixtures":["malformed-da.info","ignore-format.rc"],"id":"diag-ignore-precedence-cli-replaces-rc","kind":"ignore_precedence_control","observation_sha256":"3abc2a92e2372e92cee2d5ab369969aff6c5a8a3ab396fbf7e7c5e95cb50ada7","path":"cases/diag-ignore-precedence-cli-replaces-rc/result.json","planned_case_ids":["DIAG-IGNORE-PRECEDENCE-001"],"stderr_sha256":"7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017","stdout_sha256":"8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"},{"argv":["lcov","--no-function-coverage","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-warning0-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b","fixtures":["tn-sanitize.info"],"id":"diag-warning0-format-sanitize","kind":"warning_control","observation_sha256":"9a626cd91c3a086a49e498a482caa9ed4227c15be585260e27a2c128c4003044","path":"cases/diag-warning0-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8","stdout_sha256":"c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"},{"argv":["lcov","--no-function-coverage","--ignore-errors","format","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-warning1-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b","fixtures":["tn-sanitize.info"],"id":"diag-warning1-format-sanitize","kind":"warning_control","observation_sha256":"94c73d1a653fe07cadac1d5b3eb01a24dddc355121ab145816743d5c97205d9a","path":"cases/diag-warning1-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"},{"argv":["lcov","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-warning2-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b","fixtures":["tn-sanitize.info"],"id":"diag-warning2-format-sanitize","kind":"warning_control","observation_sha256":"4d24441294578a9e5d27d63524d8ab0378c7ae2083bf542f7a8032dbe48ff16d","path":"cases/diag-warning2-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"},{"argv":["lcov","--config-file","promote.rc","--no-function-coverage","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-promote0-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"b4dfdcdf5c46197aa8bc133d41d5abe5535195064ff40d2807121d3e96940f66","fixtures":["tn-sanitize.info","promote.rc"],"id":"diag-promote0-format-sanitize","kind":"warning_promotion_control","observation_sha256":"4b9ca1fa87b3deca5d0fb7a196cad97017920999622c72a9673f7c858a22c7ca","path":"cases/diag-promote0-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"6e60f32ad9cd6f50294f73fcc11e11cb49574b3e970fa9d7956b515ea46ba34e","stdout_sha256":"4d87b2d0a1c84bdcdf773c1db6105ca9875dc2f3facf757c692fe2e5de800fb9"},{"argv":["lcov","--config-file","promote.rc","--no-function-coverage","--ignore-errors","format","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-promote1-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854","fixtures":["tn-sanitize.info","promote.rc"],"id":"diag-promote1-format-sanitize","kind":"warning_promotion_control","observation_sha256":"f742511fb3bda3f2af62fefba72c30ce17721217fad843bc4a063622deb799ca","path":"cases/diag-promote1-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8","stdout_sha256":"c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"},{"argv":["lcov","--config-file","promote.rc","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","tn-sanitize.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-promote2-format-sanitize","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854","fixtures":["tn-sanitize.info","promote.rc"],"id":"diag-promote2-format-sanitize","kind":"warning_promotion_control","observation_sha256":"06f4b06b1e2c992ad7027b60895197652b52a5804f8bbffff3479a3ea6846b43","path":"cases/diag-promote2-format-sanitize/result.json","planned_case_ids":["DIAG-WARNING-PROMOTE-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"},{"argv":["lcov","--config-file","maxmsg.rc","--no-function-coverage","--keep-going","--add-tracefile","many-format.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-max-messages-format","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2","fixtures":["many-format.info","maxmsg.rc"],"id":"diag-max-messages-format","kind":"message_suppression_control","observation_sha256":"b9a883ef543be122fb36811d566efa394e9a312c7008273eb7b58a3ee2086e7e","path":"cases/diag-max-messages-format/result.json","planned_case_ids":["DIAG-MAX-MESSAGES-001"],"stderr_sha256":"02b2897582f68eb423eacc9af78e7f4be17ab2dd88c8a0f73d2687fe04e51df1","stdout_sha256":"460de6340072ee561561a102f2e7c32e6d7e998201dbd534efd777eb0415d24f"},{"argv":["lcov","--config-file","expect-count-false.rc","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-expected-count-file-false","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":2,"file_tree_sha256":"cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4","fixtures":["malformed-da.info","expect-count-false.rc"],"id":"diag-expected-count-file-false","kind":"expected_count_control","observation_sha256":"5e0487a0ba0af01fcec55b2a05603090b5a1ec69807073c496eada9c499efbad","path":"cases/diag-expected-count-file-false/result.json","planned_case_ids":["DIAG-EXPECTED-COUNT-FILE-001"],"stderr_sha256":"e8a8e26225db126371c014851cda0a06b9ce5a8980c3882922a5f42512e1978e","stdout_sha256":"52ec83b3ffa310274ea1cb200a29cd9d9d6f6b11420ad158f5bb9bee83c3b80b"},{"argv":["lcov","--config-file","expect-count-true.rc","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-expected-count-file-true","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"09cea71a84988458146e664daf29341aee571fece58593fb6a9052be33caaf83","fixtures":["malformed-da.info","expect-count-true.rc"],"id":"diag-expected-count-file-true","kind":"expected_count_control","observation_sha256":"33f3a6a812b343780a41ac0978bba5ab2dd1e4ab601aaeeb1d6752a7b398eeb3","path":"cases/diag-expected-count-file-true/result.json","planned_case_ids":["DIAG-EXPECTED-COUNT-FILE-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"},{"argv":["lcov","--config-file","expect-manual.rc","--no-function-coverage","--ignore-errors","format,format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-expected-count-manual-file","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"bc053bf36047d2d9d99372bdd0264945c6e2779d7c46e8a788b0682a717a846a","fixtures":["malformed-da.info","expect-manual.rc"],"id":"diag-expected-count-manual-file","kind":"expected_count_control","observation_sha256":"5a70074f814ccda1554872e76ce0ff73c79dd4fc65f3b179ebb7077dcfde7d55","path":"cases/diag-expected-count-manual-file/result.json","planned_case_ids":["DIAG-EXPECTED-COUNT-MANUAL-FILE-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"},{"argv":["lcov","--rc","expect_message_count=format:0","--no-function-coverage","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-expected-count-manual-rc","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":2,"file_tree_sha256":"1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3","fixtures":["malformed-da.info"],"id":"diag-expected-count-manual-rc","kind":"expected_count_control","observation_sha256":"8a34d1c50428606e86022a6a58ac9820667a953ce6375d22c141b7bcb9e33159","path":"cases/diag-expected-count-manual-rc/result.json","planned_case_ids":["DIAG-EXPECTED-COUNT-MANUAL-RC-001"],"stderr_sha256":"48c11bcdef6b5b75c3755ccc5e92c07c734c3309eb4b5ac5f000cb73a15bafa4","stdout_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},{"argv":["lcov","--no-function-coverage","--msg-log","messages.log","--ignore-errors","format","--add-tracefile","malformed-da.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-message-log","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"14198c4562b2fa2943da53842dd4e1c6d869099ae0e2744d89dd14f4dbf8180b","fixtures":["malformed-da.info"],"id":"diag-message-log","kind":"message_log_control","observation_sha256":"b93b1314e213d6596bdf5b2645a583d865e22e37c802a8fd16a21d601fdc7342","path":"cases/diag-message-log/result.json","planned_case_ids":["DIAG-MESSAGE-LOG-001"],"stderr_sha256":"a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b","stdout_sha256":"66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"},{"argv":["perl2lcov","--keep-going","--output","out.info","cover_db"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-perl2lcov-keep","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906","fixtures":["cover_db"],"id":"diag-perl2lcov-keep","kind":"converter_keep_trap","observation_sha256":"44142726689b4dbc7b4a2de7b3bd2a1b5b67d7197e6849b921a0c3f90a6579f6","path":"cases/diag-perl2lcov-keep/result.json","planned_case_ids":["DIAG-PERL2LCOV-KEEP-001"],"stderr_sha256":"572cca15f114a15c7d674fc7c945ed07f505efb57e3b1442e2ac301a26d93476","stdout_sha256":"9a48312d3649cba8f882421ff9ac5303e262b7156fcbc99d0117a30287a96a47"},{"argv":["llvm2lcov","--keep-going","--output","out.info","llvm-keep.json"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-llvm2lcov-keep","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"6d5a3c51751d1bca9c73e0619763456bef9cc234bc26578170fcfdf0a8fcd545","fixtures":["llvm-keep.json"],"id":"diag-llvm2lcov-keep","kind":"converter_keep_trap","observation_sha256":"5f6537f2b7f47a44789715e4a000a04a8eddb2e370ed0ac9b7b197378cffd3d6","path":"cases/diag-llvm2lcov-keep/result.json","planned_case_ids":["DIAG-LLVM2LCOV-KEEP-001"],"stderr_sha256":"4484d422bfebd610e1b5a12bad618959dcb31c152e6dfbba62be5844b5102cad","stdout_sha256":"25302739f8dabf07027dc263ef042ec2d1d9c05c631b6ec5e2a29353b4017f3f"},{"argv":["py2lcov","--keep-going","--output","out.info","coverage-keep.xml"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-py2lcov-keep","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c","fixtures":["coverage-keep.xml"],"id":"diag-py2lcov-keep","kind":"converter_keep_trap","observation_sha256":"8fa4027026bb65cb24ea14a7159813c7e7019e74e5512bafbb366494e988fd04","path":"cases/diag-py2lcov-keep/result.json","planned_case_ids":["DIAG-PY2LCOV-KEEP-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"53bf0b384623443b0b5a7cf095c082afd5c28756c2b35db6e8d9c9ffb4777105"},{"argv":["xml2lcov","--keep-going","--output","out.info","coverage-keep.xml"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-xml2lcov-keep","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c","fixtures":["coverage-keep.xml"],"id":"diag-xml2lcov-keep","kind":"converter_keep_trap","observation_sha256":"59aa6f34e615defb8a35202e50937a078349a0be9b5d504d8ef41fc29f3ac4b7","path":"cases/diag-xml2lcov-keep/result.json","planned_case_ids":["DIAG-XML2LCOV-KEEP-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"15991091cf6482c67d61cdb5411022cdcc31a59322b5206f4c990f48caf8c461"},{"argv":["xml2lcov","--keep-going","--output","out.info","broken-no-sources.xml"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-diag-converter-keep-boundary","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":1,"file_tree_sha256":"ca83adba43eedc6bc3dae4e3308257762c49eb64c23f79503525bfdbddea5074","fixtures":["broken-no-sources.xml"],"id":"diag-converter-keep-boundary","kind":"converter_keep_trap","observation_sha256":"1110e2f7a7da8f20426af379555a21bf8113494c1d8f5b7161022eff2ea99b1e","path":"cases/diag-converter-keep-boundary/result.json","planned_case_ids":["DIAG-CONVERTER-KEEP-BOUNDARY-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"2179ace6576aefb53f790a7856642b3b74e2321d5383ee478169ae6ad797ea3e"},{"argv":["lcov","--no-function-coverage","--parallel","1","--add-tracefile","a.info","--add-tracefile","b.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-par-serial-parity-parallel1","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed","fixtures":["a.info","b.info"],"id":"par-serial-parity-parallel1","kind":"parallel_control","observation_sha256":"1868b49a1ee7a2caa13a5dd3dd99a0bc7e0889d35a315c20fa7acacf67b31922","path":"cases/par-serial-parity-parallel1/result.json","planned_case_ids":["PAR-SERIAL-PARITY-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"62aa7e9ecf95871ce31f8f4ee08aeabae089d1306dd5622c2a0f301dffc3e08d"},{"argv":["lcov","--no-function-coverage","--parallel","2","--add-tracefile","a.info","--add-tracefile","b.info","--output-file","out.info"],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","cleanup_outcome":{"container_absent":true,"container_name":"ferricov-diag-wave1-par-serial-parity-parallel2","direct_child_reaped":true,"named_container_removed":true,"policy":"remove_case_workdir_before_capture_and_force_remove_named_container","process_group_empty":null},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"exit_status":0,"file_tree_sha256":"a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed","fixtures":["a.info","b.info"],"id":"par-serial-parity-parallel2","kind":"parallel_control","observation_sha256":"2154d3fb951c58cd4dd2cf0a1ced3235113642e322db90d09eb4845997732fda","path":"cases/par-serial-parity-parallel2/result.json","planned_case_ids":["PAR-SERIAL-PARITY-001"],"stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","stdout_sha256":"7e6a75267a07bd5c68f5818f711e9b4dbad504addf95a939ed635c4d7dd9156e"}],"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"evidence_status":"oracle_reference","execution_environment":{"cleanup":"remove_case_workdir_before_capture_and_force_remove_named_container","docker_image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","env":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"environment_policy":{"declared_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"effective_environment_variables":{"HOME":"/work","LANG":"C","LC_ALL":"C","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TZ":"UTC"},"inherits_host_environment":false,"mode":"declared_clean_env","reviewed_exclusions":["host process environment is not inherited; only declared Docker -e values are applied"]},"network":"none","timeout_seconds":30,"tmpfs":["/tmp:rw,exec,mode=1777"],"user":"1000:1000","workdir":"/work"},"file_tree_semantics":"workspace_including_inputs","image":"sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7","product_compatibility_evidence":false,"schema_version":1,"timeout_seconds":30,"upstream_commit":"74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5","wave":"m0-diagnostics-wave1"}
+{
+  "case_count": 26,
+  "cases": [
+    {
+      "argv": [
+        "geninfo"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-noargs-geninfo-writable",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 255,
+      "file_tree_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "fixtures": [],
+      "id": "diag-noargs-geninfo-writable",
+      "kind": "startup_boundary",
+      "observation_sha256": "8e625b5bb7157d37b31e62e1cc8839384633c2b31834fd8813ab9598a7da357c",
+      "path": "cases/diag-noargs-geninfo-writable/result.json",
+      "planned_case_ids": [
+        "DIAG-NOARGS-GENINFO-001"
+      ],
+      "stderr_sha256": "7cb6f0570a71b64677014dd751c180642d14c98b30369f640acd3598a5c6d2c7",
+      "stdout_sha256": "b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore0-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-ignore0-format-da",
+      "kind": "named_error_fatal",
+      "observation_sha256": "8fcbecd9e9a6231cbf706108014c90f4603cb4d003be97ae7b876cc7833cb29c",
+      "path": "cases/diag-ignore0-format-da/result.json",
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017",
+      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore1-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-ignore1-format-da",
+      "kind": "named_error_ignore_one",
+      "observation_sha256": "fc33448cb18a25725362362dcf6a657eaa301ff94a44b00a77b81592be7d2234",
+      "path": "cases/diag-ignore1-format-da/result.json",
+      "planned_case_ids": [
+        "DIAG-IGNORE-WARN-001"
+      ],
+      "stderr_sha256": "a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b",
+      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore2-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-ignore2-format-da",
+      "kind": "named_error_ignore_two",
+      "observation_sha256": "d41e5a4572dcf351125fcd9df3e5485f6969de289d30ff1525896a56c0f26921",
+      "path": "cases/diag-ignore2-format-da/result.json",
+      "planned_case_ids": [
+        "DIAG-IGNORE-SILENT-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--keep-going",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-keep-going-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-keep-going-format-da",
+      "kind": "keep_going_control",
+      "observation_sha256": "8cb9fb4ba5abcde0bae9692b3e8849d428b3c1cf57b62bda2c6df5bc227a8e32",
+      "path": "cases/diag-keep-going-format-da/result.json",
+      "planned_case_ids": [
+        "DIAG-KEEP-GOING-001"
+      ],
+      "stderr_sha256": "96d4fdac9c8fdc93c9151fca101fca0025e6f8b6b8c3270d908d728821eb335c",
+      "stdout_sha256": "c460db89e2d3407991c0b16b31a75c19620b6a4ca973b86a854998552112d0c2"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "notaclass",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore-unknown",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 2,
+      "file_tree_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-ignore-unknown",
+      "kind": "ignore_unknown_control",
+      "observation_sha256": "abf05935027279d6c2b0b8776a978f0bc86b002585f9707aa7c89efc46a2aaa9",
+      "path": "cases/diag-ignore-unknown/result.json",
+      "planned_case_ids": [
+        "DIAG-IGNORE-UNKNOWN-001"
+      ],
+      "stderr_sha256": "f8eb9ca6c92e2bb1ea75e8239099813b14b909ed4804c629233f56ed0e8a599d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "ignore-format.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore-precedence-cli-replaces-rc",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768",
+      "fixtures": [
+        "malformed-da.info",
+        "ignore-format.rc"
+      ],
+      "id": "diag-ignore-precedence-cli-replaces-rc",
+      "kind": "ignore_precedence_control",
+      "observation_sha256": "cdb2d843988f39b40106cd1c70c412531a1ea20813d6f03401a3b4fb8b002e5d",
+      "path": "cases/diag-ignore-precedence-cli-replaces-rc/result.json",
+      "planned_case_ids": [
+        "DIAG-IGNORE-PRECEDENCE-001"
+      ],
+      "stderr_sha256": "7f11d9171889cc55d86d0bf9af98ef549f81780995584cab80189ca6ac8ab017",
+      "stdout_sha256": "8fb35f277651b9c75737407c25f93d54b923c617422e12f8f476fe5392458614"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning0-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
+      "id": "diag-warning0-format-sanitize",
+      "kind": "warning_control",
+      "observation_sha256": "74082d1c5a9ac9d409c0f59d1f8ef5b49ba2c00ff35cb7d5f93e16ff1a59d9d6",
+      "path": "cases/diag-warning0-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8",
+      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning1-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
+      "id": "diag-warning1-format-sanitize",
+      "kind": "warning_control",
+      "observation_sha256": "d3f7b830ea1927d45072ac80a50ece1dc7c181ea061d167b8143d3cda75dd25c",
+      "path": "cases/diag-warning1-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning2-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
+      "fixtures": [
+        "tn-sanitize.info"
+      ],
+      "id": "diag-warning2-format-sanitize",
+      "kind": "warning_control",
+      "observation_sha256": "885e5153f80b81384956c34781ecb18eb587aa322f273d25589412b35ce0d21a",
+      "path": "cases/diag-warning2-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote0-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "b4dfdcdf5c46197aa8bc133d41d5abe5535195064ff40d2807121d3e96940f66",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
+      "id": "diag-promote0-format-sanitize",
+      "kind": "warning_promotion_control",
+      "observation_sha256": "382467b31ba7230c49b59fd48e8c2ff94e4dadc062a54c5ecfe887b44b66266b",
+      "path": "cases/diag-promote0-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "6e60f32ad9cd6f50294f73fcc11e11cb49574b3e970fa9d7956b515ea46ba34e",
+      "stdout_sha256": "4d87b2d0a1c84bdcdf773c1db6105ca9875dc2f3facf757c692fe2e5de800fb9"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote1-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
+      "id": "diag-promote1-format-sanitize",
+      "kind": "warning_promotion_control",
+      "observation_sha256": "79cd2b1a18a3c4230d30c94d3ea2810ff64dee8637ee9cdecc5c7a80ac0b9f24",
+      "path": "cases/diag-promote1-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "3895d1e75a96fae622e01c7634517ba627215cbef6de0fc0584ef7384dbf14c8",
+      "stdout_sha256": "c2429580dbfc8f965f403ca9191fa5cb37ffc1d03f430d49a257cdd4b0bd9071"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "promote.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "tn-sanitize.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote2-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
+      "fixtures": [
+        "tn-sanitize.info",
+        "promote.rc"
+      ],
+      "id": "diag-promote2-format-sanitize",
+      "kind": "warning_promotion_control",
+      "observation_sha256": "afef405cf079677001e0d408e3e7687215026c698fbe1b4e935e45c424f092fc",
+      "path": "cases/diag-promote2-format-sanitize/result.json",
+      "planned_case_ids": [
+        "DIAG-WARNING-PROMOTE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "maxmsg.rc",
+        "--no-function-coverage",
+        "--keep-going",
+        "--add-tracefile",
+        "many-format.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-max-messages-format",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2",
+      "fixtures": [
+        "many-format.info",
+        "maxmsg.rc"
+      ],
+      "id": "diag-max-messages-format",
+      "kind": "message_suppression_control",
+      "observation_sha256": "6b0b8c8924b7b045b507ec044898ade1275573265bbcfbb68b592afae2d594d2",
+      "path": "cases/diag-max-messages-format/result.json",
+      "planned_case_ids": [
+        "DIAG-MAX-MESSAGES-001"
+      ],
+      "stderr_sha256": "02b2897582f68eb423eacc9af78e7f4be17ab2dd88c8a0f73d2687fe04e51df1",
+      "stdout_sha256": "460de6340072ee561561a102f2e7c32e6d7e998201dbd534efd777eb0415d24f"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-count-false.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-file-false",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 2,
+      "file_tree_sha256": "cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-count-false.rc"
+      ],
+      "id": "diag-expected-count-file-false",
+      "kind": "expected_count_control",
+      "observation_sha256": "af98bfbf02add11fdb16a37e62811e07f400d9ca791ff96d98b14a85d352b7e4",
+      "path": "cases/diag-expected-count-file-false/result.json",
+      "planned_case_ids": [
+        "DIAG-EXPECTED-COUNT-FILE-001"
+      ],
+      "stderr_sha256": "e8a8e26225db126371c014851cda0a06b9ce5a8980c3882922a5f42512e1978e",
+      "stdout_sha256": "52ec83b3ffa310274ea1cb200a29cd9d9d6f6b11420ad158f5bb9bee83c3b80b"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-count-true.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-file-true",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "09cea71a84988458146e664daf29341aee571fece58593fb6a9052be33caaf83",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-count-true.rc"
+      ],
+      "id": "diag-expected-count-file-true",
+      "kind": "expected_count_control",
+      "observation_sha256": "6d5cd9af894dcf7760921aecd8cce64a599270fc2a5e967b9f2104bee3ce167e",
+      "path": "cases/diag-expected-count-file-true/result.json",
+      "planned_case_ids": [
+        "DIAG-EXPECTED-COUNT-FILE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--config-file",
+        "expect-manual.rc",
+        "--no-function-coverage",
+        "--ignore-errors",
+        "format,format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-manual-file",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "bc053bf36047d2d9d99372bdd0264945c6e2779d7c46e8a788b0682a717a846a",
+      "fixtures": [
+        "malformed-da.info",
+        "expect-manual.rc"
+      ],
+      "id": "diag-expected-count-manual-file",
+      "kind": "expected_count_control",
+      "observation_sha256": "0886cd796fc9fa8be4636eb8c8a48f228f703823ceee15d7b701a8f216acf5dd",
+      "path": "cases/diag-expected-count-manual-file/result.json",
+      "planned_case_ids": [
+        "DIAG-EXPECTED-COUNT-MANUAL-FILE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1ff836d692b8ebece31c502ac8f2e2838f11e8557647eb0b0a4e15fd726f62a9"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--rc",
+        "expect_message_count=format:0",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-manual-rc",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 2,
+      "file_tree_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-expected-count-manual-rc",
+      "kind": "expected_count_control",
+      "observation_sha256": "d4591266063a9763ba91c67ea49a7aa8f79c80d6b48f85a1a3c7f47e40077d2d",
+      "path": "cases/diag-expected-count-manual-rc/result.json",
+      "planned_case_ids": [
+        "DIAG-EXPECTED-COUNT-MANUAL-RC-001"
+      ],
+      "stderr_sha256": "48c11bcdef6b5b75c3755ccc5e92c07c734c3309eb4b5ac5f000cb73a15bafa4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--msg-log",
+        "messages.log",
+        "--ignore-errors",
+        "format",
+        "--add-tracefile",
+        "malformed-da.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-message-log",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "14198c4562b2fa2943da53842dd4e1c6d869099ae0e2744d89dd14f4dbf8180b",
+      "fixtures": [
+        "malformed-da.info"
+      ],
+      "id": "diag-message-log",
+      "kind": "message_log_control",
+      "observation_sha256": "27549d55e708a140ba27f4b61469bcb2a8004af51a5220d34284607db811c29e",
+      "path": "cases/diag-message-log/result.json",
+      "planned_case_ids": [
+        "DIAG-MESSAGE-LOG-001"
+      ],
+      "stderr_sha256": "a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b",
+      "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97"
+    },
+    {
+      "argv": [
+        "perl2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "cover_db"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-perl2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906",
+      "fixtures": [
+        "cover_db"
+      ],
+      "id": "diag-perl2lcov-keep",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "55c5c0c74335c39c695dbf5b3b592ca1f4fbc339b754db40dc380fae6e9fd471",
+      "path": "cases/diag-perl2lcov-keep/result.json",
+      "planned_case_ids": [
+        "DIAG-PERL2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "572cca15f114a15c7d674fc7c945ed07f505efb57e3b1442e2ac301a26d93476",
+      "stdout_sha256": "9a48312d3649cba8f882421ff9ac5303e262b7156fcbc99d0117a30287a96a47"
+    },
+    {
+      "argv": [
+        "llvm2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "llvm-keep.json"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-llvm2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "6d5a3c51751d1bca9c73e0619763456bef9cc234bc26578170fcfdf0a8fcd545",
+      "fixtures": [
+        "llvm-keep.json"
+      ],
+      "id": "diag-llvm2lcov-keep",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "1d218c2a6e85ab0c5c644c44b6b64fec35962b9d3634dac64c71cc423a490c48",
+      "path": "cases/diag-llvm2lcov-keep/result.json",
+      "planned_case_ids": [
+        "DIAG-LLVM2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "4484d422bfebd610e1b5a12bad618959dcb31c152e6dfbba62be5844b5102cad",
+      "stdout_sha256": "25302739f8dabf07027dc263ef042ec2d1d9c05c631b6ec5e2a29353b4017f3f"
+    },
+    {
+      "argv": [
+        "py2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "coverage-keep.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-py2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
+      "fixtures": [
+        "coverage-keep.xml"
+      ],
+      "id": "diag-py2lcov-keep",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "cea1a39c53de7958e1290b181f475b449306c1f6f026b0d7a92b69d3b6f7c02e",
+      "path": "cases/diag-py2lcov-keep/result.json",
+      "planned_case_ids": [
+        "DIAG-PY2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "53bf0b384623443b0b5a7cf095c082afd5c28756c2b35db6e8d9c9ffb4777105"
+    },
+    {
+      "argv": [
+        "xml2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "coverage-keep.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-xml2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
+      "fixtures": [
+        "coverage-keep.xml"
+      ],
+      "id": "diag-xml2lcov-keep",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "04e0afbaed4c9967d9a42ee41f333b5dc910b5318616bd4d68af3a444946cb87",
+      "path": "cases/diag-xml2lcov-keep/result.json",
+      "planned_case_ids": [
+        "DIAG-XML2LCOV-KEEP-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "15991091cf6482c67d61cdb5411022cdcc31a59322b5206f4c990f48caf8c461"
+    },
+    {
+      "argv": [
+        "xml2lcov",
+        "--keep-going",
+        "--output",
+        "out.info",
+        "broken-no-sources.xml"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-converter-keep-boundary",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 1,
+      "file_tree_sha256": "ca83adba43eedc6bc3dae4e3308257762c49eb64c23f79503525bfdbddea5074",
+      "fixtures": [
+        "broken-no-sources.xml"
+      ],
+      "id": "diag-converter-keep-boundary",
+      "kind": "converter_keep_trap",
+      "observation_sha256": "f81d13b75fb2b52903afd755712a0e4fe916da40145a3154d0737657b81cd274",
+      "path": "cases/diag-converter-keep-boundary/result.json",
+      "planned_case_ids": [
+        "DIAG-CONVERTER-KEEP-BOUNDARY-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2179ace6576aefb53f790a7856642b3b74e2321d5383ee478169ae6ad797ea3e"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--parallel",
+        "1",
+        "--add-tracefile",
+        "a.info",
+        "--add-tracefile",
+        "b.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-par-serial-parity-parallel1",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
+      "fixtures": [
+        "a.info",
+        "b.info"
+      ],
+      "id": "par-serial-parity-parallel1",
+      "kind": "parallel_control",
+      "observation_sha256": "ed3e4cf9acd2d0ff00908d5e417b2a3eb5522c74fe802bac8dc2460784d5262e",
+      "path": "cases/par-serial-parity-parallel1/result.json",
+      "planned_case_ids": [
+        "PAR-SERIAL-PARITY-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "62aa7e9ecf95871ce31f8f4ee08aeabae089d1306dd5622c2a0f301dffc3e08d"
+    },
+    {
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--parallel",
+        "2",
+        "--add-tracefile",
+        "a.info",
+        "--add-tracefile",
+        "b.info",
+        "--output-file",
+        "out.info"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-par-serial-parity-parallel2",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+        ]
+      },
+      "exit_status": 0,
+      "file_tree_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
+      "fixtures": [
+        "a.info",
+        "b.info"
+      ],
+      "id": "par-serial-parity-parallel2",
+      "kind": "parallel_control",
+      "observation_sha256": "5f97872648630497cba440e9fcd4f769923269e0384f7f87c936cd2b73c43e76",
+      "path": "cases/par-serial-parity-parallel2/result.json",
+      "planned_case_ids": [
+        "PAR-SERIAL-PARITY-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7e6a75267a07bd5c68f5818f711e9b4dbad504addf95a939ed635c4d7dd9156e"
+    }
+  ],
+  "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
+  "environment_policy": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "declared_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "inherits_host_environment": false,
+    "mode": "in_container_env_dash_i_clean",
+    "reviewed_exclusions": [
+      "host process environment is not inherited by docker CLI or Oracle command",
+      "Oracle command environment is produced by in-container env -i with only declared_variables",
+      "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+    ]
+  },
+  "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "docker_cli_host_env": {
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "environment_policy": {
+      "command_wrapper": [
+        "env",
+        "-i"
+      ],
+      "declared_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "inherits_host_environment": false,
+      "mode": "in_container_env_dash_i_clean",
+      "reviewed_exclusions": [
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment"
+      ]
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
+  "file_tree_semantics": "workspace_including_inputs",
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "timeout_seconds": 30,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "wave": "m0-diagnostics-wave1"
+}

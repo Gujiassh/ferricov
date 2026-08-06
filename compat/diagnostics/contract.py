@@ -40,7 +40,7 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
         "d9383f3e0bc7218806818c024dcb97744cf27816901b6afb9e1ff726fbb4e94e",
     "compat/diagnostics/wave1/result.json":
-        "990decc9be2a1090348c46fc162d64d9d6fd6ac2fa9bc9ae0f722516255a92ea",
+        "8849b6fb27ffd41a7798f48add1cc52ebd7d03945e277bd0be8b19b558fbde57",
 }
 
 
@@ -60,13 +60,23 @@ WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES = {
     "TZ": "UTC",
     "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 }
+WAVE1_DOCKER_CLI_HOST_ENV = {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "/tmp",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+}
 WAVE1_ENVIRONMENT_POLICY = {
-    "mode": "declared_clean_env",
+    "mode": "in_container_env_dash_i_clean",
     "inherits_host_environment": False,
     "declared_variables": WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
+    "command_wrapper": ["env", "-i"],
     "effective_environment_variables": WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES,
     "reviewed_exclusions": [
-        "host process environment is not inherited; only declared Docker -e values are applied"
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
     ],
 }
 WAVE1_CLEANUP_OUTCOME_TEMPLATE = {
@@ -86,6 +96,7 @@ WAVE1_EXECUTION_ENVIRONMENT = {
     "timeout_seconds": WAVE1_TIMEOUT_SECONDS,
     "cleanup": WAVE1_CLEANUP,
     "environment_policy": WAVE1_ENVIRONMENT_POLICY,
+    "docker_cli_host_env": WAVE1_DOCKER_CLI_HOST_ENV,
 }
 
 # Independent expected identity for every wave1 case. These facts are not derived
@@ -1038,6 +1049,21 @@ def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]
     if document.get("environment_policy") != WAVE1_ENVIRONMENT_POLICY:
         raise DiagnosticsContractError(
             f"wave1 environment policy drift: {case_id}"
+        )
+    if (
+        document.get("environment_policy", {}).get("effective_environment_variables")
+        != WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
+    ):
+        raise DiagnosticsContractError(
+            f"wave1 environment policy effective env drift: {case_id}"
+        )
+    if document.get("environment_policy", {}).get("command_wrapper") != ["env", "-i"]:
+        raise DiagnosticsContractError(
+            f"wave1 command wrapper drift: {case_id}"
+        )
+    if document.get("environment_policy", {}).get("inherits_host_environment") is not False:
+        raise DiagnosticsContractError(
+            f"wave1 host env inheritance claim drift: {case_id}"
         )
     if document.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
         raise DiagnosticsContractError(f"wave1 timeout drift: {case_id}")
