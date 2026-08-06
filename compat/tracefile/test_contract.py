@@ -331,5 +331,57 @@ class TracefileContractTests(unittest.TestCase):
 
 
 
+    def test_wave2_mapping_is_exact_and_source_scoped(self) -> None:
+        expected = {
+            "wave2-framing-blank.summary": ["M1-TF-001"],
+            "wave2-framing-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-crlf-blank.summary": ["M1-TF-001"],
+            "wave2-framing-crlf-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-no-final-newline-blank.summary": ["M1-TF-001"],
+            "wave2-framing-no-final-newline-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-trailing-ws.summary": ["M1-TF-001"],
+            "wave2-framing-trailing-ws.canonical": ["M1-TF-001"],
+            "wave2-tn-diff.summary": ["M1-TF-004"],
+            "wave2-tn-diff.canonical": ["M1-TF-004"],
+            "wave2-kf-parity.summary": ["M1-TF-006"],
+            "wave2-kf-parity.canonical": ["M1-TF-006"],
+            "wave2-kf-empty.summary": ["M1-TF-006"],
+            "wave2-kf-empty.canonical": ["M1-TF-006"],
+            "wave2-kf-empty.ignore-format": ["M1-TF-006"],
+            "wave2-da-accumulate.summary": ["M1-TF-008"],
+            "wave2-da-accumulate.canonical": ["M1-TF-008"],
+            "wave2-da-checksum-store.canonical": ["M1-TF-008"],
+            "wave2-da-checksum-store.no-verify.canonical": ["M1-TF-008"],
+            "wave2-summary-forms.summary": ["M1-TF-012"],
+            "wave2-summary-forms.canonical": ["M1-TF-012"],
+            "wave2-terminator-suffix.summary": ["M1-TF-015"],
+            "wave2-terminator-suffix.canonical": ["M1-TF-015"],
+            "wave2-terminator-dup.summary": ["M1-TF-015"],
+            "wave2-terminator-dup.canonical": ["M1-TF-015"],
+            "wave2-terminator-missing.summary": ["M1-TF-015"],
+            "wave2-terminator-missing.canonical": ["M1-TF-015"],
+            "wave2-terminator-missing.ignore-empty": ["M1-TF-015"],
+            "wave2-unknown-tags.summary": ["M1-TF-016"],
+            "wave2-unknown-tags.canonical": ["M1-TF-016"],
+            "wave2-unknown-tags.ignore-format": ["M1-TF-016"],
+            "wave2-leading-ws-tag.summary": ["M1-TF-016"],
+            "wave2-leading-ws-tag.canonical": ["M1-TF-016"],
+            "wave2-leading-ws-tag.ignore-format": ["M1-TF-016"],
+            "wave2-case-change.summary": ["M1-TF-016"],
+            "wave2-case-change.canonical": ["M1-TF-016"],
+            "wave2-case-change.ignore-format": ["M1-TF-016"],
+        }
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith("wave2-")
+        }
+        self.assertEqual(set(targets), set(expected))
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+
+
 if __name__ == "__main__":
     unittest.main()
