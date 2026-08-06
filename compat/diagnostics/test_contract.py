@@ -167,7 +167,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave1_observations"], 26)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 201)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 204)
         planned = []
         for entry in wave1:
             for planned_id in entry["planned_case_ids"]:
@@ -682,7 +682,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave2), contract.WAVE2_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave2_observations"], 32)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 201)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 204)
         planned = []
         for entry in wave2:
             for planned_id in entry["planned_case_ids"]:
@@ -690,6 +690,28 @@ class DiagnosticsContractTests(unittest.TestCase):
                     planned.append(planned_id)
         self.assertEqual(planned, contract.WAVE2_EXPECTED_PLANNED_IDS)
         self.assertEqual(len(planned), 30)
+
+    def test_writer_transport_diagnostics_are_retained_as_oracle_references(self) -> None:
+        expected_ids = {
+            "tracefile:gzip-corrupt.summary",
+            "tracefile:gzip-empty.summary",
+            "tracefile:gzip-valid.missing-gzip",
+        }
+        observations = {
+            entry["id"]: entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"] in expected_ids
+        }
+        self.assertEqual(set(observations), expected_ids)
+        for observation in observations.values():
+            self.assertEqual(observation["kind"], "named_error_fatal")
+            self.assertEqual(observation["exit_status"], 1)
+            self.assertEqual(
+                observation["planned_case_ids"], ["DIAG-IGNORE-ERROR-001"]
+            )
+        self.assertEqual(
+            self.committed["totals"]["named_error_fatal_observations"], 82
+        )
 
     def test_wave2_product_promotion_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)
