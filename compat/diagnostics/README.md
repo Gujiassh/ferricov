@@ -14,14 +14,44 @@ The generated contract freezes:
 - ignore-list precedence, repeated-name counts, keep-going, warning promotion,
   suppression, summary, and command exit-folding controls;
 - parser, raw Perl, native Python, and early dependency failure surfaces;
-- all 71 planned diagnostic and parallel case identities; and
-- 52 bindings to retained raw Oracle observations.
+- all 71 planned diagnostic and parallel case identities;
+- 121 retained historical Oracle references from correctness and tracefile
+  baselines; and
+- 25 wave1 diagnostics Oracle references under `compat/diagnostics/wave1/`.
 
-The retained observations are references only. In particular, the retained
-`geninfo` startup case is classified as an environment intercept because its
-read-only execution environment prevents temporary-file creation before the
-true no-argument path. Missing ignore-two, promotion, converter, and parallel
-evidence remains explicit in the generated contract.
+## Wave1 Oracle references
+
+`compat/diagnostics/wave1/` retains a bounded executable Oracle batch for the
+highest-priority remaining diagnostics gaps:
+
+- true `geninfo` no-args with writable temporary storage
+  (`DIAG-NOARGS-GENINFO-001`, exit `255`);
+- ignore zero / one / two ladders;
+- keep-going, unknown ignore, and CLI-over-RC ignore precedence;
+- warning and warning-promotion ladders;
+- max-message suppression and expected-count spellings;
+- message-log capture;
+- converter keep-going traps and no-input keep-going boundaries; and
+- basic `--parallel 1` / `--parallel 2` parity smoke.
+
+Wave1 observations are reference-only. They bind planned case identities to
+exact exit, stdout, stderr, and output-tree hashes, but they do **not** set
+`product_compatibility_evidence`.
+
+The retained correctness `m0-core-geninfo-startup-control` observation remains a
+`startup_environment_intercept` with exit `30` because its read-only environment
+fails temporary-file creation before the true no-argument path. Wave1 adds the
+separate writable-temp observation and must not replace or reclassify the
+intercept.
+
+Regenerate wave1 only after an intentional reviewed capture change against the
+pinned Oracle image:
+
+```sh
+python3 compat/diagnostics/wave1/scripts/capture_wave1.py
+```
+
+## Validate
 
 Validate against a clean pinned upstream checkout:
 
@@ -31,7 +61,8 @@ python3 compat/diagnostics/contract.py \
 python3 -m unittest compat/diagnostics/test_contract.py
 ```
 
-Regenerate only after an intentional reviewed contract change:
+Regenerate the contract inventory only after an intentional reviewed contract
+change:
 
 ```sh
 python3 compat/diagnostics/contract.py \

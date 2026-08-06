@@ -24,6 +24,8 @@ CORRECTNESS_ROOT = ROOT / "compat/correctness/baselines/m0-cli-oracle-v2.5"
 CORRECTNESS_INDEX = CORRECTNESS_ROOT / "result.json"
 TRACEFILE_BASELINE = ROOT / "compat/fixtures/m0-tracefiles/oracle-baseline.json"
 TRACEFILE_CASES = ROOT / "compat/fixtures/m0-tracefiles/oracle-cases.json"
+WAVE1_ROOT = Path(__file__).with_name("wave1")
+WAVE1_INDEX = WAVE1_ROOT / "result.json"
 SPEC_PATH = ROOT / "specs/001-full-lcov-compatibility/diagnostics-parallel-contract.md"
 UPSTREAM_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 DEFAULT_UPSTREAM_ROOT = Path(
@@ -37,7 +39,14 @@ EXPECTED_ARTIFACT_HASHES = {
         "b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e",
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
         "d9383f3e0bc7218806818c024dcb97744cf27816901b6afb9e1ff726fbb4e94e",
+    "compat/diagnostics/wave1/result.json":
+        "56e25136c383159d5d9ed7e1229812c4fabfe92315f2be5dd686960e07c156c7",
 }
+
+WAVE1_EXPECTED_CASE_COUNT = 25
+WAVE1_PINNED_IMAGE = (
+    "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
+)
 
 EXPECTED_REGISTRY = (
     ("annotate", "ERROR_ANNOTATE_SCRIPT"),
@@ -414,6 +423,70 @@ def tracefile_case(case: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def wave1_case(case: dict[str, Any]) -> dict[str, Any]:
+    path = WAVE1_ROOT / "cases" / case["id"] / "result.json"
+    document = load_json(path)
+    if document["case_id"] != case["id"]:
+        raise DiagnosticsContractError(f"wave1 case id mismatch: {case['id']}")
+    if document.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError(f"wave1 case claims product evidence: {case['id']}")
+    if document.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError(
+            f"wave1 case evidence status is not oracle_reference: {case['id']}"
+        )
+    if document["exit_status"] != case["exit_status"]:
+        raise DiagnosticsContractError(f"wave1 case exit drift: {case['id']}")
+    if document["stdout_sha256"] != case["stdout_sha256"]:
+        raise DiagnosticsContractError(f"wave1 case stdout drift: {case['id']}")
+    if document["stderr_sha256"] != case["stderr_sha256"]:
+        raise DiagnosticsContractError(f"wave1 case stderr drift: {case['id']}")
+    if document["file_tree_sha256"] != case["file_tree_sha256"]:
+        raise DiagnosticsContractError(f"wave1 case file-tree drift: {case['id']}")
+    if document["planned_case_ids"] != case["planned_case_ids"]:
+        raise DiagnosticsContractError(f"wave1 planned-case binding drift: {case['id']}")
+    if document["kind"] != case["kind"]:
+        raise DiagnosticsContractError(f"wave1 kind drift: {case['id']}")
+    if case["observation_sha256"] != sha256_file(path):
+        raise DiagnosticsContractError(
+            f"wave1 observation hash drift: {case['id']}"
+        )
+    return {
+        "id": f"diagnostics-wave1:{case['id']}",
+        "kind": case["kind"],
+        "planned_case_ids": list(case["planned_case_ids"]),
+        "exit_status": case["exit_status"],
+        "stdout_sha256": case["stdout_sha256"],
+        "stderr_sha256": case["stderr_sha256"],
+        "output_sha256": case["file_tree_sha256"],
+        "observation_sha256": case["observation_sha256"],
+    }
+
+
+def wave1_observations() -> list[dict[str, Any]]:
+    index = load_json(WAVE1_INDEX)
+    if index.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError("wave1 index claims product compatibility")
+    if index.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError("wave1 index evidence status drift")
+    if index.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError("wave1 upstream commit drift")
+    if index.get("image") != WAVE1_PINNED_IMAGE:
+        raise DiagnosticsContractError("wave1 image identity drift")
+    if index.get("case_count") != WAVE1_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave1 case count drift")
+    if len(index.get("cases", [])) != WAVE1_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave1 case list length drift")
+    result = []
+    seen = set()
+    for case in index["cases"]:
+        case_id = case["id"]
+        if case_id in seen:
+            raise DiagnosticsContractError(f"duplicate wave1 case id: {case_id}")
+        seen.add(case_id)
+        result.append(wave1_case(case))
+    return result
+
+
 def oracle_observations() -> list[dict[str, Any]]:
     result = []
     startup_case_to_command = {case: command for command, case in STARTUP_CASES.items()}
@@ -456,6 +529,8 @@ def oracle_observations() -> list[dict[str, Any]]:
             else "DIAG-IGNORE-ERROR-001"
         ]
         result.append(entry)
+
+    result.extend(wave1_observations())
     return result
 
 
@@ -483,12 +558,12 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "oracle_observation_evidence_status": "oracle_reference",
         "oracle_observation_product_evidence": [],
         "known_evidence_gaps": [
-            "ignore count two or greater",
-            "warning promotion",
-            "message suppression and expected counts",
-            "converter keep-going traps",
-            "parallel worker failure and state transfer",
-            "geninfo no-args after a writable temporary directory is available",
+            "parallel worker failure, signals, payload, and parent-death paths",
+            "forced-parallel and child lifecycle callback failures",
+            "environment discovery and POSIX singular-ignore profile matrix",
+            "callback finalize and cleanup diagnostics",
+            "converter keep-going success paths with real conversion inputs",
+            "full 71-case executable acceptance suite beyond wave1 reference bindings",
         ],
         "totals": {
             "categories": len(categories),
@@ -519,6 +594,9 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             ),
             "named_error_ignore_one_observations": sum(
                 entry["kind"] == "named_error_ignore_one" for entry in observations
+            ),
+            "wave1_observations": sum(
+                entry["id"].startswith("diagnostics-wave1:") for entry in observations
             ),
         },
         "product_compatibility_evidence": False,
@@ -618,6 +696,41 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         raise DiagnosticsContractError("diagnostic Oracle reference claims product status")
     if document["oracle_observation_product_evidence"]:
         raise DiagnosticsContractError("diagnostic Oracle reference claims product evidence")
+    wave1_ids = [
+        entry["id"]
+        for entry in document["oracle_observations"]
+        if entry["id"].startswith("diagnostics-wave1:")
+    ]
+    if len(wave1_ids) != WAVE1_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave1 observation count drift")
+    geninfo_true = next(
+        (
+            entry
+            for entry in document["oracle_observations"]
+            if entry["id"] == "diagnostics-wave1:diag-noargs-geninfo-writable"
+        ),
+        None,
+    )
+    if geninfo_true is None:
+        raise DiagnosticsContractError("missing true geninfo no-args wave1 observation")
+    if geninfo_true["kind"] != "startup_boundary":
+        raise DiagnosticsContractError("true geninfo no-args kind drift")
+    if geninfo_true["planned_case_ids"] != ["DIAG-NOARGS-GENINFO-001"]:
+        raise DiagnosticsContractError("true geninfo no-args planned-case binding drift")
+    if geninfo_true["exit_status"] != 255:
+        raise DiagnosticsContractError("true geninfo no-args exit drift")
+    intercept = next(
+        (
+            entry
+            for entry in document["oracle_observations"]
+            if entry["id"] == "correctness:m0-core-geninfo-startup-control"
+        ),
+        None,
+    )
+    if intercept is None or intercept["kind"] != "startup_environment_intercept":
+        raise DiagnosticsContractError("geninfo startup intercept classification drift")
+    if intercept["planned_case_ids"]:
+        raise DiagnosticsContractError("geninfo intercept must not claim no-args case")
 
 
 def main() -> int:
