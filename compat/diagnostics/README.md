@@ -44,8 +44,13 @@ Wave1 validation is fail-closed:
   directories rather than trusting observation self-hashes alone;
 - file-tree semantics are explicitly
   `workspace_including_inputs` (inputs + outputs under the case workdir);
-- capture records pinned image/upstream, timeout, cleanup, and execution
-  environment identity.
+- capture uses a declared clean environment only (no host-env inheritance)
+  and retains effective environment identity plus reviewed exclusions;
+- timeout path stops/removes the named Docker container and retains verified
+  cleanup outcomes (`direct_child_reaped`, `container_absent`,
+  `process_group_empty=null` for Docker);
+- contract schema enumerates every supported `oracleObservation` field with
+  `additionalProperties: false` so unknown fields fail independently.
 
 Wave1 observations remain `oracle_reference` only and do **not** set
 `product_compatibility_evidence`.

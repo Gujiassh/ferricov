@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -18,21 +19,35 @@ IMAGE = "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7
 UPSTREAM_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 TIMEOUT_SECONDS = 30
 FILE_TREE_SEMANTICS = "workspace_including_inputs"
+CLEANUP_POLICY = (
+    "remove_case_workdir_before_capture_and_force_remove_named_container"
+)
+DECLARED_ENV = {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "TZ": "UTC",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+}
+ENVIRONMENT_POLICY = {
+    "mode": "declared_clean_env",
+    "inherits_host_environment": False,
+    "declared_variables": DECLARED_ENV,
+    "effective_environment_variables": DECLARED_ENV,
+    "reviewed_exclusions": [
+        "host process environment is not inherited; only declared Docker -e values are applied"
+    ],
+}
 EXECUTION_ENVIRONMENT = {
     "docker_image": IMAGE,
     "network": "none",
     "user": "1000:1000",
     "workdir": "/work",
-    "env": {
-        "HOME": "/work",
-        "LANG": "C",
-        "LC_ALL": "C",
-        "TZ": "UTC",
-        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    },
+    "env": DECLARED_ENV,
     "tmpfs": ["/tmp:rw,exec,mode=1777"],
     "timeout_seconds": TIMEOUT_SECONDS,
-    "cleanup": "remove_case_workdir_before_capture",
+    "cleanup": CLEANUP_POLICY,
+    "environment_policy": ENVIRONMENT_POLICY,
 }
 
 
@@ -527,6 +542,44 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
     return result
 
 
+def container_absent(name: str) -> bool:
+    observed = subprocess.run(
+        ["docker", "ps", "-a", "--format", "{{.Names}}"],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    names = observed.stdout.splitlines() if observed.returncode == 0 else []
+    return name not in names
+
+
+def force_remove_container(name: str) -> dict[str, Any]:
+    """Stop/rm named container and verify absence.
+
+    Docker observations use process_group_empty=null because the host process
+    group is not the container process model.
+    """
+    if not container_absent(name):
+        subprocess.run(
+            ["docker", "rm", "-f", name],
+            check=False,
+            capture_output=True,
+            timeout=30,
+        )
+    absent = container_absent(name)
+    if not absent:
+        raise RuntimeError(f"wave1 container survived cleanup: {name}")
+    return {
+        "policy": CLEANUP_POLICY,
+        "direct_child_reaped": True,
+        "process_group_empty": None,
+        "container_absent": True,
+        "named_container_removed": True,
+        "container_name": name,
+    }
+
+
 def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     work = CASES / spec["id"]
     if work.exists():
@@ -534,12 +587,18 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     stage(work, spec["fixtures"])
     ref = work / "reference"
     ref.mkdir()
+    container_name = f"ferricov-diag-wave1-{spec['id']}"
+    # Ensure any previous same-named container is gone before launch.
+    force_remove_container(container_name)
     env_flags: list[str] = []
-    for key, value in EXECUTION_ENVIRONMENT["env"].items():
+    for key, value in DECLARED_ENV.items():
         env_flags.extend(["-e", f"{key}={value}"])
+    # Deliberate clean/declared environment only: do not pass host env.
     cmd = [
         "docker",
         "run",
+        "--name",
+        container_name,
         "--rm",
         "--network=none",
         "-u",
@@ -554,22 +613,44 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         IMAGE,
         *spec["argv"],
     ]
+    # Host-side subprocess env is also cleaned to the declared set so capture
+    # identity does not depend on ambient host variables.
+    host_env = {
+        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+        "HOME": os.environ.get("HOME", "/tmp"),
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+    }
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=host_env,
+    )
+    timed_out = False
     try:
-        proc = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=TIMEOUT_SECONDS,
-        )
-        timed_out = False
+        stdout, stderr = proc.communicate(timeout=TIMEOUT_SECONDS)
         exit_status = proc.returncode
-        stdout = proc.stdout
-        stderr = proc.stderr
-    except subprocess.TimeoutExpired as error:
+        direct_child_reaped = True
+    except subprocess.TimeoutExpired:
         timed_out = True
+        # Kill the docker CLI child first, then force-remove the named container.
+        proc.kill()
+        try:
+            stdout, stderr = proc.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            stdout, stderr = b"", b""
         exit_status = 124
-        stdout = error.stdout or b""
-        stderr = error.stderr or b""
+        direct_child_reaped = proc.poll() is not None
+        if not direct_child_reaped:
+            proc.kill()
+            proc.wait(timeout=10)
+            direct_child_reaped = True
+    cleanup_outcome = force_remove_container(container_name)
+    cleanup_outcome["direct_child_reaped"] = direct_child_reaped
+    if not cleanup_outcome["container_absent"] or not cleanup_outcome["direct_child_reaped"]:
+        raise RuntimeError(f"wave1 cleanup not confirmed: {spec['id']}")
     (ref / "stdout.bin").write_bytes(stdout)
     (ref / "stderr.bin").write_bytes(stderr)
     (ref / "stdout.txt").write_text(stdout.decode("utf-8", "replace"))
@@ -587,9 +668,12 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         "image": IMAGE,
         "upstream_commit": UPSTREAM_COMMIT,
         "execution_environment": EXECUTION_ENVIRONMENT,
+        "effective_environment_variables": dict(DECLARED_ENV),
+        "environment_policy": ENVIRONMENT_POLICY,
         "timeout_seconds": TIMEOUT_SECONDS,
         "timed_out": timed_out,
-        "cleanup": EXECUTION_ENVIRONMENT["cleanup"],
+        "cleanup": CLEANUP_POLICY,
+        "cleanup_outcome": cleanup_outcome,
         "file_tree_semantics": FILE_TREE_SEMANTICS,
         "exit_status": exit_status,
         "stdout_sha256": sha256_bytes(stdout),
@@ -607,6 +691,7 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     (work / "result.json").write_text(canonical_json(result))
     print(
         f"CASE {spec['id']} exit={exit_status} timed_out={timed_out} "
+        f"cleanup_absent={cleanup_outcome['container_absent']} "
         f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}"
     )
     return result
@@ -640,6 +725,12 @@ def main() -> int:
                 "observation_sha256": sha256_file(
                     CASES / result["case_id"] / "result.json"
                 ),
+                "cleanup": result["cleanup"],
+                "cleanup_outcome": result["cleanup_outcome"],
+                "effective_environment_variables": result[
+                    "effective_environment_variables"
+                ],
+                "environment_policy": result["environment_policy"],
             }
             for result in results
         ],

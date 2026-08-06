@@ -14,7 +14,7 @@
     },
     {
       "path": "compat/diagnostics/wave1/result.json",
-      "sha256": "4ff53ab7c96d448ab944264e7c53fb2568fa1f28f004831b41caf1d082c08788"
+      "sha256": "990decc9be2a1090348c46fc162d64d9d6fd6ac2fa9bc9ae0f722516255a92ea"
     }
   ],
   "categories": [
@@ -2604,14 +2604,50 @@
       "argv": [
         "geninfo"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-noargs-geninfo-writable",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 255,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [],
       "id": "diagnostics-wave1:diag-noargs-geninfo-writable",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "startup_boundary",
-      "observation_sha256": "ea5958178d37144f5f2c3ea518a3667b45f5cf89f9a49626d406aaf2933dc487",
+      "observation_sha256": "d9b799d48b18416063a548be8d8cc2c9e657780276b50c504217e88a75c2c065",
       "output_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "planned_case_ids": [
         "DIAG-NOARGS-GENINFO-001"
@@ -2631,7 +2667,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore0-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2640,7 +2712,7 @@
       "id": "diagnostics-wave1:diag-ignore0-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_fatal",
-      "observation_sha256": "8ad9a4f5c8effcfb95e92f97c785079e3324d16193d357af5221a54d54897da2",
+      "observation_sha256": "d6347364d8abfe20e5a3e73b8944939ccbe4b7ae86b7fcbc9d7f04a0cb922fc0",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-ERROR-001"
@@ -2662,7 +2734,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore1-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2671,7 +2779,7 @@
       "id": "diagnostics-wave1:diag-ignore1-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_one",
-      "observation_sha256": "9649af26a99ad62c53e0a0b08b00578725ebef59bbe25287c09875b107848f76",
+      "observation_sha256": "4ae6f01130c333473c63f71c031ab3d542a987b86fd42c3a313e1bbcc2925a2a",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-WARN-001"
@@ -2693,7 +2801,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore2-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2702,7 +2846,7 @@
       "id": "diagnostics-wave1:diag-ignore2-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "named_error_ignore_two",
-      "observation_sha256": "62385cba4c25653a508740e24775665bbd13a922f589fb612d8371f0e60a7325",
+      "observation_sha256": "59fa78388ae8fce6e9383327ed4c6abc4e4000e951f66b3b216835552b460fd3",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-IGNORE-SILENT-001"
@@ -2723,7 +2867,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-keep-going-format-da",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2732,7 +2912,7 @@
       "id": "diagnostics-wave1:diag-keep-going-format-da",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "keep_going_control",
-      "observation_sha256": "72eef764fb3992efc07c3fe87adf448fe1a8bf337eb8419c57fb80c4bb51686a",
+      "observation_sha256": "5576730d949c60af988219e6a97467469d7d53b2d38fde3ae234d02896897e5b",
       "output_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
       "planned_case_ids": [
         "DIAG-KEEP-GOING-001"
@@ -2754,7 +2934,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore-unknown",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 2,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2763,7 +2979,7 @@
       "id": "diagnostics-wave1:diag-ignore-unknown",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_unknown_control",
-      "observation_sha256": "4b3682ab94e9bd5c484b2e470883c8f03a7777673fb41cb94aafc3a5f716b7d4",
+      "observation_sha256": "e975de67f65aaa1a4990a2d04b9b06b58e5e3490fc31c57b0a311a6dbedcd423",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-IGNORE-UNKNOWN-001"
@@ -2787,7 +3003,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-ignore-precedence-cli-replaces-rc",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2797,7 +3049,7 @@
       "id": "diagnostics-wave1:diag-ignore-precedence-cli-replaces-rc",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "ignore_precedence_control",
-      "observation_sha256": "96c73818d894284d6bf98b3ddf5293f0eab6df0415b9e18546cb37e0c745072d",
+      "observation_sha256": "3abc2a92e2372e92cee2d5ab369969aff6c5a8a3ab396fbf7e7c5e95cb50ada7",
       "output_sha256": "83d7168eb249b2b4f65fb53b129c1c7cbd25a81b9452506e90ae0bd806cba768",
       "planned_case_ids": [
         "DIAG-IGNORE-PRECEDENCE-001"
@@ -2817,7 +3069,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning0-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2826,7 +3114,7 @@
       "id": "diagnostics-wave1:diag-warning0-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "b07ac38315d3e7328bdc8ed510b6c279b66bdae2af5c1d280e7a8257674169a7",
+      "observation_sha256": "9a626cd91c3a086a49e498a482caa9ed4227c15be585260e27a2c128c4003044",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -2848,7 +3136,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning1-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2857,7 +3181,7 @@
       "id": "diagnostics-wave1:diag-warning1-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "8c0646df644e714b7e924100f6adef3d2739c61a32d1cc14531fe8753154499c",
+      "observation_sha256": "94c73d1a653fe07cadac1d5b3eb01a24dddc355121ab145816743d5c97205d9a",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -2879,7 +3203,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-warning2-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2888,7 +3248,7 @@
       "id": "diagnostics-wave1:diag-warning2-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_control",
-      "observation_sha256": "904d99f319748e15c4be64a1517a74117539280cc9690d641e10ba33dee2d22d",
+      "observation_sha256": "4d24441294578a9e5d27d63524d8ab0378c7ae2083bf542f7a8032dbe48ff16d",
       "output_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -2910,7 +3270,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote0-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2920,7 +3316,7 @@
       "id": "diagnostics-wave1:diag-promote0-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "04322c1f69757c12f77f480bf7e4db0ceb32809c1383dad39da4347255ef3b4b",
+      "observation_sha256": "4b9ca1fa87b3deca5d0fb7a196cad97017920999622c72a9673f7c858a22c7ca",
       "output_sha256": "b4dfdcdf5c46197aa8bc133d41d5abe5535195064ff40d2807121d3e96940f66",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -2944,7 +3340,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote1-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2954,7 +3386,7 @@
       "id": "diagnostics-wave1:diag-promote1-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "3c1162168697c8f566cd127c908cb1be8c44a8e47cbf0c2ea39512dacaa166ab",
+      "observation_sha256": "f742511fb3bda3f2af62fefba72c30ce17721217fad843bc4a063622deb799ca",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -2978,7 +3410,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-promote2-format-sanitize",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -2988,7 +3456,7 @@
       "id": "diagnostics-wave1:diag-promote2-format-sanitize",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "warning_promotion_control",
-      "observation_sha256": "cd71742073f1b826ca51a314903b9b143a64695477ddb7898b73f125761c8bf7",
+      "observation_sha256": "06f4b06b1e2c992ad7027b60895197652b52a5804f8bbffff3479a3ea6846b43",
       "output_sha256": "262fdc10b8d7f8edf23d4dec5d1ecb458efba4aa8c89b0fc478361298d24a854",
       "planned_case_ids": [
         "DIAG-WARNING-PROMOTE-001"
@@ -3011,7 +3479,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-max-messages-format",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3021,7 +3525,7 @@
       "id": "diagnostics-wave1:diag-max-messages-format",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_suppression_control",
-      "observation_sha256": "0d168f7b79c43c0e97e2a7dc04961ad7f9b6f55a9e492f90440a8f9e766e4447",
+      "observation_sha256": "b9a883ef543be122fb36811d566efa394e9a312c7008273eb7b58a3ee2086e7e",
       "output_sha256": "887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2",
       "planned_case_ids": [
         "DIAG-MAX-MESSAGES-001"
@@ -3045,7 +3549,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-file-false",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 2,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3055,7 +3595,7 @@
       "id": "diagnostics-wave1:diag-expected-count-file-false",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "7e79ef5e7c5f781e72231ac06defc5c9a315214f17a133ce6c665229877c9882",
+      "observation_sha256": "5e0487a0ba0af01fcec55b2a05603090b5a1ec69807073c496eada9c499efbad",
       "output_sha256": "cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
@@ -3079,7 +3619,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-file-true",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3089,7 +3665,7 @@
       "id": "diagnostics-wave1:diag-expected-count-file-true",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "9f720bd519b8204317678790b384ae4ed905fcacd914496bd194beccfb303a25",
+      "observation_sha256": "33f3a6a812b343780a41ac0978bba5ab2dd1e4ab601aaeeb1d6752a7b398eeb3",
       "output_sha256": "09cea71a84988458146e664daf29341aee571fece58593fb6a9052be33caaf83",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-FILE-001"
@@ -3113,7 +3689,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-manual-file",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3123,7 +3735,7 @@
       "id": "diagnostics-wave1:diag-expected-count-manual-file",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "02f12f6dcaa94e9b43c0b74142f597a7f6728cf68f5e8e4b167e833a961429f5",
+      "observation_sha256": "5a70074f814ccda1554872e76ce0ff73c79dd4fc65f3b179ebb7077dcfde7d55",
       "output_sha256": "bc053bf36047d2d9d99372bdd0264945c6e2779d7c46e8a788b0682a717a846a",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-FILE-001"
@@ -3145,7 +3757,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-expected-count-manual-rc",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 2,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3154,7 +3802,7 @@
       "id": "diagnostics-wave1:diag-expected-count-manual-rc",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "expected_count_control",
-      "observation_sha256": "24a640a41dfda59cbb06495a87664b57551472b2a0dac96761be07674dd373d8",
+      "observation_sha256": "8a34d1c50428606e86022a6a58ac9820667a953ce6375d22c141b7bcb9e33159",
       "output_sha256": "1eb9bfc1ec1335d14da7056a8e8dec8c8f3accade45e20bf872ffe81f89c0bb3",
       "planned_case_ids": [
         "DIAG-EXPECTED-COUNT-MANUAL-RC-001"
@@ -3178,7 +3826,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-message-log",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3187,7 +3871,7 @@
       "id": "diagnostics-wave1:diag-message-log",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "message_log_control",
-      "observation_sha256": "3cc33a8331e08821119cf9e05b940bbca492f2a3f8d0f2be6182e6a904d4262e",
+      "observation_sha256": "b93b1314e213d6596bdf5b2645a583d865e22e37c802a8fd16a21d601fdc7342",
       "output_sha256": "14198c4562b2fa2943da53842dd4e1c6d869099ae0e2744d89dd14f4dbf8180b",
       "planned_case_ids": [
         "DIAG-MESSAGE-LOG-001"
@@ -3206,7 +3890,43 @@
         "out.info",
         "cover_db"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-perl2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3215,7 +3935,7 @@
       "id": "diagnostics-wave1:diag-perl2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "8454661e9ed8160cd89decbf84c9c488959e7d4fe30acc97d2f6b3999703dab6",
+      "observation_sha256": "44142726689b4dbc7b4a2de7b3bd2a1b5b67d7197e6849b921a0c3f90a6579f6",
       "output_sha256": "52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906",
       "planned_case_ids": [
         "DIAG-PERL2LCOV-KEEP-001"
@@ -3234,7 +3954,43 @@
         "out.info",
         "llvm-keep.json"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-llvm2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3243,7 +3999,7 @@
       "id": "diagnostics-wave1:diag-llvm2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "45071510a2c84a73f41fe0e346c9da28fe73da1f9121a80c40a7ba20ac85f5bb",
+      "observation_sha256": "5f6537f2b7f47a44789715e4a000a04a8eddb2e370ed0ac9b7b197378cffd3d6",
       "output_sha256": "6d5a3c51751d1bca9c73e0619763456bef9cc234bc26578170fcfdf0a8fcd545",
       "planned_case_ids": [
         "DIAG-LLVM2LCOV-KEEP-001"
@@ -3262,7 +4018,43 @@
         "out.info",
         "coverage-keep.xml"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-py2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3271,7 +4063,7 @@
       "id": "diagnostics-wave1:diag-py2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "0d5f0da6620a896e4ef4615c4031b2c587506feda91950dd4837954258151e0b",
+      "observation_sha256": "8fa4027026bb65cb24ea14a7159813c7e7019e74e5512bafbb366494e988fd04",
       "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
       "planned_case_ids": [
         "DIAG-PY2LCOV-KEEP-001"
@@ -3290,7 +4082,43 @@
         "out.info",
         "coverage-keep.xml"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-xml2lcov-keep",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3299,7 +4127,7 @@
       "id": "diagnostics-wave1:diag-xml2lcov-keep",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "1bae24913071b56d51211fe8ec860c22b7b548d105a7190fca44672eebfee001",
+      "observation_sha256": "59aa6f34e615defb8a35202e50937a078349a0be9b5d504d8ef41fc29f3ac4b7",
       "output_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
       "planned_case_ids": [
         "DIAG-XML2LCOV-KEEP-001"
@@ -3318,7 +4146,43 @@
         "out.info",
         "broken-no-sources.xml"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-diag-converter-keep-boundary",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 1,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3327,7 +4191,7 @@
       "id": "diagnostics-wave1:diag-converter-keep-boundary",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "converter_keep_trap",
-      "observation_sha256": "7a569ce0532337b68cc75fc2b4e35158c2e3e48667debf3c332822180b6b955e",
+      "observation_sha256": "1110e2f7a7da8f20426af379555a21bf8113494c1d8f5b7161022eff2ea99b1e",
       "output_sha256": "ca83adba43eedc6bc3dae4e3308257762c49eb64c23f79503525bfdbddea5074",
       "planned_case_ids": [
         "DIAG-CONVERTER-KEEP-BOUNDARY-001"
@@ -3351,7 +4215,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-par-serial-parity-parallel1",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3361,7 +4261,7 @@
       "id": "diagnostics-wave1:par-serial-parity-parallel1",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "5377add90167085faa9be66f77c98d7ab07fecf5e09cab46c4a67f45ba074cce",
+      "observation_sha256": "1868b49a1ee7a2caa13a5dd3dd99a0bc7e0889d35a315c20fa7acacf67b31922",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
@@ -3385,7 +4285,43 @@
         "--output-file",
         "out.info"
       ],
-      "cleanup": "remove_case_workdir_before_capture",
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave1-par-serial-parity-parallel2",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "declared_clean_env",
+        "reviewed_exclusions": [
+          "host process environment is not inherited; only declared Docker -e values are applied"
+        ]
+      },
       "exit_status": 0,
       "file_tree_semantics": "workspace_including_inputs",
       "fixtures": [
@@ -3395,7 +4331,7 @@
       "id": "diagnostics-wave1:par-serial-parity-parallel2",
       "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
       "kind": "parallel_control",
-      "observation_sha256": "0fb536878e8a138433410aa89be26b1fe945dbb1e87a6e967feeec37fccad556",
+      "observation_sha256": "2154d3fb951c58cd4dd2cf0a1ced3235113642e322db90d09eb4845997732fda",
       "output_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
       "planned_case_ids": [
         "PAR-SERIAL-PARITY-001"
