@@ -29,13 +29,25 @@
         "bytes": 247,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-children.json",
-        "sha256": "7b5eae30718098af9f82b884ebdbd8d18d96671e074e51dd4c2b2b7686ae785c"
+        "sha256": "2696e07342516a58a2901965a66a6e6f20b42114a5e6fcd06a9978c487ec2206"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-PATH-001/relative/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 222,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/status.env",
+        "sha256": "7e2e5de243bbd62d065b8892239c7817c223c5110f81e5288829f30dc67acb0f"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/run-meta.env",
+        "sha256": "d7488fe2ee27d391fd42f62dfc1d502b839c6e1772ebabf4725d353feaca4235"
       }
     ],
     "stderr_bin": {
@@ -92,7 +104,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -116,7 +128,7 @@
     "timeout_seconds": 120,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "325e41f27798285651d50385d7ab8eb6f52d83ba1ac06fee338643e4a4699d33",
+  "observation_sha256": "323c4b284a14479b21778766db7e8e2cf312e3a5cc14babbee5bbd6e7452c8dc",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
@@ -134,7 +146,7 @@
       }
     ],
     "exit_status": 2,
-    "host_observer_code": 2,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

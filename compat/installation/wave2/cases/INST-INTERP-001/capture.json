@@ -26,22 +26,34 @@
         "sha256": "10d4cc4b0ccc7b30a5cf1283b889680d12519077a244be94bb943e9d7b79ec75"
       },
       {
-        "bytes": 127,
+        "bytes": 82,
         "name": "observed-argv.json",
         "path": "compat/installation/wave2/cases/INST-INTERP-001/observed-argv.json",
-        "sha256": "1f7e1920f1cd2a8ccb12536cff3c7c093fd86cbf8f1c61f35adf368c61c265e8"
+        "sha256": "966f95079f2e18460755f7b91e9355bfae36a513a06e43731fab9d9f5c73e606"
       },
       {
-        "bytes": 357,
+        "bytes": 269,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-INTERP-001/observed-children.json",
-        "sha256": "24a9af3b0855aa7711311dcadb80c63889dda7dd8b6b36c2016cbc4eade3650c"
+        "sha256": "a4ae4d01ec4607da701c5485c744d47afe6880025ad7d85411a5d09cb1b3cc17"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-INTERP-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 222,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-INTERP-001/status.env",
+        "sha256": "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-INTERP-001/run-meta.env",
+        "sha256": "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089"
       }
     ],
     "stderr_bin": {
@@ -2375,7 +2387,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -2385,8 +2397,6 @@
   },
   "invocation": {
     "argv": [
-      "env",
-      "LCOV_PERL=/opt/custom/bin/perl",
       "make",
       "install",
       "DESTDIR=/tmp/destdir-interp",
@@ -2404,20 +2414,18 @@
     "timeout_seconds": 600,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "2b00c1d5d37c7e4cab2c20ac7b558713ccb6400e03e1dc98d45934276003a118",
+  "observation_sha256": "1f2e164a921cf37ed5371a7d99d7b087a06e9eb8ad44711f222da725ad6cebd8",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
       {
         "argv": [
-          "env",
-          "LCOV_PERL=/opt/custom/bin/perl",
           "make",
           "install",
           "DESTDIR=/tmp/destdir-interp",
           "PREFIX=/usr/local"
         ],
-        "command": "env LCOV_PERL=/opt/custom/bin/perl make install DESTDIR=/tmp/destdir-interp PREFIX=/usr/local",
+        "command": "make install DESTDIR=/tmp/destdir-interp PREFIX=/usr/local",
         "exit_status": 0,
         "signal": null,
         "timed_out": false

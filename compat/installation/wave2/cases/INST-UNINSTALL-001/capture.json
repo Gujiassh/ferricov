@@ -35,13 +35,25 @@
         "bytes": 273,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-children.json",
-        "sha256": "6cbfec5cbc8545dbd2807f218713b862a3cf60b97e23dd52f9665ff3b8b27206"
+        "sha256": "0e8e01a4e29e44d07d16f3ab6cbce02aa3131d979dbb740abf13a7d7ad4e8d08"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 222,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/status.env",
+        "sha256": "60808c8092b8acf14a3b8f82607ac700a29ea843463878298016bad2d6cbd1f4"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/run-meta.env",
+        "sha256": "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089"
       }
     ],
     "stderr_bin": {
@@ -129,7 +141,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -155,7 +167,7 @@
     "timeout_seconds": 600,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "f29849268d059cdcab021ced97c7df64b153d25a0fb776eec787f43402df84fb",
+  "observation_sha256": "d8cc4de7c3f72dee517aafdf9713bd0f5bd065f1fc09fe6ed229df07953dab15",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [

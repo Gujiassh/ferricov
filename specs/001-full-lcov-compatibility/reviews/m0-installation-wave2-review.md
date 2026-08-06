@@ -92,7 +92,7 @@ Upstream commit:
 
 Capture format:
 
-`replayable_case_records_v1` with `env -i` execution, observed env/argv/cwd, full tree rows, fail-closed docker inspect + git rev-parse provenance, and an independently authored expected-case table that recapture never rewrites.
+`replayable_case_records_v1` with ptrace live process observation (`process-observer.py`), transactional staging, runner signal/timeout qualification probes, and deterministic TEST-RUN `make -n info` with `env -i` execution, observed env/argv/cwd, full tree rows, fail-closed docker inspect + git rev-parse provenance, and an independently authored expected-case table that recapture never rewrites.
 
 Primary capture index:
 
@@ -138,7 +138,7 @@ Harness:
 
 ## Validation Performed
 
-- `python3 -m unittest compat.installation.test_contract` (63 tests)
+- `python3 -m unittest compat.installation.test_contract` (68 tests)
 - Contract regenerate/validate against pinned upstream checkout
 - Independent expected-table co-mutation reverse tests (image, upstream, exit,
   argv, raw stdout bytes, observation hash, status promotion)

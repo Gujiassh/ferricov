@@ -20,22 +20,34 @@
         "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
       },
       {
-        "bytes": 67,
+        "bytes": 72,
         "name": "observed-argv.json",
         "path": "compat/installation/wave2/cases/INST-LAYOUT-001/observed-argv.json",
-        "sha256": "304d7396d707db8ce266786310e68c4e80765921728612fd97beef9e6f7b251d"
+        "sha256": "01ee064044bf24cd51f5522809af88433d99fcd8b304ceb1739751d71e263de1"
       },
       {
-        "bytes": 240,
+        "bytes": 250,
         "name": "observed-children.json",
         "path": "compat/installation/wave2/cases/INST-LAYOUT-001/observed-children.json",
-        "sha256": "9fe95225e75895bebb11b5e5b450c1880578643528129e198ca8437e38d91c93"
+        "sha256": "d15874e7c6028735132c765285bb0a0eab2af361b1d1b9430616216bc761476b"
       },
       {
         "bytes": 20,
         "name": "host-observer.txt",
         "path": "compat/installation/wave2/cases/INST-LAYOUT-001/host-observer.txt",
         "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 215,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/status.env",
+        "sha256": "3328fe76ef7b3bbc290dd90fe3029aafdbf0b308cefaab3d3fae1cd061814876"
+      },
+      {
+        "bytes": 188,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-LAYOUT-001/run-meta.env",
+        "sha256": "3d6018c4e1f966ca0a4827b1659e715e9e073d7edad9a7b92c8ad1cfcb247ddd"
       }
     ],
     "stderr_bin": {
@@ -435,17 +447,17 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
-    "executable_path": "/usr/bin/find",
-    "executable_sha256": "c703b94ad3448bccc79cda80520964c8d371918a39eecc27f8d60f4e8891770a",
+    "executable_path": "/usr/bin/dash",
+    "executable_sha256": "f5adb8bf0100ed0f8c7782ca5f92814e9229525a4b4e0d401cf3bea09ac960a6",
     "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
     "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
     "upstream_release": "v2.5"
   },
   "invocation": {
     "argv": [
-      "sh",
+      "/bin/sh",
       "/tmp/installed-tree-directories.sh",
       "/usr/local"
     ],
@@ -459,17 +471,17 @@
     "timeout_seconds": 60,
     "working_directory": "/"
   },
-  "observation_sha256": "217ca6e82a65cc109140a2afc062c9ee784a92fd911a88f2560158d41663066d",
+  "observation_sha256": "46527878ef6f965705a8a75bf50e7d314241adfbe009d3464c0f6fbdc6fc53f0",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
       {
         "argv": [
-          "sh",
+          "/bin/sh",
           "/tmp/installed-tree-directories.sh",
           "/usr/local"
         ],
-        "command": "sh /tmp/installed-tree-directories.sh /usr/local",
+        "command": "/bin/sh /tmp/installed-tree-directories.sh /usr/local",
         "exit_status": 0,
         "signal": null,
         "timed_out": false

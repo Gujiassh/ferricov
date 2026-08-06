@@ -2,16 +2,16 @@
   "artifacts": {
     "extra": [
       {
-        "bytes": 4573,
+        "bytes": 5057,
         "name": "relative_capture",
         "path": "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json",
-        "sha256": "e64f6599d5f2f5ed1a1bfaaf85c617309dc9252ff017ab8d2160dd2702e4bb86"
+        "sha256": "e2f9df0fc88f5792e512c762030948726daaa71ae70114f239013ba01fed90a2"
       },
       {
-        "bytes": 4761,
+        "bytes": 5239,
         "name": "space_capture",
         "path": "compat/installation/wave2/cases/INST-PATH-001/space/capture.json",
-        "sha256": "3210e97d830432481520901b6731fed85aa0bea322d58efdad18758c69340c1c"
+        "sha256": "a2bab341ed2590e53a7f65eae7894da480c647bce18fcb22923225052756e112"
       },
       {
         "bytes": 0,
@@ -92,7 +92,7 @@
     "symlink_count": 0
   },
   "identity": {
-    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
     "docker_runtime": "29.1.3",
     "executable_path": "/usr/bin/make",
     "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
@@ -118,7 +118,7 @@
     "timeout_seconds": 300,
     "working_directory": "/tmp/src"
   },
-  "observation_sha256": "974ddd5ce9cd19bdeb4730b3cb0504526a6699d8afab7d2acb0e33f3c8e59fd3",
+  "observation_sha256": "c481d3260a20c2301d288c4f5f0cecc3b04f7083e0c0df45196d00f7687bbc56",
   "oracle_execution_status": "captured",
   "process": {
     "child_processes_observed": [
@@ -148,7 +148,7 @@
       }
     ],
     "exit_status": 2,
-    "host_observer_code": 2,
+    "host_observer_code": 0,
     "signal": null,
     "timed_out": false
   },

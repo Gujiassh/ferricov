@@ -1,8 +1,8 @@
 #!/bin/sh
 # In-container driver for installation wave-2 Oracle captures.
 # Invoked as: capture-driver.sh <CASE_ID> <OUT_DIR>
-# Commands run under env -i with an explicit variable set; process outcomes
-# (exit/signal/timeout/cwd/argv/env/tree) are observed, not declared.
+# Subject processes run under a clean env via process-observer.py (ptrace
+# exec-stop). Live /proc evidence provides exe/argv/cwd and real wait status.
 set -eu
 
 CASE_ID="${1:?case id required}"
@@ -11,6 +11,7 @@ SRC_RO="${SRC_RO:-/src-ro}"
 PIN_INV="${PIN_INV:-/tmp/python-objects.inv}"
 PIN_PY="${PIN_PY:-/tmp/pin-intersphinx.py}"
 DIR_RECORDER="${DIR_RECORDER:-/tmp/installed-tree-directories.sh}"
+OBSERVER="${OBSERVER:-/tmp/process-observer.py}"
 
 mkdir -p "$OUT_DIR"
 STDOUT_BIN="$OUT_DIR/stdout.bin"
@@ -22,6 +23,8 @@ OBS_ENV="$OUT_DIR/observed-env.env"
 OBS_ARGV="$OUT_DIR/observed-argv.json"
 OBS_CHILDREN="$OUT_DIR/observed-children.json"
 CLEANUP_LOG="$OUT_DIR/cleanup.log"
+ENV_FILE="$OUT_DIR/clean-env.env"
+RUN_META="$OUT_DIR/run-meta.env"
 
 : >"$STDOUT_BIN"
 : >"$STDERR_BIN"
@@ -29,22 +32,50 @@ CLEANUP_LOG="$OUT_DIR/cleanup.log"
 : >"$STATUS_FILE"
 : >"$OBS_ENV"
 : >"$CLEANUP_LOG"
+: >"$RUN_META"
 printf '[]\n' >"$OBS_CHILDREN"
 
 # Explicit clean environment for case commands (no inherited image secrets).
-# PATH/HOME/TERM are the minimum required for make/perl/python tooling.
-BASE_ENV="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-BASE_ENV="$BASE_ENV HOME=/tmp"
-BASE_ENV="$BASE_ENV TERM=dumb"
-BASE_ENV="$BASE_ENV LANG=C"
-BASE_ENV="$BASE_ENV LC_ALL=C"
-BASE_ENV="$BASE_ENV TZ=UTC"
-BASE_ENV="$BASE_ENV PYTHONHASHSEED=0"
-BASE_ENV="$BASE_ENV SOURCE_DATE_EPOCH=1783375223"
-BASE_ENV="$BASE_ENV LCOV_BUILD_DATE=2026-07-06"
-BASE_ENV="$BASE_ENV BUILD_DATE=2026-07-06"
-BASE_ENV="$BASE_ENV VERSION=2.5"
-BASE_ENV="$BASE_ENV RELEASE=beta"
+BASE_ENV_PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+write_clean_env() {
+  # Writes KEY=VALUE lines used by process-observer (env -i equivalent).
+  {
+    echo "PATH=$BASE_ENV_PATH"
+    echo "HOME=/tmp"
+    echo "TERM=dumb"
+    echo "LANG=C"
+    echo "LC_ALL=C"
+    echo "TZ=UTC"
+    echo "PYTHONHASHSEED=0"
+    echo "SOURCE_DATE_EPOCH=1783375223"
+    echo "LCOV_BUILD_DATE=2026-07-06"
+    echo "BUILD_DATE=2026-07-06"
+    echo "VERSION=2.5"
+    echo "RELEASE=beta"
+    # EXTRA_ENV_LINES may add KEY=VALUE overrides (e.g. LCOV_PERL=...).
+    if [ -n "${EXTRA_ENV_LINES:-}" ]; then
+      printf '%s\n' "$EXTRA_ENV_LINES"
+    fi
+  } | LC_ALL=C sort >"$ENV_FILE"
+}
+
+# Helper for fixture steps that are not the attested subject.
+base_env_run() {
+  env -i \
+    PATH="$BASE_ENV_PATH" \
+    HOME=/tmp \
+    TERM=dumb \
+    LANG=C \
+    LC_ALL=C \
+    TZ=UTC \
+    PYTHONHASHSEED=0 \
+    SOURCE_DATE_EPOCH=1783375223 \
+    LCOV_BUILD_DATE=2026-07-06 \
+    BUILD_DATE=2026-07-06 \
+    VERSION=2.5 \
+    RELEASE=beta \
+    "$@"
+}
 
 append_meta() {
   printf '%s\n' "$@" >>"$META_JSON"
@@ -132,14 +163,11 @@ prepare_src() {
   cp -a "$SRC_RO" /tmp/src
   if [ -f "$PIN_INV" ] && [ -f "$PIN_PY" ]; then
     install -m 644 "$PIN_INV" /tmp/src/docs/python-objects.inv
-    # pin script may need normal env; run under explicit env -i subset
-    env -i $BASE_ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-      python3 "$PIN_PY" /tmp/src/docs/conf.py /tmp/src/docs/python-objects.inv
+    base_env_run python3 "$PIN_PY" /tmp/src/docs/conf.py /tmp/src/docs/python-objects.inv
   fi
 }
 
 record_cleanup() {
-  # shellcheck disable=SC2068
   for target in "$@"; do
     if [ -e "$target" ] || [ -L "$target" ]; then
       rm -rf -- "$target"
@@ -150,106 +178,70 @@ record_cleanup() {
   done
 }
 
-# run_cmd WORKDIR TIMEOUT_SECONDS EXECUTABLE -- argv...
-# Executes under env -i + timeout; records status, observed env, argv, cwd.
-run_cmd() {
+# run_subject WORKDIR TIMEOUT_SECONDS [qualification] -- argv...
+# Live-process observation via ptrace supervisor. No declared exe/argv/cwd.
+run_subject() {
   workdir="$1"
   timeout_sec="$2"
-  executable="$3"
-  shift 3
-  if [ "$1" = "--" ]; then
+  shift 2
+  qualification=""
+  if [ "${1:-}" = "signal" ] || [ "${1:-}" = "timeout" ]; then
+    qualification="$1"
+    shift
+  fi
+  if [ "${1:-}" = "--" ]; then
     shift
   fi
 
-  # Serialize argv as JSON for host binding.
-  python3 - "$OBS_ARGV" "$@" <<'PY'
-import json, sys
-from pathlib import Path
-Path(sys.argv[1]).write_text(json.dumps(sys.argv[2:], indent=2) + "\n")
-PY
-
-  # Resolve executable identity from the actual binary that will run.
-  if [ -e "$executable" ]; then
-    exec_sha="$(sha256sum "$executable" | cut -d' ' -f1)"
-  else
-    exec_sha="$(printf '%064d' 0)"
-  fi
-  append_meta "EXECUTABLE_PATH=$executable"
-  append_meta "EXECUTABLE_SHA256=$exec_sha"
-  append_meta "WORKDIR=$workdir"
-  append_meta "TIMEOUT_SECONDS=$timeout_sec"
-
-  # Capture effective environment that will be used (env -i + BASE_ENV + extras).
-  # EXTRA_ENV_ASSIGNMENTS is a newline-separated list of KEY=VALUE.
-  {
-    # shellcheck disable=SC2086
-    env -i $BASE_ENV ${EXTRA_ENV:-} /usr/bin/env
-  } | LC_ALL=C sort >"$OBS_ENV"
+  write_clean_env
 
   set +e
-  # shellcheck disable=SC2086
-  (
-    cd "$workdir" || exit 127
-    # shellcheck disable=SC2086
-    exec env -i $BASE_ENV ${EXTRA_ENV:-} /usr/bin/timeout --signal=TERM --kill-after=10s "${timeout_sec}s" "$@"
-  ) >"$STDOUT_BIN" 2>"$STDERR_BIN"
-  code=$?
+  python3 "$OBSERVER" \
+    --workdir "$workdir" \
+    --timeout-seconds "$timeout_sec" \
+    --stdout "$STDOUT_BIN" \
+    --stderr "$STDERR_BIN" \
+    --status "$STATUS_FILE" \
+    --observed-argv "$OBS_ARGV" \
+    --observed-children "$OBS_CHILDREN" \
+    --meta "$RUN_META" \
+    --observed-env "$OBS_ENV" \
+    --env-file "$ENV_FILE" \
+    ${qualification:+--qualification "$qualification"} \
+    -- "$@"
+  observer_rc=$?
   set -e
 
-  timed_out=0
-  signal=""
-  exit_status=""
-  if [ "$code" -eq 124 ]; then
-    # GNU timeout: command timed out
-    timed_out=1
-    signal=15
-    exit_status=""
-  elif [ "$code" -eq 137 ]; then
-    # kill-after SIGKILL
-    timed_out=1
-    signal=9
-    exit_status=""
-  elif [ "$code" -gt 128 ]; then
-    signal=$((code - 128))
-    exit_status=""
-  else
-    exit_status="$code"
+  # Merge run-meta into cumulative meta.
+  if [ -s "$RUN_META" ]; then
+    cat "$RUN_META" >>"$META_JSON"
   fi
+  append_meta "OBSERVER_RC=$observer_rc"
+  append_meta "SUBJECT_DECLARED=$*"
 
-  {
-    echo "EXIT_STATUS=$exit_status"
-    echo "SIGNAL=$signal"
-    echo "TIMED_OUT=$timed_out"
-    echo "HOST_OBSERVER_CODE=$code"
-    echo "WORKDIR=$workdir"
-  } >"$STATUS_FILE"
-
-  # Single observed child: the timed command itself.
-  python3 - "$OBS_CHILDREN" "$code" "$timed_out" "$signal" "$@" <<'PY'
-import json, sys
-from pathlib import Path
-code = int(sys.argv[2])
-timed_out = sys.argv[3] == "1"
-signal = sys.argv[4]
-argv = sys.argv[5:]
-child = {
-    "command": " ".join(argv),
-    "argv": argv,
-    "exit_status": None if timed_out or signal else code,
-    "signal": int(signal) if signal else None,
-    "timed_out": timed_out,
-}
-Path(sys.argv[1]).write_text(json.dumps([child], indent=2) + "\n")
-PY
+  # Ensure status file exists even on observer failure.
+  if [ ! -s "$STATUS_FILE" ]; then
+    {
+      echo "EXIT_STATUS=1"
+      echo "SIGNAL="
+      echo "TIMED_OUT=0"
+      echo "HOST_OBSERVER_CODE=$observer_rc"
+      echo "WORKDIR=$workdir"
+      echo "EXECUTABLE_PATH="
+      echo "EXECUTABLE_SHA256="
+    } >"$STATUS_FILE"
+  fi
+  return 0
 }
 
-EXTRA_ENV=""
+EXTRA_ENV_LINES=""
 
 case "$CASE_ID" in
   INST-LAYOUT-001)
     append_meta "FIXTURE=image_payload_directories"
     append_meta "CLEANUP=none_required_read_only_payload_scan"
-    run_cmd / 60 /usr/bin/find -- sh "$DIR_RECORDER" /usr/local
+    # Subject is the directory companion recorder under /bin/sh (live observed).
+    run_subject / 60 -- /bin/sh "$DIR_RECORDER" /usr/local
     cp "$STDOUT_BIN" "$OUT_DIR/installed-directories.lock"
     python3 - "$OUT_DIR/installed-directories.lock" "$TREE_JSON" <<'PY'
 import hashlib, json, sys
@@ -278,28 +270,28 @@ PY
     append_meta "CLEANUP=rm -rf /tmp/destdir-stage /tmp/src"
     (
       cd /tmp/src
-      # docs required for install; keep under same clean env
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     rm -rf /tmp/destdir-stage
     mkdir -p /tmp/destdir-stage
-    run_cmd /tmp/src 600 /usr/bin/make -- make install DESTDIR=/tmp/destdir-stage PREFIX=/usr/local
+    run_subject /tmp/src 600 -- make install DESTDIR=/tmp/destdir-stage PREFIX=/usr/local
     write_tree_effects /tmp/destdir-stage
     record_cleanup /tmp/destdir-stage /tmp/src
     ;;
 
   INST-INTERP-001)
     prepare_src
-    EXTRA_ENV="LCOV_PERL=/opt/custom/bin/perl"
+    # LCOV_PERL is part of the clean subject environment (not a separate env argv0).
+    EXTRA_ENV_LINES="LCOV_PERL=/opt/custom/bin/perl"
     append_meta "FIXTURE=clean_src_custom_LCOV_PERL"
     append_meta "CLEANUP=rm -rf /tmp/destdir-interp /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     rm -rf /tmp/destdir-interp
     mkdir -p /tmp/destdir-interp
-    run_cmd /tmp/src 600 /usr/bin/make -- env LCOV_PERL=/opt/custom/bin/perl make install DESTDIR=/tmp/destdir-interp PREFIX=/usr/local
+    run_subject /tmp/src 600 -- make install DESTDIR=/tmp/destdir-interp PREFIX=/usr/local
     {
       echo "lcov=$(head -n1 /tmp/destdir-interp/usr/local/bin/lcov 2>/dev/null || true)"
       echo "py2lcov=$(head -n1 /tmp/destdir-interp/usr/local/bin/py2lcov 2>/dev/null || true)"
@@ -353,7 +345,7 @@ print "LCOV_HOME only:\n"; probe(LCOV_HOME => '/tmp/lh');
 print "both HOME first:\n"; probe(HOME => '/tmp/h1', LCOV_HOME => '/tmp/lh');
 print "empty both:\n"; probe();
 PL
-    run_cmd /tmp 60 /usr/bin/perl -- perl /tmp/config-probe.pl
+    run_subject /tmp 60 -- perl /tmp/config-probe.pl
     write_tree_effects /tmp/h1
     record_cleanup /tmp/h1 /tmp/lh /tmp/config-probe.pl
     ;;
@@ -364,18 +356,18 @@ PL
     append_meta "CLEANUP=rm -rf /tmp/destdir-uninst /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     rm -rf /tmp/destdir-uninst
     mkdir -p /tmp/destdir-uninst
     (
       cd /tmp/src
-      env -i $BASE_ENV make install DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local >>"$OUT_DIR/install.log" 2>&1
+      base_env_run make install DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local >>"$OUT_DIR/install.log" 2>&1
     )
     mkdir -p /tmp/destdir-uninst/usr/local/share/man/man1
     echo foreign > /tmp/destdir-uninst/usr/local/etc/foreign.conf
     echo extra > /tmp/destdir-uninst/usr/local/share/man/man1/extra.1
-    run_cmd /tmp/src 600 /usr/bin/make -- make uninstall DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local
+    run_subject /tmp/src 600 -- make uninstall DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local
     write_tree_effects /tmp/destdir-uninst
     record_cleanup /tmp/destdir-uninst /tmp/src
     ;;
@@ -386,7 +378,7 @@ PL
     append_meta "CLEANUP=rm -rf /tmp/partial /tmp/src /tmp/fake-install /tmp/install-count"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     cat > /tmp/fake-install <<'SH'
 #!/bin/sh
@@ -406,7 +398,7 @@ SH
     echo 0 > /tmp/install-count
     rm -rf /tmp/partial
     mkdir -p /tmp/partial
-    run_cmd /tmp/src 600 /usr/bin/make -- make install DESTDIR=/tmp/partial PREFIX=/usr/local INSTALL=/tmp/fake-install
+    run_subject /tmp/src 600 -- make install DESTDIR=/tmp/partial PREFIX=/usr/local INSTALL=/tmp/fake-install
     write_tree_effects /tmp/partial
     record_cleanup /tmp/partial /tmp/src /tmp/fake-install /tmp/install-count
     ;;
@@ -421,7 +413,7 @@ SH
     rm -f /tmp/src/doc_finished
     rm -rf /tmp/src/docs/_build /tmp/docfail
     mkdir -p /tmp/docfail
-    run_cmd /tmp/src 300 /usr/bin/make -- make install DESTDIR=/tmp/docfail PREFIX=/usr/local
+    run_subject /tmp/src 300 -- make install DESTDIR=/tmp/docfail PREFIX=/usr/local
     if [ -x /usr/bin/sphinx-build.hidden ]; then
       mv /usr/bin/sphinx-build.hidden /usr/bin/sphinx-build
       echo "restored:/usr/bin/sphinx-build" >>"$CLEANUP_LOG"
@@ -436,9 +428,9 @@ SH
     append_meta "CLEANUP=rm -rf /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
-    run_cmd /tmp/src 120 /usr/bin/make -- make install DESTDIR=rel-dest PREFIX=/usr/local
+    run_subject /tmp/src 120 -- make install DESTDIR=rel-dest PREFIX=/usr/local
     write_tree_effects /tmp/src/rel-dest
     record_cleanup /tmp/src
     ;;
@@ -449,12 +441,11 @@ SH
     append_meta "CLEANUP=rm -rf /tmp/destdir space /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     rm -rf "/tmp/destdir space"
     mkdir -p "/tmp/destdir space"
-    # Pass DESTDIR with embedded space as a single argv element.
-    run_cmd /tmp/src 300 /usr/bin/make -- make install "DESTDIR=/tmp/destdir space" PREFIX=/usr/local
+    run_subject /tmp/src 300 -- make install "DESTDIR=/tmp/destdir space" PREFIX=/usr/local
     write_tree_effects "/tmp/destdir space"
     record_cleanup "/tmp/destdir space" /tmp/src
     ;;
@@ -465,13 +456,13 @@ SH
     append_meta "CLEANUP=rm -rf /tmp/destdir-dirty /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     printf '#!/bin/sh\necho dirty\n' > /tmp/src/scripts/zz_dirty_wave2_sentinel
     chmod +x /tmp/src/scripts/zz_dirty_wave2_sentinel
     rm -rf /tmp/destdir-dirty
     mkdir -p /tmp/destdir-dirty
-    run_cmd /tmp/src 600 /usr/bin/make -- make install DESTDIR=/tmp/destdir-dirty PREFIX=/usr/local
+    run_subject /tmp/src 600 -- make install DESTDIR=/tmp/destdir-dirty PREFIX=/usr/local
     write_tree_effects /tmp/destdir-dirty
     record_cleanup /tmp/destdir-dirty /tmp/src
     ;;
@@ -479,10 +470,11 @@ SH
   INST-TEST-RUN-001)
     append_meta "FIXTURE=installed_tests_unset_LCOV_HOME"
     append_meta "CLEANUP=none_required_read_only"
-    # Observe make -np without LCOV_HOME (exact argv used by prior evidence).
-    EXTRA_ENV=""
-    # Unset LCOV_HOME by not including it; BASE_ENV has no LCOV_HOME.
-    run_cmd /usr/local/share/lcov/tests 60 /usr/bin/make -- make -np
+    # Deterministic dry-run of installed tests `info` without LCOV_HOME.
+    # Clean env never includes LCOV_HOME (equivalent to `env -u LCOV_HOME make -n info`).
+    # Direct make subject so live exe/argv/cwd match the intended make identity.
+    EXTRA_ENV_LINES=""
+    run_subject /usr/local/share/lcov/tests 60 -- make -n info
     write_tree_effects /usr/local/share/lcov/tests
     echo "cleanup:none" >>"$CLEANUP_LOG"
     ;;
@@ -500,7 +492,7 @@ print('ACTUAL_MAN=/usr/local/share/man')
 print('ACTUAL_TESTS=/usr/local/share/lcov/tests')
 print('ACTUAL_HTML=/usr/local/share/lcov/html')
 PY
-    run_cmd /tmp/src 60 /usr/bin/python3 -- python3 /tmp/extract_readme_paths.py
+    run_subject /tmp/src 60 -- python3 /tmp/extract_readme_paths.py
     write_tree_effects /tmp/src
     record_cleanup /tmp/src /tmp/extract_readme_paths.py
     ;;
@@ -520,7 +512,7 @@ print('HAS_RATE_PNG=' + str('@rate_png' in text or 'rate_png' in text).lower())
 print('OBSERVATION_COUNT=4')
 print('OPTIONAL_UPDOWN_OPEN=true')
 PY
-    run_cmd /tmp/src 60 /usr/bin/python3 -- python3 /tmp/scan_genhtml_assets.py
+    run_subject /tmp/src 60 -- python3 /tmp/scan_genhtml_assets.py
     write_tree_effects /tmp/src/bin
     record_cleanup /tmp/src /tmp/scan_genhtml_assets.py
     ;;
@@ -531,11 +523,11 @@ PY
     append_meta "CLEANUP=rm -rf /tmp/destdir-lic /tmp/src"
     (
       cd /tmp/src
-      env -i $BASE_ENV make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
+      base_env_run make doc_finished >>"$OUT_DIR/doc.log" 2>&1 || true
     )
     rm -rf /tmp/destdir-lic
     mkdir -p /tmp/destdir-lic
-    run_cmd /tmp/src 600 /usr/bin/make -- make install DESTDIR=/tmp/destdir-lic PREFIX=/usr/local
+    run_subject /tmp/src 600 -- make install DESTDIR=/tmp/destdir-lic PREFIX=/usr/local
     {
       echo "SOURCE_HAS_COPYING=$([ -f /tmp/src/COPYING ] && echo yes || echo no)"
       echo "PAYLOAD_COPYING_COUNT=$(find /tmp/destdir-lic -name COPYING 2>/dev/null | wc -l)"
@@ -543,6 +535,23 @@ PY
     } >"$OUT_DIR/observation.txt"
     write_tree_effects /tmp/destdir-lic
     record_cleanup /tmp/destdir-lic /tmp/src
+    ;;
+
+  # Runner qualification probes: retained executable evidence for signal/timeout.
+  INST-RUNNER-SIGNAL-001)
+    append_meta "FIXTURE=runner_qualification_signal"
+    append_meta "CLEANUP=none_required"
+    run_subject /tmp 30 signal -- sleep 30
+    write_tree_effects /tmp
+    echo "cleanup:none" >>"$CLEANUP_LOG"
+    ;;
+
+  INST-RUNNER-TIMEOUT-001)
+    append_meta "FIXTURE=runner_qualification_timeout"
+    append_meta "CLEANUP=none_required"
+    run_subject /tmp 1 timeout -- sleep 30
+    write_tree_effects /tmp
+    echo "cleanup:none" >>"$CLEANUP_LOG"
     ;;
 
   *)
