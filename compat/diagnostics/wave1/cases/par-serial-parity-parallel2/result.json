@@ -1,0 +1,52 @@
+{
+  "argv": [
+    "lcov",
+    "--no-function-coverage",
+    "--parallel",
+    "2",
+    "--add-tracefile",
+    "a.info",
+    "--add-tracefile",
+    "b.info",
+    "--output-file",
+    "out.info"
+  ],
+  "case_id": "par-serial-parity-parallel2",
+  "command": "lcov",
+  "evidence_status": "oracle_reference",
+  "exit_status": 0,
+  "file_tree": [
+    {
+      "bytes": 47,
+      "path": "a.info",
+      "sha256": "1daee25da8d8134f98a56b9928d94a3b8be0b1744d1eeed49a93d09b0fb6c23c"
+    },
+    {
+      "bytes": 47,
+      "path": "b.info",
+      "sha256": "b75923bdfe10c9d58d718f7d191e89b46312dcc770976383eb361131d2c290e1"
+    },
+    {
+      "bytes": 94,
+      "path": "out.info",
+      "sha256": "4474c4c81da7e4a0a9544ed58d01023e76536bceff25c93212752ef49e5d60e2"
+    }
+  ],
+  "file_tree_sha256": "a97df350cee64597c1045b23a945395db1a17ed19248a597e3c1884a20351aed",
+  "fixtures": [
+    "a.info",
+    "b.info"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "parallel_control",
+  "notes": "",
+  "planned_case_ids": [
+    "PAR-SERIAL-PARITY-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 283,
+  "stdout_sha256": "7e6a75267a07bd5c68f5818f711e9b4dbad504addf95a939ed635c4d7dd9156e",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

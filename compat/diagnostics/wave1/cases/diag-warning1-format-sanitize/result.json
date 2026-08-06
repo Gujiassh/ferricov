@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "lcov",
+    "--no-function-coverage",
+    "--ignore-errors",
+    "format",
+    "--add-tracefile",
+    "tn-sanitize.info",
+    "--output-file",
+    "out.info"
+  ],
+  "case_id": "diag-warning1-format-sanitize",
+  "command": "lcov",
+  "evidence_status": "oracle_reference",
+  "exit_status": 0,
+  "file_tree": [
+    {
+      "bytes": 55,
+      "path": "out.info",
+      "sha256": "6dc294e17d01c52f4093fc9ea40eef5b79277f7d22ee5f4438b4e117204ed7f8"
+    },
+    {
+      "bytes": 55,
+      "path": "tn-sanitize.info",
+      "sha256": "b5cad1c8f48eead99a1e9830fc00c19b1e3813dd02244b43304246a73eb98a42"
+    }
+  ],
+  "file_tree_sha256": "cde8fb94b9ae5b5177eac057bf640eae66b5626aca8fc41e8ecb144f6bec1d9b",
+  "fixtures": [
+    "tn-sanitize.info"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "warning_control",
+  "notes": "",
+  "planned_case_ids": [
+    "DIAG-WARNING-PROMOTE-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 243,
+  "stdout_sha256": "3e20e0c5e9de03a85a5231c80cae81ac25fbadf0dffc3cc00d641f65bd11ab84",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

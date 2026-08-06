@@ -169,5 +169,75 @@ class DiagnosticsContractTests(unittest.TestCase):
             self.validate(document)
 
 
+    def test_wave1_observation_count_is_bound(self) -> None:
+        wave1 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:")
+        ]
+        self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
+        self.assertEqual(self.committed["totals"]["wave1_observations"], 25)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 146)
+
+    def test_true_geninfo_noargs_is_bound_separately_from_intercept(self) -> None:
+        true_case = next(
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"] == "diagnostics-wave1:diag-noargs-geninfo-writable"
+        )
+        intercept = next(
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"] == "correctness:m0-core-geninfo-startup-control"
+        )
+        self.assertEqual(true_case["kind"], "startup_boundary")
+        self.assertEqual(true_case["exit_status"], 255)
+        self.assertEqual(true_case["planned_case_ids"], ["DIAG-NOARGS-GENINFO-001"])
+        self.assertEqual(intercept["kind"], "startup_environment_intercept")
+        self.assertEqual(intercept["planned_case_ids"], [])
+
+    def test_ignore_two_and_promotion_wave1_bindings_exist(self) -> None:
+        by_id = {
+            entry["id"]: entry for entry in self.committed["oracle_observations"]
+        }
+        silent = by_id["diagnostics-wave1:diag-ignore2-format-da"]
+        promote = by_id["diagnostics-wave1:diag-promote0-format-sanitize"]
+        self.assertEqual(silent["kind"], "named_error_ignore_two")
+        self.assertEqual(silent["planned_case_ids"], ["DIAG-IGNORE-SILENT-001"])
+        self.assertEqual(silent["exit_status"], 0)
+        self.assertEqual(silent["stderr_sha256"], "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+        self.assertEqual(promote["kind"], "warning_promotion_control")
+        self.assertEqual(promote["planned_case_ids"], ["DIAG-WARNING-PROMOTE-001"])
+        self.assertEqual(promote["exit_status"], 1)
+
+    def test_wave1_identity_swap_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        first = next(
+            entry
+            for entry in document["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:")
+        )
+        second = next(
+            entry
+            for entry in document["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave1:") and entry is not first
+        )
+        first["stderr_sha256"], second["stderr_sha256"] = (
+            second["stderr_sha256"],
+            first["stderr_sha256"],
+        )
+        with self.assertRaisesRegex(
+            contract.DiagnosticsContractError,
+            "Oracle observation identity drift",
+        ):
+            self.validate(document)
+
+    def test_wave1_product_promotion_is_rejected(self) -> None:
+        document = copy.deepcopy(self.committed)
+        document["product_compatibility_evidence"] = True
+        with self.assertRaises(contract.DiagnosticsContractError):
+            self.validate(document)
+
+
 if __name__ == "__main__":
     unittest.main()

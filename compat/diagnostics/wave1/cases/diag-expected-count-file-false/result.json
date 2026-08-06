@@ -1,0 +1,52 @@
+{
+  "argv": [
+    "lcov",
+    "--config-file",
+    "expect-count-false.rc",
+    "--no-function-coverage",
+    "--ignore-errors",
+    "format,format",
+    "--add-tracefile",
+    "malformed-da.info",
+    "--output-file",
+    "out.info"
+  ],
+  "case_id": "diag-expected-count-file-false",
+  "command": "lcov",
+  "evidence_status": "oracle_reference",
+  "exit_status": 2,
+  "file_tree": [
+    {
+      "bytes": 34,
+      "path": "expect-count-false.rc",
+      "sha256": "8b1d13dbaca9746490cb029e59f966ed124f0348213d489744f031e4f59fc0a3"
+    },
+    {
+      "bytes": 94,
+      "path": "malformed-da.info",
+      "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
+    },
+    {
+      "bytes": 89,
+      "path": "out.info",
+      "sha256": "186482499306796418d317223696a11ba1c82c9460a216687a76e5553a78a083"
+    }
+  ],
+  "file_tree_sha256": "cd28173f9b138b6a7916674d0dad6484307f451dee210b18296f70b255b46bd4",
+  "fixtures": [
+    "malformed-da.info",
+    "expect-count-false.rc"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "expected_count_control",
+  "notes": "",
+  "planned_case_ids": [
+    "DIAG-EXPECTED-COUNT-FILE-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 167,
+  "stderr_sha256": "e8a8e26225db126371c014851cda0a06b9ce5a8980c3882922a5f42512e1978e",
+  "stdout_bytes": 193,
+  "stdout_sha256": "52ec83b3ffa310274ea1cb200a29cd9d9d6f6b11420ad158f5bb9bee83c3b80b",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

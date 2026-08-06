@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "lcov",
+    "--no-function-coverage",
+    "--ignore-errors",
+    "format",
+    "--add-tracefile",
+    "malformed-da.info",
+    "--output-file",
+    "out.info"
+  ],
+  "case_id": "diag-ignore1-format-da",
+  "command": "lcov",
+  "evidence_status": "oracle_reference",
+  "exit_status": 0,
+  "file_tree": [
+    {
+      "bytes": 94,
+      "path": "malformed-da.info",
+      "sha256": "19d137575220b323b68fb9f2e67a76de38b985b3c797431a78a697416a693eb8"
+    },
+    {
+      "bytes": 89,
+      "path": "out.info",
+      "sha256": "186482499306796418d317223696a11ba1c82c9460a216687a76e5553a78a083"
+    }
+  ],
+  "file_tree_sha256": "b72c217f7f8399c90c9ceadf3839621377eaad58678d2af54c3cc3632e5b5582",
+  "fixtures": [
+    "malformed-da.info"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "named_error_ignore_one",
+  "notes": "",
+  "planned_case_ids": [
+    "DIAG-IGNORE-WARN-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 156,
+  "stderr_sha256": "a1fe82f42f244dab05e6b1dba6a2d3b45a0a73eef4f6861acc43865171c54d5b",
+  "stdout_bytes": 279,
+  "stdout_sha256": "66e5a8ec1e7e65fd71f04e1182400bd787db3e5aee8909fe6c905b3e884a9c97",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}
