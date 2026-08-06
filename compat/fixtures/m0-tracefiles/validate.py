@@ -37,6 +37,7 @@ from validation_common import (
     validate_semantic_stderr,
     verify_identity,
 )
+from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
 from validation_numeric import (
     ADDED_CASE_ARGV,
     ADDED_OUTPUT_EXPECTATIONS,
@@ -659,12 +660,33 @@ def validate_observation_binding(
     label = str(case["id"])
     expected_tf030 = expected_tf030_observation(label)
     if expected_tf030 is not None:
-        for field in ("exit_status", "output_file", "stdout", "stderr", "output"):
+        for field in ("exit_status", "output_file", "stdout", "stderr", "output", "environment"):
             require_json_equal(
                 observation.get(field),
                 expected_tf030[field],
                 f"{label}: independent TF-030 {field} identity drift",
             )
+
+    if label in TF030_CASE_IDS:
+        require_json_equal(
+            case.get("environment"),
+            TF030_PERL_ENV,
+            f"{label}: TF-030 case environment must equal TF030_PERL_ENV",
+        )
+        require_json_equal(
+            observation.get("environment"),
+            TF030_PERL_ENV,
+            f"{label}: TF-030 observation environment must equal TF030_PERL_ENV",
+        )
+    else:
+        require(
+            "environment" not in case or case.get("environment") is None,
+            f"{label}: non-TF-030 cases must not declare environment",
+        )
+        require(
+            "environment" not in observation,
+            f"{label}: non-TF-030 observations must not retain environment",
+        )
 
     require(observation["fixture"] == case["fixture"], f"fixture mismatch: {label}")
     require(
@@ -724,6 +746,17 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             require(fixture in fixtures, f"Oracle case references unknown additional fixture: {case['id']}")
         require(case["argv"] and case["argv"][0] in ALLOWED_ARGV_HEADS, f"invalid Oracle argv head: {case['id']}")
         require(isinstance(case["expected_exit"], int), f"missing expected_exit: {case['id']}")
+        if case["id"] in TF030_CASE_IDS:
+            require_json_equal(
+                case.get("environment"),
+                TF030_PERL_ENV,
+                f"{case['id']}: TF-030 case environment must equal TF030_PERL_ENV",
+            )
+        else:
+            require(
+                "environment" not in case,
+                f"{case['id']}: non-TF-030 cases must not declare environment",
+            )
         output_file = case.get("output_file")
         if output_file is not None:
             require(output_file == Path(output_file).name, f"unsafe output_file: {case['id']}")

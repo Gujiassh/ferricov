@@ -64,6 +64,12 @@ TF030_CASE_IDS = (
 
 TF030_SKIP_SUMMARY_FIXTURE_IDS = set(TF030_FIXTURE_IDS)
 
+# Deterministic Perl hash behavior for TF-030 Oracle captures only.
+TF030_PERL_ENV: dict[str, str] = {
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+}
+
 
 def slug_atom(atom: str) -> str:
     mapping = {
@@ -611,4 +617,6 @@ def build_tf030_oracle_cases() -> list[dict[str, object]]:
     ]
     if [case["id"] for case in cases] != list(TF030_CASE_IDS):
         raise ValueError("TF-030 case name registry drift")
+    for case in cases:
+        case["environment"] = dict(TF030_PERL_ENV)
     return cases

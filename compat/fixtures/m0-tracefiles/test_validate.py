@@ -846,5 +846,72 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
 
 
 
+    def test_tf030_environment_binding_is_required(self) -> None:
+        """TF-030 cases/observations must pin deterministic Perl hash env."""
+        from corpus_tf030 import TF030_PERL_ENV
+
+        case_id = "numeric-tf030-fna-mirror.threshold-ignore-all.canonical"
+        case = copy.deepcopy(self.cases[case_id])
+        observation = copy.deepcopy(self.baseline[case_id])
+        observation["fixture_sha256"] = hashlib.sha256(self.fixtures[case["fixture"]].data).hexdigest()
+        observation["additional_fixture_sha256"] = {
+            name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+            for name, path in case.get("additional_fixtures", {}).items()
+        }
+        # Canonical path must already carry exact env.
+        self.assertEqual(case.get("environment"), TF030_PERL_ENV)
+        self.assertEqual(observation.get("environment"), TF030_PERL_ENV)
+        validate_observation_binding(case, observation, self.fixtures)
+
+        missing_case = copy.deepcopy(case)
+        missing_case.pop("environment", None)
+        with self.assertRaises(ValueError):
+            validate_observation_binding(missing_case, observation, self.fixtures)
+
+        missing_obs = copy.deepcopy(observation)
+        missing_obs.pop("environment", None)
+        with self.assertRaises(ValueError):
+            validate_observation_binding(case, missing_obs, self.fixtures)
+
+        wrong = copy.deepcopy(observation)
+        wrong["environment"] = {"PERL_HASH_SEED": "1", "PERL_PERTURB_KEYS": "0"}
+        with self.assertRaises(ValueError):
+            validate_observation_binding(case, wrong, self.fixtures)
+
+        bool_env = copy.deepcopy(observation)
+        bool_env["environment"] = {"PERL_HASH_SEED": 0, "PERL_PERTURB_KEYS": "0"}  # type: ignore[dict-item]
+        with self.assertRaises(ValueError):
+            validate_observation_binding(case, bool_env, self.fixtures)
+
+        # Non-TF-030 cases must not retain environment.
+        plain_id = "numeric-format-atoms.ignore-all.canonical"
+        if plain_id in self.cases:
+            plain_case = copy.deepcopy(self.cases[plain_id])
+            plain_obs = copy.deepcopy(self.baseline[plain_id])
+            plain_obs["fixture_sha256"] = hashlib.sha256(self.fixtures[plain_case["fixture"]].data).hexdigest()
+            plain_obs["additional_fixture_sha256"] = {}
+            require_plain = copy.deepcopy(plain_obs)
+            require_plain["environment"] = dict(TF030_PERL_ENV)
+            with self.assertRaises(ValueError):
+                validate_observation_binding(plain_case, require_plain, self.fixtures)
+
+    def test_capture_normalize_case_environment(self) -> None:
+        from capture_oracle import normalize_case_environment
+        from corpus_tf030 import TF030_PERL_ENV
+
+        self.assertEqual(
+            normalize_case_environment({"id": "x", "environment": dict(TF030_PERL_ENV)}),
+            TF030_PERL_ENV,
+        )
+        self.assertIsNone(normalize_case_environment({"id": "x"}))
+        with self.assertRaises(SystemExit):
+            normalize_case_environment({"id": "x", "environment": {"PERL_HASH_SEED": 0}})
+        with self.assertRaises(SystemExit):
+            normalize_case_environment({"id": "x", "environment": {}})
+        with self.assertRaises(SystemExit):
+            normalize_case_environment({"id": "x", "environment": {"BAD=KEY": "1"}})
+
+
+
 if __name__ == "__main__":
     unittest.main()

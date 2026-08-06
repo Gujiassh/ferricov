@@ -90,5 +90,10 @@ TF-030 numeric plans bind every matrix row to fixture bytes with section-local
 six-snapshot `tf030-semantic-registry.json` additionally fixes every row field,
 Perl/B scalar projection, stored aggregate/testcase value, and source cache
 fact; its contract-bound SHA-256 is
-`d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`.
+`bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c`.
+
+All 15 TF-030 Oracle cases pin a deterministic Perl environment via
+`environment = {PERL_HASH_SEED=0, PERL_PERTURB_KEYS=0}` on the case
+definition, Docker capture, observation, and independent registry binding.
+Non-TF-030 cases must not declare this field.
 Product compatibility evidence remains false; M1 remains blocked.

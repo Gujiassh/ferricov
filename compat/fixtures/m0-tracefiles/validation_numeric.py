@@ -704,12 +704,23 @@ def _expected_tf030_case(case_id: str) -> dict[str, object]:
 
 
 def expected_tf030_observation(case_id: str) -> dict[str, object] | None:
+    from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
+    from validation_common import require_json_equal
+
     observations = _load_tf030_semantic_registry().get("observations")
     require(isinstance(observations, dict), "TF-030 semantic registry observations")
     if case_id not in observations:
         return None
     expected = observations[case_id]
     require(isinstance(expected, dict), f"{case_id}: semantic registry observation invalid")
+    require(case_id in TF030_CASE_IDS, f"{case_id}: observation registry entry outside TF-030 set")
+    for field in ("exit_status", "output_file", "stdout", "stderr", "output", "environment"):
+        require(field in expected, f"{case_id}: registry observation missing {field}")
+    require_json_equal(
+        expected.get("environment"),
+        TF030_PERL_ENV,
+        f"{case_id}: registry observation environment must equal TF030_PERL_ENV",
+    )
     return expected
 
 

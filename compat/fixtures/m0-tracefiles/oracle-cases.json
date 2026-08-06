@@ -2300,7 +2300,11 @@
       "additional_fixtures": {
         "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-format-atoms.tf030-threshold.semantic-snapshot",
@@ -2322,7 +2326,11 @@
       "additional_fixtures": {
         "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.default-stop",
@@ -2338,7 +2346,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 1,
-      "expected_output_exists": false
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.ignore-negative-stop-format",
@@ -2356,7 +2368,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 1,
-      "expected_output_exists": false
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
@@ -2374,7 +2390,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 0,
-      "expected_output_exists": true
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
@@ -2394,7 +2414,11 @@
       "additional_fixtures": {
         "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.threshold-default-stop",
@@ -2414,7 +2438,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 1,
-      "expected_output_exists": false
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
@@ -2434,7 +2462,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 0,
-      "expected_output_exists": true
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
@@ -2456,7 +2488,11 @@
       "additional_fixtures": {
         "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.default-stop",
@@ -2473,7 +2509,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 1,
-      "expected_output_exists": false
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.ignore-negative.canonical",
@@ -2492,7 +2532,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 0,
-      "expected_output_exists": true
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
@@ -2512,7 +2556,11 @@
       "additional_fixtures": {
         "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.threshold-default-stop",
@@ -2533,7 +2581,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 1,
-      "expected_output_exists": false
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.threshold-ignore-all.canonical",
@@ -2554,7 +2606,11 @@
       ],
       "output_file": "output.info",
       "expected_exit": 0,
-      "expected_output_exists": true
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
@@ -2576,7 +2632,11 @@
       "additional_fixtures": {
         "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
       },
-      "expected_exit": 0
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
     },
     {
       "id": "branches-forms-core.canonical",

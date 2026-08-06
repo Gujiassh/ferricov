@@ -14,7 +14,7 @@ Pinned Oracle identity:
 - LCOV `v2.5` at `74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5`
 - Docker image ID `sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e`
 - one stabilized full capture producing 93 fixtures and 184 cases
-- retained final baseline SHA-256 `a04d26a29d548ebbf594a38dda3200c4c3e8e1c5b25afd3651568e15909c7689`
+- retained final baseline SHA-256 `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`
 
 ## Controller Acceptance
 
@@ -29,7 +29,7 @@ Pinned Oracle identity:
   and testcase model values, and classified stderr.
 - Semantic snapshots are checked against the contract-bound
   `tf030-semantic-registry.json` (SHA-256
-  `d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`), not
+  `bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c`), not
   only against row shape or self-derived classifications. The registry fixes
   all row fields, every executed Perl/B scalar projection and flag, stored
   aggregate/testcase values, and aggregate/testcase source cache facts.
@@ -55,15 +55,15 @@ Pinned Oracle identity:
 
 ## Current Audit Decision
 
-**Rework implemented; pending next independent Critical audit.** The
-`m0-tf030-audit-rework-spec.md` items for independent TF-030 observation bytes,
-closed semantic JSON shape, escaped duplicate plan keys, direct upstream
-format-atoms binding, and EOF hygiene are implemented on this branch. A second
-independent Critical audit then found type-insensitive JSON equality in the
-observation/semantic registry comparisons; that P0 is fixed with type-sensitive
-recursive JSON equality and reverse mutation coverage. This review does **not**
-mark the branch final-accepted; the next independent Critical audit remains
-required.
+**Rework implemented; pending fourth independent Critical audit.** Prior audit
+rework items remain in place. A third independent Critical audit found that
+TF-030 threshold stderr could be nondeterministic because Oracle capture pinned
+locale but not Perl hash behavior. The branch now pins
+`PERL_HASH_SEED=0` and `PERL_PERTURB_KEYS=0` on all 15 TF-030 case definitions,
+Docker captures, retained observations, and independent registry bindings, with
+type-sensitive validation and reverse mutation coverage. This review does
+**not** mark the branch final-accepted; the fourth independent Critical audit
+remains required.
 
 ## Independent Review Matrix
 
@@ -103,11 +103,12 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Audit rework is implemented on the branch, including type-sensitive JSON
-  equality for TF-030 observation and semantic registry comparisons. Registry
-  hash is `d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`.
-  Final acceptance still requires the next independent Critical audit; this
-  document does not claim final acceptance.
+- Deterministic TF-030 Perl environment binding is implemented
+  (`PERL_HASH_SEED=0`, `PERL_PERTURB_KEYS=0`) with independent registry facts and
+  10x Docker repeat evidence for threshold canonical/semantic stderr hashes.
+  Registry hash is `bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c`; baseline hash is `b586a1196d120126f618b56f5995b6a2cc9f3bd27b2c4ab10e0e27e7f955e09e`. Final
+  acceptance still requires the fourth independent Critical audit; this document
+  does not claim final acceptance.
 - The remaining 18 named blockers and broader M1 readiness tasks remain open.
 
 ## Verification
@@ -124,5 +125,5 @@ python3 -m compileall -q compat
 ```
 
 The commands above are the required verification set for the rework. The
-branch remains pending the next independent Critical audit and is not final
+branch remains pending the fourth independent Critical audit and is not final
 accepted in this document.

@@ -135,6 +135,25 @@ def case_uses_model_inspector(case: dict[str, object]) -> bool:
     return MODEL_INSPECTOR_NAME in argv
 
 
+def normalize_case_environment(case: dict[str, object]) -> dict[str, str] | None:
+    """Validate optional case environment as string->string only."""
+    if "environment" not in case:
+        return None
+    raw = case["environment"]
+    if not isinstance(raw, dict) or not raw:
+        raise SystemExit(f"{case.get('id')}: environment must be a non-empty object")
+    env: dict[str, str] = {}
+    for key, value in raw.items():
+        if not isinstance(key, str) or not isinstance(value, str):
+            raise SystemExit(
+                f"{case.get('id')}: environment keys and values must be strings"
+            )
+        if not key or "=" in key:
+            raise SystemExit(f"{case.get('id')}: invalid environment key {key!r}")
+        env[key] = value
+    return env
+
+
 def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
@@ -175,13 +194,21 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
                 raise SystemExit(f"{case['id']}: numeric plan not found for {plan_name}")
             plan_raw, _plan_doc = load_strict_numeric_plan(plan_source)
             (work / Path(plan_name).name).write_bytes(plan_raw)
+        case_env = normalize_case_environment(case)
         command = [
             "docker", "run", "--rm", "--network", "none",
             "--user", f"{os.getuid()}:{os.getgid()}",
             "--env", "HOME=/tmp", "--env", "LC_ALL=C.UTF-8", "--env", "LANG=C.UTF-8",
-            "--volume", f"{work}:/work", "--workdir", "/work", image,
-            *[str(value) for value in case["argv"]],
         ]
+        if case_env is not None:
+            for key in sorted(case_env):
+                command.extend(["--env", f"{key}={case_env[key]}"])
+        command.extend(
+            [
+                "--volume", f"{work}:/work", "--workdir", "/work", image,
+                *[str(value) for value in case["argv"]],
+            ]
+        )
         # Hash the exact bytes mounted into the container before execution.
         fixture_sha256 = hashlib.sha256((work / "input.info").read_bytes()).hexdigest()
         additional_fixture_sha256 = {
@@ -204,6 +231,8 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             "output_file": output_file,
             "output": output,
         }
+        if case_env is not None:
+            observation["environment"] = dict(case_env)
         if additional_fixtures:
             observation["additional_fixtures"] = additional_fixtures
             observation["additional_fixture_sha256"] = additional_fixture_sha256
@@ -217,6 +246,24 @@ def main() -> int:
     parser.add_argument("--image", default=generate.ORACLE_IMAGE_ID)
     parser.add_argument("--cases", type=Path, default=ROOT / "oracle-cases.json")
     parser.add_argument("--output", type=Path, default=ROOT / "oracle-baseline.json")
+    parser.add_argument(
+        "--case-id",
+        action="append",
+        default=[],
+        help="Capture only the named case id (repeatable).",
+    )
+    parser.add_argument(
+        "--case-prefix",
+        action="append",
+        default=[],
+        help="Capture only case ids with this prefix (repeatable).",
+    )
+    parser.add_argument(
+        "--merge-into",
+        type=Path,
+        default=None,
+        help="Merge captured observations into an existing baseline by case id.",
+    )
     args = parser.parse_args()
 
     if not MODEL_INSPECTOR.is_file():
@@ -239,29 +286,65 @@ def main() -> int:
         generated_root = Path(raw_generated)
         generate.write_corpus(generated_root, include_scale=True)
         manifest_sha256 = hashlib.sha256((generated_root / "manifest.json").read_bytes()).hexdigest()
+        selected_cases = list(cases_document["cases"])
+        if args.case_id or args.case_prefix:
+            wanted_ids = set(args.case_id)
+            prefixes = list(args.case_prefix)
+            selected_cases = [
+                case
+                for case in selected_cases
+                if case["id"] in wanted_ids
+                or any(str(case["id"]).startswith(prefix) for prefix in prefixes)
+            ]
+            if not selected_cases:
+                raise SystemExit("no oracle cases matched --case-id/--case-prefix filters")
+            missing = wanted_ids - {case["id"] for case in selected_cases}
+            if missing:
+                raise SystemExit(f"unknown --case-id values: {sorted(missing)}")
         observations = []
-        for index, case in enumerate(cases_document["cases"], start=1):
-            print(f"[{index}/{len(cases_document['cases'])}] {case['id']}", flush=True)
+        for index, case in enumerate(selected_cases, start=1):
+            print(f"[{index}/{len(selected_cases)}] {case['id']}", flush=True)
             observations.append(run_case(case, generated_root, args.image))
 
-    baseline = {
-        "schema_version": 1,
-        "oracle": {
-            "source_commit": expected_oracle["source_commit"],
-            "docker_image": generate.ORACLE_IMAGE,
-            "docker_image_id": image_id,
-            "program": program["path"],
-            "program_sha256": program["sha256"],
-            "perl_version": program["perl_version"],
-            "locale": "C.UTF-8",
-            "network": "none",
-        },
-        "cases_sha256": hashlib.sha256(cases_raw).hexdigest(),
-        "manifest_sha256": manifest_sha256,
-        "cases": observations,
-    }
+    if args.merge_into is not None:
+        merge_document = strict_json_loads_ascii(args.merge_into.read_bytes(), "merge baseline")
+        if not isinstance(merge_document.get("cases"), list):
+            raise SystemExit("merge baseline: cases must be an array")
+        by_id = {observation["id"]: observation for observation in merge_document["cases"]}
+        if len(by_id) != len(merge_document["cases"]):
+            raise SystemExit("merge baseline: duplicate observation ids")
+        for observation in observations:
+            case_id = observation["id"]
+            if case_id not in by_id:
+                raise SystemExit(f"merge baseline missing case id: {case_id}")
+            by_id[case_id] = observation
+        merged_cases = [by_id[case["id"]] for case in merge_document["cases"]]
+        baseline = {
+            "schema_version": merge_document["schema_version"],
+            "oracle": merge_document["oracle"],
+            "cases_sha256": hashlib.sha256(cases_raw).hexdigest(),
+            "manifest_sha256": merge_document.get("manifest_sha256", manifest_sha256),
+            "cases": merged_cases,
+        }
+    else:
+        baseline = {
+            "schema_version": 1,
+            "oracle": {
+                "source_commit": expected_oracle["source_commit"],
+                "docker_image": generate.ORACLE_IMAGE,
+                "docker_image_id": image_id,
+                "program": program["path"],
+                "program_sha256": program["sha256"],
+                "perl_version": program["perl_version"],
+                "locale": "C.UTF-8",
+                "network": "none",
+            },
+            "cases_sha256": hashlib.sha256(cases_raw).hexdigest(),
+            "manifest_sha256": manifest_sha256,
+            "cases": observations,
+        }
     args.output.write_text(json.dumps(baseline, indent=2) + "\n", encoding="ascii")
-    print(f"wrote {len(observations)} observations to {args.output}")
+    print(f"wrote {len(baseline['cases'])} observations to {args.output}")
     return 0
 
 
