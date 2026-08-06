@@ -73,7 +73,7 @@ git diff --check
 Observed:
 
 - installation contract generation/validation: pass;
-- unittest: 38 pass, including reverse mutations for case-record binding,
+- unittest: 39 pass, including reverse mutations for case-record binding,
   facts-hash drift, order drift, execution promotion, product evidence,
   type-sensitive JSON equality, and fail-closed independent-facts rebinding
   after self-hash refresh;
@@ -89,12 +89,29 @@ oracle:
 1. `oracle-case-records.schema.json` closes `independent_facts` per family with
    `additionalProperties: false` and exact nested shapes for source bindings and
    report observations.
-2. `contract.py` rebuilds expected source bindings, layout partition facts,
+2. Each case id is positionally and conditionally bound to its exact
+   `independent_facts` variant via `prefixItems` order and per-id case defs.
+   Swapping complete LAYOUT/STAGE fact objects with refreshed hashes fails
+   standalone schema validation, not only integrated contract validation.
+3. `contract.py` rebuilds expected source bindings, layout partition facts,
    failure claims, report artifact paths/hashes/sample metadata, and
    observation IDs from pinned inputs before accepting retained records.
-3. Reverse mutations that refresh `facts_sha256` / case-records SHA-256 after
+4. Reverse mutations that refresh `facts_sha256` / case-records SHA-256 after
    changing nested source digests, report `artifact_path`, layout
    `support_script_names`, or report observation mapping all reject.
+
+### INST-LAYOUT nested source_bindings exception
+
+`INST-LAYOUT-001` intentionally does **not** carry nested `source_bindings`.
+Its source identity is bound only through:
+
+- top-level `source_closure_ids` (`installation.make-variables`,
+  `installation.make-doc-install`);
+- independently regenerated tree partition facts from the pinned
+  installed-tree lock.
+
+The schema forbids adding nested `source_bindings` to layout facts. All other
+INST cases require nested source binding digests.
 
 Statuses remain `execution_status=planned`, `evidence_status=oracle_reference`,
 and root `product_compatibility_evidence=false`.

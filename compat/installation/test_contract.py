@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+from jsonschema import Draft202012Validator
 import importlib.util
 import os
 import tempfile
@@ -305,7 +306,7 @@ class InstallationContractTests(unittest.TestCase):
             contract.EXPECTED_CASE_RECORDS_SHA256 = refreshed
             with self.assertRaisesRegex(
                 contract.InstallationContractError,
-                "independent_facts mismatch|support_script_names|case records drift",
+                "schema failure|independent_facts mismatch|support_script_names|case records drift",
             ):
                 contract.validate_document(contract.build_document(UPSTREAM_ROOT), UPSTREAM_ROOT)
         finally:
@@ -378,6 +379,44 @@ class InstallationContractTests(unittest.TestCase):
         finally:
             contract.CASE_RECORDS_PATH.write_bytes(backup)
             contract.EXPECTED_CASE_RECORDS_SHA256 = expected
+
+    def test_standalone_schema_rejects_layout_stage_facts_variant_swap(self) -> None:
+        """Standalone schema must bind each case id to its exact facts variant."""
+        schema = json.loads(contract.CASE_RECORDS_SCHEMA_PATH.read_text(encoding="ascii"))
+        records = json.loads(contract.CASE_RECORDS_PATH.read_text(encoding="ascii"))
+        Draft202012Validator(schema).validate(records)
+
+        mutated = copy.deepcopy(records)
+        layout = next(case for case in mutated["cases"] if case["id"] == "INST-LAYOUT-001")
+        stage = next(case for case in mutated["cases"] if case["id"] == "INST-STAGE-001")
+        layout["independent_facts"], stage["independent_facts"] = (
+            stage["independent_facts"],
+            layout["independent_facts"],
+        )
+        for case in (layout, stage):
+            facts_bytes = contract.canonical_json(case["independent_facts"]).encode("ascii")
+            case["facts_sha256"] = contract.sha256_bytes(facts_bytes)
+
+        errors = list(Draft202012Validator(schema).iter_errors(mutated))
+        self.assertTrue(errors, "schema accepted LAYOUT/STAGE independent_facts swap")
+
+        # Fixed order is also schema-enforced.
+        reordered = copy.deepcopy(records)
+        reordered["cases"][0], reordered["cases"][1] = reordered["cases"][1], reordered["cases"][0]
+        order_errors = list(Draft202012Validator(schema).iter_errors(reordered))
+        self.assertTrue(order_errors, "schema accepted case order swap")
+
+        # Layout exception: nested source_bindings are forbidden on INST-LAYOUT-001.
+        with_bindings = copy.deepcopy(records)
+        with_bindings["cases"][0]["independent_facts"]["source_bindings"] = (
+            records["cases"][1]["independent_facts"]["source_bindings"]
+        )
+        facts_bytes = contract.canonical_json(
+            with_bindings["cases"][0]["independent_facts"]
+        ).encode("ascii")
+        with_bindings["cases"][0]["facts_sha256"] = contract.sha256_bytes(facts_bytes)
+        layout_errors = list(Draft202012Validator(schema).iter_errors(with_bindings))
+        self.assertTrue(layout_errors, "schema accepted nested source_bindings on INST-LAYOUT-001")
 
 
 if __name__ == "__main__":
