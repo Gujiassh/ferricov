@@ -1,9 +1,9 @@
 # M0 Tracefile Wave 1 Review Note
 
-Status: lane implementation complete (Oracle/contract evidence only)  
-Branch worktree: `/tmp/ferricov-review-tracefile` (from `6a8a1d0`)  
-Scope: M1-TF-002 / 003 / 005 / 014 / 020 / 023 / 027 / 028  
-`product_compatibility_evidence`: **false** (unchanged)  
+Status: lane implementation complete (Oracle/contract evidence only)
+Branch worktree: `/tmp/ferricov-review-tracefile` (from `6a8a1d0`)
+Scope: M1-TF-002 / 003 / 005 / 014 / 020 / 023 / 027 / 028
+`product_compatibility_evidence`: **false** (unchanged)
 M1 / Ferricov parser-model: **not unlocked**
 
 ## Ownership

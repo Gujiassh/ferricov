@@ -1,9 +1,9 @@
 # M0 Tracefile Wave 2 Review Note
 
-Status: lane implementation complete (Oracle/contract evidence only)  
-Branch worktree: `/tmp/ferricov-trace-reader-wave2` (from `55af3cb`)  
-Scope: M1-TF-001 / 004 / 006 / 008 / 012 / 015 / 016  
-`product_compatibility_evidence`: **false** (unchanged)  
+Status: lane implementation complete (Oracle/contract evidence only)
+Branch worktree: `/tmp/ferricov-trace-reader-wave2` (from `55af3cb`)
+Scope: M1-TF-001 / 004 / 006 / 008 / 012 / 015 / 016
+`product_compatibility_evidence`: **false** (unchanged)
 M1 / Ferricov parser-model: **not unlocked**
 
 ## Ownership
