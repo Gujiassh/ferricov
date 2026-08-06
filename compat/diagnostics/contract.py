@@ -40,13 +40,521 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/oracle-cases.json":
         "d9383f3e0bc7218806818c024dcb97744cf27816901b6afb9e1ff726fbb4e94e",
     "compat/diagnostics/wave1/result.json":
-        "56e25136c383159d5d9ed7e1229812c4fabfe92315f2be5dd686960e07c156c7",
+        "4ff53ab7c96d448ab944264e7c53fb2568fa1f28f004831b41caf1d082c08788",
 }
 
-WAVE1_EXPECTED_CASE_COUNT = 25
+
+WAVE1_EXPECTED_CASE_COUNT = 26
 WAVE1_PINNED_IMAGE = (
     "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
 )
+WAVE1_FILE_TREE_SEMANTICS = "workspace_including_inputs"
+WAVE1_TIMEOUT_SECONDS = 30
+WAVE1_CLEANUP = "remove_case_workdir_before_capture"
+WAVE1_EXECUTION_ENVIRONMENT = {
+    "docker_image": WAVE1_PINNED_IMAGE,
+    "network": "none",
+    "user": "1000:1000",
+    "workdir": "/work",
+    "env": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    },
+    "tmpfs": ["/tmp:rw,exec,mode=1777"],
+    "timeout_seconds": WAVE1_TIMEOUT_SECONDS,
+    "cleanup": WAVE1_CLEANUP,
+}
+
+# Independent expected identity for every wave1 case. These facts are not derived
+# from observation self-hashes; validators recompute stdout/stderr/file-tree from
+# committed artifacts and compare against this table plus captured exit values.
+WAVE1_EXPECTED_PLANNED_IDS = [
+    "DIAG-NOARGS-GENINFO-001",
+    "DIAG-IGNORE-ERROR-001",
+    "DIAG-IGNORE-WARN-001",
+    "DIAG-IGNORE-SILENT-001",
+    "DIAG-KEEP-GOING-001",
+    "DIAG-IGNORE-UNKNOWN-001",
+    "DIAG-IGNORE-PRECEDENCE-001",
+    "DIAG-WARNING-PROMOTE-001",
+    "DIAG-MAX-MESSAGES-001",
+    "DIAG-EXPECTED-COUNT-FILE-001",
+    "DIAG-EXPECTED-COUNT-MANUAL-FILE-001",
+    "DIAG-EXPECTED-COUNT-MANUAL-RC-001",
+    "DIAG-MESSAGE-LOG-001",
+    "DIAG-PERL2LCOV-KEEP-001",
+    "DIAG-LLVM2LCOV-KEEP-001",
+    "DIAG-PY2LCOV-KEEP-001",
+    "DIAG-XML2LCOV-KEEP-001",
+    "DIAG-CONVERTER-KEEP-BOUNDARY-001",
+    "PAR-SERIAL-PARITY-001",
+]
+
+WAVE1_EXPECTED_CASES: list[dict[str, Any]] = [
+    {
+        "id": "diag-noargs-geninfo-writable",
+        "kind": "startup_boundary",
+        "planned_case_ids": ["DIAG-NOARGS-GENINFO-001"],
+        "argv": ["geninfo"],
+        "fixtures": [],
+        "expected_exit": 255,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-ignore0-format-da",
+        "kind": "named_error_fatal",
+        "planned_case_ids": ["DIAG-IGNORE-ERROR-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-ignore1-format-da",
+        "kind": "named_error_ignore_one",
+        "planned_case_ids": ["DIAG-IGNORE-WARN-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-ignore2-format-da",
+        "kind": "named_error_ignore_two",
+        "planned_case_ids": ["DIAG-IGNORE-SILENT-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-keep-going-format-da",
+        "kind": "keep_going_control",
+        "planned_case_ids": ["DIAG-KEEP-GOING-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--keep-going",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-ignore-unknown",
+        "kind": "ignore_unknown_control",
+        "planned_case_ids": ["DIAG-IGNORE-UNKNOWN-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "notaclass",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 2,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-ignore-precedence-cli-replaces-rc",
+        "kind": "ignore_precedence_control",
+        "planned_case_ids": ["DIAG-IGNORE-PRECEDENCE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "ignore-format.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "negative",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info", "ignore-format.rc"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-warning0-format-sanitize",
+        "kind": "warning_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-warning1-format-sanitize",
+        "kind": "warning_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-warning2-format-sanitize",
+        "kind": "warning_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-promote0-format-sanitize",
+        "kind": "warning_promotion_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "promote.rc",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info", "promote.rc"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-promote1-format-sanitize",
+        "kind": "warning_promotion_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "promote.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info", "promote.rc"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-promote2-format-sanitize",
+        "kind": "warning_promotion_control",
+        "planned_case_ids": ["DIAG-WARNING-PROMOTE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "promote.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "tn-sanitize.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["tn-sanitize.info", "promote.rc"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-max-messages-format",
+        "kind": "message_suppression_control",
+        "planned_case_ids": ["DIAG-MAX-MESSAGES-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "maxmsg.rc",
+            "--no-function-coverage",
+            "--keep-going",
+            "--add-tracefile",
+            "many-format.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["many-format.info", "maxmsg.rc"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-expected-count-file-false",
+        "kind": "expected_count_control",
+        "planned_case_ids": ["DIAG-EXPECTED-COUNT-FILE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "expect-count-false.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info", "expect-count-false.rc"],
+        "expected_exit": 2,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-expected-count-file-true",
+        "kind": "expected_count_control",
+        "planned_case_ids": ["DIAG-EXPECTED-COUNT-FILE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "expect-count-true.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info", "expect-count-true.rc"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-expected-count-manual-file",
+        "kind": "expected_count_control",
+        "planned_case_ids": ["DIAG-EXPECTED-COUNT-MANUAL-FILE-001"],
+        "argv": [
+            "lcov",
+            "--config-file",
+            "expect-manual.rc",
+            "--no-function-coverage",
+            "--ignore-errors",
+            "format,format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info", "expect-manual.rc"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-expected-count-manual-rc",
+        "kind": "expected_count_control",
+        "planned_case_ids": ["DIAG-EXPECTED-COUNT-MANUAL-RC-001"],
+        "argv": [
+            "lcov",
+            "--rc",
+            "expect_message_count=format:0",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 2,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-message-log",
+        "kind": "message_log_control",
+        "planned_case_ids": ["DIAG-MESSAGE-LOG-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--msg-log",
+            "messages.log",
+            "--ignore-errors",
+            "format",
+            "--add-tracefile",
+            "malformed-da.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["malformed-da.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-perl2lcov-keep",
+        "kind": "converter_keep_trap",
+        "planned_case_ids": ["DIAG-PERL2LCOV-KEEP-001"],
+        "argv": [
+            "perl2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "cover_db",
+        ],
+        "fixtures": ["cover_db"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-llvm2lcov-keep",
+        "kind": "converter_keep_trap",
+        "planned_case_ids": ["DIAG-LLVM2LCOV-KEEP-001"],
+        "argv": [
+            "llvm2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "llvm-keep.json",
+        ],
+        "fixtures": ["llvm-keep.json"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-py2lcov-keep",
+        "kind": "converter_keep_trap",
+        "planned_case_ids": ["DIAG-PY2LCOV-KEEP-001"],
+        "argv": [
+            "py2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "coverage-keep.xml",
+        ],
+        "fixtures": ["coverage-keep.xml"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-xml2lcov-keep",
+        "kind": "converter_keep_trap",
+        "planned_case_ids": ["DIAG-XML2LCOV-KEEP-001"],
+        "argv": [
+            "xml2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "coverage-keep.xml",
+        ],
+        "fixtures": ["coverage-keep.xml"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "diag-converter-keep-boundary",
+        "kind": "converter_keep_trap",
+        "planned_case_ids": ["DIAG-CONVERTER-KEEP-BOUNDARY-001"],
+        "argv": [
+            "xml2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "broken-no-sources.xml",
+        ],
+        "fixtures": ["broken-no-sources.xml"],
+        "expected_exit": 1,
+        "timed_out": False,
+    },
+    {
+        "id": "par-serial-parity-parallel1",
+        "kind": "parallel_control",
+        "planned_case_ids": ["PAR-SERIAL-PARITY-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--parallel",
+            "1",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["a.info", "b.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+    {
+        "id": "par-serial-parity-parallel2",
+        "kind": "parallel_control",
+        "planned_case_ids": ["PAR-SERIAL-PARITY-001"],
+        "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--parallel",
+            "2",
+            "--add-tracefile",
+            "a.info",
+            "--add-tracefile",
+            "b.info",
+            "--output-file",
+            "out.info",
+        ],
+        "fixtures": ["a.info", "b.info"],
+        "expected_exit": 0,
+        "timed_out": False,
+    },
+]
+
+WAVE1_EXPECTED_CASE_BY_ID = {entry["id"]: entry for entry in WAVE1_EXPECTED_CASES}
 
 EXPECTED_REGISTRY = (
     ("annotate", "ERROR_ANNOTATE_SCRIPT"),
@@ -423,42 +931,169 @@ def tracefile_case(case: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def wave1_case(case: dict[str, Any]) -> dict[str, Any]:
-    path = WAVE1_ROOT / "cases" / case["id"] / "result.json"
+def wave1_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
+    result = []
+    for name in fixtures:
+        src = WAVE1_ROOT / "fixtures" / name
+        if not src.exists():
+            raise DiagnosticsContractError(f"missing wave1 fixture: {name}")
+        if src.is_dir():
+            for path in sorted(src.rglob("*")):
+                if not path.is_file():
+                    continue
+                rel = f"{name}/{path.relative_to(src).as_posix()}"
+                data = path.read_bytes()
+                result.append(
+                    {
+                        "path": rel,
+                        "bytes": len(data),
+                        "sha256": sha256_bytes(data),
+                    }
+                )
+        else:
+            data = src.read_bytes()
+            result.append(
+                {
+                    "path": name,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                }
+            )
+    return result
+
+
+def recompute_wave1_file_tree(case_dir: Path) -> list[dict[str, Any]]:
+    entries = []
+    for path in sorted(case_dir.rglob("*")):
+        if not path.is_file():
+            continue
+        rel = path.relative_to(case_dir).as_posix()
+        if rel.startswith("reference/") or rel == "result.json":
+            continue
+        data = path.read_bytes()
+        entries.append(
+            {
+                "path": rel,
+                "bytes": len(data),
+                "sha256": sha256_bytes(data),
+            }
+        )
+    return entries
+
+
+def file_tree_sha256(tree: list[dict[str, Any]]) -> str:
+    return sha256_bytes(
+        json.dumps(tree, sort_keys=True, separators=(",", ":")).encode("ascii")
+    )
+
+
+def wave1_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]:
+    case_id = expected["id"]
+    if case.get("id") != case_id:
+        raise DiagnosticsContractError(f"wave1 index case id drift: {case_id}")
+    case_dir = WAVE1_ROOT / "cases" / case_id
+    path = case_dir / "result.json"
     document = load_json(path)
-    if document["case_id"] != case["id"]:
-        raise DiagnosticsContractError(f"wave1 case id mismatch: {case['id']}")
+
+    if document.get("case_id") != case_id:
+        raise DiagnosticsContractError(f"wave1 case id mismatch: {case_id}")
     if document.get("product_compatibility_evidence"):
-        raise DiagnosticsContractError(f"wave1 case claims product evidence: {case['id']}")
+        raise DiagnosticsContractError(f"wave1 case claims product evidence: {case_id}")
     if document.get("evidence_status") != "oracle_reference":
         raise DiagnosticsContractError(
-            f"wave1 case evidence status is not oracle_reference: {case['id']}"
+            f"wave1 case evidence status is not oracle_reference: {case_id}"
         )
-    if document["exit_status"] != case["exit_status"]:
-        raise DiagnosticsContractError(f"wave1 case exit drift: {case['id']}")
-    if document["stdout_sha256"] != case["stdout_sha256"]:
-        raise DiagnosticsContractError(f"wave1 case stdout drift: {case['id']}")
-    if document["stderr_sha256"] != case["stderr_sha256"]:
-        raise DiagnosticsContractError(f"wave1 case stderr drift: {case['id']}")
-    if document["file_tree_sha256"] != case["file_tree_sha256"]:
-        raise DiagnosticsContractError(f"wave1 case file-tree drift: {case['id']}")
-    if document["planned_case_ids"] != case["planned_case_ids"]:
-        raise DiagnosticsContractError(f"wave1 planned-case binding drift: {case['id']}")
-    if document["kind"] != case["kind"]:
-        raise DiagnosticsContractError(f"wave1 kind drift: {case['id']}")
-    if case["observation_sha256"] != sha256_file(path):
+    if document.get("image") != WAVE1_PINNED_IMAGE:
+        raise DiagnosticsContractError(f"wave1 case image drift: {case_id}")
+    if document.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError(f"wave1 case upstream drift: {case_id}")
+    if document.get("execution_environment") != WAVE1_EXECUTION_ENVIRONMENT:
         raise DiagnosticsContractError(
-            f"wave1 observation hash drift: {case['id']}"
+            f"wave1 execution environment drift: {case_id}"
         )
+    if document.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
+        raise DiagnosticsContractError(f"wave1 timeout drift: {case_id}")
+    if document.get("cleanup") != WAVE1_CLEANUP:
+        raise DiagnosticsContractError(f"wave1 cleanup policy drift: {case_id}")
+    if document.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
+        raise DiagnosticsContractError(
+            f"wave1 file-tree semantics drift: {case_id}"
+        )
+    if document.get("timed_out") is not False:
+        raise DiagnosticsContractError(f"wave1 timed_out claim drift: {case_id}")
+    if document.get("kind") != expected["kind"] or case.get("kind") != expected["kind"]:
+        raise DiagnosticsContractError(f"wave1 kind drift: {case_id}")
+    if (
+        document.get("planned_case_ids") != expected["planned_case_ids"]
+        or case.get("planned_case_ids") != expected["planned_case_ids"]
+    ):
+        raise DiagnosticsContractError(f"wave1 planned-case binding drift: {case_id}")
+    if document.get("argv") != expected["argv"] or case.get("argv") != expected["argv"]:
+        raise DiagnosticsContractError(f"wave1 argv drift: {case_id}")
+    if (
+        document.get("fixtures") != expected["fixtures"]
+        or case.get("fixtures") != expected["fixtures"]
+    ):
+        raise DiagnosticsContractError(f"wave1 fixture list drift: {case_id}")
+    if document.get("command") != expected["argv"][0]:
+        raise DiagnosticsContractError(f"wave1 command drift: {case_id}")
+    if document.get("exit_status") != expected["expected_exit"]:
+        raise DiagnosticsContractError(f"wave1 expected exit drift: {case_id}")
+    if case.get("exit_status") != expected["expected_exit"]:
+        raise DiagnosticsContractError(f"wave1 index exit drift: {case_id}")
+
+    stdout_path = case_dir / "reference" / "stdout.bin"
+    stderr_path = case_dir / "reference" / "stderr.bin"
+    if not stdout_path.is_file() or not stderr_path.is_file():
+        raise DiagnosticsContractError(f"wave1 missing raw stream artifacts: {case_id}")
+    stdout = stdout_path.read_bytes()
+    stderr = stderr_path.read_bytes()
+    stdout_hash = sha256_bytes(stdout)
+    stderr_hash = sha256_bytes(stderr)
+    if document.get("stdout_sha256") != stdout_hash or case.get("stdout_sha256") != stdout_hash:
+        raise DiagnosticsContractError(f"wave1 stdout hash drift: {case_id}")
+    if document.get("stderr_sha256") != stderr_hash or case.get("stderr_sha256") != stderr_hash:
+        raise DiagnosticsContractError(f"wave1 stderr hash drift: {case_id}")
+    if document.get("stdout_bytes") != len(stdout):
+        raise DiagnosticsContractError(f"wave1 stdout byte-count drift: {case_id}")
+    if document.get("stderr_bytes") != len(stderr):
+        raise DiagnosticsContractError(f"wave1 stderr byte-count drift: {case_id}")
+
+    expected_fixtures = wave1_fixture_bindings(expected["fixtures"])
+    if document.get("fixture_bindings") != expected_fixtures:
+        raise DiagnosticsContractError(f"wave1 fixture binding drift: {case_id}")
+
+    recomputed_tree = recompute_wave1_file_tree(case_dir)
+    recomputed_tree_hash = file_tree_sha256(recomputed_tree)
+    if document.get("file_tree") != recomputed_tree:
+        raise DiagnosticsContractError(f"wave1 file-tree content drift: {case_id}")
+    if (
+        document.get("file_tree_sha256") != recomputed_tree_hash
+        or case.get("file_tree_sha256") != recomputed_tree_hash
+    ):
+        raise DiagnosticsContractError(f"wave1 file-tree hash drift: {case_id}")
+
+    observation_hash = sha256_file(path)
+    if case.get("observation_sha256") != observation_hash:
+        raise DiagnosticsContractError(f"wave1 observation hash drift: {case_id}")
+
     return {
-        "id": f"diagnostics-wave1:{case['id']}",
-        "kind": case["kind"],
-        "planned_case_ids": list(case["planned_case_ids"]),
-        "exit_status": case["exit_status"],
-        "stdout_sha256": case["stdout_sha256"],
-        "stderr_sha256": case["stderr_sha256"],
-        "output_sha256": case["file_tree_sha256"],
-        "observation_sha256": case["observation_sha256"],
+        "id": f"diagnostics-wave1:{case_id}",
+        "kind": expected["kind"],
+        "planned_case_ids": list(expected["planned_case_ids"]),
+        "argv": list(expected["argv"]),
+        "fixtures": list(expected["fixtures"]),
+        "image": WAVE1_PINNED_IMAGE,
+        "upstream_commit": UPSTREAM_COMMIT,
+        "timeout_seconds": WAVE1_TIMEOUT_SECONDS,
+        "timed_out": False,
+        "cleanup": WAVE1_CLEANUP,
+        "file_tree_semantics": WAVE1_FILE_TREE_SEMANTICS,
+        "exit_status": expected["expected_exit"],
+        "stdout_sha256": stdout_hash,
+        "stderr_sha256": stderr_hash,
+        "output_sha256": recomputed_tree_hash,
+        "observation_sha256": observation_hash,
     }
 
 
@@ -472,18 +1107,35 @@ def wave1_observations() -> list[dict[str, Any]]:
         raise DiagnosticsContractError("wave1 upstream commit drift")
     if index.get("image") != WAVE1_PINNED_IMAGE:
         raise DiagnosticsContractError("wave1 image identity drift")
+    if index.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
+        raise DiagnosticsContractError("wave1 index file-tree semantics drift")
+    if index.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
+        raise DiagnosticsContractError("wave1 index timeout drift")
+    if index.get("execution_environment") != WAVE1_EXECUTION_ENVIRONMENT:
+        raise DiagnosticsContractError("wave1 index execution environment drift")
     if index.get("case_count") != WAVE1_EXPECTED_CASE_COUNT:
         raise DiagnosticsContractError("wave1 case count drift")
     if len(index.get("cases", [])) != WAVE1_EXPECTED_CASE_COUNT:
         raise DiagnosticsContractError("wave1 case list length drift")
+
+    expected_ids = [entry["id"] for entry in WAVE1_EXPECTED_CASES]
+    actual_ids = [case["id"] for case in index["cases"]]
+    if actual_ids != expected_ids:
+        raise DiagnosticsContractError("wave1 case id set/order drift")
+
+    planned_seen: list[str] = []
+    for case, expected in zip(index["cases"], WAVE1_EXPECTED_CASES):
+        for planned_id in expected["planned_case_ids"]:
+            if planned_id not in planned_seen:
+                planned_seen.append(planned_id)
+    if planned_seen != WAVE1_EXPECTED_PLANNED_IDS:
+        raise DiagnosticsContractError("wave1 planned-id coverage set drift")
+    if set(planned_seen) != set(WAVE1_EXPECTED_PLANNED_IDS):
+        raise DiagnosticsContractError("wave1 planned-id coverage incomplete")
+
     result = []
-    seen = set()
-    for case in index["cases"]:
-        case_id = case["id"]
-        if case_id in seen:
-            raise DiagnosticsContractError(f"duplicate wave1 case id: {case_id}")
-        seen.add(case_id)
-        result.append(wave1_case(case))
+    for case, expected in zip(index["cases"], WAVE1_EXPECTED_CASES):
+        result.append(wave1_case(case, expected))
     return result
 
 
@@ -562,7 +1214,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             "forced-parallel and child lifecycle callback failures",
             "environment discovery and POSIX singular-ignore profile matrix",
             "callback finalize and cleanup diagnostics",
-            "converter keep-going success paths with real conversion inputs",
+            "converter keep-going paths with richer multi-error conversion corpora",
             "full 71-case executable acceptance suite beyond wave1 reference bindings",
         ],
         "totals": {
@@ -701,8 +1353,72 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         for entry in document["oracle_observations"]
         if entry["id"].startswith("diagnostics-wave1:")
     ]
-    if len(wave1_ids) != WAVE1_EXPECTED_CASE_COUNT:
-        raise DiagnosticsContractError("wave1 observation count drift")
+    expected_wave1_ids = [
+        f"diagnostics-wave1:{entry['id']}" for entry in WAVE1_EXPECTED_CASES
+    ]
+    if wave1_ids != expected_wave1_ids:
+        raise DiagnosticsContractError("wave1 observation id set/order drift")
+    wave1_planned: list[str] = []
+    for entry in document["oracle_observations"]:
+        if not entry["id"].startswith("diagnostics-wave1:"):
+            continue
+        for planned_id in entry["planned_case_ids"]:
+            if planned_id not in wave1_planned:
+                wave1_planned.append(planned_id)
+    if wave1_planned != WAVE1_EXPECTED_PLANNED_IDS:
+        raise DiagnosticsContractError("wave1 planned-id coverage set drift")
+    for entry, expected in zip(
+        [
+            item
+            for item in document["oracle_observations"]
+            if item["id"].startswith("diagnostics-wave1:")
+        ],
+        WAVE1_EXPECTED_CASES,
+    ):
+        if entry["kind"] != expected["kind"]:
+            raise DiagnosticsContractError(
+                f"wave1 observation kind drift: {expected['id']}"
+            )
+        if entry["planned_case_ids"] != expected["planned_case_ids"]:
+            raise DiagnosticsContractError(
+                f"wave1 observation planned-case drift: {expected['id']}"
+            )
+        if entry.get("argv") != expected["argv"]:
+            raise DiagnosticsContractError(
+                f"wave1 observation argv drift: {expected['id']}"
+            )
+        if entry.get("fixtures") != expected["fixtures"]:
+            raise DiagnosticsContractError(
+                f"wave1 observation fixtures drift: {expected['id']}"
+            )
+        if entry["exit_status"] != expected["expected_exit"]:
+            raise DiagnosticsContractError(
+                f"wave1 observation exit drift: {expected['id']}"
+            )
+        if entry.get("image") != WAVE1_PINNED_IMAGE:
+            raise DiagnosticsContractError(
+                f"wave1 observation image drift: {expected['id']}"
+            )
+        if entry.get("upstream_commit") != UPSTREAM_COMMIT:
+            raise DiagnosticsContractError(
+                f"wave1 observation upstream drift: {expected['id']}"
+            )
+        if entry.get("timeout_seconds") != WAVE1_TIMEOUT_SECONDS:
+            raise DiagnosticsContractError(
+                f"wave1 observation timeout drift: {expected['id']}"
+            )
+        if entry.get("timed_out") is not False:
+            raise DiagnosticsContractError(
+                f"wave1 observation timed_out drift: {expected['id']}"
+            )
+        if entry.get("cleanup") != WAVE1_CLEANUP:
+            raise DiagnosticsContractError(
+                f"wave1 observation cleanup drift: {expected['id']}"
+            )
+        if entry.get("file_tree_semantics") != WAVE1_FILE_TREE_SEMANTICS:
+            raise DiagnosticsContractError(
+                f"wave1 observation file-tree semantics drift: {expected['id']}"
+            )
     geninfo_true = next(
         (
             entry
@@ -731,6 +1447,36 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         raise DiagnosticsContractError("geninfo startup intercept classification drift")
     if intercept["planned_case_ids"]:
         raise DiagnosticsContractError("geninfo intercept must not claim no-args case")
+    for converter_id in (
+        "diag-perl2lcov-keep",
+        "diag-llvm2lcov-keep",
+        "diag-py2lcov-keep",
+        "diag-xml2lcov-keep",
+    ):
+        entry = next(
+            item
+            for item in document["oracle_observations"]
+            if item["id"] == f"diagnostics-wave1:{converter_id}"
+        )
+        if entry["exit_status"] != 0:
+            raise DiagnosticsContractError(
+                f"converter keep-going success exit drift: {converter_id}"
+            )
+        if not entry["fixtures"]:
+            raise DiagnosticsContractError(
+                f"converter keep-going missing real input fixture: {converter_id}"
+            )
+    boundary = next(
+        item
+        for item in document["oracle_observations"]
+        if item["id"] == "diagnostics-wave1:diag-converter-keep-boundary"
+    )
+    if boundary["planned_case_ids"] != ["DIAG-CONVERTER-KEEP-BOUNDARY-001"]:
+        raise DiagnosticsContractError("converter boundary planned-case drift")
+    if boundary["exit_status"] != 1:
+        raise DiagnosticsContractError("converter boundary exit drift")
+    if boundary["fixtures"] != ["broken-no-sources.xml"]:
+        raise DiagnosticsContractError("converter boundary fixture drift")
 
 
 def main() -> int:

@@ -16,6 +16,24 @@ FIXTURES = WAVE_ROOT / "fixtures"
 CASES = WAVE_ROOT / "cases"
 IMAGE = "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
 UPSTREAM_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+TIMEOUT_SECONDS = 30
+FILE_TREE_SEMANTICS = "workspace_including_inputs"
+EXECUTION_ENVIRONMENT = {
+    "docker_image": IMAGE,
+    "network": "none",
+    "user": "1000:1000",
+    "workdir": "/work",
+    "env": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "TZ": "UTC",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    },
+    "tmpfs": ["/tmp:rw,exec,mode=1777"],
+    "timeout_seconds": TIMEOUT_SECONDS,
+    "cleanup": "remove_case_workdir_before_capture",
+}
 
 
 def sha256_bytes(content: bytes) -> str:
@@ -340,34 +358,73 @@ CASE_SPECS: list[dict[str, Any]] = [
     },
     {
         "id": "diag-perl2lcov-keep",
-        "argv": ["perl2lcov", "--keep-going"],
-        "fixtures": [],
+        "argv": [
+            "perl2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "cover_db",
+        ],
+        "fixtures": ["cover_db"],
         "planned_case_ids": ["DIAG-PERL2LCOV-KEEP-001"],
         "kind": "converter_keep_trap",
+        "notes": "Empty cover_db input continues named empty errors and exits 0.",
     },
     {
-        "id": "diag-llvm2lcov-keep-boundary",
-        "argv": ["llvm2lcov", "--keep-going"],
-        "fixtures": [],
-        "planned_case_ids": ["DIAG-LLVM2LCOV-KEEP-001", "DIAG-CONVERTER-KEEP-BOUNDARY-001"],
+        "id": "diag-llvm2lcov-keep",
+        "argv": [
+            "llvm2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "llvm-keep.json",
+        ],
+        "fixtures": ["llvm-keep.json"],
+        "planned_case_ids": ["DIAG-LLVM2LCOV-KEEP-001"],
         "kind": "converter_keep_trap",
-        "notes": "Missing JSON argument is raw-Perl and bypasses keep-going.",
+        "notes": "Real JSON export input; keep-going continues source/empty errors and exits 0.",
     },
     {
-        "id": "diag-py2lcov-keep-boundary",
-        "argv": ["py2lcov", "--keep-going"],
-        "fixtures": [],
-        "planned_case_ids": ["DIAG-PY2LCOV-KEEP-001", "DIAG-CONVERTER-KEEP-BOUNDARY-001"],
+        "id": "diag-py2lcov-keep",
+        "argv": [
+            "py2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "coverage-keep.xml",
+        ],
+        "fixtures": ["coverage-keep.xml"],
+        "planned_case_ids": ["DIAG-PY2LCOV-KEEP-001"],
         "kind": "converter_keep_trap",
-        "notes": "No-input path exits 1 even with keep-going.",
+        "notes": "Real Coverage.py XML input; keep-going catches conversion issues and exits 0.",
     },
     {
-        "id": "diag-xml2lcov-keep-boundary",
-        "argv": ["xml2lcov", "--keep-going"],
-        "fixtures": [],
-        "planned_case_ids": ["DIAG-XML2LCOV-KEEP-001", "DIAG-CONVERTER-KEEP-BOUNDARY-001"],
+        "id": "diag-xml2lcov-keep",
+        "argv": [
+            "xml2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "coverage-keep.xml",
+        ],
+        "fixtures": ["coverage-keep.xml"],
+        "planned_case_ids": ["DIAG-XML2LCOV-KEEP-001"],
         "kind": "converter_keep_trap",
-        "notes": "No-input path exits 1 even with keep-going.",
+        "notes": "Real Coverage.py XML input; keep-going path exits 0 with partial TN artifact.",
+    },
+    {
+        "id": "diag-converter-keep-boundary",
+        "argv": [
+            "xml2lcov",
+            "--keep-going",
+            "--output",
+            "out.info",
+            "broken-no-sources.xml",
+        ],
+        "fixtures": ["broken-no-sources.xml"],
+        "planned_case_ids": ["DIAG-CONVERTER-KEEP-BOUNDARY-001"],
+        "kind": "converter_keep_trap",
+        "notes": "Pre-try XML structural failure bypasses keep-going and exits 1.",
     },
     {
         "id": "par-serial-parity-parallel1",
@@ -412,9 +469,13 @@ def stage(work: Path, fixtures: list[str]) -> None:
     work.mkdir(parents=True)
     for name in fixtures:
         src = FIXTURES / name
-        if not src.is_file():
+        if not src.exists():
             raise SystemExit(f"missing fixture: {name}")
-        shutil.copy2(src, work / name)
+        dest = work / name
+        if src.is_dir():
+            shutil.copytree(src, dest)
+        else:
+            shutil.copy2(src, dest)
 
 
 def file_tree(work: Path) -> list[dict[str, Any]]:
@@ -436,6 +497,36 @@ def file_tree(work: Path) -> list[dict[str, Any]]:
     return entries
 
 
+def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
+    result = []
+    for name in fixtures:
+        src = FIXTURES / name
+        if src.is_dir():
+            # bind directory tree of fixture inputs
+            for path in sorted(src.rglob("*")):
+                if not path.is_file():
+                    continue
+                rel = f"{name}/{path.relative_to(src).as_posix()}"
+                data = path.read_bytes()
+                result.append(
+                    {
+                        "path": rel,
+                        "bytes": len(data),
+                        "sha256": sha256_bytes(data),
+                    }
+                )
+        else:
+            data = src.read_bytes()
+            result.append(
+                {
+                    "path": name,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                }
+            )
+    return result
+
+
 def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     work = CASES / spec["id"]
     if work.exists():
@@ -443,38 +534,48 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     stage(work, spec["fixtures"])
     ref = work / "reference"
     ref.mkdir()
+    env_flags: list[str] = []
+    for key, value in EXECUTION_ENVIRONMENT["env"].items():
+        env_flags.extend(["-e", f"{key}={value}"])
     cmd = [
         "docker",
         "run",
         "--rm",
         "--network=none",
         "-u",
-        "1000:1000",
+        EXECUTION_ENVIRONMENT["user"],
         "-w",
-        "/work",
-        "-e",
-        "HOME=/work",
-        "-e",
-        "LANG=C",
-        "-e",
-        "LC_ALL=C",
-        "-e",
-        "TZ=UTC",
-        "-e",
-        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        EXECUTION_ENVIRONMENT["workdir"],
+        *env_flags,
         "--tmpfs",
-        "/tmp:rw,exec,mode=1777",
+        EXECUTION_ENVIRONMENT["tmpfs"][0],
         "-v",
         f"{work}:/work:rw",
         IMAGE,
         *spec["argv"],
     ]
-    proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (ref / "stdout.bin").write_bytes(proc.stdout)
-    (ref / "stderr.bin").write_bytes(proc.stderr)
-    (ref / "stdout.txt").write_text(proc.stdout.decode("utf-8", "replace"))
-    (ref / "stderr.txt").write_text(proc.stderr.decode("utf-8", "replace"))
+    try:
+        proc = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=TIMEOUT_SECONDS,
+        )
+        timed_out = False
+        exit_status = proc.returncode
+        stdout = proc.stdout
+        stderr = proc.stderr
+    except subprocess.TimeoutExpired as error:
+        timed_out = True
+        exit_status = 124
+        stdout = error.stdout or b""
+        stderr = error.stderr or b""
+    (ref / "stdout.bin").write_bytes(stdout)
+    (ref / "stderr.bin").write_bytes(stderr)
+    (ref / "stdout.txt").write_text(stdout.decode("utf-8", "replace"))
+    (ref / "stderr.txt").write_text(stderr.decode("utf-8", "replace"))
     tree = file_tree(work)
+    fixtures = fixture_bindings(spec["fixtures"])
     result = {
         "case_id": spec["id"],
         "kind": spec["kind"],
@@ -482,13 +583,19 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
         "command": spec["argv"][0],
         "argv": list(spec["argv"]),
         "fixtures": list(spec["fixtures"]),
+        "fixture_bindings": fixtures,
         "image": IMAGE,
         "upstream_commit": UPSTREAM_COMMIT,
-        "exit_status": proc.returncode,
-        "stdout_sha256": sha256_bytes(proc.stdout),
-        "stderr_sha256": sha256_bytes(proc.stderr),
-        "stdout_bytes": len(proc.stdout),
-        "stderr_bytes": len(proc.stderr),
+        "execution_environment": EXECUTION_ENVIRONMENT,
+        "timeout_seconds": TIMEOUT_SECONDS,
+        "timed_out": timed_out,
+        "cleanup": EXECUTION_ENVIRONMENT["cleanup"],
+        "file_tree_semantics": FILE_TREE_SEMANTICS,
+        "exit_status": exit_status,
+        "stdout_sha256": sha256_bytes(stdout),
+        "stderr_sha256": sha256_bytes(stderr),
+        "stdout_bytes": len(stdout),
+        "stderr_bytes": len(stderr),
         "file_tree": tree,
         "file_tree_sha256": sha256_bytes(
             json.dumps(tree, sort_keys=True, separators=(",", ":")).encode("ascii")
@@ -499,7 +606,7 @@ def run_case(spec: dict[str, Any]) -> dict[str, Any]:
     }
     (work / "result.json").write_text(canonical_json(result))
     print(
-        f"CASE {spec['id']} exit={proc.returncode} "
+        f"CASE {spec['id']} exit={exit_status} timed_out={timed_out} "
         f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}"
     )
     return result
@@ -514,6 +621,9 @@ def main() -> int:
         "image": IMAGE,
         "product_compatibility_evidence": False,
         "evidence_status": "oracle_reference",
+        "file_tree_semantics": FILE_TREE_SEMANTICS,
+        "timeout_seconds": TIMEOUT_SECONDS,
+        "execution_environment": EXECUTION_ENVIRONMENT,
         "case_count": len(results),
         "cases": [
             {
@@ -521,17 +631,23 @@ def main() -> int:
                 "path": f"cases/{result['case_id']}/result.json",
                 "kind": result["kind"],
                 "planned_case_ids": result["planned_case_ids"],
+                "argv": result["argv"],
+                "fixtures": result["fixtures"],
                 "exit_status": result["exit_status"],
                 "stdout_sha256": result["stdout_sha256"],
                 "stderr_sha256": result["stderr_sha256"],
                 "file_tree_sha256": result["file_tree_sha256"],
-                "observation_sha256": sha256_file(CASES / result["case_id"] / "result.json"),
+                "observation_sha256": sha256_file(
+                    CASES / result["case_id"] / "result.json"
+                ),
             }
             for result in results
         ],
     }
     (WAVE_ROOT / "result.json").write_text(canonical_json(index))
-    print(f"WAVE1_INDEX cases={len(results)} sha256={sha256_file(WAVE_ROOT / 'result.json')}")
+    print(
+        f"WAVE1_INDEX cases={len(results)} sha256={sha256_file(WAVE_ROOT / 'result.json')}"
+    )
     return 0
 
 

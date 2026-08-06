@@ -1,31 +1,70 @@
 {
   "argv": [
     "perl2lcov",
-    "--keep-going"
+    "--keep-going",
+    "--output",
+    "out.info",
+    "cover_db"
   ],
   "case_id": "diag-perl2lcov-keep",
+  "cleanup": "remove_case_workdir_before_capture",
   "command": "perl2lcov",
   "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture",
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
   "exit_status": 0,
   "file_tree": [
     {
       "bytes": 0,
-      "path": "perlcov.info",
+      "path": "cover_db/.keep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "out.info",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
-  "file_tree_sha256": "af51e6f040391798c9c0fa24d39320cb4a8ec47bea43630f7c028154a6798025",
-  "fixtures": [],
+  "file_tree_semantics": "workspace_including_inputs",
+  "file_tree_sha256": "52d913593b5f4f4eb6e23ccf947a6af406c0636e98de03670ef72b5b91053906",
+  "fixture_bindings": [
+    {
+      "bytes": 0,
+      "path": "cover_db/.keep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fixtures": [
+    "cover_db"
+  ],
   "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
   "kind": "converter_keep_trap",
-  "notes": "",
+  "notes": "Empty cover_db input continues named empty errors and exits 0.",
   "planned_case_ids": [
     "DIAG-PERL2LCOV-KEEP-001"
   ],
   "product_compatibility_evidence": false,
-  "stderr_bytes": 295,
-  "stderr_sha256": "beabd3f772a3aa71ab0f7094efe46dadd883ebe5034b198cc4f5249e5d05d45c",
+  "stderr_bytes": 573,
+  "stderr_sha256": "572cca15f114a15c7d674fc7c945ed07f505efb57e3b1442e2ac301a26d93476",
   "stdout_bytes": 50,
-  "stdout_sha256": "dc89c272c1c67fc43e474ebca2ec11bec79f73edf5473f2f0e9b5acf6b68f581",
+  "stdout_sha256": "9a48312d3649cba8f882421ff9ac5303e262b7156fcbc99d0117a30287a96a47",
+  "timed_out": false,
+  "timeout_seconds": 30,
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 }

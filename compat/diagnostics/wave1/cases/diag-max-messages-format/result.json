@@ -11,8 +11,27 @@
     "out.info"
   ],
   "case_id": "diag-max-messages-format",
+  "cleanup": "remove_case_workdir_before_capture",
   "command": "lcov",
   "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture",
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
   "exit_status": 1,
   "file_tree": [
     {
@@ -31,7 +50,20 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
+  "file_tree_semantics": "workspace_including_inputs",
   "file_tree_sha256": "887214e05def43ceac83c33878ac7de5d37d65ccce02ed377020864c4585edf2",
+  "fixture_bindings": [
+    {
+      "bytes": 183,
+      "path": "many-format.info",
+      "sha256": "f92867156f34cd6d71769acc06c60ea96e0cb7ccbba06973185f8c27c71dbd1b"
+    },
+    {
+      "bytes": 22,
+      "path": "maxmsg.rc",
+      "sha256": "045b23678dd549f1dbceadc3f3c53a2bfcf970f88f982a4f7ad0dea696eebb67"
+    }
+  ],
   "fixtures": [
     "many-format.info",
     "maxmsg.rc"
@@ -47,5 +79,7 @@
   "stderr_sha256": "02b2897582f68eb423eacc9af78e7f4be17ab2dd88c8a0f73d2687fe04e51df1",
   "stdout_bytes": 318,
   "stdout_sha256": "460de6340072ee561561a102f2e7c32e6d7e998201dbd534efd777eb0415d24f",
+  "timed_out": false,
+  "timeout_seconds": 30,
   "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
 }

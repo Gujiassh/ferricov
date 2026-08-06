@@ -95,8 +95,8 @@
     },
     "oracle_observations": {
       "type": "array",
-      "minItems": 146,
-      "maxItems": 146,
+      "minItems": 147,
+      "maxItems": 147,
       "items": {
         "$ref": "#/$defs/oracleObservation"
       }
@@ -360,7 +360,7 @@
     },
     "oracleObservation": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "id",
         "kind",
@@ -426,6 +426,38 @@
         },
         "observation_sha256": {
           "$ref": "#/$defs/sha256"
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fixtures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "image": {
+          "type": "string"
+        },
+        "upstream_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "cleanup": {
+          "type": "string"
+        },
+        "file_tree_semantics": {
+          "type": "string"
         }
       }
     },
@@ -471,7 +503,7 @@
           "const": 71
         },
         "oracle_observations": {
-          "const": 146
+          "const": 147
         },
         "startup_observations": {
           "const": 11
@@ -489,7 +521,7 @@
           "const": 35
         },
         "wave1_observations": {
-          "const": 25
+          "const": 26
         }
       }
     }

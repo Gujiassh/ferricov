@@ -1,0 +1,70 @@
+{
+  "argv": [
+    "py2lcov",
+    "--keep-going",
+    "--output",
+    "out.info",
+    "coverage-keep.xml"
+  ],
+  "case_id": "diag-py2lcov-keep",
+  "cleanup": "remove_case_workdir_before_capture",
+  "command": "py2lcov",
+  "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture",
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "network": "none",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
+  "exit_status": 0,
+  "file_tree": [
+    {
+      "bytes": 557,
+      "path": "coverage-keep.xml",
+      "sha256": "492cf2291119f022b9135d3fada65c1161b4a82f79f31c8ebe120714113b97bc"
+    },
+    {
+      "bytes": 43,
+      "path": "out.info",
+      "sha256": "6b16aa72baa3a449790e4f4e52ff21198a33ad945c4b62a383074aa24aa7d4c7"
+    }
+  ],
+  "file_tree_semantics": "workspace_including_inputs",
+  "file_tree_sha256": "5bb9b9fb614a2611adc3ccb5f3fbb8fb879bff6ec3a3bc91119ed7373677ff8c",
+  "fixture_bindings": [
+    {
+      "bytes": 557,
+      "path": "coverage-keep.xml",
+      "sha256": "492cf2291119f022b9135d3fada65c1161b4a82f79f31c8ebe120714113b97bc"
+    }
+  ],
+  "fixtures": [
+    "coverage-keep.xml"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "converter_keep_trap",
+  "notes": "Real Coverage.py XML input; keep-going catches conversion issues and exits 0.",
+  "planned_case_ids": [
+    "DIAG-PY2LCOV-KEEP-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 153,
+  "stdout_sha256": "53bf0b384623443b0b5a7cf095c082afd5c28756c2b35db6e8d9c9ffb4777105",
+  "timed_out": false,
+  "timeout_seconds": 30,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}
