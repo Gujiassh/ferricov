@@ -62,8 +62,8 @@
     },
     "fixtures": {
       "type": "array",
-      "minItems": 124,
-      "maxItems": 124,
+      "minItems": 137,
+      "maxItems": 137,
       "items": {
         "$ref": "#/$defs/fixture"
       }
@@ -78,8 +78,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 254,
-      "maxItems": 254,
+      "minItems": 271,
+      "maxItems": 271,
       "items": {
         "$ref": "#/$defs/oracleCase"
       }
@@ -349,7 +349,8 @@
             "branch-records",
             "deterministic-scale",
             "wave1-tracefile",
-            "wave2-tracefile"
+            "wave2-tracefile",
+            "writer-tracefile"
           ]
         },
         "oracle_default": {
@@ -543,19 +544,19 @@
           "const": 18
         },
         "fixtures": {
-          "const": 124
+          "const": 137
         },
         "malformed_fixtures": {
           "const": 21
         },
         "oracle_cases": {
-          "const": 254
+          "const": 271
         },
         "default_parse_cases": {
-          "const": 111
+          "const": 115
         },
         "canonical_rewrite_cases": {
-          "const": 79
+          "const": 92
         },
         "ignore_recovery_cases": {
           "const": 36
@@ -564,10 +565,10 @@
           "const": 28
         },
         "oracle_exit_zero": {
-          "const": 174
+          "const": 188
         },
         "oracle_exit_nonzero": {
-          "const": 80
+          "const": 83
         },
         "exact_executable_requirement_ids": {
           "type": "array",
@@ -602,7 +603,18 @@
             "M1-TF-033",
             "M1-TF-034",
             "M1-TF-035",
-            "M1-TF-036"
+            "M1-TF-036",
+            "M1-TF-041",
+            "M1-TF-042",
+            "M1-TF-043",
+            "M1-TF-044",
+            "M1-TF-045",
+            "M1-TF-046",
+            "M1-TF-050",
+            "M1-TF-051",
+            "M1-TF-052",
+            "M1-TF-060",
+            "M1-TF-061"
           ]
         },
         "exact_executable_m0_decision_ids": {

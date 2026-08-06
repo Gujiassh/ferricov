@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, and wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes.",
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, and writer/converter/transport probes.",
   "execution": {
     "working_directory": "/work",
     "input_name": "input.info",
@@ -3958,6 +3958,278 @@
         "lcov",
         "--ignore-errors",
         "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-order-core.canonical",
+      "fixture": "fixtures/writer/order-core.info",
+      "requirement": "M1-TF-041",
+      "description": "Canonical writer sorts files/tests and renumbers function/branch/MC/DC fields.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-mcdc-groups.canonical",
+      "fixture": "fixtures/writer/mcdc-groups.info",
+      "requirement": "M1-TF-041",
+      "description": "MC/DC group-size lexical keys, U retention, t-before-f senses, and comma expressions.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-summaries.canonical",
+      "fixture": "fixtures/writer/summaries.info",
+      "requirement": "M1-TF-042",
+      "description": "Canonical writer recomputes FNF/FNH, BRF/BRH, MCF/MCH, and LF/LH.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-comments.canonical",
+      "fixture": "fixtures/writer/comments.info",
+      "requirement": "M1-TF-043",
+      "description": "Input comments and ignored summaries/checksums are not blindly reproduced.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-forbidden.canonical",
+      "fixture": "fixtures/writer/forbidden.info",
+      "requirement": "M1-TF-044",
+      "description": "Canonical output never emits KF, FN, FNDA, or suffixed terminators.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-fixedpoint.canonical",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "M1-TF-045",
+      "description": "Parse-write of already-canonical multi-family corpus preserves bytes.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-fixedpoint.repeated-write",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "M1-TF-046",
+      "description": "Repeated write of identical model/configuration inputs is byte-identical.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.xml2lcov",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-050",
+      "description": "xml2lcov direct converter record order, global TN, summaries, no MC/DC.",
+      "argv": [
+        "xml2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "xml",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.py2lcov-no-functions",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-051",
+      "description": "py2lcov direct conversion with derived functions disabled.",
+      "argv": [
+        "py2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "py",
+        "--no-functions",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.py2lcov-with-functions",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-051",
+      "description": "py2lcov direct conversion with derived functions enabled and companion source.",
+      "argv": [
+        "py2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "py",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "additional_fixtures": {
+        "mod.py": "fixtures/writer/mod.py"
+      }
+    },
+    {
+      "id": "converter-coverage.canonical-rewrite",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-052",
+      "description": "Direct converter output rewritten through canonical lcov writer without semantic loss.",
+      "argv": [
+        "sh",
+        "-c",
+        "xml2lcov -o converted.info -t xml input.xml && lcov --branch-coverage --add-tracefile converted.info --output-file output.info"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "gzip-valid.summary",
+      "fixture": "fixtures/writer/gzip-valid.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Valid gzip transport summary succeeds.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 0,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-plain.write-gz",
+      "fixture": "fixtures/writer/gzip-plain.info",
+      "requirement": "M1-TF-060",
+      "description": "Canonical writer emits a readable .gz transport file.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info.gz"
+      ],
+      "output_file": "output.info.gz",
+      "expected_exit": 0
+    },
+    {
+      "id": "gzip-corrupt.summary",
+      "fixture": "fixtures/writer/gzip-corrupt.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Corrupt gzip payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 1,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-empty.summary",
+      "fixture": "fixtures/writer/gzip-empty.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Empty gzip payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 1,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-valid.missing-gzip",
+      "fixture": "fixtures/writer/gzip-valid.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Missing gzip utility fails gzip transport before parse.",
+      "argv": [
+        "sh",
+        "-c",
+        "mkdir -p /tmp/ng && ln -sf /usr/bin/perl /tmp/ng/perl && ln -sf /usr/bin/env /tmp/ng/env && export PATH=/tmp/ng:/usr/local/bin && lcov --no-function-coverage --summary input.info.gz"
+      ],
+      "input_name": "input.info.gz",
+      "expected_exit": 1
+    },
+    {
+      "id": "writer-non-utf8.canonical",
+      "fixture": "fixtures/writer/non-utf8.info",
+      "requirement": "M1-TF-061",
+      "description": "Invalid UTF-8 source path bytes are retained through parse/write.",
+      "argv": [
+        "lcov",
         "--no-function-coverage",
         "--add-tracefile",
         "input.info",

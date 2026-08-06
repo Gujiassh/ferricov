@@ -40,6 +40,7 @@ from validation_common import (
 from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
 from corpus_wave1 import WAVE1_CASE_IDS, WAVE1_FIXTURE_IDS
 from corpus_wave2 import WAVE2_CASE_IDS, WAVE2_FIXTURE_IDS
+from corpus_writer import WRITER_CASE_IDS, WRITER_FIXTURE_IDS
 from validation_numeric import (
     ADDED_CASE_ARGV,
     ADDED_OUTPUT_EXPECTATIONS,
@@ -297,6 +298,18 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     require(b"TD:desc\nZZ:x\n" in by_id["wave2-unknown-tags"].data, "wave2 unknown tags missing")
     require(b" DA:1,1\n" in by_id["wave2-leading-ws-tag"].data, "wave2 leading-ws tag missing")
     require(b"da:1,1\n" in by_id["wave2-case-change"].data, "wave2 case-change tag missing")
+    require(b"TN:z\n" in by_id["writer-order-core"].data and b"TN:a\n" in by_id["writer-order-core"].data, "writer order TN missing")
+    require(b"MCDC:1,10,t,1,0,big\n" in by_id["writer-mcdc-groups"].data, "writer mcdc group10 missing")
+    require(b"MCDC:3,1,t,1,0,a,b,c\n" in by_id["writer-mcdc-groups"].data, "writer mcdc comma expression missing")
+    require(b"FNF:999\n" in by_id["writer-summaries"].data, "writer summary junk missing")
+    require(b"KF:src/k.c\n" in by_id["writer-forbidden"].data and b"FN:1,2,foo\n" in by_id["writer-forbidden"].data, "writer forbidden records missing")
+    require(b"# dropme\n" in by_id["writer-comments"].data, "writer comments fixture missing")
+    require(by_id["gzip-valid"].data[:2] == b"\x1f\x8b", "gzip-valid magic missing")
+    require(by_id["gzip-corrupt"].data == b"not-a-gzip-payload", "gzip-corrupt fixture drift")
+    require(by_id["gzip-empty"].data[:2] == b"\x1f\x8b", "gzip-empty magic missing")
+    require(b"\xff" in by_id["writer-non-utf8"].data, "writer non-utf8 fixture missing")
+    require(b"<coverage" in by_id["converter-coverage-xml"].data, "converter xml fixture missing")
+    require(b"def foo" in by_id["converter-mod-py"].data, "converter mod.py fixture missing")
     require(by_id["branches-malformed-tail"].oracle_default == "reject", "malformed-tail must reject")
     require(
         by_id["branches-malformed-tail-empty-taken"].oracle_default == "reject",
@@ -934,7 +947,17 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             require(case["argv"][0] == "perl", f"inspector runner must use perl: {case['id']}")
             require(MODEL_INSPECTOR_NAME in case["argv"], f"inspector argv missing script: {case['id']}")
         else:
-            require(case["argv"][0] == "lcov", f"default runner must use lcov: {case['id']}")
+            require(
+                case["argv"][0] in {"lcov", "xml2lcov", "py2lcov", "sh"},
+                f"default runner must use lcov/xml2lcov/py2lcov/sh: {case['id']}",
+            )
+        if "input_name" in case:
+            require(
+                isinstance(case["input_name"], str)
+                and case["input_name"]
+                and Path(str(case["input_name"])).name == case["input_name"],
+                f"unsafe input_name: {case['id']}",
+            )
         # Fail closed against product evidence promotion fields.
         require(case.get("evidence_status") in (None, "oracle_reference"), f"product evidence claim: {case['id']}")
         require("product_compatibility" not in case, f"product compatibility claim: {case['id']}")
@@ -1631,6 +1654,123 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             output_bytes = decode_identity(observation["output"], "wave2 unknown ignore")
             require(b"TD:" not in output_bytes and b"ZZ:" not in output_bytes, "wave2 unknown tags retained")
             require(b"DA:1,1\n" in output_bytes, "wave2 unknown ignore DA missing")
+
+    writer_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "writer-tracefile"]
+    require(
+        [fixture.id for fixture in writer_fixtures] == list(WRITER_FIXTURE_IDS),
+        f"writer fixture closure drift: {[fixture.id for fixture in writer_fixtures]}",
+    )
+    writer_case_ids = [
+        case["id"]
+        for case in cases
+        if str(case["id"]).startswith(("writer-", "gzip-", "converter-coverage."))
+    ]
+    require(
+        writer_case_ids == list(WRITER_CASE_IDS),
+        f"writer case closure drift: {writer_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        case_id = str(case["id"])
+        if case_id not in WRITER_CASE_IDS:
+            continue
+        if case_id == "writer-order-core.canonical":
+            output_bytes = decode_identity(observation["output"], "writer order")
+            require(output_bytes.startswith(b"TN:a\nSF:src/a.c\n"), "writer file/test order drift")
+            require(b"TN:m\nSF:src/a.c\n" in output_bytes and b"TN:z\nSF:src/z.c\n" in output_bytes, "writer section set drift")
+            require(b"FNL:0,10,20\nFNA:0,2,za\nFNA:0,1,zb\n" in output_bytes, "writer alias lexical order drift")
+            require(b"MCDC:3,2,t,1,0,expr\nMCDC:3,2,f,0,0,expr\n" in output_bytes, "writer mcdc t-before-f drift")
+            require(b"FNF:1\nFNH:1\n" in output_bytes and b"BRF:2\nBRH:1\n" in output_bytes, "writer recomputed summaries missing")
+            require(b"FNF:9" not in output_bytes and b"LF:9" not in output_bytes, "writer junk summaries retained")
+        if case_id == "writer-mcdc-groups.canonical":
+            output_bytes = decode_identity(observation["output"], "writer mcdc groups")
+            require(b"MCDC:1,10,t,1,0,big\n" in output_bytes, "writer lexical group 10 missing")
+            require(b"MCDC:1,2,t,1,0,small\n" in output_bytes, "writer lexical group 2 missing")
+            require(b"MCDC:1,U3,t,1,0,ucond\n" in output_bytes, "writer U-flag retention missing")
+            require(b"MCDC:2,1,t,2,0,sense_first\nMCDC:2,1,f,1,0,sense_first\n" in output_bytes, "writer sense order drift")
+            require(b"MCDC:3,1,t,1,0,a,b,c\n" in output_bytes, "writer comma expression drift")
+            require(b"MCF:10\nMCH:6\n" in output_bytes, "writer mcdc totals drift")
+        if case_id == "writer-summaries.canonical":
+            output_bytes = decode_identity(observation["output"], "writer summaries")
+            require(
+                output_bytes
+                == b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n",
+                "writer summary rewrite drift",
+            )
+        if case_id == "writer-comments.canonical":
+            output_bytes = decode_identity(observation["output"], "writer comments")
+            require(b"#" not in output_bytes, "writer comments retained")
+            require(b",chk" not in output_bytes, "writer stored checksum retained without --checksum")
+            require(
+                output_bytes == b"TN:c\nSF:src/c.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
+                "writer comments rewrite drift",
+            )
+        if case_id == "writer-forbidden.canonical":
+            output_bytes = decode_identity(observation["output"], "writer forbidden")
+            require(b"KF:" not in output_bytes, "writer emitted KF")
+            require(b"FN:" not in output_bytes and b"FNDA:" not in output_bytes, "writer emitted legacy FN/FNDA")
+            require(b"end_of_record_and_junk" not in output_bytes, "writer emitted suffixed terminator")
+            require(b"FNL:0,1,2\nFNA:0,3,foo\n" in output_bytes, "writer forbidden rewrite body missing")
+        if case_id in {"writer-fixedpoint.canonical", "writer-fixedpoint.repeated-write"}:
+            output_bytes = decode_identity(observation["output"], case_id)
+            require(
+                output_bytes
+                == b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n",
+                f"{case_id} fixed-point drift",
+            )
+        if case_id == "converter-coverage.xml2lcov":
+            output_bytes = decode_identity(observation["output"], "xml2lcov")
+            require(output_bytes.startswith(b"TN:xml\nSF:mod.py\n"), "xml2lcov header drift")
+            require(b"BRDA:1,0,0,1\nBRDA:1,0,1,0\n" in output_bytes, "xml2lcov branch order drift")
+            require(b"FNL:0,1,1\nFNA:0,3,foo\n" in output_bytes, "xml2lcov function records missing")
+            require(b"DA:1,3\nDA:2,1\nLF:2\nLH:2\nBRF:2\nBRH:1\nFNF:1\nFNH:1\n" in output_bytes, "xml2lcov summary order drift")
+            require(b"MCDC:" not in output_bytes, "xml2lcov must not emit MC/DC")
+            require(b"end_of_record\n" in output_bytes, "xml2lcov terminator missing")
+        if case_id == "converter-coverage.py2lcov-no-functions":
+            output_bytes = decode_identity(observation["output"], "py2lcov no-functions")
+            require(output_bytes.startswith(b"TN:py\nSF:mod.py\n"), "py2lcov no-functions header drift")
+            require(b"FNL:0,1,1\nFNA:0,3,foo\n" in output_bytes, "py2lcov no-functions XML method records missing")
+            require(output_bytes.count(b"FNL:") == 1, "py2lcov no-functions must not derive extra functions")
+            require(b"MCDC:" not in output_bytes, "py2lcov must not emit MC/DC")
+        if case_id == "converter-coverage.py2lcov-with-functions":
+            output_bytes = decode_identity(observation["output"], "py2lcov with-functions")
+            require(output_bytes.startswith(b"TN:py\nSF:./mod.py\n"), "py2lcov with-functions path drift")
+            require(b"FNL:0,1,1\nFNA:0,3,foo\nFNL:1,1,2\nFNA:1,1,foo\n" in output_bytes, "py2lcov derived function missing")
+            require(b"FNF:2\nFNH:2\n" in output_bytes, "py2lcov derived function totals missing")
+        if case_id == "converter-coverage.canonical-rewrite":
+            output_bytes = decode_identity(observation["output"], "converter rewrite")
+            require(output_bytes.startswith(b"TN:xml\nSF:mod.py\n"), "converter rewrite header drift")
+            require(b"FNL:0,1,1\nFNA:0,3,foo\n" in output_bytes, "converter rewrite function missing")
+            require(b"BRDA:1,0,0,1\nBRDA:1,0,1,0\n" in output_bytes, "converter rewrite branch missing")
+            require(b"DA:1,3\nDA:2,1\n" in output_bytes, "converter rewrite DA missing")
+            require(b"BRDA:" in output_bytes and output_bytes.find(b"FNL:") < output_bytes.find(b"BRDA:"), "converter rewrite must use canonical family order")
+            require(b"MCDC:" not in output_bytes, "converter rewrite must not invent MC/DC")
+        if case_id == "gzip-plain.write-gz":
+            output = observation["output"]
+            require(output.get("exists") is True, "gzip write must create output")
+            raw = decode_identity(output, "gzip write")
+            require(raw[:2] == b"\x1f\x8b", "gzip write magic missing")
+        if case_id == "gzip-valid.summary":
+            require(observation["exit_status"] == 0, "gzip-valid summary must succeed")
+            stdout = decode_identity(observation["stdout"], "gzip-valid stdout")
+            require(b"source files: 1" in stdout, "gzip-valid summary identity missing")
+        if case_id in {"gzip-corrupt.summary", "gzip-empty.summary", "gzip-valid.missing-gzip"}:
+            require(observation["exit_status"] == 1, f"{case_id} must exit 1")
+            stderr = decode_identity(observation["stderr"], f"{case_id} stderr").decode("utf-8", "replace")
+            if case_id == "gzip-corrupt.summary":
+                require("integrity check failed for compressed file" in stderr, "gzip-corrupt diagnostic drift")
+            elif case_id == "gzip-empty.summary":
+                require("no valid records found in tracefile" in stderr or "empty" in stderr, "gzip-empty diagnostic drift")
+            else:
+                require("gzip command not available" in stderr, "missing-gzip diagnostic drift")
+        if case_id == "writer-non-utf8.canonical":
+            output_bytes = decode_identity(observation["output"], "writer non-utf8")
+            require(output_bytes == b"TN:x\nSF:src/\xff.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", "writer non-utf8 rewrite drift")
 
     numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
     require(

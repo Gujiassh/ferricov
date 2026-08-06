@@ -42,6 +42,15 @@ from corpus_wave2 import (
     validate_wave2_fixture_closure,
     wave2_fixtures,
 )
+from corpus_writer import (
+    WRITER_FEATURE_FLAGS,
+    WRITER_GROUP,
+    WRITER_REQUIREMENT_TEXT,
+    WRITER_SKIP_SUMMARY_FIXTURE_IDS,
+    build_writer_oracle_cases,
+    validate_writer_fixture_closure,
+    writer_fixtures,
+)
 
 ROOT = Path(__file__).resolve().parent
 ORACLE_COMMIT = "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
@@ -990,6 +999,7 @@ def build_fixtures() -> list[Fixture]:
     fixtures.extend(branch_record_fixtures())
     fixtures.extend(wave1_fixtures())
     fixtures.extend(wave2_fixtures())
+    fixtures.extend(writer_fixtures())
     fixtures.extend(
         [
             scale_fixture("medium", sections=256, lines_per_section=64),
@@ -1003,6 +1013,7 @@ def build_fixtures() -> list[Fixture]:
     validate_numeric_fixture_closure(fixtures)
     validate_wave1_fixture_closure(fixtures)
     validate_wave2_fixture_closure(fixtures)
+    validate_writer_fixture_closure(fixtures)
     return fixtures
 
 
@@ -1125,6 +1136,7 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
         "branch-records": "M1-TF-013/025",
         WAVE1_GROUP: WAVE1_REQUIREMENT_TEXT,
         WAVE2_GROUP: WAVE2_REQUIREMENT_TEXT,
+        WRITER_GROUP: WRITER_REQUIREMENT_TEXT,
         "deterministic-scale": "M1-TF-062",
     }
     feature_flags = {
@@ -1147,6 +1159,7 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
         "scale-large": ["--branch-coverage", "--mcdc-coverage"],
         **WAVE1_FEATURE_FLAGS,
         **WAVE2_FEATURE_FLAGS,
+        **WRITER_FEATURE_FLAGS,
     }
     cases: list[dict[str, object]] = []
     for fixture in fixtures:
@@ -1165,6 +1178,7 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
             *TF030_SKIP_SUMMARY_FIXTURE_IDS,
             *WAVE1_SKIP_SUMMARY_FIXTURE_IDS,
             *WAVE2_SKIP_SUMMARY_FIXTURE_IDS,
+            *WRITER_SKIP_SUMMARY_FIXTURE_IDS,
         }:
             continue
         flags = feature_flags.get(fixture.id, [])
@@ -1729,12 +1743,13 @@ def build_oracle_cases(fixtures: Iterable[Fixture]) -> dict[str, object]:
     cases.extend(branch_cases)
     cases.extend(build_wave1_oracle_cases())
     cases.extend(build_wave2_oracle_cases())
+    cases.extend(build_writer_oracle_cases())
 
     validate_numeric_case_closure(cases, fixtures)
 
     return {
         "schema_version": 1,
-        "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, and wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes.",
+        "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, and writer/converter/transport probes.",
         "execution": {
             "working_directory": "/work",
             "input_name": "input.info",

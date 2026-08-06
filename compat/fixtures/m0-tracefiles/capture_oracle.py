@@ -18,8 +18,8 @@ import generate
 ROOT = Path(__file__).resolve().parent
 CANONICAL_BASELINE_PATH = ROOT / "oracle-baseline.json"
 CANONICAL_CASES_PATH = ROOT / "oracle-cases.json"
-EXPECTED_MERGE_BASELINE_SHA256 = "1fb07bd39932acf7edfc35b487b23ef504a226239e9de2b6e24ef70c0bfa46bb"
-EXPECTED_CASES_SHA256 = "20e4bc440d855d7c773bd37087c318a852e850534f3c7f71ab847f9291053a28"
+EXPECTED_MERGE_BASELINE_SHA256 = "69312253531ac9ba999b9e3f5b111a593b5cbb864e148db2fe9030ffe660ad48"
+EXPECTED_CASES_SHA256 = "4cec83ca3ae22ee90dfb5f693a6bb1b01006775feae6774efe76b386ead1a15d"
 RAW_OUTPUT_LIMIT = 256 * 1024
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
@@ -158,10 +158,20 @@ def normalize_case_environment(case: dict[str, object]) -> dict[str, str] | None
     return env
 
 
+def case_input_name(case: dict[str, object]) -> str:
+    name = case.get("input_name")
+    if name is None:
+        return "input.info"
+    if not isinstance(name, str) or not name or Path(name).name != name:
+        raise SystemExit(f"{case.get('id')}: unsafe input_name")
+    return name
+
+
 def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
-        shutil.copyfile(generated_root / str(case["fixture"]), work / "input.info")
+        input_name = case_input_name(case)
+        shutil.copyfile(generated_root / str(case["fixture"]), work / input_name)
         # Materialize durable fixture path so plan.fixture bindings can resolve
         # against the same relative path used in committed plans.
         fixture_rel = Path(str(case["fixture"]))
@@ -207,14 +217,25 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
         if case_env is not None:
             for key in sorted(case_env):
                 command.extend(["--env", f"{key}={case_env[key]}"])
-        command.extend(
-            [
-                "--volume", f"{work}:/work", "--workdir", "/work", image,
-                *[str(value) for value in case["argv"]],
-            ]
-        )
+        argv_head = str(case["argv"][0]) if case.get("argv") else ""
+        if argv_head == "sh":
+            # Shell-wrapped cases need an explicit entrypoint; image default is lcov.
+            command.extend(
+                [
+                    "--volume", f"{work}:/work", "--workdir", "/work",
+                    "--entrypoint", "sh", image,
+                    *[str(value) for value in case["argv"][1:]],
+                ]
+            )
+        else:
+            command.extend(
+                [
+                    "--volume", f"{work}:/work", "--workdir", "/work", image,
+                    *[str(value) for value in case["argv"]],
+                ]
+            )
         # Hash the exact bytes mounted into the container before execution.
-        fixture_sha256 = hashlib.sha256((work / "input.info").read_bytes()).hexdigest()
+        fixture_sha256 = hashlib.sha256((work / input_name).read_bytes()).hexdigest()
         additional_fixture_sha256 = {
             name: hashlib.sha256((work / name).read_bytes()).hexdigest()
             for name in additional_fixtures

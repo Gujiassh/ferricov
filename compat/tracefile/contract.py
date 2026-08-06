@@ -30,9 +30,9 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "808710631581d0426401d34a425c451607d11b1459486bb2fcadc37fef930bd8",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "20e4bc440d855d7c773bd37087c318a852e850534f3c7f71ab847f9291053a28",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "1fb07bd39932acf7edfc35b487b23ef504a226239e9de2b6e24ef70c0bfa46bb",
+    "compat/fixtures/m0-tracefiles/manifest.json": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "4cec83ca3ae22ee90dfb5f693a6bb1b01006775feae6774efe76b386ead1a15d",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "69312253531ac9ba999b9e3f5b111a593b5cbb864e148db2fe9030ffe660ad48",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }
@@ -164,6 +164,19 @@ EXPECTED_FIXTURE_IDS = (
     'wave2-unknown-tags',
     'wave2-leading-ws-tag',
     'wave2-case-change',
+    'writer-order-core',
+    'writer-mcdc-groups',
+    'writer-summaries',
+    'writer-forbidden',
+    'writer-comments',
+    'writer-fixedpoint',
+    'gzip-plain',
+    'gzip-valid',
+    'gzip-corrupt',
+    'gzip-empty',
+    'writer-non-utf8',
+    'converter-coverage-xml',
+    'converter-mod-py',
     'scale-medium',
     'scale-large',
 )
@@ -422,6 +435,23 @@ EXPECTED_CASE_IDS = (
     'wave2-leading-ws-tag.ignore-format',
     'wave2-case-change.canonical',
     'wave2-case-change.ignore-format',
+    'writer-order-core.canonical',
+    'writer-mcdc-groups.canonical',
+    'writer-summaries.canonical',
+    'writer-comments.canonical',
+    'writer-forbidden.canonical',
+    'writer-fixedpoint.canonical',
+    'writer-fixedpoint.repeated-write',
+    'converter-coverage.xml2lcov',
+    'converter-coverage.py2lcov-no-functions',
+    'converter-coverage.py2lcov-with-functions',
+    'converter-coverage.canonical-rewrite',
+    'gzip-valid.summary',
+    'gzip-plain.write-gz',
+    'gzip-corrupt.summary',
+    'gzip-empty.summary',
+    'gzip-valid.missing-gzip',
+    'writer-non-utf8.canonical',
 )
 
 
@@ -610,6 +640,18 @@ def case_kind(case_id: str) -> str:
         return "semantic_snapshot"
     if case_id.endswith(".clear-unreachable"):
         return "canonical_rewrite"
+    if case_id.endswith((
+        ".repeated-write",
+        ".write-gz",
+        ".xml2lcov",
+        ".py2lcov-no-functions",
+        ".py2lcov-with-functions",
+        ".canonical-rewrite",
+    )):
+        # Writer/converter/transport rewrite and direct-conversion observations.
+        return "canonical_rewrite"
+    if case_id.endswith(".missing-gzip"):
+        return "default_parse"
     if case_id.endswith((
         ".default-function-only",
         ".all-enabled",
@@ -945,6 +987,26 @@ EXACT_CASE_REQUIREMENTS.update({
     "wave2-case-change.ignore-format": {"requirement_ids": ['M1-TF-016']},
 })
 
+EXACT_CASE_REQUIREMENTS.update({
+    "writer-order-core.canonical": {"requirement_ids": ["M1-TF-041"]},
+    "writer-mcdc-groups.canonical": {"requirement_ids": ["M1-TF-041"]},
+    "writer-summaries.canonical": {"requirement_ids": ["M1-TF-042"]},
+    "writer-comments.canonical": {"requirement_ids": ["M1-TF-043"]},
+    "writer-forbidden.canonical": {"requirement_ids": ["M1-TF-044"]},
+    "writer-fixedpoint.canonical": {"requirement_ids": ["M1-TF-045"]},
+    "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
+    "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050"]},
+    "converter-coverage.py2lcov-no-functions": {"requirement_ids": ["M1-TF-051"]},
+    "converter-coverage.py2lcov-with-functions": {"requirement_ids": ["M1-TF-051"]},
+    "converter-coverage.canonical-rewrite": {"requirement_ids": ["M1-TF-052"]},
+    "gzip-valid.summary": {"requirement_ids": ["M1-TF-060"]},
+    "gzip-plain.write-gz": {"requirement_ids": ["M1-TF-060"]},
+    "gzip-corrupt.summary": {"requirement_ids": ["M1-TF-060"]},
+    "gzip-empty.summary": {"requirement_ids": ["M1-TF-060"]},
+    "gzip-valid.missing-gzip": {"requirement_ids": ["M1-TF-060"]},
+    "writer-non-utf8.canonical": {"requirement_ids": ["M1-TF-061"]},
+})
+
 def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]:
     cases_document = load_json(CASES_PATH)
     baseline = load_json(BASELINE_PATH)
@@ -1031,7 +1093,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "schema_version": 1,
         "upstream_release": "v2.5",
         "upstream_commit": UPSTREAM_COMMIT,
-        "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, and Oracle-observed malformed input behavior",
+        "scope": "LCOV 2.5 tracefile reader matchers, canonical writer tags, retained boundary fixtures, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, writer/converter/transport probes, and Oracle-observed malformed input behavior",
         "artifact_bindings": artifact_bindings(),
         "lexical_rules": lexical_rules(upstream_root),
         "records": record_entries,
@@ -1351,15 +1413,15 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "lexical_rules": 2,
         "reader_matcher_lines": 15,
         "canonical_writer_lines": 18,
-        "fixtures": 124,
+        "fixtures": 137,
         "malformed_fixtures": 21,
-        "oracle_cases": 254,
-        "default_parse_cases": 111,
-        "canonical_rewrite_cases": 79,
+        "oracle_cases": 271,
+        "default_parse_cases": 115,
+        "canonical_rewrite_cases": 92,
         "ignore_recovery_cases": 36,
         "semantic_snapshot_cases": 28,
-        "oracle_exit_zero": 174,
-        "oracle_exit_nonzero": 80,
+        "oracle_exit_zero": 188,
+        "oracle_exit_nonzero": 83,
         "exact_executable_requirement_ids": [
             "M1-TF-001",
             "M1-TF-002",
@@ -1392,6 +1454,17 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-034",
             "M1-TF-035",
             "M1-TF-036",
+            "M1-TF-041",
+            "M1-TF-042",
+            "M1-TF-043",
+            "M1-TF-044",
+            "M1-TF-045",
+            "M1-TF-046",
+            "M1-TF-050",
+            "M1-TF-051",
+            "M1-TF-052",
+            "M1-TF-060",
+            "M1-TF-061",
         ],
         "exact_executable_m0_decision_ids": [
             "M0-TF-MCDC-SF-001",
