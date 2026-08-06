@@ -147,7 +147,7 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. M0 is not complete: 170 behavior-planning gaps, 12 unbound diagnostic/parallel
-identities, the incomplete `M1-TF-045`/`052`/`061` semantic corpora, tracefile
+identities, the incomplete `M1-TF-045` semantic corpus, tracefile
 product/fuzz boundaries, executable installation lifecycle review, compiler
 capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
@@ -170,9 +170,10 @@ The separate tracefile contract reviews 20 record tags, two lexical rules, all
 15 reader matcher lines, all 18 writer emission lines, 137 fixtures, 21
 per-record malformed inputs, and 271 reference-only Oracle observations. It
 retains the TF-030 and reader/framing/state closures and adds exact
-writer/converter/transport mappings for `M1-TF-041..044`, `046`, `050`, `051`,
-and `060`. `M1-TF-045`, `052`, `061`, `063`, and `064` remain unbound, and
-product compatibility evidence remains false.
+writer/converter/transport mappings for `M1-TF-041..044`, `046`, `050..052`,
+`060`, and `061`. `M1-TF-045` remains observational pending true two-write
+Docker corpora; `M1-TF-010`, `063`, and `064` remain blocked, and product
+compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
 command exit policies. It retains 204 Oracle observations: the prior 201 are

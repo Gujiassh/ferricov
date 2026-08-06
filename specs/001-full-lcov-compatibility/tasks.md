@@ -74,10 +74,10 @@ is unchanged.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
 15 reader matcher lines, all 18 writer emission lines, 137 retained fixtures,
 and 21 per-record malformed fixtures. Its 271 Oracle observations are
-reference-only. Exact writer mappings now cover 14 cases for `M1-TF-041..044`,
-`046`, `050`, `051`, and `060`; `M1-TF-045`, `052`, and `061` remain
-observational-only gaps, while `M1-TF-063` and `064` remain product/fuzz
-boundaries. Product compatibility evidence remains false and M1 implementation
+reference-only. Exact writer mappings now cover 16 cases for `M1-TF-041..044`,
+`046`, `050..052`, `060`, and `061`; `M1-TF-045` remains observational until
+true two-write corpora exist, while `M1-TF-010`, `063`, and `064` remain
+blocked. Product compatibility evidence remains false and M1 implementation
 remains unauthorized.
 
 The TF-030 exact numeric matrix module defined in
