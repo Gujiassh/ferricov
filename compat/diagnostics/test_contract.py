@@ -1068,6 +1068,102 @@ class DiagnosticsContractTests(unittest.TestCase):
             # Capture fixture bindings also exclude the marker.
             self.assertEqual(module.fixture_bindings(["emptyhome"]), [])
 
+    def _load_wave2_capture_module(self):
+        import importlib.util
+
+        capture_path = (
+            contract.WAVE2_ROOT / "scripts" / "capture_wave2.py"
+        ).resolve()
+        spec = importlib.util.spec_from_file_location(
+            "capture_wave2_preflight_test", capture_path
+        )
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load wave2 capture module")
+        module = importlib.util.module_from_spec(spec)
+        # Avoid executing main; load module body only.
+        spec.loader.exec_module(module)
+        return module
+
+    def test_wave2_capture_preflight_accepts_tracked_emptyhome(self) -> None:
+        """Clean checkout with tracked emptyhome/.gitkeep passes capture preflight."""
+        module = self._load_wave2_capture_module()
+        fixture_dir = module.FIXTURES / "emptyhome"
+        marker = fixture_dir / ".gitkeep"
+        self.assertTrue(fixture_dir.is_dir())
+        self.assertTrue(marker.is_file())
+        self.assertFalse(marker.is_symlink())
+        self.assertEqual(marker.read_bytes(), b"")
+        # Preflight must validate preexisting tracked evidence only.
+        module.require_tracked_emptyhome_fixture()
+
+    def test_wave2_capture_main_rejects_missing_emptyhome_dir(self) -> None:
+        """Capture main fails before Docker when emptyhome fixture dir is absent."""
+        import shutil
+        import tempfile
+        from unittest.mock import patch
+
+        module = self._load_wave2_capture_module()
+        fixture_dir = module.FIXTURES / "emptyhome"
+        self.assertTrue(fixture_dir.is_dir())
+        with tempfile.TemporaryDirectory(prefix="emptyhome-main-dir-") as tmp:
+            backup = Path(tmp) / "emptyhome"
+            shutil.copytree(fixture_dir, backup)
+            shutil.rmtree(fixture_dir)
+            try:
+                with patch.object(
+                    module, "probe_effective_command_environment"
+                ) as probe_env, patch.object(
+                    module, "probe_execution_manifest"
+                ) as probe_manifest, patch.object(
+                    module, "run_case"
+                ) as run_case:
+                    with self.assertRaises(SystemExit) as raised:
+                        module.main()
+                    self.assertRegex(
+                        str(raised.exception),
+                        r"emptyhome fixture missing directory|missing \.gitkeep",
+                    )
+                    probe_env.assert_not_called()
+                    probe_manifest.assert_not_called()
+                    run_case.assert_not_called()
+            finally:
+                if not fixture_dir.exists():
+                    shutil.copytree(backup, fixture_dir)
+
+    def test_wave2_capture_main_rejects_missing_emptyhome_marker(self) -> None:
+        """Capture main fails before Docker when tracked .gitkeep is absent."""
+        import shutil
+        import tempfile
+        from unittest.mock import patch
+
+        module = self._load_wave2_capture_module()
+        fixture_dir = module.FIXTURES / "emptyhome"
+        marker = fixture_dir / ".gitkeep"
+        self.assertTrue(marker.is_file())
+        with tempfile.TemporaryDirectory(prefix="emptyhome-main-marker-") as tmp:
+            backup = Path(tmp) / ".gitkeep"
+            shutil.copy2(marker, backup)
+            marker.unlink()
+            try:
+                with patch.object(
+                    module, "probe_effective_command_environment"
+                ) as probe_env, patch.object(
+                    module, "probe_execution_manifest"
+                ) as probe_manifest, patch.object(
+                    module, "run_case"
+                ) as run_case:
+                    with self.assertRaises(SystemExit) as raised:
+                        module.main()
+                    self.assertIn("missing .gitkeep", str(raised.exception))
+                    probe_env.assert_not_called()
+                    probe_manifest.assert_not_called()
+                    run_case.assert_not_called()
+                    # Entrypoint must not recreate the marker.
+                    self.assertFalse(marker.exists())
+                    self.assertFalse(marker.is_symlink())
+            finally:
+                if not marker.exists():
+                    shutil.copy2(backup, marker)
 
 
 if __name__ == "__main__":

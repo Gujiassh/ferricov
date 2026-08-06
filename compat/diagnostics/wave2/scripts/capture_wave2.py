@@ -1134,16 +1134,25 @@ def run_case(
     return result
 
 
+def require_tracked_emptyhome_fixture() -> None:
+    """Fail closed before Docker if tracked emptyhome source evidence is missing.
+
+    emptyhome must already exist as a Git-tracked directory with a regular
+    zero-byte .gitkeep marker. Capture must never synthesize that marker.
+    """
+    validate_emptyhome_fixture_dir(
+        FIXTURES / "emptyhome",
+        context="capture-preflight",
+    )
+
+
 def main() -> int:
     # Create noread.rc fixture if missing (empty file; chmod applied per case).
     noread = FIXTURES / "noread.rc"
     if not noread.exists():
         noread.write_text("# unreadable config placeholder\n", encoding="utf-8")
-    emptyhome = FIXTURES / "emptyhome"
-    emptyhome.mkdir(parents=True, exist_ok=True)
-    gitkeep = emptyhome / ".gitkeep"
-    if not gitkeep.exists():
-        gitkeep.write_bytes(b"")
+    # emptyhome is tracked source evidence only; never mkdir/write .gitkeep here.
+    require_tracked_emptyhome_fixture()
 
     base_env = dict(BASE_DECLARED_COMMAND_ENV)
     probe_effective_command_environment(base_env)
