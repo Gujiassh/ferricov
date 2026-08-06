@@ -88,7 +88,7 @@ the pinned image without claiming Ferricov product compatibility:
 - parallel child exit, callback state/lifecycle, missing payload, message log,
   memory admission/fallback, capture status, and partial-commit control.
 
-Empty directory fixtures such as `emptyhome` are retained with a tracked `.gitkeep` marker that is excluded from Oracle fixture and file-tree hashes, so clean Git checkouts remain valid without precreated empty dirs.
+Empty directory fixture `emptyhome` is retained with a tracked zero-byte `emptyhome/.gitkeep` marker. Only that exact path is excluded from Oracle fixture and file-tree hashes; nonzero markers, `.keep`, or markers elsewhere fail closed, so clean Git checkouts remain valid without precreated empty dirs.
 
 Wave2 reuses the accepted wave1 provenance contract (clean `env -i`, DEVNULL
 stdin, fail-closed named-container cleanup, execution manifests, independent

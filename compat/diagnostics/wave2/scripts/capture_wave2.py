@@ -869,6 +869,26 @@ def case_execution_manifest(
     }
 
 
+def skip_wave2_emptyhome_marker(path: Path, *, root: Path, context: str) -> bool:
+    """Skip only zero-byte emptyhome/.gitkeep; reject other markers."""
+    if path.name not in {".gitkeep", ".keep"}:
+        return False
+    rel = path.relative_to(root).as_posix()
+    if root.name == "emptyhome":
+        allowed = rel == ".gitkeep"
+    else:
+        allowed = rel == "emptyhome/.gitkeep"
+    if path.name == ".keep" or not allowed:
+        raise SystemExit(
+            f"wave2 directory marker only allowed as zero-byte emptyhome/.gitkeep ({context}): {rel}"
+        )
+    if path.read_bytes() != b"":
+        raise SystemExit(
+            f"wave2 emptyhome/.gitkeep must be zero bytes ({context}): {rel}"
+        )
+    return True
+
+
 def stage(work: Path, fixtures: list[str], chmod_map: dict[str, int] | None) -> None:
     work.mkdir(parents=True)
     for name in fixtures:
@@ -892,7 +912,9 @@ def stage(work: Path, fixtures: list[str], chmod_map: dict[str, int] | None) -> 
 def file_tree(work: Path) -> list[dict[str, Any]]:
     entries = []
     for path in sorted(work.rglob("*")):
-        if not path.is_file() or path.name in {".gitkeep", ".keep"}:
+        if not path.is_file():
+            continue
+        if skip_wave2_emptyhome_marker(path, root=work, context=f"case:{work.name}"):
             continue
         rel = path.relative_to(work).as_posix()
         if rel.startswith("reference/") or rel in {"result.json"}:
@@ -927,7 +949,11 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
         src = FIXTURES / name
         if src.is_dir():
             for path in sorted(src.rglob("*")):
-                if not path.is_file() or path.name in {".gitkeep", ".keep"}:
+                if not path.is_file():
+                    continue
+                if skip_wave2_emptyhome_marker(
+                    path, root=src, context=f"fixture:{name}"
+                ):
                     continue
                 rel = f"{name}/{path.relative_to(src).as_posix()}"
                 data = path.read_bytes()
