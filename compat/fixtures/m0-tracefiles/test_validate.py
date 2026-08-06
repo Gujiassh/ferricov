@@ -6,7 +6,10 @@ from __future__ import annotations
 import base64
 import copy
 import hashlib
+import os
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -19,6 +22,8 @@ from validate import (  # noqa: E402
     validate_branches_expression_merge_snapshot,
     validate_lcov_stderr,
     validate_observation_binding,
+    validate_semantic_input_identity,
+    validate_semantic_snapshot_observation,
     validate_numeric_boundary_snapshot,
     validate_numeric_extra_spellings_snapshot,
     validate_numeric_format_atoms_snapshot,
@@ -63,6 +68,30 @@ class StrictJsonAndBindingTests(unittest.TestCase):
     def test_strict_json_rejects_duplicate_object_keys(self) -> None:
         with self.assertRaises(ValueError):
             strict_json_loads_ascii(b'{"value": 1, "value": 2}', "mutation")
+
+    def test_inspector_rejects_escaped_duplicate_plan_key(self) -> None:
+        upstream_root = Path(os.environ.get("LCOV_SOURCE_ROOT", ROOT.parents[3] / "lcov-upstream-reference"))
+        with tempfile.TemporaryDirectory() as directory:
+            plan = Path(directory) / "duplicate.json"
+            plan.write_text(
+                '{"schema_version":1,"kind":"tf030_numeric_plan","rows":[],"ro\\u0077s":[]}\n',
+                encoding="ascii",
+            )
+            result = subprocess.run(
+                [
+                    "perl",
+                    str(ROOT / "inspect_model.pl"),
+                    "--numeric-plan",
+                    str(plan),
+                    str(ROOT / "fixtures/numeric/tf030-candidate-matrix.info"),
+                ],
+                env={**os.environ, "PERL5LIB": str(upstream_root / "lib")},
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(b"duplicate object key", result.stderr)
 
     def test_fixture_hash_mutation_is_rejected(self) -> None:
         case = copy.deepcopy(self.cases["branches-expression-merge.semantic-snapshot"])
@@ -585,6 +614,126 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
         }
         with self.assertRaises(ValueError):
             validate_added_numeric_case(stop, stop_obs)
+
+
+
+    def test_tf030_refreshed_stream_and_output_hashes_are_rejected(self) -> None:
+        """Independent observation registry must reject refreshed self-hashes."""
+        for case_id in (
+            "numeric-format-atoms.tf030.semantic-snapshot",
+            "numeric-tf030-fna-mirror.default-stop",
+            "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+            "numeric-tf030-candidates.threshold-ignore-all.canonical",
+        ):
+            case = copy.deepcopy(self.cases[case_id])
+            observation = copy.deepcopy(self.baseline[case_id])
+            observation["fixture_sha256"] = hashlib.sha256(self.fixtures[case["fixture"]].data).hexdigest()
+            observation["additional_fixture_sha256"] = {
+                name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+                for name, path in case.get("additional_fixtures", {}).items()
+            }
+            validate_observation_binding(case, observation, self.fixtures)
+
+            for field in ("stdout", "stderr"):
+                mutated = copy.deepcopy(observation)
+                raw = base64.b64decode(mutated[field]["base64"], validate=True) + b"x"
+                mutated[field] = {
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "byte_size": len(raw),
+                    "base64": base64.b64encode(raw).decode("ascii"),
+                }
+                with self.subTest(case_id=case_id, field=field), self.assertRaises(ValueError):
+                    validate_observation_binding(case, mutated, self.fixtures)
+
+            if observation["output"].get("exists"):
+                mutated = copy.deepcopy(observation)
+                raw = base64.b64decode(mutated["output"]["base64"], validate=True) + b"x"
+                mutated["output"] = {
+                    "exists": True,
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "byte_size": len(raw),
+                    "base64": base64.b64encode(raw).decode("ascii"),
+                }
+                with self.subTest(case_id=case_id, field="output"), self.assertRaises(ValueError):
+                    validate_observation_binding(case, mutated, self.fixtures)
+            else:
+                mutated = copy.deepcopy(observation)
+                payload = b"unexpected"
+                mutated["output"] = {
+                    "exists": True,
+                    "sha256": hashlib.sha256(payload).hexdigest(),
+                    "byte_size": len(payload),
+                    "base64": base64.b64encode(payload).decode("ascii"),
+                }
+                with self.subTest(case_id=case_id, field="output-exists"), self.assertRaises(ValueError):
+                    validate_observation_binding(case, mutated, self.fixtures)
+
+            for field, value in (
+                ("exit_status", 99 if observation["exit_status"] != 99 else 0),
+                ("output_file", "mutated.info" if observation.get("output_file") != "mutated.info" else "other.info"),
+            ):
+                mutated = copy.deepcopy(observation)
+                mutated[field] = value
+                with self.subTest(case_id=case_id, field=field), self.assertRaises(ValueError):
+                    validate_observation_binding(case, mutated, self.fixtures)
+
+    def test_tf030_semantic_shape_rejects_unknown_keys(self) -> None:
+        document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
+        self.validate_tf030_numeric_rows(
+            document, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+        )
+        mutated = copy.deepcopy(document)
+        mutated["unexpected_top_level"] = True
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+        mutated = copy.deepcopy(document)
+        mutated["oracle"] = copy.deepcopy(document["oracle"])
+        mutated["oracle"]["unexpected_nested"] = True
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+
+    def test_tf030_upstream_format_atoms_binding_is_required(self) -> None:
+        from dataclasses import replace
+        from validate import _validate_upstream_numeric_fixture
+        fixtures = dict(self.fixtures)
+        _validate_upstream_numeric_fixture(fixtures)
+        original = fixtures["fixtures/numeric/format-atoms.info"]
+        fixtures["fixtures/numeric/format-atoms.info"] = replace(
+            original, data=original.data + b"\n"
+        )
+        with self.assertRaises(ValueError):
+            _validate_upstream_numeric_fixture(fixtures)
+        env = dict(os.environ)
+        env["LCOV_SOURCE_ROOT"] = "/tmp/missing-lcov-upstream-for-tf030"
+        result = subprocess.run(
+            [
+                "python3",
+                "-c",
+                (
+                    "import sys; "
+                    f"sys.path.insert(0, {str(ROOT)!r}); "
+                    "from validate import _validate_upstream_numeric_fixture; "
+                    "import generate; "
+                    "fixtures={f.path:f for f in generate.build_fixtures()}; "
+                    "_validate_upstream_numeric_fixture(fixtures)"
+                ),
+            ],
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        combined = result.stderr + result.stdout
+        self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(
+            b"missing pinned upstream fixture" in combined or b"Traceback" in combined,
+            combined.decode("utf-8", "replace"),
+        )
+
 
 
 if __name__ == "__main__":

@@ -33,8 +33,8 @@ EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/manifest.json": "71d6880fe4bb400a051411401e57cfcda0a451656a65917478705522563ab0d0",
     "compat/fixtures/m0-tracefiles/oracle-cases.json": "a8771082f4ecb09c773a58ae83af2aed6d36c04f737143e55fddf590e088dc51",
     "compat/fixtures/m0-tracefiles/oracle-baseline.json": "a04d26a29d548ebbf594a38dda3200c4c3e8e1c5b25afd3651568e15909c7689",
-    "compat/fixtures/m0-tracefiles/inspect_model.pl": "ec5564914dbadf3fb4b70d37b7760bc1567fbfc490671a84bdef01de1176dbf1",
-    "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "8a353e6429889bef3b1d66dbbcd31776d36eea0382ad951e64a27935362cb16d",
+    "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
+    "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c",
 }
 EXPECTED_RECORD_TAGS = (
     "TN", "SF", "KF", "VER", "FNL", "FNA", "FN", "FNDA", "FNF", "FNH",

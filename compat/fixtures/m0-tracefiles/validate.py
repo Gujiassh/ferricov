@@ -7,6 +7,7 @@ import base64
 from collections import Counter
 import hashlib
 import json
+import os
 import re
 import tempfile
 from pathlib import Path
@@ -43,6 +44,7 @@ from validation_numeric import (
     CHECKSUM_SOURCE_SHA256,
     NUMERIC_FIXTURE_IDS,
     validate_added_numeric_case,
+    expected_tf030_observation,
     validate_functions_zero_start_snapshot,
     validate_numeric_boundary_snapshot,
     validate_numeric_extra_spellings_snapshot,
@@ -55,7 +57,7 @@ from validation_numeric import (
     validate_tf030_numeric_rows,
 )
 
-EXPECTED_MODEL_INSPECTOR_SHA256 = "ec5564914dbadf3fb4b70d37b7760bc1567fbfc490671a84bdef01de1176dbf1"
+EXPECTED_MODEL_INSPECTOR_SHA256 = "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e"
 
 STATE_FIXTURE_IDS = (
     "state-late-tn-mcdc",
@@ -90,12 +92,36 @@ BRANCH_FIXTURE_IDS = (
     "branches-sort-signatures",
 )
 
+def _validate_upstream_numeric_fixture(fixtures: dict[str, generate.Fixture]) -> None:
+    upstream_root = Path(
+        os.environ.get(
+            "LCOV_SOURCE_ROOT",
+            ROOT.parents[3] / "lcov-upstream-reference",
+        )
+    )
+    upstream_path = upstream_root / "tests/lcov/format/format.info"
+    require(upstream_path.is_file(), f"missing pinned upstream fixture: {upstream_path}")
+    fixture = fixtures.get("fixtures/numeric/format-atoms.info")
+    require(fixture is not None, "numeric format-atoms fixture missing")
+    upstream_bytes = upstream_path.read_bytes()
+    require(
+        fixture.data == upstream_bytes,
+        "numeric format-atoms fixture differs from pinned upstream bytes",
+    )
+    require(
+        hashlib.sha256(upstream_bytes).hexdigest()
+        == "e42a8bd718d8d9aa90e952b99ab78044227b4d511ef13e1d3de78a8c75dd0041",
+        "pinned upstream format-atoms SHA-256 drift",
+    )
+
+
 def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]:
     manifest = strict_json_file(ROOT / "manifest.json", "manifest.json")
     fixtures = generate.build_fixtures()
     generated_manifest = generate.build_manifest(fixtures)
     require(manifest == generated_manifest, "manifest.json is not the exact generator result")
     by_path = {fixture.path: fixture for fixture in fixtures}
+    _validate_upstream_numeric_fixture(by_path)
 
     tracked = {
         path.relative_to(ROOT).as_posix()
@@ -630,6 +656,14 @@ def validate_observation_binding(
 ) -> None:
     """Validate identity and side-effect bindings shared by every Oracle case."""
     label = str(case["id"])
+    expected_tf030 = expected_tf030_observation(label)
+    if expected_tf030 is not None:
+        for field in ("exit_status", "output_file", "stdout", "stderr", "output"):
+            require(
+                observation.get(field) == expected_tf030[field],
+                f"{label}: independent TF-030 {field} identity drift",
+            )
+
     require(observation["fixture"] == case["fixture"], f"fixture mismatch: {label}")
     require(
         observation.get("fixture_sha256") == hashlib.sha256(fixtures[case["fixture"]].data).hexdigest(),

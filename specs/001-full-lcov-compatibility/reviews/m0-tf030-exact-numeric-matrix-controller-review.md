@@ -2,12 +2,12 @@
 
 ## Scope
 
-This review accepts the TF-030 exact numeric Oracle matrix slice in
+This review records the intended TF-030 exact numeric Oracle matrix closure in
 `compat/fixtures/m0-tracefiles/`. It does not authorize Ferricov parser/model
-implementation and does not claim product compatibility. The acceptance below
-is the final controller audit after rework of the initial worker result; the
-worker commit alone was not accepted because several independent scalar and
-cache mutations still passed its validator.
+implementation and does not claim product compatibility. The earlier controller
+acceptance was superseded by independent Critical audit `dd5399b1`; the current
+branch is blocked pending the rework specified in
+`m0-tf030-audit-rework-spec.md`.
 
 Pinned Oracle identity:
 
@@ -53,16 +53,32 @@ Pinned Oracle identity:
   fatal and 34 ignore-one tracefile/control observations) after rebinding the
   expanded 184-case baseline; all remain reference-only.
 
+## Current Audit Decision
+
+**Blocked pending rework.** Independent audit and controller reproduction found
+that the current validator can accept:
+
+- mutated TF-030 stdout/stderr/output bytes when the observation self-hashes are
+  refreshed;
+- unknown top-level fields in a TF-030 semantic snapshot; and
+- a fixture that retains its declared source hash without a direct byte binding
+  to the pinned upstream checkout.
+
+The audit also found an EOF whitespace failure in
+`validation_common.py`. These are evidence-contract blockers, not Ferricov
+product compatibility findings. The required repair and acceptance criteria
+are recorded in `m0-tf030-audit-rework-spec.md`.
+
 ## Independent Review Matrix
 
 | Area | Status | Evidence |
 | --- | --- | --- |
 | Goal alignment | pass | M0 Oracle evidence only; no Ferricov parser/model changes |
 | Old observation preservation | pass | pinned baseline comparison: common=169, changed=0, removed=0, added=15 |
-| Fixture and companion identity | pass | manifest/case/baseline/inspector/plan hashes and registry hash are contract-bound |
+| Fixture and companion identity | blocked | retained hashes are bound, but numeric format fixture lacks direct pinned-upstream byte comparison |
 | Exact matrix completeness | pass | 12 upstream rows + 4 FNA mirrors + 40 candidates, in both policy modes |
 | Scalar, stored-value, and cache semantics | pass | exact registry equality plus all-row single-field mutation tests |
-| Diagnostic/order/output policy | pass | ordered stderr and stop/output-absence tests; full baseline validation |
+| Diagnostic/order/output policy | blocked | category/order checks pass, but refreshed self-hashed stream/output bytes can pass |
 | Module responsibility and file size | pass | numeric registry loading remains in `validation_numeric.py`; no product boundary crossed |
 | Generated contracts | pass | tracefile and resource contracts regenerate and validate |
 | Product evidence | pass | `product_compatibility_evidence=false` |
@@ -91,11 +107,11 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Full-corpus recapture was performed once after stabilization; future fixture
-  edits require another pinned capture and hash rebinding.
-- Inspector `--numeric-plan` extraction depends on coerced aggregate lookup
-  after ignore-path classification; keep mutation coverage for row order,
-  category, plan hash, and stop/canonical outputs.
+- Independent observation-byte registry rework is implemented on the branch:
+  TF-030 stdout/stderr/output/exit facts are contract-bound, semantic JSON
+  shape is closed, escaped duplicate plan keys are rejected, and format-atoms
+  bytes are compared directly to the pinned upstream checkout. Final acceptance
+  still requires a second independent Critical audit.
 - The remaining 18 named blockers and broader M1 readiness tasks remain open.
 
 ## Verification
@@ -111,6 +127,6 @@ python3 compat/verify.py --skip-oracle
 python3 -m compileall -q compat
 ```
 
-The commands above pass in the final audited worktree. Rust, pinned Perl, and
-full Docker recapture gates are recorded separately below when they require
-those toolchains.
+The commands above passed before the independent audit. They are the required
+verification set for the rework; the branch remains blocked until the new
+mutation and provenance gates, then a second independent Critical audit, pass.

@@ -49,6 +49,16 @@ while (@raw) {
 die("usage: inspect_model.pl [--ignore CLASS[,CLASS...]] [--excessive-threshold N] [--numeric-plan PATH] <tracefile> [tracefile ...]\n")
     unless @inputs && !grep({ !-f $_ } @inputs);
 
+# Fail closed on the numeric plan before any fixture load so plan identity
+# errors are not masked by later tracefile diagnostics.
+my ($early_numeric_plan, $early_numeric_plan_raw);
+if (defined($numeric_plan_path)) {
+    die("inspect_model.pl: numeric plan not found: $numeric_plan_path\n")
+        unless -f $numeric_plan_path;
+    ($early_numeric_plan, $early_numeric_plan_raw) =
+      load_strict_ascii_json_object($numeric_plan_path);
+}
+
 # Match the feature surface used by the state-ownership Oracle cases.
 $lcovutil::br_coverage   = 1;
 $lcovutil::mcdc_coverage = 1;
@@ -338,19 +348,30 @@ sub reject_duplicate_json_keys {
         if ($ch eq '"') {
             $in_string = 1;
             if (@stack_keys && $stack_keys[-1]{expecting_key}) {
-                # capture key text
+                # Decode the complete JSON string so escaped spellings share the
+                # same identity as their decoded key.
                 my $j = $i + 1;
-                my $buf = '';
+                my $encoded = '"';
                 my $esc = 0;
                 while ($j < $len) {
                     my $c = substr($raw, $j, 1);
-                    if ($esc) { $buf .= $c; $esc = 0; $j++; next; }
+                    $encoded .= $c;
+                    if ($esc) { $esc = 0; $j++; next; }
+                    if ($c eq "\\") { $esc = 1; $j++; next; }
                     last if $c eq '"';
-                    if ($c eq '\\') { $esc = 1; $j++; next; }
-                    $buf .= $c;
                     $j++;
                 }
-                $stack_keys[-1]{_pending} = $buf;
+                my $key;
+                eval {
+                    $key = JSON::PP->new->ascii(1)->decode($encoded);
+                    1;
+                } or do {
+                    my $error = $@ || 'key decode failed';
+                    die("inspect_model.pl: numeric plan $path has invalid object key: $error");
+                };
+                die("inspect_model.pl: numeric plan $path object key is not a string\n")
+                    if ref($key);
+                $stack_keys[-1]{_pending} = $key;
                 $expect_key = 1;
             }
             $i++;
@@ -1063,9 +1084,7 @@ else {
 }
 
 if (defined($numeric_plan_path)) {
-    die("inspect_model.pl: numeric plan not found: $numeric_plan_path\n")
-        unless -f $numeric_plan_path;
-    my ($plan, $plan_raw) = load_strict_ascii_json_object($numeric_plan_path);
+    my ($plan, $plan_raw) = ($early_numeric_plan, $early_numeric_plan_raw);
     my $threshold_enabled = defined($excessive_threshold) ? 1 : 0;
     my $block_map = brda_fixture_block_map(@resolved_inputs);
     $document->{numeric_rows} = build_numeric_rows(

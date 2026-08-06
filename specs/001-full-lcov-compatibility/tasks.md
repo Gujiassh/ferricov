@@ -83,15 +83,15 @@ readiness tasks open. Product compatibility evidence remains false and M1
 implementation remains unauthorized.
 
 The TF-030 exact numeric matrix module defined in
-`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been executed on
+`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been implemented on
 branch `test/m0-tf030-exact-numeric-matrix`. It preserved `main@6a9a85d` as the
 169-observation comparison base (common=169, changed=0, removed=0, added=15),
-split the numeric corpus modules, added the complete 56-row matrix, captured
-and independently revalidated the pinned Oracle, mapped `M1-TF-030`, and
-synchronized generated contracts. A contract-bound six-snapshot semantic
-registry fixes every row field, scalar projection, stored aggregate/testcase
-value, and source cache fact; the full row/cache mutation suite fails closed.
-MC/DC remains outside this module under `M1-TF-031`.
+split the numeric corpus modules, added the complete 56-row matrix, and
+synchronized generated contracts. A first controller pass added a six-snapshot
+semantic registry and all-row/cache mutation coverage, but the subsequent
+independent Critical audit found fail-open observation-byte, closed-JSON, and
+direct-upstream-provenance gaps. The audit rework is specified in
+`reviews/m0-tf030-audit-rework-spec.md`; M1 remains blocked.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
@@ -141,6 +141,18 @@ have no executable suite or product evidence. The current M0 gate reports 424
 gaps, all public entries without reviewed primary cases.
 The raw Oracle correctness baseline is complete and replayed, but it remains
 reference-only evidence and does not unlock product parity.
+
+## M0 TF-030 Audit Rework
+
+- [x] Add independently contract-bound TF-030 stdout/stderr/output/exit
+  observation facts and reject refreshed self-hashes.
+- [x] Reject unknown semantic JSON keys and escaped duplicate numeric-plan keys.
+- [x] Bind `fixtures/numeric/format-atoms.info` directly to the pinned upstream
+  `tests/lcov/format/format.info` bytes.
+- [x] Remove the committed EOF whitespace and pass
+  `git diff --check origin/main...HEAD`.
+- [x] Re-run Oracle, contract, Rust, Perl, and mutation gates for the audit rework.
+- [ ] Second independent Critical audit remains required before acceptance.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 

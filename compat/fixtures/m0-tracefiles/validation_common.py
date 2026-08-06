@@ -329,4 +329,3 @@ def assert_single_testcase_parity(source: dict[str, object], testcase: str, labe
             testcases[family][testcase] == aggregate[family],
             f"{label}: aggregate/testcase {family} parity drift",
         )
-

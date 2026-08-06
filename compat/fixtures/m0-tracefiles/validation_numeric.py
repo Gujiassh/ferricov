@@ -688,6 +688,9 @@ def _load_tf030_semantic_registry() -> dict[str, object]:
     require(document.get("kind") == "tf030_semantic_registry", "TF-030 semantic registry kind")
     cases = document.get("cases")
     require(isinstance(cases, dict), "TF-030 semantic registry cases")
+    observations = document.get("observations")
+    require(isinstance(observations, dict), "TF-030 semantic registry observations")
+    require(len(observations) == 15, "TF-030 observation registry must contain 15 cases")
     return document
 
 
@@ -696,6 +699,16 @@ def _expected_tf030_case(case_id: str) -> dict[str, object]:
     require(isinstance(cases, dict), "TF-030 semantic registry cases")
     expected = cases.get(case_id)
     require(isinstance(expected, dict), f"{case_id}: semantic registry case missing")
+    return expected
+
+
+def expected_tf030_observation(case_id: str) -> dict[str, object] | None:
+    observations = _load_tf030_semantic_registry().get("observations")
+    require(isinstance(observations, dict), "TF-030 semantic registry observations")
+    if case_id not in observations:
+        return None
+    expected = observations[case_id]
+    require(isinstance(expected, dict), f"{case_id}: semantic registry observation invalid")
     return expected
 
 
@@ -803,6 +816,13 @@ def _expected_value_class(lexeme: str, looks_like_number: bool | None, never: bo
 def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: int, case_id: str) -> None:
     require(document.get("kind") == "semantic_model_snapshot", f"{case_id}: kind mismatch")
     require(document.get("schema_version") == 1, f"{case_id}: schema mismatch")
+    require(
+        set(document) == {"input", "kind", "numeric_rows", "oracle", "schema_version", "sources"},
+        f"{case_id}: semantic snapshot top-level shape drift",
+    )
+    oracle = document.get("oracle")
+    require(isinstance(oracle, dict), f"{case_id}: oracle metadata missing")
+    require(set(oracle) == {"module", "program"}, f"{case_id}: oracle metadata shape drift")
     require("numeric_rows" in document, f"{case_id}: numeric_rows missing")
     rows = document.get("numeric_rows")
     require(isinstance(rows, list), f"{case_id}: numeric_rows must be a list")
