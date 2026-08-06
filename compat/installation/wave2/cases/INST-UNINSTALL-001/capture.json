@@ -1,0 +1,90 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      },
+      {
+        "bytes": 4431,
+        "name": "install.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/install.log",
+        "sha256": "f59b021f62f0f49ba8afcc8c70e38ba6a97d938ef2b2934f3cf1900d35084c96"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 158,
+      "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/stderr.bin",
+      "sha256": "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8"
+    },
+    "stdout_bin": {
+      "bytes": 948,
+      "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/stdout.bin",
+      "sha256": "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3"
+    }
+  },
+  "case_id": "INST-UNINSTALL-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "variables": {
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 4,
+    "file_count": 1,
+    "paths_sha256": "ca2721d287761c161abe281750887c2239e126064d82d71ea3afe9e3206af5c7",
+    "root": "/tmp/destdir-uninst",
+    "selected_paths": [
+      "/tmp/destdir-uninst",
+      "/tmp/destdir-uninst/usr",
+      "/tmp/destdir-uninst/usr/local",
+      "/tmp/destdir-uninst/usr/local/etc",
+      "/tmp/destdir-uninst/usr/local/etc/foreign.conf"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "uninstall",
+      "DESTDIR=/tmp/destdir-uninst",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/destdir-uninst /tmp/src"
+    ],
+    "fixture_setup": [
+      "install full payload into DESTDIR",
+      "add foreign sentinel files under etc and man"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "b6de0f576e1e9a959d882da9c903f1c2f42040dc1b549c48d38bf533a33edd3a",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

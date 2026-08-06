@@ -1,0 +1,68 @@
+{
+  "artifacts": {
+    "extra": [],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 148,
+      "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/stdout.bin",
+      "sha256": "370b73f4fa66265c73a96aa256ff91c82c552b688860de4b1b94190582ca7438"
+    }
+  },
+  "case_id": "INST-CONFIG-DISCOVERY-001",
+  "environment": {
+    "mode": "clean_override",
+    "variables": {
+      "LC_ALL": "C"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 1,
+    "file_count": 1,
+    "paths_sha256": "44e5531100cbfabbeae6b6bf3bb801a1f25e8bfadfe6b4e3bd2efe84ef79c8f2",
+    "root": "/tmp/h1",
+    "selected_paths": [
+      "/tmp/h1",
+      "/tmp/h1/.lcovrc"
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/capture-driver.sh",
+    "executable_path": "/usr/bin/perl",
+    "executable_sha256": "f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "perl",
+      "/tmp/config-probe.pl"
+    ],
+    "cleanup": [
+      "rm -rf /tmp/h1 /tmp/lh /tmp/config-probe.pl"
+    ],
+    "fixture_setup": [
+      "create /tmp/h1/.lcovrc and /tmp/lh/etc/lcovrc",
+      "run lcovutil-equivalent HOME/LCOV_HOME search probe"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/tmp"
+  },
+  "observation_sha256": "483f902094be68628ae04419e667e80a7fd197307485767f5a3973c39b11c24f",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [],
+    "exit_status": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

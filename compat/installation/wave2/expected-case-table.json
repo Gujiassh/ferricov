@@ -1,0 +1,233 @@
+{
+  "cases": [
+    {
+      "argv": [
+        "sh",
+        "/tmp/installed-tree-directories.sh",
+        "/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-LAYOUT-001",
+      "observation_sha256": "a8220a0242a525ffb226a8d9ce10fa6e8c3a20f8b1dc8e7f69a2119f649c772e",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "install",
+        "DESTDIR=/tmp/destdir-stage",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-STAGE-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-STAGE-001",
+      "observation_sha256": "dbd70295c1b6aa5b149e8a551666fe8c6f20dc2cf10091aba0fafc3715ed2537",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+      "stdout_sha256": "34c78bff707e0e956b39f2845519e78979b1c68bef4ad78c93884b91322b9e4e",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "env",
+        "LCOV_PERL=/opt/custom/bin/perl",
+        "make",
+        "install",
+        "DESTDIR=/tmp/destdir-interp",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-INTERP-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-INTERP-001",
+      "observation_sha256": "bec765f49fd4d490d76bf3699a39ade61a77f60546f4aaf34f744c6e8f28ca16",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+      "stdout_sha256": "8ec59dcdae9493a815f7a3c6a10ac29ef94ab765845dba30c05849a4589c826a",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "perl",
+        "/tmp/config-probe.pl"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-CONFIG-DISCOVERY-001",
+      "observation_sha256": "483f902094be68628ae04419e667e80a7fd197307485767f5a3973c39b11c24f",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "370b73f4fa66265c73a96aa256ff91c82c552b688860de4b1b94190582ca7438",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "uninstall",
+        "DESTDIR=/tmp/destdir-uninst",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-UNINSTALL-001",
+      "observation_sha256": "b6de0f576e1e9a959d882da9c903f1c2f42040dc1b549c48d38bf533a33edd3a",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8",
+      "stdout_sha256": "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "install",
+        "DESTDIR=/tmp/partial",
+        "PREFIX=/usr/local",
+        "INSTALL=/tmp/fake-install"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json",
+      "expected_exit_status": 2,
+      "id": "INST-PARTIAL-001",
+      "observation_sha256": "1fd200b68c7db51ab7a8e0c54cd433c16a1f56207edeec8190d8ff04a8e0f481",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b",
+      "stdout_sha256": "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "install",
+        "DESTDIR=/tmp/docfail",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json",
+      "expected_exit_status": 2,
+      "id": "INST-DOC-FAIL-001",
+      "observation_sha256": "91d9f41818c2e009a6edd05a3e67a90cb7ef058c709a45d44d07c9587344585b",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de",
+      "stdout_sha256": "23f07f060f3cb14c91561f1bbb69f4daac6830bd3b7afafa3cc61530d1ae5fa5",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "dual",
+        "relative",
+        "and",
+        "space",
+        "path",
+        "probes"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-PATH-001/capture.json",
+      "expected_exit_status": 2,
+      "id": "INST-PATH-001",
+      "observation_sha256": "067df640acc0359c295cf9e2cb2153b0a46d78df66fe48ddea54bb42023644b5",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "space_stderr_sha256": "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de",
+      "space_stdout_sha256": "9c1c2bc44beb089ff7103020c5b19be6da066add6f6edf8687779e3fc0cb9aa5",
+      "stderr_sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "install",
+        "DESTDIR=/tmp/destdir-dirty",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-DIRTY-ASSET-001",
+      "observation_sha256": "1f3108b719d4fc13055052dcdc873b367d1da6e2e6edf636dbca9928db42459c",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+      "stdout_sha256": "fd43b7b1eb74da0952f026b075c706cb0bea78b396d3cde437efb5080a07362d",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "env",
+        "-u",
+        "LCOV_HOME",
+        "make",
+        "-np"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-TEST-RUN-001",
+      "observation_sha256": "cff9f15184859ca6581531fb6d21a198986d626420305753bc7635e4703ee26d",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f",
+      "stdout_sha256": "63a8729a754a36302e3aa56bde963ccb4c0fc2a3cdeb2290867ece1eaf9ca5d6",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "python3",
+        "-"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-DOC-PATH-001",
+      "observation_sha256": "2a33efe18b870ac39762aa95722a7bdb67da94200e6b1aa9f1775917ab8e0e09",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5ff7679291315f27f6ef621f97225fafc9829b52daedb10d4a8e87f20dc25ffa",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "python3",
+        "-"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-REPORT-ASSET-001",
+      "observation_sha256": "4b820ee9bbe29e36d3a81ffe0bce426ae8ef9664560a71570ab21538a217e9f1",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "make",
+        "install",
+        "DESTDIR=/tmp/destdir-lic",
+        "PREFIX=/usr/local"
+      ],
+      "capture_path": "compat/installation/wave2/cases/INST-LICENSE-001/capture.json",
+      "expected_exit_status": 0,
+      "id": "INST-LICENSE-001",
+      "observation_sha256": "64d7216546238b7f67d985acbe51b4df63d87e1e950c0acb977b2d729c676ca0",
+      "oracle_execution_status": "captured",
+      "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+      "stdout_sha256": "72b6c461f512ef6e7a0c8d2839f4e00c352c1ddd983fc11a5dd599d6269ff4b6",
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    }
+  ],
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "wave": 2
+}

@@ -24,17 +24,27 @@
     "captureArtifact": {
       "additionalProperties": false,
       "properties": {
+        "observation_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
         "path": {
           "minLength": 1,
           "type": "string"
         },
         "sha256": {
           "$ref": "#/$defs/sha256"
+        },
+        "stderr_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
         }
       },
       "required": [
         "path",
-        "sha256"
+        "sha256",
+        "observation_sha256"
       ],
       "type": "object"
     },
@@ -1395,6 +1405,9 @@
           "minItems": 10,
           "type": "array"
         },
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
         "directory_companion_entry_count": {
           "const": 57
         },
@@ -1557,7 +1570,8 @@
         "directory_companion_entry_count",
         "directory_companion_mode",
         "directory_companion_path",
-        "directory_companion_sha256"
+        "directory_companion_sha256",
+        "capture_artifact"
       ],
       "type": "object"
     },
@@ -1639,11 +1653,27 @@
       ],
       "type": "object"
     },
+    "pathCaptureArtifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "relative": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "space": {
+          "$ref": "#/$defs/captureArtifact"
+        }
+      },
+      "required": [
+        "relative",
+        "space"
+      ],
+      "type": "object"
+    },
     "pathFacts": {
       "additionalProperties": false,
       "properties": {
-        "capture_artifact": {
-          "$ref": "#/$defs/captureArtifact"
+        "capture_artifacts": {
+          "$ref": "#/$defs/pathCaptureArtifacts"
         },
         "oracle_execution_status": {
           "const": "captured"
@@ -1672,7 +1702,7 @@
         "requires_absolute_destdir_prefix",
         "source_bindings",
         "space_containing_paths_platform_sensitive",
-        "capture_artifact"
+        "capture_artifacts"
       ],
       "type": "object"
     },

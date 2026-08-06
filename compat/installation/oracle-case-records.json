@@ -4,7 +4,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "484b0780e2cabbf14521ed28abccd8513a737104daa54f522a87c9e59519137a",
+      "facts_sha256": "77795cc6fec224e765b7c7cabf5a61748f7c3a0c1c046a9f29a5899efa73bf24",
       "failure_contract_ids": [],
       "family": "layout",
       "id": "INST-LAYOUT-001",
@@ -21,6 +21,13 @@
           "xml2lcov",
           "xml2lcovutil.py"
         ],
+        "capture_artifact": {
+          "observation_sha256": "a8220a0242a525ffb226a8d9ce10fa6e8c3a20f8b1dc8e7f69a2119f649c772e",
+          "path": "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json",
+          "sha256": "f04eee977b116ebd5df14c9bfa6ca9554a87e985b4c7313b20093fc4624b1a65",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+        },
         "directory_companion_entry_count": 57,
         "directory_companion_mode": "755",
         "directory_companion_path": "compat/installation/wave2/installed-directories.lock",
@@ -114,14 +121,17 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "812be1d3cc5d0824094732775d2e2ad626ec5ff87ae28bd1eb333ab217235b6b",
+      "facts_sha256": "57b2dbfd09e3d1ddaa9de91c589bb7e0cc33d3d6952dbd2d5033e584ce63a45f",
       "failure_contract_ids": [],
       "family": "lifecycle",
       "id": "INST-STAGE-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/stage-summary.txt",
-          "sha256": "0ffd379a37c28c301170499ce92308590057c71c19aa2c2fe1f8a2c1a76f161b"
+          "observation_sha256": "dbd70295c1b6aa5b149e8a551666fe8c6f20dc2cf10091aba0fafc3715ed2537",
+          "path": "compat/installation/wave2/cases/INST-STAGE-001/capture.json",
+          "sha256": "7934ceb7a72b694b4b5213d5269e4d521e4db84a8ec54e4977dde2820c19f44b",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "34c78bff707e0e956b39f2845519e78979b1c68bef4ad78c93884b91322b9e4e"
         },
         "compiled_paths_retain_prefix_without_destdir": true,
         "oracle_execution_status": "captured",
@@ -160,7 +170,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "073875607f703ea7becfcc8d4cd6f5828199def23e30fe3c8ec547d21ebc3366",
+      "facts_sha256": "128a7764e3d599b2ce4ff04766a74212b7b9c63c9dc010cbb398680e3405c83f",
       "failure_contract_ids": [
         "INST-INTERP-001"
       ],
@@ -169,8 +179,11 @@
       "independent_facts": {
         "advertised_override_effective": false,
         "capture_artifact": {
-          "path": "compat/installation/wave2/interp.txt",
-          "sha256": "e2712c806feef0de54ff0c6e8d4ba3389817bf18d8a26677e158981bc79c0eae"
+          "observation_sha256": "bec765f49fd4d490d76bf3699a39ade61a77f60546f4aaf34f744c6e8f28ca16",
+          "path": "compat/installation/wave2/cases/INST-INTERP-001/capture.json",
+          "sha256": "f64436697766ba67d85e1ecb9dbc63f44aa2c34660edb490ff5b760cd837f6a7",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "8ec59dcdae9493a815f7a3c6a10ac29ef94ab765845dba30c05849a4589c826a"
         },
         "env_shebang_excluded_from_rewrite": true,
         "install_passes_fixinterp": false,
@@ -206,7 +219,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "4c23ebbc2a2303fc52755f3d7bfeb96bebac43802452ee94c222762a232af278",
+      "facts_sha256": "3e63c74eee5fd6fa7960af79208f5b91cd6a315dfe44fd677bc1d9cd63d240dc",
       "failure_contract_ids": [
         "INST-CONFIG-DISCOVERY-001"
       ],
@@ -214,8 +227,11 @@
       "id": "INST-CONFIG-DISCOVERY-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/config.txt",
-          "sha256": "30a124335c8f0eaaa980669f98fe5b3b56284436ae2ebfb34fce5f6267f11319"
+          "observation_sha256": "483f902094be68628ae04419e667e80a7fd197307485767f5a3973c39b11c24f",
+          "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json",
+          "sha256": "016952431284493f2f86ec76f7964f54ca68f57abee8eda8623647bbf7fd5bec",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "370b73f4fa66265c73a96aa256ff91c82c552b688860de4b1b94190582ca7438"
         },
         "compiled_prefix_alone_selects_system_file": false,
         "oracle_execution_status": "captured",
@@ -248,7 +264,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "4a8ed3279ec861cac790cd79add546df7e9d016fc6b0632cda3b4f47d811efcf",
+      "facts_sha256": "c5fd40d4bfc246be3b51c2e5b4dd3686f9cda016128258981b7526dfd3228c55",
       "failure_contract_ids": [
         "INST-UNINSTALL-001"
       ],
@@ -256,8 +272,11 @@
       "id": "INST-UNINSTALL-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/uninstall.txt",
-          "sha256": "fc1151c5fe99ffddf9b74ce8e815c81bbf879f8e3121b672aa02f055d21a638e"
+          "observation_sha256": "b6de0f576e1e9a959d882da9c903f1c2f42040dc1b549c48d38bf533a33edd3a",
+          "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json",
+          "sha256": "8ab56978ef87621272cf0053abe1b4f3f475fcadfa5bcb5ef59912a78ed7cac9",
+          "stderr_sha256": "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8",
+          "stdout_sha256": "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3"
         },
         "foreign_sentinels_removed": true,
         "isolated_root_required": true,
@@ -300,7 +319,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "75f6aba168ec23eaf0a33f7ab524eb5e5e7a6a8238a2115d4d36492104e9c668",
+      "facts_sha256": "7275180c201483944165ba02362173322b53ca6b6c686db26460d3ed0ab637c8",
       "failure_contract_ids": [
         "INST-PARTIAL-001"
       ],
@@ -308,8 +327,11 @@
       "id": "INST-PARTIAL-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/partial.txt",
-          "sha256": "7c6926b26fc752ba2ec3d8fe827d375233c79076c431500a765fca877093d6eb"
+          "observation_sha256": "1fd200b68c7db51ab7a8e0c54cd433c16a1f56207edeec8190d8ff04a8e0f481",
+          "path": "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json",
+          "sha256": "079e9a9234f3fd29f28b20ab529718eec43f6dff85d675e987bdffd9bf42487a",
+          "stderr_sha256": "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b",
+          "stdout_sha256": "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e"
         },
         "oracle_execution_status": "captured",
         "partial_payload_possible": true,
@@ -337,7 +359,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "440326736fef8f6a6bcec74667d4e885f81d5d853c44466661c24d3563b6c17f",
+      "facts_sha256": "ea7b8de47dde13be03c7a6adcd771a2b5409fa0d0fdce4cf9e6fc30de9dc4186",
       "failure_contract_ids": [
         "INST-DOC-FAIL-001"
       ],
@@ -345,8 +367,11 @@
       "id": "INST-DOC-FAIL-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/docfail.txt",
-          "sha256": "edf718e5eb5084706c5a3708b15f82d7428fc82ad189f64daac739bb9b69d552"
+          "observation_sha256": "91d9f41818c2e009a6edd05a3e67a90cb7ef058c709a45d44d07c9587344585b",
+          "path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json",
+          "sha256": "a3e7a2771aba9b40a72a02c43dcf61d4796c1a69bdbea5718a736fe2a3400cfe",
+          "stderr_sha256": "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de",
+          "stdout_sha256": "23f07f060f3cb14c91561f1bbb69f4daac6830bd3b7afafa3cc61530d1ae5fa5"
         },
         "doc_finished_is_hard_prerequisite": true,
         "install_cleans_source_example_and_tests": true,
@@ -392,16 +417,28 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "96aac021d9f375633b536d4dbbcfa70a743b244ca876a7e0f773c1f9a6f452ab",
+      "facts_sha256": "97baf2247267708d4e9310ab5fd4504d3490bbb2ca425b1da9f06206c3f8722d",
       "failure_contract_ids": [
         "INST-PATH-001"
       ],
       "family": "failure",
       "id": "INST-PATH-001",
       "independent_facts": {
-        "capture_artifact": {
-          "path": "compat/installation/wave2/relative.txt",
-          "sha256": "a6be0fe22d84b9330b819e7706d7943316e02210e726ddae93d18f2303e16db2"
+        "capture_artifacts": {
+          "relative": {
+            "observation_sha256": "405564b73f717c8a9039908ebad8921abf9c3e940847ec76bc1ea4fba77747a4",
+            "path": "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json",
+            "sha256": "892b8b39dadda11c6dc31169fcac7013ed301f1611e4398623a96be26485b087",
+            "stderr_sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732",
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "space": {
+            "observation_sha256": "8e35e52ff67da739e9eb591ab743c59348b873767a3d279a5337fa34b91fcbe1",
+            "path": "compat/installation/wave2/cases/INST-PATH-001/space/capture.json",
+            "sha256": "4cf56d41ecdbf4bd2b549f041fad6f876b0ffc36e349e2cd257b701f09aaf36d",
+            "stderr_sha256": "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de",
+            "stdout_sha256": "9c1c2bc44beb089ff7103020c5b19be6da066add6f6edf8687779e3fc0cb9aa5"
+          }
         },
         "oracle_execution_status": "captured",
         "relative_roots_rejected": true,
@@ -440,7 +477,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "f86e701eaea2acddcfe0ebb2a068161611ae3b6e5c1cad684079f4bb0c0061c3",
+      "facts_sha256": "a3376d19fbe23e149fcccbb702149c51f160bfa5cb00dde6b420ad033e21ed84",
       "failure_contract_ids": [
         "INST-DIRTY-ASSET-001"
       ],
@@ -448,8 +485,11 @@
       "id": "INST-DIRTY-ASSET-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/dirty.txt",
-          "sha256": "38d0697a56fa6456dc21ab3127ccfca54ec06fb1eed66ab689185c7ab010b62a"
+          "observation_sha256": "1f3108b719d4fc13055052dcdc873b367d1da6e2e6edf636dbca9928db42459c",
+          "path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json",
+          "sha256": "b43b40373561ed284d235b0b75c15da5f51b3cba221901190e95f63a879c2ecf",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "fd43b7b1eb74da0952f026b075c706cb0bea78b396d3cde437efb5080a07362d"
         },
         "examples_and_tests_from_working_tree": true,
         "oracle_execution_status": "captured",
@@ -515,7 +555,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "24ab7ba138ab7681d797c19cc0453c6ee2be1c08a49708f6b690c3c625373514",
+      "facts_sha256": "f1c4811c034dcb07b9f1f6dff712be5d54c87de7ecdf358569f35e20ed1a5f9c",
       "failure_contract_ids": [
         "INST-TEST-RUN-001"
       ],
@@ -523,8 +563,11 @@
       "id": "INST-TEST-RUN-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/testrun.txt",
-          "sha256": "eb691c511c23a06e5ac7fedba22cfa326314ae5e717aa6bcc1b4fc918fab43e5"
+          "observation_sha256": "cff9f15184859ca6581531fb6d21a198986d626420305753bc7635e4703ee26d",
+          "path": "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json",
+          "sha256": "5643da0c7064a22d3f9a6d5fb9bc47968685fa5b482417a929cf5afc2b7696ff",
+          "stderr_sha256": "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f",
+          "stdout_sha256": "63a8729a754a36302e3aa56bde963ccb4c0fc2a3cdeb2290867ece1eaf9ca5d6"
         },
         "explicit_lcov_home_required_for_installed_tests": true,
         "oracle_execution_status": "captured",
@@ -570,7 +613,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "91f6c0f3bd2f99853c13f17898394b146fd79409819760fe8c74995074e10b1d",
+      "facts_sha256": "a92f3e24e1bc6836b731a63add71712b4b5d104f7e95e8ef51131f78b7d2523a",
       "failure_contract_ids": [
         "INST-DOC-PATH-001"
       ],
@@ -587,8 +630,11 @@
           "tests": "/usr/local/share/lcov/tests"
         },
         "capture_artifact": {
-          "path": "compat/installation/wave2/docpath.txt",
-          "sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1"
+          "observation_sha256": "2a33efe18b870ac39762aa95722a7bdb67da94200e6b1aa9f1775917ab8e0e09",
+          "path": "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json",
+          "sha256": "1ba5cb2d51ddc00fb2c9a5df23ff7f5b659a548dd6b97c50414bf38c8b8791bb",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "5ff7679291315f27f6ef621f97225fafc9829b52daedb10d4a8e87f20dc25ffa"
         },
         "documentation_mismatch_must_be_recorded": true,
         "oracle_execution_status": "captured",
@@ -627,7 +673,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "5e83bab964e62e1cf3d848eda7a0661063891310602ae120712b7539020550af",
+      "facts_sha256": "ec6a3ca13f854dc7b3cd53825a9f048145bca59fb4f57493c284fd1ad92d6885",
       "failure_contract_ids": [],
       "family": "asset",
       "id": "INST-REPORT-ASSET-001",
@@ -635,8 +681,11 @@
         "asset_count": 7,
         "assets_are_runtime_not_install_payload": true,
         "capture_artifact": {
-          "path": "compat/installation/wave2/report-assets.txt",
-          "sha256": "b7afa3eb94af7b600c2fdcddda60adb130fc115de01256fb6f1f21186dfddcf0"
+          "observation_sha256": "4b820ee9bbe29e36d3a81ffe0bce426ae8ef9664560a71570ab21538a217e9f1",
+          "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json",
+          "sha256": "921997a2007cf9b75b294aa3272cc86bff7375cd311a6d02bd35dd9c37b7573b",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4"
         },
         "observation_count": 4,
         "observations": [
@@ -933,7 +982,7 @@
     {
       "evidence_status": "oracle_reference",
       "execution_status": "planned",
-      "facts_sha256": "c695d7bb3f1699ffea9681db459ad2fcdd74fa729b24236e6bad69854b08e9d2",
+      "facts_sha256": "40b854e3d706ff7f7eb08b809842b2d7cb1c29b3db313b4f9255c18d4a2f4f8b",
       "failure_contract_ids": [
         "INST-LICENSE-001"
       ],
@@ -941,8 +990,11 @@
       "id": "INST-LICENSE-001",
       "independent_facts": {
         "capture_artifact": {
-          "path": "compat/installation/wave2/license.txt",
-          "sha256": "5596438b32c5fefaac845ff7e64bf0788397e9650a242f23bf7d2e8ebab8564f"
+          "observation_sha256": "64d7216546238b7f67d985acbe51b4df63d87e1e950c0acb977b2d729c676ca0",
+          "path": "compat/installation/wave2/cases/INST-LICENSE-001/capture.json",
+          "sha256": "13c496c17cb9202d80d964e5e174ac1989fe69146d35b4c942096e335701c2de",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "72b6c461f512ef6e7a0c8d2839f4e00c352c1ddd983fc11a5dd599d6269ff4b6"
         },
         "copying_in_install_payload": false,
         "copying_in_source_archive_manifest": true,
