@@ -810,6 +810,100 @@ class InstallationContractTests(unittest.TestCase):
         ).read_bytes()
         self.assertNotIn(b"# Make data base", stdout)
 
+    def test_wave2_retained_captures_have_no_device_inode_fields(self) -> None:
+        """Retained capture surface must not depend on container-local st_dev/st_ino."""
+        wave2 = contract.ROOT / "compat/installation/wave2"
+        forbidden = (
+            "EXECUTABLE_ST_DEV=",
+            "EXECUTABLE_ST_INO=",
+            "\"st_dev\"",
+            "\"st_ino\"",
+            "ST_DEV=",
+            "ST_INO=",
+        )
+        scanned = 0
+        for path in wave2.rglob("*"):
+            if not path.is_file():
+                continue
+            if "__pycache__" in path.parts or ".capture-staging" in path.parts:
+                continue
+            if path.suffix in {".py", ".md", ".sh"} and path.name != "capture.json":
+                # Source comments may mention the policy; only retained artifacts matter.
+                if path.parts[-2:] != ("wave2", "process-observer.py"):
+                    continue
+            data = path.read_bytes()
+            text = data.decode("utf-8", errors="replace")
+            for token in forbidden:
+                # Allow policy comments in process-observer source only.
+                if path.name == "process-observer.py":
+                    continue
+                self.assertNotIn(
+                    token,
+                    text,
+                    f"container-local identity field leaked into {path.relative_to(contract.ROOT)}",
+                )
+            scanned += 1
+        self.assertGreater(scanned, 50)
+        # Explicit: status/meta/run-meta for layout and both runners.
+        for rel in (
+            "compat/installation/wave2/cases/INST-LAYOUT-001/status.env",
+            "compat/installation/wave2/cases/INST-LAYOUT-001/meta.env",
+            "compat/installation/wave2/cases/INST-LAYOUT-001/run-meta.env",
+            "compat/installation/wave2/cases/_runner/INST-RUNNER-SIGNAL-001/status.env",
+            "compat/installation/wave2/cases/_runner/INST-RUNNER-TIMEOUT-001/status.env",
+        ):
+            body = (contract.ROOT / rel).read_text(encoding="utf-8")
+            self.assertNotIn("EXECUTABLE_ST_DEV=", body)
+            self.assertNotIn("EXECUTABLE_ST_INO=", body)
+            self.assertIn("EXECUTABLE_PATH=", body)
+            self.assertIn("EXECUTABLE_SHA256=", body)
+
+    def test_wave2_cross_clone_replay_is_independent_of_device_inode(self) -> None:
+        """Observation/status hashes must not encode device/inode numbers.
+
+        Cross-clone Docker environments may report different st_dev values for the
+        same executable content. Retained identity is path+content hash only.
+        """
+        import hashlib
+        import re
+
+        # Prove current retained envelopes contain no numeric ST fields.
+        for path in (contract.ROOT / "compat/installation/wave2/cases").rglob("*.env"):
+            body = path.read_text(encoding="utf-8", errors="replace")
+            self.assertIsNone(re.search(r"EXECUTABLE_ST_(DEV|INO)=", body), path)
+        # Observation material excludes any residual env file content; pin identity fields.
+        stage = contract.load_case_capture_record(
+            "compat/installation/wave2/cases/INST-STAGE-001/capture.json"
+        )
+        identity = stage["identity"]
+        self.assertNotIn("st_dev", identity)
+        self.assertNotIn("st_ino", identity)
+        self.assertNotIn("executable_st_dev", identity)
+        self.assertNotIn("executable_st_ino", identity)
+        self.assertRegex(identity["executable_sha256"], r"^[0-9a-f]{64}$")
+        self.assertNotIn(identity["executable_sha256"], {"0" * 64, "f" * 64})
+        # status.env artifact hash is part of extra bindings; ensure its body is clone-stable fields only.
+        status = (
+            contract.ROOT / "compat/installation/wave2/cases/INST-STAGE-001/status.env"
+        ).read_text(encoding="utf-8")
+        keys = [ln.split("=", 1)[0] for ln in status.splitlines() if "=" in ln]
+        self.assertEqual(
+            keys,
+            [
+                "EXIT_STATUS",
+                "SIGNAL",
+                "TIMED_OUT",
+                "HOST_OBSERVER_CODE",
+                "WORKDIR",
+                "EXECUTABLE_PATH",
+                "EXECUTABLE_SHA256",
+                "WAIT_STATUS_RAW",
+                "QUALIFICATION",
+                "TIMEOUT_SECONDS",
+            ],
+        )
+
+
 
 
     def test_wave2_observer_ptrace_faults_reap_and_fail_closed(self) -> None:
