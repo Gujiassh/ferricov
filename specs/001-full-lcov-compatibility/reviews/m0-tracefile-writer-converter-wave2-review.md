@@ -52,19 +52,25 @@ Relative to the accepted wave2 254-observation set, writer/converter is purely a
 | M1-TF-042 summaries | `writer-summaries.canonical` |
 | M1-TF-043 comments/checksum drop | `writer-comments.canonical` |
 | M1-TF-044 forbidden records | `writer-forbidden.canonical` |
-| M1-TF-045 parse-write fixed point | `writer-fixedpoint.canonical` |
 | M1-TF-046 repeated write | `writer-fixedpoint.repeated-write` |
 | M1-TF-050 xml2lcov | `converter-coverage.xml2lcov` |
 | M1-TF-051 py2lcov | `converter-coverage.py2lcov-no-functions`, `converter-coverage.py2lcov-with-functions` |
-| M1-TF-052 converter rewrite | `converter-coverage.canonical-rewrite` |
 | M1-TF-060 gzip transport | `gzip-valid.summary`, `gzip-plain.write-gz`, `gzip-corrupt.summary`, `gzip-empty.summary`, `gzip-valid.missing-gzip` |
-| M1-TF-061 non-UTF-8 path | `writer-non-utf8.canonical` |
 
-Exact requirement bindings live in `compat/tracefile/contract.py` `EXACT_CASE_REQUIREMENTS` for all 17 writer case ids. M1-TF-063 / M1-TF-064 remain unbound.
+Exact requirement bindings live in `compat/tracefile/contract.py` `EXACT_CASE_REQUIREMENTS` for the 14 writer cases above. Three retained captures remain observational-only (no exact mapping):
+
+| Observational capture | Partial identity (blocked) |
+| --- | --- |
+| `writer-fixedpoint.canonical` | M1-TF-045 needs multi-corpus parse-write-parse |
+| `converter-coverage.canonical-rewrite` | M1-TF-052 needs semantic no-loss snapshots |
+| `writer-non-utf8.canonical` | M1-TF-061 needs full non-UTF-8 field matrix |
+
+M1-TF-045 / M1-TF-052 / M1-TF-061 / M1-TF-063 / M1-TF-064 remain unbound.
 
 ## Independent validators / reverse mutations
 
-- Fixture byte anchors and rewrite/output fact anchors in `validate.py`.
+- Structured section-model semantic predicates in `validation_common.py` (not substring-only).
+- Identity self-hash refresh checks plus poisoned-hash rejection for every writer observation.
 - Focused reverse mutation suite: `WriterTracefileMutationTests` in `test_validate.py`.
 - Contract mapping suite: `test_writer_mapping_is_exact_and_source_scoped` in `test_contract.py`.
 - Existing TF-030 mutation/merge gates remain green against the expanded baseline (merge baseline pin updated to new canonical SHA; TF-030 selection still exact 15).

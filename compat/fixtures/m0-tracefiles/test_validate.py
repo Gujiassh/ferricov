@@ -1557,70 +1557,35 @@ class WriterTracefileMutationTests(unittest.TestCase):
 
     def test_writer_rewrite_output_independent_facts(self) -> None:
         from validate import decode_identity
+        from validation_common import (
+            assert_converter_rewrite_observational,
+            assert_py2lcov_with_functions_semantics,
+            assert_writer_comment_semantics,
+            assert_writer_fixedpoint_semantics,
+            assert_writer_forbidden_semantics,
+            assert_writer_mcdc_group_semantics,
+            assert_writer_non_utf8_observational,
+            assert_writer_order_semantics,
+            assert_writer_summary_semantics,
+            assert_xml2lcov_semantics,
+        )
 
         checks = {
-            "writer-order-core.canonical": lambda output: (
-                output.startswith(b"TN:a\nSF:src/a.c\n")
-                and b"FNL:0,10,20\nFNA:0,2,za\nFNA:0,1,zb\n" in output
-                and b"MCDC:3,2,t,1,0,expr\nMCDC:3,2,f,0,0,expr\n" in output
-                and b"FNF:9" not in output
-            ),
-            "writer-mcdc-groups.canonical": lambda output: (
-                b"MCDC:1,10,t,1,0,big\n" in output
-                and b"MCDC:1,U3,t,1,0,ucond\n" in output
-                and b"MCDC:2,1,t,2,0,sense_first\nMCDC:2,1,f,1,0,sense_first\n" in output
-                and b"MCDC:3,1,t,1,0,a,b,c\n" in output
-                and b"MCF:10\nMCH:6\n" in output
-            ),
-            "writer-summaries.canonical": lambda output: output
-            == (
-                b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
-                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
-                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
-                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
-            ),
-            "writer-comments.canonical": lambda output: (
-                b"#" not in output
-                and b",chk" not in output
-                and output == b"TN:c\nSF:src/c.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
-            ),
-            "writer-forbidden.canonical": lambda output: (
-                b"KF:" not in output
-                and b"FN:" not in output
-                and b"FNDA:" not in output
-                and b"end_of_record_and_junk" not in output
-                and b"FNL:0,1,2\nFNA:0,3,foo\n" in output
-            ),
-            "writer-fixedpoint.canonical": lambda output: output
-            == (
-                b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
-                b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
-                b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
-                b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
-            ),
-            "converter-coverage.xml2lcov": lambda output: (
-                output.startswith(b"TN:xml\nSF:mod.py\n")
-                and b"BRDA:1,0,0,1\nBRDA:1,0,1,0\n" in output
-                and b"FNL:0,1,1\nFNA:0,3,foo\n" in output
-                and b"MCDC:" not in output
-            ),
-            "converter-coverage.py2lcov-with-functions": lambda output: (
-                output.startswith(b"TN:py\nSF:./mod.py\n")
-                and b"FNL:0,1,1\nFNA:0,3,foo\nFNL:1,1,2\nFNA:1,1,foo\n" in output
-                and b"FNF:2\nFNH:2\n" in output
-            ),
-            "converter-coverage.canonical-rewrite": lambda output: (
-                output.startswith(b"TN:xml\nSF:mod.py\n")
-                and output.find(b"FNL:") < output.find(b"BRDA:")
-                and b"MCDC:" not in output
-            ),
-            "writer-non-utf8.canonical": lambda output: output
-            == b"TN:x\nSF:src/\xff.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
+            "writer-order-core.canonical": assert_writer_order_semantics,
+            "writer-mcdc-groups.canonical": assert_writer_mcdc_group_semantics,
+            "writer-summaries.canonical": assert_writer_summary_semantics,
+            "writer-comments.canonical": assert_writer_comment_semantics,
+            "writer-forbidden.canonical": assert_writer_forbidden_semantics,
+            "writer-fixedpoint.canonical": assert_writer_fixedpoint_semantics,
+            "converter-coverage.xml2lcov": assert_xml2lcov_semantics,
+            "converter-coverage.py2lcov-with-functions": assert_py2lcov_with_functions_semantics,
+            "converter-coverage.canonical-rewrite": assert_converter_rewrite_observational,
+            "writer-non-utf8.canonical": assert_writer_non_utf8_observational,
         }
         for case_id, predicate in checks.items():
             observation = self.cases[case_id]
             output = decode_identity(observation["output"], case_id)
-            self.assertTrue(predicate(output), case_id)
+            predicate(output, case_id)
             if case_id == "writer-order-core.canonical":
                 poisoned = output.replace(b"FNA:0,2,za\n", b"FNA:0,1,za\n", 1)
             elif case_id == "writer-mcdc-groups.canonical":
@@ -1634,27 +1599,60 @@ class WriterTracefileMutationTests(unittest.TestCase):
             elif case_id == "writer-fixedpoint.canonical":
                 poisoned = output + b"#mut\n"
             elif case_id == "converter-coverage.xml2lcov":
-                poisoned = output + b"MCDC:1,1,t,1,0,x\n"
+                # inject MC/DC before end_of_record so section model must reject
+                poisoned = output.replace(
+                    b"end_of_record\n",
+                    b"MCDC:1,1,t,1,0,x\nend_of_record\n",
+                    1,
+                )
             elif case_id == "converter-coverage.py2lcov-with-functions":
                 poisoned = output.replace(b"FNF:2\n", b"FNF:1\n", 1)
             elif case_id == "converter-coverage.canonical-rewrite":
-                poisoned = output.replace(b"FNL:0,1,1\n", b"BRDA:1,0,0,1\nFNL:0,1,1\n", 1)
+                # swap family order by moving first FNL after first BRDA block
+                poisoned = output.replace(b"\nFNL:0,1,1\n", b"\n", 1).replace(
+                    b"\nBRDA:1,0,0,1\n",
+                    b"\nBRDA:1,0,0,1\nFNL:0,1,1\n",
+                    1,
+                )
             elif case_id == "writer-non-utf8.canonical":
                 poisoned = output.replace(b"\xff", b"x", 1)
             else:
                 poisoned = output + b"#mut\n"
-            self.assertFalse(predicate(bytes(poisoned)), f"{case_id} poisoned still passes")
+            with self.assertRaises(ValueError, msg=f"{case_id} poisoned still passes"):
+                predicate(bytes(poisoned), f"{case_id} poisoned")
+
+    def test_writer_identity_self_hash_mutations_are_rejected(self) -> None:
+        from validation_common import assert_identity_self_hash
+
+        observation = self.cases["writer-order-core.canonical"]
+        for stream in ("stdout", "stderr", "output"):
+            identity = dict(observation[stream])
+            assert_identity_self_hash(identity, f"{stream} good")
+            poisoned = dict(identity)
+            poisoned["sha256"] = "0" * 64
+            with self.assertRaises(ValueError):
+                assert_identity_self_hash(poisoned, f"{stream} poisoned sha")
+            if "base64" in identity:
+                raw = base64.b64decode(identity["base64"])
+                mutated = dict(identity)
+                mutated["base64"] = base64.b64encode(raw + b"#mut").decode("ascii")
+                # keep stale sha/size so self-hash must fail
+                with self.assertRaises(ValueError):
+                    assert_identity_self_hash(mutated, f"{stream} stale hash")
 
     def test_writer_gzip_transport_independent_facts(self) -> None:
         from validate import decode_identity
+        from validation_common import assert_identity_self_hash
 
         valid = self.cases["gzip-valid.summary"]
         self.assertEqual(valid["exit_status"], 0)
         stdout = decode_identity(valid["stdout"], "gzip-valid stdout")
         self.assertIn(b"source files: 1", stdout)
+        assert_identity_self_hash(valid["stdout"], "gzip-valid stdout identity")
         write_gz = self.cases["gzip-plain.write-gz"]
         raw = decode_identity(write_gz["output"], "gzip write")
         self.assertEqual(raw[:2], b"\x1f\x8b")
+        assert_identity_self_hash(write_gz["output"], "gzip write identity")
         for case_id, needle in {
             "gzip-corrupt.summary": "integrity check failed for compressed file",
             "gzip-empty.summary": "no valid records found in tracefile",
@@ -1664,6 +1662,7 @@ class WriterTracefileMutationTests(unittest.TestCase):
             self.assertEqual(observation["exit_status"], 1, case_id)
             stderr = decode_identity(observation["stderr"], f"{case_id} stderr").decode("utf-8", "replace")
             self.assertIn(needle, stderr)
+            assert_identity_self_hash(observation["stderr"], f"{case_id} stderr identity")
             poisoned = stderr.replace(needle, "mutated diagnostic")
             self.assertNotIn(needle, poisoned)
 

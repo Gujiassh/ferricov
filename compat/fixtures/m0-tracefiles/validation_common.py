@@ -382,3 +382,212 @@ def assert_single_testcase_parity(source: dict[str, object], testcase: str, labe
             testcases[family][testcase] == aggregate[family],
             f"{label}: aggregate/testcase {family} parity drift",
         )
+
+
+def parse_tracefile_sections(data: bytes) -> list[dict[str, object]]:
+    """Parse LCOV info text into ordered section models for semantic predicates."""
+    sections: list[dict[str, object]] = []
+    current: dict[str, object] | None = None
+    for raw_line in data.splitlines():
+        line = raw_line
+        if line.startswith(b"TN:"):
+            if current is not None:
+                sections.append(current)
+            current = {
+                "tn": line[3:],
+                "sf": None,
+                "ver": None,
+                "functions": [],  # list[(index, start, end)]
+                "aliases": [],  # list[(index, count, name)]
+                "branches": [],  # list[(line, block, expr, taken)]
+                "mcdc": [],  # list[(line, group, sense, count, index, expr)]
+                "das": [],  # list[(line, count, checksum|None)]
+                "summaries": {},
+            }
+            continue
+        if current is None:
+            continue
+        if line.startswith(b"SF:"):
+            current["sf"] = line[3:]
+        elif line.startswith(b"VER:"):
+            current["ver"] = line[4:]
+        elif line.startswith(b"FNL:"):
+            parts = line[4:].split(b",")
+            if len(parts) == 3:
+                current["functions"].append((parts[0], parts[1], parts[2]))
+        elif line.startswith(b"FNA:"):
+            parts = line[4:].split(b",", 2)
+            if len(parts) == 3:
+                current["aliases"].append((parts[0], parts[1], parts[2]))
+        elif line.startswith(b"BRDA:"):
+            parts = line[5:].split(b",")
+            if len(parts) >= 4:
+                current["branches"].append((parts[0], parts[1], parts[2], parts[3]))
+        elif line.startswith(b"MCDC:"):
+            parts = line[5:].split(b",", 5)
+            if len(parts) == 6:
+                current["mcdc"].append(tuple(parts))
+        elif line.startswith(b"DA:"):
+            body = line[3:]
+            if b"," in body:
+                line_no, rest = body.split(b",", 1)
+                if b"," in rest:
+                    count, checksum = rest.split(b",", 1)
+                else:
+                    count, checksum = rest, None
+                current["das"].append((line_no, count, checksum))
+        elif line.startswith((b"FNF:", b"FNH:", b"BRF:", b"BRH:", b"MCF:", b"MCH:", b"LF:", b"LH:")):
+            tag, value = line.split(b":", 1)
+            current["summaries"][tag.decode("ascii")] = value
+        elif line == b"end_of_record":
+            sections.append(current)
+            current = None
+    if current is not None:
+        sections.append(current)
+    return sections
+
+
+def assert_writer_order_semantics(output: bytes, label: str) -> None:
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 3, f"{label}: expected 3 sections")
+    tns = [section["tn"] for section in sections]
+    require(tns == [b"a", b"m", b"z"], f"{label}: TN order drift {tns!r}")
+    require(sections[0]["sf"] == b"src/a.c" and sections[1]["sf"] == b"src/a.c", f"{label}: first files not a.c")
+    require(sections[2]["sf"] == b"src/z.c" and sections[2]["ver"] == b"v1", f"{label}: z section path/ver")
+    aliases = sections[2]["aliases"]
+    require(aliases == [(b"0", b"2", b"za"), (b"0", b"1", b"zb")], f"{label}: alias order/count {aliases!r}")
+    mcdc = sections[2]["mcdc"]
+    require(mcdc and mcdc[0][2] == b"t" and mcdc[1][2] == b"f", f"{label}: mcdc sense order")
+    require(sections[0]["summaries"].get("FNF") == b"1", f"{label}: recomputed FNF missing")
+    require(b"FNF:9" not in output and b"LF:9" not in output, f"{label}: junk summaries retained")
+
+
+def assert_writer_mcdc_group_semantics(output: bytes, label: str) -> None:
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: expected one section")
+    groups = [entry[1] for entry in sections[0]["mcdc"]]
+    require(groups[:2] == [b"10", b"10"], f"{label}: lexical group 10 first missing")
+    require(b"U3" in groups, f"{label}: U-flag group missing")
+    senses = [(entry[0], entry[1], entry[2], entry[3]) for entry in sections[0]["mcdc"] if entry[0] == b"2"]
+    require(senses == [(b"2", b"1", b"t", b"2"), (b"2", b"1", b"f", b"1")], f"{label}: sense order {senses!r}")
+    exprs = [entry[5] for entry in sections[0]["mcdc"] if entry[0] == b"3"]
+    require(exprs == [b"a,b,c", b"a,b,c"], f"{label}: comma expression drift {exprs!r}")
+    require(sections[0]["summaries"].get("MCF") == b"10" and sections[0]["summaries"].get("MCH") == b"6", f"{label}: mcdc totals")
+
+
+def assert_writer_summary_semantics(output: bytes, label: str) -> None:
+    expected = (
+        b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+        b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+        b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+        b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
+    )
+    require(output == expected, f"{label}: summary rewrite drift")
+    sections = parse_tracefile_sections(output)
+    require(sections[0]["summaries"] == {"FNF": b"1", "FNH": b"1", "BRF": b"2", "BRH": b"1", "MCF": b"2", "MCH": b"1", "LF": b"2", "LH": b"1"}, f"{label}: summary map")
+
+
+def assert_writer_comment_semantics(output: bytes, label: str) -> None:
+    require(b"#" not in output, f"{label}: comments retained")
+    require(b",chk" not in output, f"{label}: checksum retained")
+    require(output == b"TN:c\nSF:src/c.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", f"{label}: rewrite drift")
+
+
+def assert_writer_forbidden_semantics(output: bytes, label: str) -> None:
+    require(b"KF:" not in output and b"FN:" not in output and b"FNDA:" not in output, f"{label}: forbidden tags")
+    require(b"end_of_record_and_junk" not in output, f"{label}: suffixed terminator")
+    sections = parse_tracefile_sections(output)
+    require(sections and sections[0]["sf"] == b"src/k.c", f"{label}: KF->SF path")
+    require(sections[0]["functions"] == [(b"0", b"1", b"2")], f"{label}: FN rewrite")
+    require(sections[0]["aliases"] == [(b"0", b"3", b"foo")], f"{label}: FNDA rewrite")
+
+
+def assert_writer_fixedpoint_semantics(output: bytes, label: str) -> None:
+    expected = (
+        b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
+        b"BRDA:1,0,e,1\nBRDA:1,0,e2,0\nBRF:2\nBRH:1\n"
+        b"MCDC:1,1,t,1,0,c\nMCDC:1,1,f,0,0,c\nMCF:2\nMCH:1\n"
+        b"DA:1,1\nDA:2,0\nLF:2\nLH:1\nend_of_record\n"
+    )
+    require(output == expected, f"{label}: fixed-point drift")
+
+
+def assert_xml2lcov_semantics(output: bytes, label: str) -> None:
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: section count")
+    require(sections[0]["tn"] == b"xml" and sections[0]["sf"] == b"mod.py", f"{label}: header")
+    require(sections[0]["branches"] == [(b"1", b"0", b"0", b"1"), (b"1", b"0", b"1", b"0")], f"{label}: branches")
+    require(sections[0]["functions"] == [(b"0", b"1", b"1")], f"{label}: functions")
+    require(sections[0]["aliases"] == [(b"0", b"3", b"foo")], f"{label}: aliases")
+    require(sections[0]["das"] == [(b"1", b"3", None), (b"2", b"1", None)], f"{label}: DA")
+    require(not sections[0]["mcdc"], f"{label}: unexpected MC/DC")
+    # xml2lcov direct order is BR then FN then DA, then summaries.
+    # Use line anchors so BRDA does not false-match DA:.
+    brda_at = output.find(b"\nBRDA:")
+    fnl_at = output.find(b"\nFNL:")
+    da_at = output.find(b"\nDA:")
+    require(0 <= brda_at < fnl_at < da_at, f"{label}: converter order")
+    require(
+        sections[0]["summaries"].get("LF") == b"2"
+        and sections[0]["summaries"].get("LH") == b"2"
+        and sections[0]["summaries"].get("BRF") == b"2"
+        and sections[0]["summaries"].get("BRH") == b"1"
+        and sections[0]["summaries"].get("FNF") == b"1"
+        and sections[0]["summaries"].get("FNH") == b"1",
+        f"{label}: converter summaries",
+    )
+
+
+def assert_py2lcov_no_functions_semantics(output: bytes, label: str) -> None:
+    sections = parse_tracefile_sections(output)
+    require(sections[0]["tn"] == b"py" and sections[0]["sf"] == b"mod.py", f"{label}: header")
+    require(len(sections[0]["functions"]) == 1 and len(sections[0]["aliases"]) == 1, f"{label}: derived extra")
+    require(not sections[0]["mcdc"], f"{label}: unexpected MC/DC")
+
+
+def assert_py2lcov_with_functions_semantics(output: bytes, label: str) -> None:
+    sections = parse_tracefile_sections(output)
+    require(sections[0]["tn"] == b"py" and sections[0]["sf"] == b"./mod.py", f"{label}: header")
+    require(sections[0]["functions"] == [(b"0", b"1", b"1"), (b"1", b"1", b"2")], f"{label}: functions")
+    require(sections[0]["aliases"] == [(b"0", b"3", b"foo"), (b"1", b"1", b"foo")], f"{label}: aliases")
+    require(sections[0]["summaries"].get("FNF") == b"2" and sections[0]["summaries"].get("FNH") == b"2", f"{label}: totals")
+
+
+def assert_converter_rewrite_observational(output: bytes, label: str) -> None:
+    """Observational rewrite shape only; not full M1-TF-052 semantic no-loss proof."""
+    sections = parse_tracefile_sections(output)
+    require(sections[0]["tn"] == b"xml" and sections[0]["sf"] == b"mod.py", f"{label}: header")
+    require(sections[0]["functions"] == [(b"0", b"1", b"1")], f"{label}: functions")
+    require(sections[0]["aliases"] == [(b"0", b"3", b"foo")], f"{label}: aliases")
+    require(sections[0]["branches"] == [(b"1", b"0", b"0", b"1"), (b"1", b"0", b"1", b"0")], f"{label}: branches")
+    require(sections[0]["das"] == [(b"1", b"3", None), (b"2", b"1", None)], f"{label}: DA")
+    fnl_at = output.find(b"\nFNL:")
+    brda_at = output.find(b"\nBRDA:")
+    da_at = output.find(b"\nDA:")
+    require(0 <= fnl_at < brda_at < da_at, f"{label}: canonical family order")
+    require(not sections[0]["mcdc"], f"{label}: invented MC/DC")
+
+
+def assert_writer_non_utf8_observational(output: bytes, label: str) -> None:
+    """Observational SF invalid UTF-8 retention only; not full M1-TF-061 matrix."""
+    sections = parse_tracefile_sections(output)
+    require(len(sections) == 1, f"{label}: section count")
+    require(sections[0]["tn"] == b"x", f"{label}: TN")
+    require(sections[0]["sf"] == b"src/\xff.c", f"{label}: SF bytes")
+    require(sections[0]["das"] == [(b"1", b"1", None)], f"{label}: DA")
+    require(output == b"TN:x\nSF:src/\xff.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", f"{label}: exact rewrite")
+
+
+def assert_identity_self_hash(identity: dict[str, object], label: str) -> None:
+    """Require identity base64/size/sha are self-consistent and reject mutated hashes."""
+    verify_identity(identity, label)
+    data = decode_identity(identity, label)
+    require(hashlib.sha256(data).hexdigest() == identity["sha256"], f"{label}: self-hash mismatch")
+    require(len(data) == identity["byte_size"], f"{label}: self-size mismatch")
+    poisoned = dict(identity)
+    poisoned["sha256"] = "0" * 64
+    try:
+        verify_identity(poisoned, f"{label} poisoned")
+    except ValueError:
+        return
+    raise ValueError(f"{label}: poisoned sha256 still accepted")
