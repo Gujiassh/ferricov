@@ -21,19 +21,23 @@ from generate import (
     AUDIT_PATH,
     CONTRACT_PATH,
     INVENTORY_PATH,
+    PLAN_BINDINGS_PATH,
     REQUIRED_INTERACTION_DOMAINS,
     SCHEMA_PATH,
     SUITES_PATH,
     TEST_MAP_PATH,
     UPSTREAM_COMMIT,
     UPSTREAM_RELEASE,
+    build_plan_bindings,
     calculate_totals,
     canonical_bytes,
     inventory_entries,
     FRAGMENT_SCHEMA_PATH,
     FRAGMENTS_PATH,
     make_case_skeleton,
+    planning_boundary_form,
     public_inventory_entries,
+    source_fingerprint,
 )
 
 
@@ -43,6 +47,9 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 SUITE_SCHEMA_PATH = "compat/schema/suite.schema.json"
 RESULT_SCHEMA_PATH = "compat/schema/differential-result.schema.json"
+EXPECTED_PLAN_BINDINGS_SHA256 = (
+    "b6c8d24c7de40ed28a8382b4596dd2741b5074ec98dfba4e6880df7400b0e6ce"
+)
 
 
 class ValidationError(Exception):
@@ -78,6 +85,186 @@ def case_is_substantive_plan(case: dict[str, Any]) -> bool:
     if case.get("suite_cases"):
         return True
     return bool(case.get("behavior_groups")) and bool(case.get("upstream_tests"))
+
+
+
+
+def actual_primary_plan_binding(case: dict[str, Any]) -> dict[str, Any]:
+    primary_targets = sorted(
+        target["id"] for target in case["targets"] if target["role"] == "primary"
+    )
+    try:
+        boundary_form = planning_boundary_form(case)
+    except Exception as error:  # GenerationError or ValueError
+        raise ValidationError(
+            f"{case['id']}: cannot derive sealed boundary form: {error}"
+        ) from error
+    return {
+        "id": case["id"],
+        "behavior_groups": list(case.get("behavior_groups") or []),
+        "boundary_form": boundary_form,
+        "description_sha256": hashlib.sha256(
+            case["description"].encode("utf-8")
+        ).hexdigest(),
+        "primary_targets": primary_targets,
+        "source_fingerprint": source_fingerprint(case["source_references"]),
+        "suite_cases": [
+            {"case_id": item["case_id"], "suite_id": item["suite_id"]}
+            for item in sorted(
+                case.get("suite_cases") or [],
+                key=lambda item: (item["suite_id"], item["case_id"]),
+            )
+        ],
+        "upstream_tests": list(case.get("upstream_tests") or []),
+    }
+
+
+def actual_critical_interaction_binding(
+    group: dict[str, Any],
+    case_by_id: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    case_contexts: list[dict[str, Any]] = []
+    for case_id in group["planned_cases"]:
+        case = case_by_id[case_id]
+        case_contexts.append(
+            {
+                "id": case_id,
+                "behavior_groups": list(case.get("behavior_groups") or []),
+                "surface": case["surface"],
+                "targets": sorted(
+                    [
+                        {"id": target["id"], "role": target["role"]}
+                        for target in case["targets"]
+                    ],
+                    key=lambda item: (item["id"], item["role"]),
+                ),
+                "upstream_tests": list(case.get("upstream_tests") or []),
+            }
+        )
+    case_contexts.sort(key=lambda item: item["id"])
+    return {
+        "id": group["id"],
+        "case_contexts": case_contexts,
+        "domain": group["domain"],
+        "member_ids": sorted(member["id"] for member in group["members"]),
+        "planned_cases": list(group["planned_cases"]),
+        "source_fingerprint": source_fingerprint(group["source_references"]),
+    }
+
+
+def validate_plan_bindings(
+    repo_root: Path,
+    contract: dict[str, Any],
+    *,
+    bindings_path: Path | None = None,
+    check_self_hash: bool = True,
+) -> None:
+    """Fail closed on semantic/interaction identity drift.
+
+    plan-bindings.json is an independent fixed fact. Its trusted SHA-256 is a
+    hard-coded constant; regenerating the file after a silent mutation does not
+    update that constant, so content swaps still fail.
+    """
+    path = (bindings_path or (repo_root / PLAN_BINDINGS_PATH)).resolve()
+    require(path.is_file(), f"missing plan bindings file: {PLAN_BINDINGS_PATH}")
+    raw = path.read_bytes()
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if check_self_hash:
+        require(
+            actual_sha == EXPECTED_PLAN_BINDINGS_SHA256,
+            "behavior plan bindings self-hash mismatch "
+            f"(expected {EXPECTED_PLAN_BINDINGS_SHA256}, found {actual_sha})",
+        )
+    try:
+        document = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValidationError(f"cannot parse plan bindings: {error}") from error
+    require(isinstance(document, dict), "plan bindings root must be an object")
+    require(document.get("kind") == "behavior_plan_bindings", "plan bindings kind mismatch")
+    require(document.get("schema_version") == 1, "plan bindings schema_version mismatch")
+    require(
+        document.get("upstream") == {
+            "release": UPSTREAM_RELEASE,
+            "commit": UPSTREAM_COMMIT,
+        },
+        "plan bindings upstream pin mismatch",
+    )
+    require(
+        path.read_bytes() == canonical_bytes(document),
+        "plan bindings are not canonical",
+    )
+
+    expected = build_plan_bindings(contract)
+    require(
+        document == expected,
+        "behavior plan bindings drift from contract semantic/interaction identity",
+    )
+
+    # Explicit reverse checks keep error messages mutation-specific.
+    primary_by_id = {item["id"]: item for item in document["primary_plans"]}
+    for case in contract["case_groups"]:
+        if not case_is_substantive_plan(case) or case["case_class"] == "interaction":
+            continue
+        binding = primary_by_id.get(case["id"])
+        require(binding is not None, f"{case['id']}: missing fixed primary plan binding")
+        actual = actual_primary_plan_binding(case)
+        require(
+            actual["primary_targets"] == binding["primary_targets"],
+            f"{case['id']}: primary target binding drift",
+        )
+        require(
+            actual["boundary_form"] == binding["boundary_form"],
+            f"{case['id']}: boundary form binding drift",
+        )
+        require(
+            actual["description_sha256"] == binding["description_sha256"],
+            f"{case['id']}: description binding drift",
+        )
+        require(
+            actual["source_fingerprint"] == binding["source_fingerprint"],
+            f"{case['id']}: source_references binding drift",
+        )
+        require(
+            actual["upstream_tests"] == binding["upstream_tests"],
+            f"{case['id']}: upstream driver binding drift",
+        )
+        require(
+            actual["behavior_groups"] == binding["behavior_groups"],
+            f"{case['id']}: behavior_groups binding drift",
+        )
+        require(
+            actual["suite_cases"] == binding["suite_cases"],
+            f"{case['id']}: suite_cases binding drift",
+        )
+
+    case_by_id = {case["id"]: case for case in contract["case_groups"]}
+    interaction_by_id = {item["id"]: item for item in document["critical_interactions"]}
+    for group in contract["interaction_groups"]:
+        if not (group.get("critical") and group.get("review_status") == "reviewed"):
+            continue
+        binding = interaction_by_id.get(group["id"])
+        require(binding is not None, f"{group['id']}: missing fixed critical interaction binding")
+        actual = actual_critical_interaction_binding(group, case_by_id)
+        require(
+            actual["member_ids"] == binding["member_ids"],
+            f"{group['id']}: interaction member identity binding drift",
+        )
+        require(
+            actual["planned_cases"] == binding["planned_cases"],
+            f"{group['id']}: interaction planned_cases binding drift",
+        )
+        require(
+            actual["case_contexts"] == binding["case_contexts"],
+            f"{group['id']}: interaction case context binding drift",
+        )
+        require(
+            actual["source_fingerprint"] == binding["source_fingerprint"],
+            f"{group['id']}: interaction source_references binding drift",
+        )
+        require(
+            actual["domain"] == binding["domain"],
+            f"{group['id']}: interaction domain binding drift",
+        )
 
 
 def load_object(path: Path, label: str) -> dict[str, Any]:
@@ -877,6 +1064,10 @@ def validate_contract(
                     planned_case["surface"] in interaction_surfaces[group["domain"]],
                     f"{group['id']}: planned case {case_id} has the wrong interaction surface",
                 )
+
+    canonical_contract = (repo_root / CONTRACT_PATH).resolve()
+    if check_regeneration or contract_path.resolve() == canonical_contract:
+        validate_plan_bindings(repo_root, contract)
 
     expected_totals = calculate_totals(contract, public_ids)
     require(contract["totals"] == expected_totals, f"contract totals mismatch: expected {expected_totals}, found {contract['totals']}")

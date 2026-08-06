@@ -23,9 +23,11 @@ from generate import (  # noqa: E402
     FRAGMENT_SCHEMA_PATH,
     FRAGMENTS_PATH,
     INVENTORY_PATH,
+    PLAN_BINDINGS_PATH,
     SCHEMA_PATH,
     TEST_MAP_PATH,
     GenerationError,
+    build_plan_bindings,
     calculate_totals,
     canonical_bytes,
     inventory_entries,
@@ -38,9 +40,11 @@ from generate import (  # noqa: E402
 )
 from validate import (  # noqa: E402
     DEFAULT_UPSTREAM_ROOT,
+    EXPECTED_PLAN_BINDINGS_SHA256,
     ValidationError,
     validate_contract,
     validate_evidence,
+    validate_plan_bindings,
 )
 
 
@@ -1244,6 +1248,174 @@ class BehaviorContractValidationTests(unittest.TestCase):
 
         error = self.mutate(drop_behavior_groups, recompute_totals=True)
         self.assertIn("lacks substantive", str(error))
+
+    def test_plan_bindings_self_hash_is_hard_coded(self) -> None:
+        path = REPO_ROOT / PLAN_BINDINGS_PATH
+        raw = path.read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), EXPECTED_PLAN_BINDINGS_SHA256)
+        document = json.loads(raw.decode("utf-8"))
+        self.assertEqual(document["kind"], "behavior_plan_bindings")
+        self.assertEqual(document["totals"]["primary_plans"], 363)
+        self.assertEqual(document["totals"]["critical_interactions"], 4)
+        self.assertEqual(build_plan_bindings(self.base), document)
+        # Canonical contract validation enforces the fixed binding set.
+        report = self.validate_path(self.contract_path)
+        self.assertEqual(report.reviewed_primary_coverage, 361)
+        self.assertEqual(len(report.readiness_gaps), 170)
+
+    def test_source_bound_semantic_mutation_fails_after_binding_refresh(self) -> None:
+        """Content swaps fail even when plan-bindings.json is regenerated.
+
+        The trusted SHA-256 is a hard-coded validator constant, not a self-hash
+        derived from the refreshed file.
+        """
+        donor = next(
+            item
+            for item in self.base["case_groups"]
+            if item["id"] == "case.acceptance.command.genhtml.option.baseline-date"
+        )
+        mutated = copy.deepcopy(self.base)
+        target = next(
+            item
+            for item in mutated["case_groups"]
+            if item["id"] == "case.acceptance.command.genhtml.option.annotate-script"
+        )
+        target["source_references"] = copy.deepcopy(donor["source_references"])
+        target["upstream_tests"] = list(donor["upstream_tests"])
+        target["behavior_groups"] = list(donor["behavior_groups"])
+        target["description"] = donor["description"]
+        mutated["totals"] = calculate_totals(mutated, self.public_ids)
+
+        with tempfile.TemporaryDirectory(prefix="ferricov-plan-bind-semantic-") as temp:
+            bindings_path = Path(temp) / "plan-bindings.json"
+            bindings_path.write_bytes(canonical_bytes(build_plan_bindings(mutated)))
+            refreshed_sha = hashlib.sha256(bindings_path.read_bytes()).hexdigest()
+            self.assertNotEqual(refreshed_sha, EXPECTED_PLAN_BINDINGS_SHA256)
+            with self.assertRaises(ValidationError) as raised:
+                validate_plan_bindings(
+                    REPO_ROOT,
+                    mutated,
+                    bindings_path=bindings_path,
+                    check_self_hash=True,
+                )
+            self.assertIn("plan bindings self-hash mismatch", str(raised.exception))
+
+            with self.assertRaises(ValidationError) as raised:
+                validate_plan_bindings(
+                    REPO_ROOT,
+                    mutated,
+                    bindings_path=REPO_ROOT / PLAN_BINDINGS_PATH,
+                    check_self_hash=True,
+                )
+            message = str(raised.exception)
+            self.assertTrue(
+                any(
+                    token in message
+                    for token in (
+                        "plan bindings drift",
+                        "binding drift",
+                        "source_references binding drift",
+                        "upstream driver binding drift",
+                        "boundary form binding drift",
+                        "description binding drift",
+                    )
+                ),
+                msg=message,
+            )
+
+    def test_critical_interaction_member_substitution_fails_after_binding_refresh(self) -> None:
+        """Same-kind member/context swaps fail under fixed interaction bindings."""
+        mutated = copy.deepcopy(self.base)
+        group = next(
+            item
+            for item in mutated["interaction_groups"]
+            if item["domain"] == "option_option"
+        )
+        case = next(
+            item for item in mutated["case_groups"] if item["id"] == group["planned_cases"][0]
+        )
+        old_members = [member["id"] for member in group["members"]]
+        replacement = "command.lcov.option.summary"
+        self.assertNotIn(replacement, old_members)
+        group["members"] = [{"id": value} for value in sorted([old_members[0], replacement])]
+        new_targets = []
+        for target in case["targets"]:
+            if target["id"] == old_members[1]:
+                new_targets.append({"id": replacement, "role": target["role"]})
+            else:
+                new_targets.append(target)
+        case["targets"] = sorted(new_targets, key=lambda item: (item["id"], item["role"]))
+        mutated["totals"] = calculate_totals(mutated, self.public_ids)
+
+        with tempfile.TemporaryDirectory(prefix="ferricov-plan-bind-ix-") as temp:
+            bindings_path = Path(temp) / "plan-bindings.json"
+            bindings_path.write_bytes(canonical_bytes(build_plan_bindings(mutated)))
+            with self.assertRaises(ValidationError) as raised:
+                validate_plan_bindings(
+                    REPO_ROOT,
+                    mutated,
+                    bindings_path=bindings_path,
+                    check_self_hash=True,
+                )
+            self.assertIn("plan bindings self-hash mismatch", str(raised.exception))
+
+            with self.assertRaises(ValidationError) as raised:
+                validate_plan_bindings(
+                    REPO_ROOT,
+                    mutated,
+                    bindings_path=REPO_ROOT / PLAN_BINDINGS_PATH,
+                    check_self_hash=True,
+                )
+            message = str(raised.exception)
+            self.assertTrue(
+                any(
+                    token in message
+                    for token in (
+                        "interaction member identity binding drift",
+                        "interaction case context binding drift",
+                        "plan bindings drift",
+                    )
+                ),
+                msg=message,
+            )
+
+        mutated = copy.deepcopy(self.base)
+        group = next(
+            item for item in mutated["interaction_groups"] if item["domain"] == "callback"
+        )
+        case = next(
+            item for item in mutated["case_groups"] if item["id"] == group["planned_cases"][0]
+        )
+        replacement = "command.genhtml.option.baseline-file"
+        group["members"] = [
+            {"id": value} for value in sorted(["CB-ANNOTATE", replacement])
+        ]
+        new_targets = []
+        for target in case["targets"]:
+            if target["id"] == "command.genhtml.option.annotate-script":
+                new_targets.append({"id": replacement, "role": target["role"]})
+            else:
+                new_targets.append(target)
+        case["targets"] = sorted(new_targets, key=lambda item: (item["id"], item["role"]))
+        with self.assertRaises(ValidationError) as raised:
+            validate_plan_bindings(
+                REPO_ROOT,
+                mutated,
+                bindings_path=REPO_ROOT / PLAN_BINDINGS_PATH,
+                check_self_hash=True,
+            )
+        message = str(raised.exception)
+        self.assertTrue(
+            any(
+                token in message
+                for token in (
+                    "interaction member identity binding drift",
+                    "interaction case context binding drift",
+                    "plan bindings drift",
+                )
+            ),
+            msg=message,
+        )
 
     def test_totals_are_recomputed(self) -> None:
         def change(contract: dict[str, Any]) -> None:
