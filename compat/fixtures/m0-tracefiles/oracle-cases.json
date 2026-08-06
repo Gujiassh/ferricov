@@ -4052,8 +4052,8 @@
     {
       "id": "writer-fixedpoint.canonical",
       "fixture": "fixtures/writer/fixedpoint.info",
-      "requirement": "M1-TF-045",
-      "description": "Parse-write of already-canonical multi-family corpus preserves bytes.",
+      "requirement": "observational-fixedpoint-single-corpus",
+      "description": "Observational single-corpus fixed-point rewrite; not full M1-TF-045 evidence.",
       "argv": [
         "lcov",
         "--branch-coverage",
@@ -4141,8 +4141,8 @@
     {
       "id": "converter-coverage.canonical-rewrite",
       "fixture": "fixtures/writer/coverage.xml",
-      "requirement": "M1-TF-052",
-      "description": "Direct converter output rewritten through canonical lcov writer without semantic loss.",
+      "requirement": "observational-converter-rewrite",
+      "description": "Observational converter-to-canonical rewrite; not full M1-TF-052 semantic no-loss evidence.",
       "argv": [
         "sh",
         "-c",
@@ -4226,8 +4226,8 @@
     {
       "id": "writer-non-utf8.canonical",
       "fixture": "fixtures/writer/non-utf8.info",
-      "requirement": "M1-TF-061",
-      "description": "Invalid UTF-8 source path bytes are retained through parse/write.",
+      "requirement": "observational-non-utf8-sf",
+      "description": "Observational SF invalid UTF-8 retention; not full M1-TF-061 field matrix.",
       "argv": [
         "lcov",
         "--no-function-coverage",

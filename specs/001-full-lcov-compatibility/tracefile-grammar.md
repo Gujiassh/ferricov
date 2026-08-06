@@ -20,11 +20,10 @@ lexical rules, 15 reader matcher lines, 18 writer emission lines, 137 fixtures,
 21 per-record malformed fixtures, and 271 retained Oracle observations, including
 VER, state-ownership, function, branch, numeric/error/checksum probes, the TF-030
 exact numeric matrix, 28 semantic snapshots, wave-1/wave-2 reader probes, and
-writer/converter/transport probes with the inspect_model.pl runner.
-That inventory does not change this document's proposed status: remaining named
-tracefile blockers such as `M1-TF-063`/`M1-TF-064` still lack exact executable
-mappings, `M1-TF-030` remains Oracle-only evidence through the 56-row four-family
-exact atom matrix, and no M1 case has product evidence.
+writer/converter/transport probes with the inspect_model.pl runner. That inventory
+does not change this document's proposed status: remaining blockers still lack full
+exact mappings, `M1-TF-030` remains Oracle-only evidence through the 56-row matrix,
+and no M1 case has product evidence.
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT,
 RECOMMENDED, NOT RECOMMENDED, MAY, and OPTIONAL in this document are to be
@@ -695,12 +694,12 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 42 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 39 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
 `M1-TF-001` through `M1-TF-009`, `M1-TF-011` through `M1-TF-016`, `M1-TF-020`
 through `M1-TF-028`, `M1-TF-030` through `M1-TF-036`, `M1-TF-041` through
-`M1-TF-046`, `M1-TF-050` through `M1-TF-052`, `M1-TF-060`, and `M1-TF-061`.
+`M1-TF-044`, `M1-TF-046`, `M1-TF-050`, `M1-TF-051`, and `M1-TF-060`.
 `M1-TF-030` is mapped through the 56-row four-family exact atom matrix and
 row-level semantic validators as Oracle-only evidence.
 
@@ -717,15 +716,14 @@ independence and left-expression retention, branch-block contiguity/reuse/gap/so
 renumbering, semantic snapshots, and retained Oracle identities.
 `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` remain bound through the
 state-ownership fixture group and the same inspector runner; the contract also
-records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. Wave-1/wave-2 reader probes
-bind `M1-TF-001`/`003`/`004`/`005`/`006`/`008`/`012`/`014`/`015`/`016`/
-`020`/`023`/`027`/`028` and related identities. Writer/converter/transport probes
-bind `M1-TF-041` through `M1-TF-046`, `M1-TF-050` through `M1-TF-052`,
-`M1-TF-060`, and `M1-TF-061` as Oracle-only evidence. Older free-form compound
-`requirement` labels remain informational only when they are not exact
-executable mappings. The remaining named blockers are:
+records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. Writer/converter probes bind
+`M1-TF-041`–`044`/`046`/`050`/`051`/`060` as Oracle-only evidence. Incomplete
+writer identities remain blocked pending complete semantic corpora:
 
-`M1-TF-063` and `M1-TF-064`.
+`M1-TF-045`, `M1-TF-052`, `M1-TF-061`, `M1-TF-063`, and `M1-TF-064`.
+
+
+
 
 No M1 parser implementation is authorized until the M0 baseline phase resolves
 the model-shaping decisions and the executable manifest/approval record exist.

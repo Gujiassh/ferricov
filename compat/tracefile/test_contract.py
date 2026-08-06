@@ -391,28 +391,34 @@ class TracefileContractTests(unittest.TestCase):
             "writer-summaries.canonical": ["M1-TF-042"],
             "writer-comments.canonical": ["M1-TF-043"],
             "writer-forbidden.canonical": ["M1-TF-044"],
-            "writer-fixedpoint.canonical": ["M1-TF-045"],
             "writer-fixedpoint.repeated-write": ["M1-TF-046"],
             "converter-coverage.xml2lcov": ["M1-TF-050"],
             "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
             "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],
-            "converter-coverage.canonical-rewrite": ["M1-TF-052"],
             "gzip-valid.summary": ["M1-TF-060"],
             "gzip-plain.write-gz": ["M1-TF-060"],
             "gzip-corrupt.summary": ["M1-TF-060"],
             "gzip-empty.summary": ["M1-TF-060"],
             "gzip-valid.missing-gzip": ["M1-TF-060"],
-            "writer-non-utf8.canonical": ["M1-TF-061"],
+        }
+        observational_only = {
+            "writer-fixedpoint.canonical",
+            "converter-coverage.canonical-rewrite",
+            "writer-non-utf8.canonical",
         }
         targets = {
             case["id"]: case
             for case in self.committed["oracle_cases"]
             if case["id"].startswith(("writer-", "gzip-", "converter-coverage."))
         }
-        self.assertEqual(set(targets), set(expected))
+        self.assertEqual(set(targets), set(expected) | observational_only)
         for case_id, requirement_ids in expected.items():
             with self.subTest(case_id=case_id):
                 self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+        for case_id in observational_only:
+            with self.subTest(case_id=case_id):
+                self.assertNotIn("requirement_ids", targets[case_id])
                 self.assertNotIn("m0_decision_ids", targets[case_id])
 
 
