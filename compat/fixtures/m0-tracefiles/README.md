@@ -90,5 +90,5 @@ TF-030 numeric plans bind every matrix row to fixture bytes with section-local
 six-snapshot `tf030-semantic-registry.json` additionally fixes every row field,
 Perl/B scalar projection, stored aggregate/testcase value, and source cache
 fact; its contract-bound SHA-256 is
-`8a353e6429889bef3b1d66dbbcd31776d36eea0382ad951e64a27935362cb16d`.
+`d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`.
 Product compatibility evidence remains false; M1 remains blocked.

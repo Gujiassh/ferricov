@@ -148,6 +148,49 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+
+def json_values_equal(left: object, right: object) -> bool:
+    """Type-sensitive recursive JSON equality.
+
+    Python's ``==`` treats ``True == 1`` and ``1 == 1.0`` as true. JSON
+    evidence comparisons must reject those cross-type equivalences.
+    """
+    if left is None or right is None:
+        return left is right
+    if isinstance(left, bool) or isinstance(right, bool):
+        return isinstance(left, bool) and isinstance(right, bool) and left is right
+    if isinstance(left, int) or isinstance(right, int):
+        # bool is a subclass of int; bools already handled above.
+        return (
+            isinstance(left, int)
+            and not isinstance(left, bool)
+            and isinstance(right, int)
+            and not isinstance(right, bool)
+            and left == right
+        )
+    if isinstance(left, float) or isinstance(right, float):
+        return isinstance(left, float) and isinstance(right, float) and left == right
+    if isinstance(left, str) or isinstance(right, str):
+        return isinstance(left, str) and isinstance(right, str) and left == right
+    if isinstance(left, list) or isinstance(right, list):
+        if not isinstance(left, list) or not isinstance(right, list):
+            return False
+        if len(left) != len(right):
+            return False
+        return all(json_values_equal(a, b) for a, b in zip(left, right))
+    if isinstance(left, dict) or isinstance(right, dict):
+        if not isinstance(left, dict) or not isinstance(right, dict):
+            return False
+        if set(left) != set(right):
+            return False
+        return all(json_values_equal(left[key], right[key]) for key in left)
+    return left == right
+
+
+def require_json_equal(left: object, right: object, message: str) -> None:
+    require(json_values_equal(left, right), message)
+
+
 def reject_json_constant(value: str) -> None:
     raise ValueError(f"non-RFC JSON constant: {value}")
 

@@ -152,6 +152,8 @@ reference-only evidence and does not unlock product parity.
 - [x] Remove the committed EOF whitespace and pass
   `git diff --check origin/main...HEAD`.
 - [x] Re-run Oracle, contract, Rust, Perl, and mutation gates for the audit rework.
+- [x] Enforce type-sensitive JSON equality for TF-030 observation and
+  semantic registry comparisons (reject int/bool/float cross-type).
 - [ ] Second independent Critical audit remains required before acceptance.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness

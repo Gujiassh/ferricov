@@ -29,7 +29,7 @@ Pinned Oracle identity:
   and testcase model values, and classified stderr.
 - Semantic snapshots are checked against the contract-bound
   `tf030-semantic-registry.json` (SHA-256
-  `8a353e6429889bef3b1d66dbbcd31776d36eea0382ad951e64a27935362cb16d`), not
+  `d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`), not
   only against row shape or self-derived classifications. The registry fixes
   all row fields, every executed Perl/B scalar projection and flag, stored
   aggregate/testcase values, and aggregate/testcase source cache facts.
@@ -55,19 +55,15 @@ Pinned Oracle identity:
 
 ## Current Audit Decision
 
-**Blocked pending rework.** Independent audit and controller reproduction found
-that the current validator can accept:
-
-- mutated TF-030 stdout/stderr/output bytes when the observation self-hashes are
-  refreshed;
-- unknown top-level fields in a TF-030 semantic snapshot; and
-- a fixture that retains its declared source hash without a direct byte binding
-  to the pinned upstream checkout.
-
-The audit also found an EOF whitespace failure in
-`validation_common.py`. These are evidence-contract blockers, not Ferricov
-product compatibility findings. The required repair and acceptance criteria
-are recorded in `m0-tf030-audit-rework-spec.md`.
+**Rework implemented; pending next independent Critical audit.** The
+`m0-tf030-audit-rework-spec.md` items for independent TF-030 observation bytes,
+closed semantic JSON shape, escaped duplicate plan keys, direct upstream
+format-atoms binding, and EOF hygiene are implemented on this branch. A second
+independent Critical audit then found type-insensitive JSON equality in the
+observation/semantic registry comparisons; that P0 is fixed with type-sensitive
+recursive JSON equality and reverse mutation coverage. This review does **not**
+mark the branch final-accepted; the next independent Critical audit remains
+required.
 
 ## Independent Review Matrix
 
@@ -75,10 +71,10 @@ are recorded in `m0-tf030-audit-rework-spec.md`.
 | --- | --- | --- |
 | Goal alignment | pass | M0 Oracle evidence only; no Ferricov parser/model changes |
 | Old observation preservation | pass | pinned baseline comparison: common=169, changed=0, removed=0, added=15 |
-| Fixture and companion identity | blocked | retained hashes are bound, but numeric format fixture lacks direct pinned-upstream byte comparison |
+| Fixture and companion identity | pass (pending next audit) | retained hashes are bound; format-atoms bytes are compared to pinned upstream checkout |
 | Exact matrix completeness | pass | 12 upstream rows + 4 FNA mirrors + 40 candidates, in both policy modes |
 | Scalar, stored-value, and cache semantics | pass | exact registry equality plus all-row single-field mutation tests |
-| Diagnostic/order/output policy | blocked | category/order checks pass, but refreshed self-hashed stream/output bytes can pass |
+| Diagnostic/order/output policy | pass (pending next audit) | independent observation registry binds stdout/stderr/output/exit; type-sensitive JSON equality rejects int/bool/float cross-type mutations |
 | Module responsibility and file size | pass | numeric registry loading remains in `validation_numeric.py`; no product boundary crossed |
 | Generated contracts | pass | tracefile and resource contracts regenerate and validate |
 | Product evidence | pass | `product_compatibility_evidence=false` |
@@ -107,11 +103,11 @@ facts fails a contract or validator gate.
 
 ## Residual Risks
 
-- Independent observation-byte registry rework is implemented on the branch:
-  TF-030 stdout/stderr/output/exit facts are contract-bound, semantic JSON
-  shape is closed, escaped duplicate plan keys are rejected, and format-atoms
-  bytes are compared directly to the pinned upstream checkout. Final acceptance
-  still requires a second independent Critical audit.
+- Audit rework is implemented on the branch, including type-sensitive JSON
+  equality for TF-030 observation and semantic registry comparisons. Registry
+  hash is `d4cee1797e6c2a7d46ac5efc35be4627457fdb09168a0378e804006a2b99107c`.
+  Final acceptance still requires the next independent Critical audit; this
+  document does not claim final acceptance.
 - The remaining 18 named blockers and broader M1 readiness tasks remain open.
 
 ## Verification
@@ -127,6 +123,6 @@ python3 compat/verify.py --skip-oracle
 python3 -m compileall -q compat
 ```
 
-The commands above passed before the independent audit. They are the required
-verification set for the rework; the branch remains blocked until the new
-mutation and provenance gates, then a second independent Critical audit, pass.
+The commands above are the required verification set for the rework. The
+branch remains pending the next independent Critical audit and is not final
+accepted in this document.

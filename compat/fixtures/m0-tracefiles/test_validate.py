@@ -65,6 +65,19 @@ class StrictJsonAndBindingTests(unittest.TestCase):
             with self.subTest(raw=raw), self.assertRaises(ValueError):
                 strict_json_loads_ascii(raw, "mutation")
 
+    def test_json_values_equal_is_type_sensitive(self) -> None:
+        from validation_common import json_values_equal
+        self.assertTrue(json_values_equal(1, 1))
+        self.assertTrue(json_values_equal(True, True))
+        self.assertTrue(json_values_equal(1.0, 1.0))
+        self.assertFalse(json_values_equal(1, True))
+        self.assertFalse(json_values_equal(1, 1.0))
+        self.assertFalse(json_values_equal(0, False))
+        self.assertFalse(json_values_equal(0, 0.0))
+        self.assertFalse(json_values_equal({"exists": False}, {"exists": 0}))
+        self.assertFalse(json_values_equal([1], [True]))
+        self.assertTrue(json_values_equal({"a": [1, False, None]}, {"a": [1, False, None]}))
+
     def test_strict_json_rejects_duplicate_object_keys(self) -> None:
         with self.assertRaises(ValueError):
             strict_json_loads_ascii(b'{"value": 1, "value": 2}', "mutation")
@@ -733,6 +746,103 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             b"missing pinned upstream fixture" in combined or b"Traceback" in combined,
             combined.decode("utf-8", "replace"),
         )
+
+
+
+    def test_tf030_json_type_insensitivity_is_rejected(self) -> None:
+        """Registry comparisons must reject Python int/bool/float equivalences."""
+        case_id = "numeric-tf030-fna-mirror.default-stop"
+        case = copy.deepcopy(self.cases[case_id])
+        observation = copy.deepcopy(self.baseline[case_id])
+        observation["fixture_sha256"] = hashlib.sha256(self.fixtures[case["fixture"]].data).hexdigest()
+        observation["additional_fixture_sha256"] = {
+            name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+            for name, path in case.get("additional_fixtures", {}).items()
+        }
+        validate_observation_binding(case, observation, self.fixtures)
+
+        # exit_status is 1 for this stop case; bool/float must not pass via ==.
+        for value in (True, 1.0):
+            mutated = copy.deepcopy(observation)
+            mutated["exit_status"] = value
+            with self.subTest(exit_status=value), self.assertRaises(ValueError):
+                validate_observation_binding(case, mutated, self.fixtures)
+
+        # exit_status 0 equivalents on a success semantic case
+        success_id = "numeric-format-atoms.tf030.semantic-snapshot"
+        success_case = copy.deepcopy(self.cases[success_id])
+        success_obs = copy.deepcopy(self.baseline[success_id])
+        success_obs["fixture_sha256"] = hashlib.sha256(self.fixtures[success_case["fixture"]].data).hexdigest()
+        success_obs["additional_fixture_sha256"] = {
+            name: hashlib.sha256(self.fixtures[path].data).hexdigest()
+            for name, path in success_case.get("additional_fixtures", {}).items()
+        }
+        validate_observation_binding(success_case, success_obs, self.fixtures)
+        for value in (False, 0.0):
+            mutated = copy.deepcopy(success_obs)
+            mutated["exit_status"] = value
+            with self.subTest(exit_status=value), self.assertRaises(ValueError):
+                validate_observation_binding(success_case, mutated, self.fixtures)
+
+        # output.exists false/true must not accept 0/1 or 0.0/1.0
+        for value in (0, 0.0):
+            mutated = copy.deepcopy(observation)
+            mutated["output"] = {"exists": value}
+            with self.subTest(exists=value), self.assertRaises(ValueError):
+                validate_observation_binding(case, mutated, self.fixtures)
+        canonical_id = "numeric-tf030-fna-mirror.ignore-negative-format.canonical"
+        canon_case = copy.deepcopy(self.cases[canonical_id])
+        canon_obs = copy.deepcopy(self.baseline[canonical_id])
+        canon_obs["fixture_sha256"] = hashlib.sha256(self.fixtures[canon_case["fixture"]].data).hexdigest()
+        canon_obs["additional_fixture_sha256"] = {}
+        validate_observation_binding(canon_case, canon_obs, self.fixtures)
+        for value in (1, 1.0):
+            mutated = copy.deepcopy(canon_obs)
+            mutated["output"] = {**mutated["output"], "exists": value}
+            with self.subTest(exists=value), self.assertRaises(ValueError):
+                validate_observation_binding(canon_case, mutated, self.fixtures)
+
+        document = self._snapshot("numeric-format-atoms.tf030.semantic-snapshot")
+        self.validate_tf030_numeric_rows(
+            document, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+        )
+        for value in (1.0, True):
+            mutated = copy.deepcopy(document)
+            mutated["schema_version"] = value
+            with self.subTest(schema_version=value), self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(
+                    mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+                )
+        mutated = copy.deepcopy(document)
+        mutated["numeric_rows"][0]["record_ordinal"] = float(mutated["numeric_rows"][0]["record_ordinal"])
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+        # locator line int -> float
+        mutated = copy.deepcopy(document)
+        if isinstance(mutated["numeric_rows"][0].get("locator"), dict) and "line" in mutated["numeric_rows"][0]["locator"]:
+            mutated["numeric_rows"][0]["locator"]["line"] = float(mutated["numeric_rows"][0]["locator"]["line"])
+            with self.assertRaises(ValueError):
+                self.validate_tf030_numeric_rows(
+                    mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+                )
+        # cache found int -> float
+        mutated = copy.deepcopy(document)
+        metric = mutated["sources"][0]["aggregate"]["line"]
+        metric["found"] = float(metric["found"])
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
+        # cache found int -> bool when zero/nonzero
+        mutated = copy.deepcopy(document)
+        metric = mutated["sources"][0]["aggregate"]["line"]
+        metric["found"] = bool(metric["found"])
+        with self.assertRaises(ValueError):
+            self.validate_tf030_numeric_rows(
+                mutated, expected_count=12, case_id="numeric-format-atoms.tf030.semantic-snapshot"
+            )
 
 
 

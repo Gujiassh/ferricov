@@ -10,6 +10,7 @@ from validation_common import (
     assert_single_testcase_parity,
     decode_identity,
     require,
+    require_json_equal,
     strict_json_loads_ascii,
 )
 
@@ -815,7 +816,7 @@ def _expected_value_class(lexeme: str, looks_like_number: bool | None, never: bo
 
 def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: int, case_id: str) -> None:
     require(document.get("kind") == "semantic_model_snapshot", f"{case_id}: kind mismatch")
-    require(document.get("schema_version") == 1, f"{case_id}: schema mismatch")
+    require_json_equal(document.get("schema_version"), 1, f"{case_id}: schema mismatch")
     require(
         set(document) == {"input", "kind", "numeric_rows", "oracle", "schema_version", "sources"},
         f"{case_id}: semantic snapshot top-level shape drift",
@@ -837,12 +838,14 @@ def validate_tf030_numeric_rows(document: dict[str, object], *, expected_count: 
     # shape checks. This prevents a self-consistent but fabricated row/source
     # snapshot from satisfying the compatibility contract.
     expected_case = _expected_tf030_case(case_id)
-    require(
-        rows == expected_case.get("numeric_rows"),
+    require_json_equal(
+        rows,
+        expected_case.get("numeric_rows"),
         f"{case_id}: numeric row semantic registry mismatch",
     )
-    require(
-        document.get("sources") == expected_case.get("sources"),
+    require_json_equal(
+        document.get("sources"),
+        expected_case.get("sources"),
         f"{case_id}: aggregate/testcase semantic registry mismatch",
     )
 

@@ -28,6 +28,7 @@ from validation_common import (
     assert_single_testcase_parity,
     decode_identity,
     require,
+    require_json_equal,
     semantic_inputs_from_argv,
     strict_json_file,
     strict_json_loads_ascii,
@@ -659,8 +660,9 @@ def validate_observation_binding(
     expected_tf030 = expected_tf030_observation(label)
     if expected_tf030 is not None:
         for field in ("exit_status", "output_file", "stdout", "stderr", "output"):
-            require(
-                observation.get(field) == expected_tf030[field],
+            require_json_equal(
+                observation.get(field),
+                expected_tf030[field],
                 f"{label}: independent TF-030 {field} identity drift",
             )
 
