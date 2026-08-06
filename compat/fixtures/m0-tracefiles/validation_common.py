@@ -612,16 +612,19 @@ def assert_writer_non_utf8_observational(output: bytes, label: str) -> None:
 
 # ---------------------------------------------------------------------------
 # Wave3 semantic closures (M1-TF-045 / 052 / 061)
-# Exact bindings require independent input/source models, not output-only
-# self-parse or duplicated constants. Group completeness is mandatory.
+# M1-TF-052 / M1-TF-061 may exact-bind when independent source/field models hold.
+# M1-TF-045 validators remain observational only: they check retained single-write
+# outputs and mutations but do NOT authorize an exact executable mapping until
+# true two-write Docker round-trip cases are captured and bound.
 # ---------------------------------------------------------------------------
 
 import re as _re
 import xml.etree.ElementTree as _ET
 
-# M1-TF-045: parse-write-parse across four corpora. Each member binds an
-# independent semantic model derived from the actual input fixture bytes, then
-# compares that model with the model obtained by parsing the rewritten output.
+# M1-TF-045 observational probes across four corpora (NOT exact-bound).
+# Each member loads an independent input model from fixture bytes and compares
+# it to the retained single-write output model. A second parse of the same
+# output is not a second write; keep M1-TF-045 blocked until two-write cases exist.
 TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     "canonical": {
         "case_id": "writer-fixedpoint.canonical",

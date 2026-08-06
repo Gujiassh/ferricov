@@ -1771,10 +1771,10 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
                 "writer non-utf8",
             )
 
-    # Wave3 semantic group completeness for exact M1-TF-045/052/061 bindings.
-    # Binding is only valid when every required corpus/field member validates.
+    # Wave3 semantic group completeness: TF-052/061 exact-bound; TF-045 observational only.
+    # TF-045 validators remain as regression probes without authorizing exact mapping.
     observed_by_id = {str(observation["id"]): observation for observation in observations}
-    assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045")
+    assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045-observational")
     assert_tf052_group_completeness(observed_by_id, decode_identity, "M1-TF-052")
     assert_tf061_group_completeness(observed_by_id, decode_identity, "M1-TF-061")
     # Per-member exact tables also cover non-writer cases used by TF-045/061.
