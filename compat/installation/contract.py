@@ -118,6 +118,87 @@ CASE_FAMILY_BY_ID = {
     "INST-REPORT-ASSET-001": "asset",
     "INST-LICENSE-001": "license",
 }
+CASE_ROLE_BY_ID = {
+    "INST-LAYOUT-001": "installed_tree_partition",
+    "INST-STAGE-001": "staged_root_versus_prefix",
+    "INST-INTERP-001": "interpreter_fixup_ineffective",
+    "INST-CONFIG-DISCOVERY-001": "config_discovery_precedence",
+    "INST-UNINSTALL-001": "uninstall_residue_and_recursive_removal",
+    "INST-PARTIAL-001": "non_transactional_install_loops",
+    "INST-DOC-FAIL-001": "documentation_prerequisite_before_payload",
+    "INST-PATH-001": "install_root_path_variants",
+    "INST-DIRTY-ASSET-001": "dynamic_working_tree_enumeration",
+    "INST-TEST-RUN-001": "installed_test_runtime_paths",
+    "INST-DOC-PATH-001": "documented_path_mismatch",
+    "INST-REPORT-ASSET-001": "runtime_report_assets",
+    "INST-LICENSE-001": "distribution_license_manifest",
+}
+CASE_SOURCE_CLOSURE_IDS = {
+    "INST-LAYOUT-001": ("installation.make-variables", "installation.make-doc-install"),
+    "INST-STAGE-001": ("installation.make-variables", "installation.make-doc-install"),
+    "INST-INTERP-001": ("installation.fixup", "installation.make-doc-install"),
+    "INST-CONFIG-DISCOVERY-001": ("installation.config-discovery",),
+    "INST-UNINSTALL-001": ("installation.make-uninstall", "installation.make-doc-install"),
+    "INST-PARTIAL-001": ("installation.make-doc-install",),
+    "INST-DOC-FAIL-001": (
+        "installation.make-doc-install",
+        "installation.docs-build",
+        "installation.docs-config",
+    ),
+    "INST-PATH-001": ("installation.make-variables", "installation.make-doc-install"),
+    "INST-DIRTY-ASSET-001": ("installation.make-variables", "installation.make-doc-install"),
+    "INST-TEST-RUN-001": (
+        "installation.test-runtime",
+        "installation.test-paths",
+        "installation.test-readme",
+    ),
+    "INST-DOC-PATH-001": ("installation.readme-paths", "installation.make-variables"),
+    "INST-REPORT-ASSET-001": (
+        "installation.asset-names",
+        "installation.asset-generation",
+        "installation.asset-writers",
+    ),
+    "INST-LICENSE-001": ("installation.make-variables", "installation.make-doc-install"),
+}
+CASE_LAYOUT_IDS = {
+    "INST-LAYOUT-001": (
+        "INST-PATHS-001",
+        "INST-BIN-001",
+        "INST-SCRIPT-001",
+        "INST-LIB-001",
+        "INST-MAN-001",
+        "INST-HTML-001",
+        "INST-EXAMPLE-001",
+        "INST-CONFIG-001",
+    ),
+    "INST-STAGE-001": ("INST-PATHS-001",),
+    "INST-INTERP-001": (),
+    "INST-CONFIG-DISCOVERY-001": ("INST-CONFIG-001",),
+    "INST-UNINSTALL-001": ("INST-MAN-001",),
+    "INST-PARTIAL-001": (),
+    "INST-DOC-FAIL-001": (),
+    "INST-PATH-001": ("INST-PATHS-001",),
+    "INST-DIRTY-ASSET-001": ("INST-SCRIPT-001", "INST-EXAMPLE-001"),
+    "INST-TEST-RUN-001": (),
+    "INST-DOC-PATH-001": ("INST-PATHS-001", "INST-MAN-001"),
+    "INST-REPORT-ASSET-001": ("INST-REPORT-ASSET-001",),
+    "INST-LICENSE-001": (),
+}
+CASE_FAILURE_IDS = {
+    "INST-LAYOUT-001": (),
+    "INST-STAGE-001": (),
+    "INST-INTERP-001": ("INST-INTERP-001",),
+    "INST-CONFIG-DISCOVERY-001": ("INST-CONFIG-DISCOVERY-001",),
+    "INST-UNINSTALL-001": ("INST-UNINSTALL-001",),
+    "INST-PARTIAL-001": ("INST-PARTIAL-001",),
+    "INST-DOC-FAIL-001": ("INST-DOC-FAIL-001",),
+    "INST-PATH-001": ("INST-PATH-001",),
+    "INST-DIRTY-ASSET-001": ("INST-DIRTY-ASSET-001",),
+    "INST-TEST-RUN-001": ("INST-TEST-RUN-001",),
+    "INST-DOC-PATH-001": ("INST-DOC-PATH-001",),
+    "INST-REPORT-ASSET-001": (),
+    "INST-LICENSE-001": ("INST-LICENSE-001",),
+}
 
 SOURCE_CLOSURES = (
     ("installation.make-variables", "Makefile", 38, 84, "install_variables"),
@@ -500,6 +581,340 @@ def validate_benchmark_result() -> dict[str, Any]:
 
 
 
+
+def source_binding(upstream_root: Path, path: str, start: int, end: int) -> dict[str, Any]:
+    try:
+        lines = (upstream_root / path).read_text(encoding="utf-8").splitlines()
+        selected = lines[start - 1:end]
+    except (OSError, IndexError) as error:
+        raise InstallationContractError(f"cannot read source binding {path}:{start}-{end}") from error
+    if len(selected) != end - start + 1:
+        raise InstallationContractError(f"short source binding {path}:{start}-{end}")
+    content = ("\n".join(selected) + "\n").encode("utf-8")
+    digest = sha256_bytes(content)
+    return {
+        "path": path,
+        "line_start": start,
+        "line_end": end,
+        "line_count": len(selected),
+        "sha256": digest,
+        "text_sha256": digest,
+    }
+
+
+def tree_entries() -> list[dict[str, str]]:
+    return parse_tree()
+
+
+def group_entries(entries: list[dict[str, str]]) -> dict[str, list[dict[str, str]]]:
+    grouped: dict[str, list[dict[str, str]]] = {
+        "bin": [],
+        "config": [],
+        "lib": [],
+        "man": [],
+        "support_scripts": [],
+        "html": [],
+        "example": [],
+        "tests": [],
+        "legacy_man_symlink": [],
+    }
+    for entry in entries:
+        name, _prefix = group_for_path(entry["path"])
+        grouped[name].append(entry)
+    return grouped
+
+
+def expected_report_observation_facts() -> list[dict[str, Any]]:
+    expected_names = {name for _, name, _, _, _ in EXPECTED_ASSETS}
+    observations: list[dict[str, Any]] = []
+    for relative in ASSET_SAMPLE_PATHS:
+        artifact_path = ROOT / relative
+        sample_relative = str(Path(relative).with_name("sample.json"))
+        sample = load_json(ROOT / sample_relative)
+        tree_document = json.loads(artifact_path.read_text(encoding="utf-8"))
+        if not isinstance(tree_document, list):
+            raise InstallationContractError(f"asset sample is not a tree list: {relative}")
+        assets: dict[str, dict[str, object]] = {}
+        for entry in tree_document:
+            if not isinstance(entry, dict):
+                continue
+            path = entry.get("path")
+            if not isinstance(path, str) or not path.startswith("html/"):
+                continue
+            name = path.removeprefix("html/")
+            if name not in expected_names:
+                continue
+            assets[name] = {
+                "bytes": entry.get("bytes"),
+                "sha256": str(entry.get("sha256", "")).removeprefix("sha256:"),
+                "status": entry.get("status"),
+            }
+        if set(assets) != expected_names:
+            raise InstallationContractError(f"report observation asset set drift: {relative}")
+        for _, name, _, size, digest in EXPECTED_ASSETS:
+            asset = assets[name]
+            if asset.get("bytes") != size or asset.get("sha256") != digest or asset.get("status") != "created":
+                raise InstallationContractError(f"report observation asset identity drift: {relative}:{name}")
+        sample_id = Path(relative).parent.name
+        expected_phase = "warmup" if "-warmup-" in sample_id else "measured"
+        if (
+            sample.get("case_id") != "report-genhtml-default"
+            or sample.get("sample_id") != sample_id
+            or sample.get("phase") != expected_phase
+        ):
+            raise InstallationContractError(f"report observation sample identity drift: {sample_relative}")
+        observations.append({
+            "id": f"installation.asset-observation.{sample_id}",
+            "artifact_path": relative,
+            "artifact_sha256": sha256_file(artifact_path),
+            "sample_metadata_path": sample_relative,
+            "sample_metadata_sha256": sha256_file(ROOT / sample_relative),
+            "sample_case_id": sample["case_id"],
+            "sample_id": sample_id,
+            "phase": expected_phase,
+            "assets": assets,
+            "asset_count": len(assets),
+        })
+    return observations
+
+
+def expected_case_independent_facts(
+    case_id: str,
+    upstream_root: Path,
+    tree: dict[str, Any],
+    assets: list[dict[str, Any]],
+    observations: list[dict[str, Any]],
+) -> dict[str, Any]:
+    entries = tree_entries()
+    grouped = group_entries(entries)
+    bin_names = sorted(Path(entry["path"]).name for entry in grouped["bin"])
+    support_script_names = sorted(Path(entry["path"]).name for entry in grouped["support_scripts"])
+    man_page_names = sorted(Path(entry["path"]).name for entry in grouped["man"])
+    mk_vars = source_binding(upstream_root, "Makefile", 38, 84)
+    install_payload = source_binding(upstream_root, "Makefile", 134, 190)
+    install_doc = source_binding(upstream_root, "Makefile", 125, 190)
+    fixup = source_binding(upstream_root, "bin/fix.pl", 89, 139)
+    config_discovery = source_binding(upstream_root, "lib/lcovutil.pm", 1448, 1460)
+    uninstall = source_binding(upstream_root, "Makefile", 194, 223)
+    man_install = source_binding(upstream_root, "Makefile", 163, 174)
+    docs_build = source_binding(upstream_root, "docs/Makefile", 4, 22)
+    docs_config = source_binding(upstream_root, "docs/conf.py", 34, 63)
+    test_runtime = source_binding(upstream_root, "tests/common.mak", 2, 18)
+    test_paths = source_binding(upstream_root, "tests/common.mak", 76, 83)
+    test_readme = source_binding(upstream_root, "tests/README.md", 13, 18)
+    readme_paths = source_binding(upstream_root, "README.rst", 125, 139)
+    asset_names = source_binding(upstream_root, "bin/genhtml", 7128, 7128)
+    asset_generation = source_binding(upstream_root, "bin/genhtml", 7952, 7952)
+    asset_writers = source_binding(upstream_root, "bin/genhtml", 8822, 9046)
+    dist_manifest = source_binding(upstream_root, "Makefile", 71, 72)
+    report_observation_facts = expected_report_observation_facts()
+
+    if case_id == "INST-LAYOUT-001":
+        return {
+            "bin_names": bin_names,
+            "directory_entries_retained": False,
+            "file_count": tree["file_count"],
+            "group_counts": {name: len(values) for name, values in grouped.items()},
+            "legacy_symlink": {
+                "mode": "777",
+                "path": "/usr/local/man",
+                "target": "share/man",
+            },
+            "man_page_names": man_page_names,
+            "manifest_sha256": tree["manifest_sha256"],
+            "mode_counts": {
+                "644": tree["mode_counts"]["644"],
+                "755": tree["mode_counts"]["755"],
+                "777": tree["mode_counts"]["777"],
+            },
+            "path_order": "lexicographic",
+            "path_root": "/usr/local",
+            "support_script_count": 23,
+            "support_script_names": support_script_names,
+            "symlink_count": tree["symlink_count"],
+            "tree_entry_count": tree["entry_count"],
+        }
+    if case_id == "INST-STAGE-001":
+        return {
+            "compiled_paths_retain_prefix_without_destdir": True,
+            "oracle_execution_status": "not_captured",
+            "payload_under_destdir": True,
+            "requires_absolute_destdir_prefix": True,
+            "source_bindings": [mk_vars, install_payload],
+        }
+    if case_id == "INST-INTERP-001":
+        return {
+            "advertised_override_effective": False,
+            "env_shebang_excluded_from_rewrite": True,
+            "install_passes_fixinterp": False,
+            "oracle_execution_status": "not_captured",
+            "source_bindings": [fixup, install_payload],
+        }
+    if case_id == "INST-CONFIG-DISCOVERY-001":
+        return {
+            "compiled_prefix_alone_selects_system_file": False,
+            "oracle_execution_status": "not_captured",
+            "search_order": ["$HOME/.lcovrc", "$LCOV_HOME/etc/lcovrc"],
+            "source_bindings": [config_discovery],
+            "stops_after_first_readable": True,
+        }
+    if case_id == "INST-UNINSTALL-001":
+        return {
+            "foreign_sentinels_removed": True,
+            "isolated_root_required": True,
+            "man_uninstall_enumerates_source_glob": True,
+            "oracle_execution_status": "not_captured",
+            "recursive_removal_targets": ["lib/lcov", "share/lcov"],
+            "source_bindings": [man_install, uninstall],
+        }
+    if case_id == "INST-PARTIAL-001":
+        return {
+            "oracle_execution_status": "not_captured",
+            "partial_payload_possible": True,
+            "rollback": False,
+            "source_bindings": [install_payload],
+            "transactional": False,
+        }
+    if case_id == "INST-DOC-FAIL-001":
+        return {
+            "doc_finished_is_hard_prerequisite": True,
+            "install_cleans_source_example_and_tests": True,
+            "missing_sphinx_or_theme_fails_before_payload": True,
+            "oracle_execution_status": "not_captured",
+            "source_bindings": [install_doc, docs_build, docs_config],
+        }
+    if case_id == "INST-PATH-001":
+        return {
+            "oracle_execution_status": "not_captured",
+            "relative_roots_rejected": True,
+            "requires_absolute_destdir_prefix": True,
+            "source_bindings": [mk_vars, install_payload],
+            "space_containing_paths_platform_sensitive": True,
+        }
+    if case_id == "INST-DIRTY-ASSET-001":
+        return {
+            "examples_and_tests_from_working_tree": True,
+            "oracle_execution_status": "not_captured",
+            "retained_support_script_count": 23,
+            "retained_support_script_names": support_script_names,
+            "scripts_from_dynamic_ls": True,
+            "source_bindings": [mk_vars, install_payload],
+            "untracked_ordinary_files_can_enter_install": True,
+        }
+    if case_id == "INST-TEST-RUN-001":
+        return {
+            "explicit_lcov_home_required_for_installed_tests": True,
+            "oracle_execution_status": "not_captured",
+            "retained_test_entry_count": 205,
+            "source_bindings": [test_runtime, test_paths, test_readme],
+            "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": True,
+        }
+    if case_id == "INST-DOC-PATH-001":
+        return {
+            "actual_retained_roots": {
+                "bin": "/usr/local/bin",
+                "config": "/usr/local/etc/lcovrc",
+                "html": "/usr/local/share/lcov/html",
+                "lib": "/usr/local/lib/lcov",
+                "man": "/usr/local/share/man",
+                "scripts": "/usr/local/share/lcov/support-scripts",
+                "tests": "/usr/local/share/lcov/tests",
+            },
+            "documentation_mismatch_must_be_recorded": True,
+            "oracle_execution_status": "not_captured",
+            "source_bindings": [readme_paths, mk_vars],
+            "truth_source": "installed_tree_filesystem_evidence",
+        }
+    if case_id == "INST-REPORT-ASSET-001":
+        expected_observation_ids = [item["id"] for item in report_observation_facts]
+        retained_observation_ids = [item["id"] for item in observations]
+        if expected_observation_ids != retained_observation_ids:
+            raise InstallationContractError("report observation id order drift")
+        for expected_obs, retained_obs in zip(report_observation_facts, observations):
+            if expected_obs["artifact_path"] != retained_obs["artifact_path"]:
+                raise InstallationContractError("report observation artifact_path drift")
+            if expected_obs["artifact_sha256"] != retained_obs["artifact_sha256"]:
+                raise InstallationContractError("report observation artifact_sha256 drift")
+            if expected_obs["sample_metadata_path"] != retained_obs["sample_metadata_path"]:
+                raise InstallationContractError("report observation sample_metadata_path drift")
+            if expected_obs["sample_metadata_sha256"] != retained_obs["sample_metadata_sha256"]:
+                raise InstallationContractError("report observation sample_metadata_sha256 drift")
+            if expected_obs["id"] != retained_obs["id"]:
+                raise InstallationContractError("report observation id drift")
+            if expected_obs["asset_count"] != retained_obs["asset_count"]:
+                raise InstallationContractError("report observation asset_count drift")
+        return {
+            "asset_count": 7,
+            "assets_are_runtime_not_install_payload": True,
+            "observation_count": 4,
+            "observations": report_observation_facts,
+            "optional_updown_and_html_reference_qualification_open": True,
+            "runtime_assets": assets,
+            "source_bindings": [asset_names, asset_generation, asset_writers],
+        }
+    if case_id == "INST-LICENSE-001":
+        return {
+            "copying_in_install_payload": False,
+            "copying_in_source_archive_manifest": True,
+            "oracle_execution_status": "not_captured",
+            "retained_tree_contains_copying": any("COPYING" in entry["path"] for entry in entries),
+            "source_bindings": [dist_manifest, install_payload],
+            "upstream_omission_is_not_permission_to_omit": True,
+        }
+    raise InstallationContractError(f"unknown installation case id: {case_id}")
+
+
+def expected_case_record(
+    case_id: str,
+    upstream_root: Path,
+    tree: dict[str, Any],
+    assets: list[dict[str, Any]],
+    observations: list[dict[str, Any]],
+) -> dict[str, Any]:
+    facts = expected_case_independent_facts(case_id, upstream_root, tree, assets, observations)
+    observation_ids = (
+        [item["id"] for item in facts["observations"]]
+        if case_id == "INST-REPORT-ASSET-001"
+        else []
+    )
+    return {
+        "id": case_id,
+        "family": CASE_FAMILY_BY_ID[case_id],
+        "role": CASE_ROLE_BY_ID[case_id],
+        "evidence_status": "oracle_reference",
+        "execution_status": "planned",
+        "product_evidence": [],
+        "source_closure_ids": list(CASE_SOURCE_CLOSURE_IDS[case_id]),
+        "layout_contract_ids": list(CASE_LAYOUT_IDS[case_id]),
+        "failure_contract_ids": list(CASE_FAILURE_IDS[case_id]),
+        "observation_ids": observation_ids,
+        "independent_facts": facts,
+        "facts_sha256": sha256_bytes(canonical_json(facts).encode("ascii")),
+    }
+
+
+def expected_case_records_document(
+    upstream_root: Path,
+    tree: dict[str, Any],
+    assets: list[dict[str, Any]],
+    observations: list[dict[str, Any]],
+) -> dict[str, Any]:
+    cases = [
+        expected_case_record(case_id, upstream_root, tree, assets, observations)
+        for case_id in CASE_RECORD_ORDER
+    ]
+    return {
+        "schema_version": 1,
+        "upstream_release": "v2.5",
+        "upstream_commit": UPSTREAM_COMMIT,
+        "evidence_status": "oracle_reference",
+        "execution_status": "planned",
+        "product_compatibility_evidence": False,
+        "case_count": 13,
+        "cases": cases,
+    }
+
+
 def json_values_equal(left: object, right: object) -> bool:
     """Type-sensitive JSON equality: bool is not int, 1 is not 1.0."""
     if type(left) is not type(right):
@@ -559,19 +974,30 @@ def load_case_records() -> dict[str, Any]:
     for case in cases:
         if not isinstance(case, dict):
             raise InstallationContractError("installation case record is not an object")
-        if case.get("family") != CASE_FAMILY_BY_ID[case["id"]]:
-            raise InstallationContractError(f"installation case family drift: {case['id']}")
+        case_id = case.get("id")
+        if case_id not in CASE_FAMILY_BY_ID:
+            raise InstallationContractError(f"installation case id unknown: {case_id}")
+        if case.get("family") != CASE_FAMILY_BY_ID[case_id]:
+            raise InstallationContractError(f"installation case family drift: {case_id}")
+        if case.get("role") != CASE_ROLE_BY_ID[case_id]:
+            raise InstallationContractError(f"installation case role drift: {case_id}")
         if case.get("product_evidence"):
-            raise InstallationContractError(f"installation case product evidence: {case['id']}")
+            raise InstallationContractError(f"installation case product evidence: {case_id}")
+        if tuple(case.get("source_closure_ids", ())) != CASE_SOURCE_CLOSURE_IDS[case_id]:
+            raise InstallationContractError(f"installation case source_closure_ids drift: {case_id}")
+        if tuple(case.get("layout_contract_ids", ())) != CASE_LAYOUT_IDS[case_id]:
+            raise InstallationContractError(f"installation case layout_contract_ids drift: {case_id}")
+        if tuple(case.get("failure_contract_ids", ())) != CASE_FAILURE_IDS[case_id]:
+            raise InstallationContractError(f"installation case failure_contract_ids drift: {case_id}")
         facts = case.get("independent_facts")
         if not isinstance(facts, dict):
-            raise InstallationContractError(f"installation case facts missing: {case['id']}")
+            raise InstallationContractError(f"installation case facts missing: {case_id}")
         facts_bytes = canonical_json(facts).encode("ascii")
         if case.get("facts_sha256") != sha256_bytes(facts_bytes):
-            raise InstallationContractError(f"installation case facts hash drift: {case['id']}")
+            raise InstallationContractError(f"installation case facts hash drift: {case_id}")
         # closed independent-facts must not self-certify only through nested hashes without identity
         if "product_compatibility_evidence" in facts and facts["product_compatibility_evidence"] is not False:
-            raise InstallationContractError(f"installation case facts claim product compatibility: {case['id']}")
+            raise InstallationContractError(f"installation case facts claim product compatibility: {case_id}")
     return document
 
 
@@ -595,19 +1021,49 @@ def case_records_binding() -> dict[str, Any]:
 
 def validate_case_records_against_contract(
     document: dict[str, Any],
+    upstream_root: Path,
     tree: dict[str, Any],
     assets: list[dict[str, Any]],
     observations: list[dict[str, Any]],
     closures: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     records = load_case_records()
+    expected_records = expected_case_records_document(upstream_root, tree, assets, observations)
+    if not json_values_equal(records, expected_records):
+        raise InstallationContractError("installation case records drift from independently generated facts")
+
     closure_ids = {closure["id"] for closure in closures}
     layout_ids = set(document["layout_contract_ids"])
     failure_ids = set(document["failure_contract_ids"])
-    observation_ids = {observation["id"] for observation in observations}
+    observation_by_id = {observation["id"]: observation for observation in observations}
+    retained_observation_ids = [observation["id"] for observation in observations]
     asset_by_name = {asset["name"]: asset for asset in assets}
     summaries = []
-    for case in records["cases"]:
+
+    for case, expected_case in zip(records["cases"], expected_records["cases"]):
+        if case["id"] != expected_case["id"]:
+            raise InstallationContractError(f"installation case order drift: {case['id']}")
+        if case["family"] != CASE_FAMILY_BY_ID[case["id"]] or case["role"] != CASE_ROLE_BY_ID[case["id"]]:
+            raise InstallationContractError(f"installation case identity drift: {case['id']}")
+        if tuple(case["source_closure_ids"]) != CASE_SOURCE_CLOSURE_IDS[case["id"]]:
+            raise InstallationContractError(f"installation case source_closure_ids drift: {case['id']}")
+        if tuple(case["layout_contract_ids"]) != CASE_LAYOUT_IDS[case["id"]]:
+            raise InstallationContractError(f"installation case layout_contract_ids drift: {case['id']}")
+        if tuple(case["failure_contract_ids"]) != CASE_FAILURE_IDS[case["id"]]:
+            raise InstallationContractError(f"installation case failure_contract_ids drift: {case['id']}")
+        if not json_values_equal(case["source_closure_ids"], expected_case["source_closure_ids"]):
+            raise InstallationContractError(f"installation case source_closure_ids mismatch: {case['id']}")
+        if not json_values_equal(case["layout_contract_ids"], expected_case["layout_contract_ids"]):
+            raise InstallationContractError(f"installation case layout_contract_ids mismatch: {case['id']}")
+        if not json_values_equal(case["failure_contract_ids"], expected_case["failure_contract_ids"]):
+            raise InstallationContractError(f"installation case failure_contract_ids mismatch: {case['id']}")
+        if not json_values_equal(case["observation_ids"], expected_case["observation_ids"]):
+            raise InstallationContractError(f"installation case observation_ids mismatch: {case['id']}")
+        if not json_values_equal(case["independent_facts"], expected_case["independent_facts"]):
+            raise InstallationContractError(f"installation case independent_facts mismatch: {case['id']}")
+        if case["facts_sha256"] != expected_case["facts_sha256"]:
+            raise InstallationContractError(f"installation case facts_sha256 mismatch: {case['id']}")
+
         for source_id in case["source_closure_ids"]:
             if source_id not in closure_ids:
                 raise InstallationContractError(f"case source closure unbound: {case['id']}:{source_id}")
@@ -618,45 +1074,79 @@ def validate_case_records_against_contract(
             if failure_id not in failure_ids:
                 raise InstallationContractError(f"case failure id unbound: {case['id']}:{failure_id}")
         for observation_id in case["observation_ids"]:
-            if observation_id not in observation_ids:
+            if observation_id not in observation_by_id:
                 raise InstallationContractError(f"case observation unbound: {case['id']}:{observation_id}")
+
         facts = case["independent_facts"]
+        source_bindings = facts.get("source_bindings", [])
+        if case["id"] != "INST-LAYOUT-001":
+            if not isinstance(source_bindings, list) or not source_bindings:
+                raise InstallationContractError(f"installation case source_bindings missing: {case['id']}")
+            for binding in source_bindings:
+                if not isinstance(binding, dict):
+                    raise InstallationContractError(f"installation case source binding shape drift: {case['id']}")
+                expected_binding = source_binding(
+                    upstream_root,
+                    binding["path"],
+                    binding["line_start"],
+                    binding["line_end"],
+                )
+                if not json_values_equal(binding, expected_binding):
+                    raise InstallationContractError(
+                        f"installation case source binding digest drift: {case['id']}:{binding['path']}"
+                    )
+
         if case["id"] == "INST-LAYOUT-001":
-            if facts.get("tree_entry_count") != tree["entry_count"]:
+            if not json_values_equal(facts["support_script_names"], sorted(
+                Path(entry["path"]).name for entry in group_entries(tree_entries())["support_scripts"]
+            )):
+                raise InstallationContractError("INST-LAYOUT-001 support_script_names drift")
+            if facts["support_script_count"] != 23:
+                raise InstallationContractError("INST-LAYOUT-001 support_script_count drift")
+            if facts["tree_entry_count"] != tree["entry_count"]:
                 raise InstallationContractError("INST-LAYOUT-001 tree_entry_count drift")
-            if facts.get("manifest_sha256") != tree["manifest_sha256"]:
+            if facts["manifest_sha256"] != tree["manifest_sha256"]:
                 raise InstallationContractError("INST-LAYOUT-001 manifest_sha256 drift")
-            if facts.get("group_counts", {}).get("bin") != 10:
-                raise InstallationContractError("INST-LAYOUT-001 bin group drift")
-            if facts.get("support_script_count") != 23:
-                raise InstallationContractError("INST-LAYOUT-001 support script count drift")
+
         if case["id"] == "INST-REPORT-ASSET-001":
-            if facts.get("asset_count") != 7 or facts.get("observation_count") != 4:
-                raise InstallationContractError("INST-REPORT-ASSET-001 asset observation counts drift")
-            if not json_values_equal(facts.get("runtime_assets"), assets):
+            if case["observation_ids"] != retained_observation_ids:
+                raise InstallationContractError("INST-REPORT-ASSET-001 observation_ids mapping drift")
+            if not json_values_equal(facts["runtime_assets"], assets):
                 raise InstallationContractError("INST-REPORT-ASSET-001 runtime_assets drift")
-            for observed in facts.get("observations", []):
-                if not isinstance(observed, dict):
-                    raise InstallationContractError("INST-REPORT-ASSET-001 observation shape drift")
-                assets_map = observed.get("assets")
-                if not isinstance(assets_map, dict) or set(assets_map) != set(asset_by_name):
+            if len(facts["observations"]) != 4:
+                raise InstallationContractError("INST-REPORT-ASSET-001 observation count drift")
+            for observed_fact, retained in zip(facts["observations"], observations):
+                if observed_fact["id"] != retained["id"]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 observation id mapping drift")
+                if observed_fact["artifact_path"] != retained["artifact_path"]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 observation artifact_path drift")
+                if observed_fact["artifact_sha256"] != retained["artifact_sha256"]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 observation artifact_sha256 drift")
+                if observed_fact["sample_metadata_path"] != retained["sample_metadata_path"]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 sample_metadata_path drift")
+                if observed_fact["sample_metadata_sha256"] != retained["sample_metadata_sha256"]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 sample_metadata_sha256 drift")
+                if observed_fact["artifact_sha256"] != EXPECTED_ASSET_SAMPLE_HASHES[observed_fact["artifact_path"]]:
+                    raise InstallationContractError("INST-REPORT-ASSET-001 retained artifact hash drift")
+                if (
+                    observed_fact["sample_metadata_sha256"]
+                    != EXPECTED_SAMPLE_METADATA_HASHES[observed_fact["sample_metadata_path"]]
+                ):
+                    raise InstallationContractError("INST-REPORT-ASSET-001 retained sample metadata hash drift")
+                assets_map = observed_fact["assets"]
+                if set(assets_map) != set(asset_by_name):
                     raise InstallationContractError("INST-REPORT-ASSET-001 observation asset set drift")
                 for name, asset in assets_map.items():
-                    expected = asset_by_name[name]
+                    expected_asset = asset_by_name[name]
                     if (
-                        not isinstance(asset, dict)
-                        or asset.get("bytes") != expected["bytes"]
-                        or asset.get("sha256") != expected["sha256"]
+                        asset.get("bytes") != expected_asset["bytes"]
+                        or asset.get("sha256") != expected_asset["sha256"]
                         or asset.get("status") != "created"
                     ):
                         raise InstallationContractError(
                             f"INST-REPORT-ASSET-001 observation asset identity drift: {name}"
                         )
-        if case["id"] == "INST-LICENSE-001":
-            if facts.get("copying_in_install_payload") is not False:
-                raise InstallationContractError("INST-LICENSE-001 license payload claim drift")
-            if facts.get("retained_tree_contains_copying") is not False:
-                raise InstallationContractError("INST-LICENSE-001 retained tree license claim drift")
+
         summaries.append({
             "id": case["id"],
             "family": case["family"],
@@ -728,7 +1218,7 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "product_compatibility_evidence": False,
     }
     document["oracle_case_summaries"] = validate_case_records_against_contract(
-        document, tree, assets, observations, closures
+        document, upstream_root, tree, assets, observations, closures
     )
     return document
 

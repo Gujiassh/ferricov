@@ -1,5 +1,26 @@
 {
   "$defs": {
+    "assetIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "const": "created"
+        }
+      },
+      "required": [
+        "bytes",
+        "sha256",
+        "status"
+      ],
+      "type": "object"
+    },
     "caseRecord": {
       "additionalProperties": false,
       "properties": {
@@ -29,11 +50,64 @@
           ]
         },
         "id": {
-          "pattern": "^INST-[A-Z0-9-]+$",
-          "type": "string"
+          "enum": [
+            "INST-LAYOUT-001",
+            "INST-STAGE-001",
+            "INST-INTERP-001",
+            "INST-CONFIG-DISCOVERY-001",
+            "INST-UNINSTALL-001",
+            "INST-PARTIAL-001",
+            "INST-DOC-FAIL-001",
+            "INST-PATH-001",
+            "INST-DIRTY-ASSET-001",
+            "INST-TEST-RUN-001",
+            "INST-DOC-PATH-001",
+            "INST-REPORT-ASSET-001",
+            "INST-LICENSE-001"
+          ]
         },
         "independent_facts": {
-          "type": "object"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/layoutFacts"
+            },
+            {
+              "$ref": "#/$defs/stageFacts"
+            },
+            {
+              "$ref": "#/$defs/interpFacts"
+            },
+            {
+              "$ref": "#/$defs/configFacts"
+            },
+            {
+              "$ref": "#/$defs/uninstallFacts"
+            },
+            {
+              "$ref": "#/$defs/partialFacts"
+            },
+            {
+              "$ref": "#/$defs/docFailFacts"
+            },
+            {
+              "$ref": "#/$defs/pathFacts"
+            },
+            {
+              "$ref": "#/$defs/dirtyFacts"
+            },
+            {
+              "$ref": "#/$defs/testRunFacts"
+            },
+            {
+              "$ref": "#/$defs/docPathFacts"
+            },
+            {
+              "$ref": "#/$defs/reportFacts"
+            },
+            {
+              "$ref": "#/$defs/licenseFacts"
+            }
+          ]
         },
         "layout_contract_ids": {
           "items": {
@@ -80,13 +154,803 @@
       ],
       "type": "object"
     },
+    "configFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "compiled_prefix_alone_selects_system_file": {
+          "const": false
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "search_order": {
+          "const": [
+            "$HOME/.lcovrc",
+            "$LCOV_HOME/etc/lcovrc"
+          ]
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "stops_after_first_readable": {
+          "const": true
+        }
+      },
+      "required": [
+        "compiled_prefix_alone_selects_system_file",
+        "oracle_execution_status",
+        "search_order",
+        "source_bindings",
+        "stops_after_first_readable"
+      ],
+      "type": "object"
+    },
+    "dirtyFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "examples_and_tests_from_working_tree": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "retained_support_script_count": {
+          "const": 23
+        },
+        "retained_support_script_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 23,
+          "minItems": 23,
+          "type": "array"
+        },
+        "scripts_from_dynamic_ls": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "untracked_ordinary_files_can_enter_install": {
+          "const": true
+        }
+      },
+      "required": [
+        "examples_and_tests_from_working_tree",
+        "oracle_execution_status",
+        "retained_support_script_count",
+        "retained_support_script_names",
+        "scripts_from_dynamic_ls",
+        "source_bindings",
+        "untracked_ordinary_files_can_enter_install"
+      ],
+      "type": "object"
+    },
+    "docFailFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "doc_finished_is_hard_prerequisite": {
+          "const": true
+        },
+        "install_cleans_source_example_and_tests": {
+          "const": true
+        },
+        "missing_sphinx_or_theme_fails_before_payload": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "doc_finished_is_hard_prerequisite",
+        "install_cleans_source_example_and_tests",
+        "missing_sphinx_or_theme_fails_before_payload",
+        "oracle_execution_status",
+        "source_bindings"
+      ],
+      "type": "object"
+    },
+    "docPathFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_retained_roots": {
+          "additionalProperties": false,
+          "properties": {
+            "bin": {
+              "const": "/usr/local/bin"
+            },
+            "config": {
+              "const": "/usr/local/etc/lcovrc"
+            },
+            "html": {
+              "const": "/usr/local/share/lcov/html"
+            },
+            "lib": {
+              "const": "/usr/local/lib/lcov"
+            },
+            "man": {
+              "const": "/usr/local/share/man"
+            },
+            "scripts": {
+              "const": "/usr/local/share/lcov/support-scripts"
+            },
+            "tests": {
+              "const": "/usr/local/share/lcov/tests"
+            }
+          },
+          "required": [
+            "bin",
+            "config",
+            "html",
+            "lib",
+            "man",
+            "scripts",
+            "tests"
+          ],
+          "type": "object"
+        },
+        "documentation_mismatch_must_be_recorded": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "truth_source": {
+          "const": "installed_tree_filesystem_evidence"
+        }
+      },
+      "required": [
+        "actual_retained_roots",
+        "documentation_mismatch_must_be_recorded",
+        "oracle_execution_status",
+        "source_bindings",
+        "truth_source"
+      ],
+      "type": "object"
+    },
+    "interpFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "advertised_override_effective": {
+          "const": false
+        },
+        "env_shebang_excluded_from_rewrite": {
+          "const": true
+        },
+        "install_passes_fixinterp": {
+          "const": false
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "advertised_override_effective",
+        "env_shebang_excluded_from_rewrite",
+        "install_passes_fixinterp",
+        "oracle_execution_status",
+        "source_bindings"
+      ],
+      "type": "object"
+    },
+    "layoutFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "bin_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "type": "array"
+        },
+        "directory_entries_retained": {
+          "const": false
+        },
+        "file_count": {
+          "const": 320
+        },
+        "group_counts": {
+          "additionalProperties": false,
+          "properties": {
+            "bin": {
+              "const": 10
+            },
+            "config": {
+              "const": 1
+            },
+            "example": {
+              "const": 10
+            },
+            "html": {
+              "const": 60
+            },
+            "legacy_man_symlink": {
+              "const": 1
+            },
+            "lib": {
+              "const": 1
+            },
+            "man": {
+              "const": 10
+            },
+            "support_scripts": {
+              "const": 23
+            },
+            "tests": {
+              "const": 205
+            }
+          },
+          "required": [
+            "bin",
+            "config",
+            "lib",
+            "man",
+            "support_scripts",
+            "html",
+            "example",
+            "tests",
+            "legacy_man_symlink"
+          ],
+          "type": "object"
+        },
+        "legacy_symlink": {
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "const": "777"
+            },
+            "path": {
+              "const": "/usr/local/man"
+            },
+            "target": {
+              "const": "share/man"
+            }
+          },
+          "required": [
+            "path",
+            "target",
+            "mode"
+          ],
+          "type": "object"
+        },
+        "man_page_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "type": "array"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mode_counts": {
+          "additionalProperties": false,
+          "properties": {
+            "644": {
+              "const": 210
+            },
+            "755": {
+              "const": 110
+            },
+            "777": {
+              "const": 1
+            }
+          },
+          "required": [
+            "644",
+            "755",
+            "777"
+          ],
+          "type": "object"
+        },
+        "path_order": {
+          "const": "lexicographic"
+        },
+        "path_root": {
+          "const": "/usr/local"
+        },
+        "support_script_count": {
+          "const": 23
+        },
+        "support_script_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 23,
+          "minItems": 23,
+          "type": "array"
+        },
+        "symlink_count": {
+          "const": 1
+        },
+        "tree_entry_count": {
+          "const": 321
+        }
+      },
+      "required": [
+        "bin_names",
+        "directory_entries_retained",
+        "file_count",
+        "group_counts",
+        "legacy_symlink",
+        "man_page_names",
+        "manifest_sha256",
+        "mode_counts",
+        "path_order",
+        "path_root",
+        "support_script_count",
+        "support_script_names",
+        "symlink_count",
+        "tree_entry_count"
+      ],
+      "type": "object"
+    },
+    "licenseFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "copying_in_install_payload": {
+          "const": false
+        },
+        "copying_in_source_archive_manifest": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "retained_tree_contains_copying": {
+          "const": false
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "upstream_omission_is_not_permission_to_omit": {
+          "const": true
+        }
+      },
+      "required": [
+        "copying_in_install_payload",
+        "copying_in_source_archive_manifest",
+        "oracle_execution_status",
+        "retained_tree_contains_copying",
+        "source_bindings",
+        "upstream_omission_is_not_permission_to_omit"
+      ],
+      "type": "object"
+    },
+    "partialFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "partial_payload_possible": {
+          "const": true
+        },
+        "rollback": {
+          "const": false
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "transactional": {
+          "const": false
+        }
+      },
+      "required": [
+        "oracle_execution_status",
+        "partial_payload_possible",
+        "rollback",
+        "source_bindings",
+        "transactional"
+      ],
+      "type": "object"
+    },
+    "pathFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "relative_roots_rejected": {
+          "const": true
+        },
+        "requires_absolute_destdir_prefix": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "space_containing_paths_platform_sensitive": {
+          "const": true
+        }
+      },
+      "required": [
+        "oracle_execution_status",
+        "relative_roots_rejected",
+        "requires_absolute_destdir_prefix",
+        "source_bindings",
+        "space_containing_paths_platform_sensitive"
+      ],
+      "type": "object"
+    },
     "productEvidence": {
       "maxItems": 0,
       "type": "array"
     },
+    "reportFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_count": {
+          "const": 7
+        },
+        "assets_are_runtime_not_install_payload": {
+          "const": true
+        },
+        "observation_count": {
+          "const": 4
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/reportObservation"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "optional_updown_and_html_reference_qualification_open": {
+          "const": true
+        },
+        "runtime_assets": {
+          "items": {
+            "$ref": "#/$defs/runtimeAsset"
+          },
+          "maxItems": 7,
+          "minItems": 7,
+          "type": "array"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "asset_count",
+        "assets_are_runtime_not_install_payload",
+        "observation_count",
+        "observations",
+        "optional_updown_and_html_reference_qualification_open",
+        "runtime_assets",
+        "source_bindings"
+      ],
+      "type": "object"
+    },
+    "reportObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_path": {
+          "pattern": "^compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-(measured|warmup)-[0-9]{3}/output-tree\\.json$",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asset_count": {
+          "const": 7
+        },
+        "assets": {
+          "additionalProperties": false,
+          "properties": {
+            "amber.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "emerald.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "gcov.css": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "glass.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "ruby.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "snow.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "updown.png": {
+              "$ref": "#/$defs/assetIdentity"
+            }
+          },
+          "required": [
+            "gcov.css",
+            "ruby.png",
+            "amber.png",
+            "emerald.png",
+            "snow.png",
+            "glass.png",
+            "updown.png"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "pattern": "^installation\\.asset-observation\\.",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "measured",
+            "warmup"
+          ]
+        },
+        "sample_case_id": {
+          "const": "report-genhtml-default"
+        },
+        "sample_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sample_metadata_path": {
+          "pattern": "/sample\\.json$",
+          "type": "string"
+        },
+        "sample_metadata_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "artifact_path",
+        "artifact_sha256",
+        "sample_metadata_path",
+        "sample_metadata_sha256",
+        "sample_case_id",
+        "sample_id",
+        "phase",
+        "assets",
+        "asset_count"
+      ],
+      "type": "object"
+    },
+    "runtimeAsset": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "pattern": "^[a-z0-9-]+$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "css",
+            "png"
+          ]
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
     "sha256": {
       "pattern": "^[0-9a-f]{64}$",
       "type": "string"
+    },
+    "sourceBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "line_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line_end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line_start": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "text_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "line_start",
+        "line_end",
+        "line_count",
+        "sha256",
+        "text_sha256"
+      ],
+      "type": "object"
+    },
+    "stageFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "compiled_paths_retain_prefix_without_destdir": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "payload_under_destdir": {
+          "const": true
+        },
+        "requires_absolute_destdir_prefix": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "compiled_paths_retain_prefix_without_destdir",
+        "oracle_execution_status",
+        "payload_under_destdir",
+        "requires_absolute_destdir_prefix",
+        "source_bindings"
+      ],
+      "type": "object"
+    },
+    "testRunFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "explicit_lcov_home_required_for_installed_tests": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "retained_test_entry_count": {
+          "const": 205
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": {
+          "const": true
+        }
+      },
+      "required": [
+        "explicit_lcov_home_required_for_installed_tests",
+        "oracle_execution_status",
+        "retained_test_entry_count",
+        "source_bindings",
+        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin"
+      ],
+      "type": "object"
+    },
+    "uninstallFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "foreign_sentinels_removed": {
+          "const": true
+        },
+        "isolated_root_required": {
+          "const": true
+        },
+        "man_uninstall_enumerates_source_glob": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "not_captured"
+        },
+        "recursive_removal_targets": {
+          "const": [
+            "lib/lcov",
+            "share/lcov"
+          ]
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "foreign_sentinels_removed",
+        "isolated_root_required",
+        "man_uninstall_enumerates_source_glob",
+        "oracle_execution_status",
+        "recursive_removal_targets",
+        "source_bindings"
+      ],
+      "type": "object"
     }
   },
   "$id": "https://github.com/Gujiassh/ferricov/compat/installation/oracle-case-records.schema.json",
