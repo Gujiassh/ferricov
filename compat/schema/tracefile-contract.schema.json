@@ -62,8 +62,8 @@
     },
     "fixtures": {
       "type": "array",
-      "minItems": 137,
-      "maxItems": 137,
+      "minItems": 140,
+      "maxItems": 140,
       "items": {
         "$ref": "#/$defs/fixture"
       }
@@ -78,8 +78,8 @@
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 271,
-      "maxItems": 271,
+      "minItems": 275,
+      "maxItems": 275,
       "items": {
         "$ref": "#/$defs/oracleCase"
       }
@@ -544,19 +544,19 @@
           "const": 18
         },
         "fixtures": {
-          "const": 137
+          "const": 140
         },
         "malformed_fixtures": {
           "const": 21
         },
         "oracle_cases": {
-          "const": 271
+          "const": 275
         },
         "default_parse_cases": {
-          "const": 115
+          "const": 116
         },
         "canonical_rewrite_cases": {
-          "const": 92
+          "const": 95
         },
         "ignore_recovery_cases": {
           "const": 36
@@ -565,10 +565,10 @@
           "const": 28
         },
         "oracle_exit_zero": {
-          "const": 188
+          "const": 190
         },
         "oracle_exit_nonzero": {
-          "const": 83
+          "const": 85
         },
         "exact_executable_requirement_ids": {
           "type": "array",
@@ -582,6 +582,7 @@
             "M1-TF-007",
             "M1-TF-008",
             "M1-TF-009",
+            "M1-TF-010",
             "M1-TF-011",
             "M1-TF-012",
             "M1-TF-013",

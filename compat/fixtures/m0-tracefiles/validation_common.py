@@ -670,6 +670,99 @@ TF045_CASE_IDS = frozenset(
     str(member["case_id"]) for member in TF045_CORPUS_MEMBERS.values()
 )
 
+def assert_tf010_legacy_output(
+    output: bytes,
+    member_name: str,
+    label: str,
+) -> None:
+    """Validate legacy FN/FNDA edge behavior against independently parsed input facts."""
+    members = {
+        "comma": ("fixtures/writer/legacy-comma-name.info", "comma"),
+        "repeat": ("fixtures/writer/legacy-repeated-definition.info", "repeat"),
+    }
+    require(member_name in members, f"{label}: unknown TF-010 member {member_name}")
+    fixture_path, mode = members[member_name]
+    input_bytes = (ROOT / fixture_path).read_bytes()
+    input_sections = parse_input_semantic_model(input_bytes)
+    require(len(input_sections) == 1, f"{label}: input section count")
+    input_model = input_sections[0]
+    output_sections = parse_tracefile_sections(output)
+    require(len(output_sections) == 1, f"{label}: output section count")
+    out = output_sections[0]
+    require(out["tn"] == input_model["tn"], f"{label}: TN drift")
+    require(out["sf"] == input_model["sf"], f"{label}: SF drift")
+    functions = list(input_model["legacy_functions"])
+    counts = {name: count for count, name in input_model["legacy_counts"]}
+    if mode == "comma":
+        require(len(functions) == 1, f"{label}: comma input function count")
+        start, end, name = functions[0]
+        require(name == b"foo,bar", f"{label}: comma source fact drift")
+        require(out["functions"] == [(b"0", start, end)], f"{label}: comma FNL rewrite")
+        require(out["aliases"] == [(b"0", counts[name], name)], f"{label}: comma FNA rewrite")
+    else:
+        require(len(functions) == 2 and functions[0] == functions[1], f"{label}: repeated FN source facts")
+        start, end, name = functions[0]
+        require(out["functions"] == [(b"0", start, end)], f"{label}: repeated FNL deduplication")
+        total = sum(int(count) for count, alias in input_model["legacy_counts"] if alias == name)
+        require(out["aliases"] == [(b"0", str(total).encode("ascii"), name)], f"{label}: repeated FNDA accumulation")
+    require(_da_line_hits(out["das"]) == _da_line_hits(input_model["das"]), f"{label}: DA drift")
+
+
+def assert_tf010_group_completeness(
+    observed_by_id: dict[str, dict[str, object]],
+    decode_output,
+    label: str = "M1-TF-010",
+) -> None:
+    """Require all legacy function edge captures and their failure facts."""
+    summary_id = "legacy.summary"
+    canonical_id = "legacy.canonical"
+    for case_id in (summary_id, canonical_id):
+        require(case_id in observed_by_id, f"{label}: missing {case_id}")
+        require(observed_by_id[case_id].get("exit_status") == 0, f"{label}: {case_id} exit")
+    legacy_input = parse_input_semantic_model((ROOT / "fixtures/legacy.info").read_bytes())
+    require(len(legacy_input) == 1, f"{label}: legacy source section count")
+    legacy_functions = list(legacy_input[0]["legacy_functions"])
+    legacy_counts = {name: count for count, name in legacy_input[0]["legacy_counts"]}
+    require(len(legacy_functions) == 2, f"{label}: legacy source function count")
+    require(legacy_functions[1][1] is None, f"{label}: optional-end source probe missing")
+    hit_count = sum(int(legacy_counts.get(name, b"0")) > 0 for _start, _end, name in legacy_functions)
+    summary_stdout = decode_output(observed_by_id[summary_id]["stdout"], f"{label}.{summary_id}.stdout")
+    require(
+        f"{100 * hit_count / len(legacy_functions):.1f}% ({hit_count} of {len(legacy_functions)} functions)".encode("ascii") in summary_stdout,
+        f"{label}: legacy summary function facts",
+    )
+    canonical_output = observed_by_id[canonical_id].get("output")
+    require(
+        isinstance(canonical_output, dict) and canonical_output.get("exists") is True,
+        f"{label}: {canonical_id} output",
+    )
+    assert_tf045_member_semantics(
+        decode_output(canonical_output, canonical_id),
+        "legacy",
+        f"{label}.{canonical_id}",
+    )
+
+    for case_id, member_name in (
+        ("writer-legacy-comma.canonical", "comma"),
+        ("writer-legacy-repeat.canonical", "repeat"),
+    ):
+        require(case_id in observed_by_id, f"{label}: missing {case_id}")
+        observation = observed_by_id[case_id]
+        require(observation.get("exit_status") == 0, f"{label}: {case_id} exit")
+        output = observation.get("output")
+        require(isinstance(output, dict) and output.get("exists") is True, f"{label}: {case_id} output")
+        assert_tf010_legacy_output(decode_output(output, case_id), member_name, f"{label}.{case_id}")
+    for case_id in ("writer-legacy-unknown.summary", "writer-legacy-unknown.canonical"):
+        require(case_id in observed_by_id, f"{label}: missing {case_id}")
+        observation = observed_by_id[case_id]
+        require(observation.get("exit_status") == 1, f"{label}: {case_id} exit")
+        output = observation.get("output")
+        require(isinstance(output, dict) and output.get("exists") is False, f"{label}: {case_id} must not output")
+        stderr = decode_output(observation["stderr"], f"{label}.{case_id}.stderr").decode("utf-8", "replace")
+        require("unknown function 'unknown'" in stderr, f"{label}: {case_id} unknown-name diagnostic")
+        require("mismatch" in stderr and "corrupt" in stderr, f"{label}: {case_id} diagnostic classes")
+
+
 # Converter source artifact paths (authoritative inputs for M1-TF-052).
 TF052_XML_PATH = "fixtures/writer/coverage.xml"
 TF052_PYTHON_PATH = "fixtures/writer/mod.py"
@@ -762,7 +855,7 @@ def parse_input_semantic_model(data: bytes) -> list[dict[str, object]]:
             current["ordered_detail_tags"].append("VER")
         elif line.startswith(b"FN:"):
             body = line[3:]
-            parts = body.split(b",")
+            parts = body.split(b",", 2)
             if len(parts) == 3:
                 current["legacy_functions"].append((parts[0], parts[1], parts[2]))
             elif len(parts) == 2:
@@ -891,8 +984,8 @@ def assert_tf045_input_to_output_preservation(
             f"{label}: DA line/hits not preserved",
         )
         require(not out["branches"] and not out["mcdc"], f"{label}: invented branch/mcdc")
-        # M1-TF-010 remains unbound: this fixture has no comma-name / repeated-def /
-        # unknown-name probes, so we only prove the rewrite facts present here.
+        # Optional-end and legacy-to-current rewrite are covered by the exact
+        # legacy group case; this helper remains the shared semantic checker.
         return
 
     if kind == "permissive":

@@ -10,8 +10,8 @@
     "locale": "C.UTF-8",
     "network": "none"
   },
-  "cases_sha256": "e8e40b6097083e2a4c61e0c04f61c1136d89aa5147f5c7e956ab1589f7ba5d84",
-  "manifest_sha256": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
+  "cases_sha256": "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0",
+  "manifest_sha256": "2a3f890c87a6930d7704e999a7222fa6eb1d484d37b89c572bacd2cbf122d03c",
   "cases": [
     {
       "id": "current-all-records.summary",
@@ -8863,6 +8863,144 @@
           "TN": 1,
           "end_of_record": 1
         }
+      }
+    },
+    {
+      "id": "writer-legacy-comma.canonical",
+      "fixture": "fixtures/writer/legacy-comma-name.info",
+      "fixture_sha256": "da95115187f93b1a478e22c11788225c55aef4c639b24bc10f57c62a75071b04",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "4726e09a41d1a8b557931db7009bb3df79d7de49e4795de6e438bcb01ed070c1",
+        "byte_size": 276,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgyIG9mIDIgbGluZXMpCiAgZnVuY3Rpb25zLi4uOiAxMDAuMCUgKDEgb2YgMSBmdW5jdGlvbikKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output.info",
+      "output": {
+        "exists": true,
+        "sha256": "dd991330c5f1293ce48a3078b267b7c71c5869ba5b4efbcbfa3c491c7f24a63e",
+        "byte_size": 104,
+        "base64": "VE46Y29tbWEKU0Y6c3JjL2NvbW1hLmMKRk5MOjAsMTAsMjAKRk5BOjAsMyxmb28sYmFyCkZORjoxCkZOSDoxCkRBOjEwLDMKREE6MjAsMwpMRjoyCkxIOjIKZW5kX29mX3JlY29yZAo=",
+        "record_count": 11,
+        "record_counts": {
+          "DA": 2,
+          "FNA": 1,
+          "FNF": 1,
+          "FNH": 1,
+          "FNL": 1,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      }
+    },
+    {
+      "id": "writer-legacy-repeat.canonical",
+      "fixture": "fixtures/writer/legacy-repeated-definition.info",
+      "fixture_sha256": "d489768a72dded5c8133f67fdcc8bd718c3c78e3a7b8104f11f60b2e1bd4037d",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "4726e09a41d1a8b557931db7009bb3df79d7de49e4795de6e438bcb01ed070c1",
+        "byte_size": 276,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgyIG9mIDIgbGluZXMpCiAgZnVuY3Rpb25zLi4uOiAxMDAuMCUgKDEgb2YgMSBmdW5jdGlvbikKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output.info",
+      "output": {
+        "exists": true,
+        "sha256": "c7485b9c69e418e6a7a1811781492a4f0b23c23d35066ff781125181b853c0aa",
+        "byte_size": 102,
+        "base64": "VE46cmVwZWF0ClNGOnNyYy9yZXBlYXQuYwpGTkw6MCwxMCwyMApGTkE6MCwzLGZvbwpGTkY6MQpGTkg6MQpEQToxMCwzCkRBOjIwLDMKTEY6MgpMSDoyCmVuZF9vZl9yZWNvcmQK",
+        "record_count": 11,
+        "record_counts": {
+          "DA": 2,
+          "FNA": 1,
+          "FNF": 1,
+          "FNH": 1,
+          "FNL": 1,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      }
+    },
+    {
+      "id": "writer-legacy-unknown.summary",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "fixture_sha256": "a27d99286b055c061d1de7b7ff58a35eed1cae0636f9b2517da8225d60bfaa3d",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "exit_status": 1,
+      "stdout": {
+        "sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a",
+        "byte_size": 30,
+        "base64": "UmVhZGluZyB0cmFjZWZpbGUgaW5wdXQuaW5mby4K"
+      },
+      "stderr": {
+        "sha256": "21241363e29f159096e7ff56740667763c3d31ce6f1f9fa6453b5707cfb55edf",
+        "byte_size": 241,
+        "base64": "bGNvdjogRVJST1I6IChjb3JydXB0KSB1bmFibGUgdG8gcmVhZCB0cmFjZSBmaWxlICdpbnB1dC5pbmZvJzogbGNvdjogRVJST1I6IChtaXNtYXRjaCkgdW5rbm93biBmdW5jdGlvbiAndW5rbm93bicKCSh1c2UgImxjb3YgLS1pZ25vcmUtZXJyb3JzIG1pc21hdGNoIC4uLiIgdG8gYnlwYXNzIHRoaXMgZXJyb3IpCgkodXNlICJsY292IC0taWdub3JlLWVycm9ycyBjb3JydXB0IC4uLiIgdG8gYnlwYXNzIHRoaXMgZXJyb3IpCg=="
+      },
+      "output_file": null,
+      "output": {
+        "exists": false
+      }
+    },
+    {
+      "id": "writer-legacy-unknown.canonical",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "fixture_sha256": "a27d99286b055c061d1de7b7ff58a35eed1cae0636f9b2517da8225d60bfaa3d",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 1,
+      "stdout": {
+        "sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475",
+        "byte_size": 83,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgo="
+      },
+      "stderr": {
+        "sha256": "21241363e29f159096e7ff56740667763c3d31ce6f1f9fa6453b5707cfb55edf",
+        "byte_size": 241,
+        "base64": "bGNvdjogRVJST1I6IChjb3JydXB0KSB1bmFibGUgdG8gcmVhZCB0cmFjZSBmaWxlICdpbnB1dC5pbmZvJzogbGNvdjogRVJST1I6IChtaXNtYXRjaCkgdW5rbm93biBmdW5jdGlvbiAndW5rbm93bicKCSh1c2UgImxjb3YgLS1pZ25vcmUtZXJyb3JzIG1pc21hdGNoIC4uLiIgdG8gYnlwYXNzIHRoaXMgZXJyb3IpCgkodXNlICJsY292IC0taWdub3JlLWVycm9ycyBjb3JydXB0IC4uLiIgdG8gYnlwYXNzIHRoaXMgZXJyb3IpCg=="
+      },
+      "output_file": "output.info",
+      "output": {
+        "exists": false
       }
     },
     {

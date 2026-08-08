@@ -167,17 +167,17 @@ fail-closed environment contract now reviews 19 named variables, one dynamic inp
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 137 fixtures, 21
-per-record malformed inputs, and 271 reference-only Oracle observations. It
+15 reader matcher lines, all 18 writer emission lines, 140 fixtures, 21
+per-record malformed inputs, and 275 reference-only Oracle observations. It
 retains the TF-030 and reader/framing/state closures and adds exact
-writer/converter/transport mappings for `M1-TF-041..044`, `046`, `050..052`,
-`060`, and `061`. `M1-TF-045` remains observational pending true two-write
-Docker corpora; `M1-TF-010`, `063`, and `064` remain blocked, and product
+legacy/writer/converter/transport mappings for `M1-TF-010`, `M1-TF-041..044`,
+`046`, `050..052`, `060`, and `061`. `M1-TF-045` remains observational pending
+true two-write Docker corpora; `M1-TF-063` and `064` remain blocked, and product
 compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
-command exit policies. It retains 204 Oracle observations: the prior 201 are
-unchanged and three writer-transport fatal references are added. Fifty-nine of
+command exit policies. It retains 206 Oracle observations: the prior 204 are
+unchanged and two legacy unknown-function fatal references are added. Fifty-nine of
 71 diagnostic/parallel identities have exact bindings and 12 remain planned
 and unbound. Product compatibility evidence remains false.
 The separate installation contract binds the 321-entry installed tree to nine

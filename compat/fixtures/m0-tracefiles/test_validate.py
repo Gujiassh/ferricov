@@ -1290,7 +1290,7 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
         )
         parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
-        self.assertEqual(len(parsed["cases"]), 271)
+        self.assertEqual(len(parsed["cases"]), 275)
 
 
 
@@ -1656,6 +1656,8 @@ class WriterTracefileMutationTests(unittest.TestCase):
             TF052_REWRITE_CASE_ID,
             TF061_CASE_ID,
             TF061_REQUIRED_FIELDS,
+            assert_tf010_group_completeness,
+            assert_tf010_legacy_output,
             assert_tf045_group_completeness,
             assert_tf045_member_semantics,
             assert_tf052_group_completeness,
@@ -1675,9 +1677,36 @@ class WriterTracefileMutationTests(unittest.TestCase):
         def decode_output(identity, label):
             return decode_identity(identity, label)
 
+        assert_tf010_group_completeness(observed_by_id, decode_output)
         assert_tf045_group_completeness(observed_by_id, decode_output)
         assert_tf052_group_completeness(observed_by_id, decode_output)
         assert_tf061_group_completeness(observed_by_id, decode_output)
+
+        # TF-010 source-derived legacy edge mutations and member omission.
+        for case_id, member_name, old, new in (
+            ("writer-legacy-comma.canonical", "comma", b"foo,bar", b"foo,baz"),
+            ("writer-legacy-repeat.canonical", "repeat", b"FNA:0,3,foo", b"FNA:0,2,foo"),
+        ):
+            output = decode_identity(self.cases[case_id]["output"], case_id)
+            assert_tf010_legacy_output(output, member_name, case_id)
+            with self.subTest(case_id=case_id):
+                with self.assertRaises(ValueError):
+                    assert_tf010_legacy_output(output.replace(old, new, 1), member_name, f"{case_id}.mutated")
+        missing_tf010 = copy.deepcopy(observed_by_id)
+        del missing_tf010["writer-legacy-unknown.summary"]
+        with self.assertRaises(ValueError):
+            assert_tf010_group_completeness(missing_tf010, decode_output, "omit-unknown-summary")
+        missing_legacy = copy.deepcopy(observed_by_id)
+        del missing_legacy["legacy.canonical"]
+        with self.assertRaises(ValueError):
+            assert_tf010_group_completeness(missing_legacy, decode_output, "omit-legacy-canonical")
+        mutated_legacy = copy.deepcopy(observed_by_id)
+        legacy_bytes = decode_identity(self.cases["legacy.canonical"]["output"], "legacy.canonical")
+        mutated_legacy["legacy.canonical"]["output"] = _identity(
+            legacy_bytes.replace(b"FNL:1,30,30", b"FNL:1,30,31", 1)
+        )
+        with self.assertRaises(ValueError):
+            assert_tf010_group_completeness(mutated_legacy, decode_output, "mutated-optional-end")
 
         # Member omission from TF-045 group must fail closed.
         omitted = copy.deepcopy(observed_by_id)

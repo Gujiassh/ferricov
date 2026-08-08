@@ -474,13 +474,22 @@ class BehaviorContractValidationTests(unittest.TestCase):
             if case["kind"] == "canonical_rewrite"
             and identifier.startswith(("functions-", "branches-", "numeric-", "checksum-"))
         }
+        auxiliary_canonical_ids = {
+            identifier
+            for identifier, case in tracefile_by_id.items()
+            if case["kind"] == "canonical_rewrite"
+            and identifier.startswith(("wave1-", "wave2-", "writer-", "gzip-", "converter-"))
+        }
         self.assertEqual(
             {
                 identifier
                 for identifier, case in tracefile_by_id.items()
                 if case["kind"] == "canonical_rewrite"
             },
-            planning_canonical_ids | state_canonical_ids | module_canonical_ids,
+            planning_canonical_ids
+            | state_canonical_ids
+            | module_canonical_ids
+            | auxiliary_canonical_ids,
         )
         self.assertTrue(module_canonical_ids)
         for identifier in planning_canonical_ids:

@@ -386,11 +386,17 @@ class TracefileContractTests(unittest.TestCase):
 
     def test_writer_mapping_is_exact_and_source_scoped(self) -> None:
         expected = {
+            "legacy.summary": ["M1-TF-010"],
+            "legacy.canonical": ["M1-TF-010"],
             "writer-order-core.canonical": ["M1-TF-041"],
             "writer-mcdc-groups.canonical": ["M1-TF-041"],
             "writer-summaries.canonical": ["M1-TF-042"],
             "writer-comments.canonical": ["M1-TF-043"],
             "writer-forbidden.canonical": ["M1-TF-044"],
+            "writer-legacy-comma.canonical": ["M1-TF-010"],
+            "writer-legacy-repeat.canonical": ["M1-TF-010"],
+            "writer-legacy-unknown.summary": ["M1-TF-010"],
+            "writer-legacy-unknown.canonical": ["M1-TF-010"],
             "writer-fixedpoint.repeated-write": ["M1-TF-046"],
             "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
             "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
@@ -410,6 +416,7 @@ class TracefileContractTests(unittest.TestCase):
             case["id"]: case
             for case in self.committed["oracle_cases"]
             if case["id"].startswith(("writer-", "gzip-", "converter-coverage."))
+            or case["id"] in {"legacy.summary", "legacy.canonical"}
         }
         self.assertEqual(set(targets), set(expected) | observational_only)
         for case_id, requirement_ids in expected.items():
@@ -435,7 +442,6 @@ class TracefileContractTests(unittest.TestCase):
         # M1-TF-045 is observational only until true two-write Docker cases exist.
         for case_id in (
             "writer-fixedpoint.canonical",
-            "legacy.canonical",
             "permissive-prefix.canonical",
         ):
             self.assertNotIn("requirement_ids", targets[case_id])
@@ -444,15 +450,15 @@ class TracefileContractTests(unittest.TestCase):
             ["M1-TF-016"],
         )
         exact = self.committed["totals"]["exact_executable_requirement_ids"]
-        # M1-TF-010 / M1-TF-045 must remain unbound.
-        self.assertNotIn("M1-TF-010", exact)
+        # M1-TF-045 must remain unbound until true two-write cases exist.
         self.assertNotIn("M1-TF-045", exact)
+        self.assertIn("M1-TF-010", exact)
         # SF-only writer non-utf8 remains observational; matrix is on bytes-non-utf8.
         writer_non_utf8 = targets["writer-non-utf8.canonical"]
         self.assertNotIn("requirement_ids", writer_non_utf8)
         self.assertIn("M1-TF-052", exact)
         self.assertIn("M1-TF-061", exact)
-        self.assertEqual(len(exact), 41)
+        self.assertEqual(len(exact), 42)
         self.assertFalse(self.committed["product_compatibility_evidence"])
 
 

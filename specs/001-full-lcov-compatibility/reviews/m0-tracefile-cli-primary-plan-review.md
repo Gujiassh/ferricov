@@ -54,8 +54,8 @@ evidence is empty. The authored behavior cases therefore use
 `evidence_status=none`, not `planned`, `pass`, or `fail`, and keep both
 `evidence` and `suite_cases` empty.
 
-The focused tests cross-check the exact eight canonical IDs, the five
-no-function argv observations, the two MC/DC argv observations, all eight
+The focused tests cross-check the exact nine canonical IDs, the six
+no-function argv observations, the two MC/DC argv observations, all nine
 diagnostic recovery references, every linked upstream test classification, and
 the complete source-reference list for each authored case against its reviewed
 inventory target. Mutation guards reject source-reference removal or field

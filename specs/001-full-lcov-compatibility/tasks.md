@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 271 Oracle observations.
+  standalone fail-closed contract bound to 275 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -72,13 +72,13 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 137 retained fixtures,
-and 21 per-record malformed fixtures. Its 271 Oracle observations are
-reference-only. Exact writer mappings now cover 16 cases for `M1-TF-041..044`,
-`046`, `050..052`, `060`, and `061`; `M1-TF-045` remains observational until
-true two-write corpora exist, while `M1-TF-010`, `063`, and `064` remain
-blocked. Product compatibility evidence remains false and M1 implementation
-remains unauthorized.
+15 reader matcher lines, all 18 writer emission lines, 140 retained fixtures,
+and 21 per-record malformed fixtures. Its 275 Oracle observations are
+reference-only. Exact legacy/writer mappings now cover 22 cases for
+`M1-TF-010`, `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`;
+`M1-TF-045` remains observational until true two-write corpora exist, while
+`M1-TF-063` and `064` remain blocked. Product compatibility evidence remains
+false and M1 implementation remains unauthorized.
 
 The TF-030 exact numeric matrix module defined in
 `reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been implemented on
@@ -93,9 +93,9 @@ direct-upstream-provenance gaps. The audit rework is specified in
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 204 retained observations are
-reference-only; the previous 201 observations remain unchanged and three
-writer-transport fatal references are added. Fifty-nine of 71 diagnostic and
+surfaces, and ten command exit policies. Its 206 retained observations are
+reference-only; the previous 204 observations remain unchanged and two legacy
+unknown-function fatal references are added. Fifty-nine of 71 diagnostic and
 parallel case IDs have exact bindings; the remaining 12 stay planned and
 unbound, and product compatibility remains open.
 

@@ -4067,6 +4067,63 @@
       "expected_exit": 0
     },
     {
+      "id": "writer-legacy-comma.canonical",
+      "fixture": "fixtures/writer/legacy-comma-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Legacy comma-bearing FN/FNDA name is preserved in current-form FNA output.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-legacy-repeat.canonical",
+      "fixture": "fixtures/writer/legacy-repeated-definition.info",
+      "requirement": "M1-TF-010",
+      "description": "Repeated legacy FN definitions deduplicate and repeated FNDA counts accumulate.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-legacy-unknown.summary",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Unknown legacy FNDA name fails with mismatch/corrupt diagnostics.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "writer-legacy-unknown.canonical",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Unknown legacy FNDA name fails closed without a canonical output.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
       "id": "writer-fixedpoint.repeated-write",
       "fixture": "fixtures/writer/fixedpoint.info",
       "requirement": "M1-TF-046",

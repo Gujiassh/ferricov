@@ -6,11 +6,11 @@
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-baseline.json",
-      "sha256": "6551d0422cb31b896209edf319246164f837cf696b7ad037032e4ebcfeb9c612"
+      "sha256": "b271c78b128451a44c1487945d578feea6ec29ccbb4fea3403fc48c643bee89e"
     },
     {
       "path": "compat/fixtures/m0-tracefiles/oracle-cases.json",
-      "sha256": "e8e40b6097083e2a4c61e0c04f61c1136d89aa5147f5c7e956ab1589f7ba5d84"
+      "sha256": "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0"
     },
     {
       "path": "compat/diagnostics/wave1/result.json",
@@ -2867,6 +2867,30 @@
       ],
       "stderr_sha256": "6bf96699a15efa83e37189232746b2b65b4e22aa21e0877fd34acf99a4ba4c55",
       "stdout_sha256": "0dae023f9550cfadb307182a05c6729ead86991c46474012dff3b962713890aa"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:writer-legacy-unknown.summary",
+      "kind": "named_error_fatal",
+      "observation_sha256": "64e978d77e7a01b3d1289cdc1020bd1627b76127930ab317f12bde1ff39c83c1",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "21241363e29f159096e7ff56740667763c3d31ce6f1f9fa6453b5707cfb55edf",
+      "stdout_sha256": "fe463e66ac4e67b25267571dbc8206888e9504625aabb33df71f6f942cc8ae6a"
+    },
+    {
+      "exit_status": 1,
+      "id": "tracefile:writer-legacy-unknown.canonical",
+      "kind": "named_error_fatal",
+      "observation_sha256": "bb1e95f286fa368e9dad1691c4215f3ed452ca0ed9b632512579fb330fd08429",
+      "output_sha256": null,
+      "planned_case_ids": [
+        "DIAG-IGNORE-ERROR-001"
+      ],
+      "stderr_sha256": "21241363e29f159096e7ff56740667763c3d31ce6f1f9fa6453b5707cfb55edf",
+      "stdout_sha256": "d91c6c07c40011adf6c24ef9a02f3e53c58d6f3d78b8690f05905939398d2475"
     },
     {
       "exit_status": 1,
@@ -12500,9 +12524,9 @@
     "configuration_observations": 5,
     "control_rules": 9,
     "exit_policies": 10,
-    "named_error_fatal_observations": 82,
+    "named_error_fatal_observations": 84,
     "named_error_ignore_one_observations": 41,
-    "oracle_observations": 204,
+    "oracle_observations": 206,
     "parser_observations": 10,
     "planned_cases": 71,
     "reserved_categories": 1,

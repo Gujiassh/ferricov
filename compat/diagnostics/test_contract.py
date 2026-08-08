@@ -167,7 +167,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave1_observations"], 26)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 204)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 206)
         planned = []
         for entry in wave1:
             for planned_id in entry["planned_case_ids"]:
@@ -682,7 +682,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave2), contract.WAVE2_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave2_observations"], 32)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 204)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 206)
         planned = []
         for entry in wave2:
             for planned_id in entry["planned_case_ids"]:
@@ -696,6 +696,8 @@ class DiagnosticsContractTests(unittest.TestCase):
             "tracefile:gzip-corrupt.summary",
             "tracefile:gzip-empty.summary",
             "tracefile:gzip-valid.missing-gzip",
+            "tracefile:writer-legacy-unknown.summary",
+            "tracefile:writer-legacy-unknown.canonical",
         }
         observations = {
             entry["id"]: entry
@@ -710,7 +712,7 @@ class DiagnosticsContractTests(unittest.TestCase):
                 observation["planned_case_ids"], ["DIAG-IGNORE-ERROR-001"]
             )
         self.assertEqual(
-            self.committed["totals"]["named_error_fatal_observations"], 82
+            self.committed["totals"]["named_error_fatal_observations"], 84
         )
 
     def test_wave2_product_promotion_is_rejected(self) -> None:

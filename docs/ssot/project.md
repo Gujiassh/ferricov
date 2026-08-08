@@ -96,20 +96,20 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 137 fixtures, 21 per-record malformed inputs, and 271
+  emission lines, 140 fixtures, 21 per-record malformed inputs, and 275
   retained Oracle observations. Reader/framing/state and
-  writer/converter/transport mappings include 16 exact cases for
-  `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`; the retained
-  fixed-point capture remains observational because `M1-TF-045` lacks true
-  two-write Docker corpora. `M1-TF-010`, `M1-TF-063`, and `M1-TF-064` remain
-  blocked, product compatibility evidence remains false, and M1 implementation
-  remains unauthorized.
+  writer/converter mappings include 22 exact legacy/writer cases for
+  `M1-TF-010`, `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`; the
+  retained fixed-point capture remains observational because `M1-TF-045` lacks
+  true two-write Docker corpora. `M1-TF-063` and `M1-TF-064` remain blocked,
+  product compatibility evidence remains false, and M1 implementation remains
+  unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
-  rules, four unclassified surfaces, ten command exit policies, and 204
+  rules, four unclassified surfaces, ten command exit policies, and 206
   retained Oracle observations. Twenty-six wave1 and 32 wave2 cases retain
-  full capture provenance; three writer-transport failures add references
-  without changing the prior 201 observations. Fifty-nine of 71
+  full capture provenance; two legacy unknown-function failures extend the
+  fatal set without changing the prior 204 observations. Fifty-nine of 71
   diagnostic/parallel identities have exact bindings, 12 remain planned and
   unbound, and product evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry

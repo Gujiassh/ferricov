@@ -1,7 +1,7 @@
 """Writer/converter/transport M0 Oracle fixtures and cases.
 
 Exact executable mappings for:
-  M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044,
+  M1-TF-010, M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044,
   M1-TF-046, M1-TF-050, M1-TF-051, M1-TF-052, M1-TF-060.
 
 Wave3 exact semantic closures (source-bound / field-matrix):
@@ -17,7 +17,7 @@ Observational-only captures retained without exact mapping:
   writer-non-utf8.canonical (SF-only; matrix lives on bytes-non-utf8).
 
 Oracle evidence only. Product compatibility remains false.
-M1-TF-010 / M1-TF-045 / M1-TF-063 / M1-TF-064 remain blocked.
+M1-TF-045 / M1-TF-063 / M1-TF-064 remain blocked.
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ import io
 from corpus_model import Fixture, ascii_bytes
 
 WRITER_GROUP = "writer-tracefile"
-WRITER_REQUIREMENT_TEXT = "M1-TF-041/042/043/044/046/050/051/052/060 (+ observational TF-045 fixedpoint and SF-only 061 writer capture)"
+WRITER_REQUIREMENT_TEXT = "M1-TF-010/041/042/043/044/046/050/051/052/060 (+ observational TF-045 fixedpoint and SF-only 061 writer capture)"
 
 WRITER_FIXTURE_IDS = (
     "writer-order-core",
@@ -37,6 +37,9 @@ WRITER_FIXTURE_IDS = (
     "writer-forbidden",
     "writer-comments",
     "writer-fixedpoint",
+    "legacy-comma-name",
+    "legacy-repeated-definition",
+    "legacy-unknown-name",
     "gzip-plain",
     "gzip-valid",
     "gzip-corrupt",
@@ -55,6 +58,9 @@ WRITER_SKIP_SUMMARY_FIXTURE_IDS = frozenset(
         "converter-coverage-xml",
         "converter-mod-py",
         "writer-fixedpoint",
+        "legacy-comma-name",
+        "legacy-repeated-definition",
+        "legacy-unknown-name",
         "writer-order-core",
         "writer-mcdc-groups",
         "writer-summaries",
@@ -207,6 +213,53 @@ LH:1
 end_of_record
 """
     )
+    legacy_comma_name = ascii_bytes(
+        """
+TN:comma
+SF:src/comma.c
+FN:10,20,foo,bar
+FNDA:3,foo,bar
+FNF:1
+FNH:1
+DA:10,3
+DA:20,3
+LF:2
+LH:2
+end_of_record
+"""
+    )
+    legacy_repeated_definition = ascii_bytes(
+        """
+TN:repeat
+SF:src/repeat.c
+FN:10,20,foo
+FN:10,20,foo
+FNDA:1,foo
+FNDA:2,foo
+FNF:2
+FNH:2
+DA:10,3
+DA:20,3
+LF:2
+LH:2
+end_of_record
+"""
+    )
+    legacy_unknown_name = ascii_bytes(
+        """
+TN:unknown
+SF:src/unknown.c
+FN:10,20,known
+FNDA:1,unknown
+FNF:1
+FNH:0
+DA:10,1
+DA:20,0
+LF:2
+LH:1
+end_of_record
+"""
+    )
     gzip_plain = ascii_bytes(
         """
 TN:g
@@ -295,6 +348,30 @@ def foo():
             "Already-canonical corpus for parse-write-parse and repeated-write fixed point.",
             fixedpoint,
             "accept",
+        ),
+        Fixture(
+            "legacy-comma-name",
+            "fixtures/writer/legacy-comma-name.info",
+            WRITER_GROUP,
+            "Legacy FN/FNDA comma-bearing function name rewritten without truncation.",
+            legacy_comma_name,
+            "accept",
+        ),
+        Fixture(
+            "legacy-repeated-definition",
+            "fixtures/writer/legacy-repeated-definition.info",
+            WRITER_GROUP,
+            "Repeated legacy FN definitions deduplicate and repeated FNDA counts accumulate.",
+            legacy_repeated_definition,
+            "accept",
+        ),
+        Fixture(
+            "legacy-unknown-name",
+            "fixtures/writer/legacy-unknown-name.info",
+            WRITER_GROUP,
+            "Legacy FNDA references an unknown function name and fails closed.",
+            legacy_unknown_name,
+            "reject",
         ),
         Fixture(
             "gzip-plain",
@@ -462,6 +539,36 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
             branch_mcdc,
         ),
         _lcov_write(
+            "writer-legacy-comma.canonical",
+            "fixtures/writer/legacy-comma-name.info",
+            "M1-TF-010",
+            "Legacy comma-bearing FN/FNDA name is preserved in current-form FNA output.",
+            [],
+        ),
+        _lcov_write(
+            "writer-legacy-repeat.canonical",
+            "fixtures/writer/legacy-repeated-definition.info",
+            "M1-TF-010",
+            "Repeated legacy FN definitions deduplicate and repeated FNDA counts accumulate.",
+            [],
+        ),
+        _lcov_summary(
+            "writer-legacy-unknown.summary",
+            "fixtures/writer/legacy-unknown-name.info",
+            "M1-TF-010",
+            "Unknown legacy FNDA name fails with mismatch/corrupt diagnostics.",
+            [],
+            expected_exit=1,
+        ),
+        _lcov_write(
+            "writer-legacy-unknown.canonical",
+            "fixtures/writer/legacy-unknown-name.info",
+            "M1-TF-010",
+            "Unknown legacy FNDA name fails closed without a canonical output.",
+            [],
+            expected_exit=1,
+        ),
+        _lcov_write(
             "writer-fixedpoint.repeated-write",
             "fixtures/writer/fixedpoint.info",
             "M1-TF-046",
@@ -606,6 +713,10 @@ WRITER_CASE_IDS = (
     "writer-comments.canonical",
     "writer-forbidden.canonical",
     "writer-fixedpoint.canonical",
+    "writer-legacy-comma.canonical",
+    "writer-legacy-repeat.canonical",
+    "writer-legacy-unknown.summary",
+    "writer-legacy-unknown.canonical",
     "writer-fixedpoint.repeated-write",
     "converter-coverage.xml2lcov",
     "converter-coverage.py2lcov-no-functions",
@@ -625,6 +736,10 @@ WRITER_EXACT_REQUIREMENTS: dict[str, list[str]] = {
     "writer-summaries.canonical": ["M1-TF-042"],
     "writer-comments.canonical": ["M1-TF-043"],
     "writer-forbidden.canonical": ["M1-TF-044"],
+    "writer-legacy-comma.canonical": ["M1-TF-010"],
+    "writer-legacy-repeat.canonical": ["M1-TF-010"],
+    "writer-legacy-unknown.summary": ["M1-TF-010"],
+    "writer-legacy-unknown.canonical": ["M1-TF-010"],
     "writer-fixedpoint.repeated-write": ["M1-TF-046"],
     "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
     "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],

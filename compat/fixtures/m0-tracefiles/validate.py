@@ -23,6 +23,7 @@ from validation_common import (
     assert_branch_store,
     assert_converter_rewrite_observational,
     assert_tf045_group_completeness,
+    assert_tf010_group_completeness,
     assert_tf052_group_completeness,
     assert_tf061_group_completeness,
     assert_tf045_member_semantics,
@@ -1771,9 +1772,9 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
                 "writer non-utf8",
             )
 
-    # Wave3 semantic group completeness: TF-052/061 exact-bound; TF-045 observational only.
-    # TF-045 validators remain as regression probes without authorizing exact mapping.
     observed_by_id = {str(observation["id"]): observation for observation in observations}
+    # Legacy FN/FNDA edge cases are source-bound exact evidence.
+    assert_tf010_group_completeness(observed_by_id, decode_identity, "M1-TF-010")
     assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045-observational")
     assert_tf052_group_completeness(observed_by_id, decode_identity, "M1-TF-052")
     assert_tf061_group_completeness(observed_by_id, decode_identity, "M1-TF-061")

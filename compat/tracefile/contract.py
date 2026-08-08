@@ -30,9 +30,9 @@ DEFAULT_UPSTREAM_ROOT = Path(
 )
 
 EXPECTED_ARTIFACT_HASHES = {
-    "compat/fixtures/m0-tracefiles/manifest.json": "e6e6e3efa28a1f8c82cb5892c62b414737f26af973defe661d91c2409aeffd5a",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "e8e40b6097083e2a4c61e0c04f61c1136d89aa5147f5c7e956ab1589f7ba5d84",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "6551d0422cb31b896209edf319246164f837cf696b7ad037032e4ebcfeb9c612",
+    "compat/fixtures/m0-tracefiles/manifest.json": "2a3f890c87a6930d7704e999a7222fa6eb1d484d37b89c572bacd2cbf122d03c",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "b271c78b128451a44c1487945d578feea6ec29ccbb4fea3403fc48c643bee89e",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }
@@ -170,6 +170,9 @@ EXPECTED_FIXTURE_IDS = (
     'writer-forbidden',
     'writer-comments',
     'writer-fixedpoint',
+    'legacy-comma-name',
+    'legacy-repeated-definition',
+    'legacy-unknown-name',
     'gzip-plain',
     'gzip-valid',
     'gzip-corrupt',
@@ -441,6 +444,10 @@ EXPECTED_CASE_IDS = (
     'writer-comments.canonical',
     'writer-forbidden.canonical',
     'writer-fixedpoint.canonical',
+    'writer-legacy-comma.canonical',
+    'writer-legacy-repeat.canonical',
+    'writer-legacy-unknown.summary',
+    'writer-legacy-unknown.canonical',
     'writer-fixedpoint.repeated-write',
     'converter-coverage.xml2lcov',
     'converter-coverage.py2lcov-no-functions',
@@ -988,17 +995,21 @@ EXACT_CASE_REQUIREMENTS.update({
 })
 
 EXACT_CASE_REQUIREMENTS.update({
+    "legacy.summary": {"requirement_ids": ["M1-TF-010"]},
+    "legacy.canonical": {"requirement_ids": ["M1-TF-010"]},
     "writer-order-core.canonical": {"requirement_ids": ["M1-TF-041"]},
     "writer-mcdc-groups.canonical": {"requirement_ids": ["M1-TF-041"]},
     "writer-summaries.canonical": {"requirement_ids": ["M1-TF-042"]},
     "writer-comments.canonical": {"requirement_ids": ["M1-TF-043"]},
     "writer-forbidden.canonical": {"requirement_ids": ["M1-TF-044"]},
+    "writer-legacy-comma.canonical": {"requirement_ids": ["M1-TF-010"]},
+    "writer-legacy-repeat.canonical": {"requirement_ids": ["M1-TF-010"]},
+    "writer-legacy-unknown.summary": {"requirement_ids": ["M1-TF-010"]},
+    "writer-legacy-unknown.canonical": {"requirement_ids": ["M1-TF-010"]},
     # M1-TF-045 remains blocked/observational: retained single-write captures and
     # validator probes do not bind an actual second independent write round-trip
     # for each corpus member. Do not exact-map writer-fixedpoint/legacy/
     # permissive/ignored-error under M1-TF-045 until true two-write cases exist.
-    # M1-TF-010 remains unbound: legacy.info lacks comma-name / repeated-def /
-    # unknown-name probes.
     "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
     "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050", "M1-TF-052"]},
     "converter-coverage.py2lcov-no-functions": {"requirement_ids": ["M1-TF-051"]},
@@ -1420,15 +1431,15 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "lexical_rules": 2,
         "reader_matcher_lines": 15,
         "canonical_writer_lines": 18,
-        "fixtures": 137,
+        "fixtures": 140,
         "malformed_fixtures": 21,
-        "oracle_cases": 271,
-        "default_parse_cases": 115,
-        "canonical_rewrite_cases": 92,
+        "oracle_cases": 275,
+        "default_parse_cases": 116,
+        "canonical_rewrite_cases": 95,
         "ignore_recovery_cases": 36,
         "semantic_snapshot_cases": 28,
-        "oracle_exit_zero": 188,
-        "oracle_exit_nonzero": 83,
+        "oracle_exit_zero": 190,
+        "oracle_exit_nonzero": 85,
         "exact_executable_requirement_ids": [
             "M1-TF-001",
             "M1-TF-002",
@@ -1439,6 +1450,7 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-007",
             "M1-TF-008",
             "M1-TF-009",
+            "M1-TF-010",
             "M1-TF-011",
             "M1-TF-012",
             "M1-TF-013",
