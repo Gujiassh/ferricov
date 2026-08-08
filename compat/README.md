@@ -65,7 +65,7 @@ test commands.
 The standalone [`tracefile/v2.5.json`](tracefile/v2.5.json) contract reviews 20
 known record tags, two lexical framing rules, the complete 15-line reader
 matcher closure, and the complete 18-line canonical writer emission closure.
-It binds all 140 retained fixtures, all 21 per-record malformed fixtures, and 275
+It binds all 140 retained fixtures, all 21 per-record malformed fixtures, and 279
 pinned Oracle observations by exact artifact and stream/output hashes, including
 VER semantics and state-ownership probes for `M1-TF-007`, `M1-TF-021`,
 `M1-TF-022`, and `M1-TF-026`.

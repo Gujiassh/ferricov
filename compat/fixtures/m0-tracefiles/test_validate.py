@@ -1290,7 +1290,7 @@ class Tf030NumericMatrixMutationTests(unittest.TestCase):
             capture_oracle.EXPECTED_MERGE_BASELINE_SHA256,
         )
         parsed = capture_oracle.strict_json_loads_ascii(trusted, "trusted merge")
-        self.assertEqual(len(parsed["cases"]), 275)
+        self.assertEqual(len(parsed["cases"]), 279)
 
 
 
@@ -1660,6 +1660,7 @@ class WriterTracefileMutationTests(unittest.TestCase):
             assert_tf010_legacy_output,
             assert_tf045_group_completeness,
             assert_tf045_member_semantics,
+            assert_tf045_two_write_group_completeness,
             assert_tf052_group_completeness,
             assert_tf052_source_to_output_semantics,
             assert_tf061_field_matrix,
@@ -1679,8 +1680,36 @@ class WriterTracefileMutationTests(unittest.TestCase):
 
         assert_tf010_group_completeness(observed_by_id, decode_output)
         assert_tf045_group_completeness(observed_by_id, decode_output)
+        assert_tf045_two_write_group_completeness(observed_by_id, decode_output)
         assert_tf052_group_completeness(observed_by_id, decode_output)
         assert_tf061_group_completeness(observed_by_id, decode_output)
+
+        two_write_missing = copy.deepcopy(observed_by_id)
+        del two_write_missing["writer-ignored-error.two-write"]
+        with self.assertRaises(ValueError):
+            assert_tf045_two_write_group_completeness(two_write_missing, decode_output, "omit-two-write")
+        swapped = copy.deepcopy(observed_by_id)
+        swapped["writer-fixedpoint.two-write"]["stages"] = list(
+            reversed(swapped["writer-fixedpoint.two-write"]["stages"])
+        )
+        with self.assertRaises(ValueError):
+            assert_tf045_two_write_group_completeness(swapped, decode_output, "swap-stages")
+        duplicated = copy.deepcopy(observed_by_id)
+        duplicated["writer-fixedpoint.two-write"]["stages"][1] = copy.deepcopy(
+            duplicated["writer-fixedpoint.two-write"]["stages"][0]
+        )
+        with self.assertRaises(ValueError):
+            assert_tf045_two_write_group_completeness(duplicated, decode_output, "duplicate-stage")
+        refreshed = copy.deepcopy(observed_by_id)
+        second_output = decode_identity(
+            refreshed["writer-fixedpoint.two-write"]["stages"][1]["output"],
+            "writer-fixedpoint.two-write.stage2",
+        )
+        refreshed["writer-fixedpoint.two-write"]["stages"][1]["output"] = _identity(
+            second_output.replace(b"DA:2,0", b"DA:2,1", 1)
+        )
+        with self.assertRaises(ValueError):
+            assert_tf045_two_write_group_completeness(refreshed, decode_output, "refreshed-stage-output")
 
         # TF-010 source-derived legacy edge mutations and member omission.
         for case_id, member_name, old, new in (

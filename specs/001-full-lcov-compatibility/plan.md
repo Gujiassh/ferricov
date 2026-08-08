@@ -147,9 +147,8 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. M0 is not complete: 170 behavior-planning gaps, 12 unbound diagnostic/parallel
-identities, the incomplete `M1-TF-045` semantic corpus, tracefile
-product/fuzz boundaries, executable installation lifecycle review, compiler
-capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
+identities, tracefile product/fuzz boundaries, executable installation lifecycle
+review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
 product compatibility. Forty public CLI primary entries covered by that
 contract now have reviewed planning bindings to 154 exact suite cases. Eight
@@ -168,12 +167,12 @@ configuration-discovery paths, all 36 direct `$ENV` source lines, and 22
 reference-only Oracle-case bindings without changing the public inventory.
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
 15 reader matcher lines, all 18 writer emission lines, 140 fixtures, 21
-per-record malformed inputs, and 275 reference-only Oracle observations. It
+per-record malformed inputs, and 279 reference-only Oracle observations. It
 retains the TF-030 and reader/framing/state closures and adds exact
-legacy/writer/converter/transport mappings for `M1-TF-010`, `M1-TF-041..044`,
-`046`, `050..052`, `060`, and `061`. `M1-TF-045` remains observational pending
-true two-write Docker corpora; `M1-TF-063` and `064` remain blocked, and product
-compatibility evidence remains false.
+legacy/writer/converter/transport mappings for `M1-TF-010`, `M1-TF-041..045`,
+`046`, `050..052`, `060`, and `061`. The four TF-045 members now have true
+chained two-write Docker evidence; `M1-TF-063` and `064` remain blocked, and
+product compatibility evidence remains false.
 The separate diagnostics contract reviews all 32 shared classes, 399 symbol
 references, nine control rules, four unclassified failure surfaces, and ten
 command exit policies. It retains 206 Oracle observations: the prior 204 are

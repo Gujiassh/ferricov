@@ -31,8 +31,8 @@ DEFAULT_UPSTREAM_ROOT = Path(
 
 EXPECTED_ARTIFACT_HASHES = {
     "compat/fixtures/m0-tracefiles/manifest.json": "2a3f890c87a6930d7704e999a7222fa6eb1d484d37b89c572bacd2cbf122d03c",
-    "compat/fixtures/m0-tracefiles/oracle-cases.json": "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0",
-    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "b271c78b128451a44c1487945d578feea6ec29ccbb4fea3403fc48c643bee89e",
+    "compat/fixtures/m0-tracefiles/oracle-cases.json": "c1dd062759db1eabfec567f22f906c34b6b549e91c63835b6284226f8200a734",
+    "compat/fixtures/m0-tracefiles/oracle-baseline.json": "01590cad21ba17297e0257c9d586e7687afe86be7ab86a557610edbd89684e27",
     "compat/fixtures/m0-tracefiles/inspect_model.pl": "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e",
     "compat/fixtures/m0-tracefiles/tf030-semantic-registry.json": "bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c",
 }
@@ -444,6 +444,10 @@ EXPECTED_CASE_IDS = (
     'writer-comments.canonical',
     'writer-forbidden.canonical',
     'writer-fixedpoint.canonical',
+    'writer-fixedpoint.two-write',
+    'writer-legacy.two-write',
+    'writer-permissive.two-write',
+    'writer-ignored-error.two-write',
     'writer-legacy-comma.canonical',
     'writer-legacy-repeat.canonical',
     'writer-legacy-unknown.summary',
@@ -646,6 +650,8 @@ def case_kind(case_id: str) -> str:
     if case_id.endswith(".semantic-snapshot"):
         return "semantic_snapshot"
     if case_id.endswith(".clear-unreachable"):
+        return "canonical_rewrite"
+    if case_id.endswith(".two-write"):
         return "canonical_rewrite"
     if case_id.endswith((
         ".repeated-write",
@@ -1006,10 +1012,10 @@ EXACT_CASE_REQUIREMENTS.update({
     "writer-legacy-repeat.canonical": {"requirement_ids": ["M1-TF-010"]},
     "writer-legacy-unknown.summary": {"requirement_ids": ["M1-TF-010"]},
     "writer-legacy-unknown.canonical": {"requirement_ids": ["M1-TF-010"]},
-    # M1-TF-045 remains blocked/observational: retained single-write captures and
-    # validator probes do not bind an actual second independent write round-trip
-    # for each corpus member. Do not exact-map writer-fixedpoint/legacy/
-    # permissive/ignored-error under M1-TF-045 until true two-write cases exist.
+    "writer-fixedpoint.two-write": {"requirement_ids": ["M1-TF-045"]},
+    "writer-legacy.two-write": {"requirement_ids": ["M1-TF-045"]},
+    "writer-permissive.two-write": {"requirement_ids": ["M1-TF-045"]},
+    "writer-ignored-error.two-write": {"requirement_ids": ["M1-TF-045"]},
     "writer-fixedpoint.repeated-write": {"requirement_ids": ["M1-TF-046"]},
     "converter-coverage.xml2lcov": {"requirement_ids": ["M1-TF-050", "M1-TF-052"]},
     "converter-coverage.py2lcov-no-functions": {"requirement_ids": ["M1-TF-051"]},
@@ -1059,6 +1065,8 @@ def oracle_case_bindings(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]
             entry["requirement_ids"] = list(mapping["requirement_ids"])
             if "m0_decision_ids" in mapping:
                 entry["m0_decision_ids"] = list(mapping["m0_decision_ids"])
+        if case.get("two_write"):
+            entry["two_write"] = True
         result.append(entry)
     return result
 
@@ -1433,12 +1441,12 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
         "canonical_writer_lines": 18,
         "fixtures": 140,
         "malformed_fixtures": 21,
-        "oracle_cases": 275,
+        "oracle_cases": 279,
         "default_parse_cases": 116,
-        "canonical_rewrite_cases": 95,
+        "canonical_rewrite_cases": 99,
         "ignore_recovery_cases": 36,
         "semantic_snapshot_cases": 28,
-        "oracle_exit_zero": 190,
+        "oracle_exit_zero": 194,
         "oracle_exit_nonzero": 85,
         "exact_executable_requirement_ids": [
             "M1-TF-001",
@@ -1477,6 +1485,7 @@ def validate_document(document: dict[str, Any], upstream_root: Path) -> None:
             "M1-TF-042",
             "M1-TF-043",
             "M1-TF-044",
+            "M1-TF-045",
             "M1-TF-046",
             "M1-TF-050",
             "M1-TF-051",

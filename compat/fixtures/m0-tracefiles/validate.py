@@ -23,6 +23,7 @@ from validation_common import (
     assert_branch_store,
     assert_converter_rewrite_observational,
     assert_tf045_group_completeness,
+    assert_tf045_two_write_group_completeness,
     assert_tf010_group_completeness,
     assert_tf052_group_completeness,
     assert_tf061_group_completeness,
@@ -1776,6 +1777,7 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
     # Legacy FN/FNDA edge cases are source-bound exact evidence.
     assert_tf010_group_completeness(observed_by_id, decode_identity, "M1-TF-010")
     assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045-observational")
+    assert_tf045_two_write_group_completeness(observed_by_id, decode_identity, "M1-TF-045")
     assert_tf052_group_completeness(observed_by_id, decode_identity, "M1-TF-052")
     assert_tf061_group_completeness(observed_by_id, decode_identity, "M1-TF-061")
     # Per-member exact tables also cover non-writer cases used by TF-045/061.

@@ -45,7 +45,7 @@ relationships where supported.
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
-| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 275 retained Oracle observations across 140 fixtures, including TF-030, reader/framing/state, writer/converter/transport, and semantic snapshots; 20 legacy/writer/converter cases exactly bind `M1-TF-010`, `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`, while `M1-TF-045`, `063`, and `064` remain blocked; no product evidence |
+| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 279 retained Oracle observations across 140 fixtures, including TF-030, reader/framing/state, writer/converter/transport, and semantic snapshots; 26 legacy/writer/converter cases exactly bind `M1-TF-010`, `M1-TF-041..045`, `046`, `050..052`, `060`, and `061`; `M1-TF-063` and `064` remain blocked; no product evidence |
 | diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 206 retained Oracle references, including 26 wave1 and 32 wave2 Docker observations plus tracefile-derived error/recovery observations; the prior 204 objects remain unchanged and two legacy-function fatal references are added; 59 of 71 diagnostic/parallel identities have exact bindings, 12 remain planned and unbound, and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
@@ -112,14 +112,15 @@ observations do not provide Ferricov product compatibility evidence.
 The standalone tracefile contract is also independent of the public inventory.
 It closes the pinned source inventory over every reader matcher and canonical
 writer emission, distinguishes the three reader-only tags, and binds the
-retained corpus and Oracle baseline by exact hashes. Its 275 observations are
+retained corpus and Oracle baseline by exact hashes. Its 279 observations are
 Oracle references only across 140 fixtures, including the accepted TF-030
 matrix, reader/framing/state cases, and writer/converter/transport probes.
-Exact structured legacy/writer mappings cover 22 cases for `M1-TF-010`,
-`M1-TF-041..044`, `M1-TF-046`, `M1-TF-050..052`, `M1-TF-060`, and `M1-TF-061`.
-The retained fixed-point capture remains observational only: `M1-TF-045` still
-needs true two-write Docker corpora; `M1-TF-063` and `M1-TF-064` remain blocked.
-No tracefile observation provides Ferricov product compatibility evidence.
+Exact structured legacy/writer mappings cover 26 cases for `M1-TF-010`,
+`M1-TF-041..045`, `M1-TF-046`, `M1-TF-050..052`, `M1-TF-060`, and `M1-TF-061`.
+The four TF-045 members now have true two-write Docker evidence with chained
+stage input/output hashes and independent input-model semantic checks.
+`M1-TF-063` and `M1-TF-064` remain blocked. No tracefile observation provides
+Ferricov product compatibility evidence.
 
 The standalone diagnostics contract closes the M0 source inventory over the
 shared registry, symbol references, ignore/keep-going state machine, raw

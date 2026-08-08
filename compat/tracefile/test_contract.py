@@ -397,6 +397,10 @@ class TracefileContractTests(unittest.TestCase):
             "writer-legacy-repeat.canonical": ["M1-TF-010"],
             "writer-legacy-unknown.summary": ["M1-TF-010"],
             "writer-legacy-unknown.canonical": ["M1-TF-010"],
+            "writer-fixedpoint.two-write": ["M1-TF-045"],
+            "writer-legacy.two-write": ["M1-TF-045"],
+            "writer-permissive.two-write": ["M1-TF-045"],
+            "writer-ignored-error.two-write": ["M1-TF-045"],
             "writer-fixedpoint.repeated-write": ["M1-TF-046"],
             "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
             "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
@@ -409,7 +413,7 @@ class TracefileContractTests(unittest.TestCase):
             "gzip-valid.missing-gzip": ["M1-TF-060"],
         }
         observational_only = {
-            "writer-fixedpoint.canonical",  # M1-TF-045 blocked without true two-write cases
+            "writer-fixedpoint.canonical",
             "writer-non-utf8.canonical",
         }
         targets = {
@@ -439,7 +443,7 @@ class TracefileContractTests(unittest.TestCase):
             with self.subTest(case_id=case_id):
                 self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
                 self.assertNotIn("m0_decision_ids", targets[case_id])
-        # M1-TF-045 is observational only until true two-write Docker cases exist.
+        # M1-TF-045 is exact only through the four true two-write cases.
         for case_id in (
             "writer-fixedpoint.canonical",
             "permissive-prefix.canonical",
@@ -450,15 +454,14 @@ class TracefileContractTests(unittest.TestCase):
             ["M1-TF-016"],
         )
         exact = self.committed["totals"]["exact_executable_requirement_ids"]
-        # M1-TF-045 must remain unbound until true two-write cases exist.
-        self.assertNotIn("M1-TF-045", exact)
+        self.assertIn("M1-TF-045", exact)
         self.assertIn("M1-TF-010", exact)
         # SF-only writer non-utf8 remains observational; matrix is on bytes-non-utf8.
         writer_non_utf8 = targets["writer-non-utf8.canonical"]
         self.assertNotIn("requirement_ids", writer_non_utf8)
         self.assertIn("M1-TF-052", exact)
         self.assertIn("M1-TF-061", exact)
-        self.assertEqual(len(exact), 42)
+        self.assertEqual(len(exact), 43)
         self.assertFalse(self.committed["product_compatibility_evidence"])
 
 

@@ -1,7 +1,7 @@
 """Writer/converter/transport M0 Oracle fixtures and cases.
 
 Exact executable mappings for:
-  M1-TF-010, M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044,
+  M1-TF-010, M1-TF-041, M1-TF-042, M1-TF-043, M1-TF-044, M1-TF-045,
   M1-TF-046, M1-TF-050, M1-TF-051, M1-TF-052, M1-TF-060.
 
 Wave3 exact semantic closures (source-bound / field-matrix):
@@ -9,15 +9,17 @@ Wave3 exact semantic closures (source-bound / field-matrix):
   with independent XML/Python source semantic facts.
   M1-TF-061 on bytes-non-utf8.canonical current-form FNA field matrix.
 
-M1-TF-045 remains blocked/observational: retained single-write captures and
-validators do not yet bind true two-write Docker round-trip cases.
+  M1-TF-045 via four true two-write Docker round-trip observations.
+
+M1-TF-045 is exact only through the explicit `.two-write` cases; the retained
+single-write fixedpoint captures remain observational regression probes.
 
 Observational-only captures retained without exact mapping:
   writer-fixedpoint.canonical (and legacy/permissive/ignored-error TF-045 probes),
   writer-non-utf8.canonical (SF-only; matrix lives on bytes-non-utf8).
 
 Oracle evidence only. Product compatibility remains false.
-M1-TF-045 / M1-TF-063 / M1-TF-064 remain blocked.
+M1-TF-063 / M1-TF-064 remain blocked.
 """
 
 from __future__ import annotations
@@ -28,7 +30,7 @@ import io
 from corpus_model import Fixture, ascii_bytes
 
 WRITER_GROUP = "writer-tracefile"
-WRITER_REQUIREMENT_TEXT = "M1-TF-010/041/042/043/044/046/050/051/052/060 (+ observational TF-045 fixedpoint and SF-only 061 writer capture)"
+WRITER_REQUIREMENT_TEXT = "M1-TF-010/041/042/043/044/045/046/050/051/052/060 (+ observational SF-only 061 writer capture)"
 
 WRITER_FIXTURE_IDS = (
     "writer-order-core",
@@ -444,6 +446,7 @@ def _lcov_write(
     input_name: str = "input.info",
     additional_fixtures: dict[str, str] | None = None,
 ) -> dict[str, object]:
+    stage1_output_file = "output.info" if output_file == "output2.info" else output_file
     case: dict[str, object] = {
         "id": case_id,
         "fixture": fixture_path,
@@ -455,11 +458,21 @@ def _lcov_write(
             "--add-tracefile",
             input_name,
             "--output-file",
-            output_file,
+            stage1_output_file,
         ],
         "output_file": output_file,
         "expected_exit": expected_exit,
     }
+    if output_file == "output2.info":
+        case["two_write"] = True
+        case["stage2_argv"] = [
+            "lcov",
+            *flags,
+            "--add-tracefile",
+            "output.info",
+            "--output-file",
+            "output2.info",
+        ]
     if input_name != "input.info":
         case["input_name"] = input_name
     if additional_fixtures is not None:
@@ -537,6 +550,38 @@ def build_writer_oracle_cases() -> list[dict[str, object]]:
             "observational-blocked-tf045",
             "Observational single-write fixedpoint capture for blocked M1-TF-045 (true two-write round-trip not bound).",
             branch_mcdc,
+        ),
+        _lcov_write(
+            "writer-fixedpoint.two-write",
+            "fixtures/writer/fixedpoint.info",
+            "M1-TF-045",
+            "True two-write canonical fixedpoint: the second independent Docker write reads the first output.",
+            branch_mcdc,
+            output_file="output2.info",
+        ),
+        _lcov_write(
+            "writer-legacy.two-write",
+            "fixtures/legacy.info",
+            "M1-TF-045",
+            "True two-write legacy parse/write round-trip after current-form rewrite.",
+            [],
+            output_file="output2.info",
+        ),
+        _lcov_write(
+            "writer-permissive.two-write",
+            "fixtures/permissive-prefix.info",
+            "M1-TF-045",
+            "True two-write permissive parse/write round-trip.",
+            no_fn,
+            output_file="output2.info",
+        ),
+        _lcov_write(
+            "writer-ignored-error.two-write",
+            "fixtures/wave2/unknown-tags.info",
+            "M1-TF-045",
+            "True two-write ignored-error parse/write round-trip.",
+            ["--ignore-errors", "format", "--no-function-coverage"],
+            output_file="output2.info",
         ),
         _lcov_write(
             "writer-legacy-comma.canonical",
@@ -713,6 +758,10 @@ WRITER_CASE_IDS = (
     "writer-comments.canonical",
     "writer-forbidden.canonical",
     "writer-fixedpoint.canonical",
+    "writer-fixedpoint.two-write",
+    "writer-legacy.two-write",
+    "writer-permissive.two-write",
+    "writer-ignored-error.two-write",
     "writer-legacy-comma.canonical",
     "writer-legacy-repeat.canonical",
     "writer-legacy-unknown.summary",
@@ -741,6 +790,10 @@ WRITER_EXACT_REQUIREMENTS: dict[str, list[str]] = {
     "writer-legacy-unknown.summary": ["M1-TF-010"],
     "writer-legacy-unknown.canonical": ["M1-TF-010"],
     "writer-fixedpoint.repeated-write": ["M1-TF-046"],
+    "writer-fixedpoint.two-write": ["M1-TF-045"],
+    "writer-legacy.two-write": ["M1-TF-045"],
+    "writer-permissive.two-write": ["M1-TF-045"],
+    "writer-ignored-error.two-write": ["M1-TF-045"],
     "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
     "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
     "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],

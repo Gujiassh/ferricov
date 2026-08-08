@@ -10,7 +10,7 @@
     "locale": "C.UTF-8",
     "network": "none"
   },
-  "cases_sha256": "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0",
+  "cases_sha256": "c1dd062759db1eabfec567f22f906c34b6b549e91c63835b6284226f8200a734",
   "manifest_sha256": "2a3f890c87a6930d7704e999a7222fa6eb1d484d37b89c572bacd2cbf122d03c",
   "cases": [
     {
@@ -8864,6 +8864,546 @@
           "end_of_record": 1
         }
       }
+    },
+    {
+      "id": "writer-fixedpoint.two-write",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "fixture_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "0569a6a6107c19798f3bb4fbd43608c56c7e8ba86702c52e06e3483b323c49c6",
+        "byte_size": 360,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiA1MC4wJSAoMSBvZiAyIGxpbmVzKQogIGZ1bmN0aW9ucy4uLjogMTAwLjAlICgxIG9mIDEgZnVuY3Rpb24pCiAgYnJhbmNoZXMuLi4uOiA1MC4wJSAoMSBvZiAyIGJyYW5jaGVzKQogIGNvbmRpdGlvbnMuLjogNTAuMCUgKDEgb2YgMiBjb25kaXRpb25zcykKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output2.info",
+      "output": {
+        "exists": true,
+        "sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+        "byte_size": 171,
+        "base64": "VE46cwpTRjpzcmMvcy5jCkZOTDowLDEsMQpGTkE6MCwxLGYKRk5GOjEKRk5IOjEKQlJEQToxLDAsZSwxCkJSREE6MSwwLGUyLDAKQlJGOjIKQlJIOjEKTUNEQzoxLDEsdCwxLDAsYwpNQ0RDOjEsMSxmLDAsMCxjCk1DRjoyCk1DSDoxCkRBOjEsMQpEQToyLDAKTEY6MgpMSDoxCmVuZF9vZl9yZWNvcmQK",
+        "record_count": 19,
+        "record_counts": {
+          "BRDA": 2,
+          "BRF": 1,
+          "BRH": 1,
+          "DA": 2,
+          "FNA": 1,
+          "FNF": 1,
+          "FNH": 1,
+          "FNL": 1,
+          "LF": 1,
+          "LH": 1,
+          "MCDC": 2,
+          "MCF": 1,
+          "MCH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      },
+      "two_write": true,
+      "stages": [
+        {
+          "stage": "write1",
+          "input_name": "input.info",
+          "input_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+          "argv": [
+            "lcov",
+            "--branch-coverage",
+            "--mcdc-coverage",
+            "--add-tracefile",
+            "input.info",
+            "--output-file",
+            "output.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "142c098fa9bba1106ef785a638a39697766c6c34ccddc545c30e8415321b74b8",
+            "byte_size": 358,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogNTAuMCUgKDEgb2YgMiBsaW5lcykKICBmdW5jdGlvbnMuLi46IDEwMC4wJSAoMSBvZiAxIGZ1bmN0aW9uKQogIGJyYW5jaGVzLi4uLjogNTAuMCUgKDEgb2YgMiBicmFuY2hlcykKICBjb25kaXRpb25zLi46IDUwLjAlICgxIG9mIDIgY29uZGl0aW9uc3MpCk1lc3NhZ2Ugc3VtbWFyeToKICBubyBtZXNzYWdlcyB3ZXJlIHJlcG9ydGVkCg=="
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output.info",
+          "output": {
+            "exists": true,
+            "sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+            "byte_size": 171,
+            "base64": "VE46cwpTRjpzcmMvcy5jCkZOTDowLDEsMQpGTkE6MCwxLGYKRk5GOjEKRk5IOjEKQlJEQToxLDAsZSwxCkJSREE6MSwwLGUyLDAKQlJGOjIKQlJIOjEKTUNEQzoxLDEsdCwxLDAsYwpNQ0RDOjEsMSxmLDAsMCxjCk1DRjoyCk1DSDoxCkRBOjEsMQpEQToyLDAKTEY6MgpMSDoxCmVuZF9vZl9yZWNvcmQK",
+            "record_count": 19,
+            "record_counts": {
+              "BRDA": 2,
+              "BRF": 1,
+              "BRH": 1,
+              "DA": 2,
+              "FNA": 1,
+              "FNF": 1,
+              "FNH": 1,
+              "FNL": 1,
+              "LF": 1,
+              "LH": 1,
+              "MCDC": 2,
+              "MCF": 1,
+              "MCH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        },
+        {
+          "stage": "write2",
+          "input_name": "output.info",
+          "input_sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+          "argv": [
+            "lcov",
+            "--branch-coverage",
+            "--mcdc-coverage",
+            "--add-tracefile",
+            "output.info",
+            "--output-file",
+            "output2.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "0569a6a6107c19798f3bb4fbd43608c56c7e8ba86702c52e06e3483b323c49c6",
+            "byte_size": 360,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiA1MC4wJSAoMSBvZiAyIGxpbmVzKQogIGZ1bmN0aW9ucy4uLjogMTAwLjAlICgxIG9mIDEgZnVuY3Rpb24pCiAgYnJhbmNoZXMuLi4uOiA1MC4wJSAoMSBvZiAyIGJyYW5jaGVzKQogIGNvbmRpdGlvbnMuLjogNTAuMCUgKDEgb2YgMiBjb25kaXRpb25zcykKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output2.info",
+          "output": {
+            "exists": true,
+            "sha256": "f97dde419ce509bc010a17537eb32e55f56a72ab78ad3ecdca486daa571e4f11",
+            "byte_size": 171,
+            "base64": "VE46cwpTRjpzcmMvcy5jCkZOTDowLDEsMQpGTkE6MCwxLGYKRk5GOjEKRk5IOjEKQlJEQToxLDAsZSwxCkJSREE6MSwwLGUyLDAKQlJGOjIKQlJIOjEKTUNEQzoxLDEsdCwxLDAsYwpNQ0RDOjEsMSxmLDAsMCxjCk1DRjoyCk1DSDoxCkRBOjEsMQpEQToyLDAKTEY6MgpMSDoxCmVuZF9vZl9yZWNvcmQK",
+            "record_count": 19,
+            "record_counts": {
+              "BRDA": 2,
+              "BRF": 1,
+              "BRH": 1,
+              "DA": 2,
+              "FNA": 1,
+              "FNF": 1,
+              "FNH": 1,
+              "FNL": 1,
+              "LF": 1,
+              "LH": 1,
+              "MCDC": 2,
+              "MCF": 1,
+              "MCH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "writer-legacy.two-write",
+      "fixture": "fixtures/legacy.info",
+      "fixture_sha256": "745932bc7f184b6957001704592d344e201191c632bb697864fa64397b9c13be",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "5b2f19fc3cbc4061599eece7a1bdd40791a313a30f607a3ab9f3f2eb93a75577",
+        "byte_size": 277,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiA2Ni43JSAoMiBvZiAzIGxpbmVzKQogIGZ1bmN0aW9ucy4uLjogNTAuMCUgKDEgb2YgMiBmdW5jdGlvbnMpCk1lc3NhZ2Ugc3VtbWFyeToKICBubyBtZXNzYWdlcyB3ZXJlIHJlcG9ydGVkCg=="
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output2.info",
+      "output": {
+        "exists": true,
+        "sha256": "736c05d83e82d7c1a02ca7bce7616f23fa003e7b617068ec1dbabe050d5c547c",
+        "byte_size": 152,
+        "base64": "VE46bGVnYWN5ClNGOnNyYy9sZWdhY3kuYwpGTkw6MCwxMCwyMApGTkE6MCw0LGxlZ2FjeV9tYWluCkZOTDoxLDMwLDMwCkZOQToxLDAsbGVnYWN5X2hlbHBlcgpGTkY6MgpGTkg6MQpEQToxMCw0CkRBOjIwLDEKREE6MzAsMApMRjozCkxIOjIKZW5kX29mX3JlY29yZAo=",
+        "record_count": 14,
+        "record_counts": {
+          "DA": 3,
+          "FNA": 2,
+          "FNF": 1,
+          "FNH": 1,
+          "FNL": 2,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      },
+      "two_write": true,
+      "stages": [
+        {
+          "stage": "write1",
+          "input_name": "input.info",
+          "input_sha256": "745932bc7f184b6957001704592d344e201191c632bb697864fa64397b9c13be",
+          "argv": [
+            "lcov",
+            "--add-tracefile",
+            "input.info",
+            "--output-file",
+            "output.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "957ad61df6ee930118727ac68c676ad968e93e041a5a37bee41f6c7184b5c7e5",
+            "byte_size": 287,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogNjYuNyUgKDIgb2YgMyBsaW5lcykKICBmdW5jdGlvbnMuLi46IDUwLjAlICgxIG9mIDIgZnVuY3Rpb25zKQpNZXNzYWdlIHN1bW1hcnk6CiAgMSB3YXJuaW5nIG1lc3NhZ2U6CiAgICB1bnN1cHBvcnRlZDogMQo="
+          },
+          "stderr": {
+            "sha256": "54f50f86ddc2caadafd4f88971129f77eb943c19157e790f51cfaa0c787cc2d7",
+            "byte_size": 311,
+            "base64": "bGNvdjogV0FSTklORzogKHVuc3VwcG9ydGVkKSBGdW5jdGlvbiBiZWdpbi9lbmQgbGluZSBleGNsdXNpb25zIG5vdCBzdXBwb3J0ZWQgd2l0aCB0aGlzIHZlcnNpb24gb2YgR0NDL2djb3Y7IHJlcXVpcmUgZ2NjLzkgb3IgbmV3ZXI6IGF0dGVtcHRpbmcgdG8gZGVyaXZlIGZ1bmN0aW9uIGVuZCBsaW5lcyAtIHNlZSBsY292cmMgbWFuIGVudHJ5IGZvciAnZGVyaXZlX2Z1bmN0aW9uX2VuZF9saW5lJy4KCSh1c2UgImxjb3YgLS1pZ25vcmUtZXJyb3JzIHVuc3VwcG9ydGVkLHVuc3VwcG9ydGVkIC4uLiIgdG8gc3VwcHJlc3MgdGhpcyB3YXJuaW5nKQo="
+          },
+          "output_file": "output.info",
+          "output": {
+            "exists": true,
+            "sha256": "736c05d83e82d7c1a02ca7bce7616f23fa003e7b617068ec1dbabe050d5c547c",
+            "byte_size": 152,
+            "base64": "VE46bGVnYWN5ClNGOnNyYy9sZWdhY3kuYwpGTkw6MCwxMCwyMApGTkE6MCw0LGxlZ2FjeV9tYWluCkZOTDoxLDMwLDMwCkZOQToxLDAsbGVnYWN5X2hlbHBlcgpGTkY6MgpGTkg6MQpEQToxMCw0CkRBOjIwLDEKREE6MzAsMApMRjozCkxIOjIKZW5kX29mX3JlY29yZAo=",
+            "record_count": 14,
+            "record_counts": {
+              "DA": 3,
+              "FNA": 2,
+              "FNF": 1,
+              "FNH": 1,
+              "FNL": 2,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        },
+        {
+          "stage": "write2",
+          "input_name": "output.info",
+          "input_sha256": "736c05d83e82d7c1a02ca7bce7616f23fa003e7b617068ec1dbabe050d5c547c",
+          "argv": [
+            "lcov",
+            "--add-tracefile",
+            "output.info",
+            "--output-file",
+            "output2.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "5b2f19fc3cbc4061599eece7a1bdd40791a313a30f607a3ab9f3f2eb93a75577",
+            "byte_size": 277,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiA2Ni43JSAoMiBvZiAzIGxpbmVzKQogIGZ1bmN0aW9ucy4uLjogNTAuMCUgKDEgb2YgMiBmdW5jdGlvbnMpCk1lc3NhZ2Ugc3VtbWFyeToKICBubyBtZXNzYWdlcyB3ZXJlIHJlcG9ydGVkCg=="
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output2.info",
+          "output": {
+            "exists": true,
+            "sha256": "736c05d83e82d7c1a02ca7bce7616f23fa003e7b617068ec1dbabe050d5c547c",
+            "byte_size": 152,
+            "base64": "VE46bGVnYWN5ClNGOnNyYy9sZWdhY3kuYwpGTkw6MCwxMCwyMApGTkE6MCw0LGxlZ2FjeV9tYWluCkZOTDoxLDMwLDMwCkZOQToxLDAsbGVnYWN5X2hlbHBlcgpGTkY6MgpGTkg6MQpEQToxMCw0CkRBOjIwLDEKREE6MzAsMApMRjozCkxIOjIKZW5kX29mX3JlY29yZAo=",
+            "record_count": 14,
+            "record_counts": {
+              "DA": 3,
+              "FNA": 2,
+              "FNF": 1,
+              "FNH": 1,
+              "FNL": 2,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "writer-permissive.two-write",
+      "fixture": "fixtures/permissive-prefix.info",
+      "fixture_sha256": "11444e5f95896a2c9e17000a50e25e4128712218ec5338f2586ba9e5128c90a6",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "c7119482f06349d34f20a51adb8ce4282b5a22c9d06ccea95195ecc50e5d7105",
+        "byte_size": 236,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiAxMDAuMCUgKDEgb2YgMSBsaW5lKQpNZXNzYWdlIHN1bW1hcnk6CiAgbm8gbWVzc2FnZXMgd2VyZSByZXBvcnRlZAo="
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output2.info",
+      "output": {
+        "exists": true,
+        "sha256": "dd221b12a515aa5d04b503a722141d84206d2a824b8a4145877c0b5941a71384",
+        "byte_size": 60,
+        "base64": "VE46LGRpZmYKU0Y6c3JjL3Blcm1pc3NpdmUuYwpEQToxLDEKTEY6MQpMSDoxCmVuZF9vZl9yZWNvcmQK",
+        "record_count": 6,
+        "record_counts": {
+          "DA": 1,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      },
+      "two_write": true,
+      "stages": [
+        {
+          "stage": "write1",
+          "input_name": "input.info",
+          "input_sha256": "11444e5f95896a2c9e17000a50e25e4128712218ec5338f2586ba9e5128c90a6",
+          "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "input.info",
+            "--output-file",
+            "output.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "1556837d07b98f4c002a3c159e0c1a9c0737476c710c151d0c620dab49067bb0",
+            "byte_size": 234,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgxIG9mIDEgbGluZSkKTWVzc2FnZSBzdW1tYXJ5OgogIG5vIG1lc3NhZ2VzIHdlcmUgcmVwb3J0ZWQK"
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output.info",
+          "output": {
+            "exists": true,
+            "sha256": "dd221b12a515aa5d04b503a722141d84206d2a824b8a4145877c0b5941a71384",
+            "byte_size": 60,
+            "base64": "VE46LGRpZmYKU0Y6c3JjL3Blcm1pc3NpdmUuYwpEQToxLDEKTEY6MQpMSDoxCmVuZF9vZl9yZWNvcmQK",
+            "record_count": 6,
+            "record_counts": {
+              "DA": 1,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        },
+        {
+          "stage": "write2",
+          "input_name": "output.info",
+          "input_sha256": "dd221b12a515aa5d04b503a722141d84206d2a824b8a4145877c0b5941a71384",
+          "argv": [
+            "lcov",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "output.info",
+            "--output-file",
+            "output2.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "c7119482f06349d34f20a51adb8ce4282b5a22c9d06ccea95195ecc50e5d7105",
+            "byte_size": 236,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiAxMDAuMCUgKDEgb2YgMSBsaW5lKQpNZXNzYWdlIHN1bW1hcnk6CiAgbm8gbWVzc2FnZXMgd2VyZSByZXBvcnRlZAo="
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output2.info",
+          "output": {
+            "exists": true,
+            "sha256": "dd221b12a515aa5d04b503a722141d84206d2a824b8a4145877c0b5941a71384",
+            "byte_size": 60,
+            "base64": "VE46LGRpZmYKU0Y6c3JjL3Blcm1pc3NpdmUuYwpEQToxLDEKTEY6MQpMSDoxCmVuZF9vZl9yZWNvcmQK",
+            "record_count": 6,
+            "record_counts": {
+              "DA": 1,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "writer-ignored-error.two-write",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "fixture_sha256": "6662cffb19b9ed0be91baabe7cebac6d8d9273ae5c84409d5a7a86ad9a51f973",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "exit_status": 0,
+      "stdout": {
+        "sha256": "c7119482f06349d34f20a51adb8ce4282b5a22c9d06ccea95195ecc50e5d7105",
+        "byte_size": 236,
+        "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiAxMDAuMCUgKDEgb2YgMSBsaW5lKQpNZXNzYWdlIHN1bW1hcnk6CiAgbm8gbWVzc2FnZXMgd2VyZSByZXBvcnRlZAo="
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_size": 0,
+        "base64": ""
+      },
+      "output_file": "output2.info",
+      "output": {
+        "exists": true,
+        "sha256": "b91a3782de552af5c34cc7fa4abb270d8fea4133b59dfa18cbacedcd38361f14",
+        "byte_size": 47,
+        "base64": "VE46dQpTRjpzcmMvdS5jCkRBOjEsMQpMRjoxCkxIOjEKZW5kX29mX3JlY29yZAo=",
+        "record_count": 6,
+        "record_counts": {
+          "DA": 1,
+          "LF": 1,
+          "LH": 1,
+          "SF": 1,
+          "TN": 1,
+          "end_of_record": 1
+        }
+      },
+      "two_write": true,
+      "stages": [
+        {
+          "stage": "write1",
+          "input_name": "input.info",
+          "input_sha256": "6662cffb19b9ed0be91baabe7cebac6d8d9273ae5c84409d5a7a86ad9a51f973",
+          "argv": [
+            "lcov",
+            "--ignore-errors",
+            "format",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "input.info",
+            "--output-file",
+            "output.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "cae9ac432c6e950fc667aae2233e40d6d5b8fb7d5a65227dd1e2dc714368ceb7",
+            "byte_size": 242,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBpbnB1dC5pbmZvLgpXcml0aW5nIGRhdGEgdG8gb3V0cHV0LmluZm8KU3VtbWFyeSBjb3ZlcmFnZSByYXRlOgogIHNvdXJjZSBmaWxlczogMQogIGxpbmVzLi4uLi4uLjogMTAwLjAlICgxIG9mIDEgbGluZSkKTWVzc2FnZSBzdW1tYXJ5OgogIDIgd2FybmluZyBtZXNzYWdlczoKICAgIGZvcm1hdDogMgo="
+          },
+          "stderr": {
+            "sha256": "46dbb5e4ac3c4c7b70b30e58359c33477d09c889b5ffaa67467c71a86830ec75",
+            "byte_size": 228,
+            "base64": "bGNvdjogV0FSTklORzogKGZvcm1hdCkgImlucHV0LmluZm8iOjM6IHVuZXhwZWN0ZWQgLmluZm8gZmlsZSByZWNvcmQgJ1REOmRlc2MnCgkodXNlICJsY292IC0taWdub3JlLWVycm9ycyBmb3JtYXQsZm9ybWF0IC4uLiIgdG8gc3VwcHJlc3MgdGhpcyB3YXJuaW5nKQpsY292OiBXQVJOSU5HOiAoZm9ybWF0KSAiaW5wdXQuaW5mbyI6NDogdW5leHBlY3RlZCAuaW5mbyBmaWxlIHJlY29yZCAnWlo6eCcK"
+          },
+          "output_file": "output.info",
+          "output": {
+            "exists": true,
+            "sha256": "b91a3782de552af5c34cc7fa4abb270d8fea4133b59dfa18cbacedcd38361f14",
+            "byte_size": 47,
+            "base64": "VE46dQpTRjpzcmMvdS5jCkRBOjEsMQpMRjoxCkxIOjEKZW5kX29mX3JlY29yZAo=",
+            "record_count": 6,
+            "record_counts": {
+              "DA": 1,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        },
+        {
+          "stage": "write2",
+          "input_name": "output.info",
+          "input_sha256": "b91a3782de552af5c34cc7fa4abb270d8fea4133b59dfa18cbacedcd38361f14",
+          "argv": [
+            "lcov",
+            "--ignore-errors",
+            "format",
+            "--no-function-coverage",
+            "--add-tracefile",
+            "output.info",
+            "--output-file",
+            "output2.info"
+          ],
+          "exit_status": 0,
+          "stdout": {
+            "sha256": "c7119482f06349d34f20a51adb8ce4282b5a22c9d06ccea95195ecc50e5d7105",
+            "byte_size": 236,
+            "base64": "Q29tYmluaW5nIHRyYWNlZmlsZXMuCi4uIGZvdW5kIDEgZmlsZXMgdG8gYWdncmVnYXRlLgpSZWFkaW5nIHRyYWNlZmlsZSBvdXRwdXQuaW5mby4KV3JpdGluZyBkYXRhIHRvIG91dHB1dDIuaW5mbwpTdW1tYXJ5IGNvdmVyYWdlIHJhdGU6CiAgc291cmNlIGZpbGVzOiAxCiAgbGluZXMuLi4uLi4uOiAxMDAuMCUgKDEgb2YgMSBsaW5lKQpNZXNzYWdlIHN1bW1hcnk6CiAgbm8gbWVzc2FnZXMgd2VyZSByZXBvcnRlZAo="
+          },
+          "stderr": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_size": 0,
+            "base64": ""
+          },
+          "output_file": "output2.info",
+          "output": {
+            "exists": true,
+            "sha256": "b91a3782de552af5c34cc7fa4abb270d8fea4133b59dfa18cbacedcd38361f14",
+            "byte_size": 47,
+            "base64": "VE46dQpTRjpzcmMvdS5jCkRBOjEsMQpMRjoxCkxIOjEKZW5kX29mX3JlY29yZAo=",
+            "record_count": 6,
+            "record_counts": {
+              "DA": 1,
+              "LF": 1,
+              "LH": 1,
+              "SF": 1,
+              "TN": 1,
+              "end_of_record": 1
+            }
+          }
+        }
+      ]
     },
     {
       "id": "writer-legacy-comma.canonical",

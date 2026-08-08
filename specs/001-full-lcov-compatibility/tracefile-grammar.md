@@ -17,7 +17,7 @@ blocked by the gates in [plan.md](plan.md), [tasks.md](tasks.md), and the
 The M0 source and evidence inventory is now executable at
 `compat/tracefile/v2.5.json`. It closes over all 20 known record tags, two
 lexical rules, 15 reader matcher lines, 18 writer emission lines, 140 fixtures,
-21 per-record malformed fixtures, and 275 retained Oracle observations, including
+21 per-record malformed fixtures, and 279 retained Oracle observations, including
 VER, state-ownership, function, branch, numeric/error/checksum probes, the TF-030
 exact numeric matrix, 28 semantic snapshots, wave-1/wave-2 reader probes, and
 writer/converter/transport probes with the inspect_model.pl runner. That inventory
@@ -694,12 +694,12 @@ and two independent statuses:
   `not_applicable`, or `blocked`.
 
 The generated tracefile contract records exact structured executable mappings
-for these 42 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
+for these 43 M1 IDs; `compat/fixtures/m0-tracefiles/oracle-cases.json` supplies the
 source bindings:
 
 `M1-TF-001` through `M1-TF-010`, `M1-TF-011` through `M1-TF-016`, `M1-TF-020`
 through `M1-TF-028`, `M1-TF-030` through `M1-TF-036`, `M1-TF-041` through
-`M1-TF-044`, `M1-TF-046`, `M1-TF-050` through `M1-TF-052`, `M1-TF-060`, and `M1-TF-061`.
+`M1-TF-044` through `M1-TF-046`, `M1-TF-050` through `M1-TF-052`, `M1-TF-060`, and `M1-TF-061`.
 `M1-TF-030` is mapped through the 56-row four-family exact atom matrix and
 row-level semantic validators as Oracle-only evidence.
 
@@ -716,11 +716,12 @@ renumbering, semantic snapshots, and retained Oracle identities.
 `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` remain bound through the
 state-ownership fixture group and the same inspector runner; the contract also
 records `M0-TF-TN-MCDC-001` and `M0-TF-MCDC-SF-001`. Writer/converter probes bind
-`M1-TF-041`–`044`/`046`/`050`–`052`/`060`/`061` as Oracle-only evidence. Wave-3 exact
-closures cover source-bound converter no-loss and the non-ASCII field matrix; remaining
-blocked identities (no true two-write TF-045 round-trip bound) are:
+`M1-TF-041`–`046`/`050`–`052`/`060`/`061` as Oracle-only evidence. Wave-3 exact
+closures cover source-bound converter no-loss, the non-ASCII field matrix, and
+four chained two-write fixed-point cases for `M1-TF-045`; remaining blocked
+identities are:
 
-`M1-TF-045`, `M1-TF-063`, and `M1-TF-064`.
+`M1-TF-063` and `M1-TF-064`.
 
 
 

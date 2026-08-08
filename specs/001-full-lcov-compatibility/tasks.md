@@ -38,7 +38,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 275 Oracle observations.
+  standalone fail-closed contract bound to 279 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -73,12 +73,12 @@ is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
 15 reader matcher lines, all 18 writer emission lines, 140 retained fixtures,
-and 21 per-record malformed fixtures. Its 275 Oracle observations are
-reference-only. Exact legacy/writer mappings now cover 22 cases for
-`M1-TF-010`, `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`;
-`M1-TF-045` remains observational until true two-write corpora exist, while
-`M1-TF-063` and `064` remain blocked. Product compatibility evidence remains
-false and M1 implementation remains unauthorized.
+and 21 per-record malformed fixtures. Its 279 Oracle observations are
+reference-only. Exact legacy/writer mappings now cover 26 cases for
+`M1-TF-010`, `M1-TF-041..045`, `046`, `050..052`, `060`, and `061`; the four
+TF-045 members now have true chained two-write Docker evidence. `M1-TF-063`
+and `064` remain blocked. Product compatibility evidence remains false and M1
+implementation remains unauthorized.
 
 The TF-030 exact numeric matrix module defined in
 `reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been implemented on

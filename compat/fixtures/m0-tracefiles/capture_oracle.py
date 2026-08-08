@@ -18,8 +18,8 @@ import generate
 ROOT = Path(__file__).resolve().parent
 CANONICAL_BASELINE_PATH = ROOT / "oracle-baseline.json"
 CANONICAL_CASES_PATH = ROOT / "oracle-cases.json"
-EXPECTED_MERGE_BASELINE_SHA256 = "b271c78b128451a44c1487945d578feea6ec29ccbb4fea3403fc48c643bee89e"
-EXPECTED_CASES_SHA256 = "9809ff8690dcfa79668db2ecdb2324aaec591038903ff2c1915d02fc763019b0"
+EXPECTED_MERGE_BASELINE_SHA256 = "01590cad21ba17297e0257c9d586e7687afe86be7ab86a557610edbd89684e27"
+EXPECTED_CASES_SHA256 = "c1dd062759db1eabfec567f22f906c34b6b549e91c63835b6284226f8200a734"
 RAW_OUTPUT_LIMIT = 256 * 1024
 MODEL_INSPECTOR = ROOT / "inspect_model.pl"
 MODEL_INSPECTOR_NAME = "inspect_model.pl"
@@ -167,6 +167,39 @@ def case_input_name(case: dict[str, object]) -> str:
     return name
 
 
+def docker_command(
+    argv: list[object],
+    work: Path,
+    image: str,
+    case_env: dict[str, str] | None,
+) -> list[str]:
+    command = [
+        "docker", "run", "--rm", "--network", "none",
+        "--user", f"{os.getuid()}:{os.getgid()}",
+        "--env", "HOME=/tmp", "--env", "LC_ALL=C.UTF-8", "--env", "LANG=C.UTF-8",
+    ]
+    if case_env is not None:
+        for key in sorted(case_env):
+            command.extend(["--env", f"{key}={case_env[key]}"])
+    argv_head = str(argv[0]) if argv else ""
+    if argv_head == "sh":
+        command.extend(
+            [
+                "--volume", f"{work}:/work", "--workdir", "/work",
+                "--entrypoint", "sh", image,
+                *[str(value) for value in argv[1:]],
+            ]
+        )
+    else:
+        command.extend(
+            [
+                "--volume", f"{work}:/work", "--workdir", "/work", image,
+                *[str(value) for value in argv],
+            ]
+        )
+    return command
+
+
 def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="ferricov-m0-oracle-case-") as raw_work:
         work = Path(raw_work)
@@ -209,31 +242,7 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             plan_raw, _plan_doc = load_strict_numeric_plan(plan_source)
             (work / Path(plan_name).name).write_bytes(plan_raw)
         case_env = normalize_case_environment(case)
-        command = [
-            "docker", "run", "--rm", "--network", "none",
-            "--user", f"{os.getuid()}:{os.getgid()}",
-            "--env", "HOME=/tmp", "--env", "LC_ALL=C.UTF-8", "--env", "LANG=C.UTF-8",
-        ]
-        if case_env is not None:
-            for key in sorted(case_env):
-                command.extend(["--env", f"{key}={case_env[key]}"])
-        argv_head = str(case["argv"][0]) if case.get("argv") else ""
-        if argv_head == "sh":
-            # Shell-wrapped cases need an explicit entrypoint; image default is lcov.
-            command.extend(
-                [
-                    "--volume", f"{work}:/work", "--workdir", "/work",
-                    "--entrypoint", "sh", image,
-                    *[str(value) for value in case["argv"][1:]],
-                ]
-            )
-        else:
-            command.extend(
-                [
-                    "--volume", f"{work}:/work", "--workdir", "/work", image,
-                    *[str(value) for value in case["argv"]],
-                ]
-            )
+        command = docker_command(case["argv"], work, image, case_env)
         # Hash the exact bytes mounted into the container before execution.
         fixture_sha256 = hashlib.sha256((work / input_name).read_bytes()).hexdigest()
         additional_fixture_sha256 = {
@@ -245,6 +254,52 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             validate_semantic_json(result.stdout, str(case["id"]))
         output_file = case.get("output_file")
         output = output_identity(work / str(output_file)) if output_file else {"exists": False}
+        stages: list[dict[str, object]] = []
+        if case.get("two_write"):
+            stage2_argv = case.get("stage2_argv")
+            if not isinstance(stage2_argv, list) or not stage2_argv:
+                raise SystemExit(f"{case['id']}: two-write stage2_argv missing")
+            stage1_output_path = work / "output.info"
+            stage1_output = output_identity(stage1_output_path)
+            if result.returncode != 0 or not stage1_output.get("exists"):
+                raise SystemExit(f"{case['id']}: stage1 did not produce output for two-write capture")
+            stages.append(
+                {
+                    "stage": "write1",
+                    "input_name": input_name,
+                    "input_sha256": fixture_sha256,
+                    "argv": case["argv"],
+                    "exit_status": result.returncode,
+                    "stdout": byte_identity(result.stdout),
+                    "stderr": byte_identity(result.stderr),
+                    "output_file": "output.info",
+                    "output": stage1_output,
+                }
+            )
+            stage2_input_sha256 = hashlib.sha256(stage1_output_path.read_bytes()).hexdigest()
+            stage2_command = docker_command(stage2_argv, work, image, case_env)
+            stage2_result = subprocess.run(
+                stage2_command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+            stage2_output = output_identity(work / "output2.info")
+            stages.append(
+                {
+                    "stage": "write2",
+                    "input_name": "output.info",
+                    "input_sha256": stage2_input_sha256,
+                    "argv": stage2_argv,
+                    "exit_status": stage2_result.returncode,
+                    "stdout": byte_identity(stage2_result.stdout),
+                    "stderr": byte_identity(stage2_result.stderr),
+                    "output_file": "output2.info",
+                    "output": stage2_output,
+                }
+            )
+            result = stage2_result
+            output = stage2_output
         observation: dict[str, object] = {
             "id": case["id"],
             "fixture": case["fixture"],
@@ -256,6 +311,9 @@ def run_case(case: dict[str, object], generated_root: Path, image: str) -> dict[
             "output_file": output_file,
             "output": output,
         }
+        if stages:
+            observation["two_write"] = True
+            observation["stages"] = stages
         if case_env is not None:
             observation["environment"] = dict(case_env)
         if additional_fixtures:

@@ -613,21 +613,20 @@ def assert_writer_non_utf8_observational(output: bytes, label: str) -> None:
 # ---------------------------------------------------------------------------
 # Wave3 semantic closures (M1-TF-045 / 052 / 061)
 # M1-TF-052 / M1-TF-061 may exact-bind when independent source/field models hold.
-# M1-TF-045 validators remain observational only: they check retained single-write
-# outputs and mutations but do NOT authorize an exact executable mapping until
-# true two-write Docker round-trip cases are captured and bound.
+# M1-TF-045 has exact evidence through the four explicit two-write cases below.
+# The retained single-write probes remain observational regression coverage and
+# do not independently bind the requirement.
 # ---------------------------------------------------------------------------
 
 import re as _re
 import xml.etree.ElementTree as _ET
 
-# M1-TF-045 observational probes across four corpora (NOT exact-bound).
-# Each member loads an independent input model from fixture bytes and compares
-# it to the retained single-write output model. A second parse of the same
-# output is not a second write; keep M1-TF-045 blocked until two-write cases exist.
+# M1-TF-045 retained single-write probes (NOT exact-bound individually).
+# The exact requirement binding is carried by TF045_TWO_WRITE_CASE_IDS.
 TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     "canonical": {
         "case_id": "writer-fixedpoint.canonical",
+        "two_write_case_id": "writer-fixedpoint.two-write",
         "fixture_path": "fixtures/writer/fixedpoint.info",
         "expected_output": (
             b"TN:s\nSF:src/s.c\nFNL:0,1,1\nFNA:0,1,f\nFNF:1\nFNH:1\n"
@@ -639,6 +638,7 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     },
     "legacy": {
         "case_id": "legacy.canonical",
+        "two_write_case_id": "writer-legacy.two-write",
         "fixture_path": "fixtures/legacy.info",
         "expected_output": (
             b"TN:legacy\nSF:src/legacy.c\n"
@@ -652,6 +652,7 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     },
     "permissive": {
         "case_id": "permissive-prefix.canonical",
+        "two_write_case_id": "writer-permissive.two-write",
         "fixture_path": "fixtures/permissive-prefix.info",
         "expected_output": (
             b"TN:,diff\nSF:src/permissive.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
@@ -660,6 +661,7 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
     },
     "ignored_error": {
         "case_id": "wave2-unknown-tags.ignore-format",
+        "two_write_case_id": "writer-ignored-error.two-write",
         "fixture_path": "fixtures/wave2/unknown-tags.info",
         "expected_output": b"TN:u\nSF:src/u.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n",
         "kind": "ignored_error",
@@ -668,6 +670,9 @@ TF045_CORPUS_MEMBERS: dict[str, dict[str, object]] = {
 TF045_REQUIRED_MEMBERS = frozenset(TF045_CORPUS_MEMBERS)
 TF045_CASE_IDS = frozenset(
     str(member["case_id"]) for member in TF045_CORPUS_MEMBERS.values()
+)
+TF045_TWO_WRITE_CASE_IDS = frozenset(
+    str(member["two_write_case_id"]) for member in TF045_CORPUS_MEMBERS.values()
 )
 
 def assert_tf010_legacy_output(
@@ -1056,6 +1061,66 @@ def assert_tf045_group_completeness(
         assert_tf045_member_semantics(output, member_name, f"{label}.{case_id}")
         present.add(member_name)
     require(present == TF045_REQUIRED_MEMBERS, f"{label}: incomplete corpus group {present!r}")
+
+
+def assert_tf045_two_write_observation(
+    observation: dict[str, object],
+    member_name: str,
+    decode_output,
+    label: str,
+) -> None:
+    """Validate a real two-stage Docker write chain for one TF-045 member."""
+    require(member_name in TF045_CORPUS_MEMBERS, f"{label}: unknown member")
+    require(observation.get("two_write") is True, f"{label}: two_write marker")
+    stages = observation.get("stages")
+    require(isinstance(stages, list) and len(stages) == 2, f"{label}: exactly two stages required")
+    stage1, stage2 = stages
+    require(isinstance(stage1, dict) and isinstance(stage2, dict), f"{label}: stage shape")
+    require([stage1.get("stage"), stage2.get("stage")] == ["write1", "write2"], f"{label}: stage order")
+    require(stage1.get("input_name") == "input.info", f"{label}: stage1 input name")
+    require(stage1.get("output_file") == "output.info", f"{label}: stage1 output name")
+    require(stage2.get("input_name") == "output.info", f"{label}: stage2 input name")
+    require(stage2.get("output_file") == "output2.info", f"{label}: stage2 output name")
+    require(stage1.get("exit_status") == 0 and stage2.get("exit_status") == 0, f"{label}: stage exit")
+    require(stage1.get("argv", [])[:1] == ["lcov"], f"{label}: stage1 argv")
+    require(stage2.get("argv", [])[:1] == ["lcov"], f"{label}: stage2 argv")
+    require(stage1.get("argv", [])[-3:] == ["input.info", "--output-file", "output.info"], f"{label}: stage1 output argv")
+    require(stage2.get("argv", [])[-3:] == ["output.info", "--output-file", "output2.info"], f"{label}: stage2 output argv")
+    for index, stage in enumerate((stage1, stage2), start=1):
+        for field in ("stdout", "stderr", "output"):
+            identity = stage.get(field)
+            require(isinstance(identity, dict), f"{label}: stage{index} {field} shape")
+            verify_identity(identity, f"{label}: stage{index} {field}")
+            assert_identity_self_hash(identity, f"{label}: stage{index} {field}")
+        require(stage["output"].get("exists") is True, f"{label}: stage{index} output exists")
+    require(stage1["input_sha256"] == observation["fixture_sha256"], f"{label}: stage1 input binding")
+    require(stage2["input_sha256"] == stage1["output"]["sha256"], f"{label}: stage2 input binding")
+    first = decode_output(stage1["output"], f"{label}.write1.output")
+    second = decode_output(stage2["output"], f"{label}.write2.output")
+    require(first == second, f"{label}: two-write output is not byte fixed-point")
+    expected = TF045_CORPUS_MEMBERS[member_name]["expected_output"]
+    require(second == expected, f"{label}: final output snapshot drift")
+    input_model = load_tf045_input_model(member_name, f"{label}.input")
+    assert_tf045_input_to_output_preservation(
+        input_model, parse_tracefile_sections(first), member_name, f"{label}.semantic"
+    )
+    require(observation.get("output", {}).get("sha256") == stage2["output"]["sha256"], f"{label}: top-level output mirror")
+
+
+def assert_tf045_two_write_group_completeness(
+    observed_by_id: dict[str, dict[str, object]],
+    decode_output,
+    label: str = "M1-TF-045",
+) -> None:
+    present = set()
+    for member_name, member in TF045_CORPUS_MEMBERS.items():
+        case_id = str(member["two_write_case_id"])
+        require(case_id in observed_by_id, f"{label}: missing {case_id}")
+        assert_tf045_two_write_observation(
+            observed_by_id[case_id], member_name, decode_output, f"{label}.{case_id}"
+        )
+        present.add(member_name)
+    require(present == TF045_REQUIRED_MEMBERS, f"{label}: incomplete two-write group")
 
 
 def derive_tf052_source_facts() -> dict[str, object]:

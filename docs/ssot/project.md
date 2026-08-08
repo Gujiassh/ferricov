@@ -96,14 +96,13 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 140 fixtures, 21 per-record malformed inputs, and 275
+  emission lines, 140 fixtures, 21 per-record malformed inputs, and 279
   retained Oracle observations. Reader/framing/state and
-  writer/converter mappings include 22 exact legacy/writer cases for
-  `M1-TF-010`, `M1-TF-041..044`, `046`, `050..052`, `060`, and `061`; the
-  retained fixed-point capture remains observational because `M1-TF-045` lacks
-  true two-write Docker corpora. `M1-TF-063` and `M1-TF-064` remain blocked,
-  product compatibility evidence remains false, and M1 implementation remains
-  unauthorized.
+  writer/converter mappings include 26 exact legacy/writer cases for
+  `M1-TF-010`, `M1-TF-041..045`, `M1-TF-046`, `M1-TF-050..052`, `M1-TF-060`,
+  and `M1-TF-061`; the four-member TF-045 two-write Docker group is now bound.
+  `M1-TF-063` and `M1-TF-064` remain blocked, product compatibility evidence
+  remains false, and M1 implementation remains unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
   rules, four unclassified surfaces, ten command exit policies, and 206

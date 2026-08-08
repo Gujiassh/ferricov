@@ -4067,6 +4067,110 @@
       "expected_exit": 0
     },
     {
+      "id": "writer-fixedpoint.two-write",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write canonical fixedpoint: the second independent Docker write reads the first output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-legacy.two-write",
+      "fixture": "fixtures/legacy.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write legacy parse/write round-trip after current-form rewrite.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-permissive.two-write",
+      "fixture": "fixtures/permissive-prefix.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write permissive parse/write round-trip.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-ignored-error.two-write",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write ignored-error parse/write round-trip.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
       "id": "writer-legacy-comma.canonical",
       "fixture": "fixtures/writer/legacy-comma-name.info",
       "requirement": "M1-TF-010",
