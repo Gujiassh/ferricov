@@ -29554,13 +29554,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for support-script.analyzeinfofiles: support-script boundary `analyzeInfoFiles` invocation/input boundary from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed compatibility plan for the support-script.analyzeinfofiles boundary: the invocation/input boundary runs the installed `analyzeInfoFiles` utility over two tracefile inputs and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.support-script.analyzeinfofiles",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "install_manifest",
@@ -29575,7 +29575,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-analyze-info-files",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
       "surface": "installation",
       "targets": [
         {
@@ -29598,13 +29603,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for support-script.annotateutil-pm: support-script boundary `annotateutil.pm` invocation/input boundary from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed compatibility plan for the support-script.annotateutil-pm boundary: the invocation/input boundary invokes the installed Perl module through its exported `compute_md5` helper and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.support-script.annotateutil-pm",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "install_manifest",
@@ -29619,7 +29624,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-annotateutil-compute-md5",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
       "surface": "installation",
       "targets": [
         {
@@ -29847,13 +29857,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for support-script.get-signature: support-script boundary `get_signature` invocation/input boundary from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed compatibility plan for the support-script.get-signature boundary: the invocation/input boundary runs the installed MD5 version callback against a committed source fixture and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.support-script.get-signature",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "install_manifest",
@@ -29868,7 +29878,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-get-signature",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
       "surface": "installation",
       "targets": [
         {
@@ -33250,14 +33265,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 523,
+      "none": 520,
       "pass": 0,
-      "planned": 48
+      "planned": 51
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 401,
-      "unreviewed": 170
+      "reviewed": 404,
+      "unreviewed": 167
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33268,9 +33283,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 361,
+    "reviewed_primary_coverage": 364,
     "subjects": 35,
-    "uncovered_public_entries": 170
+    "uncovered_public_entries": 167
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

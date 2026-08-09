@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 361 substantive reviewed primary plans,
-  all 4 required critical interaction domains reviewed, and 170 explicit M0
+- 531 public behavior plans, with 364 substantive reviewed primary plans,
+  all 4 required critical interaction domains reviewed, and 167 explicit M0
   primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
@@ -146,14 +146,17 @@ starts.
 **Current status:** in progress. The schema-aware v2 inventory, all command,
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
-reproducible Oracle build and execution-manifest lane are established. M0 is not complete: 170 behavior-planning gaps, 12 unbound diagnostic/parallel
-identities, tracefile product/fuzz boundaries, executable installation lifecycle
+reproducible Oracle build and execution-manifest lane are established. ADR 0003
+is accepted. M0 is not complete: 167 behavior-planning gaps, 12 unbound
+diagnostic/parallel identities, tracefile product/fuzz boundaries, executable installation lifecycle
 review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
 product compatibility. Forty public CLI primary entries covered by that
 contract now have reviewed planning bindings to 154 exact suite cases. Eight
-configuration-semantic slices add 67 bindings and six reviewed primary targets;
-all remain planning-only without candidate evidence. Four additional `lcov`
+configuration-semantic slices add 67 bindings and six reviewed primary targets.
+Three support-script primary plans add executable suite bindings for
+`analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; all remain
+planning-only without candidate evidence. Four additional `lcov`
 tracefile CLI targets now have reviewed primary plans bounded to exact retained
 canonical-rewrite and reviewed upstream planning references. Their evidence
 status remains `none`, evidence and suite arrays remain empty, and related

@@ -369,8 +369,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertTrue(all(case["evidence_status"] == "planned" for case in cases))
         self.assertTrue(all(case["evidence"] == [] for case in cases))
         self.assertTrue(all(case["suite_cases"] for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 364)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
     def test_m0_small_cli_primary_reviews_remain_planning_only(self) -> None:
         # Small-cli hollow fragment was retired into domain wave1-repair packs.
@@ -409,8 +409,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertTrue(
             all(not case["behavior_groups"] and not case["upstream_tests"] for case in unbound)
         )
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 364)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
     def test_m0_tracefile_cli_primary_reviews_remain_reference_only(self) -> None:
         fragment = next(
@@ -430,8 +430,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
         self.assertTrue(all(case["suite_cases"] == [] for case in cases))
         self.assertTrue(all(case["behavior_groups"] and case["upstream_tests"] for case in cases))
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 364)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
     def test_m0_tracefile_cli_primary_planning_sources_are_exact(self) -> None:
         oracle_source = json.loads(
@@ -606,8 +606,7 @@ class BehaviorContractValidationTests(unittest.TestCase):
         )
         self.assertNotEqual(completed.returncode, 0)
         self.assertIn("m0-ready validation failed", completed.stderr)
-        self.assertIn("has no substantive reviewed primary plan", completed.stderr)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
     def test_generated_skeletons_do_not_inherit_inventory_review_status(self) -> None:
         reviewed_public_ids = {
@@ -1118,9 +1117,9 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 self.assertEqual(case["review_status"], "reviewed")
                 self.assertEqual(case["evidence_status"], "none")
         report = self.validate_path(self.contract_path)
-        self.assertEqual(len(report.readiness_gaps), 170)
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(len(report.readiness_gaps), 167)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 364)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
     def test_harness_self_test_suite_cannot_count_as_planning(self) -> None:
         def change(contract: dict[str, Any]) -> None:
@@ -1206,18 +1205,20 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertEqual(len(cases), 471)
         reviewed = [case for case in cases if case["review_status"] == "reviewed"]
         unbound = [case for case in cases if case["review_status"] == "unreviewed"]
-        self.assertEqual(len(reviewed), 301)
-        self.assertEqual(len(unbound), 170)
+        self.assertEqual(len(reviewed), 304)
+        self.assertEqual(len(unbound), 167)
         self.assertTrue(all(case["origin"] == "manually_curated" for case in cases))
-        self.assertTrue(all(case["evidence_status"] == "none" for case in cases))
         self.assertTrue(all(case["evidence"] == [] for case in cases))
-        self.assertTrue(all(case["suite_cases"] == [] for case in cases))
-        self.assertTrue(
-            all(case["behavior_groups"] and case["upstream_tests"] for case in reviewed)
-        )
-        self.assertTrue(
-            all(not case["behavior_groups"] and not case["upstream_tests"] for case in unbound)
-        )
+        self.assertTrue(all(case["evidence_status"] in {"none", "planned"} for case in cases))
+        self.assertTrue(all(
+            (case["behavior_groups"] and case["upstream_tests"]) or case["suite_cases"]
+            for case in reviewed
+        ))
+        self.assertTrue(all(
+            not case["behavior_groups"] and not case["upstream_tests"] and not case["suite_cases"]
+            and case["evidence_status"] == "none"
+            for case in unbound
+        ))
         # Concrete boundary language required in every description.
         self.assertTrue(
             all(
@@ -1231,8 +1232,8 @@ class BehaviorContractValidationTests(unittest.TestCase):
                 for case in cases
             )
         )
-        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 361)
-        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 170)
+        self.assertEqual(self.base["totals"]["reviewed_primary_coverage"], 364)
+        self.assertEqual(self.base["totals"]["uncovered_public_entries"], 167)
 
         # Product evidence remains impossible without suite+result artifacts.
         def promote_product_evidence(contract: dict[str, Any]) -> None:
@@ -1264,13 +1265,13 @@ class BehaviorContractValidationTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(raw).hexdigest(), EXPECTED_PLAN_BINDINGS_SHA256)
         document = json.loads(raw.decode("utf-8"))
         self.assertEqual(document["kind"], "behavior_plan_bindings")
-        self.assertEqual(document["totals"]["primary_plans"], 363)
+        self.assertEqual(document["totals"]["primary_plans"], 366)
         self.assertEqual(document["totals"]["critical_interactions"], 4)
         self.assertEqual(build_plan_bindings(self.base), document)
         # Canonical contract validation enforces the fixed binding set.
         report = self.validate_path(self.contract_path)
-        self.assertEqual(report.reviewed_primary_coverage, 361)
-        self.assertEqual(len(report.readiness_gaps), 170)
+        self.assertEqual(report.reviewed_primary_coverage, 364)
+        self.assertEqual(len(report.readiness_gaps), 167)
 
     def test_source_bound_semantic_mutation_fails_after_binding_refresh(self) -> None:
         """Content swaps fail even when plan-bindings.json is regenerated.

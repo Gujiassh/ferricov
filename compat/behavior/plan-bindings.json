@@ -14945,6 +14945,66 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "suite-bound:support-script.analyzeinfofiles",
+      "description_sha256": "e7070748d22b3ed9362b05b2d60c66064be7e12b20601e586de2ebf14056e817",
+      "id": "case.acceptance.support-script.analyzeinfofiles",
+      "primary_targets": [
+        "support-script.analyzeinfofiles"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/analyzeInfoFiles",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-analyze-info-files",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "suite-bound:support-script.annotateutil-pm",
+      "description_sha256": "5ee342e2534cba567479927a3711003f262332f73de129b79f03424c0944d1d8",
+      "id": "case.acceptance.support-script.annotateutil-pm",
+      "primary_targets": [
+        "support-script.annotateutil-pm"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/annotateutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-annotateutil-compute-md5",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "support-script.batch-git-version"
       ],
@@ -15072,6 +15132,36 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "suite-bound:support-script.get-signature",
+      "description_sha256": "6fa95de9065a77836c1359e756d2ba619c7a0abab4a3c613c76f92f72b18fa01",
+      "id": "case.acceptance.support-script.get-signature",
+      "primary_targets": [
+        "support-script.get-signature"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/get_signature",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-get-signature",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -15643,7 +15733,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 363
+    "primary_plans": 366
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

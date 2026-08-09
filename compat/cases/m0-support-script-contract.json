@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-support-script-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-support-analyze-info-files",
+      "surface": "installation",
+      "command": "analyzeInfoFiles",
+      "arguments": ["one.info", "two.info"],
+      "fixture": "compat/fixtures/m0-support-script-contract/analyze-info",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-support-annotateutil-compute-md5",
+      "surface": "installation",
+      "command": "perl",
+      "arguments": [
+        "-I/usr/local/share/lcov/support-scripts",
+        "-MFile::Spec",
+        "-Mannotateutil",
+        "-e",
+        "print annotateutil::compute_md5($ARGV[0]), \"\\n\"",
+        "sample.txt"
+      ],
+      "fixture": "compat/fixtures/m0-support-script-contract/annotateutil",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-support-get-signature",
+      "surface": "installation",
+      "command": "get_signature",
+      "arguments": ["sample.txt"],
+      "fixture": "compat/fixtures/m0-support-script-contract/signature",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

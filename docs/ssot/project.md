@@ -139,9 +139,11 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 363 projections; 361 substantive primary plans are
-  reviewed and 170 explicit M0 gaps remain. Product evidence remains empty and
-  no compatibility claim is made.
+  independently seal 366 projections; 364 substantive primary plans are
+  reviewed and 167 explicit M0 gaps remain. The first support-script planning
+  suite covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature` with
+  executable pinned-Oracle argv checks. Product evidence remains empty and no
+  compatibility claim is made.
 - `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
   Oracle-only coverage-model algebra contract with 157 cases across 27
   fixtures, binding rows `M1-MD-010..014`, `M1-MD-017`, and `M1-MD-019` through
@@ -149,8 +151,9 @@ the M0 harness become the permanent integration boundary.
   `M1-TF-064` remain blocked; this does not authorize Rust model/parser work.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
-- ADR 0003 separates Oracle, compiler capture, and release platform matrices.
-  The Oracle lane now has a two-build no-cache reproducibility check, locked
+- ADR 0003 is accepted and separates Oracle, compiler capture, and release
+  platform matrices. The Oracle lane has a two-build no-cache reproducibility
+  check, locked
   package and installed-tree closures, and a runtime-validated execution
   manifest. The portable verifier binds all post-build probes to the immutable
   image ID in that run's manifest; the `v2.5` tag is only a convenience alias.

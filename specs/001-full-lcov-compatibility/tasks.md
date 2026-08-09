@@ -126,9 +126,10 @@ Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
 Behavior planning covers all 531 public entries with primary plans. Three
-hundred sixty-one substantive primary plans are reviewed with fixed source and
-interaction bindings; 170 explicit M0 gaps remain. Forty CLI entries bind 154
-exact suite cases, eight configuration slices bind 67 cases, and the tracefile,
+hundred sixty-four substantive primary plans are reviewed with 366 fixed source
+and interaction projections; 167 explicit M0 gaps remain. Forty CLI entries
+bind 154 exact suite cases, eight configuration slices bind 67 cases, and three
+support-script entries bind executable planning cases. The tracefile,
 small-tool, and `lcovrc` slices remain planning-only. Product evidence stays
 empty and the current M0 readiness gate remains blocked. The raw Oracle
 correctness baseline is complete and replayed, but remains reference-only and
@@ -186,7 +187,7 @@ does not unlock product parity.
 
 - [x] No candidate inventory entry remains unclassified.
 - [ ] Every public behavior has a planned case group.
-- [ ] Callback/runtime and compiler-matrix decisions are accepted.
+- [x] Callback/runtime and compiler-matrix decisions are accepted.
 - [x] Upstream correctness and performance baselines are reproducible from a
   clean checkout; the independent 148-case correctness replay passes semantic
   comparison.
