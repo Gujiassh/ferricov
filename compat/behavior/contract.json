@@ -25011,13 +25011,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-header: config-key boundary `genhtml_header = <value>` from `#genhtml_header = Coverage report for my project`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-header: boundary `genhtml_header = Ferricov Header Probe` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; the header changes the exact report tree to dd905f60222c6bbee4d49a3cf9bf2ca6f806a25eccc826fdc641b66143053e2b. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-header",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25032,7 +25032,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-header",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25143,13 +25152,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-html-epilog: config-key boundary `genhtml_html_epilog = <FILE>` from `#genhtml_html_epilog = FILE`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-html-epilog: boundary `genhtml_html_epilog = /work/epilog.html` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; the epilog marker changes the exact report tree to 1369bd3bb49513c1155be6debd60d2d16d6e7420b5ea45b546dc60a84d2568ca. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-html-epilog",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25164,7 +25173,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-html-epilog",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25187,13 +25205,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-html-extension: config-key boundary `genhtml_html_extension = <html>` from `#genhtml_html_extension = html`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-html-extension: boundary `genhtml_html_extension = xhtml` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; the xhtml extension changes names and links, yielding tree 8b7ece3a9252b116da96543759c4e4c3d1def60ae8ee272433582de06ad02a73. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-html-extension",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25208,7 +25226,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-html-extension",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25231,13 +25258,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-html-gzip: config-key boundary `genhtml_html_gzip = <0|1>` from `#genhtml_html_gzip = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-html-gzip: boundary `genhtml_html_gzip = 1` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; gzip produces 27 output files and exact tree 61ca7006bcf456919d0ebde34291db0605bb6ab2e8ab77cadcdb7d03677034b3. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-html-gzip",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25252,7 +25279,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-html-gzip",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25275,13 +25311,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-html-prolog: config-key boundary `genhtml_html_prolog = <FILE>` from `#genhtml_html_prolog = FILE`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-html-prolog: boundary `genhtml_html_prolog = /work/prolog.html` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; the prolog marker changes the exact report tree to 7537b712392045180f090622fcdf855b81fdc79b2f5a49c6fcf2e964bfc608e1. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-html-prolog",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25296,7 +25332,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-html-prolog",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25363,13 +25408,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-legend: config-key boundary `genhtml_legend = <0|1>` from `genhtml_legend = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-legend: boundary `genhtml_legend = 1` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; the legend changes the exact report tree to cc0d5c3ce4c4206abf7d1335b8c881c9ba518013273f02e9c976712de3cca54e. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-legend",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25384,7 +25429,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-legend",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25879,13 +25933,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-no-source: config-key boundary `genhtml_no_source = <0|1>` from `genhtml_no_source = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-no-source: boundary `genhtml_no_source = 1` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; no-source reduces output from 26 to 23 files and yields tree d379b35ac10155127c6dd9c0bf473d535bfc4c959532cf06a4a3dfe282ac91b5. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-no-source",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25900,7 +25954,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-no-source",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25923,13 +25986,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-num-spaces: config-key boundary `genhtml_num_spaces = <int>` from `genhtml_num_spaces = 8`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-num-spaces: boundary `genhtml_num_spaces = 2` uses a SOURCE_DATE_EPOCH-pinned genhtml run compares the nondefault config with a shared control; tab expansion width 2 changes the exact report tree to 5bf70dc8b7b36740587c8629d3eea41e7ce43e5724fe7771916b63b7a271901c. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-num-spaces",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25944,7 +26007,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-num-spaces",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-output-control",
+          "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -33406,14 +33478,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 495,
+      "none": 487,
       "pass": 0,
-      "planned": 76
+      "planned": 84
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 429,
-      "unreviewed": 142
+      "reviewed": 437,
+      "unreviewed": 134
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33424,9 +33496,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 389,
+    "reviewed_primary_coverage": 397,
     "subjects": 35,
-    "uncovered_public_entries": 142
+    "uncovered_public_entries": 134
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

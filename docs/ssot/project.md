@@ -139,12 +139,13 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 391 projections; 389 substantive primary plans are
-  reviewed and 142 explicit M0 gaps remain. The support-script planning suite
+  independently seal 399 projections; 397 substantive primary plans are
+  reviewed and 134 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
-  `perl2lcov` residuals, five trace-operation `lcov` cases, and two `lcovrc`
-  list-format cases. Their argv is executable on the pinned Oracle. Product
+  `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
+  list-format cases, and eight deterministic `genhtml` output-config cases.
+  Their argv is executable on the pinned Oracle. Product
   evidence remains empty and no compatibility claim is made.
 - `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
   Oracle-only coverage-model algebra contract with 157 cases across 27
