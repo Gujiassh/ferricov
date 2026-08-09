@@ -11650,6 +11650,30 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--debug",
+      "description_sha256": "aa0dbb5d80c9e0b2b199a1b408f61e4b58a38964f9764f226fadfa6b94c9b014",
+      "id": "case.acceptance.command.perl2lcov.option.debug",
+      "primary_targets": [
+        "command.perl2lcov.option.debug"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-debug",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.demangling",
         "genhtml.diagnostics-and-config",
@@ -11764,6 +11788,30 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--fail-under-branches <value>",
+      "description_sha256": "a5869116a6dd07aea806932c36f051555ddddcbc33d30d8ca14fc3fb01e480d9",
+      "id": "case.acceptance.command.perl2lcov.option.fail-under-branches",
+      "primary_targets": [
+        "command.perl2lcov.option.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-fail-under-branches",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -11915,6 +11963,30 @@
         {
           "case_id": "m0-posix-shared-perl2lcov-rc-exact",
           "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--history-script <value>",
+      "description_sha256": "6920764b3d9a0116fba0fff258e536f1ee0bc1e974f17cec63ad5551fd75ac99",
+      "id": "case.acceptance.command.perl2lcov.option.history-script",
+      "primary_targets": [
+        "command.perl2lcov.option.history-script"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-history-script",
+          "suite_id": "m0-perl2lcov-contract"
         }
       ],
       "upstream_tests": []
@@ -12111,6 +12183,34 @@
       "upstream_tests": [
         "tests/genhtml/simple/script.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--no-checksum",
+      "description_sha256": "9f9d19c4f21b6e9b182c3c4a28cc64d67aab32e1c450d75691f54ddbe998d8b6",
+      "id": "case.acceptance.command.perl2lcov.option.no-checksum",
+      "primary_targets": [
+        "command.perl2lcov.option.no-checksum"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-checksum-control",
+          "suite_id": "m0-perl2lcov-contract"
+        },
+        {
+          "case_id": "m0-perl2lcov-no-checksum",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -12612,6 +12712,30 @@
         "tests/py2lcov/py2lcov.sh",
         "tests/xml2lcov/xml2lcov.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "<cover_db>",
+      "description_sha256": "ce6432fae69b16fa459e452b3da4212f88e2eb13c892692dedc5db401bd082aa",
+      "id": "case.acceptance.command.perl2lcov.positional.cover-db",
+      "primary_targets": [
+        "command.perl2lcov.positional.cover-db"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 168,
+          "path": "bin/perl2lcov",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-cover-db-positional",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [],
@@ -16129,7 +16253,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 379
+    "primary_plans": 384
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

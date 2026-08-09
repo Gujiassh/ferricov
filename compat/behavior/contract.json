@@ -19306,13 +19306,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.perl2lcov.option.debug: cli-option boundary `--debug` is accepted while translating a real Devel::Cover database and produces the same 142-byte tracefile with no extra diagnostics for this path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.perl2lcov.option.debug",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -19321,7 +19321,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-debug",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -19536,13 +19541,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.option.fail-under-branches: cli-option boundary `--fail-under-branches <value>` from `\"fail-under-branches=s\" => \\$fail_under_branches,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.perl2lcov.option.fail-under-branches: cli-option boundary `--fail-under-branches <value>` evaluates a real 50 percent branch result against threshold 75, writes the tracefile, reports the failed criterion, and exits nonzero. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.perl2lcov.option.fail-under-branches",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -19551,7 +19556,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-fail-under-branches",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -19823,13 +19833,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.perl2lcov.option.history-script: cli-option boundary `--history-script <value>` loads a committed Perl callback whose constructor writes a marker before translating the real coverage database. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.perl2lcov.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -19838,7 +19848,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-history-script",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -20187,13 +20202,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.option.no-checksum: cli-option boundary `--no-checksum` from `\"no-checksum\" => \\$rc_no_checksum,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.perl2lcov.option.no-checksum: cli-option boundary `--no-checksum` overrides `--checksum`; the same real coverage database writes a 142-byte checksum-free tracefile instead of the 188-byte checksum form. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.perl2lcov.option.no-checksum",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -20202,7 +20217,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-checksum-control",
+          "suite_id": "m0-perl2lcov-contract"
+        },
+        {
+          "case_id": "m0-perl2lcov-no-checksum",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -20421,7 +20445,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Unbound source-bound plan for command.perl2lcov.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. A real greater-than-50-file Oracle probe reaches parallel filtering but leaves a randomized filter_dat directory and enters volatile parent/fork/child failure paths. No approved filesystem normalizer or stable compatibility suite binds this entry; it remains unreviewed and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.perl2lcov.option.preserve",
@@ -21087,13 +21111,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.perl2lcov.positional.cover-db: cli-positional boundary `<cover_db>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.perl2lcov.positional.cover-db: cli-positional boundary `<cover_db>` reads a committed Devel::Cover database and writes the default 142-byte `perlcov.info` tracefile. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.perl2lcov.positional.cover-db",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -21102,7 +21126,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-perl2lcov-cover-db-positional",
+          "suite_id": "m0-perl2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33330,14 +33359,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 507,
+      "none": 502,
       "pass": 0,
-      "planned": 64
+      "planned": 69
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 417,
-      "unreviewed": 154
+      "reviewed": 422,
+      "unreviewed": 149
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33348,9 +33377,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 377,
+    "reviewed_primary_coverage": 382,
     "subjects": 35,
-    "uncovered_public_entries": 154
+    "uncovered_public_entries": 149
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

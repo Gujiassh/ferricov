@@ -6,6 +6,9 @@ compat/fixtures/m0-tracefiles/fixtures/**/*.info binary
 compat/fixtures/m0-tracefiles/fixtures/**/*.info.gz binary
 compat/fixtures/m0-tracefiles/corpus_wave1.py whitespace=-blank-at-eol,-blank-at-eof
 
+# Devel::Cover database fixtures are opaque Storable evidence.
+compat/fixtures/m0-perl2lcov-contract/coverdb/** binary
+
 # Retained Oracle streams are byte evidence, not formatted text.
 compat/correctness/baselines/**/*.bin binary
 compat/resources/results/**/*.bin binary
