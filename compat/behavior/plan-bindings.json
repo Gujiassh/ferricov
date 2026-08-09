@@ -15158,6 +15158,74 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "lcov_list_full_path = 1",
+      "description_sha256": "0a62aa26e2e645cd6e1a0d1cc14220b5eff9aa3f1469556392363a193cd057bf",
+      "id": "case.acceptance.lcovrc.lcov-list-full-path",
+      "primary_targets": [
+        "lcovrc.lcov-list-full-path"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 192,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 302,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-list-control",
+          "suite_id": "m0-lcovrc-list-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-list-full-path",
+          "suite_id": "m0-lcovrc-list-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "lcov_list_width = 50",
+      "description_sha256": "d4941a8be05e41c574359ef2756070edd82afb5cdad6cd67e73bfac2a35ea4b4",
+      "id": "case.acceptance.lcovrc.lcov-list-width",
+      "primary_targets": [
+        "lcovrc.lcov-list-width"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 193,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 306,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-list-control",
+          "suite_id": "m0-lcovrc-list-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-list-width",
+          "suite_id": "m0-lcovrc-list-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "lcov.capture-and-filter"
       ],
@@ -16503,7 +16571,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 389
+    "primary_plans": 391
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

@@ -27815,13 +27815,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-list-full-path: config-key boundary `lcov_list_full_path = <0|1>` from `lcov_list_full_path = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config plan for lcovrc.lcov-list-full-path: config boundary `lcov_list_full_path = 1` is compared with the default control and expands list output from 687 to 1275 bytes by printing full source paths. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.lcov-list-full-path",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27836,7 +27836,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-list-control",
+          "suite_id": "m0-lcovrc-list-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-list-full-path",
+          "suite_id": "m0-lcovrc-list-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27859,7 +27868,7 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-list-truncate-max: config-key boundary `lcov_list_truncate_max = <int>` from `lcov_list_truncate_max = 20`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Unbound source-bound plan for lcovrc.lcov-list-truncate-max: config boundary `lcov_list_truncate_max = <value>` was probed with long-path fixtures at widths 50 and 80, but value 0 remained byte-identical to the control value 20. No stable differential fixture currently binds this entry; it remains unreviewed and claims no Ferricov product evidence.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.lcovrc.lcov-list-truncate-max",
@@ -27903,13 +27912,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-list-width: config-key boundary `lcov_list_width = <int>` from `lcov_list_width = 80`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config plan for lcovrc.lcov-list-width: config boundary `lcov_list_width = 50` is compared with the width-80 control and contracts list output from 687 to 389 bytes with deterministic filename truncation. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.lcov-list-width",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27924,7 +27933,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-list-control",
+          "suite_id": "m0-lcovrc-list-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-list-width",
+          "suite_id": "m0-lcovrc-list-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -33388,14 +33406,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 497,
+      "none": 495,
       "pass": 0,
-      "planned": 74
+      "planned": 76
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 427,
-      "unreviewed": 144
+      "reviewed": 429,
+      "unreviewed": 142
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33406,9 +33424,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 387,
+    "reviewed_primary_coverage": 389,
     "subjects": 35,
-    "uncovered_public_entries": 144
+    "uncovered_public_entries": 142
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

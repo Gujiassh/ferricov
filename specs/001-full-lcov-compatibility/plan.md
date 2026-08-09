@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 387 substantive reviewed primary plans,
-  all 4 required critical interaction domains reviewed, and 144 explicit M0
+- 531 public behavior plans, with 389 substantive reviewed primary plans,
+  all 4 required critical interaction domains reviewed, and 142 explicit M0
   primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
@@ -147,7 +147,7 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. ADR 0003
-is accepted. M0 is not complete: 144 behavior-planning gaps, 12 unbound
+is accepted. M0 is not complete: 142 behavior-planning gaps, 12 unbound
 diagnostic/parallel identities, tracefile product/fuzz boundaries, executable installation lifecycle
 review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
@@ -158,7 +158,8 @@ Three support-script primary plans add executable suite bindings for
 `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; all remain
 planning-only without candidate evidence. Eighteen command primary plans bind
 executable `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, `perl2lcov`, and five
-trace-operation `lcov` cases; `perl2lcov --preserve` remains unbound because its true parallel path leaves a
+trace-operation `lcov` cases plus two `lcovrc` list-format plans;
+`perl2lcov --preserve` remains unbound because its true parallel path leaves a
 randomized temp tree without an approved normalizer. Four additional `lcov`
 tracefile CLI targets now have reviewed primary plans bounded to exact retained
 canonical-rewrite and reviewed upstream planning references. Their evidence

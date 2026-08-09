@@ -6,22 +6,23 @@ Status: active ledger
 
 The behavior contract covers all 531 public inventory entries with primary
 plans. After the support-script, small-command, `llvm2lcov`, and `perl2lcov`
-suite waves plus five trace-operation `lcov` cases, 387 primary plans are
-substantive and reviewed; 144 remain explicit M0 planning gaps. Product
+suite waves, five trace-operation `lcov` cases, and two `lcovrc` list-format
+cases, 389 primary plans are substantive and reviewed; 142 remain explicit M0
+planning gaps. Product
 compatibility evidence remains absent.
 
 The remaining gaps partition exactly as follows:
 
 | Lane | Remaining | Authored ownership |
 | --- | ---: | --- |
-| `lcovrc` consumer semantics | 100 | `m0-lcovrc-wave1-repair-a.json` through `d.json` |
+| `lcovrc` consumer semantics | 98 | responsibility-split `m0-lcovrc-*.json` fragments |
 | command options and positionals | 44 | command-owned `m0-*-wave1-repair-*.json` fragments |
 | support scripts | 0 | `m0-support-wave1-repair-a.json` |
 
 The command lane consists of 27 `genhtml`, 9 `geninfo`, 7 capture/reset-oriented
 `lcov` entries, and the unbound `perl2lcov --preserve` entry. The other
 `genpng`, `gendesc`, `py2lcov`, `llvm2lcov`, `perl2lcov`, and trace-operation
-`lcov` residuals are closed. The totals reconcile to `100 + 44 = 144`.
+`lcov` residuals are closed. The totals reconcile to `98 + 44 = 142`.
 
 ## Closure Rule
 
