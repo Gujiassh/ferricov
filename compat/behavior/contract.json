@@ -12335,13 +12335,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.debug: cli-option boundary `--debug` reads and rewrites a committed tracefile while adding the Oracle debug memory line to stderr. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.debug",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -12368,7 +12368,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-debug",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -12865,13 +12870,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.extract: cli-option boundary `--extract <value>` from `\"extract|e=s\"        => \\$lcovutil::lcov_extract,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.extract: cli-option boundary `--extract <value>` keeps `/work/foo.c`, removes `/work/bar.c`, and writes the filtered tracefile for pattern `*/foo.c`. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.extract",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -12898,7 +12903,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-extract",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -13586,13 +13596,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.history-script: cli-option boundary `--history-script <value>` loads a committed Perl callback whose constructor writes a marker before rewriting the tracefile. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -13619,7 +13629,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-history-script",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -14580,13 +14595,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.no-checksum: cli-option boundary `--no-checksum` from `\"no-checksum\" => \\$rc_no_checksum,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.no-checksum: cli-option boundary `--no-checksum` overrides `--checksum`; the positive control writes a 286-byte checksummed tracefile while the paired case writes the 217-byte checksum-free form. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.no-checksum",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -14637,7 +14652,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-checksum-control",
+          "suite_id": "m0-lcov-operation-contract"
+        },
+        {
+          "case_id": "m0-lcov-no-checksum",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -15465,13 +15489,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.prune-tests: cli-option boundary `--prune-tests` from `\"prune-tests\"       => \\$prune_testcases,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.prune-tests: cli-option boundary `--prune-tests` reads a tracefile containing contributing and empty testcase data and writes the 11-byte retained-input list. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.prune-tests",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -15510,7 +15534,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-prune-tests",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33359,14 +33388,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 502,
+      "none": 497,
       "pass": 0,
-      "planned": 69
+      "planned": 74
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 422,
-      "unreviewed": 149
+      "reviewed": 427,
+      "unreviewed": 144
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33377,9 +33406,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 382,
+    "reviewed_primary_coverage": 387,
     "subjects": 35,
-    "uncovered_public_entries": 149
+    "uncovered_public_entries": 144
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

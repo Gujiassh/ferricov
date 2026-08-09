@@ -7335,6 +7335,48 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--debug",
+      "description_sha256": "c35aea64881018eb0d609b2e2117ea44ad25c3a1731c7d8b6fc175bee295d7ff",
+      "id": "case.acceptance.command.lcov.option.debug",
+      "primary_targets": [
+        "command.lcov.option.debug"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 165,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 1334,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 13,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-debug",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential",
@@ -7606,6 +7648,48 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--extract <value>",
+      "description_sha256": "dffd6d3e31d28aa90a2f5cdfd3cd076e70970897ce12fbc7fb8d9284da6c866a",
+      "id": "case.acceptance.command.lcov.option.extract",
+      "primary_targets": [
+        "command.lcov.option.extract"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 200,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 101,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 868,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 26,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-extract",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -8066,6 +8150,48 @@
         {
           "case_id": "m0-posix-shared-single-dash-long-preserved",
           "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--history-script <value>",
+      "description_sha256": "02df82eb359395562a70554d62872537201e4464fb28bb846bc647c0afab23a3",
+      "id": "case.acceptance.command.lcov.option.history-script",
+      "primary_targets": [
+        "command.lcov.option.history-script"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 52,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 481,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 484,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-history-script",
+          "suite_id": "m0-lcov-operation-contract"
         }
       ],
       "upstream_tests": []
@@ -8706,6 +8832,76 @@
       "upstream_tests": []
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--no-checksum",
+      "description_sha256": "2b3245d9afc39ca5acda7c524e679b42a2af450005afb63b981cec1d8ff8d569",
+      "id": "case.acceptance.command.lcov.option.no-checksum",
+      "primary_targets": [
+        "command.lcov.option.no-checksum"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 34,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 88,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 104,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 113,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 349,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 354,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 52,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-checksum-control",
+          "suite_id": "m0-lcov-operation-contract"
+        },
+        {
+          "case_id": "m0-lcov-no-checksum",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "lcov.operations-and-packages"
       ],
@@ -9263,6 +9459,60 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/extract/extract.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--prune-tests",
+      "description_sha256": "959a07036ce885a044e906935dcd87216b2df622f21fc73d1d13aa15cc75825a",
+      "id": "case.acceptance.command.lcov.option.prune-tests",
+      "primary_targets": [
+        "command.lcov.option.prune-tests"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 226,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 82,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 737,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 761,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 859,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 30,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-prune-tests",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [],
@@ -16253,7 +16503,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 384
+    "primary_plans": 389
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

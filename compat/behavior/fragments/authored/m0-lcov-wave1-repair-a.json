@@ -723,13 +723,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.debug: cli-option boundary `--debug` reads and rewrites a committed tracefile while adding the Oracle debug memory line to stderr. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.debug",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -756,7 +756,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-debug",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -1253,13 +1258,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.extract: cli-option boundary `--extract <value>` from `\"extract|e=s\"        => \\$lcovutil::lcov_extract,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.extract: cli-option boundary `--extract <value>` keeps `/work/foo.c`, removes `/work/bar.c`, and writes the filtered tracefile for pattern `*/foo.c`. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.extract",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -1286,7 +1291,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-extract",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -1819,13 +1829,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.lcov.option.history-script: cli-option boundary `--history-script <value>` loads a committed Perl callback whose constructor writes a marker before rewriting the tracefile. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -1852,7 +1862,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-history-script",
+          "suite_id": "m0-lcov-operation-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
