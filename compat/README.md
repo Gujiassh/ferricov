@@ -164,8 +164,10 @@ cargo run -p ferricov-oracle --bin differential -- \
 This suite is marked `harness_self_test` and cannot count as compatibility
 evidence. A suite marked `compatibility` rejects reference and candidate
 launchers that resolve to the same executable SHA-256, even when the launcher
-name or container image differs. Each run uses a fresh working directory,
-receives an independent fixture copy, and retains actual implementation
+name or container image differs. Docker launchers keep the container root
+read-only and set `TMPDIR=/work`, the fresh per-case writable mount, so tools
+that initialize temporary files can run without inheriting host storage. Each
+run receives an independent fixture copy and retains actual implementation
 identities, raw stdout, stderr, exit status, timings, and a file tree with
 content hashes, raw path bytes, Unix metadata, and hardlink relationships.
 

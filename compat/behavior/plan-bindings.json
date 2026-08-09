@@ -10407,6 +10407,30 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--debug",
+      "description_sha256": "4891dc1b9832346b482fe20f016d84e743a7c3b015fd632d0ee84a9cf8fe1077",
+      "id": "case.acceptance.command.llvm2lcov.option.debug",
+      "primary_targets": [
+        "command.llvm2lcov.option.debug"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-debug",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.demangling",
         "genhtml.diagnostics-and-config",
@@ -10517,6 +10541,30 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--fail-under-branches <value>",
+      "description_sha256": "171427a3b8c5685bf6136e74e51245778879b6ef10e8746ad41b387c673d17be",
+      "id": "case.acceptance.command.llvm2lcov.option.fail-under-branches",
+      "primary_targets": [
+        "command.llvm2lcov.option.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-fail-under-branches",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -10666,6 +10714,30 @@
         {
           "case_id": "m0-posix-shared-llvm2lcov-rc-exact",
           "suite_id": "m0-cli-contract-posix"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--history-script <value>",
+      "description_sha256": "c2c6e7309aee90dcfd6c4a35e888453c346fc686e9f0efca23834b03f93dab44",
+      "id": "case.acceptance.command.llvm2lcov.option.history-script",
+      "primary_targets": [
+        "command.llvm2lcov.option.history-script"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-history-script",
+          "suite_id": "m0-llvm2lcov-contract"
         }
       ],
       "upstream_tests": []
@@ -10876,6 +10948,30 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--no-checksum",
+      "description_sha256": "3a1b28d626110388bc18258b7a6c9ce60bc87c684ee8d04d7a34d78c8b3553c8",
+      "id": "case.acceptance.command.llvm2lcov.option.no-checksum",
+      "primary_targets": [
+        "command.llvm2lcov.option.no-checksum"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-no-checksum",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.tracefile-synthesis"
       ],
@@ -10922,6 +11018,30 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--output-filename <value>",
+      "description_sha256": "fc33bef9786cd0b4764db11ad8838eb59bb6402c5ec5baf13fb8c581a3238aac",
+      "id": "case.acceptance.command.llvm2lcov.option.output-filename",
+      "primary_targets": [
+        "command.llvm2lcov.option.output-filename"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 546,
+          "path": "bin/llvm2lcov",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-output-filename",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.report-options",
@@ -10947,6 +11067,30 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--preserve",
+      "description_sha256": "311fb18c8dbf969e15eab259eed3489b990f1635e7f67bdb245ca4eb39495349",
+      "id": "case.acceptance.command.llvm2lcov.option.preserve",
+      "primary_targets": [
+        "command.llvm2lcov.option.preserve"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-preserve",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -11302,6 +11446,30 @@
         "tests/genhtml/exception/exception.sh",
         "tests/lcov/mcdc/mcdc.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "<json_file>",
+      "description_sha256": "ad3adc43afb1817da67c4ad38ee7f87b5593546f54141547ca12f4ef82402acd",
+      "id": "case.acceptance.command.llvm2lcov.positional.json-file",
+      "primary_targets": [
+        "command.llvm2lcov.positional.json-file"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 553,
+          "path": "bin/llvm2lcov",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-json-file-positional",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -15961,7 +16129,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 372
+    "primary_plans": 379
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

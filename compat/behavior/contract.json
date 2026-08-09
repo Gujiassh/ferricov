@@ -17189,13 +17189,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.debug: cli-option boundary `--debug` is accepted on a successful JSON conversion and produces no additional stream or filesystem differences for this path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.debug",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -17204,7 +17204,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-debug",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -17415,13 +17420,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.fail-under-branches: cli-option boundary `--fail-under-branches <value>` from `\"fail-under-branches=s\" => \\$fail_under_branches,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.fail-under-branches: cli-option boundary `--fail-under-branches <value>` evaluates a real 50 percent branch result against threshold 75, writes the tracefile, reports the failed criterion, and exits nonzero. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.fail-under-branches",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -17430,7 +17435,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-fail-under-branches",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -17700,13 +17710,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.history-script: cli-option boundary `--history-script <value>` loads a committed Perl callback whose constructor writes a marker before successful conversion. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -17715,7 +17725,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-history-script",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -18076,13 +18091,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.no-checksum: cli-option boundary `--no-checksum` from `\"no-checksum\" => \\$rc_no_checksum,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.no-checksum: cli-option boundary `--no-checksum` is paired with `--checksum`, but this LLVM JSON writer path never emits line checksums under either setting. The exact suite preserves that bounded option no-op while comparing exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.no-checksum",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -18091,7 +18106,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-no-checksum",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -18198,13 +18218,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.output-filename: cli-option boundary `--output-filename <value>` from `'output-filename|o=s' => \\$output_filename,);`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.output-filename: cli-option boundary `--output-filename <value>` writes the translated tracefile to the requested path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.output-filename",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -18213,7 +18233,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-output-filename",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -18282,13 +18307,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.option.preserve: cli-option boundary `--preserve` is combined with filtering, parallelism, and an explicit temp root; this bounded path creates no intermediate artifact to retain and only writes the requested tracefile. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.option.preserve",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -18297,7 +18322,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-preserve",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -18922,13 +18952,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.llvm2lcov.positional.json-file: cli-positional boundary `<json_file>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.llvm2lcov.positional.json-file: cli-positional boundary `<json_file>` reads a committed LLVM coverage export and writes the default `llvm2lcov.info` tracefile. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.llvm2lcov.positional.json-file",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -18937,7 +18967,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-llvm2lcov-json-file-positional",
+          "suite_id": "m0-llvm2lcov-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33295,14 +33330,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 514,
+      "none": 507,
       "pass": 0,
-      "planned": 57
+      "planned": 64
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 410,
-      "unreviewed": 161
+      "reviewed": 417,
+      "unreviewed": 154
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33313,9 +33348,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 370,
+    "reviewed_primary_coverage": 377,
     "subjects": 35,
-    "uncovered_public_entries": 161
+    "uncovered_public_entries": 154
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
