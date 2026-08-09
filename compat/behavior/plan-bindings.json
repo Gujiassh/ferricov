@@ -279,6 +279,48 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "--output-filename <value>",
+      "description_sha256": "726994f244010a2d4491c3abf77b52590aab17986a396ba38fe22af56f9c5bb0",
+      "id": "case.acceptance.command.gendesc.option.output-filename",
+      "primary_targets": [
+        "command.gendesc.option.output-filename"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 70,
+          "path": "bin/gendesc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 19,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 57,
+          "path": "docs/man/gendesc.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 8,
+          "path": "help/gendesc.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-gendesc-output-filename",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "suite-bound:command.gendesc.option.version",
       "description_sha256": "c19343c562b4fa8eda123b6ec6383cd75a167f387663fd4c2c18089a10ce49b3",
       "id": "case.acceptance.command.gendesc.option.version",
@@ -6437,6 +6479,90 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "--output-filename <value>",
+      "description_sha256": "667ff4276d12ce5801d49e5b114752b87c03982618bad6143a3f782084414a42",
+      "id": "case.acceptance.command.genpng.option.output-filename",
+      "primary_targets": [
+        "command.genpng.option.output-filename"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 84,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 25,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 66,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 12,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-output-filename",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--tab-size <int>",
+      "description_sha256": "0632a49595bf16cd62d0b797f9202c83172b14035abe188e993e2427d2daea17",
+      "id": "case.acceptance.command.genpng.option.tab-size",
+      "primary_targets": [
+        "command.genpng.option.tab-size"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 82,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 22,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 49,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 9,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-tab-size",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "suite-bound:command.genpng.option.version",
       "description_sha256": "48a18ca137687ccdd161e95bebe06f8b221f8b5112a556894e67b3bed3f001fb",
       "id": "case.acceptance.command.genpng.option.version",
@@ -6477,6 +6603,72 @@
         {
           "case_id": "m0-policy-direct-version-abbreviation",
           "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--width <int>",
+      "description_sha256": "828c6ff022cc64a80c7be82ca9793732d7006c162922396a195b5322978c6322",
+      "id": "case.acceptance.command.genpng.option.width",
+      "primary_targets": [
+        "command.genpng.option.width"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 83,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 23,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 55,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 10,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-width",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "<sourcefile>",
+      "description_sha256": "3c75b3eb992da4ca384f4d8c19e07b43dbe84431ebc2f972724a935827736c57",
+      "id": "case.acceptance.command.genpng.positional.sourcefile",
+      "primary_targets": [
+        "command.genpng.positional.sourcefile"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 93,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-sourcefile-positional",
+          "suite_id": "m0-small-command-contract"
         }
       ],
       "upstream_tests": []
@@ -12582,6 +12774,42 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--tabwidth <int>",
+      "description_sha256": "b3a90138b03c7444c6091ddf39a5300fd218e3ccc77c9e34206f670b7d63b910",
+      "id": "case.acceptance.command.py2lcov.option.tabwidth",
+      "primary_targets": [
+        "command.py2lcov.option.tabwidth"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 146,
+          "path": "bin/py2lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 103,
+          "path": "docs/man/py2lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 27,
+          "path": "help/py2lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-py2lcov-tabwidth",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential",
@@ -15733,7 +15961,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 366
+    "primary_plans": 372
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

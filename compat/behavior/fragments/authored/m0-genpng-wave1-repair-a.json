@@ -75,13 +75,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genpng.option.output-filename: cli-option boundary `--output-filename <value>` from `\"output-filename=s\" => \\$out_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.genpng.option.output-filename: cli-option boundary `--output-filename <value>` writes the generated image to the requested path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genpng.option.output-filename",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -108,7 +108,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-output-filename",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -131,13 +136,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genpng.option.tab-size: cli-option boundary `--tab-size <int>` from `if (!GetOptions(\"tab-size=i\"        => \\$tab_size,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.genpng.option.tab-size: cli-option boundary `--tab-size <int>` controls tab expansion while rendering a committed source fixture. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genpng.option.tab-size",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -164,7 +169,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-tab-size",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -187,13 +197,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genpng.option.width: cli-option boundary `--width <int>` from `\"width=i\"           => \\$width,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.genpng.option.width: cli-option boundary `--width <int>` controls the generated image width for a committed source fixture. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genpng.option.width",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -220,7 +230,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-width",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -243,13 +258,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genpng.positional.sourcefile: cli-positional boundary `<sourcefile>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.genpng.positional.sourcefile: cli-positional boundary `<sourcefile>` renders the named committed source fixture to the default output path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genpng.positional.sourcefile",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -258,7 +273,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-sourcefile-positional",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {

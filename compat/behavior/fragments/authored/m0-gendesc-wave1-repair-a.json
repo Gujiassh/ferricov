@@ -15,13 +15,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.gendesc.option.output-filename: cli-option boundary `--output-filename <value>` from `if (!GetOptions(\"output-filename=s\" => \\$output_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.gendesc.option.output-filename: cli-option boundary `--output-filename <value>` writes converted test descriptions to the requested path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.gendesc.option.output-filename",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -48,7 +48,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-gendesc-output-filename",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {

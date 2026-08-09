@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 364 substantive reviewed primary plans,
-  all 4 required critical interaction domains reviewed, and 167 explicit M0
+- 531 public behavior plans, with 370 substantive reviewed primary plans,
+  all 4 required critical interaction domains reviewed, and 161 explicit M0
   primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
@@ -147,7 +147,7 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. ADR 0003
-is accepted. M0 is not complete: 167 behavior-planning gaps, 12 unbound
+is accepted. M0 is not complete: 161 behavior-planning gaps, 12 unbound
 diagnostic/parallel identities, tracefile product/fuzz boundaries, executable installation lifecycle
 review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
@@ -156,14 +156,15 @@ contract now have reviewed planning bindings to 154 exact suite cases. Eight
 configuration-semantic slices add 67 bindings and six reviewed primary targets.
 Three support-script primary plans add executable suite bindings for
 `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; all remain
-planning-only without candidate evidence. Four additional `lcov`
+planning-only without candidate evidence. Six small-command primary plans bind
+executable `gendesc`, `py2lcov`, and `genpng` cases. Four additional `lcov`
 tracefile CLI targets now have reviewed primary plans bounded to exact retained
 canonical-rewrite and reviewed upstream planning references. Their evidence
 status remains `none`, evidence and suite arrays remain empty, and related
 diagnostic recovery observations remain reference-only rather than becoming
-product evidence. Seventeen `genpng`, `gendesc`, `py2lcov`, and `xml2lcov`
-targets add exact source-bound planning cases with no executable suite or
-product evidence. Seventeen source-bound `lcovrc` configuration targets now
+product evidence. The remaining small-tool targets retain exact source-bound plans without
+product evidence; all previously unbound `genpng`, `gendesc`, and `py2lcov`
+primary gaps now have executable suite cases. Seventeen source-bound `lcovrc` configuration targets now
 have reviewed planning cases with no suite or product evidence. A separate
 fail-closed environment contract now reviews 19 named variables, one dynamic input, five
 configuration-discovery paths, all 36 direct `$ENV` source lines, and 22

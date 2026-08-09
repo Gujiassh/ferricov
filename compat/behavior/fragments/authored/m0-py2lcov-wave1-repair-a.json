@@ -247,13 +247,13 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.py2lcov.option.tabwidth: cli-option boundary `--tabwidth` from `parser.add_argument(\"--tabwidth\", dest='tabwidth', default=8, type=int,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.py2lcov.option.tabwidth: cli-option boundary `--tabwidth <int>` enters Python indentation-based function derivation on a tabbed source fixture. The pinned Oracle exposes its bounded `tabwidth`/`tabWidth` namespace defect here, so the exact suite compares the nonzero exit, partial filesystem output, stdout, and stderr without deciding the later Ferricov safety policy. No product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.py2lcov.option.tabwidth",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -274,7 +274,12 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-py2lcov-tabwidth",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
