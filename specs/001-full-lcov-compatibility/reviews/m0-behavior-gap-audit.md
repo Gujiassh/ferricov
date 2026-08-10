@@ -6,25 +6,33 @@ Status: active ledger
 
 The behavior contract covers all 531 public inventory entries with primary
 plans. After the support-script, small-command, `llvm2lcov`, and `perl2lcov`
-suite waves, five trace-operation `lcov` cases, two `lcovrc` list-format cases, nineteen prior plus nine metric and two
-report/differential fixed-epoch `genhtml` config cases, and the six-case
-`m0-genhtml-cli-output-contract` command wave, 425 primary plans are
-substantive and reviewed; 106 remain explicit M0 planning gaps. Product
+suite waves, five trace-operation `lcov` cases, two `lcovrc` list-format cases,
+nineteen prior plus nine metric and two report/differential fixed-epoch
+`genhtml` config cases, the six-case `m0-genhtml-cli-output-contract` command
+wave, and the three-case `m0-genhtml-cli-metric-layout-contract` command wave,
+428 primary plans are substantive and reviewed; 103 remain explicit M0
+planning gaps. Product
 compatibility evidence remains absent.
+
+The `m0-genhtml-cli-metric-layout-contract` wave closes three command-owned
+boundaries: `--frames`, `--precision 4`, and `--no-sort`. It uses one shared
+metric trace/config control plus three direct-option targets. Two clean pinned
+Oracle runs agree on the reference hashes, while the reverse harness exits 23;
+the slice remains planning-only with product evidence absent.
 
 The remaining gaps partition exactly as follows:
 
 | Lane | Remaining | Authored ownership |
 | --- | ---: | --- |
 | `lcovrc` consumer semantics | 68 | responsibility-split `m0-lcovrc-*.json` fragments |
-| command options and positionals | 38 | command-owned `m0-*-wave1-repair-*.json` fragments |
+| command options and positionals | 35 | command-owned `m0-*-wave1-repair-*.json` fragments |
 | support scripts | 0 | `m0-support-wave1-repair-a.json` |
 
-The command lane consists of 21 `genhtml`, 9 `geninfo`, 7 capture/reset-oriented
-`lcov` entries, and the unbound `perl2lcov --preserve` entry. The six newly
+The command lane consists of 18 `genhtml`, 9 `geninfo`, 7 capture/reset-oriented
+`lcov` entries, and the unbound `perl2lcov --preserve` entry. The nine newly
 closed `genhtml` options are command-owned CLI boundaries; the other
 `genpng`, `gendesc`, `py2lcov`, `llvm2lcov`, `perl2lcov`, and trace-operation
-`lcov` residuals are closed. The totals reconcile to `68 + 38 = 106`.
+`lcov` residuals are closed. The totals reconcile to `68 + 35 = 103`.
 
 ## Closure Rule
 

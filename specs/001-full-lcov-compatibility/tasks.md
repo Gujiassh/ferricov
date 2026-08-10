@@ -52,6 +52,9 @@
   contract and bind their 154 exact suite cases without claiming product evidence.
 - [x] Review six command-owned `genhtml` CLI-output options and bind one shared
   control plus six exact target cases without claiming product evidence.
+- [x] Review three command-owned `genhtml` metric/layout options (`--frames`,
+  `--precision 4`, and `--no-sort`) with two clean pinned Oracle runs and no
+  product evidence.
 - [x] Review the four retained-corpus `lcov` tracefile CLI primary targets while
   keeping Oracle references out of product evidence and compatibility suites.
 - [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
@@ -128,11 +131,12 @@ Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
 Behavior planning covers all 531 public entries with primary plans. Four
-hundred twenty-five substantive primary plans are reviewed with 427 fixed source and
-interaction projections; 106 explicit M0 gaps remain. Forty CLI
+hundred twenty-eight substantive primary plans are reviewed with 430 fixed source and
+interaction projections; 103 explicit M0 gaps remain. Forty CLI
 entries bind 154 exact suite cases, eight base configuration slices bind 67
 cases, three support-script entries bind executable planning cases, and
-twenty-nine command entries bind six command-owned `genhtml` CLI-output cases plus `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`,
+thirty-two command entries bind six command-owned `genhtml` CLI-output cases,
+three command-owned metric/layout cases, plus `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`,
 `perl2lcov`, and trace-operation `lcov` cases. Separately, 32 `lcovrc`
 consumer plans bind two list-format cases and thirty fixed-epoch `genhtml`
 output/layout, metric-config, and report/differential cases. Owner and age field widths remain

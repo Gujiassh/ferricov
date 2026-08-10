@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.frames: cli-option boundary `--frames` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `9c5524a2b6856b12a7820785c2b7ca28c8abe4785dbae8ea62416af741453998`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.frames",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7253,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"frames|f\"          => \\$frames,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7552,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "if ($frames) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8467,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($frames) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-frames",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.frames",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.no-sort: cli-option boundary `--no-sort` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `233d08f67421873aacd37a84670e9bcaa7c6dece107af6d215877e0921200fa7`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.no-sort",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7265,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"no-sort\"           => \\$no_sort,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7337,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($no_sort);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8970,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($sort_tables) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-no-sort",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.no-sort",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.precision: cli-option boundary `--precision 4` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `582cc0c35384825eba455cf952f056dffc1271e6b46c820acb502ff5f0ac7bba`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.precision",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7266,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"precision=i\"       => \\$lcovutil::default_precision,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7558,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "check_precision();"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 2768,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    $precision = $default_precision"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-precision",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.precision",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed suite-bound genhtml CLI metric/layout plans for frames, precision, and no-sort; no product evidence.",
+  "fragment_id": "authored.m0-genhtml-cli-metric-layout-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

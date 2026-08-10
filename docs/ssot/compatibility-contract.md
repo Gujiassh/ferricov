@@ -49,7 +49,7 @@ relationships where supported.
 | diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 206 retained Oracle references, including 26 wave1 and 32 wave2 Docker observations plus tracefile-derived error/recovery observations; the prior 204 objects remain unchanged and two legacy-function fatal references are added; 59 of 71 diagnostic/parallel identities have exact bindings, 12 remain planned and unbound, and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary plans cover all 531 public entries | not started | 425 substantive reviewed primary plans with 427 fixed source/interaction projections; 106 explicit M0 gaps remain; 3 support-script, 29 command, and 32 `lcovrc` plans have executable suite bindings, including six command-owned `genhtml` CLI-output cases; deterministic `genhtml` captures use a fixed `SOURCE_DATE_EPOCH`, report-wave Perl hash seeds, and explicit baseline date; all product evidence remains empty |
+| behavior planning | primary plans cover all 531 public entries | not started | 428 substantive reviewed primary plans with 430 fixed source/interaction projections; 103 explicit M0 gaps remain; 3 support-script, 32 command, and 32 `lcovrc` plans have executable suite bindings, including six command-owned `genhtml` CLI-output cases and three command-owned metric/layout cases; deterministic `genhtml` captures use a fixed `SOURCE_DATE_EPOCH`, report-wave Perl hash seeds, and explicit baseline date; all product evidence remains empty |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
 | installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | independent expected facts and replayable pinned-Docker envelopes bind 13 planned Oracle-reference cases plus 15 case/Path captures and 2 runner-qualification captures; observed env/argv/cwd/executable/wait/timeout/cleanup/raw streams/full tree rows, 57 directory-mode companion, and transactional replay checks are retained; no product evidence |
 | coverage-model algebra decisions | Oracle-only model contract for set algebra, parse-write-parse, and repeated-close decisions | not started | 157 pinned Oracle cases bind 7 rows (`M1-MD-010..014`, `017`, `019`); `M1-MD-020` and fuzz/product-boundary rows remain blocked |
@@ -104,6 +104,13 @@ shared `--config-file control.lcovrc` control and compares exact exit, stdout,
 stderr, and filesystem results. The pinned reference cases exit 0 with
 337-byte stdout and empty stderr; gzip emits 27 files and the other targets
 emit 26. The reverse harness exits 23 for every case. These observations are
+Oracle characterization only, not Ferricov product evidence.
+
+The command-owned `m0-genhtml-cli-metric-layout-contract` suite adds three
+reviewed planning links for `--frames`, `--precision 4`, and `--no-sort`. Each
+target is paired with a shared function/branch/MC/DC metric control and compares
+exact exit, stdout, stderr, and filesystem results. Two clean pinned Oracle
+runs agree on the reference facts and the reverse harness exits 23. These are
 Oracle characterization only, not Ferricov product evidence.
 
 Four additional `lcov` tracefile CLI primary plans cover `--add-tracefile`,

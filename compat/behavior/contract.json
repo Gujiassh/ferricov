@@ -2935,46 +2935,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.frames: cli-option boundary `--frames` from `\"frames|f\"          => \\$frames,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.frames: cli-option boundary `--frames` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `9c5524a2b6856b12a7820785c2b7ca28c8abe4785dbae8ea62416af741453998`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.frames",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 7253,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     \"frames|f\"          => \\$frames,"
         },
         {
-          "kind": "manual_candidate",
-          "line": 22,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 7552,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "if ($frames) {"
         },
         {
-          "kind": "manual_candidate",
-          "line": 560,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 993,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 60,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 8467,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($frames) {"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-frames",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -4566,46 +4566,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.no-sort: cli-option boundary `--no-sort` from `\"no-sort\"           => \\$no_sort,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.no-sort: cli-option boundary `--no-sort` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `233d08f67421873aacd37a84670e9bcaa7c6dece107af6d215877e0921200fa7`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.no-sort",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 7265,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     \"no-sort\"           => \\$no_sort,"
         },
         {
-          "kind": "manual_candidate",
-          "line": 37,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 7337,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($no_sort);"
         },
         {
-          "kind": "manual_candidate",
-          "line": 1269,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1272,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 78,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 8970,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($sort_tables) {"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-no-sort",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -4958,40 +4958,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.precision: cli-option boundary `--precision <int>` from `\"precision=i\"       => \\$lcovutil::default_precision,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.precision: cli-option boundary `--precision 4` uses the shared metric trace/config invocation and the direct option delta. The pinned Oracle suite records exact exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `582cc0c35384825eba455cf952f056dffc1271e6b46c820acb502ff5f0ac7bba`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.precision",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 7266,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     \"precision=i\"       => \\$lcovutil::default_precision,"
         },
         {
-          "kind": "manual_candidate",
-          "line": 49,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 7558,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "check_precision();"
         },
         {
-          "kind": "manual_candidate",
-          "line": 1561,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 80,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 2768,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    $precision = $default_precision"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-precision",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33780,14 +33786,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 459,
+      "none": 456,
       "pass": 0,
-      "planned": 112
+      "planned": 115
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 465,
-      "unreviewed": 106
+      "reviewed": 468,
+      "unreviewed": 103
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33798,9 +33804,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 425,
+    "reviewed_primary_coverage": 428,
     "subjects": 35,
-    "uncovered_public_entries": 106
+    "uncovered_public_entries": 103
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

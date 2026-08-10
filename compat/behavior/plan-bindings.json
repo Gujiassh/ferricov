@@ -1847,6 +1847,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--frames",
+      "description_sha256": "abd4561ff9917beff204e87138bc07f6c52c0b09ded315e9a908725ec04ba7e2",
+      "id": "case.acceptance.command.genhtml.option.frames",
+      "primary_targets": [
+        "command.genhtml.option.frames"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7253,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"frames|f\"          => \\$frames,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7552,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "if ($frames) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8467,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($frames) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-frames",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential",
@@ -2731,6 +2774,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--no-sort",
+      "description_sha256": "39ce9002abc859c9c2b38016eb2aaed2a476fb05d576080fc04f7dc4ae8dbb5e",
+      "id": "case.acceptance.command.genhtml.option.no-sort",
+      "primary_targets": [
+        "command.genhtml.option.no-sort"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7265,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"no-sort\"           => \\$no_sort,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7337,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($no_sort);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8970,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($sort_tables) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-no-sort",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -2964,6 +3050,49 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--precision 4",
+      "description_sha256": "b0233b9367ab1b8d9ddd70d295cce79435c056867c9b996aa2c0170d08479a92",
+      "id": "case.acceptance.command.genhtml.option.precision",
+      "primary_targets": [
+        "command.genhtml.option.precision"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7266,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"precision=i\"       => \\$lcovutil::default_precision,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7558,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "check_precision();"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 2768,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    $precision = $default_precision"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-control",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metric-layout-precision",
+          "suite_id": "m0-genhtml-cli-metric-layout-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -17899,7 +18028,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 427
+    "primary_plans": 430
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

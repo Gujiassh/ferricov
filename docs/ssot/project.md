@@ -139,8 +139,8 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 427 projections; 425 substantive primary plans are
-  reviewed and 106 explicit M0 gaps remain. The support-script planning suite
+  independently seal 430 projections; 428 substantive primary plans are
+  reviewed and 103 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
@@ -212,5 +212,10 @@ the M0 harness become the permanent integration boundary.
   stderr; output trees differ per target, with 27 files for gzip and 26 for
   the other cases. The reverse harness exits 23 in every case. These are
   reference/output planning facts only; no Ferricov candidate evidence exists.
+- The `m0-genhtml-cli-metric-layout-contract` suite binds three command-owned
+  options (`--frames`, `--precision 4`, and `--no-sort`) to a shared metric
+  trace/config control and one direct-option target each. Two clean pinned
+  Oracle runs agree on the reference facts; the reverse harness exits 23.
+  These are planning facts only, with product evidence empty.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.
