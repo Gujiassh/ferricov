@@ -1070,6 +1070,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--css-file custom.css",
+      "description_sha256": "72e72260241db7dd27aa7de4ffc616b43f256f29b865b40547fb05f83ab29b73",
+      "id": "case.acceptance.command.genhtml.option.css-file",
+      "primary_targets": [
+        "command.genhtml.option.css-file"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7226,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"css-file|c=s\"         => \\$css_filename,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 9047,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($css_filename) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 9049,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        system(\"cp\", $css_filename, $f) and"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-control",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-css-file",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -1309,6 +1352,49 @@
         "tests/genhtml/synthesize/synthesize.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--description-file descriptions.info",
+      "description_sha256": "ca1ee141fb157fce5577bd0abbcf70efbd10bef02cb94d2422c629279a226a47",
+      "id": "case.acceptance.command.genhtml.option.description-file",
+      "primary_targets": [
+        "command.genhtml.option.description-file"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7224,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"description-file|d=s\" => \\$desc_filename,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7929,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($desc_filename) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7931,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        %test_description = %{read_testfile($desc_filename)};"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-control",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-description-file",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -2512,6 +2598,49 @@
         "tests/genhtml/exception/exception.sh",
         "tests/genhtml/simple/script.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--keep-descriptions",
+      "description_sha256": "3b34a1e86eaf174b1559c81b86a3d9f7c92ff4e1bee93acf12a9ab7fcee6b38e",
+      "id": "case.acceptance.command.genhtml.option.keep-descriptions",
+      "primary_targets": [
+        "command.genhtml.option.keep-descriptions"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7225,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"keep-descriptions|k\"  => \\$keep_descriptions,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7935,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if (!$keep_descriptions) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7936,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            remove_unused_descriptions();"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-control",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-metadata-contract-keep-descriptions",
+          "suite_id": "m0-genhtml-cli-metadata-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18415,7 +18544,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 439
+    "primary_plans": 442
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

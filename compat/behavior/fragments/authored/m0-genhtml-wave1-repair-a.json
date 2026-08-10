@@ -769,68 +769,6 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.genhtml.option.css-file: cli-option boundary `--css-file <value>` from `\"css-file|c=s\"         => \\$css_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.genhtml.option.css-file",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 7226,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 29,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 480,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1156,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 65,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.genhtml.option.css-file",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -1217,62 +1155,6 @@
         "tests/genhtml/synthesize/synthesize.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.genhtml.option.description-file: cli-option boundary `--description-file <value>` from `\"description-file|d=s\" => \\$desc_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.genhtml.option.description-file",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 7224,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 28,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1135,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 23,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.genhtml.option.description-file",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
     },
     {
       "applicability": {

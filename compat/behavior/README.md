@@ -172,6 +172,13 @@ three target cases using `--filter function`. Its two clean pinned Oracle runs
 agree on exact reference/output facts; every plan remains `evidence_status=planned`
 with an empty evidence array and no product compatibility evidence.
 
+The `m0-genhtml-cli-metadata-contract` wave adds three command-owned `genhtml`
+option plans (`--css-file custom.css`, `--description-file descriptions.info`,
+and `--keep-descriptions`) with one metadata fixture and one control case. Its
+two clean pinned Oracle runs agree on exact reference/output facts; every plan
+remains `evidence_status=planned` with an empty evidence array and no product
+compatibility evidence.
+
 ## Fixed plan bindings
 
 `plan-bindings.json` seals substantive primary-plan semantics and critical
