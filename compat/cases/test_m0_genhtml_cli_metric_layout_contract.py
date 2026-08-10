@@ -276,10 +276,25 @@ class GenhtmlCliMetricLayoutContractTests(unittest.TestCase):
         self.assertEqual(candidate["arguments"], ["-c", REVERSE_COMMAND, "sh", "{command}"])
 
     def test_review_records_final_oracle_facts(self) -> None:
-        review = " ".join(REVIEW.read_text(encoding="utf-8").split())
+        raw_review = REVIEW.read_text(encoding="utf-8")
+        review = " ".join(raw_review.split())
         self.assertIn("reference/output characterization", review)
         self.assertIn("no Ferricov candidate was run", review)
+        labels = {
+            CONTROL: "control",
+            "m0-genhtml-cli-metric-layout-frames": "frames",
+            "m0-genhtml-cli-metric-layout-precision": "precision 4",
+            "m0-genhtml-cli-metric-layout-no-sort": "no-sort",
+        }
         for case_id, observation in ORACLE_OBSERVATIONS.items():
+            prefix = f"| `{labels[case_id]}` |" if case_id != CONTROL else "| control |"
+            rows = [
+                line
+                for line in raw_review.splitlines()
+                if line.startswith(prefix) and observation["file_tree_sha256"] in line
+            ]
+            self.assertEqual(len(rows), 1, case_id)
+            row = rows[0]
             for key in (
                 "stdout_sha256",
                 "stdout_bytes",
@@ -289,7 +304,8 @@ class GenhtmlCliMetricLayoutContractTests(unittest.TestCase):
                 "file_tree_bytes",
                 "file_count",
             ):
-                self.assertIn(str(observation[key]), review, f"{case_id}:{key}")
+                self.assertIn(str(observation[key]), row, f"{case_id}:{key}")
+            self.assertIn("| 0 | 23 |", row, case_id)
 
     def test_plan_binding_mutation_is_rejected(self) -> None:
         contract = json.loads((ROOT / "compat/behavior/contract.json").read_text(encoding="utf-8"))
