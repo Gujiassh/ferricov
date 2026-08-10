@@ -139,13 +139,13 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 410 projections; 408 substantive primary plans are
-  reviewed and 123 explicit M0 gaps remain. The support-script planning suite
+  independently seal 419 projections; 417 substantive primary plans are
+  reviewed and 114 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
-  list-format cases, and nineteen deterministic `genhtml` output/layout-config
-  cases. Their argv is executable on the pinned Oracle. Product
+  list-format cases, and twenty-eight deterministic `genhtml` output/layout-config
+  and metric-config cases. Their argv is executable on the pinned Oracle. Product
   evidence remains empty and no compatibility claim is made.
 - `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
   Oracle-only coverage-model algebra contract with 157 cases across 27
@@ -192,9 +192,10 @@ the M0 harness become the permanent integration boundary.
   product evidence until a distinct Ferricov candidate executes them.
 - The authored configuration fragment adds eight base config-semantic planning
   slices with 67 exact suite bindings and reviews six additional public primary
-  targets. The `lcovrc` consumer waves add 21 planning-only primary plans: two
-  list-format plans, eight `genhtml` output plans, and eleven `genhtml` layout
-  plans. Exit, branch-summary, diagnostic, and fixed-epoch report expectations
+  targets. The `lcovrc` consumer waves add 30 planning-only primary plans: two
+  list-format plans, eight `genhtml` output plans, eleven `genhtml` layout plans,
+  and nine metric/threshold and field-width plans. Owner and age field widths
+  remain deferred pending annotation/date inputs. Exit, branch-summary, diagnostic, and fixed-epoch report expectations
   are Oracle-reference facts; all product evidence remains empty.
 - The authored tracefile CLI fragment reviews the four primary targets for
   `lcov` add-tracefile, output-file, no-function-coverage, and mcdc-coverage.

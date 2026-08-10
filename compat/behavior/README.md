@@ -117,9 +117,10 @@ suites. These cases use `evidence_status=planned` and retain empty evidence
 arrays because the retained Oracle observations are reference baselines, not
 Ferricov differential results. The base configuration fragment adds eight
 semantic slices with 67 exact bindings and reviews six additional primary
-targets. The `lcovrc` consumer waves separately bind 21 planning-only primary
-plans: two list-format, eight `genhtml` output, and eleven `genhtml` layout
-plans. All retain `planned` status and empty evidence arrays. The tracefile CLI
+targets. The `lcovrc` consumer waves separately bind 30 planning-only primary
+plans: two list-format, eight `genhtml` output, eleven `genhtml` layout, and
+nine metric/threshold and field-width plans. Owner and age field widths remain
+deferred pending annotation/date inputs. All retain `planned` status and empty evidence arrays. The tracefile CLI
 fragment reviews four additional primary targets from eight exact canonical
 rewrite observations plus reviewed upstream planning sources. Those four cases
 stay `evidence_status=none` with empty evidence and suite arrays; the related

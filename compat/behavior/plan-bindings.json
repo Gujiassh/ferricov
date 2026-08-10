@@ -14617,6 +14617,114 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_branch_field_width = 24",
+      "description_sha256": "deec9230d0e909a8e2a8aad08075af66f7cf60219a1b554b86d3389a58aed03e",
+      "id": "case.acceptance.lcovrc.genhtml-branch-field-width",
+      "primary_targets": [
+        "lcovrc.genhtml-branch-field-width"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7185,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_field_width\"  => \\$br_field_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 122,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_branch_field_width = 16"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-field-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_branch_hi_limit = 50",
+      "description_sha256": "29c8e181ebf63c3e0fd2ce057476cd824ac1bd324a1233a650ac04f6fbdac7ef",
+      "id": "case.acceptance.lcovrc.genhtml-branch-hi-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-branch-hi-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7181,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_hi_limit\"     => \\$br_hi_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 58,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_branch_hi_limit = 90"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_branch_med_limit = 50",
+      "description_sha256": "6d0654ff0484234fff22fa6e7df35fb12075af2c35af603cbdab155fa476988a",
+      "id": "case.acceptance.lcovrc.genhtml-branch-med-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-branch-med-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7182,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_med_limit\"    => \\$br_med_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 59,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_branch_med_limit = 75"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config"
       ],
@@ -14638,6 +14746,78 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_function_hi_limit = 50",
+      "description_sha256": "0e372f4f9c2d48b3177d79a2c50a4b1ca3476983f0502b84d829606d573fbece",
+      "id": "case.acceptance.lcovrc.genhtml-function-hi-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-function-hi-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7179,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_function_hi_limit\"   => \\$fn_hi_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 51,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_function_hi_limit = 90"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-function-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_function_med_limit = 50",
+      "description_sha256": "cfea2a68c397e74fea0fe69236e2c40eff3bda470f558c34310dc2db56725fa6",
+      "id": "case.acceptance.lcovrc.genhtml-function-med-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-function-med-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7180,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_function_med_limit\"  => \\$fn_med_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 52,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_function_med_limit = 75"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-function-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [],
@@ -15015,6 +15195,100 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "genhtml_mcdc_field_width = 24",
+      "description_sha256": "28bb834e2878b2250b323db88112a8fcb6de062ce6554c2afc70c8ddc6be16e0",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-field-width",
+      "primary_targets": [
+        "lcovrc.genhtml-mcdc-field-width"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7186,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_field_width\"    => \\$mcdc_field_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 125,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_mcdc_field_width = 16"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-field-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_mcdc_hi_limit = 50",
+      "description_sha256": "8564f3d64327f955dee1d63b0c4ad12b7fb75819b283835563ef3c2b142e026d",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-hi-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-mcdc-hi-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7183,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_hi_limit\"       => \\$mcdc_hi_limit,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_mcdc_med_limit = 50",
+      "description_sha256": "9e5c577306446aec7c1aec9c4a14d8fc5be0c4c047d8698c33af0dc8d1a5b108",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-med-limit",
+      "primary_targets": [
+        "lcovrc.genhtml-mcdc-med-limit"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7184,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_med_limit\"      => \\$mcdc_med_limit,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "genhtml_med_limit = 85",
       "description_sha256": "82fc9d2488eadab51da65ad2e0d0596dff0fe8d23dbbeec2866e8668f4f2393e",
       "id": "case.acceptance.lcovrc.genhtml-med-limit",
@@ -15179,6 +15453,42 @@
         {
           "case_id": "m0-lcovrc-genhtml-output-control",
           "suite_id": "m0-lcovrc-genhtml-output-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "genhtml_overview_width = 40",
+      "description_sha256": "ad21eaf7d7599e163abc629b20677c0e0d81946f3f6f66458a9c5267efcec976",
+      "id": "case.acceptance.lcovrc.genhtml-overview-width",
+      "primary_targets": [
+        "lcovrc.genhtml-overview-width"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7159,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_overview_width\"      => \\$overview_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 134,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_overview_width = 80"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-overview-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
         }
       ],
       "upstream_tests": []
@@ -17217,7 +17527,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 410
+    "primary_plans": 419
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

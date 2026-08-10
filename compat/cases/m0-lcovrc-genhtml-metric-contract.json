@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-genhtml-metric-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-lcovrc-genhtml-metric-control",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "control.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-function-hi-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "function-hi-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-function-med-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "function-med-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-branch-hi-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "branch-hi-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-branch-med-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "branch-med-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-mcdc-hi-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "mcdc-hi-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-mcdc-med-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "mcdc-med-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-branch-field-width",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "branch-field-width.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-mcdc-field-width",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "mcdc-field-width.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-metric-overview-width",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--frames", "--function-coverage", "--branch-coverage", "--mcdc-coverage", "--config-file", "overview-width.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    }
+  ]
+}
