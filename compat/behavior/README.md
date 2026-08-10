@@ -137,7 +137,12 @@ Wave 1 repair rebuilds residual public entries into substantive planned cases
 or explicit unbound drafts. A reviewed primary plan now requires suite bindings
 or both behavior_groups and reviewed public-behavior upstream drivers; hollow
 status-only reviews no longer satisfy `m0-ready`. Current honest debt remains
-for entries without exact executable or upstream public-behavior binding.
+for entries without exact executable or upstream public-behavior binding. The
+`m0-genhtml-cli-output-contract` wave adds six command-owned `genhtml` option
+plans (`html-epilog`, `html-extension`, `html-gzip`, `html-prolog`, `legend`,
+and `num-spaces`) with one shared control and six target cases. Its fixed
+Oracle output characterization is planning-only; every plan remains
+`evidence_status=planned` with an empty evidence array.
 Product compatibility evidence remains false/absent.
 
 ## Fixed plan bindings

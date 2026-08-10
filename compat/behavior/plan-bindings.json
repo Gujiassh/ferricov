@@ -2074,6 +2074,178 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--html-epilog epilog.html",
+      "description_sha256": "2d23e02a8d6c3b0a92cc0a747c18ef5831c09418ab4b9e9e980b429b08d0ce02",
+      "id": "case.acceptance.command.genhtml.option.html-epilog",
+      "primary_targets": [
+        "command.genhtml.option.html-epilog"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7259,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-epilog=s\"     => \\$html_epilog_file,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7512,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$html_epilog = get_html_epilog($html_epilog_file);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 14167,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "sub get_html_epilog($)"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-epilog",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--html-extension xhtml",
+      "description_sha256": "5daa15fcf06051d4a725341f226579afdd646d47399cc66661eba60ff9d61ab4",
+      "id": "case.acceptance.command.genhtml.option.html-extension",
+      "primary_targets": [
+        "command.genhtml.option.html-extension"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7260,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-extension=s\"  => \\$html_ext,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7636,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    ValidateHTML->new($output_directory, '.' . $html_ext);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8019,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                              $rel_dir, \"index$bin_prefix$page_suffix.$html_ext\""
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-extension",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--html-gzip",
+      "description_sha256": "cb0b6faa0296e9b4a98e5bec70004bb9a372a7f47110065c170c614ffc82f73a",
+      "id": "case.acceptance.command.genhtml.option.html-gzip",
+      "primary_targets": [
+        "command.genhtml.option.html-gzip"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7261,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-gzip\"         => \\$html_gzip,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7956,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($html_gzip) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7997,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($html_gzip) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-gzip",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--html-prolog prolog.html",
+      "description_sha256": "9667ad82101323697bd9afbe006d0cb70fa3cc0a07c15e35317048e6e2482ce2",
+      "id": "case.acceptance.command.genhtml.option.html-prolog",
+      "primary_targets": [
+        "command.genhtml.option.html-prolog"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7258,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-prolog=s\"     => \\$html_prolog_file,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7511,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$html_prolog = get_html_prolog($html_prolog_file);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 14128,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "sub get_html_prolog($)"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-prolog",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -2217,6 +2389,49 @@
         "tests/py2lcov/py2lcov.sh",
         "tests/xml2lcov/xml2lcov.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--legend",
+      "description_sha256": "5a2a106dd7eed9a278e557e466b61ca7dec224c647a0b556d015e1f79d3ce64a",
+      "id": "case.acceptance.command.genhtml.option.legend",
+      "primary_targets": [
+        "command.genhtml.option.legend"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7254,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"legend\"            => \\$legend,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12427,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($legend && ($type == $HDR_SOURCE || $type == $HDR_FUNC)) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12455,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    } elsif ($legend && ($type != $HDR_TESTDESC)) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-legend",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -2543,6 +2758,49 @@
       "upstream_tests": [
         "tests/genhtml/simple/script.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--num-spaces 2",
+      "description_sha256": "e34921ba257ecc6d3e002bf2faea5e28dbed8b9af0070a7008933f7a6674f424",
+      "id": "case.acceptance.command.genhtml.option.num-spaces",
+      "primary_targets": [
+        "command.genhtml.option.num-spaces"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7248,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"num-spaces=i\"      => \\$tab_size,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8737,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($tab_size > 0) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8739,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            my $replacement = \" \" x ($tab_size - (length($1) % $tab_size));"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-num-spaces",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -17641,7 +17899,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 421
+    "primary_plans": 427
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

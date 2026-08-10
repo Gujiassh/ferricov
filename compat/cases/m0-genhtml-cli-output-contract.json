@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-output-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-genhtml-cli-output-control",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-html-epilog",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--html-epilog", "epilog.html", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-html-extension",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--html-extension", "xhtml", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-html-gzip",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--html-gzip", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-html-prolog",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--html-prolog", "prolog.html", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-legend",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--legend", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-output-num-spaces",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--num-spaces", "2", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

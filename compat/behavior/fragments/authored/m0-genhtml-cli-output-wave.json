@@ -1,0 +1,384 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.html-epilog: cli-option boundary `--html-epilog epilog.html` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `5219fd1b0268007258e10fcdd79383a8cd20a57989ea2885dee0dd06da014909`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.html-epilog",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7259,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-epilog=s\"     => \\$html_epilog_file,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7512,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$html_epilog = get_html_epilog($html_epilog_file);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 14167,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "sub get_html_epilog($)"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-epilog",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.html-epilog",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.html-extension: cli-option boundary `--html-extension xhtml` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `b93f516ef048334d57a7970c4f789a7493b0005ad84049d73fcdbce24cdcd0a4`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.html-extension",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7260,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-extension=s\"  => \\$html_ext,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7636,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    ValidateHTML->new($output_directory, '.' . $html_ext);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8019,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                              $rel_dir, \"index$bin_prefix$page_suffix.$html_ext\""
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-extension",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.html-extension",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.html-gzip: cli-option boundary `--html-gzip` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `0f723523bdd8dd05084b61fca60247c4233218e9ad2a8803f021ff79d4986ed4`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.html-gzip",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7261,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-gzip\"         => \\$html_gzip,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7956,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($html_gzip) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7997,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($html_gzip) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-gzip",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.html-gzip",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.html-prolog: cli-option boundary `--html-prolog prolog.html` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `52f1a42e850fdddef67c8ceff50a91c57bcbd9052b63488592fdf1a43c720cb3`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.html-prolog",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7258,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"html-prolog=s\"     => \\$html_prolog_file,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7511,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$html_prolog = get_html_prolog($html_prolog_file);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 14128,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "sub get_html_prolog($)"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-html-prolog",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.html-prolog",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.legend: cli-option boundary `--legend` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `ab1cab67a6387cc9ac018f21b2a5ffe57a16df1cf64e9ce36bd5ef41e34f1c2e`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.legend",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7254,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"legend\"            => \\$legend,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12427,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($legend && ($type == $HDR_SOURCE || $type == $HDR_FUNC)) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12455,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    } elsif ($legend && ($type != $HDR_TESTDESC)) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-legend",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.legend",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.num-spaces: cli-option boundary `--num-spaces 2` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `e5515cfcd4e931f73a279911fdd8b6a0ccda9bb3255af9df0703ef0aee07c031`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.num-spaces",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7248,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"num-spaces=i\"      => \\$tab_size,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8737,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($tab_size > 0) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 8739,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            my $replacement = \" \" x ($tab_size - (length($1) % $tab_size));"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-output-control",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-output-num-spaces",
+          "suite_id": "m0-genhtml-cli-output-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.num-spaces",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed suite-bound genhtml CLI output plans for six direct options; no product evidence.",
+  "fragment_id": "authored.m0-genhtml-cli-output-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

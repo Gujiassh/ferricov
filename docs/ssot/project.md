@@ -139,12 +139,12 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 421 projections; 419 substantive primary plans are
-  reviewed and 112 explicit M0 gaps remain. The support-script planning suite
+  independently seal 427 projections; 425 substantive primary plans are
+  reviewed and 106 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
-  list-format cases, and thirty deterministic `genhtml` output/layout-config,
+  list-format cases, six command-owned `genhtml` CLI-output cases, and thirty deterministic `genhtml` output/layout-config,
   metric-config, and report/differential cases. The report wave pins
   `SOURCE_DATE_EPOCH`, Perl hash seeds, and an explicit baseline date in its
   dedicated launcher pair; all argv is executable on the pinned Oracle. Product
@@ -206,5 +206,11 @@ the M0 harness become the permanent integration boundary.
   and reviewed upstream planning references. All four cases remain
   `evidence_status=none` with empty evidence and suite arrays; related
   diagnostic recovery observations remain reference-only.
+- The `m0-genhtml-cli-output-contract` suite binds six command-owned option
+  plans to a shared `control.lcovrc` invocation plus one direct-option target
+  each. Its pinned reference runs all exit 0 with 337-byte stdout and empty
+  stderr; output trees differ per target, with 27 files for gzip and 26 for
+  the other cases. The reverse harness exits 23 in every case. These are
+  reference/output planning facts only; no Ferricov candidate evidence exists.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.
