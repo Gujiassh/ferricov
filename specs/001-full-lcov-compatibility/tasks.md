@@ -126,13 +126,14 @@ Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
 Behavior planning covers all 531 public entries with primary plans. Three
-hundred ninety-seven substantive primary plans are reviewed with 399 fixed
-source and interaction projections; 134 explicit M0 gaps remain. Forty CLI
-entries bind 154 exact suite cases, eight configuration slices bind 67 cases,
-three support-script entries bind executable planning cases, and twenty-three
-command entries bind `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, `perl2lcov`,
-trace-operation `lcov` cases, two `lcovrc` list-format cases, and eight
-fixed-epoch `genhtml` output-config cases. The true `perl2lcov --preserve` parallel path remains
+hundred eight substantive primary plans are reviewed with 410 fixed source and
+interaction projections; 123 explicit M0 gaps remain. Forty CLI
+entries bind 154 exact suite cases, eight base configuration slices bind 67
+cases, three support-script entries bind executable planning cases, and
+twenty-three command entries bind `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`,
+`perl2lcov`, and trace-operation `lcov` cases. Separately, 21 `lcovrc`
+consumer plans bind two list-format cases and nineteen fixed-epoch `genhtml`
+output/layout-config cases. The true `perl2lcov --preserve` parallel path remains
 unbound because it retains a randomized temp tree without an approved
 normalizer. The tracefile and `lcovrc` slices remain planning-only. Product evidence stays
 empty and the current M0 readiness gate remains blocked. The raw Oracle

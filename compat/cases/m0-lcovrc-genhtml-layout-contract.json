@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-genhtml-layout-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-lcovrc-genhtml-layout-control",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "control.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-hi-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "hi-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-med-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "med-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-line-hi-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "line-hi-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-line-med-limit",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "line-med-limit.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-line-field-width",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "line-field-width.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-missed",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "missed.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-precision",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "precision.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-hierarchical",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "hierarchical.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-no-prefix",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "no-prefix.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-show-navigation",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "show-navigation.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-layout-sort",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": ["--config-file", "sort.lcovrc", "--output-directory", "report", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-layout-contract",
+      "comparisons": [{"dimension": "exit", "normalizer": "exact-v1"}, {"dimension": "stdout", "normalizer": "exact-v1"}, {"dimension": "stderr", "normalizer": "exact-v1"}, {"dimension": "filesystem", "normalizer": "exact-v1"}]
+    }
+  ]
+}

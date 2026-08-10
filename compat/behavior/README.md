@@ -115,9 +115,11 @@ The three M0 CLI primary fragments review 40 public entries and bind them to
 154 exact cases in the core, default parser-policy, and POSIX parser-policy
 suites. These cases use `evidence_status=planned` and retain empty evidence
 arrays because the retained Oracle observations are reference baselines, not
-Ferricov differential results. The configuration fragment adds eight semantic
-slices with 67 exact bindings and reviews six additional primary targets. It
-also retains `planned` status and empty evidence arrays. The tracefile CLI
+Ferricov differential results. The base configuration fragment adds eight
+semantic slices with 67 exact bindings and reviews six additional primary
+targets. The `lcovrc` consumer waves separately bind 21 planning-only primary
+plans: two list-format, eight `genhtml` output, and eleven `genhtml` layout
+plans. All retain `planned` status and empty evidence arrays. The tracefile CLI
 fragment reviews four additional primary targets from eight exact canonical
 rewrite observations plus reviewed upstream planning sources. Those four cases
 stay `evidence_status=none` with empty evidence and suite arrays; the related

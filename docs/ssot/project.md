@@ -139,13 +139,13 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 399 projections; 397 substantive primary plans are
-  reviewed and 134 explicit M0 gaps remain. The support-script planning suite
+  independently seal 410 projections; 408 substantive primary plans are
+  reviewed and 123 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
-  list-format cases, and eight deterministic `genhtml` output-config cases.
-  Their argv is executable on the pinned Oracle. Product
+  list-format cases, and nineteen deterministic `genhtml` output/layout-config
+  cases. Their argv is executable on the pinned Oracle. Product
   evidence remains empty and no compatibility claim is made.
 - `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
   Oracle-only coverage-model algebra contract with 157 cases across 27
@@ -190,10 +190,12 @@ the M0 harness become the permanent integration boundary.
   shared Getopt primary entries already exercised by the retained M0 contract.
   They bind 154 exact suite cases but remain `evidence_status=planned` with no
   product evidence until a distinct Ferricov candidate executes them.
-- The authored configuration fragment adds eight config-semantic planning
+- The authored configuration fragment adds eight base config-semantic planning
   slices with 67 exact suite bindings and reviews six additional public primary
-  targets. Exit, branch-summary, and diagnostic expectations are validated
-  against raw Oracle artifacts, but all product evidence remains empty.
+  targets. The `lcovrc` consumer waves add 21 planning-only primary plans: two
+  list-format plans, eight `genhtml` output plans, and eleven `genhtml` layout
+  plans. Exit, branch-summary, diagnostic, and fixed-epoch report expectations
+  are Oracle-reference facts; all product evidence remains empty.
 - The authored tracefile CLI fragment reviews the four primary targets for
   `lcov` add-tracefile, output-file, no-function-coverage, and mcdc-coverage.
   It is limited to exact retained argv, zero-exit, named-output, output-hash,
