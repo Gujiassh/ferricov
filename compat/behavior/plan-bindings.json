@@ -1603,6 +1603,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--fail-under-branches 50",
+      "description_sha256": "231ec953bb5d000928891c79d3230b90b29f2265288cca3a25a3e88e2c8531d7",
+      "id": "case.acceptance.command.genhtml.option.fail-under-branches",
+      "primary_targets": [
+        "command.genhtml.option.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 3167,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    my $msg  = $info->check_fail_under_criteria();"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7173,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "            next unless defined($lcovutil::fail_under_branches);"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-fail-under-branches",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -3854,6 +3897,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--show-zero-columns",
+      "description_sha256": "10691bf21693f045e65673d8558d3fd9df501139ead39a01faa92234e27e2182",
+      "id": "case.acceptance.command.genhtml.option.show-zero-columns",
+      "primary_targets": [
+        "command.genhtml.option.show-zero-columns"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 7087,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "our $show_zeroTlaColumns;    # unless set, improve readability by removing"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7243,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     'show-zero-columns' => \\$show_zeroTlaColumns,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12480,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            if ($main::show_zeroTlaColumns) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-show-zero-columns",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -3987,6 +4073,49 @@
       "upstream_tests": [
         "tests/lcov/add/prune.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--sort-tables",
+      "description_sha256": "2d620fed232d7080f6f52e222b05ee9f030f012aec63a73c2e413bf0d9b8ff39",
+      "id": "case.acceptance.command.genhtml.option.sort-tables",
+      "primary_targets": [
+        "command.genhtml.option.sort-tables"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7264,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"sort-tables\"       => \\$sort_tables,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7336,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$sort_tables = 0"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7537,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "if ($sort_tables) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-sort-tables",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18157,7 +18286,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 433
+    "primary_plans": 436
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

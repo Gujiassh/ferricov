@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.fail-under-branches: cli-option boundary `--fail-under-branches 50` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `d22d7a069757268655feb255ba3175217037acc3df9cc80918f12514b8214737`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.fail-under-branches",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 3167,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    my $msg  = $info->check_fail_under_criteria();"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7173,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "            next unless defined($lcovutil::fail_under_branches);"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-fail-under-branches",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.fail-under-branches",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.show-zero-columns: cli-option boundary `--show-zero-columns` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `f4d6a1edcb7c762f50c07f754de5a8bcd93b5e9e092e109260d7eabf12911566`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.show-zero-columns",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 7087,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "our $show_zeroTlaColumns;    # unless set, improve readability by removing"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7243,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     'show-zero-columns' => \\$show_zeroTlaColumns,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12480,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            if ($main::show_zeroTlaColumns) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-show-zero-columns",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.show-zero-columns",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.sort-tables: cli-option boundary `--sort-tables` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `2e9ca37edf3b5f7fa6c31d15efc0ffa5ba535ee551787fdcba3c42b7843ba6c6`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.sort-tables",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7264,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"sort-tables\"       => \\$sort_tables,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7336,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$sort_tables = 0"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7537,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "if ($sort_tables) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-control",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-summary-contract-sort-tables",
+          "suite_id": "m0-genhtml-cli-summary-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.sort-tables",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed suite-bound genhtml CLI summary/layout plans for three direct options; no product evidence.",
+  "fragment_id": "authored.m0-genhtml-cli-summary-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

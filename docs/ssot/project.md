@@ -139,12 +139,13 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 433 projections; 431 substantive primary plans are
-  reviewed and 100 explicit M0 gaps remain. The support-script planning suite
+  independently seal 436 projections; 434 substantive primary plans are
+  reviewed and 97 explicit M0 gaps remain. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
-  list-format cases, six command-owned `genhtml` CLI-output cases, and thirty deterministic `genhtml` output/layout-config,
+  list-format cases, six command-owned `genhtml` CLI-output cases, three
+  command-owned `genhtml` CLI-summary cases, and thirty deterministic `genhtml` output/layout-config,
   metric-config, and report/differential cases. The report wave pins
   `SOURCE_DATE_EPOCH`, Perl hash seeds, and an explicit baseline date in its
   dedicated launcher pair; all argv is executable on the pinned Oracle. Product
@@ -222,5 +223,12 @@ the M0 harness become the permanent integration boundary.
   `control.lcovrc` invocation and one direct-option target each. Two clean pinned
   Oracle runs agree on exact reference/output characterization; the reverse
   harness exits 23. These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-summary-contract` suite binds three command-owned options
+  (`--fail-under-branches 50`, `--show-zero-columns`, and `--sort-tables`) to a
+  shared `control.lcovrc` invocation and one direct-option target each. Two clean
+  pinned Oracle runs agree on exact reference/output characterization; the reverse
+  harness exits 23. A trial `--debug` case remains excluded because its stderr
+  contains run-specific temporary paths. These are planning facts only, with
+  product evidence empty.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

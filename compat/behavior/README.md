@@ -157,6 +157,14 @@ shared control and three target cases. Its two clean pinned Oracle runs agree on
 exact reference/output facts; every plan remains `evidence_status=planned` with
 an empty evidence array and no product compatibility evidence.
 
+The `m0-genhtml-cli-summary-contract` wave adds three command-owned `genhtml`
+option plans (`--fail-under-branches 50`, `--show-zero-columns`, and
+`--sort-tables`) with one shared control and three target cases. Its two clean
+pinned Oracle runs agree on exact reference/output facts; the trial `--debug`
+case is excluded because stderr contains run-specific temporary paths. Every
+plan remains `evidence_status=planned` with an empty evidence array and no
+product compatibility evidence.
+
 ## Fixed plan bindings
 
 `plan-bindings.json` seals substantive primary-plan semantics and critical
