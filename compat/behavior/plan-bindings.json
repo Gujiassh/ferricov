@@ -679,6 +679,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--baseline-title Baseline CLI",
+      "description_sha256": "b0f30db5d7ff55f10c4418da57b1b68cfe5a026e576a1315f36809e38fcf8016",
+      "id": "case.acceptance.command.genhtml.option.baseline-title",
+      "primary_targets": [
+        "command.genhtml.option.baseline-title"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7228,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"baseline-title=s\"     => \\$baseline_title,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12362,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if (defined($baseline_title)) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12365,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "              [undef, \"headerValue\", $baseline_title]"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-baseline-title",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "coverage.mcdc",
         "genhtml.diagnostics-and-config",
@@ -2645,6 +2688,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--merge-aliases",
+      "description_sha256": "dbe9d4dc2c35118815cad69726b457f6351a4e81d52f0fc904300ae5bba0421f",
+      "id": "case.acceptance.command.genhtml.option.merge-aliases",
+      "primary_targets": [
+        "command.genhtml.option.merge-aliases"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 5243,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($main::merge_function_aliases) {"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7271,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"merge-aliases\"     => \\$merge_function_aliases,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13912,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "         funcview_get_sorted($funcData, $type, $main::merge_function_aliases)) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-merge-aliases",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -4220,6 +4306,49 @@
         "tests/genhtml/insensitive/insensitive.sh",
         "tests/genhtml/simple/script.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--suppress-aliases",
+      "description_sha256": "dbe4a75c03664b25d0d0a6ac2717a2a082e87e50c9356d69c36133e2006319e1",
+      "id": "case.acceptance.command.genhtml.option.suppress-aliases",
+      "primary_targets": [
+        "command.genhtml.option.suppress-aliases"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7272,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"suppress-aliases\"  => \\$suppress_function_aliases,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7286,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$merge_function_aliases = 1"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13998,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ((!defined($main::suppress_function_aliases) ||"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-suppress-aliases",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18286,7 +18415,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 436
+    "primary_plans": 439
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

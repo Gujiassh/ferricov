@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-context-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-genhtml-cli-context-contract-control",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--filter",
+        "function",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-context-contract-baseline-title",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-title",
+        "Baseline CLI",
+        "--filter",
+        "function",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-context-contract-merge-aliases",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--merge-aliases",
+        "--filter",
+        "function",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-context-contract-suppress-aliases",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--suppress-aliases",
+        "--filter",
+        "function",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

@@ -353,62 +353,6 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.genhtml.option.baseline-title: cli-option boundary `--baseline-title <value>` from `\"baseline-title=s\"     => \\$baseline_title,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.genhtml.option.baseline-title",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 7228,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 54,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 593,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 62,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.genhtml.option.baseline-title",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
       "behavior_groups": [
         "coverage.mcdc",
         "genhtml.diagnostics-and-config",
