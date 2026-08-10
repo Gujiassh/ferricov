@@ -15,22 +15,67 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.merge-function-aliases: config-key boundary `merge_function_aliases = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for lcovrc.merge-function-aliases: boundary `merge_function_aliases = 1` changes differential function TLA aggregation compared with the explicit control; pinned Oracle stdout changes from `UBC:1 CBC:1` to `CBC:1`, and function HTML removes the standalone UBC summary while retaining alias rows. The alias fixture uses two FNL/FNA aliases sharing source lines 1-3 with mixed hit counts and an absolute-path no-change diff. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.merge-function-aliases",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 5243,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($main::merge_function_aliases) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 5262,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            _accountFunction($fileSummary, $tla, $src_age);"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 5989,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            $testcaseCounts->numFunc($main::merge_function_aliases);"
+        },
         {
           "kind": "config_definition",
           "line": 7192,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "               'merge_function_aliases'      => \\$merge_function_aliases,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13912,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "         funcview_get_sorted($funcData, $type, $main::merge_function_aliases)) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13998,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ((!defined($main::suppress_function_aliases) ||"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-report-alias-control",
+          "suite_id": "m0-lcovrc-genhtml-report-alias-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-report-alias-merge-function-aliases",
+          "suite_id": "m0-lcovrc-genhtml-report-alias-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -53,28 +98,53 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.num-context-lines: config-key boundary `num_context_lines = <int>` from `# num_context_lines = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound config boundary plan for lcovrc.num-context-lines: boundary `num_context_lines = 5` changes the selected differential source region compared with an explicit `num_context_lines = 0` control; pinned Oracle stdout changes from `lines 100.0% (1 of 1 line)` to `lines 70.0% (7 of 10 lines)`, with distinct elided source HTML. The fixture activates a filename-matched Perl select callback that selects line 5 and uses an absolute-path no-change diff. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.num-context-lines",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 4453,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    $self->[LINES_BEFORE] = $num_context_lines + $count;"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 4479,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            $self->[LINES_AFTER] = $num_context_lines + $count;"
+        },
         {
           "kind": "config_definition",
           "line": 7206,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "               'num_context_lines' => \\$InInterestingRegion::num_context_lines,"
         },
         {
           "kind": "config_definition",
           "line": 365,
           "path": "lcovrc",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "# num_context_lines = 5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-report-context-control",
+          "suite_id": "m0-lcovrc-genhtml-report-context-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-report-context-num-context-lines",
+          "suite_id": "m0-lcovrc-genhtml-report-context-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -85,7 +155,7 @@
       "upstream_tests": []
     }
   ],
-  "description": "Unreviewed report-oriented lcovrc primary plans; no product evidence.",
+  "description": "Suite-bound genhtml report lcovrc primary plans for function alias merging and differential source context expansion. No Ferricov product evidence is claimed.",
   "fragment_id": "authored.m0-lcovrc-report-wave",
   "fragment_type": "authored",
   "interaction_groups": [],
