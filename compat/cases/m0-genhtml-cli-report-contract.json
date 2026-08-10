@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-report-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-genhtml-cli-report-contract-control",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-report-contract-footer",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--footer",
+        "CLI Footer",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-report-contract-no-html",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--no-html",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-genhtml-cli-report-contract-no-checksum",
+      "surface": "cli",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--no-checksum",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

@@ -151,6 +151,12 @@ shared metric control and three target cases. Its two clean pinned Oracle runs
 agree on exact reference facts; every plan remains `evidence_status=planned`
 with an empty evidence array and no product compatibility evidence.
 
+The `m0-genhtml-cli-report-contract` wave adds three command-owned `genhtml`
+option plans (`--footer CLI Footer`, `--no-checksum`, and `--no-html`) with one
+shared control and three target cases. Its two clean pinned Oracle runs agree on
+exact reference/output facts; every plan remains `evidence_status=planned` with
+an empty evidence array and no product compatibility evidence.
+
 ## Fixed plan bindings
 
 `plan-bindings.json` seals substantive primary-plan semantics and critical

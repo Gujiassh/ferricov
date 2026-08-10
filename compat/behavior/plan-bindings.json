@@ -1806,6 +1806,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--footer CLI Footer",
+      "description_sha256": "3691c3862578698e65681ec5517a5a5e33f931f94189b09fa0dd448784497d08",
+      "id": "case.acceptance.command.genhtml.option.footer",
+      "primary_targets": [
+        "command.genhtml.option.footer"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 7157,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_footer\"              => \\$footer,"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7222,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"footer=s\"             => \\$footer,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 11706,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        defined($main::footer) ? $footer :"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-footer",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.function-differential"
       ],
@@ -2686,6 +2729,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--no-checksum",
+      "description_sha256": "a8a677ec8a518240a5eb341a0d53fdc182eff99df0042b69abc916e53725d65d",
+      "id": "case.acceptance.command.genhtml.option.no-checksum",
+      "primary_targets": [
+        "command.genhtml.option.no-checksum"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"no-checksum\" => \\$rc_no_checksum,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 1596,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    $lcovutil::verify_checksum = 0"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 9779,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                                       $lcovutil::verify_checksum, 1);"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-no-checksum",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.tracefile-synthesis"
       ],
@@ -2731,6 +2817,49 @@
       "upstream_tests": [
         "tests/genhtml/synthesize/synthesize.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--no-html",
+      "description_sha256": "414f85c4fbc66ba78d6981be8cc1ef87920b50306ce03c6ec8247b534a29fab9",
+      "id": "case.acceptance.command.genhtml.option.no-html",
+      "primary_targets": [
+        "command.genhtml.option.no-html"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7251,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     'no-html'           => \\$no_html,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7291,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$no_sourceview             = 1 if $no_html;"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7951,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    unless ($no_html) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-no-html",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18028,7 +18157,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 430
+    "primary_plans": 433
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

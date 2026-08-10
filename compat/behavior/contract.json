@@ -2819,40 +2819,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.footer: cli-option boundary `--footer <value>` from `\"footer=s\"             => \\$footer,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.footer: cli-option boundary `--footer CLI Footer` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `a05c4105eff8f5dafd6af9c443ea4993b93d8465e7b10a418ea50c67ae5e3a3f`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.footer",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 7157,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_footer\"              => \\$footer,"
+        },
         {
           "kind": "parser_definition",
           "line": 7222,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     \"footer=s\"             => \\$footer,"
         },
         {
-          "kind": "manual_candidate",
-          "line": 26,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1130,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 67,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 11706,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        defined($main::footer) ? $footer :"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-footer",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -4346,28 +4352,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.no-checksum: cli-option boundary `--no-checksum` from `\"no-checksum\" => \\$rc_no_checksum,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.no-checksum: cli-option boundary `--no-checksum` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `0b2d3c12d04b463b1c356b0369186a2c3f791556b64c9de7191a16856654bd5c`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.no-checksum",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
-        {
-          "kind": "help_definition",
-          "line": 31,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
-        },
         {
           "kind": "parser_definition",
           "line": 1243,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"no-checksum\" => \\$rc_no_checksum,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 1596,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "    $lcovutil::verify_checksum = 0"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 9779,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                                       $lcovutil::verify_checksum, 1);"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-no-checksum",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -4456,34 +4480,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.no-html: cli-option boundary `--no-html` from `'no-html'           => \\$no_html,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.no-html: cli-option boundary `--no-html` uses shared `--config-file control.lcovrc` defaults and the direct option delta. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `aa4c1afab3bf0f16591e032c947f8b558c139a4fe36ab2d877da293f03ed41e8`; this is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.no-html",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 7251,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     'no-html'           => \\$no_html,"
         },
         {
-          "kind": "manual_candidate",
-          "line": 33,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 7291,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$no_sourceview             = 1 if $no_html;"
         },
         {
-          "kind": "manual_candidate",
-          "line": 1198,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 7951,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    unless ($no_html) {"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-report-contract-control",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-report-contract-no-html",
+          "suite_id": "m0-genhtml-cli-report-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33786,14 +33822,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 456,
+      "none": 453,
       "pass": 0,
-      "planned": 115
+      "planned": 118
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 468,
-      "unreviewed": 103
+      "reviewed": 471,
+      "unreviewed": 100
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33804,9 +33840,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 428,
+    "reviewed_primary_coverage": 431,
     "subjects": 35,
-    "uncovered_public_entries": 103
+    "uncovered_public_entries": 100
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
