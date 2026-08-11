@@ -818,6 +818,10 @@ def main() -> int:
         root,
     )
     run(
+        [sys.executable, str(root / "compat/cases/m0_genhtml_cli_residual_contract.py")],
+        root,
+    )
+    run(
         [sys.executable, str(root / "compat/correctness/m0_contract.py")],
         root,
     )

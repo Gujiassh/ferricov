@@ -61,6 +61,10 @@
 - [x] Write the callback/runtime ADR.
 - [x] Write the initial compiler/platform matrix ADR.
 
+- [x] Review three residual genhtml command surfaces (`--preserve`,
+  `--synthesize-missing`, and multi-tracefile positional inputs) with two clean
+  pinned Oracle runs and no product evidence.
+
 Current contract metrics: all 584 inventory entries and all 205 upstream test
 mappings are reviewed. The inventory contains 394 command candidates, 9
 positional forms, 158 configuration entries, and 23 support scripts. Command
@@ -131,8 +135,8 @@ Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
 Behavior planning covers all 531 public entries with primary plans. Four
-hundred twenty-eight substantive primary plans are reviewed with 430 fixed source and
-interaction projections; 103 explicit M0 gaps remain. Forty CLI
+hundred forty substantive primary plans are reviewed with 442 fixed source and
+interaction projections; 91 explicit M0 gaps remain. Forty CLI
 entries bind 154 exact suite cases, eight base configuration slices bind 67
 cases, three support-script entries bind executable planning cases, and
 thirty-two command entries bind six command-owned `genhtml` CLI-output cases,
@@ -204,6 +208,41 @@ does not unlock product parity.
   clean checkout; the independent 148-case correctness replay passes semantic
   comparison.
 - [ ] The coverage model specification represents every inventoried record.
+
+## M1 Tracefile Core Agent Breakdown (Activation-Gated)
+
+The executable implementation handoff and acceptance matrix is
+[`m1-tracefile-core-agent-spec.md`](m1-tracefile-core-agent-spec.md). It is
+ready to give to an implementation agent, but the milestone remains blocked
+until the M0 exit review passes. The agent MUST NOT implement Rust parser/model
+behavior while the gate is closed.
+
+Current activation blockers:
+
+- [ ] Reduce the remaining 88 M0 behavior-planning gaps to zero substantive
+  gaps and make `--mode m0-ready` pass.
+- [ ] Resolve or explicitly scope `M1-MD-020`, `M1-TF-063`, and `M1-TF-064`.
+- [ ] Approve the coverage-model and tracefile-grammar contracts for M1.
+- [ ] Record the M0 go/no-go decision and link it from this task ledger.
+
+After activation, the agent tasks are:
+
+- [ ] `M1-CORE-001`: implement byte/source/testcase/numeric primitives.
+- [ ] `M1-CORE-002`: implement independent aggregate and testcase-family stores.
+- [ ] `M1-CORE-003`: implement function, branch, and MC/DC invariants/indexes.
+- [ ] `M1-CORE-004`: implement ordered union/intersection/difference algebra.
+- [ ] `M1-CORE-005`: implement logical-line processing and parser state.
+- [ ] `M1-CORE-006`: implement all record semantics, errors, and section commit.
+- [ ] `M1-CORE-007`: implement deterministic canonical serialization.
+- [ ] `M1-CORE-008`: implement semantic snapshots and equality.
+- [ ] `M1-CORE-009`: implement named properties, fuzz targets, budgets, and
+  minimized regression retention.
+- [ ] `M1-CORE-010`: close Ferricov-vs-Oracle evidence for all applicable cases.
+- [ ] `M1-CORE-011`: run post-parity M1 performance qualification.
+
+The worker may not widen the ownership boundary into CLI, `lcovrc`, reports,
+capture, installation, callbacks, or release packaging. The controller owns
+activation, review, commit, push, and milestone status changes.
 
 Later milestone task breakdowns are opened before their milestone starts. The
 canonical scope, order, gates, and estimates remain in `plan.md`.

@@ -10,6 +10,12 @@ compatibility releases.
 
 ### Added
 
+- Reviewed residual genhtml CLI plans for `--preserve`, `--synthesize-missing`,
+  and multi-tracefile positional inputs with a dedicated Oracle suite and no
+  product evidence.
+- A gated M1 Tracefile Core agent specification with task IDs, module
+  ownership, semantic/property/fuzz acceptance, Oracle evidence requirements,
+  performance gates, and controller handoff rules.
 - M0 tracefile VER and state-ownership Oracle evidence: six committed fixtures,
   `inspect_model.pl` semantic snapshots, and exact mappings for
   `M1-TF-007`, `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` (63 observations / 42

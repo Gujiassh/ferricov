@@ -3531,6 +3531,49 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--preserve",
+      "description_sha256": "577401c3653333080a59249270756fa11ef7d9383477539789b6795bd84559d3",
+      "id": "case.acceptance.command.genhtml.option.preserve",
+      "primary_targets": [
+        "command.genhtml.option.preserve"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 622,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                      CLEANUP => !defined($lcovutil::preserve_intermediates));"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 10167,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "        !$lcovutil::preserve_intermediates) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-preserve",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.report-options"
@@ -4480,6 +4523,49 @@
       "upstream_tests": []
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--synthesize-missing",
+      "description_sha256": "bbb473372ede469579dd231ae1f2942ee2b2b716cca270ed6f7d030786b8ac9b",
+      "id": "case.acceptance.command.genhtml.option.synthesize-missing",
+      "primary_targets": [
+        "command.genhtml.option.synthesize-missing"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 5727,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            !$main::synthesizeMissingFile) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 5832,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($main::synthesizeMissingFile ||"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7237,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     'synthesize-missing'   => \\$synthesizeMissingFile,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-synthesize-missing",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "geninfo.capture-cli"
       ],
@@ -4866,6 +4952,35 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/mcdc/mcdc.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "input.info input2.info",
+      "description_sha256": "628777b10da81ad0c8e9f13397ce6ca1525f6f5ac0a8235dc29d698959c25347",
+      "id": "case.acceptance.command.genhtml.positional.tracefile-pattern",
+      "primary_targets": [
+        "command.genhtml.positional.tracefile-pattern"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7456,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "@info_filenames = AggregateTraces::find_from_glob(@ARGV);"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-multi",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18544,7 +18659,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 442
+    "primary_plans": 445
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

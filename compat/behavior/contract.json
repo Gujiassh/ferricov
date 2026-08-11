@@ -5166,40 +5166,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.preserve: cli-option boundary `--preserve` uses shared `--config-file control.lcovrc` with the residual fixture. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `c4cc1497831cf14b5eb5dd51db83e32b631795247c1c2f6b0ca339b556e0c45a` (18 files, 6359 bytes); the option keeps intermediate cleanup disabled and changes the retained report/cmd_line capture relative to control. This is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.preserve",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "manual_candidate",
-          "line": 90,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1610,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 19,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 622,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                      CLEANUP => !defined($lcovutil::preserve_intermediates));"
         },
         {
           "kind": "parser_definition",
           "line": 1286,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 10167,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "        !$lcovutil::preserve_intermediates) {"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-preserve",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -6551,46 +6557,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.synthesize-missing: cli-option boundary `--synthesize-missing` from `'synthesize-missing'   => \\$synthesizeMissingFile,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.synthesize-missing: cli-option boundary `--synthesize-missing` uses shared `--config-file control.lcovrc` plus `--ignore-errors source,unsupported` on a missing-source tracefile. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `977a63d367b2c9edec60d514d8ef9f04d1bd63391c367926c4b011d8c0079590` (18 files, 6432 bytes); it synthesizes fake source content and completes a report for the missing path. This is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.synthesize-missing",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 5727,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            !$main::synthesizeMissingFile) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 5832,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($main::synthesizeMissingFile ||"
+        },
         {
           "kind": "parser_definition",
           "line": 7237,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 71,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 647,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 936,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 52,
-          "path": "help/genhtml.txt",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                     'synthesize-missing'   => \\$synthesizeMissingFile,"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-synthesize-missing",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -7134,22 +7140,32 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.positional.tracefile-pattern: cli-positional boundary `<tracefile_pattern>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.positional.tracefile-pattern limited to explicit multi-file positional aggregation: invocation/input boundary `input.info input2.info` uses shared `--config-file control.lcovrc` with two concrete tracefile path arguments (not shell/glob wildcards). The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `bba9c587b30ddb407492adffe550f8fbb2c09286a25b33ea2bf200ee3b46d63c` (18 files, 6359 bytes); the runner merges both explicit inputs before report generation. Glob expansion, unmatched patterns, match ordering, and duplicate matches remain separate M0 gaps and are not claimed by this plan. This is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.positional.tracefile-pattern",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 7456,
           "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "@info_filenames = AggregateTraces::find_from_glob(@ARGV);"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-multi",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33870,14 +33886,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 444,
+      "none": 441,
       "pass": 0,
-      "planned": 127
+      "planned": 130
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 480,
-      "unreviewed": 91
+      "reviewed": 483,
+      "unreviewed": 88
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33888,9 +33904,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 440,
+    "reviewed_primary_coverage": 443,
     "subjects": 35,
-    "uncovered_public_entries": 91
+    "uncovered_public_entries": 88
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

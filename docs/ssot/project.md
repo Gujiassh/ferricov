@@ -70,6 +70,7 @@ the M0 harness become the permanent integration boundary.
 - compatibility definition: `compatibility-contract.md`
 - performance gates: `performance-contract.md`
 - requirements and acceptance: `specs/001-full-lcov-compatibility/`
+- M1 implementation handoff: `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`
 - upstream behavior: pinned LCOV executable and its fixtures
 - implementation status: generated compatibility inventory and evidence
 
@@ -139,8 +140,11 @@ the M0 harness become the permanent integration boundary.
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
   531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 442 projections; 440 substantive primary plans are
-  reviewed and 91 explicit M0 gaps remain. The support-script planning suite
+  independently seal 445 projections; 443 substantive primary plans are
+  reviewed and 88 explicit M0 gaps remain. The M1 Tracefile Core handoff is
+  now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
+  but activation remains blocked by the M0 exit review and unresolved
+  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` decisions. The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
@@ -240,5 +244,10 @@ the M0 harness become the permanent integration boundary.
   `--keep-descriptions`) to a named-testcase metadata fixture. Two clean pinned
   Oracle runs agree on exact reference/output characterization; the reverse
   harness exits 23. These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-residual-contract` suite binds three residual command-owned
+  surfaces (`--preserve`, `--synthesize-missing`, and multi-tracefile positional
+  inputs) to a dedicated fixture with shared control. Two clean pinned Oracle runs
+  agree on exact reference/output characterization; the reverse harness exits 23.
+  These are planning facts only, with product evidence empty.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

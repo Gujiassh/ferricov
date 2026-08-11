@@ -32,8 +32,8 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 440 substantive reviewed primary plans,
-  all 4 required critical interaction domains reviewed, and 91 explicit M0
+- 531 public behavior plans, with 443 substantive reviewed primary plans,
+  all 4 required critical interaction domains reviewed, and 88 explicit M0
   primary-review gaps
 
 The option and configuration counts are omission-detection inputs, not progress
@@ -147,7 +147,7 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. ADR 0003
-is accepted. M0 is not complete: 91 behavior-planning gaps, 12 unbound
+is accepted. M0 is not complete: 88 behavior-planning gaps, 12 unbound
 diagnostic/parallel identities, tracefile product/fuzz boundaries, executable installation lifecycle
 review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov
@@ -247,6 +247,12 @@ satisfied.
   target speedup is at least 2x.
 
 **Release claim:** tracefile-core preview only. No drop-in CLI claim.
+
+**Agent handoff:** The complete implementation task breakdown, ownership
+boundary, evidence schema, property/fuzz matrix, and acceptance criteria are
+in [m1-tracefile-core-agent-spec.md](m1-tracefile-core-agent-spec.md). This
+handoff is activation-gated by the M0 exit review; it does not authorize M1
+while the M0 gate is open.
 
 ### M2 / v0.2: `lcov` Manipulation And Shared Runtime
 
