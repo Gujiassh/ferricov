@@ -1,0 +1,451 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "control.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 893,
+        "file_tree_sha256": "a2c0c6c467d9972fe6c9aeda9152a532de4b00c9610e475573fed6e3ad73a840",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "out.info",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 540,
+        "stdout_sha256": "17078216307747a62a328d844a8e54b6bc6a5df47e646a222ef0e14fe6f9339e"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "source-directory.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-source-directory",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 13,
+        "file_tree_bytes": 893,
+        "file_tree_sha256": "a2c0c6c467d9972fe6c9aeda9152a532de4b00c9610e475573fed6e3ad73a840",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "out.info",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 132,
+        "stderr_sha256": "0dfb4d50204257096d89663b54a6c37b8c9a7f03ad5e3c2ca64797c932b7c69b",
+        "stdout_bytes": 545,
+        "stdout_sha256": "2ab16921747406584ae27b98e7e17577330c4ffdeb6b66e55284e3a9b9469095"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "build-directory.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-build-directory",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 13,
+        "file_tree_bytes": 893,
+        "file_tree_sha256": "a2c0c6c467d9972fe6c9aeda9152a532de4b00c9610e475573fed6e3ad73a840",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "out.info",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 131,
+        "stderr_sha256": "493ecd5855b5bf08aedeaacd913865a49aeb17422d2cae10049e27293f18a455",
+        "stdout_bytes": 545,
+        "stdout_sha256": "ca9d49db96bdb0ebfd3394f1d1427188ee6307d5c539dc2e5f063222dc2d3f4b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "tmp-dir.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-tmp-dir",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 12,
+        "file_tree_bytes": 788,
+        "file_tree_sha256": "0c8929044489b5b0badb8e09daeb9ff5d1f6500aa8f4a07706c2d5604cceb312",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 114,
+        "stderr_sha256": "df999bd45e4e30f7bfe125b6a80b8b6187a35f520d785df12fbc017a8069dfc3",
+        "stdout_bytes": 108,
+        "stdout_sha256": "75cbf49f9db08e720919090bbf7d206d9322007b1bb7be5be2786f4adc5987ae"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "erase-functions.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-erase-functions",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 12,
+        "file_tree_bytes": 788,
+        "file_tree_sha256": "0c8929044489b5b0badb8e09daeb9ff5d1f6500aa8f4a07706c2d5604cceb312",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 154,
+        "stderr_sha256": "8136552d943b91f3d0aff71f5f6c9bfb8b16820f31d3554a4a01f9587c9cf4bb",
+        "stdout_bytes": 395,
+        "stdout_sha256": "8d53b5dc1306a2107cab7484876f9899de3371a21743666a48c361ff29247b5d"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "mcdc-coverage.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-mcdc-coverage",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 255,
+        "file_count": 12,
+        "file_tree_bytes": 788,
+        "file_tree_sha256": "0c8929044489b5b0badb8e09daeb9ff5d1f6500aa8f4a07706c2d5604cceb312",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 166,
+        "stderr_sha256": "3a620a5cb4926262ba4738273be8e0249ca788f4b4544c81cb7bdab428da5db3",
+        "stdout_bytes": 58,
+        "stdout_sha256": "b59ada9660c5b95a8430a3094b5ddbd035e55caf4fce3c1b2eb5750cc5b40c76"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "gcov-tool.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-gcov-tool",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 12,
+        "file_tree_bytes": 788,
+        "file_tree_sha256": "0c8929044489b5b0badb8e09daeb9ff5d1f6500aa8f4a07706c2d5604cceb312",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 56,
+        "stderr_sha256": "1f64b64d7f929b97ed0d51997c48d0d9399053723f38a37277bf2e5ebae5d42b",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "version-script.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-lcovrc-capture-residual-contract-version-script",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 906,
+        "file_tree_sha256": "c7d8c3a5aa64c9c674282f9e0667d904613c5129611a251a5d511eb493962b56",
+        "paths": [
+          "build-directory.lcovrc",
+          "control.lcovrc",
+          "erase-functions.lcovrc",
+          "gcov-tool.lcovrc",
+          "mcdc-coverage.lcovrc",
+          "out.info",
+          "source-directory.lcovrc",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno",
+          "tmp-dir.lcovrc",
+          "ver.sh",
+          "version-script.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 540,
+        "stdout_sha256": "e6985d30bef575f88ab514776c7be0c100757f4500228f1ef4070d9f56201429"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "m0-lcovrc-capture-residual-contract",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-capture-residual-contract"
+}

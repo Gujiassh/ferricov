@@ -1,0 +1,207 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "control.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "source-directory.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-source-directory",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "build-directory.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-build-directory",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "tmp-dir.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-tmp-dir",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "erase-functions.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-erase-functions",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "mcdc-coverage.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-mcdc-coverage",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "gcov-tool.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-gcov-tool",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "version-script.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-capture-residual-contract",
+      "id": "m0-lcovrc-capture-residual-contract-version-script",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-capture-residual-contract"
+}
