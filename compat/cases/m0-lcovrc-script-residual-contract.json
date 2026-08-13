@@ -1,0 +1,145 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "annotate-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-annotate-script",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "context-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-context-script",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "criteria-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-criteria-script",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "simplify-function.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-simplify-function",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "unreachable-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-script-residual-contract",
+      "id": "m0-lcovrc-script-residual-contract-unreachable-script",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-script-residual-contract"
+}

@@ -319,44 +319,6 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for lcovrc.simplify-function: config-key boundary `simplify_function = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.simplify-function",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7205,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.simplify-function",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
       "behavior_groups": [
         "lcov.add-and-prune"
       ],
@@ -735,44 +697,6 @@
         "tests/genhtml/errs/msgtest.sh",
         "tests/genhtml/simple/script.sh"
       ]
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for lcovrc.unreachable-script: config-key boundary `unreachable_script = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.unreachable-script",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 1184,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.unreachable-script",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
     },
     {
       "applicability": {

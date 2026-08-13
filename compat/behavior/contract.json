@@ -23406,17 +23406,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.context-script: config-key boundary `context_script = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.context-script: config-key boundary `context_script = /work/missing.sh` missing script fails (exit 2). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.context-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23425,7 +23423,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-context-script",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-control",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -23540,17 +23547,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.criteria-script: config-key boundary `criteria_script = <path_to_my_executable_or_module>` from `#criteria_script = path_to_my_executable_or_module`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.criteria-script: config-key boundary `criteria_script = /work/missing.sh` missing script fails (exit 1). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.criteria-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23565,7 +23570,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-control",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-criteria-script",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24410,17 +24424,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-annotate-script: config-key boundary `genhtml_annotate_script = <path_to_my_executable>` from `#genhtml_annotate_script = path_to_my_executable`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-annotate-script: config-key boundary `genhtml_annotate_script = /work/ann.sh` with pinned ann.sh changes the sealed report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-annotate-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24435,7 +24447,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-annotate-script",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-control",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29775,17 +29796,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.simplify-function: config-key boundary `simplify_function = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.simplify-function: config-key boundary `simplify_function = /work/missing.sh` missing script fails (exit 1). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.simplify-function",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29794,7 +29813,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-control",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-simplify-function",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -30242,17 +30270,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.unreachable-script: config-key boundary `unreachable_script = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.unreachable-script: config-key boundary `unreachable_script = /work/missing.sh` missing script still exits 0 but changes the sealed report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.unreachable-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -30261,7 +30287,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-control",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-script-residual-contract-unreachable-script",
+          "suite_id": "m0-lcovrc-script-residual-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -34094,14 +34129,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 394,
+      "none": 389,
       "pass": 0,
-      "planned": 177
+      "planned": 182
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 528,
-      "unreviewed": 43
+      "reviewed": 533,
+      "unreviewed": 38
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -34112,9 +34147,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 488,
+    "reviewed_primary_coverage": 493,
     "subjects": 35,
-    "uncovered_public_entries": 43
+    "uncovered_public_entries": 38
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
