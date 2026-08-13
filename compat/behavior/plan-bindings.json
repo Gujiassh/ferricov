@@ -5497,6 +5497,52 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--debug",
+      "description_sha256": "26bbf32c7793ff921dbb3a91cd0b6faf42971ff195df2b1f07bfb81c927852e9",
+      "id": "case.acceptance.command.geninfo.option.debug",
+      "primary_targets": [
+        "command.geninfo.option.debug"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 21,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 616,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 13,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "lcov.demangling"
@@ -6378,6 +6424,58 @@
       "upstream_tests": [
         "tests/lcov/extract/extract.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--large-file (",
+      "description_sha256": "7e4c579df765150d14748a89c0b1db6006fb9b5a93fe2c07848f661dbb7a7585",
+      "id": "case.acceptance.command.geninfo.option.large-file",
+      "primary_targets": [
+        "command.geninfo.option.large-file"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 262,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 38,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 627,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 631,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 632,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -9877,6 +9975,52 @@
       "upstream_tests": [
         "tests/lcov/coverage/coverage.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--large-file (",
+      "description_sha256": "fe8c236a91be3ab0a7f87897a960f7d0c1f0244a5295194e8270d1ec85d97730",
+      "id": "case.acceptance.command.lcov.option.large-file",
+      "primary_targets": [
+        "command.lcov.option.large-file"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 211,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 57,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 896,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 899,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -19069,7 +19213,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 456
+    "primary_plans": 459
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

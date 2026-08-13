@@ -7908,16 +7908,15 @@
       "comparison_dimensions": [
         "exit",
         "filesystem",
-        "stderr",
-        "stdout"
+        "stderr"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.debug: cli-option boundary `--debug` on a pinned hello capture fixture exits 0 with the same filesystem tree as control while emitting non-empty DEBUG stderr (stable under fixed /work paths and SOURCE_DATE_EPOCH). Compared dimensions are exit, stderr, and filesystem under exact-v1; stdout excluded. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.debug",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -7944,7 +7943,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -9227,17 +9235,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.large-file: cli-option boundary `--large-file <value>` from `'large-file=s'        => \\@large_files);`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.large-file: cli-option boundary `--large-file (` supplies an invalid regexp so Oracle geninfo dies during option parsing (exit 2) with no out.info, while control without the flag exits 0 and writes out.info. Compared dimensions are exit and filesystem under exact-v1. Honest Oracle failure surface; planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.large-file",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -9270,7 +9276,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -14212,17 +14227,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.large-file: cli-option boundary `--large-file <value>` from `'large-file=s'       => \\@large_files,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.lcov.option.large-file: cli-option boundary `--large-file (` is forwarded into geninfo and fails Oracle option parsing (exit 2) with no out.info, while control capture exits 0 and writes out.info. Compared dimensions are exit and filesystem under exact-v1. Honest Oracle failure surface; planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.large-file",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -14249,7 +14262,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33855,14 +33877,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 428,
+      "none": 425,
       "pass": 0,
-      "planned": 143
+      "planned": 146
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 494,
-      "unreviewed": 77
+      "reviewed": 497,
+      "unreviewed": 74
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33873,9 +33895,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 454,
+    "reviewed_primary_coverage": 457,
     "subjects": 35,
-    "uncovered_public_entries": 77
+    "uncovered_public_entries": 74
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
