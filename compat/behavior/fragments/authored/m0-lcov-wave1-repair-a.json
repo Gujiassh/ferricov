@@ -852,50 +852,6 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.lcov.option.derive-func-data: cli-option boundary `--derive-func-data` from `\"derive-func-data\"  => \\$opt_derive_func_data,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.lcov.option.derive-func-data",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 219,
-          "path": "bin/lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 62,
-          "path": "help/lcov.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.lcov.option.derive-func-data",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential",
@@ -1182,68 +1138,6 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.lcov.option.external: cli-option boundary `--external` from `\"external\"          => \\$opt_external,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.lcov.option.external",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 222,
-          "path": "bin/lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 47,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 685,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 696,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 64,
-          "path": "help/lcov.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.lcov.option.external",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
     },
     {
       "applicability": {

@@ -1,0 +1,158 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--external",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-lcov-external",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--no-external",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-lcov-no-external",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "proj",
+        "--external",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-geninfo-external",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "proj",
+        "--no-external",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-geninfo-no-external",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-lcov-derive-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--derive-func-data",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-external-derive-contract",
+      "id": "m0-cli-external-derive-contract-lcov-derive-func-data",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-cli-external-derive-contract"
+}

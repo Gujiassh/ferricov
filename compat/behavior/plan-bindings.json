@@ -5684,6 +5684,58 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "--external",
+      "description_sha256": "86d59e7509ccff817318bbb9b5e3633d94f02fe354f55bbda33f0ea746c40b26",
+      "id": "case.acceptance.command.geninfo.option.external",
+      "primary_targets": [
+        "command.geninfo.option.external"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 259,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 48,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 331,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 334,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 42,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "--fail-under-branches 101",
       "description_sha256": "acfddeddb04da5a618fe859581f76c96a9a04e5372033b43a1e4bb14a14857f8",
       "id": "case.acceptance.command.geninfo.option.fail-under-branches",
@@ -6561,17 +6613,9 @@
       ]
     },
     {
-      "behavior_groups": [
-        "genhtml.diagnostics-and-config",
-        "lcov.branch-coverage",
-        "lcov.capture-and-filter",
-        "lcov.demangling",
-        "lcov.exception-branches",
-        "lcov.follow-symlinks",
-        "lcov.multi-directory"
-      ],
+      "behavior_groups": [],
       "boundary_form": "--no-external",
-      "description_sha256": "0af9e1e0b5f2b7b9d152226c7710f10a8ac7b4cb56c5021b1a968e80dde9eb5f",
+      "description_sha256": "a7bf1f61bf5f93ec15bd9bc8c3e7f08227daa712c5c7722d95d1ef6c90e8bebc",
       "id": "case.acceptance.command.geninfo.option.no-external",
       "primary_targets": [
         "command.geninfo.option.no-external"
@@ -6620,16 +6664,17 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
-      "upstream_tests": [
-        "tests/genhtml/errs/msgtest.sh",
-        "tests/lcov/branch/branch.sh",
-        "tests/lcov/demangle/demangle.sh",
-        "tests/lcov/exception/exception.sh",
-        "tests/lcov/extract/extract.sh",
-        "tests/lcov/follow/follow.sh",
-        "tests/lcov/multiple/multiple.sh"
-      ]
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -8632,6 +8677,40 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--derive-func-data",
+      "description_sha256": "c6cd19a23b3c0970612b6d7dd9302428fcab7c4c53fafeefa7c574959ced274e",
+      "id": "case.acceptance.command.lcov.option.derive-func-data",
+      "primary_targets": [
+        "command.lcov.option.derive-func-data"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 219,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 62,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-derive-control",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-derive-func-data",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential",
@@ -8846,6 +8925,58 @@
       "upstream_tests": [
         "tests/genhtml/errs/msgtest.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--external",
+      "description_sha256": "54d732f0171ec65826c25b81843f3960d979f8d25407a854254656ba698ee919",
+      "id": "case.acceptance.command.lcov.option.external",
+      "primary_targets": [
+        "command.lcov.option.external"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 222,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 47,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 685,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 696,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 64,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [],
@@ -10183,18 +10314,9 @@
       ]
     },
     {
-      "behavior_groups": [
-        "genhtml.diagnostics-and-config",
-        "genhtml.function-differential",
-        "genhtml.path-case",
-        "genhtml.tracefile-synthesis",
-        "lcov.branch-coverage",
-        "lcov.capture-and-filter",
-        "lcov.demangling",
-        "lcov.exception-branches"
-      ],
+      "behavior_groups": [],
       "boundary_form": "--no-external",
-      "description_sha256": "c3ac7e6026b2ce5b79cf8f109847e5848b63b160b126e37e285a1b8c6d39fd84",
+      "description_sha256": "6035b0d14ed124b9db2791ad530eccbf3fcdff07cfdfb15f6140cb9db7276e0d",
       "id": "case.acceptance.command.lcov.option.no-external",
       "primary_targets": [
         "command.lcov.option.no-external"
@@ -10243,17 +10365,17 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
-      "upstream_tests": [
-        "tests/genhtml/errs/msgtest.sh",
-        "tests/genhtml/function/function.sh",
-        "tests/genhtml/insensitive/insensitive.sh",
-        "tests/genhtml/synthesize/synthesize.sh",
-        "tests/lcov/branch/branch.sh",
-        "tests/lcov/demangle/demangle.sh",
-        "tests/lcov/exception/exception.sh",
-        "tests/lcov/extract/extract.sh"
-      ]
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18947,7 +19069,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 453
+    "primary_plans": 456
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

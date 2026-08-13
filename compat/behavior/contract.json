@@ -8225,17 +8225,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.external: cli-option boundary `--external` from `\"external|e\"          => \\$lcovutil::opt_external,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.external: cli-option boundary `--external` on a pinned capture fixture whose included header lives outside the capture directory. With `--external`, Oracle out.info retains external SF coverage (file-tree 890 bytes); compared dimensions are exit and filesystem under exact-v1. Stdout excluded for unstable temporary data-directory paths. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.external",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -8268,7 +8266,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -9623,25 +9630,15 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [
-        "genhtml.diagnostics-and-config",
-        "lcov.branch-coverage",
-        "lcov.capture-and-filter",
-        "lcov.demangling",
-        "lcov.exception-branches",
-        "lcov.follow-symlinks",
-        "lcov.multi-directory"
-      ],
+      "behavior_groups": [],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Plan command.geninfo.option.no-external as a source-bound cli-option boundary for geninfo: input form `--no-external` from parser/config text `\"no-external\"         => \\$lcovutil::opt_no_external,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/branch/branch.sh, tests/lcov/demangle/demangle.sh, tests/lcov/exception/exception.sh, tests/lcov/extract/extract.sh, tests/lcov/follow/follow.sh, tests/lcov/multiple/multiple.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.no-external: cli-option boundary `--no-external` drops external-header SF from the sealed out.info relative to `--external` on the same fixture (791 vs 890 file-tree bytes). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.no-external",
       "interaction_groups": [],
       "origin": "manually_curated",
@@ -9690,7 +9687,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-geninfo-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -9698,15 +9704,7 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": [
-        "tests/genhtml/errs/msgtest.sh",
-        "tests/lcov/branch/branch.sh",
-        "tests/lcov/demangle/demangle.sh",
-        "tests/lcov/exception/exception.sh",
-        "tests/lcov/extract/extract.sh",
-        "tests/lcov/follow/follow.sh",
-        "tests/lcov/multiple/multiple.sh"
-      ]
+      "upstream_tests": []
     },
     {
       "applicability": {
@@ -12579,17 +12577,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.derive-func-data: cli-option boundary `--derive-func-data` from `\"derive-func-data\"  => \\$opt_derive_func_data,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.lcov.option.derive-func-data: cli-option boundary `--derive-func-data` on `lcov --capture` is forwarded to geninfo; Oracle v2.5 geninfo rejects the unknown option so the case exits 1 with no out.info, while the control capture without the flag exits 0 and writes out.info. Compared dimensions are exit and filesystem under exact-v1. Honest Oracle failure surface; planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.derive-func-data",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -12604,7 +12600,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-derive-control",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-derive-func-data",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -12915,17 +12920,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.external: cli-option boundary `--external` from `\"external\"          => \\$opt_external,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.lcov.option.external: cli-option boundary `--external` on `lcov --capture` keeps external-header SF in out.info on the pinned fixture (file-tree 890 bytes) versus `--no-external` (791 bytes). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.external",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -12958,7 +12961,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -14858,26 +14870,15 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [
-        "genhtml.diagnostics-and-config",
-        "genhtml.function-differential",
-        "genhtml.path-case",
-        "genhtml.tracefile-synthesis",
-        "lcov.branch-coverage",
-        "lcov.capture-and-filter",
-        "lcov.demangling",
-        "lcov.exception-branches"
-      ],
+      "behavior_groups": [],
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Plan command.lcov.option.no-external as a source-bound cli-option boundary for lcov: input form `--no-external` from parser/config text `\"no-external\"       => \\$lcovutil::opt_no_external,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/function/function.sh, tests/genhtml/insensitive/insensitive.sh, tests/genhtml/synthesize/synthesize.sh, tests/lcov/branch/branch.sh, tests/lcov/demangle/demangle.sh, tests/lcov/exception/exception.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "description": "Reviewed source-bound plan for command.lcov.option.no-external: cli-option boundary `--no-external` on `lcov --capture` drops external-header SF from sealed out.info relative to `--external`. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.no-external",
       "interaction_groups": [],
       "origin": "manually_curated",
@@ -14926,7 +14927,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        },
+        {
+          "case_id": "m0-cli-external-derive-contract-lcov-no-external",
+          "suite_id": "m0-cli-external-derive-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -14934,16 +14944,7 @@
           "role": "primary"
         }
       ],
-      "upstream_tests": [
-        "tests/genhtml/errs/msgtest.sh",
-        "tests/genhtml/function/function.sh",
-        "tests/genhtml/insensitive/insensitive.sh",
-        "tests/genhtml/synthesize/synthesize.sh",
-        "tests/lcov/branch/branch.sh",
-        "tests/lcov/demangle/demangle.sh",
-        "tests/lcov/exception/exception.sh",
-        "tests/lcov/extract/extract.sh"
-      ]
+      "upstream_tests": []
     },
     {
       "applicability": {
@@ -33854,14 +33855,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 433,
+      "none": 428,
       "pass": 0,
-      "planned": 138
+      "planned": 143
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 491,
-      "unreviewed": 80
+      "reviewed": 494,
+      "unreviewed": 77
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33872,9 +33873,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 451,
+    "reviewed_primary_coverage": 454,
     "subjects": 35,
-    "uncovered_public_entries": 80
+    "uncovered_public_entries": 77
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

@@ -1,0 +1,299 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--external",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-lcov-external",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 890,
+        "file_tree_sha256": "d2ab2d1f45230261f13ccc386ac8fa42633e1e23eac25be2823eca7f246ab36a",
+        "paths": [
+          "external_headers/h.h",
+          "out.info",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 743,
+        "stdout_sha256": "5f7e984bb2725d5a62176a61ea51cfb3fda9f359409e74e5b47bcdc7e50b0c3a"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--no-external",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-lcov-no-external",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 791,
+        "file_tree_sha256": "d02981d1142b8cbad8b0a95e97d5835a7f0fdb4ba1ae6e53a0cd5ee661eb71d7",
+        "paths": [
+          "external_headers/h.h",
+          "out.info",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 854,
+        "stdout_sha256": "e7aae88a7b0b1a2671b65b0ba40826d1d20f399dcb793a6318609954dbd33f5e"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "proj",
+        "--external",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-geninfo-external",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 890,
+        "file_tree_sha256": "d2ab2d1f45230261f13ccc386ac8fa42633e1e23eac25be2823eca7f246ab36a",
+        "paths": [
+          "external_headers/h.h",
+          "out.info",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 544,
+        "stdout_sha256": "ec4144e55f2673427e08b2e028ab1d4a72579f93c1337e1aa2efac8f41f24780"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "proj",
+        "--no-external",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-geninfo-no-external",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 791,
+        "file_tree_sha256": "d02981d1142b8cbad8b0a95e97d5835a7f0fdb4ba1ae6e53a0cd5ee661eb71d7",
+        "paths": [
+          "external_headers/h.h",
+          "out.info",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 652,
+        "stdout_sha256": "95e2f45cb0633a65eccd30723dff21231e6eedbd2f58678924d6881cc0d122fb"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-lcov-derive-control",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 890,
+        "file_tree_sha256": "d2ab2d1f45230261f13ccc386ac8fa42633e1e23eac25be2823eca7f246ab36a",
+        "paths": [
+          "external_headers/h.h",
+          "out.info",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 732,
+        "stdout_sha256": "6fff0b1267babc9c8fa992c41b406ad8b53ee3584c2aed7ba400742613398d1d"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "proj",
+        "--derive-func-data",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-external-derive-contract-lcov-derive-func-data",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 4,
+        "file_tree_bytes": 700,
+        "file_tree_sha256": "fee28b0c5ac5034173979c40a283f32a84b958e7add0345fe2da9bb32b775c93",
+        "paths": [
+          "external_headers/h.h",
+          "proj/main.c",
+          "proj/main.gcda",
+          "proj/main.gcno"
+        ],
+        "stderr_bytes": 89,
+        "stderr_sha256": "f2c5c4eb16dc12e811faedf49bbdb09b7080d1101abbb83a136ed35d296b2f6f",
+        "stdout_bytes": 207,
+        "stdout_sha256": "ed8e5e638d3224726cf6b90ada306e46c7c91eb111979bd5ecb0b92e7973aff9"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "full fixture minus oracle-observations.json; external header lives under external_headers/",
+  "schema_version": 1,
+  "suite_id": "m0-cli-external-derive-contract"
+}
