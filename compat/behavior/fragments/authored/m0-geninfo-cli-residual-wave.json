@@ -1,0 +1,118 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.no-checksum: cli-option boundary `--checksum --no-checksum` vs checksum control on a pinned capture fixture. Compared dimensions are exit and filesystem under exact-v1; stdout excluded for unstable temp paths. Sealed Oracle facts: no-checksum tree matches default control tree (532 bytes) and is smaller/different from checksum control (601 bytes). Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.no-checksum",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 34,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --(no-)checksum               Enable (disable) line checksumming"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"no-checksum\" => \\$rc_no_checksum,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-checksum-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-no-checksum",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.no-checksum",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.output-filename: cli-option boundary `--output-filename custom.info` vs control `out.info` on a pinned capture fixture (hello.c/.gcno/.gcda). Compared dimensions are exit and filesystem under exact-v1; stdout excluded because geninfo prints unstable temporary data-directory paths. The sealed Oracle tree differs by the named output artifact. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.output-filename",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 249,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5",
+          "text": "                    \"output-filename|o=s\" => \\$output_filename,"
+        },
+        {
+          "kind": "help_definition",
+          "line": 26,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "  -o, --output-filename OUTFILE     Write data only to OUTFILE"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-output-filename",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.output-filename",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed geninfo residual CLI plans for output-filename and no-checksum on a pinned capture fixture.",
+  "fragment_id": "m0-geninfo-cli-residual-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

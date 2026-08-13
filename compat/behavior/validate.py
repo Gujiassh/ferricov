@@ -48,7 +48,7 @@ DEFAULT_UPSTREAM_ROOT = Path(
 SUITE_SCHEMA_PATH = "compat/schema/suite.schema.json"
 RESULT_SCHEMA_PATH = "compat/schema/differential-result.schema.json"
 EXPECTED_PLAN_BINDINGS_SHA256 = (
-    "b94b90ba305f4faccef3e2dda34cf65124702c493e2e61e893008a3158a4631d"
+    "56aae4b42712f96c05870323c5206b7264c91c83c5e0fec58f6edce73b163d06"
 )
 
 

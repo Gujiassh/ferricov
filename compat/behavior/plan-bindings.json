@@ -6449,6 +6449,42 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--checksum --no-checksum",
+      "description_sha256": "849968d2f99a29eb4bb5009f5ba69284b8bec0bd30368c83d5023f0d38861ad0",
+      "id": "case.acceptance.command.geninfo.option.no-checksum",
+      "primary_targets": [
+        "command.geninfo.option.no-checksum"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "help_definition",
+          "line": 34,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --(no-)checksum               Enable (disable) line checksumming"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1243,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"no-checksum\" => \\$rc_no_checksum,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-checksum-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-no-checksum",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "geninfo.capture-cli"
       ],
@@ -6737,6 +6773,42 @@
       "upstream_tests": [
         "tests/lcov/extract/extract.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--output-filename custom.info",
+      "description_sha256": "093c0e001f2cdebe4fe08069d2c202cd7c474fad2286b2d2851f91ed6e5fbdd2",
+      "id": "case.acceptance.command.geninfo.option.output-filename",
+      "primary_targets": [
+        "command.geninfo.option.output-filename"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 249,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5",
+          "text": "                    \"output-filename|o=s\" => \\$output_filename,"
+        },
+        {
+          "kind": "help_definition",
+          "line": 26,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "  -o, --output-filename OUTFILE     Write data only to OUTFILE"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-output-filename",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18702,7 +18774,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 446
+    "primary_plans": 448
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

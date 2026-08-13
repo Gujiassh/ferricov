@@ -9506,50 +9506,41 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.no-checksum: cli-option boundary `--no-checksum` from `\"no-checksum\" => \\$rc_no_checksum,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.no-checksum: cli-option boundary `--checksum --no-checksum` vs checksum control on a pinned capture fixture. Compared dimensions are exit and filesystem under exact-v1; stdout excluded for unstable temp paths. Sealed Oracle facts: no-checksum tree matches default control tree (532 bytes) and is smaller/different from checksum control (601 bytes). Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.no-checksum",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
-        {
-          "kind": "manual_candidate",
-          "line": 33,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 253,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 256,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
         {
           "kind": "help_definition",
           "line": 34,
           "path": "help/geninfo.txt",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "      --(no-)checksum               Enable (disable) line checksumming"
         },
         {
           "kind": "parser_definition",
           "line": 1243,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"no-checksum\" => \\$rc_no_checksum,"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-checksum-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-no-checksum",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -9972,56 +9963,41 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.output-filename: cli-option boundary `--output-filename <value>` from `\"output-filename|o=s\" => \\$output_filename,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.output-filename: cli-option boundary `--output-filename custom.info` vs control `out.info` on a pinned capture fixture (hello.c/.gcno/.gcda). Compared dimensions are exit and filesystem under exact-v1; stdout excluded because geninfo prints unstable temporary data-directory paths. The sealed Oracle tree differs by the named output artifact. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.output-filename",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
           "line": 249,
           "path": "bin/geninfo",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 26,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 80,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 318,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 572,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                    \"output-filename|o=s\" => \\$output_filename,"
         },
         {
           "kind": "help_definition",
           "line": 26,
           "path": "help/geninfo.txt",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "  -o, --output-filename OUTFILE     Write data only to OUTFILE"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-control",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-geninfo-cli-residual-contract-output-filename",
+          "suite_id": "m0-geninfo-cli-residual-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33880,14 +33856,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 440,
+      "none": 438,
       "pass": 0,
-      "planned": 131
+      "planned": 133
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 484,
-      "unreviewed": 87
+      "reviewed": 486,
+      "unreviewed": 85
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33898,9 +33874,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 444,
+    "reviewed_primary_coverage": 446,
     "subjects": 35,
-    "uncovered_public_entries": 87
+    "uncovered_public_entries": 85
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
