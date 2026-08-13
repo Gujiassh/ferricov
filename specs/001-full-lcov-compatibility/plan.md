@@ -33,9 +33,7 @@ candidate count with:
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
 - 531 public behavior plans; live residual metrics are owned by
-  `docs/ssot/m0-status.snapshot.json` (currently 443 substantive reviewed
-  primary plans, all 4 required critical interaction domains reviewed, and 88
-  explicit M0 primary-review gaps)
+  `docs/ssot/m0-status.snapshot.json` (live residual metrics in `docs/ssot/m0-status.snapshot.json`; all 4 required critical interaction domains reviewed)
 
 The option and configuration counts are omission-detection inputs, not progress
 percentages. One option may require multiple positive, negative, configuration,
@@ -148,7 +146,7 @@ starts.
 configuration, positional, and support-script reviews, the exhaustive 205-file
 upstream test map, the callback/runtime and compiler/platform ADRs, and the
 reproducible Oracle build and execution-manifest lane are established. ADR 0003
-is accepted. M0 is not complete: 88 behavior-planning gaps, 12 unbound
+is accepted. M0 is not complete: remaining behavior-planning gaps are recorded in `docs/ssot/m0-status.snapshot.json`, 12 unbound
 diagnostic/parallel identities, tracefile product/fuzz boundaries, executable installation lifecycle
 review, compiler capture qualification, and release platform evidence remain. The 148-case M0 CLI/configuration correctness baseline is
 retained and passes independent semantic replay, without claiming Ferricov

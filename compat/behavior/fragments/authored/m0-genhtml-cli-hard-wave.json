@@ -1,0 +1,74 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.history-script: cli-option boundary `--history-script ./history.sh` uses shared `--config-file control.lcovrc` with a trivial history callback that returns empty predictions. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization; stdout differs from control by the history-profile scheduling path (stable under fixed env and two clean runs). This is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.history-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 6172,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                        $lcovutil::profileHistoryCallback->history($filename))"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  'history-script=s'  => \\@lcovutil::profileHistoryCallback,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 1612,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                    [\\$profileHistoryCallback, \\@profileHistoryCallback],"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-control",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-history-script",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.history-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed genhtml hard residual CLI plan for history-script only. debug remains open: compared dimensions were cmd_line-only under exact-v1.",
+  "fragment_id": "m0-genhtml-cli-hard-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

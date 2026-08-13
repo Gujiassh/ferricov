@@ -2333,6 +2333,49 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "--history-script ./history.sh",
+      "description_sha256": "fd56601273fa1238312a8a57eb5a1dad5e946474986ed8b14a9b21a05f35ba09",
+      "id": "case.acceptance.command.genhtml.option.history-script",
+      "primary_targets": [
+        "command.genhtml.option.history-script"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "command_implementation",
+          "line": 6172,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                        $lcovutil::profileHistoryCallback->history($filename))"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  'history-script=s'  => \\@lcovutil::profileHistoryCallback,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 1612,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                    [\\$profileHistoryCallback, \\@profileHistoryCallback],"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-control",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-history-script",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "--html-epilog epilog.html",
       "description_sha256": "2d23e02a8d6c3b0a92cc0a747c18ef5831c09418ab4b9e9e980b429b08d0ce02",
       "id": "case.acceptance.command.genhtml.option.html-epilog",
@@ -18659,7 +18702,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 445
+    "primary_plans": 446
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

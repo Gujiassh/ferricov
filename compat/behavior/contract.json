@@ -1889,12 +1889,12 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.debug: cli-option boundary `--debug` from `\"debug+\"      => \\$lcovutil::debug,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Unreviewed acceptance skeleton for command.genhtml.option.debug; observable semantics, fixtures, and expected outcomes require manual adjudication.",
       "evidence": [],
       "evidence_status": "none",
       "id": "case.acceptance.command.genhtml.option.debug",
       "interaction_groups": [],
-      "origin": "manually_curated",
+      "origin": "generated_skeleton",
       "review_status": "unreviewed",
       "source_references": [
         {
@@ -3330,52 +3330,46 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.history-script: cli-option boundary `--history-script ./history.sh` uses shared `--config-file control.lcovrc` with a trivial history callback that returns empty predictions. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization; stdout differs from control by the history-profile scheduling path (stable under fixed env and two clean runs). This is planning-only and claims no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
-          "kind": "manual_candidate",
-          "line": 47,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 199,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1033,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1549,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1551,
-          "path": "docs/man/genhtml.rst",
-          "repository": "lcov-v2.5"
+          "kind": "command_implementation",
+          "line": 6172,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                        $lcovutil::profileHistoryCallback->history($filename))"
         },
         {
           "kind": "parser_definition",
           "line": 1277,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  'history-script=s'  => \\@lcovutil::profileHistoryCallback,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 1612,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                    [\\$profileHistoryCallback, \\@profileHistoryCallback],"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-control",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-hard-contract-history-script",
+          "suite_id": "m0-genhtml-cli-hard-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33886,14 +33880,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 441,
+      "none": 440,
       "pass": 0,
-      "planned": 130
+      "planned": 131
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 483,
-      "unreviewed": 88
+      "reviewed": 484,
+      "unreviewed": 87
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33904,9 +33898,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 443,
+    "reviewed_primary_coverage": 444,
     "subjects": 35,
-    "uncovered_public_entries": 88
+    "uncovered_public_entries": 87
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
