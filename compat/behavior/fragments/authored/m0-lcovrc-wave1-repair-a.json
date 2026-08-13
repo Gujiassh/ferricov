@@ -279,44 +279,6 @@
         "conditions": [],
         "status": "all_supported_environments"
       },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for lcovrc.compact-summary-tables: config-key boundary `compact_summary_tables = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.compact-summary-tables",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 7211,
-          "path": "bin/genhtml",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.compact-summary-tables",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential"
@@ -877,94 +839,6 @@
       "targets": [
         {
           "id": "lcovrc.expected-message-count",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for lcovrc.fail-under-branches: config-key boundary `fail_under_branches = <75.0>` from `#fail_under_branches = 75.0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.fail-under-branches",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 325,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 1201,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.fail-under-branches",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for lcovrc.fail-under-lines: config-key boundary `fail_under_lines = <97.5>` from `#fail_under_lines = 97.5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.fail-under-lines",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 330,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 1200,
-          "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.fail-under-lines",
           "role": "primary"
         }
       ],

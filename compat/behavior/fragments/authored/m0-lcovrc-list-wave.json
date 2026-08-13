@@ -68,50 +68,6 @@
         "stderr",
         "stdout"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-list-truncate-max: config boundary `lcov_list_truncate_max = <value>` was probed with long-path fixtures at widths 50 and 80, but value 0 remained byte-identical to the control value 20. No stable differential fixture currently binds this entry; it remains unreviewed and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.lcovrc.lcov-list-truncate-max",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "config_definition",
-          "line": 194,
-          "path": "bin/lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "config_definition",
-          "line": 311,
-          "path": "lcovrc",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "config",
-      "targets": [
-        {
-          "id": "lcovrc.lcov-list-truncate-max",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
       "description": "Reviewed suite-bound config plan for lcovrc.lcov-list-width: config boundary `lcov_list_width = 50` is compared with the width-80 control and contracts list output from 687 to 389 bytes with deterministic filename truncation. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
       "evidence": [],
       "evidence_status": "planned",

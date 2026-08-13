@@ -1,0 +1,210 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.compact-summary-tables: config-key boundary `compact_summary_tables = 0` on residual genhtml inputs changes the sealed report filesystem and/or exit relative to control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.compact-summary-tables",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7211,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-compact-summary-tables",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.compact-summary-tables",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.fail-under-branches: config-key boundary `fail_under_branches = 101` on residual genhtml inputs changes the sealed report filesystem and/or exit relative to control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.fail-under-branches",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 325,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1201,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-fail-under-branches",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.fail-under-branches",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.fail-under-lines: config-key boundary `fail_under_lines = 101` on residual genhtml inputs changes the sealed report filesystem and/or exit relative to control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.fail-under-lines",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 330,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1200,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-fail-under-lines",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.fail-under-lines",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.lcov-list-truncate-max: config-key boundary `lcov_list_truncate_max = 1` on residual genhtml inputs changes the sealed report filesystem and/or exit relative to control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.lcov-list-truncate-max",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 194,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 311,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-list-truncate-max",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.lcov-list-truncate-max",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed residual genhtml summary/fail-under/list-truncate lcovrc keys.",
+  "fragment_id": "m0-lcovrc-genhtml-residual3-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

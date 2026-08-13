@@ -15909,6 +15909,34 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "compact_summary_tables = 0",
+      "description_sha256": "c16d63aed6d8c2261d25a2ea50ccbf80ba0ccc657eb033aa9e8375e4d563a23c",
+      "id": "case.acceptance.lcovrc.compact-summary-tables",
+      "primary_targets": [
+        "lcovrc.compact-summary-tables"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 7211,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-compact-summary-tables",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.diagnostics-and-config",
         "genhtml.function-differential"
@@ -16161,6 +16189,74 @@
         "tests/scripts/gitdiff_test.sh",
         "tests/scripts/p4udiff_test.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "fail_under_branches = 101",
+      "description_sha256": "8539f4d6b506eb28757de5a824482aba3e6aa9732584802954a49807639105c4",
+      "id": "case.acceptance.lcovrc.fail-under-branches",
+      "primary_targets": [
+        "lcovrc.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 325,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1201,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-fail-under-branches",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "fail_under_lines = 101",
+      "description_sha256": "a20ce6ae5932475ba1a7c45b10128e034d925fc0c4925d122dfc0a22fd494ddb",
+      "id": "case.acceptance.lcovrc.fail-under-lines",
+      "primary_targets": [
+        "lcovrc.fail-under-lines"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 330,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1200,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-fail-under-lines",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18311,6 +18407,40 @@
     },
     {
       "behavior_groups": [],
+      "boundary_form": "lcov_list_truncate_max = 1",
+      "description_sha256": "ab6432514c03e128717ff1741195766fde8b8b5c86e07817b27830eeab86fd06",
+      "id": "case.acceptance.lcovrc.lcov-list-truncate-max",
+      "primary_targets": [
+        "lcovrc.lcov-list-truncate-max"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "config_definition",
+          "line": 194,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 311,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual3-contract-list-truncate-max",
+          "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
       "boundary_form": "lcov_list_width = 50",
       "description_sha256": "d4941a8be05e41c574359ef2756070edd82afb5cdad6cd67e73bfac2a35ea4b4",
       "id": "case.acceptance.lcovrc.lcov-list-width",
@@ -19803,7 +19933,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 476
+    "primary_plans": 480
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
