@@ -32,9 +32,10 @@ candidate count with:
 - 158 reviewed `lcovrc` entries: 153 public and 5 not applicable
 - 23 installed support scripts
 - all 205 upstream test files mapped and reviewed
-- 531 public behavior plans, with 443 substantive reviewed primary plans,
-  all 4 required critical interaction domains reviewed, and 88 explicit M0
-  primary-review gaps
+- 531 public behavior plans; live residual metrics are owned by
+  `docs/ssot/m0-status.snapshot.json` (currently 443 substantive reviewed
+  primary plans, all 4 required critical interaction domains reviewed, and 88
+  explicit M0 primary-review gaps)
 
 The option and configuration counts are omission-detection inputs, not progress
 percentages. One option may require multiple positive, negative, configuration,

@@ -67,6 +67,8 @@ the M0 harness become the permanent integration boundary.
 
 ## Sources Of Truth
 
+- live M0 residual status: `m0-status.snapshot.json` (generated from contracts;
+  regenerate with `python3 compat/status/generate_m0_status.py`)
 - compatibility definition: `compatibility-contract.md`
 - performance gates: `performance-contract.md`
 - requirements and acceptance: `specs/001-full-lcov-compatibility/`
@@ -139,9 +141,10 @@ the M0 harness become the permanent integration boundary.
   validates the 13 ordered samples-only trees without emitting retained
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. Fixed source and interaction plan bindings
-  independently seal 445 projections; 443 substantive primary plans are
-  reviewed and 88 explicit M0 gaps remain. The M1 Tracefile Core handoff is
+  531 public inventory entries. Live residual metrics (reviewed primary
+  coverage, fixed source/interaction projections, and explicit M0 gaps) are
+  owned by `docs/ssot/m0-status.snapshot.json` and must match
+  `compat/behavior/contract.json` totals. The M1 Tracefile Core handoff is
   now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
   but activation remains blocked by the M0 exit review and unresolved
   `M1-MD-020`/`M1-TF-063`/`M1-TF-064` decisions. The support-script planning suite

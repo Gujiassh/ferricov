@@ -16,9 +16,11 @@ all of the following:
 - the M0 go/no-go decision is written to a review artifact and linked from
   `specs/001-full-lcov-compatibility/tasks.md`.
 
-As of the current planning snapshot, M0 is still open with 91 behavior-planning
-gaps and M1 remains blocked. Oracle evidence in `compat/` is reference evidence
-only. It MUST NOT be relabeled as Ferricov product compatibility evidence.
+As of the current planning snapshot in `docs/ssot/m0-status.snapshot.json`, M0
+is still open (currently 88 behavior-planning gaps across 531 public entries)
+and M1 remains blocked (`m1_authorized=false`). Oracle evidence in `compat/` is
+reference evidence only. It MUST NOT be relabeled as Ferricov product
+compatibility evidence.
 
 The governing documents are:
 

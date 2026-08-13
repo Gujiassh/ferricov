@@ -134,9 +134,10 @@ single-run bounded observations rather than performance distributions. No
 Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
-Behavior planning covers all 531 public entries with primary plans. Four
-hundred forty substantive primary plans are reviewed with 442 fixed source and
-interaction projections; 91 explicit M0 gaps remain. Forty CLI
+Behavior planning covers all 531 public entries with primary plans. Live
+residual metrics are owned by `docs/ssot/m0-status.snapshot.json` (currently
+443 substantive reviewed primary plans, 445 fixed source/interaction
+projections, and 88 explicit M0 gaps). Forty CLI
 entries bind 154 exact suite cases, eight base configuration slices bind 67
 cases, three support-script entries bind executable planning cases, and
 thirty-two command entries bind six command-owned `genhtml` CLI-output cases,

@@ -145,3 +145,67 @@ class InventoryRegenerationCommandTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class InventoryPinSourceTests(unittest.TestCase):
+    def test_committed_pins_match_loaded_constants(self) -> None:
+        pins = verify.load_inventory_pins()
+        self.assertEqual(pins["commands"], verify.EXPECTED_COMMANDS)
+        self.assertEqual(pins["policy_families"], verify.EXPECTED_POLICY_FAMILIES)
+        self.assertEqual(
+            {k: list(v) for k, v in verify.EXPECTED_GENERATED_TOKEN_NAMES.items()},
+            pins["generated_token_names"],
+        )
+
+    def test_pin_file_mutation_is_visible_to_loader(self) -> None:
+        original = Path(verify.PIN_PATH).read_text(encoding="utf-8")
+        try:
+            document = json.loads(original)
+            document["commands"]["lcov"] = int(document["commands"]["lcov"]) + 1
+            with tempfile.TemporaryDirectory(prefix="ferricov-pins-") as directory:
+                path = Path(directory) / "pins.json"
+                path.write_text(json.dumps(document), encoding="utf-8")
+                loaded = verify.load_inventory_pins(path)
+                self.assertEqual(loaded["commands"]["lcov"], document["commands"]["lcov"])
+                self.assertNotEqual(loaded["commands"]["lcov"], verify.EXPECTED_COMMANDS["lcov"])
+        finally:
+            Path(verify.PIN_PATH).write_text(original, encoding="utf-8")
+
+
+class M0StatusSnapshotTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.root = COMPAT_ROOT.parent
+
+    def test_committed_snapshot_matches_live_contracts(self) -> None:
+        verify.validate_m0_status_snapshot(self.root)
+
+    def test_stale_residual_prose_is_rejected(self) -> None:
+        target = self.root / "docs/ssot/compatibility-contract.md"
+        original = target.read_text(encoding="utf-8")
+        try:
+            target.write_text(
+                original.replace(
+                    "88 explicit M0 gaps",
+                    "91 explicit M0 gaps",
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(RuntimeError, "stale M0 gap count 91"):
+                verify.validate_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_snapshot_drift_is_rejected(self) -> None:
+        target = self.root / "docs/ssot/m0-status.snapshot.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            document = json.loads(original)
+            document["behavior"]["uncovered_public_entries"] = (
+                int(document["behavior"]["uncovered_public_entries"]) + 1
+            )
+            target.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "out of date with live contracts"):
+                verify.validate_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
