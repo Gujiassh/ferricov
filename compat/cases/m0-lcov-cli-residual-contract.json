@@ -1,0 +1,109 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--version"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcov-cli-residual-contract",
+      "id": "m0-lcov-cli-residual-contract-zero-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--zerocounters",
+        "--directory",
+        "src"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcov-cli-residual-contract",
+      "id": "m0-lcov-cli-residual-contract-zerocounters",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "branch/base.info",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "50"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcov-cli-residual-contract",
+      "id": "m0-lcov-cli-residual-contract-failbr-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "branch/base.info",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "101"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcov-cli-residual-contract",
+      "id": "m0-lcov-cli-residual-contract-fail-under-branches",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-lcov-cli-residual-contract"
+}

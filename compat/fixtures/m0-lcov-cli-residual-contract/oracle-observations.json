@@ -1,0 +1,208 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--version"
+      ],
+      "case_id": "m0-lcov-cli-residual-contract-zero-control",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 726,
+        "file_tree_sha256": "09228a5e9f34b70c0aa83d26b6823130b1261398977b80bee285d02df44accca",
+        "paths": [
+          "branch/base.info",
+          "branch/br.c",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 28,
+        "stdout_sha256": "553f99eb62b6dac64b08057e128411879b9f10b294517d82b8ef42c8796310c9"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--zerocounters",
+        "--directory",
+        "src"
+      ],
+      "case_id": "m0-lcov-cli-residual-contract-zerocounters",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 646,
+        "file_tree_sha256": "ebd3e2edeaf161299bbd8f74c528750e00e726768f2b93230c5974e3867ef993",
+        "paths": [
+          "branch/base.info",
+          "branch/br.c",
+          "src/hello.c",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 100,
+        "stdout_sha256": "1764111da8d3594d042ed4c1d2d03cd70037b5dcc78a53502d05942913756ba2"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "branch/base.info",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "50"
+      ],
+      "case_id": "m0-lcov-cli-residual-contract-failbr-control",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 5,
+        "file_tree_bytes": 726,
+        "file_tree_sha256": "09228a5e9f34b70c0aa83d26b6823130b1261398977b80bee285d02df44accca",
+        "paths": [
+          "branch/base.info",
+          "branch/br.c",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 242,
+        "stdout_sha256": "ec440547c1d74b9a931db6fdcbcba8403beadc931add914fcf66c52286dcee3d"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--summary",
+        "branch/base.info",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "101"
+      ],
+      "case_id": "m0-lcov-cli-residual-contract-fail-under-branches",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 5,
+        "file_tree_bytes": 726,
+        "file_tree_sha256": "09228a5e9f34b70c0aa83d26b6823130b1261398977b80bee285d02df44accca",
+        "paths": [
+          "branch/base.info",
+          "branch/br.c",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 54,
+        "stderr_sha256": "0d1a3f3c4551f0a57bacfdfb0592da5e20056a1b4dfbb8b18a31b6b9ba723f8a",
+        "stdout_bytes": 371,
+        "stdout_sha256": "4f597221f55f668839492999e0d8ccecc0f0f5e0e187e5545afc5346c4ee9154"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "Oracle worktree is the full fixture minus oracle-observations.json",
+  "schema_version": 1,
+  "suite_id": "m0-lcov-cli-residual-contract"
+}

@@ -8825,6 +8825,42 @@
       "upstream_tests": []
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--fail-under-branches 101",
+      "description_sha256": "8a3d7b0fcd80451a7341a7af7b72b84191b042d32bc77aa5d64aa70e383d851f",
+      "id": "case.acceptance.command.lcov.option.fail-under-branches",
+      "primary_targets": [
+        "command.lcov.option.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 179,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5",
+          "text": "       [ --fail-under-branches *percentage* ]"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-cli-residual-contract-fail-under-branches",
+          "suite_id": "m0-lcov-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-lcov-cli-residual-contract-failbr-control",
+          "suite_id": "m0-lcov-cli-residual-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -11547,6 +11583,42 @@
         {
           "case_id": "m0-policy-shared-ambiguous-abbreviation",
           "suite_id": "m0-cli-contract-policy"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--zerocounters",
+      "description_sha256": "98b809b7dc66e484251d32d83d0aff3524a8d1cfa515c913e88cbf87edfa3682",
+      "id": "case.acceptance.command.lcov.option.zerocounters",
+      "primary_targets": [
+        "command.lcov.option.zerocounters"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 205,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5",
+          "text": "                    \"zerocounters|z\"     => \\$reset,"
+        },
+        {
+          "kind": "help_definition",
+          "line": 23,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5",
+          "text": "  -z, --zerocounters              Reset all execution counts to zero"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcov-cli-residual-contract-zero-control",
+          "suite_id": "m0-lcov-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-lcov-cli-residual-contract-zerocounters",
+          "suite_id": "m0-lcov-cli-residual-contract"
         }
       ],
       "upstream_tests": []
@@ -18774,7 +18846,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 448
+    "primary_plans": 450
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

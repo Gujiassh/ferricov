@@ -197,62 +197,6 @@
       "upstream_tests": [
         "tests/lcov/extract/extract.sh"
       ]
-    },
-    {
-      "applicability": {
-        "conditions": [],
-        "status": "all_supported_environments"
-      },
-      "behavior_groups": [],
-      "case_class": "acceptance",
-      "comparison_dimensions": [
-        "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
-      ],
-      "description": "Unbound source-bound plan for command.lcov.option.zerocounters: cli-option boundary `--zerocounters` from `\"zerocounters|z\"     => \\$reset,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
-      "evidence": [],
-      "evidence_status": "none",
-      "id": "case.acceptance.command.lcov.option.zerocounters",
-      "interaction_groups": [],
-      "origin": "manually_curated",
-      "review_status": "unreviewed",
-      "source_references": [
-        {
-          "kind": "parser_definition",
-          "line": 205,
-          "path": "bin/lcov",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 63,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1467,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "help_definition",
-          "line": 23,
-          "path": "help/lcov.txt",
-          "repository": "lcov-v2.5"
-        }
-      ],
-      "suite_cases": [],
-      "surface": "cli",
-      "targets": [
-        {
-          "id": "command.lcov.option.zerocounters",
-          "role": "primary"
-        }
-      ],
-      "upstream_tests": []
     }
   ],
   "description": "Reviewed and unbound source-bound lcov primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 3.",
