@@ -8287,32 +8287,34 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.fail-under-branches: cli-option boundary `--fail-under-branches <value>` from `\"fail-under-branches=s\" => \\$fail_under_branches,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.fail-under-branches: cli-option boundary `--fail-under-branches 101` with `--branch-coverage` on a pinned branch capture fixture fails (exit 1) while control threshold 50 succeeds (exit 0). Compared dimensions are exit and filesystem under exact-v1; stdout excluded due to unstable geninfo temporary data-directory paths. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.fail-under-branches",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
-        {
-          "kind": "manual_candidate",
-          "line": 62,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
         {
           "kind": "parser_definition",
           "line": 1259,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-fail-under-branches",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-failbr-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -10108,44 +10110,41 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.geninfo.option.preserve: cli-option boundary `--preserve` retains intermediate gcov JSON artifacts under the capture directory while control removes them. Compared dimensions are exit and filesystem under exact-v1. Sealed Oracle trees differ by the presence of a stable-named `*.gcov.json.gz` intermediate. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.preserve",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
-        {
-          "kind": "manual_candidate",
-          "line": 44,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 533,
-          "path": "docs/man/geninfo.rst",
-          "repository": "lcov-v2.5"
-        },
         {
           "kind": "help_definition",
           "line": 20,
           "path": "help/geninfo.txt",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                    Keep intermediate files for debugging"
         },
         {
           "kind": "parser_definition",
           "line": 1286,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -15476,44 +15475,41 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.lcov.option.preserve: cli-option boundary `--preserve` from `\"preserve\"          => \\$lcovutil::preserve_intermediates,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.lcov.option.preserve: cli-option boundary `--preserve` on `lcov --capture` retains intermediate gcov JSON artifacts while control removes them. Compared dimensions are exit and filesystem under exact-v1. Sealed Oracle trees differ by the intermediate `*.gcov.json.gz` file. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.lcov.option.preserve",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
-        {
-          "kind": "manual_candidate",
-          "line": 43,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
-        {
-          "kind": "manual_candidate",
-          "line": 1182,
-          "path": "docs/man/lcov.rst",
-          "repository": "lcov-v2.5"
-        },
         {
           "kind": "help_definition",
           "line": 20,
           "path": "help/lcov.txt",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                  Keep intermediate files for debugging"
         },
         {
           "kind": "parser_definition",
           "line": 1286,
           "path": "lib/lcovutil.pm",
-          "repository": "lcov-v2.5"
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33858,14 +33854,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 436,
+      "none": 433,
       "pass": 0,
-      "planned": 135
+      "planned": 138
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 488,
-      "unreviewed": 83
+      "reviewed": 491,
+      "unreviewed": 80
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33876,9 +33872,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 448,
+    "reviewed_primary_coverage": 451,
     "subjects": 35,
-    "uncovered_public_entries": 83
+    "uncovered_public_entries": 80
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

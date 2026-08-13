@@ -5683,6 +5683,35 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--fail-under-branches 101",
+      "description_sha256": "acfddeddb04da5a618fe859581f76c96a9a04e5372033b43a1e4bb14a14857f8",
+      "id": "case.acceptance.command.geninfo.option.fail-under-branches",
+      "primary_targets": [
+        "command.geninfo.option.fail-under-branches"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-fail-under-branches",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-failbr-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.report-options"
       ],
@@ -6882,6 +6911,42 @@
         "tests/genhtml/errs/msgtest.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--preserve",
+      "description_sha256": "6011a9499be5c6669f70deec88c92a9ec6524ece4ae377922c5757bf7601308f",
+      "id": "case.acceptance.command.geninfo.option.preserve",
+      "primary_targets": [
+        "command.geninfo.option.preserve"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                    Keep intermediate files for debugging"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -10577,6 +10642,42 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--preserve",
+      "description_sha256": "6916950ca5d6d1950b5185d2e952a57c98982a33de4d26c3ebcceda62a5ebbee",
+      "id": "case.acceptance.command.lcov.option.preserve",
+      "primary_targets": [
+        "command.lcov.option.preserve"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                  Keep intermediate files for debugging"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -18846,7 +18947,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 450
+    "primary_plans": 453
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

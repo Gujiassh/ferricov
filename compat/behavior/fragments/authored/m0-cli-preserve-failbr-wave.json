@@ -1,0 +1,164 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.fail-under-branches: cli-option boundary `--fail-under-branches 101` with `--branch-coverage` on a pinned branch capture fixture fails (exit 1) while control threshold 50 succeeds (exit 0). Compared dimensions are exit and filesystem under exact-v1; stdout excluded due to unstable geninfo temporary data-directory paths. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.fail-under-branches",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 1259,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"fail-under-branches=s\" => \\$fail_under_branches,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-fail-under-branches",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-failbr-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.fail-under-branches",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.preserve: cli-option boundary `--preserve` retains intermediate gcov JSON artifacts under the capture directory while control removes them. Compared dimensions are exit and filesystem under exact-v1. Sealed Oracle trees differ by the presence of a stable-named `*.gcov.json.gz` intermediate. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.preserve",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                    Keep intermediate files for debugging"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-geninfo-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.preserve",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.lcov.option.preserve: cli-option boundary `--preserve` on `lcov --capture` retains intermediate gcov JSON artifacts while control removes them. Compared dimensions are exit and filesystem under exact-v1. Sealed Oracle trees differ by the intermediate `*.gcov.json.gz` file. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.preserve",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 20,
+          "path": "help/lcov.txt",
+          "repository": "lcov-v2.5",
+          "text": "      --preserve                  Keep intermediate files for debugging"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-control",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        },
+        {
+          "case_id": "m0-cli-preserve-failbr-contract-lcov-preserve",
+          "suite_id": "m0-cli-preserve-failbr-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.preserve",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed geninfo/lcov preserve and geninfo fail-under-branches plans on a pinned branch capture fixture.",
+  "fragment_id": "m0-cli-preserve-failbr-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}
