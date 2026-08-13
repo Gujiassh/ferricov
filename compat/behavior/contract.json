@@ -24324,17 +24324,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-age-field-width: config-key boundary `genhtml_age_field_width = <int>` from `#genhtml_age_field_width = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-age-field-width: config-key boundary `genhtml_age_field_width = 12` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-age-field-width",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24349,7 +24347,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-age-field-width",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24667,17 +24674,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-charset: config-key boundary `genhtml_charset = <UTF-8>` from `genhtml_charset=UTF-8`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-charset: config-key boundary `genhtml_charset = ISO-8859-1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-charset",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24692,7 +24697,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-charset",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24755,17 +24769,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-dark-mode: config-key boundary `genhtml_dark_mode = <0|1>` from `#genhtml_dark_mode = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-dark-mode: config-key boundary `genhtml_dark_mode = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-dark-mode",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24780,7 +24792,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-dark-mode",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24849,17 +24870,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-date-labels: config-key boundary `genhtml_date_labels = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-date-labels: config-key boundary `genhtml_date_labels = d,w,m` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-date-labels",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24868,7 +24887,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-date-labels",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24887,17 +24915,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-desc-html: config-key boundary `genhtml_desc_html = <0|1>` from `genhtml_desc_html=0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-desc-html: config-key boundary `genhtml_desc_html = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-desc-html",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24912,7 +24938,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-desc-html",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24931,17 +24966,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-flat-view: config-key boundary `genhtml_flat_view = <0|1>` from `#genhtml_flat_view = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-flat-view: config-key boundary `genhtml_flat_view = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-flat-view",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24956,7 +24989,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-flat-view",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24975,17 +25017,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-footer: config-key boundary `genhtml_footer = <value>` from `#genhtml_footer = My footer text`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-footer: config-key boundary `genhtml_footer = CUSTOM_FOOTER` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-footer",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25000,7 +25040,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-footer",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25019,17 +25068,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-frames: config-key boundary `genhtml_frames = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-frames: config-key boundary `genhtml_frames = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-frames",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25038,7 +25085,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-frames",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -25580,17 +25636,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-keep-descriptions: config-key boundary `genhtml_keep_descriptions = <0|1>` from `genhtml_keep_descriptions = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-keep-descriptions: config-key boundary `genhtml_keep_descriptions = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-keep-descriptions",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -25605,7 +25659,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-keep-descriptions",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26093,17 +26156,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-nav-offset: config-key boundary `genhtml_nav_offset = <int>` from `genhtml_nav_offset = 10`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-nav-offset: config-key boundary `genhtml_nav_offset = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-nav-offset",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26118,7 +26179,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-nav-offset",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26137,17 +26207,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-nav-resolution: config-key boundary `genhtml_nav_resolution = <int>` from `genhtml_nav_resolution = 4`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-nav-resolution: config-key boundary `genhtml_nav_resolution = 5` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-nav-resolution",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26162,7 +26230,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-nav-resolution",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26395,17 +26472,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-owner-field-width: config-key boundary `genhtml_owner_field_width = <int>` from `#genhtml_owner_field_width = 20`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-owner-field-width: config-key boundary `genhtml_owner_field_width = 20` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-owner-field-width",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26420,7 +26495,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-owner-field-width",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26492,17 +26576,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-show-function-proportion: config-key boundary `genhtml_show_function_proportion = <0|1>` from `#genhtml_show_function_proportion = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-show-function-proportion: config-key boundary `genhtml_show_function_proportion = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-show-function-proportion",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26517,7 +26599,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-show-function-proportion",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26589,17 +26680,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-show-noncode-owners: config-key boundary `genhtml_show_noncode_owners = <value>` from `#genhtml_show_noncode_owners = 0 | 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-show-noncode-owners: config-key boundary `genhtml_show_noncode_owners = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-show-noncode-owners",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26614,7 +26703,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-show-noncode-owners",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -26730,17 +26828,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.genhtml-synthesize-missing: config-key boundary `genhtml_synthesize_missing = <value>` from `#genhtml_synthesize_missing = 0 | 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.genhtml-synthesize-missing: config-key boundary `genhtml_synthesize_missing = 1` on a pinned genhtml residual fixture changes the sealed report filesystem tree relative to shared control.lcovrc. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.genhtml-synthesize-missing",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -26755,7 +26851,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-control",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-residual2-contract-synthesize-missing",
+          "suite_id": "m0-lcovrc-genhtml-residual2-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -33891,14 +33996,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 423,
+      "none": 408,
       "pass": 0,
-      "planned": 148
+      "planned": 163
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 499,
-      "unreviewed": 72
+      "reviewed": 514,
+      "unreviewed": 57
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33909,9 +34014,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 459,
+    "reviewed_primary_coverage": 474,
     "subjects": 35,
-    "uncovered_public_entries": 72
+    "uncovered_public_entries": 57
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
