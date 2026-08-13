@@ -1289,6 +1289,52 @@
       ]
     },
     {
+      "behavior_groups": [],
+      "boundary_form": "--debug",
+      "description_sha256": "d14bc90f0e7d3e85449fe7445c084870b32919a5652fc13d534b4c16a97048bb",
+      "id": "case.acceptance.command.genhtml.option.debug",
+      "primary_targets": [
+        "command.genhtml.option.debug"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "manual_candidate",
+          "line": 20,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 519,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 12,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
       "behavior_groups": [
         "genhtml.demangling",
         "genhtml.diagnostics-and-config",
@@ -2981,6 +3027,52 @@
         "tests/genhtml/simple/script.sh",
         "tests/lcov/demangle/demangle.sh"
       ]
+    },
+    {
+      "behavior_groups": [],
+      "boundary_form": "--new-file-as-baseline",
+      "description_sha256": "0638cfbfc3283289f465498077447199cdfe2f0bf4c6bf76fb502d091ad8753e",
+      "id": "case.acceptance.command.genhtml.option.new-file-as-baseline",
+      "primary_targets": [
+        "command.genhtml.option.new-file-as-baseline"
+      ],
+      "source_fingerprint": [
+        {
+          "kind": "parser_definition",
+          "line": 7235,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 69,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 906,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 34,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-baseline-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-new-file-as-baseline",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
+      "upstream_tests": []
     },
     {
       "behavior_groups": [
@@ -19213,7 +19305,7 @@
   "schema_version": 1,
   "totals": {
     "critical_interactions": 4,
-    "primary_plans": 459
+    "primary_plans": 461
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

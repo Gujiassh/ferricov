@@ -1885,17 +1885,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unreviewed acceptance skeleton for command.genhtml.option.debug; observable semantics, fixtures, and expected outcomes require manual adjudication.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.debug: cli-option boundary `--debug` on a pinned genhtml residual fixture exits 0 and changes the sealed report tree via `report/cmd_line` relative to control. Compared dimensions are exit and filesystem under exact-v1; stderr excluded because DEBUG memory counters are not stable under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.debug",
       "interaction_groups": [],
-      "origin": "generated_skeleton",
-      "review_status": "unreviewed",
+      "origin": "manually_curated",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -1922,7 +1920,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -4262,17 +4269,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.genhtml.option.new-file-as-baseline: cli-option boundary `--new-file-as-baseline` from `\"new-file-as-baseline\" => \\$treatNewFileAsBaseline,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for command.genhtml.option.new-file-as-baseline: cli-option boundary `--new-file-as-baseline` with `--baseline-file input.info` and current `input2.info` changes the sealed report tree relative to the baseline-only control on the same inputs. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.genhtml.option.new-file-as-baseline",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "parser_definition",
@@ -4299,7 +4304,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-baseline-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-new-file-as-baseline",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -33877,14 +33891,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 425,
+      "none": 423,
       "pass": 0,
-      "planned": 146
+      "planned": 148
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 497,
-      "unreviewed": 74
+      "reviewed": 499,
+      "unreviewed": 72
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -33895,9 +33909,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 457,
+    "reviewed_primary_coverage": 459,
     "subjects": 35,
-    "uncovered_public_entries": 74
+    "uncovered_public_entries": 72
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",

@@ -1,0 +1,253 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-cli-genhtml-hard2-contract-debug-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 17,
+        "file_tree_bytes": 46787,
+        "file_tree_sha256": "009526230a1a9d2e2cd3154dfc8585eb9f21d09756405bec5b2a93ebf97de107",
+        "paths": [
+          "control.lcovrc",
+          "input.info",
+          "input2.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "source.c"
+        ],
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--debug",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-cli-genhtml-hard2-contract-debug",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 17,
+        "file_tree_bytes": 46795,
+        "file_tree_sha256": "30a61e6cdada14a3e7ae854cb0dbfe243d8e3a5d8f5f85dbe6f39b3b143f7a8e",
+        "paths": [
+          "control.lcovrc",
+          "input.info",
+          "input2.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "source.c"
+        ],
+        "stderr_bytes": 364,
+        "stderr_sha256": "d4a9cbc58a205272e27adad10e99495f845736089f5acc7a9fd0be5186f9698e",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-file",
+        "input.info",
+        "--output-directory",
+        "report",
+        "input2.info"
+      ],
+      "case_id": "m0-cli-genhtml-hard2-contract-baseline-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 17,
+        "file_tree_bytes": 55194,
+        "file_tree_sha256": "7f73e8978817776636975f594ac3040ecc28310adf36fd92a280eb3ef39f6ffc",
+        "paths": [
+          "control.lcovrc",
+          "input.info",
+          "input2.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "source.c"
+        ],
+        "stderr_bytes": 514,
+        "stderr_sha256": "0d4c45b77bdb17fff9ac43270344ed688a1ed2e4f51956ee4f6ab8a3f5a45a4b",
+        "stdout_bytes": 678,
+        "stdout_sha256": "544def6aa4ff805f8f479b784552c13a21da2c64bafb31dfbba4423631f7b085"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-file",
+        "input.info",
+        "--new-file-as-baseline",
+        "--output-directory",
+        "report",
+        "input2.info"
+      ],
+      "case_id": "m0-cli-genhtml-hard2-contract-new-file-as-baseline",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 17,
+        "file_tree_bytes": 55217,
+        "file_tree_sha256": "8caf65cc0f8748932cea3bbeee4adafb8e51a6225bdc368052c73060d21f7ab7",
+        "paths": [
+          "control.lcovrc",
+          "input.info",
+          "input2.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "source.c"
+        ],
+        "stderr_bytes": 514,
+        "stderr_sha256": "0d4c45b77bdb17fff9ac43270344ed688a1ed2e4f51956ee4f6ab8a3f5a45a4b",
+        "stdout_bytes": 678,
+        "stdout_sha256": "544def6aa4ff805f8f479b784552c13a21da2c64bafb31dfbba4423631f7b085"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "genhtml residual inputs; debug changes report/cmd_line (stderr excluded: memory counters unstable); new-file-as-baseline vs baseline-control on input.info/input2.info",
+  "schema_version": 1,
+  "suite_id": "m0-cli-genhtml-hard2-contract"
+}
