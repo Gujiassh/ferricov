@@ -1,0 +1,123 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--filter",
+        "branch,blank",
+        "--branch-coverage",
+        "-a",
+        "src/edges.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty,inconsistent,unused,mismatch,format,path"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-c-filters-contract",
+      "id": "m0-residual-c-filters-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "bitwise-conditional.lcovrc",
+        "--filter",
+        "branch,blank",
+        "--branch-coverage",
+        "-a",
+        "src/edges.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty,inconsistent,unused,mismatch,format,path"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-c-filters-contract",
+      "id": "m0-residual-c-filters-contract-bitwise-conditional",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "blank-aggressive.lcovrc",
+        "--filter",
+        "branch,blank",
+        "--branch-coverage",
+        "-a",
+        "src/edges.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty,inconsistent,unused,mismatch,format,path"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-c-filters-contract",
+      "id": "m0-residual-c-filters-contract-blank-aggressive",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "lookahead.lcovrc",
+        "--filter",
+        "branch,blank",
+        "--branch-coverage",
+        "-a",
+        "src/edges.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty,inconsistent,unused,mismatch,format,path"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-c-filters-contract",
+      "id": "m0-residual-c-filters-contract-lookahead",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-residual-c-filters-contract"
+}
