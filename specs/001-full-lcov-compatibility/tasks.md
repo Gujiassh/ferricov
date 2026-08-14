@@ -25,6 +25,19 @@
 - [x] Verify the harness with positive and intentional reverse cases.
 - [x] Define the milestone, release, risk, and quality-gate plan.
 
+## M0 Residual Closure (multi-agent)
+
+Baseline: `90bc1f7` · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.md`
+
+- [ ] Lane A CLI hard (4) — brief `m0-residual-lane-A-cli-hard-brief.md`
+- [ ] Lane B language extensions (5) — `m0-residual-lane-B-lang-ext-brief.md`
+- [ ] Lane C filters (3) — `m0-residual-lane-C-filters-brief.md`
+- [ ] Lane D geninfo success (9) — `m0-residual-lane-D-geninfo-success-brief.md`
+- [ ] Lane E parallel/fork (6) — `m0-residual-lane-E-parallel-brief.md`
+- [ ] Lane F misc (11) — `m0-residual-lane-F-misc-brief.md`
+- [ ] Controller serial merge + regenerate pin after each lane
+- [ ] M0 exit review when primary gaps hit 0 (still no M1 without product evidence)
+
 ## M0 Current: Week 1 Contract Completion
 
 - [x] Add classification and source-reference fields to inventory entries.

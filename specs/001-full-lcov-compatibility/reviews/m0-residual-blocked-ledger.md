@@ -54,3 +54,19 @@ that did not produce exit/filesystem exact-v1 deltas on the hello/residual genht
 - `lcovrc.trivial-function-threshold`
 
 Policy: do not close with cmd_line-only or hollow parse-only plans.
+
+## Lane assignment (multi-agent)
+
+Parent plan: `m0-residual-multi-agent-plan.md`
+
+| Lane | Branch | Count | Brief |
+| --- | --- | ---: | --- |
+| A CLI hard | `m0-residual/lane-A-cli-hard` | 4 | `m0-residual-lane-A-cli-hard-brief.md` |
+| B lang ext | `m0-residual/lane-B-lang-ext` | 5 | `m0-residual-lane-B-lang-ext-brief.md` |
+| C filters | `m0-residual/lane-C-filters` | 3 | `m0-residual-lane-C-filters-brief.md` |
+| D geninfo success | `m0-residual/lane-D-geninfo-success` | 9 | `m0-residual-lane-D-geninfo-success-brief.md` |
+| E parallel | `m0-residual/lane-E-parallel` | 6 | `m0-residual-lane-E-parallel-brief.md` |
+| F misc | `m0-residual/lane-F-misc` | 11 | `m0-residual-lane-F-misc-brief.md` |
+
+**Parallel implement, serial merge** is the default. Implementers open PRs; controller merges one lane at a time and regenerates contract pins.
+
