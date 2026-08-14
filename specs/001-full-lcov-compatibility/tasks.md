@@ -30,15 +30,16 @@
 Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.md` · standards: `reviews/m0-residual-execution-standards.md`
 
 - [x] S0 independent Critical audit of residual multi-agent spec package (ACCEPT @5a769cb re-audit)
+- [x] S1–S3 residual multi-lane program: 31 sealed, 7 honest blocked; metrics 524/7
 - [ ] S1 open six lane worktrees from one integration SHA
 
-- [ ] Lane A CLI hard (4) — brief `m0-residual-lane-A-cli-hard-brief.md`
-- [ ] Lane B language extensions (5) — `m0-residual-lane-B-lang-ext-brief.md`
-- [ ] Lane C filters (3) — `m0-residual-lane-C-filters-brief.md`
-- [ ] Lane D geninfo success (9) — `m0-residual-lane-D-geninfo-success-brief.md`
-- [ ] Lane E parallel/fork (6) — `m0-residual-lane-E-parallel-brief.md`
-- [ ] Lane F misc (11) — `m0-residual-lane-F-misc-brief.md`
-- [ ] Controller serial merge + regenerate pin after each lane
+- [x] Lane A CLI hard (1 sealed / 3 blocked) — brief `m0-residual-lane-A-cli-hard-brief.md`
+- [x] Lane B language extensions (4 sealed / 1 blocked) — `m0-residual-lane-B-lang-ext-brief.md`
+- [x] Lane C filters (3) — `m0-residual-lane-C-filters-brief.md`
+- [x] Lane D geninfo success (6 sealed / 3 blocked) — `m0-residual-lane-D-geninfo-success-brief.md`
+- [x] Lane E parallel/fork (6) — `m0-residual-lane-E-parallel-brief.md`
+- [x] Lane F misc (11) — `m0-residual-lane-F-misc-brief.md`
+- [x] Controller serial merge + regenerate pin after each lane
 - [ ] M0 exit review when primary gaps hit 0 (still no M1 without product evidence)
 
 ## M0 Current: Week 1 Contract Completion

@@ -1,74 +1,37 @@
 # M0 Remaining Residuals — Blocked Ledger
 
-Status: open / blocked pending specialized fixtures or honest Oracle differentials
+Status: open / honest no-delta on Oracle pin after multi-lane residual program  
+Integration tip after S3: reviewed_primary **524**, gaps **7**, m1_authorized=false
 
-After residual4/capture/script waves (reviewed primary 493 / gaps 38):
+## Remaining primary gaps (7)
 
-## CLI (4)
+### CLI (3)
 
 | Target | Block reason |
 | --- | --- |
-| `command.geninfo.option.compat-libtool` | default libtool ON; no distinct filesystem delta |
-| `command.lcov.option.compat-libtool` | same |
-| `command.geninfo.option.history-script` | ordering-only; no content delta with minimal script |
-| `command.perl2lcov.option.preserve` | needs Devel::Cover DB fixture |
+| `command.geninfo.option.compat-libtool` | GCC12 intermediate JSON; `.libs` strip ineffective on trailing `/` dirs; no tree/exit delta |
+| `command.lcov.option.compat-libtool` | same capture path |
+| `command.perl2lcov.option.preserve` | only unstable parallel filter temp dirs; no exact-v1 seal |
 
-## lcovrc (34)
+### lcovrc (4)
 
-These need specialized multi-file, language-extension, parallel, demangle, or filter fixtures
-that did not produce exit/filesystem exact-v1 deltas on the hello/residual genhtml inputs:
+| Target | Block reason |
+| --- | --- |
+| `lcovrc.rtl-file-extensions` | `%languageExtensions` populated but `is_language('rtl')` never called in public tools |
+| `lcovrc.geninfo-compat-libtool` | same `.libs` strip no-op as CLI |
+| `lcovrc.geninfo-gcov-all-blocks` | gcov 12 always intermediate; classic path rejects gcc-12 gcno |
+| `lcovrc.geninfo-interval-update` | stdout/profile only; temp paths + timings not exact-v1 stable |
 
-- `lcovrc.c-file-extensions`
-- `lcovrc.check-data-consistency`
-- `lcovrc.demangle-cpp`
-- `lcovrc.derive-function-end-line-all-files`
-- `lcovrc.expected-message-count`
-- `lcovrc.filter-bitwise-conditional`
-- `lcovrc.filter-blank-aggressive`
-- `lcovrc.filter-lookahead`
-- `lcovrc.forget-testcase-names`
-- `lcovrc.fork-fail-timeout`
-- `lcovrc.geninfo-auto-base`
-- `lcovrc.geninfo-capture-all`
-- `lcovrc.geninfo-compat`
-- `lcovrc.geninfo-compat-libtool`
-- `lcovrc.geninfo-follow-symlinks`
-- `lcovrc.geninfo-gcov-all-blocks`
-- `lcovrc.geninfo-interval-update`
-- `lcovrc.geninfo-unexecuted-blocks`
-- `lcovrc.info-file-pattern`
-- `lcovrc.java-file-extensions`
-- `lcovrc.lcov-filter-chunk-size`
-- `lcovrc.lcov-filter-parallel`
-- `lcovrc.lcov-json-module`
-- `lcovrc.max-fork-fails`
-- `lcovrc.max-tasks-per-core`
-- `lcovrc.no-exception-branch`
-- `lcovrc.parallel`
-- `lcovrc.perl-file-extensions`
-- `lcovrc.python-file-extensions`
-- `lcovrc.rtl-file-extensions`
-- `lcovrc.select-script`
-- `lcovrc.split-char`
-- `lcovrc.suppress-function-aliases`
-- `lcovrc.trivial-function-threshold`
+## Closed by residual lanes (31)
 
-Policy: do not close with cmd_line-only or hollow parse-only plans.
+A1 + B4 + C3 + D6 + E6 + F11 = 31. See lane S2 audits and wave fragments `m0-residual-*-wave.json`.
 
-## Lane assignment (multi-agent)
+## Policy
 
-Parent plan: `m0-residual-multi-agent-plan.md`  
-Execution standards: `m0-residual-execution-standards.md`  
-S0 status: **ACCEPT** after re-audit @5a769cb (+wording polish); GO for six-lane worktree dispatch under serial merge
+Do not hollow-close the 7. Prefer signed N/A or future Oracle/toolchain change.
 
-| Lane | Branch | Count | Brief |
-| --- | --- | ---: | --- |
-| A CLI hard | `m0-residual/lane-A-cli-hard` | 4 | `m0-residual-lane-A-cli-hard-brief.md` |
-| B lang ext | `m0-residual/lane-B-lang-ext` | 5 | `m0-residual-lane-B-lang-ext-brief.md` |
-| C filters | `m0-residual/lane-C-filters` | 3 | `m0-residual-lane-C-filters-brief.md` |
-| D geninfo success | `m0-residual/lane-D-geninfo-success` | 9 | `m0-residual-lane-D-geninfo-success-brief.md` |
-| E parallel | `m0-residual/lane-E-parallel` | 6 | `m0-residual-lane-E-parallel-brief.md` |
-| F misc | `m0-residual/lane-F-misc` | 11 | `m0-residual-lane-F-misc-brief.md` |
+## Multi-agent program
 
-**Parallel implement, serial merge** is the default. Implementers open PRs; controller merges one lane at a time and regenerates contract pins.
-
+- Plan: `m0-residual-multi-agent-plan.md`
+- Standards: `m0-residual-execution-standards.md`
+- S0 ACCEPT; S1 worktrees; S2 per-lane ACCEPT; S3 merge in progress/complete

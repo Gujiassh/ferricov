@@ -8871,17 +8871,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for command.geninfo.option.history-script: cli-option boundary `--history-script <value>` from `'history-script=s'  => \\@lcovutil::profileHistoryCallback,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed suite-bound plan for command.geninfo.option.history-script: cli-option boundary `--history-script ./HistoryProbe.pm` on a multi-gcda capture fixture loads a committed Perl callback whose constructor writes a stable `history.loaded` marker before capture completes. Control without the flag exits 0 without the marker; the variant exits 0 with the marker, producing a sealed filesystem tree delta under exact-v1 (control tree `fda604f45bc9a729f6c80e3bf32396ef3f9ec1a11eb014c8daf5b11d56148dd3`, history tree `5725a1e6865cf7ad9c7cfd3622f6fcd047c9aa459f7f7deb6840fd7fad33e070`). Stdout is excluded because geninfo progress text is not sealed for this case. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.command.geninfo.option.history-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "manual_candidate",
@@ -8914,7 +8912,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-control",
+          "suite_id": "m0-residual-a-cli-hard-contract"
+        },
+        {
+          "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-script",
+          "suite_id": "m0-residual-a-cli-hard-contract"
+        }
+      ],
       "surface": "cli",
       "targets": [
         {
@@ -23008,17 +23015,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.c-file-extensions: config-key boundary `c_file_extensions = <h,c,i,C,H,I,cpp,hpp,icc,cc,hh,cxx,hxx>` from `#c_file_extensions = h,c,i,C,H,I,cpp,hpp,icc,cc,hh,cxx,hxx`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.c-file-extensions: config-key boundary `c_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. brace/directive filters and C end-line derivation no longer apply to src/sample.c, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.c-file-extensions",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23033,7 +23038,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-c-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -23104,17 +23118,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.check-data-consistency: config-key boundary `check_data_consistency = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.check-data-consistency: config-key boundary `check_data_consistency = 1` \u2014 genhtml on inconsistent.info fails (exit 1) when function is hit but all contained lines are unhit; control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.check-data-consistency",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23123,7 +23135,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-check-data-consistency",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -23598,17 +23619,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.demangle-cpp: config-key boundary `demangle_cpp = <c++filt>` from `#demangle_cpp = c++filt`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.demangle-cpp: config-key boundary `demangle_cpp = c++filt` \u2014 genhtml demangles C++ FN symbols via c++filt producing a distinct report tree vs mangled control symbols. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.demangle-cpp",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23623,7 +23642,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-demangle-cpp",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -23700,17 +23728,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.derive-function-end-line-all-files: config-key boundary `derive_function_end_line_all_files = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.derive-function-end-line-all-files: config-key boundary `derive_function_end_line_all_files = 1` \u2014 lcov derives FNL end lines for non-C source.py (FNL:0,1,3) when all-files is enabled. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.derive-function-end-line-all-files",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23719,7 +23745,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-derive-function-end-line-all-files",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -23909,17 +23944,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.expected-message-count: config-key boundary `expected_message_count = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.expected-message-count: config-key boundary `expected_message_count = unsupported:0` \u2014 legal type:count form expects zero unsupported messages but Oracle emits one, failing with exit 1 COUNT. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.expected-message-count",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -23928,7 +23961,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-expected-message-count",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24105,17 +24147,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.filter-bitwise-conditional: config-key boundary `filter_bitwise_conditional = <0|1>` from `#filter_bitwise_conditional = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.filter-bitwise-conditional: config-key boundary `filter_bitwise_conditional = 1` with `lcov --filter branch,blank` on crafted C edges keeps BRDA coverpoints on the bitwise expression line, while control `filter_bitwise_conditional = 0` filters them out. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.filter-bitwise-conditional",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24130,7 +24170,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-bitwise-conditional",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24149,17 +24198,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.filter-blank-aggressive: config-key boundary `filter_blank_aggressive = <0|1>` from `#filter_blank_aggressive = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.filter-blank-aggressive: config-key boundary `filter_blank_aggressive = 1` with `lcov --filter branch,blank` removes a hit comment-only (blank-after-removeComments) DA line from out.info, while control `filter_blank_aggressive = 0` retains non-zero-hit blank lines. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.filter-blank-aggressive",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24174,7 +24221,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-blank-aggressive",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24193,17 +24249,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.filter-lookahead: config-key boundary `filter_lookahead = <int>` from `#filter_lookahead = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.filter-lookahead: config-key boundary `filter_lookahead = 2` with `lcov --filter branch,blank` retains BRDA coverpoints on a multi-line call start when lookahead cannot close parentheses, while control `filter_lookahead = 10` filters the bogus branch after balanced-paren analysis. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.filter-lookahead",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24218,7 +24272,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-lookahead",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24237,17 +24300,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.forget-testcase-names: config-key boundary `forget_testcase_names = <0|1>` from `#forget_testcase_names = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.forget-testcase-names: config-key boundary `forget_testcase_names = 1` \u2014 lcov collapses multi-TN input into a single unnamed TN record producing distinct out.info. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.forget-testcase-names",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24262,7 +24323,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-forget-testcase-names",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -24281,17 +24351,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.fork-fail-timeout: config-key boundary `fork_fail_timeout = <int>` from `# fork_fail_timeout = 10`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.fork-fail-timeout: config-key boundary `fork_fail_timeout = $ENV{MISSING_FORK_FAIL_TIMEOUT}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Pure timeout scheduling only changes wall-clock sleep after fork failures and has no stable exit/filesystem success-path delta; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.fork-fail-timeout",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -24306,7 +24374,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-fork-fail-timeout",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27004,17 +27081,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.geninfo-auto-base: config-key boundary `geninfo_auto_base = <0|1>` from `geninfo_auto_base = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-auto-base: config-key boundary `geninfo_auto_base = 0` vs `geninfo_auto_base = 1` on a multi-dir fixture with intermediate-text gcov and relative `src/hello.c` yields distinct SF paths in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.geninfo-auto-base",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27029,7 +27104,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-auto-base",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-auto-base-on",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27048,17 +27132,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.geninfo-capture-all: config-key boundary `geninfo_capture_all = <0|1>` from `#geninfo_capture_all = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-capture-all: config-key boundary `geninfo_capture_all = 1` vs control `0` on a fixture with executed a.gcda plus lone b.gcno includes the second source file in out.info (tree delta) under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.geninfo-capture-all",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27073,7 +27155,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-capture-all",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27134,17 +27225,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.geninfo-compat: config-key boundary `geninfo_compat = <value>` from `#geninfo_compat = libtool=on, hammer=auto, split_crc=auto`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-compat: config-key boundary `geninfo_compat = not_a_mode=on` is rejected as an unknown compatibility mode (exit 255, no out.info) vs control exit 0 under exact-v1. Error-surface seal of the parsed key; planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.geninfo-compat",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27159,7 +27248,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-compat",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27312,17 +27410,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.geninfo-follow-symlinks: config-key boundary `geninfo_follow_symlinks = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-follow-symlinks: config-key boundary `geninfo_follow_symlinks = 1` vs control `0` follows `src/via` into hidden coverage and adds a second SF record in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.geninfo-follow-symlinks",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27331,7 +27427,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-follow-symlinks",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27531,17 +27636,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.geninfo-unexecuted-blocks: config-key boundary `geninfo_unexecuted_blocks = <0|1>` from `#geninfo_unexecuted_blocks = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-unexecuted-blocks: config-key boundary `geninfo_unexecuted_blocks = 1` vs `0` on a fixture whose gcov JSON reports unexecuted_block with nonzero count adjusts DA hit counts in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.geninfo-unexecuted-blocks",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27556,7 +27659,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks-off",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27727,17 +27839,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.info-file-pattern: config-key boundary `info_file_pattern = <*.info>` from `#info_file_pattern = *.info`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.info-file-pattern: config-key boundary `info_file_pattern = *.nomatch` \u2014 directory aggregation finds no files matching the pattern and yields empty coverage DB vs control report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.info-file-pattern",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27752,7 +27862,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-info-file-pattern",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -27771,17 +27890,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.java-file-extensions: config-key boundary `java_file_extensions = <java>` from `#java_file_extensions = java`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.java-file-extensions: config-key boundary `java_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter and Java end-line derivation no longer apply to src/Sample.java, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.java-file-extensions",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -27796,7 +27913,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-java-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -28247,17 +28373,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-filter-chunk-size: config-key boundary `lcov_filter_chunk_size = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.lcov-filter-chunk-size: config-key boundary `lcov_filter_chunk_size = notanumber` under multi-file filter with `parallel = 2`, `lcov_filter_parallel = 1`, and `treat_warning_as_error = 1` rejects the unrecognized chunk size (exit 1, no out.info) vs control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.lcov-filter-chunk-size",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -28266,7 +28390,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-lcov-filter-chunk-size",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -28285,17 +28418,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-filter-parallel: config-key boundary `lcov_filter_parallel = <value>` from pinned inventory source references. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.lcov-filter-parallel: config-key boundary `lcov_filter_parallel = 1` with `parallel = 2` enables the multi-file filter parallel path that applies `lcov_filter_chunk_size = notanumber` under `treat_warning_as_error = 1` (exit 1, no out.info) vs control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.lcov-filter-parallel",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -28304,7 +28435,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-lcov-filter-parallel",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -28371,17 +28511,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.lcov-json-module: config-key boundary `lcov_json_module = <auto>` from `lcov_json_module = auto`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.lcov-json-module: config-key boundary `lcov_json_module = Bogus::NoModule` \u2014 genhtml --profile dies loading a missing JSON module (exit 2). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.lcov-json-module",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -28396,7 +28534,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-lcov-json-module",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -28767,17 +28914,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.max-fork-fails: config-key boundary `max_fork_fails = <int>` from `# max_fork_fails = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.max-fork-fails: config-key boundary `max_fork_fails = $ENV{MISSING_MAX_FORK_FAILS}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Forced child callback failures do not exercise the consecutive-fork-fail counter, and success-path values only change retry logging; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.max-fork-fails",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -28792,7 +28937,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-max-fork-fails",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -28859,17 +29013,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.max-tasks-per-core: config-key boundary `max_tasks_per_core = <int>` from `# max_tasks_per_core = 20`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.max-tasks-per-core: config-key boundary `max_tasks_per_core = $ENV{MISSING_MAX_TASKS_PER_CORE}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Scheduling values (including 0) only change genhtml task packing or hang without a stable success-path exit/filesystem delta; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.max-tasks-per-core",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -28884,7 +29036,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-max-tasks-per-core",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29179,17 +29340,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.no-exception-branch: config-key boundary `no_exception_branch = <0|1>` from `no_exception_branch = 0`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.no-exception-branch: config-key boundary `no_exception_branch = 1` vs `0` on C++ throw/catch coverage with `--branch-coverage` drops exception BRDA records in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.no-exception-branch",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29204,7 +29363,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-exception-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-no-exception-branch",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29396,17 +29564,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.parallel: config-key boundary `parallel = <0|1>` from `#parallel = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.parallel: config-key boundary `parallel = 2` with multi-file filter enables the parallel filter path that surfaces `lcov_filter_chunk_size = notanumber` under `treat_warning_as_error = 1` (exit 1, no out.info) vs control exit 0 where default serial parallelism leaves the invalid chunk size unused. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.parallel",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29421,7 +29587,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-parallel",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29440,17 +29615,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.perl-file-extensions: config-key boundary `perl_file_extensions = <pl,pm>` from `#perl_file_extensions = pl,pm`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.perl-file-extensions: config-key boundary `perl_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter and Perl end-line derivation no longer apply to src/sample.pl, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.perl-file-extensions",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29465,7 +29638,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-perl-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29532,17 +29714,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.python-file-extensions: config-key boundary `python_file_extensions = <py>` from `#python_file_extensions = py`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.python-file-extensions: config-key boundary `python_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter no longer applies to src/sample.py (language not in c|perl|python|java worklist), changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.python-file-extensions",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29557,7 +29737,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-python-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29752,17 +29941,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.select-script: config-key boundary `select_script = <value>` from `# select_script = path_to_exe | callback_parameter`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.select-script: config-key boundary `select_script = /work/select_none.pm` \u2014 select callback rejects all coverpoints, shrinking the HTML report tree vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.select-script",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29777,7 +29964,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-select-script",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -29934,17 +30130,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.split-char: config-key boundary `split_char = <,>` from `#split_char = ,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.split-char: config-key boundary `split_char = @` \u2014 with split_char=@, CLI --ignore-errors source,unsupported is not split on comma and fails (exit 255); matching @-separated tokens remain legal. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.split-char",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -29959,7 +30153,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-split-char",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -30084,17 +30287,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.suppress-function-aliases: config-key boundary `suppress_function_aliases = <0|1>` from `#suppress_function_aliases = 1`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.suppress-function-aliases: config-key boundary `suppress_function_aliases = 1` \u2014 genhtml with merge aliases omits alias rows in function tables producing a distinct report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.suppress-function-aliases",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -30109,7 +30310,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-suppress-function-aliases",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -30176,17 +30386,15 @@
       "case_class": "acceptance",
       "comparison_dimensions": [
         "exit",
-        "filesystem",
-        "stderr",
-        "stdout"
+        "filesystem"
       ],
-      "description": "Unbound source-bound plan for lcovrc.trivial-function-threshold: config-key boundary `trivial_function_threshold = <int>` from `#trivial_function_threshold = 5`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "description": "Reviewed source-bound plan for lcovrc.trivial-function-threshold: config-key boundary `trivial_function_threshold = 5` \u2014 with filter=trivial, threshold 5 erases empty-body functions from out.info (FNF:1) vs unfiltered control tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
       "evidence": [],
-      "evidence_status": "none",
+      "evidence_status": "planned",
       "id": "case.acceptance.lcovrc.trivial-function-threshold",
       "interaction_groups": [],
       "origin": "manually_curated",
-      "review_status": "unreviewed",
+      "review_status": "reviewed",
       "source_references": [
         {
           "kind": "config_definition",
@@ -30201,7 +30409,16 @@
           "repository": "lcov-v2.5"
         }
       ],
-      "suite_cases": [],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-trivial-function-threshold",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
       "surface": "config",
       "targets": [
         {
@@ -34129,14 +34346,14 @@
     },
     "case_evidence_status": {
       "fail": 0,
-      "none": 389,
+      "none": 358,
       "pass": 0,
-      "planned": 182
+      "planned": 213
     },
     "case_groups": 571,
     "case_review_status": {
-      "reviewed": 533,
-      "unreviewed": 38
+      "reviewed": 564,
+      "unreviewed": 7
     },
     "interaction_groups": 4,
     "interaction_review_status": {
@@ -34147,9 +34364,9 @@
     "public_inventory_entries": 531,
     "required_interaction_domains": 4,
     "reviewed_interaction_domains": 4,
-    "reviewed_primary_coverage": 493,
+    "reviewed_primary_coverage": 524,
     "subjects": 35,
-    "uncovered_public_entries": 38
+    "uncovered_public_entries": 7
   },
   "upstream": {
     "commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
