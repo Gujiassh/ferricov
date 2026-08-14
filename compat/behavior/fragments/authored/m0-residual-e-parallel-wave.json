@@ -1,0 +1,306 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.fork-fail-timeout: config-key boundary `fork_fail_timeout = $ENV{MISSING_FORK_FAIL_TIMEOUT}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Pure timeout scheduling only changes wall-clock sleep after fork failures and has no stable exit/filesystem success-path delta; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.fork-fail-timeout",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 463,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1165,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-fork-fail-timeout",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.fork-fail-timeout",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.lcov-filter-chunk-size: config-key boundary `lcov_filter_chunk_size = notanumber` under multi-file filter with `parallel = 2`, `lcov_filter_parallel = 1`, and `treat_warning_as_error = 1` rejects the unrecognized chunk size (exit 1, no out.info) vs control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.lcov-filter-chunk-size",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1203,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-lcov-filter-chunk-size",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.lcov-filter-chunk-size",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.lcov-filter-parallel: config-key boundary `lcov_filter_parallel = 1` with `parallel = 2` enables the multi-file filter parallel path that applies `lcov_filter_chunk_size = notanumber` under `treat_warning_as_error = 1` (exit 1, no out.info) vs control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.lcov-filter-parallel",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1202,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-lcov-filter-parallel",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.lcov-filter-parallel",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.max-fork-fails: config-key boundary `max_fork_fails = $ENV{MISSING_MAX_FORK_FAILS}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Forced child callback failures do not exercise the consecutive-fork-fail counter, and success-path values only change retry logging; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.max-fork-fails",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 456,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1163,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-max-fork-fails",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.max-fork-fails",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.max-tasks-per-core: config-key boundary `max_tasks_per_core = $ENV{MISSING_MAX_TASKS_PER_CORE}` fails usage when the named environment variable is unset (exit 255, no out.info) vs control exit 0. Scheduling values (including 0) only change genhtml task packing or hang without a stable success-path exit/filesystem delta; this seals the documented RC ENV-expansion error surface for the key. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.max-tasks-per-core",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 460,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1164,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-max-tasks-per-core",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.max-tasks-per-core",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.parallel: config-key boundary `parallel = 2` with multi-file filter enables the parallel filter path that surfaces `lcov_filter_chunk_size = notanumber` under `treat_warning_as_error = 1` (exit 1, no out.info) vs control exit 0 where default serial parallelism leaves the invalid chunk size unused. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.parallel",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 447,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1160,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-e-parallel-contract-control",
+          "suite_id": "m0-residual-e-parallel-contract"
+        },
+        {
+          "case_id": "m0-residual-e-parallel-contract-parallel",
+          "suite_id": "m0-residual-e-parallel-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.parallel",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed residual parallel/fork lcovrc plans for m0-residual-e-parallel-contract. Planning-only; no Ferricov product evidence.",
+  "fragment_id": "m0-residual-e-parallel-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}
