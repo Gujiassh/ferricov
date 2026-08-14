@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 4 |
 | Fixture theme | Real `.libs` compile for libtool path rewrite; multi-gcda history profile; minimal Devel::Cover DB for perl2lcov preserve. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 

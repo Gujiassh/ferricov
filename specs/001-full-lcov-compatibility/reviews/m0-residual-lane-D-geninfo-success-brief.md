@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 9 |
 | Fixture theme | Multi-dir/symlink/unexecuted-block fixtures; success-path tree deltas preferred over unused-path exit-only. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 

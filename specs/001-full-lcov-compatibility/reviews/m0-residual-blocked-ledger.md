@@ -57,7 +57,9 @@ Policy: do not close with cmd_line-only or hollow parse-only plans.
 
 ## Lane assignment (multi-agent)
 
-Parent plan: `m0-residual-multi-agent-plan.md`
+Parent plan: `m0-residual-multi-agent-plan.md`  
+Execution standards: `m0-residual-execution-standards.md`  
+S0 status: pending independent Critical audit before worktree dispatch
 
 | Lane | Branch | Count | Brief |
 | --- | --- | ---: | --- |

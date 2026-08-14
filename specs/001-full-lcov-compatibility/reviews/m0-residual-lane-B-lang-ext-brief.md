@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 5 |
 | Fixture theme | Multi-extension sources; SF set must change when extension allow-list excludes real files. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 

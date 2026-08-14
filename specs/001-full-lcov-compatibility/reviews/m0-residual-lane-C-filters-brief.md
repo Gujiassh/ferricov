@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 3 |
 | Fixture theme | Crafted C with blank/bitwise/lookahead edges; filtered out.info must differ from control. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 

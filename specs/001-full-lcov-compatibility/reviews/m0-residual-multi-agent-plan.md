@@ -1,8 +1,20 @@
 # M0 Residual Closure — Multi-Agent / Multi-Worktree Plan
 
 Status: active collaboration plan  
-Baseline: `test/m0-tf030-exact-numeric-matrix@90bc1f7`  
-Metrics at plan freeze: `reviewed_primary=493`, `gaps=38`, `m1_authorized=false`
+Baseline: `test/m0-tf030-exact-numeric-matrix@fa6820c` (docs plan); live tip may advance after residual merges  
+Metrics at plan freeze: `reviewed_primary=493`, `gaps=38`, `m1_authorized=false`  
+**Normative execution standards:** `m0-residual-execution-standards.md` (every step audited)
+
+## 0. Audit-gated pipeline
+
+1. **S0** Spec package complete → independent Critical audit of standards+plan+briefs  
+2. **S1** Open 6 worktrees from the same integration SHA → controller check  
+3. **S2** Parallel implement (A–F) → **per-lane** independent Critical audit before merge queue  
+4. **S3** Serial controller merge (one lane at a time) → merge audit (metrics/pin/validate)  
+5. **S4** Push integration → confirm remote  
+6. **S5** When gaps=0: M0 exit review (still no M1)
+
+No dispatch of implementers before S0 ACCEPT. No merge before S2 ACCEPT for that lane.
 
 ## 1. What is already listed vs what this plan adds
 
@@ -14,6 +26,7 @@ Metrics at plan freeze: `reviewed_primary=493`, `gaps=38`, `m1_authorized=false`
 | `tasks.md` / `plan.md` | milestone narrative | partial (not lane-split) |
 | **this plan** | lane ownership, worktree/PR rules, acceptance | **this file** |
 | per-lane agent briefs | exact target lists + edit boundaries | `m0-residual-lane-*-brief.md` |
+| **execution standards** | fail-closed how-to + audit gates | `m0-residual-execution-standards.md` |
 
 **Answer:** residual *inventory* is listed; *multi-agent execution package* was incomplete — this plan + lane briefs close that gap.
 
@@ -56,7 +69,7 @@ Rules:
 
 | Role | May do | Must not do |
 | --- | --- | --- |
-| **Lane implementer** | seal Oracle, suite/tests, authored fragment, regenerate contract in-lane, open PR | push to integration, claim product evidence, edit other lanes' files |
+| **Lane implementer** | seal Oracle, suite/tests, authored fragment only, open PR | push to integration, bump plan-bindings pin, strip repair fragments, claim product evidence, edit other lanes |
 | **Lane auditor** (separate agent) | Critical read-only audit of the PR diff | implement fixes (return findings to implementer) |
 | **Controller** | architecture, lane assignment, final acceptance, merge/push, ledger/status updates | leave unreviewed multi-lane merges unvalidated |
 

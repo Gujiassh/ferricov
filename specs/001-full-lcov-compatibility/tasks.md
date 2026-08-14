@@ -27,7 +27,10 @@
 
 ## M0 Residual Closure (multi-agent)
 
-Baseline: `90bc1f7` · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.md`
+Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.md` · standards: `reviews/m0-residual-execution-standards.md`
+
+- [ ] S0 independent Critical audit of residual multi-agent spec package
+- [ ] S1 open six lane worktrees from one integration SHA
 
 - [ ] Lane A CLI hard (4) — brief `m0-residual-lane-A-cli-hard-brief.md`
 - [ ] Lane B language extensions (5) — `m0-residual-lane-B-lang-ext-brief.md`

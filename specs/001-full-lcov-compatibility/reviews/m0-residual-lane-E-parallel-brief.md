@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 6 |
 | Fixture theme | Multi-file workloads; seal exit/filesystem effects, not pure wall-clock timing. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 

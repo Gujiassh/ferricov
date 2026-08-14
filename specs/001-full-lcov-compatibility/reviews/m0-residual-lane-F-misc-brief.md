@@ -14,6 +14,7 @@ and push to the integration branch.**
 | Target count | 11 |
 | Fixture theme | demangle requires c++filt in Oracle image; expected-message-count uses legal type:count forms; split-char must not break ignore-errors tokens. |
 | Parent plan | `m0-residual-multi-agent-plan.md` |
+| Execution standards | `m0-residual-execution-standards.md` (**normative**) |
 
 ## Exact Targets
 
