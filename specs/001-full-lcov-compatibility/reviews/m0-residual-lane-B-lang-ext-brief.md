@@ -35,7 +35,7 @@ Implementer **may** create/edit only:
 Implementer **must not**:
 
 - edit other lanes' fixtures/cases/fragments
-- strip repair fragments or bump plan-bindings pin / final `contract.json` (controller merge)
+- strip any pre-existing authored host fragment, bump plan-bindings pin, or finalize `contract.json` (controller merge only)
 - edit Rust crates, inventory, schemas, CI
 - set `product_compatibility_evidence=true`
 - push to the integration branch

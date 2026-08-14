@@ -69,7 +69,7 @@ Rules:
 
 | Role | May do | Must not do |
 | --- | --- | --- |
-| **Lane implementer** | seal Oracle, suite/tests, authored fragment only, open PR | push to integration, bump plan-bindings pin, strip repair fragments, claim product evidence, edit other lanes |
+| **Lane implementer** | seal Oracle, suite/tests, authored fragment only, open PR | push to integration, bump plan-bindings pin, strip any pre-existing authored host, claim product evidence, edit other lanes |
 | **Lane auditor** (separate agent) | Critical read-only audit of the PR diff | implement fixes (return findings to implementer) |
 | **Controller** | architecture, lane assignment, final acceptance, merge/push, ledger/status updates | leave unreviewed multi-lane merges unvalidated |
 

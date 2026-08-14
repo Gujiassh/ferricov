@@ -59,7 +59,7 @@ Policy: do not close with cmd_line-only or hollow parse-only plans.
 
 Parent plan: `m0-residual-multi-agent-plan.md`  
 Execution standards: `m0-residual-execution-standards.md`  
-S0 status: rework after first Critical REJECT (strip hosts + local validate path); pending re-audit before dispatch
+S0 status: **ACCEPT** after re-audit @5a769cb (+wording polish); GO for six-lane worktree dispatch under serial merge
 
 | Lane | Branch | Count | Brief |
 | --- | --- | ---: | --- |
