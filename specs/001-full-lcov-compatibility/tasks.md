@@ -31,6 +31,9 @@ Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.m
 
 - [x] S0 independent Critical audit of residual multi-agent spec package (ACCEPT @5a769cb re-audit)
 - [x] S1–S3 residual multi-lane program: 31 sealed, 7 honest blocked; metrics 524/7
+- [x] S4 residual integration push (`d7420f1`)
+- [x] S5 residual signed N/A closeout + Critical audit (`m0-residual-s5-signed-na.md`, `m0-residual-s5-audit.md`)
+- [ ] Diagnostics wave3: bind 12 unbound PAR-* planned IDs (`m0-diagnostics-wave3-plan.md`)
 - [ ] S1 open six lane worktrees from one integration SHA
 
 - [x] Lane A CLI hard (1 sealed / 3 blocked) — brief `m0-residual-lane-A-cli-hard-brief.md`

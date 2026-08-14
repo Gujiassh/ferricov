@@ -1,9 +1,12 @@
 # M0 Remaining Residuals — Blocked Ledger
 
-Status: open / honest no-delta on Oracle pin after multi-lane residual program  
-Integration tip after S3: reviewed_primary **524**, gaps **7**, m1_authorized=false
+Status: **intentional signed N/A** (residual multi-agent program S5 closed)  
+Integration tip: reviewed_primary **524**, gaps **7**, m1_authorized=false  
+Sign-off: `m0-residual-s5-signed-na.md` · Audit: `m0-residual-s5-audit.md`
 
-## Remaining primary gaps (7)
+## Remaining primary gaps (7) — signed N/A
+
+These stay public inventory entries. Do not hollow-close. Future work requires Oracle/toolchain change, approved normalizer, or a separate inventory applicability program with its own Critical audit.
 
 ### CLI (3)
 
@@ -28,10 +31,10 @@ A1 + B4 + C3 + D6 + E6 + F11 = 31. See lane S2 audits and wave fragments `m0-res
 
 ## Policy
 
-Do not hollow-close the 7. Prefer signed N/A or future Oracle/toolchain change.
+Do not hollow-close the 7. Prefer signed N/A (done for residual program) or future Oracle/toolchain change.
 
 ## Multi-agent program
 
-- Plan: `m0-residual-multi-agent-plan.md`
+- Plan: `m0-residual-multi-agent-plan.md` — **S5 closed**
 - Standards: `m0-residual-execution-standards.md`
-- S0 ACCEPT; S1 worktrees; S2 per-lane ACCEPT; S3 merge in progress/complete
+- S0 ACCEPT; S1 worktrees; S2 per-lane ACCEPT; S3 merge ACCEPT; S4 push ACCEPT; S5 signed N/A ACCEPT

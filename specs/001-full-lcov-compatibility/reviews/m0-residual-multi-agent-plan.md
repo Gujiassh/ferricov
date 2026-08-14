@@ -1,6 +1,6 @@
 # M0 Residual Closure — Multi-Agent / Multi-Worktree Plan
 
-Status: active collaboration plan  
+Status: **closed** (S5 signed N/A @ residual program; integration d7420f1; 524/7)  
 Baseline: `test/m0-tf030-exact-numeric-matrix@fa6820c` (docs plan); live tip may advance after residual merges  
 Metrics at plan freeze: `reviewed_primary=493`, `gaps=38`, `m1_authorized=false`  
 **Normative execution standards:** `m0-residual-execution-standards.md` (every step audited)
@@ -12,7 +12,7 @@ Metrics at plan freeze: `reviewed_primary=493`, `gaps=38`, `m1_authorized=false`
 3. **S2** Parallel implement (A–F) → **per-lane** independent Critical audit before merge queue  
 4. **S3** Serial controller merge (one lane at a time) → merge audit (metrics/pin/validate)  
 5. **S4** Push integration → confirm remote  
-6. **S5** When gaps=0: M0 exit review (still no M1)
+6. **S5** Residual program close: gaps=0 **or** signed N/A (still no M1; full M0 exit review is a separate process gate)
 
 No dispatch of implementers before S0 ACCEPT. No merge before S2 ACCEPT for that lane.
 
@@ -239,3 +239,13 @@ Max concurrent merges: **1**.
 3. blocked ledger empty or only intentional N/A
 4. M0 exit review artifact written
 5. Still `m1_authorized=false` until product evidence program starts
+
+
+## 7. S5 closeout (2026-08-14)
+
+Residual multi-agent program closed with controller signed N/A for 7 honest no-delta residuals.
+
+- Sign-off: `m0-residual-s5-signed-na.md`
+- Audit: `m0-residual-s5-audit.md` **ACCEPT**
+- Metrics remain reviewed_primary=524 / gaps=7 (intentional)
+- Next: diagnostics wave3 plan `m0-diagnostics-wave3-plan.md`
