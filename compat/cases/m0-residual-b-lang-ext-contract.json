@@ -1,0 +1,147 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-b-lang-ext-contract",
+      "id": "m0-residual-b-lang-ext-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "c-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-b-lang-ext-contract",
+      "id": "m0-residual-b-lang-ext-contract-c-file-extensions",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "java-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-b-lang-ext-contract",
+      "id": "m0-residual-b-lang-ext-contract-java-file-extensions",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "python-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-b-lang-ext-contract",
+      "id": "m0-residual-b-lang-ext-contract-python-file-extensions",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "perl-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-b-lang-ext-contract",
+      "id": "m0-residual-b-lang-ext-contract-perl-file-extensions",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-residual-b-lang-ext-contract"
+}
