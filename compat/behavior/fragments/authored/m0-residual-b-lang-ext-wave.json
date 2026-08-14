@@ -1,0 +1,216 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.c-file-extensions: config-key boundary `c_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. brace/directive filters and C end-line derivation no longer apply to src/sample.c, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.c-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 97,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1150,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-c-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.c-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.java-file-extensions: config-key boundary `java_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter and Java end-line derivation no longer apply to src/Sample.java, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.java-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 100,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1153,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-java-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.java-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.perl-file-extensions: config-key boundary `perl_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter and Perl end-line derivation no longer apply to src/sample.pl, changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.perl-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 103,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1151,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-perl-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.perl-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.python-file-extensions: config-key boundary `python_file_extensions = nomatch` on multi-extension crafted input.info with `lcov --filter region,brace,directive`. region filter no longer applies to src/sample.py (language not in c|perl|python|java worklist), changing out.info content and tree hash vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.python-file-extensions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 106,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1152,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-control",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        },
+        {
+          "case_id": "m0-residual-b-lang-ext-contract-python-file-extensions",
+          "suite_id": "m0-residual-b-lang-ext-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.python-file-extensions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Lane B residual language-extension lcovrc plans (c/java/python/perl); rtl blocked \u2014 see review. Planning-only; no product evidence.",
+  "fragment_id": "authored.m0-residual-b-lang-ext-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

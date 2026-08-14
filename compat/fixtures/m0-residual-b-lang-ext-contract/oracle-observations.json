@@ -1,0 +1,308 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-control",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1719,
+        "file_tree_sha256": "8acb76b55c6fe7b4449461c6810f1d59a33737ac8610762923a95e48aad9cd85",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 408,
+        "stdout_sha256": "993b12b3821f829e75201126980662e0acc32d0bd43de77e9ff74a634989b17f"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "c-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-c-file-extensions",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1724,
+        "file_tree_sha256": "891e2b974c985d4ea2cd493a2995566f3cb868177707ad1e0a5155475162c204",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 384,
+        "stdout_sha256": "d443c9e4e5f596c1bed610390cb90ff1e6fb3460da76e11e52ac12bef40a0945"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "java-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-java-file-extensions",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1731,
+        "file_tree_sha256": "a62539bf8247070aca4a5b46ec6748c1cd782590660d817cfea04d4568599d49",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 408,
+        "stdout_sha256": "7ef6fa4d4433da499d3c8232f7bbf2162e8e2fff80da4586281f64879823a8ed"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "python-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-python-file-extensions",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1733,
+        "file_tree_sha256": "8c44f9e92e72b1601fdb0873d0be03aa32ced68f37a9e7acf72cd08a75a273d5",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 408,
+        "stdout_sha256": "7ef6fa4d4433da499d3c8232f7bbf2162e8e2fff80da4586281f64879823a8ed"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "perl-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-perl-file-extensions",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1731,
+        "file_tree_sha256": "b881b7172a52d08b6f07e70a03a9a2721a323a2ee193f35cced7146f9b5ef0ec",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 408,
+        "stdout_sha256": "7ef6fa4d4433da499d3c8232f7bbf2162e8e2fff80da4586281f64879823a8ed"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "Lane B language-extension lcovrc keys: multi-SF crafted input.info; region/brace/directive filter differentials when language allow-list excludes real extensions",
+  "schema_version": 1,
+  "suite_id": "m0-residual-b-lang-ext-contract"
+}
