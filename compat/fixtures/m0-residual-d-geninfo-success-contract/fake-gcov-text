@@ -1,0 +1,14 @@
+#!/bin/bash
+if [[ "$*" == *--version* ]]; then echo "gcov (GCC) 7.5.0"; exit 0; fi
+if [[ "$*" == *--help* ]]; then
+  echo "  -i, --intermediate-format"
+  echo "  -b, --branch-probabilities"
+  echo "  -x, --hash-filenames"
+  exit 0
+fi
+cat > hello.gcov <<'EOT'
+file:src/hello.c
+function:1,1,main
+lcount:1,1
+EOT
+exit 0

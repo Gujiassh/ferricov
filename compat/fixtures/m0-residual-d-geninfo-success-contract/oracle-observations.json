@@ -1,0 +1,733 @@
+{
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "tool": "geninfo",
+    "upstream": "lcov-v2.5"
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "suite_id": "m0-residual-d-geninfo-success-contract",
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "control.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 4978,
+        "file_tree_sha256": "b1244b465ff64b6ddeca01ea7e3d297811e71dc7552b6ae5d4e8bead3537b545",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 550,
+        "stdout_sha256": "045c90690030eef7ff9edf46112dae245003a799418b1cdcf3acda821901a1ce"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "capture-all.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-capture-all",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 5067,
+        "file_tree_sha256": "fa8d850bcac6359e122f8573b17fb562f1be36aca0f56cf80b509b374bef2fc6",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 616,
+        "stdout_sha256": "d665c51a6088ad87f08a7c4daffa5bafa719304a71524141843955cf16b8c579"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "follow-symlinks.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-follow-symlinks",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 5068,
+        "file_tree_sha256": "64e6444094e368c3818b8b29a48bf915521ac46d095eca2d25541365e4673c9e",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 553,
+        "stdout_sha256": "6522f1396c22db376ded53ec72a06c12e7c41ff9eecfa06c5feca9c30b0364fd"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "compat.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-compat",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 255,
+        "file_count": 30,
+        "file_tree_bytes": 4891,
+        "file_tree_sha256": "bfef66597384a4ef8540af1eb9593338de8ced7c30d49e92f90d6f8161d0b16c",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 57,
+        "stderr_sha256": "fa088112ef01779b63919f3ebc57da1154e75d91d8e10b60eabf7697f042449b",
+        "stdout_bytes": 71,
+        "stdout_sha256": "30b1e88a7a2485600c8ca061f12512d59a3a8098cc196cddc40dad6ee4af86db"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ab/obj",
+        "--config-file",
+        "auto-base-on.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-auto-base-on",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 4985,
+        "file_tree_sha256": "cfa6b1fb301f7f0b787c392d4dd1f8e4f8e3fabd13f752d6e22998e738a10043",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 572,
+        "stdout_sha256": "0803f3bf2edfe95d16fe281eb49b9fa417044daede650af45a5d7cfc8ae03947"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ab/obj",
+        "--config-file",
+        "auto-base.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-auto-base",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 4989,
+        "file_tree_sha256": "4410a8cc582289112dba68c9e4fc597a93d8aa3089a0521c63d2e359747e9055",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 170,
+        "stderr_sha256": "9582481ceec9ce12397178b7c8da4ae574741a550be50cd730b32051856e3acd",
+        "stdout_bytes": 607,
+        "stdout_sha256": "6a6d40f7f1151f740340c7e5fd4e2446cd5642630377fc94abc232e0f2b58eb8"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ub",
+        "--config-file",
+        "unexecuted-blocks-off.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,inconsistent"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks-off",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 4981,
+        "file_tree_sha256": "22e1561243166cd4d2b608af9ff8d1e6542dd45d2c78b5d4d2f400eb7b4376ab",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 558,
+        "stdout_sha256": "ee95f2853e8efd75226d65fc7eae89280b6ffa1ebb1c31d941b4bacbabb02fde"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ub",
+        "--config-file",
+        "unexecuted-blocks.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,inconsistent"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 4981,
+        "file_tree_sha256": "cfd3fa447c378ee43fefaa11f0ee2a17bf0fda856bf7b890021bfa19a0a797ec",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 544,
+        "stdout_sha256": "1dcc3451add1a63225529a7f6f90104ccd7538bd3303e12bdaf6b47fdf230ad1"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ex",
+        "--config-file",
+        "exception-control.lcovrc",
+        "--branch-coverage",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-exception-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 5149,
+        "file_tree_sha256": "31667c516c63032c583742d002bb9782d165045aded9a36d0abd4c3692f6c95f",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 588,
+        "stdout_sha256": "d0763fda3fffc644e98f2e79883241e3af5dcdce2ad715b56292d737fa055221"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ex",
+        "--config-file",
+        "no-exception-branch.lcovrc",
+        "--branch-coverage",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-d-geninfo-success-contract-no-exception-branch",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 31,
+        "file_tree_bytes": 5093,
+        "file_tree_sha256": "8787f0a23ae9aeefcdae40d479b882d82304c2e60b1ac553d6982df0e101c465",
+        "paths": [
+          "ab/obj/hello.gcda",
+          "ab/obj/hello.gcno",
+          "ab/src/hello.c",
+          "auto-base-on.lcovrc",
+          "auto-base.lcovrc",
+          "capture-all.lcovrc",
+          "compat.lcovrc",
+          "control.lcovrc",
+          "ex/ex.cpp",
+          "ex/ex.gcda",
+          "ex/ex.gcno",
+          "exception-control.lcovrc",
+          "fake-gcov-json",
+          "fake-gcov-text",
+          "follow-symlinks.lcovrc",
+          "hidden/h.c",
+          "hidden/h.gcda",
+          "hidden/h.gcno",
+          "no-exception-branch.lcovrc",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcno",
+          "src/via",
+          "ub/hello.c",
+          "ub/hello.gcda",
+          "ub/hello.gcno",
+          "unexecuted-blocks-off.lcovrc",
+          "unexecuted-blocks.lcovrc"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 825,
+        "stdout_sha256": "46a51fcfd254fc57d4d518c0e8622a2ea47b61f642a2d901ed11b141c4c63469"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-auto-base: config-key boundary `geninfo_auto_base = 0` vs `geninfo_auto_base = 1` on a multi-dir fixture with intermediate-text gcov and relative `src/hello.c` yields distinct SF paths in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.geninfo-auto-base",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 277,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1231,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-auto-base",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-auto-base-on",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.geninfo-auto-base",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-capture-all: config-key boundary `geninfo_capture_all = 1` vs control `0` on a fixture with executed a.gcda plus lone b.gcno includes the second source file in out.info (tree delta) under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.geninfo-capture-all",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 259,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1235,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-capture-all",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.geninfo-capture-all",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-compat: config-key boundary `geninfo_compat = not_a_mode=on` is rejected as an unknown compatibility mode (exit 255, no out.info) vs control exit 0 under exact-v1. Error-surface seal of the parsed key; planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.geninfo-compat",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 273,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1230,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-compat",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.geninfo-compat",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-follow-symlinks: config-key boundary `geninfo_follow_symlinks = 1` vs control `0` follows `src/via` into hidden coverage and adds a second SF record in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.geninfo-follow-symlinks",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1226,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-follow-symlinks",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.geninfo-follow-symlinks",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.geninfo-unexecuted-blocks: config-key boundary `geninfo_unexecuted_blocks = 1` vs `0` on a fixture whose gcov JSON reports unexecuted_block with nonzero count adjusts DA hit counts in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.geninfo-unexecuted-blocks",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 270,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1229,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks-off",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.geninfo-unexecuted-blocks",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.no-exception-branch: config-key boundary `no_exception_branch = 1` vs `0` on C++ throw/catch coverage with `--branch-coverage` drops exception BRDA records in out.info under exact-v1 filesystem. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.no-exception-branch",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 283,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1169,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-exception-control",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        },
+        {
+          "case_id": "m0-residual-d-geninfo-success-contract-no-exception-branch",
+          "suite_id": "m0-residual-d-geninfo-success-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.no-exception-branch",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ]
+}
