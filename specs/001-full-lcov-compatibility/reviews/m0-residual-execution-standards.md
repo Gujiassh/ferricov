@@ -127,10 +127,24 @@ Record in PR:
 - lane letter + exact target ids
 - Oracle seal command summary (or script path if committed under fixture)
 
+### Local validation path (implementer)
+
+Because residual `case.acceptance.*` ids already live in other authored fragments, a full
+`python3 compat/behavior/generate.py` **will fail** in the lane worktree if the new wave
+is added without stripping those hosts. That strip is **controller-only**.
+
+Therefore implementers **must** validate with:
+
+1. `python3 -m unittest compat.cases.test_m0_residual_<slug_us>_contract -v`
+2. `python3 compat/cases/m0_residual_<slug_us>_contract.py` (static suite gate)
+3. Optional: JSON schema sanity on the authored fragment only
+
+Implementers **must not** attempt full contract regenerate/pin update in the lane PR.
+
 ### Implementer must NOT
 
-- run controller merge (`generate` pin update is optional locally; **committed pin/contract finalization is controller-only**)
-- strip `m0-*-wave1-repair-*.json`
+- run controller merge or commit final `contract.json` / `plan-bindings.json` / pin bump
+- strip **any** pre-existing authored fragments (repair, blocked, capture, filter, …)
 - edit other lanes
 - force-push integration
 
@@ -178,7 +192,21 @@ For each accepted lane, **one at a time**:
 
 1. Merge lane branch into integration (ff or merge commit; no force)
 2. Ensure authored wave fragment present
-3. Strip closed case ids from repair fragments only
+3. **Strip closed case ids from every authored fragment that currently hosts them**
+   (not only `wave1-repair`). Deterministic procedure:
+   - for each closed `case.acceptance.*` id, search `compat/behavior/fragments/authored/**/*.json`
+   - remove that case group from its current host fragment
+   - rewrite host as canonical sorted JSON
+   - known residual hosts at plan time (38 ids):
+     - `m0-geninfo-wave1-repair-a.json` (2)
+     - `m0-lcov-wave1-repair-a.json` (1)
+     - `m0-perl2lcov-wave1-repair-a.json` (1)
+     - `m0-lcovrc-wave1-repair-a.json` (10)
+     - `m0-lcovrc-wave1-repair-b.json` (6)
+     - `m0-lcovrc-wave1-repair-d.json` (6)
+     - `m0-lcovrc-blocked-wave.json` (6)
+     - `m0-lcovrc-capture-wave.json` (2)
+     - `m0-lcovrc-filter-wave.json` (4)
 4. `python3 compat/behavior/generate.py`
 5. Confirm generated inventory dirty only as expected; fix stale skeletons
 6. Update `EXPECTED_PLAN_BINDINGS_SHA256` in `compat/behavior/validate.py`

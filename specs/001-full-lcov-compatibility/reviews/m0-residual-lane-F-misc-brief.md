@@ -58,8 +58,9 @@ Implementer **must not**:
 
 ## Deliverable To Controller
 
-Sealed oracle fixture, suite+tests, authored fragment, draft review, green unit tests.
-Controller merges, regenerates contract/pins/status, Critical-audits, pushes.
+Sealed oracle fixture, suite+tests, authored fragment, draft review, green **suite unit tests only**.
+Do **not** full-regenerate the behavior contract in the lane (old hosts still own case ids until controller strip).
+Controller merges, strips all host fragments, regenerates contract/pins/status, Critical-audits, pushes.
 
 ## Out Of Scope
 

@@ -82,8 +82,12 @@ Default model for subagents when spawning: follow workspace rule (`gpt-5.4` unle
 | `compat/fixtures/m0-residual-<lane>-*/` | that lane only |
 | `compat/cases/m0-residual-<lane>-*` / `test_m0_residual_<lane>_*` | that lane only |
 | `compat/behavior/fragments/authored/m0-residual-<lane>-*.json` | that lane only |
-| `compat/behavior/fragments/authored/m0-*-wave1-repair-*.json` | **serialize** strip of case groups (controller or single merge agent) |
-| `compat/behavior/contract.json` / `plan-bindings.json` / `validate.py` pin | **controller merge step** (or last-merge lane with exclusive lock) |
+| `compat/behavior/fragments/authored/m0-*-wave1-repair-*.json` | **controller serial strip** of closed case groups |
+| `compat/behavior/fragments/authored/m0-lcovrc-blocked-wave.json` | **controller serial strip** |
+| `compat/behavior/fragments/authored/m0-lcovrc-capture-wave.json` | **controller serial strip** |
+| `compat/behavior/fragments/authored/m0-lcovrc-filter-wave.json` | **controller serial strip** |
+| any other authored host of a closed residual id | **controller serial strip** (search-by-id; do not assume repair-only) |
+| `compat/behavior/contract.json` / `plan-bindings.json` / `validate.py` pin | **controller merge step only** |
 | `docs/ssot/m0-status.snapshot.json` | controller after each merge |
 | `specs/.../reviews/m0-residual-lane-*-review.md` | that lane |
 
@@ -97,9 +101,11 @@ Controller (or a dedicated **merge agent**) then:
 
 1. checks out integration
 2. applies wave fragment
-3. strips repair skeletons for those ids
+3. strips closed case ids from **all** current host authored fragments (repair + blocked + capture + filter + any other host)
 4. runs `generate.py` + pin update + status snapshot
 5. Critical audit + push/merge
+
+Implementers validate with **suite unit tests only**; full regenerate is merge-time only.
 
 Optional fast path: only **one** lane merges at a time (serial merge, parallel implement).
 
