@@ -1,0 +1,81 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed suite-bound plan for command.geninfo.option.history-script: cli-option boundary `--history-script ./HistoryProbe.pm` on a multi-gcda capture fixture loads a committed Perl callback whose constructor writes a stable `history.loaded` marker before capture completes. Control without the flag exits 0 without the marker; the variant exits 0 with the marker, producing a sealed filesystem tree delta under exact-v1 (control tree `fda604f45bc9a729f6c80e3bf32396ef3f9ec1a11eb014c8daf5b11d56148dd3`, history tree `5725a1e6865cf7ad9c7cfd3622f6fcd047c9aa459f7f7deb6840fd7fad33e070`). Stdout is excluded because geninfo progress text is not sealed for this case. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.history-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 54,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 320,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 322,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 629,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1277,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-control",
+          "suite_id": "m0-residual-a-cli-hard-contract"
+        },
+        {
+          "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-script",
+          "suite_id": "m0-residual-a-cli-hard-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.history-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Lane A residual CLI hard wave: geninfo --history-script multi-gcda marker differential. product_compatibility_evidence=false; planning-only.",
+  "fragment_id": "m0-residual-a-cli-hard-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}
