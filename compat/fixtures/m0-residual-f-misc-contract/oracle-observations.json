@@ -1,0 +1,900 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 38,
+        "file_tree_bytes": 48438,
+        "file_tree_sha256": "388f8d0e84277d49c7836986189246afa7ff2dbca133f00dfff3cf8ce0591523",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 348,
+        "stdout_sha256": "853de6dc3622826052268b671e58a970ce19da715f2e8b20a5a1653a4a75ca38"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "check-data-consistency.lcovrc",
+        "--output-directory",
+        "report",
+        "inconsistent.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-check-data-consistency",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 26,
+        "file_tree_bytes": 2332,
+        "file_tree_sha256": "340b8ac853b3b6069d02412ea7b70c41d81d0bf9cb3b17977c5de1d0a95be091",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/cmd_line",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 404,
+        "stderr_sha256": "35ca81f1fc849bac0fe093b72af10a712a1ffd87d6ed405e8158a9fa4fb53b83",
+        "stdout_bytes": 37,
+        "stdout_sha256": "1a6279d18deb3b3468c121469c20d53505648976c8bea8bea1fdf953f3713d0b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "demangle-cpp.lcovrc",
+        "--output-directory",
+        "report",
+        "mangled.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-demangle-cpp",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 38,
+        "file_tree_bytes": 48927,
+        "file_tree_sha256": "c9350478ce8c95b859bdd2c0b72aa921172aa2f63d68888b59d9e0757317d363",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 351,
+        "stdout_sha256": "044380a9d8994cec622466e88ec145de4872500ceafa4f22d572f14ec0515206"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "derive-function-end-line-all-files.lcovrc",
+        "-a",
+        "nonc.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-derive-function-end-line-all-files",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 26,
+        "file_tree_bytes": 2313,
+        "file_tree_sha256": "a7a4c619bd0b47be65a4955a87f78135b20cfcccb230a785f8fb8752720ff55a",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "out.info",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 283,
+        "stdout_sha256": "cc7381703899f0d0cfa3afae663f9bbbdeffa2f7d92895c137f1134bd8557544"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "expected-message-count.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source"
+      ],
+      "case_id": "m0-residual-f-misc-contract-expected-message-count",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 38,
+        "file_tree_bytes": 48441,
+        "file_tree_sha256": "12251bbf5e984d429d85db277610abd2d0da931e209708408896fc5c83281a3c",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 495,
+        "stderr_sha256": "553026be4aea3ff05a6f9fc38cf2dce48cbfb327ccc52ca7b71282f9d6d4f379",
+        "stdout_bytes": 292,
+        "stdout_sha256": "865fc2036c935b383465e19df7b01e5985dc3c25867e071dfee69b8465249301"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "forget-testcase-names.lcovrc",
+        "-a",
+        "multi_tn.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-forget-testcase-names",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 26,
+        "file_tree_bytes": 2317,
+        "file_tree_sha256": "3faabcb9a3c1e858d9806ceed0542b0b9809c470e9afcfa88eeb710afe69ec82",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "out.info",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 286,
+        "stdout_sha256": "b8ad87588ea4e4439babaec8dbb370bc076339a121707c230f604595456c891f"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "info-file-pattern.lcovrc",
+        "-a",
+        "data",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty"
+      ],
+      "case_id": "m0-residual-f-misc-contract-info-file-pattern",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 26,
+        "file_tree_bytes": 2201,
+        "file_tree_sha256": "1ba2c46c9716bad83f3ad03dfd54f2a9b06f8926ad3a6b68a41abc7b96acff19",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "out.info",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 408,
+        "stderr_sha256": "e9154d8249e1cbe6d5dd33ceca2913afb683acc44429fd58d1f5b28952a13a6e",
+        "stdout_bytes": 251,
+        "stdout_sha256": "832a8c158f6e186b77265f8a1eaea208b94ceb9c89f00d05ad372764f055e77b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "lcov-json-module.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported",
+        "--profile",
+        "/work/prof.json"
+      ],
+      "case_id": "m0-residual-f-misc-contract-lcov-json-module",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 38,
+        "file_tree_bytes": 48865,
+        "file_tree_sha256": "56876e85e654d8a89398d28dccd50aef11b779383bf5d72ab84076f6300ccfa7",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 554,
+        "stderr_sha256": "96c210b95f68ffb56ac9f95412d659814f3094fd583de22b2c39028ae291e2c1",
+        "stdout_bytes": 348,
+        "stdout_sha256": "853de6dc3622826052268b671e58a970ce19da715f2e8b20a5a1653a4a75ca38"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "select-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-select-script",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 34,
+        "file_tree_bytes": 29990,
+        "file_tree_sha256": "2e2a3a17c846643777c8d622307e44ecfe462af17a504e33b7c727d6bee17126",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 445,
+        "stdout_sha256": "d53ea629cca553a5407434359d377f01db51d32003963311727cd94c8aaaacc4"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "split-char.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-split-char",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 255,
+        "file_count": 25,
+        "file_tree_bytes": 2201,
+        "file_tree_sha256": "6319664365e019d78762a4944715653f5ce2b89956788c4f1e04843b7465ae95",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 75,
+        "stderr_sha256": "eb985839b7f89ba58aff15f04d717cdf2cb16a79b57debc03f7cc828ce84cc74",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "suppress-function-aliases.lcovrc",
+        "--output-directory",
+        "report",
+        "aliases.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-suppress-function-aliases",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 38,
+        "file_tree_bytes": 48476,
+        "file_tree_sha256": "fc1910a346ad925a8e30f365efd0ae0a1b5784300be4a6430183a559a512fa4b",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 340,
+        "stdout_sha256": "822fe01868be0da0aaaaa5a3c9e957335c3668bed2675a9934b957ceeac146ee"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "trivial-function-threshold.lcovrc",
+        "-a",
+        "trivial_empty.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-f-misc-contract-trivial-function-threshold",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 26,
+        "file_tree_bytes": 2310,
+        "file_tree_sha256": "cf4d7b6459a2e5656631c63730cad91a6c4e42d57cca84f9f69165951852f9f7",
+        "paths": [
+          "aliases.info",
+          "check-data-consistency.lcovrc",
+          "control.lcovrc",
+          "data/a.info",
+          "data/b.dat",
+          "demangle-cpp.lcovrc",
+          "derive-function-end-line-all-files.lcovrc",
+          "expected-message-count.lcovrc",
+          "forget-testcase-names.lcovrc",
+          "inconsistent.info",
+          "info-file-pattern.lcovrc",
+          "input.info",
+          "lcov-json-module.lcovrc",
+          "mangled.info",
+          "multi_tn.info",
+          "nonc.info",
+          "out.info",
+          "select-script.lcovrc",
+          "select_none.pm",
+          "source.c",
+          "source.py",
+          "source_empty.c",
+          "split-char.lcovrc",
+          "suppress-function-aliases.lcovrc",
+          "trivial-function-threshold.lcovrc",
+          "trivial_empty.info"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 390,
+        "stdout_sha256": "b96cf615c93344afac974dde0c4d489460c81595f6aedc6b052052790f9f38ea"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "m0-residual-f-misc-contract",
+  "schema_version": 1,
+  "suite_id": "m0-residual-f-misc-contract"
+}
