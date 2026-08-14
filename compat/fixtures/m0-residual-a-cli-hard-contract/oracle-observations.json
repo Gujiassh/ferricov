@@ -1,0 +1,115 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 14,
+        "file_tree_bytes": 2942,
+        "file_tree_sha256": "fda604f45bc9a729f6c80e3bf32396ef3f9ec1a11eb014c8daf5b11d56148dd3",
+        "paths": [
+          "HistoryProbe.pm",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcda",
+          "src/b.gcno",
+          "src/c.c",
+          "src/c.gcda",
+          "src/c.gcno",
+          "src/main.c",
+          "src/main.gcda",
+          "src/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 542,
+        "stdout_sha256": "ae76434a3921687f24002a99d32de09c05368efd03b00a9c42e18781b3c3077b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--history-script",
+        "./HistoryProbe.pm",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-residual-a-cli-hard-contract-geninfo-history-script",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 15,
+        "file_tree_bytes": 2949,
+        "file_tree_sha256": "5725a1e6865cf7ad9c7cfd3622f6fcd047c9aa459f7f7deb6840fd7fad33e070",
+        "paths": [
+          "HistoryProbe.pm",
+          "history.loaded",
+          "out.info",
+          "src/a.c",
+          "src/a.gcda",
+          "src/a.gcno",
+          "src/b.c",
+          "src/b.gcda",
+          "src/b.gcno",
+          "src/c.c",
+          "src/c.gcda",
+          "src/c.gcno",
+          "src/main.c",
+          "src/main.gcda",
+          "src/main.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 542,
+        "stdout_sha256": "bcdd91ea0d1962620368a0fa671fb148a2747b8f777d9048bd24fa8e12f07c7c"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "oracle_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "product_compatibility_evidence": false
+}

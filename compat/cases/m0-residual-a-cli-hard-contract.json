@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-a-cli-hard-contract",
+      "id": "m0-residual-a-cli-hard-contract-geninfo-history-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--history-script",
+        "./HistoryProbe.pm",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-a-cli-hard-contract",
+      "id": "m0-residual-a-cli-hard-contract-geninfo-history-script",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-residual-a-cli-hard-contract"
+}
