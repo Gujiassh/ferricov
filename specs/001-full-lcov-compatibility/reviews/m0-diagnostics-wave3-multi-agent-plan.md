@@ -1,6 +1,6 @@
 # M0 Diagnostics Wave3 — Multi-Agent Execution Plan
 
-Status: **active** (controller)  
+Status: **S5 closed** (controller)  
 Date: 2026-08-17  
 Baseline: `test/m0-tf030-exact-numeric-matrix@206d412`  
 Oracle image: `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`  

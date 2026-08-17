@@ -39,8 +39,8 @@ Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.m
 - [x] Wave3 S1: two lane worktrees from integration SHA `206d412` (A geninfo-child, B fault injectors)
 - [x] Wave3 S2: Lane A + Lane B capture and Critical audits (ACCEPT_WITH_NOTES)
 - [x] Wave3 S3: controller merge, contract hooks, status regenerate, review
-- [ ] Wave3 S4: push integration + hosted CI
-- [ ] Wave3 S5 program close note when CI green (FERRICOV residual floor remains 3)
+- [x] Wave3 S4: push integration + hosted CI (run 32018428585)
+- [x] Wave3 S5 program close note when CI green (FERRICOV residual floor remains 3)
 
 - [x] Lane A CLI hard (1 sealed / 3 blocked) — brief `m0-residual-lane-A-cli-hard-brief.md`
 - [x] Lane B language extensions (4 sealed / 1 blocked) — `m0-residual-lane-B-lang-ext-brief.md`

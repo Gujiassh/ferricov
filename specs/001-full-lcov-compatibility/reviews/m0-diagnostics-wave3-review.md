@@ -1,6 +1,6 @@
 # M0 Diagnostics Wave3 — Controller Closeout
 
-Status: **S3 integrated; S4 CI fix in progress**  
+Status: **S5 closed**  
 Date: 2026-08-17  
 Integration tip: `test/m0-tf030-exact-numeric-matrix` (see git for SHA after push)  
 Baseline skeleton: `60b7a5e`  
@@ -65,6 +65,34 @@ Live status: `docs/ssot/m0-status.snapshot.json` diagnostics.unbound_planned_cas
   4. refresh residual-era case contract tests that still expected hollow unreviewed status for closed IDs (`lcov-list-truncate-max`, lcov operation residuals except signed-N/A `compat-libtool`);
   5. materialize temporary harness launchers from rebuilt `ferricov/lcov-oracle:v2.5` image ID (historical launcher digests are capture pins, not live CI layer IDs);
   6. `compat/verify-guards.sh` rewrites launchers to the live local Oracle image before self-identity/duplicate guards.
+
+
+## S5 program close
+
+- Hosted CI green: https://github.com/Gujiassh/ferricov/actions/runs/32018428585
+- Tip: `test/m0-tf030-exact-numeric-matrix@a90edb2`
+- Bound Oracle planned IDs: **9** (11 observations)
+- Residual unbound (contract floor): **3** `*-FERRICOV-001` only
+- product_compatibility_evidence: **false**
+- m1_authorized: **false**
+- behavior primary gaps: **7** signed N/A (unchanged)
+
+### ID disposition (12 planned)
+
+| ID | Disposition |
+| --- | --- |
+| `PAR-GENINFO-CHILD-STOP-001` | bound (wave3 A) |
+| `PAR-GENINFO-CHILD-EXIT-ORACLE-001` | bound (wave3 A) |
+| `PAR-GENINFO-CHILD-IGNORE1-ORACLE-001` | bound (wave3 A) |
+| `PAR-GENINFO-CHILD-IGNORE2-ORACLE-001` | bound (wave3 A) |
+| `PAR-CHILD-SIGNAL-001` | bound (wave3 B, 3 obs) |
+| `PAR-FORK-RETRY-001` | bound (wave3 B) |
+| `PAR-PAYLOAD-CORRUPT-001` | bound (wave3 B) |
+| `PAR-UNKNOWN-CHILD-001` | bound (wave3 B) |
+| `PAR-PARENT-DEATH-001` | bound (wave3 B) |
+| `PAR-GENINFO-CHILD-EXIT-FERRICOV-001` | residual unbound (product parity) |
+| `PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001` | residual unbound (product parity) |
+| `PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001` | residual unbound (product parity) |
 
 ## Non-claims
 
