@@ -149,10 +149,15 @@ jobs:
     name: Oracle Evidence
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      LCOV_SOURCE_ROOT: /tmp/lcov-upstream-reference
 
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Check out pinned LCOV source
+        run: git clone --depth 1 --branch v2.5 https://github.com/linux-test-project/lcov.git "$LCOV_SOURCE_ROOT"
 
       - name: Install Rust 1.85.0
         run: rustup toolchain install 1.85.0 --profile minimal --component clippy,rustfmt

@@ -1,6 +1,6 @@
 # M0 Diagnostics Wave3 — Controller Closeout
 
-Status: **S3 integrated**  
+Status: **S3 integrated; S4 CI fix in progress**  
 Date: 2026-08-17  
 Integration tip: `test/m0-tf030-exact-numeric-matrix` (see git for SHA after push)  
 Baseline skeleton: `60b7a5e`  
@@ -51,6 +51,14 @@ Live status: `docs/ssot/m0-status.snapshot.json` diagnostics.unbound_planned_cas
 - SIGKILL path uses fork/OOM wording, not `signal 9` text.
 - Keep/ignore1 raw stderr hashes are snapshot-volatile; prefer semantic predicates on re-capture.
 - Contract tests recompute stream hashes from sealed bins (snapshot identity).
+
+## S4 hosted CI
+
+- Branch `test/m0-tf030-exact-numeric-matrix` is not on the default `push: main` CI path; use `workflow_dispatch`.
+- First dispatch run `32015991275` failed on two pre-existing branch debt items (not wave3 capture bugs):
+  1. Oracle Evidence: `compat/verify.py` invoked TF-030 fixture pin check without `LCOV_SOURCE_ROOT` / sibling upstream tree.
+  2. Behavior Contract: hard-coded residual totals still asserted 443/88 after residual program closed to 524/7.
+- Fix slice: resolve/export `LCOV_SOURCE_ROOT` early in `compat/verify.py`, clone upstream in Oracle Evidence job, refresh behavior unit-test pins to live totals (524/7, plan bindings 526, wave1 filter 385/378/7).
 
 ## Non-claims
 

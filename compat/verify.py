@@ -908,6 +908,44 @@ def run(
     subprocess.run(command, cwd=cwd, env=environment, check=True)
 
 
+def resolve_upstream_root(root: Path, *, allow_clone: bool) -> Path:
+    """Return a usable LCOV v2.5 source tree for fixture byte-pin checks.
+
+    Prefer an explicit LCOV_SOURCE_ROOT, then the sibling workspace checkout,
+    then (when Oracle work is enabled) a temporary shallow clone of v2.5.
+    """
+    candidates: list[Path] = []
+    env_root = os.environ.get("LCOV_SOURCE_ROOT")
+    if env_root:
+        candidates.append(Path(env_root))
+    candidates.append(root.parent / "lcov-upstream-reference")
+    for candidate in candidates:
+        marker = candidate / "tests/lcov/format/format.info"
+        if marker.is_file():
+            return candidate.resolve()
+    if not allow_clone:
+        raise RuntimeError(
+            "missing pinned LCOV upstream tree; set LCOV_SOURCE_ROOT to a v2.5 "
+            "checkout containing tests/lcov/format/format.info"
+        )
+    directory = Path(tempfile.mkdtemp(prefix="ferricov-upstream-"))
+    subprocess.run(
+        [
+            "git",
+            "clone",
+            "--branch",
+            "v2.5",
+            "--depth",
+            "1",
+            "https://github.com/linux-test-project/lcov.git",
+            str(directory),
+        ],
+        check=True,
+    )
+    return directory.resolve()
+
+
+
 def oracle_build_environment(
     base: dict[str, str], upstream_root: Path, manifest_path: Path
 ) -> dict[str, str]:
@@ -960,6 +998,14 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
+    # Fixture pin checks (TF-030 format-atoms) need the pinned upstream tree
+    # before any Oracle image build. Resolve early so hosted CI Oracle Evidence
+    # does not depend on a sibling workspace checkout.
+    upstream_root_for_fixtures = resolve_upstream_root(
+        root, allow_clone=not args.skip_oracle
+    )
+    os.environ["LCOV_SOURCE_ROOT"] = str(upstream_root_for_fixtures)
+    fixture_env = dict(os.environ)
     run(
         [sys.executable, str(root / "compat/cases/m0-cli-contract.py")],
         root,
@@ -1039,6 +1085,7 @@ def main() -> int:
     run(
         [sys.executable, str(root / "compat/fixtures/m0-tracefiles/validate.py")],
         root,
+        environment=fixture_env,
     )
     run(
         [
@@ -1048,6 +1095,7 @@ def main() -> int:
             str(root / "compat/fixtures/m0-tracefiles/test_validate.py"),
         ],
         root,
+        environment=fixture_env,
     )
     run(
         [sys.executable, str(root / "compat/resources/contract.py")],
