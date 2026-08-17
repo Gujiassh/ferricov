@@ -127,3 +127,29 @@ python3 compat/diagnostics/contract.py \
   --upstream-root /home/cc/code1/lcov-upstream-reference \
   --write
 ```
+
+## Wave3 Oracle references
+
+`compat/diagnostics/wave3/` retains the third bounded executable Oracle batch for
+the remaining parallel/geninfo-child planned identities that are executable on
+the pinned image without claiming Ferricov product compatibility:
+
+- geninfo child default-stop, keep-going watchdog, ignore1/ignore2 watchdog;
+- child signal vs ordinary exit matrix;
+- fork-retry exhaustion, corrupt payload, unknown positive PID child, parent death.
+
+Wave3 binds **9** planned identities across **11** observations. Across
+historical, wave1, wave2, and wave3 references, **68** of **71** planned
+diagnostic/parallel identities have exact bindings. The residual floor is the
+three `*-FERRICOV-001` parity IDs, which the contract requires to remain unbound
+until a product executable exists.
+
+Wave3 reuses the wave1/wave2 provenance contract and adds optional per-case
+host/in-container watchdog timeout handling for keep/ignore loops.
+
+Regenerate wave3 only after an intentional reviewed capture change:
+
+```sh
+python3 compat/diagnostics/wave3/scripts/capture_wave3.py
+```
+

@@ -35,10 +35,12 @@ Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.m
 - [x] S5 residual signed N/A closeout + Critical audit (`m0-residual-s5-signed-na.md`, `m0-residual-s5-audit.md`)
 - [x] Residual multi-agent program S0–S5 closed (31 sealed + 7 signed N/A) @ `206d412`
 - [x] Residual lane worktrees A–F removed; origin residual branches retained
-- [ ] Diagnostics wave3: bind Oracle-capable unbound PAR-* IDs (`m0-diagnostics-wave3-plan.md`, multi-agent plan)
+- [x] Diagnostics wave3: bind Oracle-capable unbound PAR-* IDs (`m0-diagnostics-wave3-plan.md`, multi-agent plan)
 - [x] Wave3 S1: two lane worktrees from integration SHA `206d412` (A geninfo-child, B fault injectors)
-- [ ] Wave3 S2: Lane A + Lane B capture and Critical audits
-- [ ] Wave3 S3–S5: controller merge, contract hooks, status regenerate, review
+- [x] Wave3 S2: Lane A + Lane B capture and Critical audits (ACCEPT_WITH_NOTES)
+- [x] Wave3 S3: controller merge, contract hooks, status regenerate, review
+- [ ] Wave3 S4: push integration + hosted CI
+- [ ] Wave3 S5 program close note when CI green (FERRICOV residual floor remains 3)
 
 - [x] Lane A CLI hard (1 sealed / 3 blocked) — brief `m0-residual-lane-A-cli-hard-brief.md`
 - [x] Lane B language extensions (4 sealed / 1 blocked) — `m0-residual-lane-B-lang-ext-brief.md`

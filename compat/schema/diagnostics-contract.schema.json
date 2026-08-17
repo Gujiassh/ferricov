@@ -40,8 +40,8 @@
     },
     "artifact_bindings": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "items": {
         "$ref": "#/$defs/artifactBinding"
       }
@@ -95,8 +95,8 @@
     },
     "oracle_observations": {
       "type": "array",
-      "minItems": 206,
-      "maxItems": 206,
+      "minItems": 217,
+      "maxItems": 217,
       "items": {
         "$ref": "#/$defs/oracleObservation"
       }
@@ -110,7 +110,7 @@
     "known_evidence_gaps": {
       "type": "array",
       "minItems": 6,
-      "maxItems": 6,
+      "maxItems": 10,
       "items": {
         "type": "string",
         "minLength": 1
@@ -374,7 +374,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^(correctness|tracefile|diagnostics-wave1|diagnostics-wave2):.+$"
+          "pattern": "^(correctness|tracefile|diagnostics-wave1|diagnostics-wave2|diagnostics-wave3):.+$"
         },
         "kind": {
           "enum": [
@@ -419,7 +419,16 @@
             "parallel_message_log",
             "parallel_memory",
             "parallel_capture_status",
-            "parallel_partial_commit"
+            "parallel_partial_commit",
+            "geninfo_child_stop",
+            "geninfo_child_keep_watchdog",
+            "geninfo_child_ignore1_watchdog",
+            "geninfo_child_ignore2_watchdog",
+            "parallel_child_signal",
+            "parallel_fork_retry",
+            "parallel_payload_corrupt",
+            "parallel_unknown_child",
+            "parallel_parent_death"
           ]
         },
         "planned_case_ids": {
@@ -739,7 +748,8 @@
         "named_error_fatal_observations",
         "named_error_ignore_one_observations",
         "wave1_observations",
-        "wave2_observations"
+        "wave2_observations",
+        "wave3_observations"
       ],
       "properties": {
         "categories": {
@@ -764,7 +774,7 @@
           "const": 71
         },
         "oracle_observations": {
-          "const": 206,
+          "const": 217,
           "type": "integer",
           "minimum": 0
         },
@@ -792,6 +802,12 @@
           "const": 32,
           "type": "integer",
           "minimum": 0
+        },
+        "wave3_observations": {
+          "const": 11,
+          "type": "integer",
+          "minimum": 11,
+          "maximum": 11
         }
       }
     }

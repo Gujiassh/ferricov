@@ -13,24 +13,15 @@
   },
   "canonical_worktree": "/home/cc/code1/ferricov",
   "diagnostics": {
-    "exact_bound_planned_cases": 59,
-    "oracle_observations": 206,
+    "exact_bound_planned_cases": 68,
+    "oracle_observations": 217,
     "planned_cases": 71,
     "unbound_planned_case_ids": [
-      "PAR-CHILD-SIGNAL-001",
-      "PAR-FORK-RETRY-001",
       "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
-      "PAR-GENINFO-CHILD-EXIT-ORACLE-001",
       "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
-      "PAR-GENINFO-CHILD-IGNORE1-ORACLE-001",
-      "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001",
-      "PAR-GENINFO-CHILD-IGNORE2-ORACLE-001",
-      "PAR-GENINFO-CHILD-STOP-001",
-      "PAR-PARENT-DEATH-001",
-      "PAR-PAYLOAD-CORRUPT-001",
-      "PAR-UNKNOWN-CHILD-001"
+      "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001"
     ],
-    "unbound_planned_cases": 12
+    "unbound_planned_cases": 3
   },
   "kind": "m0_status_snapshot",
   "m1_activation_blockers": [
@@ -56,22 +47,13 @@
       "kind": "decision_blocker"
     },
     {
-      "count": 12,
+      "count": 3,
       "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
       "id": "diagnostics_unbound_planned_cases",
       "ids": [
-        "PAR-CHILD-SIGNAL-001",
-        "PAR-FORK-RETRY-001",
         "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
-        "PAR-GENINFO-CHILD-EXIT-ORACLE-001",
         "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
-        "PAR-GENINFO-CHILD-IGNORE1-ORACLE-001",
-        "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001",
-        "PAR-GENINFO-CHILD-IGNORE2-ORACLE-001",
-        "PAR-GENINFO-CHILD-STOP-001",
-        "PAR-PARENT-DEATH-001",
-        "PAR-PAYLOAD-CORRUPT-001",
-        "PAR-UNKNOWN-CHILD-001"
+        "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001"
       ],
       "kind": "m0_residual"
     },

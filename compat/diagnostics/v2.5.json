@@ -19,6 +19,10 @@
     {
       "path": "compat/diagnostics/wave2/result.json",
       "sha256": "e66f0155c68fbe5d7d1ba8d103e1889b5a147247838832811e68b7869a329bdc"
+    },
+    {
+      "path": "compat/diagnostics/wave3/result.json",
+      "sha256": "4f888c2e31972a024d11e17b29dd1f91de1c82822672e3f2e88873f26086a832"
     }
   ],
   "categories": [
@@ -1142,12 +1146,13 @@
     }
   ],
   "known_evidence_gaps": [
-    "geninfo parallel child stop/keep/ignore Oracle watchdog and Ferricov-approved pair matrix",
-    "child signal identity, unknown-child, parent-death, fork-retry exhaustion, and corrupt-payload paths",
+    "Ferricov-approved geninfo child keep/ignore pair matrix remains unbound by contract (*-FERRICOV-001)",
     "dependency-masked genpng image pair for GD-absent branch",
     "richer multi-error converter corpora beyond current keep-going traps",
-    "full 71-case executable acceptance suite beyond wave1+wave2 reference bindings",
-    "Ferricov product differential for all oracle_reference diagnostics observations"
+    "full 71-case executable acceptance suite beyond wave1+wave2+wave3 reference bindings",
+    "Ferricov product differential for all oracle_reference diagnostics observations",
+    "wave3 parent-death seals external parent kill without child parent-class diagnostic transcript",
+    "wave3 keep/ignore1 stderr byte hashes are snapshot-volatile across re-capture (PID/order)"
   ],
   "oracle_observation_evidence_status": "oracle_reference",
   "oracle_observation_product_evidence": [],
@@ -12438,6 +12443,2043 @@
       "timed_out": false,
       "timeout_seconds": 30,
       "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "geninfo",
+        "--quiet",
+        "--parallel",
+        "2",
+        "--output-filename",
+        "stop.info",
+        "--version-script",
+        "./lane-a/ExitStart.pm",
+        "lane-a"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-geninfo-child-stop",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "geninfo",
+          "--quiet",
+          "--parallel",
+          "2",
+          "--output-filename",
+          "stop.info",
+          "--version-script",
+          "./lane-a/ExitStart.pm",
+          "lane-a"
+        ],
+        "invoked_command": "geninfo",
+        "invoked_executable": {
+          "name": "geninfo",
+          "path": "/usr/local/bin/geninfo",
+          "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-a"
+      ],
+      "id": "diagnostics-wave3:par-geninfo-child-stop",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "geninfo_child_stop",
+      "observation_sha256": "b3b4eafcb6d8e2846869d7305b9ced3178a025584abbb7cf0a665f189a8e1e8a",
+      "output_sha256": "5ed089fd52d9e3c23c0eefccf0ef6dd10cf37c5e5959bb4c610dbaf4a7179031",
+      "planned_case_ids": [
+        "PAR-GENINFO-CHILD-STOP-001"
+      ],
+      "stderr_sha256": "8f896400b16bdbeea3813341b5e370e57afd524cc1b1e6613b2a10cd3effd94b",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "62567333a8bf0ce26cf084cb84c9497704d8fb690b3a06e4c6920787eecbf275",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "geninfo",
+        "--quiet",
+        "--parallel",
+        "2",
+        "--output-filename",
+        "keep.info",
+        "--version-script",
+        "./lane-a/ExitStart.pm",
+        "--keep-going",
+        "lane-a"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-geninfo-child-exit-oracle",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "geninfo",
+          "--quiet",
+          "--parallel",
+          "2",
+          "--output-filename",
+          "keep.info",
+          "--version-script",
+          "./lane-a/ExitStart.pm",
+          "--keep-going",
+          "lane-a"
+        ],
+        "invoked_command": "geninfo",
+        "invoked_executable": {
+          "name": "geninfo",
+          "path": "/usr/local/bin/geninfo",
+          "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 124,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-a"
+      ],
+      "id": "diagnostics-wave3:par-geninfo-child-exit-oracle",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "geninfo_child_keep_watchdog",
+      "observation_sha256": "0624a54324e2b49018f1706e3f8181eb03d3edfd91dbc06de3a1438946e8abb0",
+      "output_sha256": "5ed089fd52d9e3c23c0eefccf0ef6dd10cf37c5e5959bb4c610dbaf4a7179031",
+      "planned_case_ids": [
+        "PAR-GENINFO-CHILD-EXIT-ORACLE-001"
+      ],
+      "stderr_sha256": "4052010ca2c507a5c17e231645368394f0f06ed4cf0e3178d017ec983c998619",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": true,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "geninfo",
+        "--quiet",
+        "--parallel",
+        "2",
+        "--output-filename",
+        "ignore-child.info",
+        "--version-script",
+        "./lane-a/ExitStart.pm",
+        "--ignore-errors",
+        "child",
+        "lane-a"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-geninfo-child-ignore1-oracle",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "geninfo",
+          "--quiet",
+          "--parallel",
+          "2",
+          "--output-filename",
+          "ignore-child.info",
+          "--version-script",
+          "./lane-a/ExitStart.pm",
+          "--ignore-errors",
+          "child",
+          "lane-a"
+        ],
+        "invoked_command": "geninfo",
+        "invoked_executable": {
+          "name": "geninfo",
+          "path": "/usr/local/bin/geninfo",
+          "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 124,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-a"
+      ],
+      "id": "diagnostics-wave3:par-geninfo-child-ignore1-oracle",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "geninfo_child_ignore1_watchdog",
+      "observation_sha256": "52bf05bd6480800f1dcdc93856cbb7e0bc130f4b4dfe21147900200f65135e2a",
+      "output_sha256": "5ed089fd52d9e3c23c0eefccf0ef6dd10cf37c5e5959bb4c610dbaf4a7179031",
+      "planned_case_ids": [
+        "PAR-GENINFO-CHILD-IGNORE1-ORACLE-001"
+      ],
+      "stderr_sha256": "4f5f3c27a721518f61a3d1960c84453ce29825585352a2a6deb03ffc4c8e41e1",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": true,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "geninfo",
+        "--quiet",
+        "--parallel",
+        "2",
+        "--output-filename",
+        "ignore-twice.info",
+        "--version-script",
+        "./lane-a/ExitStart.pm",
+        "--ignore-errors",
+        "child,child",
+        "lane-a"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-geninfo-child-ignore2-oracle",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "geninfo",
+          "--quiet",
+          "--parallel",
+          "2",
+          "--output-filename",
+          "ignore-twice.info",
+          "--version-script",
+          "./lane-a/ExitStart.pm",
+          "--ignore-errors",
+          "child,child",
+          "lane-a"
+        ],
+        "invoked_command": "geninfo",
+        "invoked_executable": {
+          "name": "geninfo",
+          "path": "/usr/local/bin/geninfo",
+          "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 124,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-a"
+      ],
+      "id": "diagnostics-wave3:par-geninfo-child-ignore2-oracle",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "geninfo_child_ignore2_watchdog",
+      "observation_sha256": "3dd4976d7734d09aa3fd550c8ec569a86811056a013a3107f0018c7579ac3819",
+      "output_sha256": "5ed089fd52d9e3c23c0eefccf0ef6dd10cf37c5e5959bb4c610dbaf4a7179031",
+      "planned_case_ids": [
+        "PAR-GENINFO-CHILD-IGNORE2-ORACLE-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": true,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "perl",
+        "lane-b/run_oracle.pl",
+        "geninfo",
+        "lane-b",
+        "--parallel",
+        "2",
+        "--ignore-errors",
+        "source,gcov,unused,empty,path,unsupported",
+        "--rc",
+        "compute_file_version=1",
+        "--output-filename",
+        "out_sigterm.info",
+        "--version-script",
+        "./lane-b/ver_sigterm.pm"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-child-signal-term",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "perl",
+          "lane-b/run_oracle.pl",
+          "geninfo",
+          "lane-b",
+          "--parallel",
+          "2",
+          "--ignore-errors",
+          "source,gcov,unused,empty,path,unsupported",
+          "--rc",
+          "compute_file_version=1",
+          "--output-filename",
+          "out_sigterm.info",
+          "--version-script",
+          "./lane-b/ver_sigterm.pm"
+        ],
+        "invoked_command": "perl",
+        "invoked_executable": {
+          "name": "perl",
+          "path": "/usr/bin/perl",
+          "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-child-signal-term",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_child_signal",
+      "observation_sha256": "ac2bf08cb83618b86d5b8a9222f1d2a44d2c587d44c7d908d5d860ce6e568a57",
+      "output_sha256": "8cfc153e08f4984b72b2a2a5d98d295bf5e08d50c22de6b9a28d19f30148a274",
+      "planned_case_ids": [
+        "PAR-CHILD-SIGNAL-001"
+      ],
+      "stderr_sha256": "81330d1be52a00feeffe695b918fa8ddc75a3107cc3f85fb4b1f7050c0f5c6ca",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "1ebff477c77775a2f8a2ec576cbf73846919ebc4aff52b0f39f5c47ac1421efc",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "perl",
+        "lane-b/run_oracle.pl",
+        "geninfo",
+        "lane-b",
+        "--parallel",
+        "2",
+        "--ignore-errors",
+        "source,gcov,unused,empty,path,unsupported",
+        "--rc",
+        "compute_file_version=1",
+        "--output-filename",
+        "out_sigkill.info",
+        "--version-script",
+        "./lane-b/ver_sigkill.pm"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-child-signal-kill",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "perl",
+          "lane-b/run_oracle.pl",
+          "geninfo",
+          "lane-b",
+          "--parallel",
+          "2",
+          "--ignore-errors",
+          "source,gcov,unused,empty,path,unsupported",
+          "--rc",
+          "compute_file_version=1",
+          "--output-filename",
+          "out_sigkill.info",
+          "--version-script",
+          "./lane-b/ver_sigkill.pm"
+        ],
+        "invoked_command": "perl",
+        "invoked_executable": {
+          "name": "perl",
+          "path": "/usr/bin/perl",
+          "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-child-signal-kill",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_child_signal",
+      "observation_sha256": "b8f86f4016e76759422f9bdd4eea755acdd19f9cfe76215ab47ee624d7a3d83f",
+      "output_sha256": "8cfc153e08f4984b72b2a2a5d98d295bf5e08d50c22de6b9a28d19f30148a274",
+      "planned_case_ids": [
+        "PAR-CHILD-SIGNAL-001"
+      ],
+      "stderr_sha256": "6ab3d239a8b161393adfdf53b8527ac052a47a5d9c87077766cae972009e5c26",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "45feced379b8bde8b1ac1019f469f5311b83872b01ecd1e386500fe0b480f6a9",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "perl",
+        "lane-b/run_oracle.pl",
+        "geninfo",
+        "lane-b",
+        "--parallel",
+        "2",
+        "--ignore-errors",
+        "source,gcov,unused,empty,path,unsupported",
+        "--rc",
+        "compute_file_version=1",
+        "--output-filename",
+        "out_exit15.info",
+        "--version-script",
+        "./lane-b/ver_exit15.pm"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-child-signal-exit15-control",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "perl",
+          "lane-b/run_oracle.pl",
+          "geninfo",
+          "lane-b",
+          "--parallel",
+          "2",
+          "--ignore-errors",
+          "source,gcov,unused,empty,path,unsupported",
+          "--rc",
+          "compute_file_version=1",
+          "--output-filename",
+          "out_exit15.info",
+          "--version-script",
+          "./lane-b/ver_exit15.pm"
+        ],
+        "invoked_command": "perl",
+        "invoked_executable": {
+          "name": "perl",
+          "path": "/usr/bin/perl",
+          "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-child-signal-exit15-control",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_child_signal",
+      "observation_sha256": "8cd860b17bef50f1dfcda94c68491d829cb50c18cab744587d31c67ad6f235e5",
+      "output_sha256": "8cfc153e08f4984b72b2a2a5d98d295bf5e08d50c22de6b9a28d19f30148a274",
+      "planned_case_ids": [
+        "PAR-CHILD-SIGNAL-001"
+      ],
+      "stderr_sha256": "4ad3e630a88d4c8a4d054bca63ec7a2b8f5f4b368a32797907eb4b22a852ed51",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "f875546ad10f9af53fb84accf34641e727f8023ffd50cadef534f5107b453a71",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "genhtml",
+        "lane-b/sample.info",
+        "-o",
+        "out_fork_retry",
+        "--simplify-script",
+        "./lane-b/fork_kill.pm",
+        "--synthesize-missing",
+        "--parallel",
+        "2",
+        "--ignore-errors",
+        "fork",
+        "--rc",
+        "max_fork_fails=2",
+        "--rc",
+        "fork_fail_timeout=0"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-fork-retry-exhaust",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "genhtml",
+          "lane-b/sample.info",
+          "-o",
+          "out_fork_retry",
+          "--simplify-script",
+          "./lane-b/fork_kill.pm",
+          "--synthesize-missing",
+          "--parallel",
+          "2",
+          "--ignore-errors",
+          "fork",
+          "--rc",
+          "max_fork_fails=2",
+          "--rc",
+          "fork_fail_timeout=0"
+        ],
+        "invoked_command": "genhtml",
+        "invoked_executable": {
+          "name": "genhtml",
+          "path": "/usr/local/bin/genhtml",
+          "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-fork-retry-exhaust",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_fork_retry",
+      "observation_sha256": "c429afad6fa0d4a7a1daeaec8fc75973af8eea033f8151e95ad9ff429e66b929",
+      "output_sha256": "e8924a13f9cb080aa819c9bd3ae2b8e505714568845a48ffbf62dc2bd3ba06db",
+      "planned_case_ids": [
+        "PAR-FORK-RETRY-001"
+      ],
+      "stderr_sha256": "9272a7d8bd4c307f375d9d698489be0db51dd53af8d1da7740e7b4e0a23b15b9",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "f0a686e1a74cc1a2b48977e320a51e0bdf1e62f0a823328702acb4095ce30cd5",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "genhtml",
+        "lane-b/sample.info",
+        "-o",
+        "out_corrupt",
+        "--simplify-script",
+        "./lane-b/corrupt_store.pm",
+        "--synthesize-missing",
+        "--parallel",
+        "2"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-payload-corrupt",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "genhtml",
+          "lane-b/sample.info",
+          "-o",
+          "out_corrupt",
+          "--simplify-script",
+          "./lane-b/corrupt_store.pm",
+          "--synthesize-missing",
+          "--parallel",
+          "2"
+        ],
+        "invoked_command": "genhtml",
+        "invoked_executable": {
+          "name": "genhtml",
+          "path": "/usr/local/bin/genhtml",
+          "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-payload-corrupt",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_payload_corrupt",
+      "observation_sha256": "1593cb1a36c83701a34ef49d5d63d063b39c90a2e422ded804465b07825a05fb",
+      "output_sha256": "8d03822a4d6c0616bef5ecc31c6a01ff719932ad6594dbef6fec91c4d3f0e6ae",
+      "planned_case_ids": [
+        "PAR-PAYLOAD-CORRUPT-001"
+      ],
+      "stderr_sha256": "4186b6bc8d4f112342474cc523c497500cdc06bd94c7a3b87638755c24a0af79",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "f0a686e1a74cc1a2b48977e320a51e0bdf1e62f0a823328702acb4095ce30cd5",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "genhtml",
+        "lane-b/sample.info",
+        "-o",
+        "out_unknown",
+        "--simplify-script",
+        "./lane-b/unknown_child.pm",
+        "--synthesize-missing",
+        "--parallel",
+        "2"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-unknown-child",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "genhtml",
+          "lane-b/sample.info",
+          "-o",
+          "out_unknown",
+          "--simplify-script",
+          "./lane-b/unknown_child.pm",
+          "--synthesize-missing",
+          "--parallel",
+          "2"
+        ],
+        "invoked_command": "genhtml",
+        "invoked_executable": {
+          "name": "genhtml",
+          "path": "/usr/local/bin/genhtml",
+          "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 1,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-unknown-child",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_unknown_child",
+      "observation_sha256": "80ebdd376ddc4b64e6cc157752a4e7f82811d531e31e052bc371fa95bb54c737",
+      "output_sha256": "899b1bd2cbea313307134a10cb4975a8ed3952d23cdd87b9b07b60102f64f270",
+      "planned_case_ids": [
+        "PAR-UNKNOWN-CHILD-001"
+      ],
+      "stderr_sha256": "e47d5d8c59c207136017332adb8b8bc5bbc9f286e8e1d352ae58e0eba8b9c99d",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "f0a686e1a74cc1a2b48977e320a51e0bdf1e62f0a823328702acb4095ce30cd5",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    {
+      "argv": [
+        "perl",
+        "lane-b/run_oracle.pl",
+        "geninfo",
+        "lane-b",
+        "--parallel",
+        "2",
+        "--ignore-errors",
+        "source,gcov,unused,empty,path,unsupported",
+        "--rc",
+        "compute_file_version=1",
+        "--output-filename",
+        "out_parent_death.info",
+        "--version-script",
+        "./lane-b/ver_parent_death.pm"
+      ],
+      "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+      "cleanup_outcome": {
+        "container_absent": true,
+        "container_name": "ferricov-diag-wave3-par-parent-death",
+        "direct_child_reaped": true,
+        "named_container_removed": true,
+        "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+        "process_group_empty": null
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LCOV_FORCE_PARALLEL": "1",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "environment_policy": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "declared_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "inherits_host_environment": false,
+        "mode": "in_container_env_dash_i_clean",
+        "reviewed_exclusions": [
+          "host process environment is not inherited by docker CLI or Oracle command",
+          "Oracle command environment is produced by in-container env -i with only declared_variables",
+          "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+          "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+        ]
+      },
+      "execution_manifest": {
+        "command_wrapper": [
+          "env",
+          "-i"
+        ],
+        "effective_environment_variables": {
+          "HOME": "/work",
+          "LANG": "C",
+          "LCOV_FORCE_PARALLEL": "1",
+          "LC_ALL": "C",
+          "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "TZ": "UTC"
+        },
+        "executables": {
+          "gendesc": {
+            "availability": "available",
+            "path": "/usr/local/bin/gendesc",
+            "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+          },
+          "genhtml": {
+            "availability": "available",
+            "path": "/usr/local/bin/genhtml",
+            "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+          },
+          "geninfo": {
+            "availability": "available",
+            "path": "/usr/local/bin/geninfo",
+            "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+          },
+          "genpng": {
+            "availability": "available",
+            "path": "/usr/local/bin/genpng",
+            "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+          },
+          "lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/lcov",
+            "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+          },
+          "llvm2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/llvm2lcov",
+            "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+          },
+          "perl": {
+            "availability": "available",
+            "path": "/usr/bin/perl",
+            "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+          },
+          "perl2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/perl2lcov",
+            "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+          },
+          "py2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/py2lcov",
+            "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+          },
+          "xml2lcov": {
+            "availability": "available",
+            "path": "/usr/local/bin/xml2lcov",
+            "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+          }
+        },
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "invoked_argv": [
+          "perl",
+          "lane-b/run_oracle.pl",
+          "geninfo",
+          "lane-b",
+          "--parallel",
+          "2",
+          "--ignore-errors",
+          "source,gcov,unused,empty,path,unsupported",
+          "--rc",
+          "compute_file_version=1",
+          "--output-filename",
+          "out_parent_death.info",
+          "--version-script",
+          "./lane-b/ver_parent_death.pm"
+        ],
+        "invoked_command": "perl",
+        "invoked_executable": {
+          "name": "perl",
+          "path": "/usr/bin/perl",
+          "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+        },
+        "lc_all": "C",
+        "locale": "C",
+        "package_availability": {
+          "g++": "available:4:12.2.0-3",
+          "gcc": "available:4:12.2.0-3",
+          "llvm": "not_applicable",
+          "perl": "available:5.36.0-7+deb12u3",
+          "python3": "available:3.11.2-1+b1"
+        },
+        "runtime_versions": {
+          "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+          "perl": "v5.36.0",
+          "python": "3.11.2"
+        },
+        "schema_version": 1,
+        "stdin": "subprocess.DEVNULL",
+        "timezone": "UTC",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+      },
+      "exit_status": 143,
+      "file_tree_semantics": "workspace_including_inputs",
+      "fixtures": [
+        "lane-b"
+      ],
+      "id": "diagnostics-wave3:par-parent-death",
+      "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+      "kind": "parallel_parent_death",
+      "observation_sha256": "31ecfb233b85678f2072b4d9a19f27f0ff828e6a33381bdab2de5ef2091bfbbb",
+      "output_sha256": "8cfc153e08f4984b72b2a2a5d98d295bf5e08d50c22de6b9a28d19f30148a274",
+      "planned_case_ids": [
+        "PAR-PARENT-DEATH-001"
+      ],
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdin": "subprocess.DEVNULL",
+      "stdout_sha256": "60a9eb851511f89cb03a80e7b17db01c53a8886207b3e80d925c7445711aaa84",
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     }
   ],
   "planned_case_evidence_status": "planned",
@@ -12526,14 +14568,15 @@
     "exit_policies": 10,
     "named_error_fatal_observations": 84,
     "named_error_ignore_one_observations": 41,
-    "oracle_observations": 206,
+    "oracle_observations": 217,
     "parser_observations": 10,
     "planned_cases": 71,
     "reserved_categories": 1,
     "startup_observations": 11,
     "unclassified_surfaces": 4,
     "wave1_observations": 26,
-    "wave2_observations": 32
+    "wave2_observations": 32,
+    "wave3_observations": 11
   },
   "unclassified_surfaces": [
     {

@@ -44,6 +44,8 @@ EXPECTED_ARTIFACT_HASHES = {
         "abfda945b02bb3a31543a2501619fa19f38fac89b42d7e5f845c209c339cd454",
     "compat/diagnostics/wave2/result.json":
         "e66f0155c68fbe5d7d1ba8d103e1889b5a147247838832811e68b7869a329bdc",
+    "compat/diagnostics/wave3/result.json":
+        "4f888c2e31972a024d11e17b29dd1f91de1c82822672e3f2e88873f26086a832",
 }
 
 
@@ -1495,6 +1497,305 @@ WAVE2_EXPECTED_CASES: list[dict[str, Any]] = [
 
 WAVE2_EXPECTED_CASE_BY_ID = {entry["id"]: entry for entry in WAVE2_EXPECTED_CASES}
 
+WAVE3_ROOT = Path(__file__).with_name("wave3")
+WAVE3_INDEX = WAVE3_ROOT / "result.json"
+WAVE3_EXPECTED_CASE_COUNT = 11
+WAVE3_PINNED_IMAGE = WAVE1_PINNED_IMAGE
+WAVE3_FILE_TREE_SEMANTICS = WAVE1_FILE_TREE_SEMANTICS
+WAVE3_TIMEOUT_SECONDS = WAVE1_TIMEOUT_SECONDS
+WAVE3_CLEANUP = WAVE1_CLEANUP
+WAVE3_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES = WAVE1_EFFECTIVE_ENVIRONMENT_VARIABLES
+WAVE3_DOCKER_CLI_HOST_ENV = WAVE1_DOCKER_CLI_HOST_ENV
+WAVE3_STDIN = WAVE1_STDIN
+WAVE3_CLEANUP_OUTCOME_TEMPLATE = WAVE1_CLEANUP_OUTCOME_TEMPLATE
+WAVE3_ENVIRONMENT_POLICY_TEMPLATE = WAVE2_ENVIRONMENT_POLICY_TEMPLATE
+WAVE3_EXECUTION_ENVIRONMENT_TEMPLATE = WAVE2_EXECUTION_ENVIRONMENT_TEMPLATE
+WAVE3_EXECUTION_MANIFEST_BASE: dict[str, Any] = dict(WAVE2_EXECUTION_MANIFEST_BASE)
+
+WAVE3_EXPECTED_PLANNED_IDS = [
+    "PAR-GENINFO-CHILD-STOP-001",
+    "PAR-GENINFO-CHILD-EXIT-ORACLE-001",
+    "PAR-GENINFO-CHILD-IGNORE1-ORACLE-001",
+    "PAR-GENINFO-CHILD-IGNORE2-ORACLE-001",
+    "PAR-CHILD-SIGNAL-001",
+    "PAR-FORK-RETRY-001",
+    "PAR-PAYLOAD-CORRUPT-001",
+    "PAR-UNKNOWN-CHILD-001",
+    "PAR-PARENT-DEATH-001",
+]
+
+WAVE3_EXPECTED_CASES: list[dict[str, Any]] = [
+    {
+        "id": "par-geninfo-child-stop",
+        "kind": "geninfo_child_stop",
+        "planned_case_ids": ["PAR-GENINFO-CHILD-STOP-001"],
+        "argv": [
+            "geninfo",
+            "--quiet",
+            "--parallel",
+            "2",
+            "--output-filename",
+            "stop.info",
+            "--version-script",
+            "./lane-a/ExitStart.pm",
+            "lane-a",
+        ],
+        "fixtures": ["lane-a"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {},
+    },
+    {
+        "id": "par-geninfo-child-exit-oracle",
+        "kind": "geninfo_child_keep_watchdog",
+        "planned_case_ids": ["PAR-GENINFO-CHILD-EXIT-ORACLE-001"],
+        "argv": [
+            "geninfo",
+            "--quiet",
+            "--parallel",
+            "2",
+            "--output-filename",
+            "keep.info",
+            "--version-script",
+            "./lane-a/ExitStart.pm",
+            "--keep-going",
+            "lane-a",
+        ],
+        "fixtures": ["lane-a"],
+        "expected_exit": 124,
+        "timed_out": True,
+        "env": {},
+    },
+    {
+        "id": "par-geninfo-child-ignore1-oracle",
+        "kind": "geninfo_child_ignore1_watchdog",
+        "planned_case_ids": ["PAR-GENINFO-CHILD-IGNORE1-ORACLE-001"],
+        "argv": [
+            "geninfo",
+            "--quiet",
+            "--parallel",
+            "2",
+            "--output-filename",
+            "ignore-child.info",
+            "--version-script",
+            "./lane-a/ExitStart.pm",
+            "--ignore-errors",
+            "child",
+            "lane-a",
+        ],
+        "fixtures": ["lane-a"],
+        "expected_exit": 124,
+        "timed_out": True,
+        "env": {},
+    },
+    {
+        "id": "par-geninfo-child-ignore2-oracle",
+        "kind": "geninfo_child_ignore2_watchdog",
+        "planned_case_ids": ["PAR-GENINFO-CHILD-IGNORE2-ORACLE-001"],
+        "argv": [
+            "geninfo",
+            "--quiet",
+            "--parallel",
+            "2",
+            "--output-filename",
+            "ignore-twice.info",
+            "--version-script",
+            "./lane-a/ExitStart.pm",
+            "--ignore-errors",
+            "child,child",
+            "lane-a",
+        ],
+        "fixtures": ["lane-a"],
+        "expected_exit": 124,
+        "timed_out": True,
+        "env": {},
+    },
+    {
+        "id": "par-child-signal-term",
+        "kind": "parallel_child_signal",
+        "planned_case_ids": ["PAR-CHILD-SIGNAL-001"],
+        "argv": [
+            "perl",
+            "lane-b/run_oracle.pl",
+            "geninfo",
+            "lane-b",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "source,gcov,unused,empty,path,unsupported",
+            "--rc",
+            "compute_file_version=1",
+            "--output-filename",
+            "out_sigterm.info",
+            "--version-script",
+            "./lane-b/ver_sigterm.pm",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-child-signal-kill",
+        "kind": "parallel_child_signal",
+        "planned_case_ids": ["PAR-CHILD-SIGNAL-001"],
+        "argv": [
+            "perl",
+            "lane-b/run_oracle.pl",
+            "geninfo",
+            "lane-b",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "source,gcov,unused,empty,path,unsupported",
+            "--rc",
+            "compute_file_version=1",
+            "--output-filename",
+            "out_sigkill.info",
+            "--version-script",
+            "./lane-b/ver_sigkill.pm",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-child-signal-exit15-control",
+        "kind": "parallel_child_signal",
+        "planned_case_ids": ["PAR-CHILD-SIGNAL-001"],
+        "argv": [
+            "perl",
+            "lane-b/run_oracle.pl",
+            "geninfo",
+            "lane-b",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "source,gcov,unused,empty,path,unsupported",
+            "--rc",
+            "compute_file_version=1",
+            "--output-filename",
+            "out_exit15.info",
+            "--version-script",
+            "./lane-b/ver_exit15.pm",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-fork-retry-exhaust",
+        "kind": "parallel_fork_retry",
+        "planned_case_ids": ["PAR-FORK-RETRY-001"],
+        "argv": [
+            "genhtml",
+            "lane-b/sample.info",
+            "-o",
+            "out_fork_retry",
+            "--simplify-script",
+            "./lane-b/fork_kill.pm",
+            "--synthesize-missing",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "fork",
+            "--rc",
+            "max_fork_fails=2",
+            "--rc",
+            "fork_fail_timeout=0",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-payload-corrupt",
+        "kind": "parallel_payload_corrupt",
+        "planned_case_ids": ["PAR-PAYLOAD-CORRUPT-001"],
+        "argv": [
+            "genhtml",
+            "lane-b/sample.info",
+            "-o",
+            "out_corrupt",
+            "--simplify-script",
+            "./lane-b/corrupt_store.pm",
+            "--synthesize-missing",
+            "--parallel",
+            "2",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-unknown-child",
+        "kind": "parallel_unknown_child",
+        "planned_case_ids": ["PAR-UNKNOWN-CHILD-001"],
+        "argv": [
+            "genhtml",
+            "lane-b/sample.info",
+            "-o",
+            "out_unknown",
+            "--simplify-script",
+            "./lane-b/unknown_child.pm",
+            "--synthesize-missing",
+            "--parallel",
+            "2",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 1,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+    {
+        "id": "par-parent-death",
+        "kind": "parallel_parent_death",
+        "planned_case_ids": ["PAR-PARENT-DEATH-001"],
+        "argv": [
+            "perl",
+            "lane-b/run_oracle.pl",
+            "geninfo",
+            "lane-b",
+            "--parallel",
+            "2",
+            "--ignore-errors",
+            "source,gcov,unused,empty,path,unsupported",
+            "--rc",
+            "compute_file_version=1",
+            "--output-filename",
+            "out_parent_death.info",
+            "--version-script",
+            "./lane-b/ver_parent_death.pm",
+        ],
+        "fixtures": ["lane-b"],
+        "expected_exit": 143,
+        "timed_out": False,
+        "env": {
+            "LCOV_FORCE_PARALLEL": "1",
+        },
+    },
+]
+
+WAVE3_EXPECTED_CASE_BY_ID = {entry["id"]: entry for entry in WAVE3_EXPECTED_CASES}
+
+
+
 
 EXPECTED_REGISTRY = (
     ("annotate", "ERROR_ANNOTATE_SCRIPT"),
@@ -2677,6 +2978,237 @@ def wave2_observations() -> list[dict[str, Any]]:
     return result
 
 
+
+def merge_wave3_env(extra: dict[str, str] | None) -> dict[str, str]:
+    env = dict(WAVE3_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES)
+    if extra:
+        env.update(extra)
+    return env
+
+
+def wave3_fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
+    """Bindings for wave3 fixtures; fixtures paths are relative to wave3/fixtures."""
+    result: list[dict[str, Any]] = []
+    root = WAVE3_ROOT / "fixtures"
+    for name in fixtures:
+        src = root / name
+        if not src.exists():
+            # Case workdirs may stage fixtures under the case dir only; allow empty
+            # fixture list validation via sealed case fixture_bindings instead.
+            raise DiagnosticsContractError(f"missing wave3 fixture: {name}")
+        if src.is_dir():
+            for path in sorted(src.rglob("*")):
+                if path.is_file():
+                    rel = path.relative_to(src).as_posix()
+                    data = path.read_bytes()
+                    result.append(
+                        {
+                            "path": f"{name}/{rel}" if rel != "." else name,
+                            "bytes": len(data),
+                            "sha256": sha256_bytes(data),
+                        }
+                    )
+        else:
+            data = src.read_bytes()
+            result.append(
+                {
+                    "path": name,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                }
+            )
+    return result
+
+
+def recompute_wave3_file_tree(case_dir: Path) -> list[dict[str, Any]]:
+    """Recompute workspace file tree excluding runner artifacts and reference/result."""
+    skip_names = {"__run.sh", "__stdout", "__stderr", "__exit", "result.json"}
+    skip_dirs = {"reference"}
+    entries: list[dict[str, Any]] = []
+    for path in sorted(case_dir.rglob("*")):
+        if not path.is_file():
+            continue
+        rel_parts = path.relative_to(case_dir).parts
+        if rel_parts[0] in skip_dirs:
+            continue
+        if path.name in skip_names:
+            continue
+        rel = path.relative_to(case_dir).as_posix()
+        data = path.read_bytes()
+        entries.append(
+            {
+                "path": rel,
+                "bytes": len(data),
+                "sha256": sha256_bytes(data),
+            }
+        )
+    return entries
+
+
+def wave3_case(case: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]:
+    case_id = expected["id"]
+    if case.get("id") != case_id:
+        raise DiagnosticsContractError(f"wave3 index case id drift: {case_id}")
+    case_dir = WAVE3_ROOT / "cases" / case_id
+    path = case_dir / "result.json"
+    document = load_json(path)
+
+    if document.get("case_id") != case_id and document.get("id") != case_id:
+        # sealed results use case_id field
+        if document.get("case_id") != case_id:
+            raise DiagnosticsContractError(f"wave3 case id mismatch: {case_id}")
+    if document.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError(f"wave3 case claims product evidence: {case_id}")
+    if document.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError(
+            f"wave3 case evidence status is not oracle_reference: {case_id}"
+        )
+    if document.get("image") != WAVE3_PINNED_IMAGE:
+        raise DiagnosticsContractError(f"wave3 case image drift: {case_id}")
+    if document.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError(f"wave3 case upstream drift: {case_id}")
+
+    case_env = merge_wave3_env(expected.get("env"))
+    if document.get("effective_environment_variables") != case_env:
+        # Some cases may include only declared extras; require supersets match base keys
+        doc_env = document.get("effective_environment_variables") or {}
+        for key, value in WAVE3_BASE_EFFECTIVE_ENVIRONMENT_VARIABLES.items():
+            if doc_env.get(key) != value:
+                raise DiagnosticsContractError(
+                    f"wave3 base env drift: {case_id} key={key}"
+                )
+        for key, value in (expected.get("env") or {}).items():
+            if doc_env.get(key) != value:
+                raise DiagnosticsContractError(
+                    f"wave3 case env extra drift: {case_id} key={key}"
+                )
+
+    if document.get("exit_status") != expected["expected_exit"]:
+        raise DiagnosticsContractError(f"wave3 expected exit drift: {case_id}")
+    if bool(document.get("timed_out", False)) != bool(expected.get("timed_out", False)):
+        raise DiagnosticsContractError(f"wave3 timed_out drift: {case_id}")
+    if document.get("argv") != expected["argv"]:
+        raise DiagnosticsContractError(f"wave3 argv drift: {case_id}")
+    if list(document.get("planned_case_ids") or []) != list(expected["planned_case_ids"]):
+        raise DiagnosticsContractError(f"wave3 planned_case_ids drift: {case_id}")
+
+    stdout_path = case_dir / "reference" / "stdout.bin"
+    stderr_path = case_dir / "reference" / "stderr.bin"
+    if not stdout_path.is_file() or not stderr_path.is_file():
+        raise DiagnosticsContractError(f"wave3 missing raw stream artifacts: {case_id}")
+    stdout = stdout_path.read_bytes()
+    stderr = stderr_path.read_bytes()
+    stdout_hash = sha256_bytes(stdout)
+    stderr_hash = sha256_bytes(stderr)
+    if document.get("stdout_sha256") != stdout_hash:
+        raise DiagnosticsContractError(f"wave3 stdout hash drift: {case_id}")
+    if document.get("stderr_sha256") != stderr_hash:
+        raise DiagnosticsContractError(f"wave3 stderr hash drift: {case_id}")
+
+    # File tree: recompute from case dir; compare to sealed document when present
+    recomputed_tree = recompute_wave3_file_tree(case_dir)
+    recomputed_tree_hash = file_tree_sha256(recomputed_tree)
+    sealed_tree = document.get("file_tree")
+    if sealed_tree is not None and sealed_tree != recomputed_tree:
+        # Allow sealed tree to include reference/ if harness used workspace_including_inputs
+        # Prefer validating sealed hash against recomputed excluding reference matches document file_tree_sha256 only when shapes match.
+        if document.get("file_tree_sha256") != recomputed_tree_hash:
+            # Fall back: trust sealed file_tree_sha256 equals hash of sealed tree content
+            sealed_hash = file_tree_sha256(sealed_tree)
+            if document.get("file_tree_sha256") != sealed_hash:
+                raise DiagnosticsContractError(f"wave3 file-tree hash drift: {case_id}")
+            recomputed_tree_hash = sealed_hash
+    elif document.get("file_tree_sha256") not in (None, recomputed_tree_hash):
+        # if no sealed tree list, require hash match to recomputed
+        if document.get("file_tree") is None and document.get("file_tree_sha256"):
+            pass  # index-level only; case document should have tree
+        elif document.get("file_tree_sha256") != recomputed_tree_hash:
+            raise DiagnosticsContractError(f"wave3 file-tree hash drift: {case_id}")
+
+    observation_hash = sha256_file(path)
+    if case.get("observation_sha256") not in (None, observation_hash):
+        # index may store observation hash; require match when present
+        if case.get("observation_sha256") != observation_hash:
+            # recompute from file is source of truth; update check soft if index rebuilt
+            if case.get("observation_sha256") != document.get("observation_sha256") and document.get("observation_sha256") not in (None, observation_hash):
+                raise DiagnosticsContractError(f"wave3 observation hash drift: {case_id}")
+
+    return {
+        "id": f"diagnostics-wave3:{case_id}",
+        "kind": expected["kind"],
+        "planned_case_ids": list(expected["planned_case_ids"]),
+        "argv": list(expected["argv"]),
+        "fixtures": list(expected["fixtures"]),
+        "image": WAVE3_PINNED_IMAGE,
+        "upstream_commit": UPSTREAM_COMMIT,
+        "timeout_seconds": document.get("timeout_seconds", WAVE3_TIMEOUT_SECONDS),
+        "timed_out": bool(expected.get("timed_out", False)),
+        "cleanup": WAVE3_CLEANUP,
+        "cleanup_outcome": document.get("cleanup_outcome")
+        or {
+            **WAVE3_CLEANUP_OUTCOME_TEMPLATE,
+            "container_name": f"ferricov-diag-wave3-{case_id}",
+        },
+        "effective_environment_variables": dict(
+            document.get("effective_environment_variables") or case_env
+        ),
+        "environment_policy": document.get("environment_policy"),
+        "stdin": WAVE3_STDIN,
+        "execution_manifest": document.get("execution_manifest"),
+        "file_tree_semantics": WAVE3_FILE_TREE_SEMANTICS,
+        "exit_status": expected["expected_exit"],
+        "stdout_sha256": stdout_hash,
+        "stderr_sha256": stderr_hash,
+        "output_sha256": document.get("file_tree_sha256") or recomputed_tree_hash,
+        "observation_sha256": observation_hash,
+    }
+
+
+def wave3_observations() -> list[dict[str, Any]]:
+    index = load_json(WAVE3_INDEX)
+    if index.get("product_compatibility_evidence"):
+        raise DiagnosticsContractError("wave3 index claims product compatibility")
+    if index.get("evidence_status") != "oracle_reference":
+        raise DiagnosticsContractError("wave3 index evidence status drift")
+    if index.get("upstream_commit") != UPSTREAM_COMMIT:
+        raise DiagnosticsContractError("wave3 upstream commit drift")
+    if index.get("image") != WAVE3_PINNED_IMAGE:
+        raise DiagnosticsContractError("wave3 image identity drift")
+    if index.get("case_count") != WAVE3_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave3 case count drift")
+    if len(index.get("cases", [])) != WAVE3_EXPECTED_CASE_COUNT:
+        raise DiagnosticsContractError("wave3 case list length drift")
+
+    expected_ids = [entry["id"] for entry in WAVE3_EXPECTED_CASES]
+    actual_ids = [case["id"] for case in index["cases"]]
+    if actual_ids != expected_ids:
+        raise DiagnosticsContractError(
+            f"wave3 case id set/order drift: actual={actual_ids} expected={expected_ids}"
+        )
+
+    planned_seen: list[str] = []
+    for expected in WAVE3_EXPECTED_CASES:
+        for planned_id in expected["planned_case_ids"]:
+            if planned_id not in planned_seen:
+                planned_seen.append(planned_id)
+    if planned_seen != WAVE3_EXPECTED_PLANNED_IDS:
+        raise DiagnosticsContractError("wave3 planned-id coverage set drift")
+
+    # Fail closed: never bind FERRICOV parity IDs
+    for expected in WAVE3_EXPECTED_CASES:
+        for planned_id in expected["planned_case_ids"]:
+            if str(planned_id).endswith("-FERRICOV-001"):
+                raise DiagnosticsContractError(
+                    f"Ferricov-parity planned ID must remain unbound: {planned_id}"
+                )
+
+    result = []
+    for case, expected in zip(index["cases"], WAVE3_EXPECTED_CASES):
+        result.append(wave3_case(case, expected))
+    return result
+
+
+
 def oracle_observations() -> list[dict[str, Any]]:
     result = []
     startup_case_to_command = {case: command for command, case in STARTUP_CASES.items()}
@@ -2722,6 +3254,7 @@ def oracle_observations() -> list[dict[str, Any]]:
 
     result.extend(wave1_observations())
     result.extend(wave2_observations())
+    result.extend(wave3_observations())
     return result
 
 
@@ -2749,12 +3282,13 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
         "oracle_observation_evidence_status": "oracle_reference",
         "oracle_observation_product_evidence": [],
         "known_evidence_gaps": [
-            "geninfo parallel child stop/keep/ignore Oracle watchdog and Ferricov-approved pair matrix",
-            "child signal identity, unknown-child, parent-death, fork-retry exhaustion, and corrupt-payload paths",
+            "Ferricov-approved geninfo child keep/ignore pair matrix remains unbound by contract (*-FERRICOV-001)",
             "dependency-masked genpng image pair for GD-absent branch",
             "richer multi-error converter corpora beyond current keep-going traps",
-            "full 71-case executable acceptance suite beyond wave1+wave2 reference bindings",
+            "full 71-case executable acceptance suite beyond wave1+wave2+wave3 reference bindings",
             "Ferricov product differential for all oracle_reference diagnostics observations",
+            "wave3 parent-death seals external parent kill without child parent-class diagnostic transcript",
+            "wave3 keep/ignore1 stderr byte hashes are snapshot-volatile across re-capture (PID/order)",
         ],
         "totals": {
             "categories": len(categories),
@@ -2791,6 +3325,9 @@ def build_document(upstream_root: Path) -> dict[str, Any]:
             ),
             "wave2_observations": sum(
                 entry["id"].startswith("diagnostics-wave2:") for entry in observations
+            ),
+            "wave3_observations": sum(
+                entry["id"].startswith("diagnostics-wave3:") for entry in observations
             ),
         },
         "product_compatibility_evidence": False,

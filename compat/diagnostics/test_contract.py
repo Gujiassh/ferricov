@@ -167,7 +167,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave1), contract.WAVE1_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave1_observations"], 26)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 206)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 217)
         planned = []
         for entry in wave1:
             for planned_id in entry["planned_case_ids"]:
@@ -682,7 +682,7 @@ class DiagnosticsContractTests(unittest.TestCase):
         ]
         self.assertEqual(len(wave2), contract.WAVE2_EXPECTED_CASE_COUNT)
         self.assertEqual(self.committed["totals"]["wave2_observations"], 32)
-        self.assertEqual(self.committed["totals"]["oracle_observations"], 206)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 217)
         planned = []
         for entry in wave2:
             for planned_id in entry["planned_case_ids"]:
@@ -720,6 +720,39 @@ class DiagnosticsContractTests(unittest.TestCase):
         document["product_compatibility_evidence"] = True
         with self.assertRaises(contract.DiagnosticsContractError):
             self.validate(document)
+
+
+    def test_wave3_observation_count_and_planned_ids_are_bound(self) -> None:
+        wave3 = [
+            entry
+            for entry in self.committed["oracle_observations"]
+            if entry["id"].startswith("diagnostics-wave3:")
+        ]
+        self.assertEqual(len(wave3), contract.WAVE3_EXPECTED_CASE_COUNT)
+        self.assertEqual(self.committed["totals"]["wave3_observations"], 11)
+        self.assertEqual(self.committed["totals"]["oracle_observations"], 217)
+        planned = []
+        for entry in wave3:
+            self.assertFalse(entry.get("product_compatibility_evidence", False))
+            for planned_id in entry["planned_case_ids"]:
+                self.assertFalse(str(planned_id).endswith("-FERRICOV-001"))
+                if planned_id not in planned:
+                    planned.append(planned_id)
+        self.assertEqual(planned, contract.WAVE3_EXPECTED_PLANNED_IDS)
+
+    def test_wave3_ferricov_planned_ids_remain_unbound(self) -> None:
+        bound = {
+            planned_id
+            for entry in self.committed["oracle_observations"]
+            for planned_id in entry.get("planned_case_ids", [])
+        }
+        for planned_id in (
+            "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
+            "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
+            "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001",
+        ):
+            self.assertNotIn(planned_id, bound)
+
 
     def test_wave2_raw_stdout_refresh_is_rejected(self) -> None:
         path = (

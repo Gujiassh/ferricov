@@ -1,6 +1,6 @@
 # M0 Diagnostics Wave3 Plan — Unbound PAR-* Bindings
 
-Status: active next track after residual S5  
+Status: S3 integrated 2026-08-17 — see m0-diagnostics-wave3-review.md  
 Baseline integration: `test/m0-tf030-exact-numeric-matrix`  
 Oracle image: `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`  
 Upstream: v2.5 `74c8eab…`  

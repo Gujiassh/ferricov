@@ -111,9 +111,10 @@ the M0 harness become the permanent integration boundary.
   rules, four unclassified surfaces, ten command exit policies, and 206
   retained Oracle observations. Twenty-six wave1 and 32 wave2 cases retain
   full capture provenance; two legacy unknown-function failures extend the
-  fatal set without changing the prior 204 observations. Fifty-nine of 71
-  diagnostic/parallel identities have exact bindings, 12 remain planned and
-  unbound, and product evidence remains empty.
+  fatal set without changing the prior 204 observations. Sixty-eight of 71
+  diagnostic/parallel identities have exact bindings (wave1+wave2+wave3); the
+  residual unbound floor is the three `*-FERRICOV-001` parity IDs, and product
+  evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry
   installed tree to nine exhaustive payload groups and 15 pinned source
   closures. Paths, file SHA-256 identities, the legacy man symlink, and the
