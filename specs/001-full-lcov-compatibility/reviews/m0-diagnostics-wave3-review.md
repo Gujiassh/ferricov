@@ -63,7 +63,8 @@ Live status: `docs/ssot/m0-status.snapshot.json` diagnostics.unbound_planned_cas
   2. refresh behavior unit-test pins to live totals (524/7, plan bindings 526, wave1 filter 385/378/7);
   3. install host Perl deps (`libcapture-tiny-perl` et al.) for `inspect_model.pl` unit tests on both Behavior and Oracle jobs;
   4. refresh residual-era case contract tests that still expected hollow unreviewed status for closed IDs (`lcov-list-truncate-max`, lcov operation residuals except signed-N/A `compat-libtool`);
-  5. materialize temporary harness launchers from rebuilt `ferricov/lcov-oracle:v2.5` image ID (historical launcher digests are capture pins, not live CI layer IDs).
+  5. materialize temporary harness launchers from rebuilt `ferricov/lcov-oracle:v2.5` image ID (historical launcher digests are capture pins, not live CI layer IDs);
+  6. `compat/verify-guards.sh` rewrites launchers to the live local Oracle image before self-identity/duplicate guards.
 
 ## Non-claims
 
