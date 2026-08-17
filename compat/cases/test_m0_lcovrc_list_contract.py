@@ -81,11 +81,20 @@ class LcovrcListContractTests(unittest.TestCase):
             ["--config-file", "width-50.lcovrc"],
         )
 
-    def test_unobservable_truncate_case_remains_unreviewed(self) -> None:
-        case = self.plans["case.acceptance.lcovrc.lcov-list-truncate-max"]
-        self.assertEqual(case["review_status"], "unreviewed")
-        self.assertEqual(case["evidence_status"], "none")
-        self.assertEqual(case["suite_cases"], [])
+    def test_list_truncate_case_is_reviewed_with_planned_suite(self) -> None:
+        # Residual program bound this key in m0-lcovrc-genhtml-residual3-wave
+        # (not the original list-wave fragment). It is reviewed + planned.
+        residual3 = json.loads(
+            (
+                ROOT
+                / "compat/behavior/fragments/authored/m0-lcovrc-genhtml-residual3-wave.json"
+            ).read_text(encoding="utf-8")
+        )
+        plans = {case["id"]: case for case in residual3["case_groups"]}
+        case = plans["case.acceptance.lcovrc.lcov-list-truncate-max"]
+        self.assertEqual(case["review_status"], "reviewed")
+        self.assertEqual(case["evidence_status"], "planned")
+        self.assertTrue(case["suite_cases"])
 
 
 if __name__ == "__main__":

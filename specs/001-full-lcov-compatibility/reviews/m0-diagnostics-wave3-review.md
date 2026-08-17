@@ -58,7 +58,11 @@ Live status: `docs/ssot/m0-status.snapshot.json` diagnostics.unbound_planned_cas
 - First dispatch run `32015991275` failed on two pre-existing branch debt items (not wave3 capture bugs):
   1. Oracle Evidence: `compat/verify.py` invoked TF-030 fixture pin check without `LCOV_SOURCE_ROOT` / sibling upstream tree.
   2. Behavior Contract: hard-coded residual totals still asserted 443/88 after residual program closed to 524/7.
-- Fix slice: resolve/export `LCOV_SOURCE_ROOT` early in `compat/verify.py`, clone upstream in Oracle Evidence job, refresh behavior unit-test pins to live totals (524/7, plan bindings 526, wave1 filter 385/378/7).
+- Fix slice:
+  1. resolve/export `LCOV_SOURCE_ROOT` early in `compat/verify.py`, clone upstream in Oracle Evidence job;
+  2. refresh behavior unit-test pins to live totals (524/7, plan bindings 526, wave1 filter 385/378/7);
+  3. install host Perl deps (`libcapture-tiny-perl` et al.) for `inspect_model.pl` unit tests on both Behavior and Oracle jobs;
+  4. refresh residual-era case contract tests that still expected hollow unreviewed status for closed IDs (`lcov-list-truncate-max`, lcov operation residuals except signed-N/A `compat-libtool`).
 
 ## Non-claims
 

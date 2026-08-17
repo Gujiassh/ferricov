@@ -88,6 +88,15 @@ jobs:
       - name: Install JSON Schema validator
         run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
 
+      - name: Install host Perl deps for model inspector unit tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libcapture-tiny-perl \
+            libdatetime-perl \
+            libdevel-stacktrace-perl \
+            libjson-pp-perl
+
       - name: Check generated behavior contract
         run: python3 compat/behavior/generate.py --check
 
@@ -169,6 +178,15 @@ jobs:
 
       - name: Install JSON Schema validator
         run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
+
+      - name: Install host Perl deps for model inspector unit tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libcapture-tiny-perl \
+            libdatetime-perl \
+            libdevel-stacktrace-perl \
+            libjson-pp-perl
 
       - name: Build and verify pinned Oracle
         run: python3 compat/verify.py

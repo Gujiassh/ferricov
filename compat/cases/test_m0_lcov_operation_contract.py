@@ -92,9 +92,14 @@ class LcovOperationContractTests(unittest.TestCase):
         self.assertEqual(trace.count("SF:/work/bar.c\n"), 1)
         self.assertEqual(trace.count("TN:\n"), 1)
 
-    def test_capture_reset_and_unstable_residuals_remain_unreviewed(self) -> None:
+    def test_signed_na_compat_libtool_residual_remains_unreviewed(self) -> None:
+        # Residual multi-agent program closed most lcov operation residuals.
+        # Only command.lcov.option.compat-libtool remains an intentional signed
+        # N/A unreviewed primary (see m0-residual-s5-signed-na.md).
         residuals = {
             "case.acceptance.command.lcov.option.compat-libtool",
+        }
+        closed = {
             "case.acceptance.command.lcov.option.derive-func-data",
             "case.acceptance.command.lcov.option.external",
             "case.acceptance.command.lcov.option.fail-under-branches",
@@ -104,9 +109,7 @@ class LcovOperationContractTests(unittest.TestCase):
         }
         cases = {}
         for path in sorted(
-            (ROOT / "compat/behavior/fragments/authored").glob(
-                "m0-lcov-wave1-repair-*.json"
-            )
+            (ROOT / "compat/behavior/fragments/authored").glob("*.json")
         ):
             fragment = json.loads(path.read_text(encoding="utf-8"))
             cases.update({case["id"]: case for case in fragment["case_groups"]})
@@ -115,6 +118,9 @@ class LcovOperationContractTests(unittest.TestCase):
             self.assertEqual(cases[case_id]["review_status"], "unreviewed")
             self.assertEqual(cases[case_id]["evidence_status"], "none")
             self.assertEqual(cases[case_id]["suite_cases"], [])
+        for case_id in closed:
+            self.assertIn(case_id, cases)
+            self.assertEqual(cases[case_id]["review_status"], "reviewed")
 
 
 if __name__ == "__main__":
