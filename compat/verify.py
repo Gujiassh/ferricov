@@ -127,6 +127,68 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         product_flags[rel] = any(found)
 
     any_product = any(product_flags.values())
+    blockers: list[dict[str, object]] = [
+        {
+            "id": "behavior_primary_gaps",
+            "kind": "m0_residual",
+            "count": totals["uncovered_public_entries"],
+            "detail": "Unreviewed primary public-entry case groups remain in the behavior contract.",
+        },
+        {
+            "id": "M1-MD-020",
+            "kind": "decision_blocker",
+            "detail": "Coverage-model decision remains blocked in compat/model/v2.5.json.",
+        },
+        {
+            "id": "M1-TF-063",
+            "kind": "decision_blocker",
+            "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
+        },
+        {
+            "id": "M1-TF-064",
+            "kind": "decision_blocker",
+            "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
+        },
+        {
+            "id": "diagnostics_unbound_planned_cases",
+            "kind": "m0_residual",
+            "count": len(unbound),
+            "ids": unbound,
+            "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
+        },
+        {
+            "id": "product_compatibility_evidence_false",
+            "kind": "gate",
+            "detail": "No domain contract currently sets product_compatibility_evidence true.",
+        },
+    ]
+    go_no_go = root / "specs/001-full-lcov-compatibility/m0-go-no-go.md"
+    if not go_no_go.is_file():
+        blockers.append(
+            {
+                "id": "m0_exit_review_missing",
+                "kind": "process",
+                "detail": (
+                    "M0 go/no-go review artifact required before M1 activation "
+                    "(expected specs/001-full-lcov-compatibility/m0-go-no-go.md)."
+                ),
+            }
+        )
+    else:
+        go_text = go_no_go.read_text(encoding="utf-8")
+        # Presence of the artifact clears "missing". A recorded NO-GO is still
+        # an activation blocker until a future GO revision is signed.
+        if "NO-GO" in go_text and "Result: GO" not in go_text:
+            blockers.append(
+                {
+                    "id": "m0_exit_review_no_go",
+                    "kind": "process",
+                    "detail": (
+                        "M0 go/no-go artifact records NO-GO for M1 activation; "
+                        "see specs/001-full-lcov-compatibility/m0-go-no-go.md."
+                    ),
+                }
+            )
     return {
         "schema_version": 1,
         "kind": "m0_status_snapshot",
@@ -139,6 +201,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
             "diagnostics_contract": "compat/diagnostics/v2.5.json",
             "model_contract": "compat/model/v2.5.json",
             "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
+            "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
         },
         "behavior": {
             "public_inventory_entries": totals["public_inventory_entries"],
@@ -162,46 +225,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         "product_compatibility_evidence": False if not any_product else True,
         "product_compatibility_evidence_by_source": product_flags,
         "m1_authorized": False,
-        "m1_activation_blockers": [
-            {
-                "id": "behavior_primary_gaps",
-                "kind": "m0_residual",
-                "count": totals["uncovered_public_entries"],
-                "detail": "Unreviewed primary public-entry case groups remain in the behavior contract.",
-            },
-            {
-                "id": "M1-MD-020",
-                "kind": "decision_blocker",
-                "detail": "Coverage-model decision remains blocked in compat/model/v2.5.json.",
-            },
-            {
-                "id": "M1-TF-063",
-                "kind": "decision_blocker",
-                "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
-            },
-            {
-                "id": "M1-TF-064",
-                "kind": "decision_blocker",
-                "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
-            },
-            {
-                "id": "diagnostics_unbound_planned_cases",
-                "kind": "m0_residual",
-                "count": len(unbound),
-                "ids": unbound,
-                "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
-            },
-            {
-                "id": "product_compatibility_evidence_false",
-                "kind": "gate",
-                "detail": "No domain contract currently sets product_compatibility_evidence true.",
-            },
-            {
-                "id": "m0_exit_review_missing",
-                "kind": "process",
-                "detail": "M0 go/no-go review artifact required before M1 activation.",
-            },
-        ],
+        "m1_activation_blockers": blockers,
         "model_blocked_case_ids": list(model.get("blocked_case_ids") or []),
     }
 

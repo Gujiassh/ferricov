@@ -18,7 +18,10 @@ all of the following:
 
 As of the current planning snapshot in `docs/ssot/m0-status.snapshot.json`, M0
 is still open (live residual metrics in `docs/ssot/m0-status.snapshot.json`)
-and M1 remains blocked (`m1_authorized=false`). Oracle evidence in `compat/` is
+and M1 remains blocked (`m1_authorized=false`). The M0 go/no-go artifact is
+[`m0-go-no-go.md`](m0-go-no-go.md) with result **NO-GO**. Model blockers are
+scoped in [`reviews/m0-model-blocker-scope.md`](reviews/m0-model-blocker-scope.md)
+but remain in `compat/model/v2.5.json` `blocked_case_ids`. Oracle evidence in `compat/` is
 reference evidence only. It MUST NOT be relabeled as Ferricov product
 compatibility evidence.
 

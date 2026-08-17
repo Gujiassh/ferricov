@@ -63,8 +63,8 @@
       "kind": "gate"
     },
     {
-      "detail": "M0 go/no-go review artifact required before M1 activation.",
-      "id": "m0_exit_review_missing",
+      "detail": "M0 go/no-go artifact records NO-GO for M1 activation; see specs/001-full-lcov-compatibility/m0-go-no-go.md.",
+      "id": "m0_exit_review_no_go",
       "kind": "process"
     }
   ],
@@ -89,6 +89,7 @@
     "behavior_contract": "compat/behavior/contract.json",
     "diagnostics_contract": "compat/diagnostics/v2.5.json",
     "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
+    "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
     "model_contract": "compat/model/v2.5.json",
     "plan_bindings": "compat/behavior/plan-bindings.json"
   },

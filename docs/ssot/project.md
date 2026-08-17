@@ -147,8 +147,11 @@ the M0 harness become the permanent integration boundary.
   owned by `docs/ssot/m0-status.snapshot.json` and must match
   `compat/behavior/contract.json` totals. The M1 Tracefile Core handoff is
   now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
-  but activation remains blocked by the M0 exit review and unresolved
-  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` decisions. The support-script planning suite
+  but activation remains blocked by the M0 go/no-go result **NO-GO**
+  (`specs/001-full-lcov-compatibility/m0-go-no-go.md`), residual signed-N/A
+  gaps, diagnostics FERRICOV parity IDs, and unresolved
+  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` decisions (scoped in
+  `specs/001-full-lcov-compatibility/reviews/m0-model-blocker-scope.md`). The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
   `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`

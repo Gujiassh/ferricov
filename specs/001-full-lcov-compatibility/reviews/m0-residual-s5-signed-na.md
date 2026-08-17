@@ -63,9 +63,10 @@ Controller sign-off: these remain **public inventory** entries that require futu
 
 ## Next tracks (ordered)
 
-1. **Diagnostics wave3** — bind 12 unbound planned PAR-* IDs (Oracle reference; product false)
-2. Model blockers M1-MD-020 / M1-TF-063 / M1-TF-064 (decision, not residual planning)
-3. M0 exit review artifact when process gate is ready (still no auto M1)
+1. ~~Diagnostics wave3~~ — **closed** (`m0-diagnostics-wave3-review.md`, residual floor 3 FERRICOV)
+2. ~~Model blockers scope~~ — **scoped** (`m0-model-blocker-scope.md`); still blocked in contract
+3. ~~M0 go/no-go artifact~~ — **written** (`m0-go-no-go.md`) with result **NO-GO**
+4. Future GO when residual/model/product gates clear (no auto M1)
 
 ## Controller signature
 
