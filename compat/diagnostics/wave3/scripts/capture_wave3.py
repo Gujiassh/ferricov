@@ -21,6 +21,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -589,6 +590,78 @@ def fixture_bindings(fixtures: list[str]) -> list[dict[str, Any]]:
     return result
 
 
+def case_timeout_seconds(spec: dict[str, Any]) -> int:
+    """Per-case host communicate timeout; defaults to wave global TIMEOUT_SECONDS."""
+    raw = spec.get("timeout_seconds", TIMEOUT_SECONDS)
+    try:
+        value = int(raw)
+    except (TypeError, ValueError) as error:
+        raise Wave3CaptureError(
+            f"case {spec.get('id')!r} timeout_seconds must be int: {raw!r}"
+        ) from error
+    if value <= 0:
+        raise Wave3CaptureError(
+            f"case {spec.get('id')!r} timeout_seconds must be positive: {value}"
+        )
+    return value
+
+
+def case_in_container_watchdog_seconds(spec: dict[str, Any]) -> int | None:
+    """Optional ADR-style in-container GNU timeout budget (seconds).
+
+    When set, the Oracle tool is run under:
+      timeout --signal=TERM --kill-after=1s <N>s <argv>
+    with stdout/stderr file-buffered then flushed to the container pipes so
+    host capture retains the pre-watchdog transcript after exit 124.
+    Recorded argv remains the tool argv; timeout is provenance metadata.
+    """
+    if "in_container_watchdog_seconds" not in spec:
+        return None
+    raw = spec["in_container_watchdog_seconds"]
+    try:
+        value = int(raw)
+    except (TypeError, ValueError) as error:
+        raise Wave3CaptureError(
+            f"case {spec.get('id')!r} in_container_watchdog_seconds must be int: {raw!r}"
+        ) from error
+    if value <= 0:
+        raise Wave3CaptureError(
+            f"case {spec.get('id')!r} in_container_watchdog_seconds must be positive: {value}"
+        )
+    return value
+
+
+def build_case_docker_command(
+    container_name: str,
+    work: Path,
+    case_env: dict[str, str],
+    spec: dict[str, Any],
+) -> list[str]:
+    """Build docker run argv for a case, optionally wrapping with in-container timeout."""
+    base = [
+        *docker_run_base(container_name, with_work=work),
+        "env",
+        "-i",
+        *command_env_assignments(case_env),
+    ]
+    tool_argv = list(spec["argv"])
+    watchdog = case_in_container_watchdog_seconds(spec)
+    if watchdog is None:
+        return [*base, *tool_argv]
+    # File-buffer then flush so TERM/KILL from GNU timeout still yields a full
+    # pre-kill transcript on the pipes the host communicate() reads.
+    quoted = " ".join(shlex.quote(part) for part in tool_argv)
+    script = (
+        f"timeout --signal=TERM --kill-after=1s {watchdog}s {quoted} "
+        f">/tmp/wave3_stdout.bin 2>/tmp/wave3_stderr.bin; "
+        f"rc=$?; "
+        f"cat /tmp/wave3_stdout.bin; "
+        f"cat /tmp/wave3_stderr.bin >&2; "
+        f"exit $rc"
+    )
+    return [*base, "sh", "-c", script]
+
+
 def run_case(
     spec: dict[str, Any],
     base_manifest: dict[str, Any],
@@ -604,13 +677,9 @@ def run_case(
     effective = probe_effective_command_environment(case_env)
     container_name = f"ferricov-diag-wave3-{spec['id']}"
     force_remove_container(container_name, direct_child_reaped=True)
-    cmd = [
-        *docker_run_base(container_name, with_work=work),
-        "env",
-        "-i",
-        *command_env_assignments(case_env),
-        *spec["argv"],
-    ]
+    host_timeout = case_timeout_seconds(spec)
+    in_container_watchdog = case_in_container_watchdog_seconds(spec)
+    cmd = build_case_docker_command(container_name, work, case_env, spec)
     proc = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
@@ -618,13 +687,13 @@ def run_case(
         stdin=subprocess.DEVNULL,
         env=DOCKER_CLI_HOST_ENV,
     )
-    timed_out = False
+    host_timed_out = False
     try:
-        stdout, stderr = proc.communicate(timeout=TIMEOUT_SECONDS)
+        stdout, stderr = proc.communicate(timeout=host_timeout)
         exit_status = proc.returncode
         direct_child_reaped = True
     except subprocess.TimeoutExpired:
-        timed_out = True
+        host_timed_out = True
         proc.kill()
         try:
             stdout, stderr = proc.communicate(timeout=10)
@@ -636,6 +705,12 @@ def run_case(
             proc.kill()
             proc.wait(timeout=10)
             direct_child_reaped = True
+    # Watchdog evidence: host communicate timeout OR in-container GNU timeout 124.
+    timed_out = host_timed_out or (
+        exit_status == 124 and in_container_watchdog is not None
+    )
+    if timed_out and exit_status != 124:
+        exit_status = 124
     cleanup_outcome = force_remove_container(
         container_name, direct_child_reaped=direct_child_reaped
     )
@@ -658,10 +733,20 @@ def run_case(
     }
     execution_environment = {
         **EXECUTION_ENVIRONMENT_TEMPLATE,
+        "timeout_seconds": host_timeout,
         "env": dict(case_env),
         "environment_policy": environment_policy,
         "stdin": "subprocess.DEVNULL",
     }
+    if in_container_watchdog is not None:
+        execution_environment["in_container_watchdog_seconds"] = in_container_watchdog
+        execution_environment["in_container_watchdog"] = {
+            "command": "timeout",
+            "signal": "TERM",
+            "kill_after_seconds": 1,
+            "seconds": in_container_watchdog,
+            "stream_capture": "file_buffer_then_flush",
+        }
     execution_manifest = case_execution_manifest(spec, base_manifest, case_env)
     result = {
         "case_id": spec["id"],
@@ -677,7 +762,7 @@ def run_case(
         "execution_manifest": execution_manifest,
         "effective_environment_variables": dict(effective),
         "environment_policy": environment_policy,
-        "timeout_seconds": TIMEOUT_SECONDS,
+        "timeout_seconds": host_timeout,
         "timed_out": timed_out,
         "cleanup": CLEANUP_POLICY,
         "cleanup_outcome": cleanup_outcome,
@@ -695,9 +780,13 @@ def run_case(
         "product_compatibility_evidence": False,
         "evidence_status": "oracle_reference",
     }
+    if in_container_watchdog is not None:
+        result["in_container_watchdog_seconds"] = in_container_watchdog
     (work / "result.json").write_text(canonical_json(result))
     print(
         f"CASE {spec['id']} exit={exit_status} timed_out={timed_out} "
+        f"host_timeout={host_timeout} "
+        f"watchdog={in_container_watchdog} "
         f"cleanup_absent={cleanup_outcome['container_absent']} "
         f"env_extra={sorted((spec.get('env') or {}).keys())} "
         f"stderr={result['stderr_sha256'][:12]} planned={spec['planned_case_ids']}",
