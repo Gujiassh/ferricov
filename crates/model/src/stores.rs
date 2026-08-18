@@ -431,8 +431,8 @@ mod tests {
     use crate::identity::{SourceIdentity, SourceLookupKey, TestName};
     use crate::keys::LineKey;
     use crate::line::LineCoverage;
-    use crate::mcdc::McdcCoverage;
-    use crate::numeric::CoverageCount;
+    use crate::mcdc::{GroupSizeKey, McdcCoverage};
+    use crate::numeric::{CoverageCount, NumericAtom};
 
     fn sample_source(path: &str) -> SourceCoverage {
         SourceCoverage::new(SourceIdentity::from_display_path(path))
@@ -609,14 +609,19 @@ mod tests {
             .insert(LineKey::from_lexeme("1"), CoverageCount::from_lexeme("1"));
         store
             .functions_mut()
-            .insert_alias("main", CoverageCount::from_lexeme("1"));
+            .insert_alias("main", CoverageCount::from_lexeme("1"))
+            .expect("alias insert");
         store
             .branches_mut()
-            .insert_line(LineKey::from_lexeme("1"), vec![BranchTaken::from_token("-")]);
-        store.mcdc_mut().insert_line(
-            LineKey::from_lexeme("1"),
-            vec![(ByteString::from("a"), CoverageCount::zero())],
-        );
+            .push_taken_on_line(LineKey::from_lexeme("1"), BranchTaken::from_token("-"));
+        {
+            let mcdc_line = store.mcdc_mut().entry_line(LineKey::from_lexeme("1"));
+            mcdc_line.append_expression(
+                GroupSizeKey::from_lexeme("1"),
+                NumericAtom::from_lexeme("0"),
+                "a",
+            );
+        }
 
         assert_eq!(store.lines().len(), 1);
         assert_eq!(store.functions().alias_len(), 1);

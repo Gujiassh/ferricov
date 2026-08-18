@@ -5,7 +5,10 @@
 //!
 //! M1-CORE-002 adds independent aggregate and testcase-family coverage stores,
 //! including explicit empty family values and a distinct observable totals
-//! holder. Function/branch/MC/DC structural invariants arrive in CORE-003.
+//! holder.
+//!
+//! M1-CORE-003 adds function dual indexes, ordered branch blocks, and MC/DC
+//! dual-sense group structure with structural invariants.
 
 #![forbid(unsafe_code)]
 
@@ -21,13 +24,19 @@ mod numeric;
 mod stores;
 
 pub use branch::BranchTaken;
-pub use branch_store::BranchCoverage;
+pub use branch_store::{
+    BranchBlock, BranchCoverage, BranchEdge, BranchError, BranchKind, BranchLine,
+};
 pub use bytes::ByteString;
-pub use function::FunctionTable;
+pub use function::{
+    effective_alias_length, is_lambda_alias, FunctionError, FunctionGroup, FunctionTable,
+};
 pub use identity::{SourceIdentity, SourceLookupKey, TestName};
 pub use keys::LineKey;
 pub use line::LineCoverage;
-pub use mcdc::McdcCoverage;
+pub use mcdc::{
+    GroupSizeKey, McdcCoverage, McdcError, McdcExpression, McdcLine, SenseCoverage,
+};
 pub use numeric::{
     AddError, CountValidation, CoverageCount, NumericAtom, NumericClass, NumericKind,
 };
