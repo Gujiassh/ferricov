@@ -107,7 +107,7 @@ end_of_record\n";
     assert!(events.iter().any(|e| matches!(e, ParseEvent::IgnoredComment)));
     assert!(events.iter().any(|e| matches!(
         e,
-        ParseEvent::RecordStub {
+        ParseEvent::RecordApplied {
             tag: RecordTag::Da,
             ..
         }

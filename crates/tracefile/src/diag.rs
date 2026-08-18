@@ -1,8 +1,7 @@
 //! Malformed-state / diagnostic classification for the logical-line layer.
 //!
-//! CORE-005 exposes explicit ignored-vs-hard-fail classes where the grammar is
-//! already clear for this slice. Full ignore-policy / stop-on-error wiring is
-//! CORE-006+.
+//! CORE-005 exposes explicit ignored-vs-hard-fail classes. CORE-006 adds
+//! record-semantic categories and wires [`crate::policy::IgnorePolicy`].
 
 use ferricov_model::ByteString;
 
@@ -12,7 +11,7 @@ pub enum DiagClass {
     /// Informational note; never stops parsing.
     Note,
     /// Oracle ignorable category (e.g. `ERROR_FORMAT`). Continuation depends on
-    /// ignore / stop-on-error policy (policy application is CORE-006+).
+    /// [`crate::policy::IgnorePolicy`].
     Ignorable,
     /// Unconditional hard failure in the Oracle (`die` / non-ignorable).
     HardFail,
@@ -27,7 +26,19 @@ pub enum DiagKind {
     EmptySourcePath,
     /// Test name `\W` sanitization warning (`ERROR_FORMAT` warning after parse).
     TestNameSanitized,
-    /// Placeholder for categories CORE-006 will emit (negative, mismatch, …).
+    /// Conflicting second `VER` for the same source (unconditional die).
+    VersionConflict,
+    /// Duplicate current-format `FNL` index (unconditional die).
+    DuplicateFnlIndex,
+    /// `FNA` references an unknown `FNL` index (unconditional die).
+    UnknownFnlIndex,
+    /// `FNDA` references an undeclared function name (`ERROR_MISMATCH`).
+    FunctionMismatch,
+    /// Returning to a closed MC/DC source line (`MCDC already defined`).
+    McdcAlreadyDefined,
+    /// Inconsistent MC/DC expression for an existing index.
+    InconsistentData,
+    /// Generic deferred / unclassified semantic issue.
     Deferred,
 }
 
@@ -84,6 +95,90 @@ impl ParseDiag {
                 sanitized.to_string_lossy()
             ),
             related: Some(original),
+        }
+    }
+
+    /// Hard-fail: conflicting second version for a source.
+    #[must_use]
+    pub fn version_conflict(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+        Self {
+            kind: DiagKind::VersionConflict,
+            class: DiagClass::HardFail,
+            line_no,
+            message: message.into(),
+            related,
+        }
+    }
+
+    /// Hard-fail: duplicate FNL index.
+    #[must_use]
+    pub fn duplicate_fnl(line_no: u64, message: impl Into<String>) -> Self {
+        Self {
+            kind: DiagKind::DuplicateFnlIndex,
+            class: DiagClass::HardFail,
+            line_no,
+            message: message.into(),
+            related: None,
+        }
+    }
+
+    /// Hard-fail: FNA for unknown FNL index.
+    #[must_use]
+    pub fn unknown_fnl(line_no: u64, message: impl Into<String>) -> Self {
+        Self {
+            kind: DiagKind::UnknownFnlIndex,
+            class: DiagClass::HardFail,
+            line_no,
+            message: message.into(),
+            related: None,
+        }
+    }
+
+    /// Ignorable function mismatch (`ERROR_MISMATCH`).
+    #[must_use]
+    pub fn function_mismatch(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+        Self {
+            kind: DiagKind::FunctionMismatch,
+            class: DiagClass::Ignorable,
+            line_no,
+            message: message.into(),
+            related,
+        }
+    }
+
+    /// Hard-fail: MC/DC already defined for a line.
+    #[must_use]
+    pub fn mcdc_already_defined(line_no: u64, message: impl Into<String>) -> Self {
+        Self {
+            kind: DiagKind::McdcAlreadyDefined,
+            class: DiagClass::HardFail,
+            line_no,
+            message: message.into(),
+            related: None,
+        }
+    }
+
+    /// Ignorable inconsistent-data diagnostic.
+    #[must_use]
+    pub fn inconsistent_data(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+        Self {
+            kind: DiagKind::InconsistentData,
+            class: DiagClass::Ignorable,
+            line_no,
+            message: message.into(),
+            related,
+        }
+    }
+
+    /// Generic hard-fail helper.
+    #[must_use]
+    pub fn hard_fail(kind: DiagKind, line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+        Self {
+            kind,
+            class: DiagClass::HardFail,
+            line_no,
+            message: message.into(),
+            related,
         }
     }
 }

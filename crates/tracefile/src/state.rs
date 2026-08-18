@@ -120,6 +120,11 @@ impl ParserState {
         std::mem::take(&mut self.diags)
     }
 
+    /// Push an externally produced diagnostic (CORE-006 record apply).
+    pub fn push_diag(&mut self, diag: ParseDiag) {
+        self.diags.push(diag);
+    }
+
     /// Advance the line counter and apply a classified line to binding state.
     ///
     /// Returns the [`ParseEvent`] describing what happened. Known non-binding
@@ -253,12 +258,22 @@ pub enum ParseEvent {
         tag: SourceTag,
         payload: ByteString,
     },
-    /// `end_of_record` detected (commit deferred to CORE-006).
+    /// `end_of_record` detected (section commit applied by StreamingParser).
     Terminator {
         unconsumed: ByteString,
     },
-    /// Known tag classified but not semantically applied (CORE-006).
+    /// Known tag classified but not yet semantically applied.
+    ///
+    /// Emitted by [`ParserState::apply_classified`] for non-binding tags.
+    /// [`crate::parser::StreamingParser`] replaces this with
+    /// [`ParseEvent::RecordApplied`] after CORE-006 dispatch.
     RecordStub {
+        tag: RecordTag,
+        payload: ByteString,
+        unconsumed: ByteString,
+    },
+    /// Known tag whose payload was applied (or intentionally ignored).
+    RecordApplied {
         tag: RecordTag,
         payload: ByteString,
         unconsumed: ByteString,
