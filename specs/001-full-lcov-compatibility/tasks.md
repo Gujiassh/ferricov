@@ -262,7 +262,7 @@ Authorized now:
 - [x] `M1-CORE-001`: implement byte/source/testcase/numeric primitives (`crates/model`; review `reviews/m1-core-001-controller-review.md`).
 - [x] `M1-CORE-002`: implement independent aggregate and testcase-family stores (`crates/model`; review `reviews/m1-core-002-controller-review.md`).
 - [x] `M1-CORE-003`: implement function, branch, and MC/DC invariants/indexes (`crates/model`; review `reviews/m1-core-003-controller-review.md`).
-- [ ] `M1-CORE-004`: implement ordered union/intersection/difference algebra.
+- [x] `M1-CORE-004`: implement ordered union/intersection/difference algebra (`crates/model` algebra.rs; review `reviews/m1-core-004-controller-review.md`; ALG Oracle binding residual).
 - [ ] `M1-CORE-005`: implement logical-line processing and parser state.
 - [ ] `M1-CORE-006`: implement all record semantics, errors, and section commit.
 - [ ] `M1-CORE-007`: implement deterministic canonical serialization.

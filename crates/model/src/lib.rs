@@ -9,9 +9,13 @@
 //!
 //! M1-CORE-003 adds function dual indexes, ordered branch blocks, and MC/DC
 //! dual-sense group structure with structural invariants.
+//!
+//! M1-CORE-004 adds ordered union / intersect / difference algebra for coverage
+//! families and thin store wrappers.
 
 #![forbid(unsafe_code)]
 
+mod algebra;
 mod branch;
 mod branch_store;
 mod bytes;
@@ -23,6 +27,7 @@ mod mcdc;
 mod numeric;
 mod stores;
 
+pub use algebra::{AlgebraError, AlgebraOp};
 pub use branch::BranchTaken;
 pub use branch_store::{
     BranchBlock, BranchCoverage, BranchEdge, BranchError, BranchKind, BranchLine,

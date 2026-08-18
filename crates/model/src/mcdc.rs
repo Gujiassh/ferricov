@@ -1,7 +1,8 @@
 //! Hierarchical MC/DC coverage with dual-sense sticky exclusion.
 //!
 //! Normative layout comes from `coverage-model.md` "MC/DC Coverage".
-//! Asymmetric vector merge algebra is deferred (`M1-ALG-MCDC-*`).
+//! Ordered algebra lives in `algebra.rs` (CORE-004). Residual asymmetric
+//! Oracle die/continuation paths remain `M1-ALG-MCDC-*`.
 
 use crate::bytes::ByteString;
 use crate::keys::LineKey;
@@ -110,6 +111,17 @@ impl SenseCoverage {
         Ok(())
     }
 
+    /// Merge another sense: add counts and sticky-OR exclusion.
+    pub fn merge_add(&mut self, other: &Self) -> Result<(), AddError> {
+        if other.excluded {
+            self.excluded = true;
+        }
+        if !other.count.is_zero() {
+            self.count = self.count.add(&other.count)?;
+        }
+        Ok(())
+    }
+
     /// Replace the count without clearing sticky exclusion.
     pub fn set_count(&mut self, count: CoverageCount) {
         self.count = count;
@@ -202,6 +214,15 @@ impl McdcExpression {
             self.false_sense.set(count, excluded)
         }
     }
+
+    /// Merge both senses from `other` (count add + sticky exclusion).
+    ///
+    /// Retains this expression's bytes and declared index (left-biased).
+    pub fn merge_senses_from(&mut self, other: &Self) -> Result<(), AddError> {
+        self.false_sense.merge_add(other.false_sense())?;
+        self.true_sense.merge_add(other.true_sense())?;
+        Ok(())
+    }
 }
 
 /// MC/DC groups on a single line: at most one vector per [`GroupSizeKey`].
@@ -235,6 +256,13 @@ impl McdcLine {
     #[must_use]
     pub fn groups(&self) -> &BTreeMap<GroupSizeKey, Vec<McdcExpression>> {
         &self.groups
+    }
+
+    /// Mutable groups map (algebra helpers).
+    pub fn groups_mut_for_algebra(
+        &mut self,
+    ) -> &mut BTreeMap<GroupSizeKey, Vec<McdcExpression>> {
+        &mut self.groups
     }
 
     /// Borrow the expression vector for a group-size key.
@@ -345,6 +373,11 @@ impl McdcCoverage {
     #[must_use]
     pub fn contains_line(&self, key: &LineKey) -> bool {
         self.lines.contains_key(key)
+    }
+
+    /// Remove an MC/DC line when present.
+    pub fn remove_line(&mut self, key: &LineKey) -> Option<McdcLine> {
+        self.lines.remove(key)
     }
 
     /// Iterate lines in key order.

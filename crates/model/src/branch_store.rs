@@ -1,7 +1,9 @@
 //! Hierarchical ordered branch coverage.
 //!
 //! Normative layout comes from `coverage-model.md` "Ordered Branch Coverage".
-//! Algebra, writer renumbering, and parser transition ownership are deferred.
+//! Ordered algebra lives in `algebra.rs` (CORE-004). Writer renumbering and
+//! parser transition ownership remain deferred; intersection cache quirk is
+//! `M1-ALG-BRANCH-CACHE-001`.
 
 use crate::branch::BranchTaken;
 use crate::bytes::ByteString;
@@ -143,6 +145,11 @@ impl BranchBlock {
         self.model_position
     }
 
+    /// Set model-order position (algebra renumbering).
+    pub fn set_model_position(&mut self, position: usize) {
+        self.model_position = position;
+    }
+
     /// Ordered kind signature (expressions excluded).
     #[must_use]
     pub fn signature(&self) -> &[BranchKind] {
@@ -258,7 +265,7 @@ impl BranchLine {
     }
 }
 
-/// Errors from branch invariant checks.
+/// Errors from branch invariant checks or algebra.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum BranchError {
     /// Block signature / derived_index invariant failed.
@@ -327,6 +334,11 @@ impl BranchCoverage {
     #[must_use]
     pub fn contains_line(&self, key: &LineKey) -> bool {
         self.lines.contains_key(key)
+    }
+
+    /// Remove a branch line when present.
+    pub fn remove_line(&mut self, key: &LineKey) -> Option<BranchLine> {
+        self.lines.remove(key)
     }
 
     /// Iterate lines in key order.

@@ -1,7 +1,7 @@
 //! Function coverage table with coherent location and alias indexes.
 //!
 //! Normative behavior comes from `coverage-model.md` "Functions And Aliases".
-//! Algebra (union / intersect / difference) is deferred to CORE-004.
+//! Ordered algebra lives in `algebra.rs` (CORE-004).
 
 use crate::bytes::ByteString;
 use crate::keys::LineKey;
@@ -111,6 +111,18 @@ impl FunctionGroup {
         &self.aliases
     }
 
+    /// Replace the alias count map wholesale (algebra rebuild helpers).
+    ///
+    /// Caller must refresh representative and keep table indexes coherent.
+    pub fn set_aliases_for_algebra(
+        &mut self,
+        aliases: BTreeMap<ByteString, CoverageCount>,
+        representative: ByteString,
+    ) {
+        self.aliases = aliases;
+        self.representative = representative;
+    }
+
     /// Number of aliases in this group.
     #[must_use]
     pub fn alias_len(&self) -> usize {
@@ -146,6 +158,48 @@ impl FunctionGroup {
         self.aliases.insert(alias.clone(), count);
         self.refresh_representative_on_insert(&alias);
         Ok(true)
+    }
+
+    /// Remove an alias. Returns the prior count when present.
+    ///
+    /// When the removed alias was the representative, recomputes a defined
+    /// survivor using shortest-effective-length then lexical order. Oracle
+    /// `removeAliases` can disagree on equal-length ties (`M1-ALG-FUNCTION-REP-001`).
+    pub fn remove_alias(&mut self, alias: &ByteString) -> Option<CoverageCount> {
+        let prior = self.aliases.remove(alias)?;
+        if self.aliases.is_empty() {
+            // Representative is undefined on an empty group; keep last name only
+            // long enough for the caller to drop the group.
+            return Some(prior);
+        }
+        if self.representative == *alias {
+            self.recompute_representative_after_removal();
+        }
+        Some(prior)
+    }
+
+    /// Defined post-removal representative: shortest effective length, then
+    /// lexical bytes among remaining aliases.
+    ///
+    /// This is Ferricov's documented CORE-004 behavior. Exact Oracle hash-seed
+    /// / non-lexical survivor selection remains `M1-ALG-FUNCTION-REP-001`.
+    pub fn recompute_representative_after_removal(&mut self) {
+        let mut best: Option<&ByteString> = None;
+        let mut best_len = usize::MAX;
+        for alias in self.aliases.keys() {
+            let len = effective_alias_length(alias.as_bytes());
+            if best.is_none()
+                || len < best_len
+                || (len == best_len
+                    && alias.as_bytes() < best.expect("checked").as_bytes())
+            {
+                best = Some(alias);
+                best_len = len;
+            }
+        }
+        if let Some(alias) = best {
+            self.representative = alias.clone();
+        }
     }
 
     /// Recompute representative using insertion tie-break (shortest + lexical).
@@ -412,6 +466,64 @@ impl FunctionTable {
             }
             None => false,
         }
+    }
+
+    /// Remove an alias by name, dropping the group when it becomes empty.
+    ///
+    /// Keeps both indexes coherent. Returns the prior count when the alias
+    /// existed.
+    pub fn remove_alias(&mut self, alias: &ByteString) -> Option<CoverageCount> {
+        let start = self.by_alias.remove(alias)?;
+        let group = self.by_start.get_mut(&start)?;
+        let prior = group.remove_alias(alias);
+        if group.alias_len() == 0 {
+            self.by_start.remove(&start);
+        }
+        prior
+    }
+
+    /// Remove an entire group by start location, clearing all of its aliases
+    /// from the reverse index.
+    pub fn remove_group(&mut self, start: &LineKey) -> Option<FunctionGroup> {
+        let group = self.by_start.remove(start)?;
+        for alias in group.aliases().keys() {
+            self.by_alias.remove(alias);
+        }
+        Some(group)
+    }
+
+    /// Borrow mutable group by start (algebra helpers).
+    pub fn get_by_start_mut(&mut self, start: &LineKey) -> Option<&mut FunctionGroup> {
+        self.by_start.get_mut(start)
+    }
+
+    /// Insert a fully-formed group, replacing any previous group at that start.
+    ///
+    /// Callers must ensure aliases do not conflict with other starts. Existing
+    /// aliases at this start are cleared from the reverse index first.
+    pub fn insert_group(&mut self, group: FunctionGroup) -> Result<(), FunctionError> {
+        let start = group.start().clone();
+        if let Some(old) = self.by_start.remove(&start) {
+            for alias in old.aliases().keys() {
+                self.by_alias.remove(alias);
+            }
+        }
+        for alias in group.aliases().keys() {
+            if let Some(existing) = self.by_alias.get(alias) {
+                if existing != &start {
+                    return Err(FunctionError::AliasStartConflict {
+                        alias: alias.clone(),
+                        existing_start: existing.clone(),
+                        requested_start: start,
+                    });
+                }
+            }
+        }
+        for alias in group.aliases().keys() {
+            self.by_alias.insert(alias.clone(), start.clone());
+        }
+        self.by_start.insert(start, group);
+        Ok(())
     }
 
     /// Assert that start and alias indexes are coherent.
