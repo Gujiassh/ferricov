@@ -1,24 +1,32 @@
 # M0 Go / No-Go Decision
 
-Status: **NO-GO for M1 activation**  
-Date: 2026-08-17  
+Status: **GO (conditional) for M1 Tracefile Core v0.1**  
+Date: 2026-08-18  
 Approver: main-controller (workspace session)  
 Source branch: `test/m0-tf030-exact-numeric-matrix`  
-Source SHA: `b0b9970ac248a552d48aa9ace665ad5f06f55554`  
-Planned path (coverage-model): this file  
-Related scope: `reviews/m0-model-blocker-scope.md`  
-Related residual: `reviews/m0-residual-s5-signed-na.md`  
-Related diagnostics: `reviews/m0-diagnostics-wave3-review.md`
+Source SHA at decision base (pre-GO tip): `331447f7d91b926e8b3536f8fca10a3c6b492ec2`  
+Support matrix: [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md)  
+Prior revision: 2026-08-17 **NO-GO** (superseded by this GO revision)  
+Related scope: [`reviews/m0-model-blocker-scope.md`](reviews/m0-model-blocker-scope.md)  
+Related residual: [`reviews/m0-residual-s5-signed-na.md`](reviews/m0-residual-s5-signed-na.md)  
+Related diagnostics: [`reviews/m0-diagnostics-wave3-review.md`](reviews/m0-diagnostics-wave3-review.md)
 
 ## Decision
 
-**NO-GO** — do **not** set `m1_authorized=true`, do **not** start
-`crates/` product implementation, and do **not** claim Ferricov product
-compatibility.
+**Result: GO**
 
-M0 planning / Oracle-reference work for the current residual and diagnostics
-programs is **closed at the program level**. Activation of M1 Tracefile Core
-remains blocked by the residual and gate list below.
+Authorize **conditional** activation of M1 Tracefile Core for tasks
+`M1-CORE-001` … `M1-CORE-008` only, under
+[`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md).
+
+This GO:
+
+- **does** set process permission for bounded `crates/model` + `crates/tracefile` work,
+- **does not** claim Ferricov product compatibility,
+- **does not** hollow-close the 7 signed-N/A primaries,
+- **does not** bind the 3 `*-FERRICOV-001` diagnostics IDs,
+- **does not** clear `M1-MD-020` / `M1-TF-063` / `M1-TF-064` from `blocked_case_ids`,
+- **does not** authorize `M1-CORE-009` / `M1-CORE-011` until the matrix is revised.
 
 ## Oracle and contract identity
 
@@ -26,12 +34,12 @@ remains blocked by the residual and gate list below.
 | --- | --- |
 | Upstream release | LCOV v2.5 |
 | Upstream commit | `74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5` |
-| Historical Oracle image pin (launchers / retained evidence) | `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7` |
-| Hosted CI (wave3 S4/S5) | https://github.com/Gujiassh/ferricov/actions/runs/32018428585 |
-| product_compatibility_evidence | **false** (all domain contracts) |
-| m1_authorized | **false** |
+| Historical Oracle image pin | `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7` |
+| Hosted CI reference (wave3 S4/S5) | https://github.com/Gujiassh/ferricov/actions/runs/32018428585 |
+| product_compatibility_evidence | **false** (required to stay false under this GO) |
+| m1_authorized | **true** (conditional; matrix-bounded) |
 
-### Artifact hashes (at decision tip)
+### Artifact hashes (at decision authorship tip)
 
 | Path | SHA-256 |
 | --- | --- |
@@ -48,46 +56,30 @@ remains blocked by the residual and gate list below.
 | --- | --- |
 | public inventory entries | 531 |
 | reviewed primary coverage | 524 |
-| uncovered public entries (gaps) | **7** |
+| uncovered public entries (gaps) | **7** (signed N/A; excluded by matrix) |
 | plan bindings primary_plans | 526 |
 | diagnostics planned cases | 71 |
 | diagnostics exact-bound planned | 68 |
-| diagnostics unbound planned | **3** (`*-FERRICOV-001`) |
+| diagnostics unbound planned | **3** (`*-FERRICOV-001`; excluded by matrix) |
 | diagnostics oracle observations | 217 |
-| wave3 observations | 11 |
 
-## Activation criteria vs current state
+## Activation criteria vs this GO
 
-Criteria from `m1-tracefile-core-agent-spec.md` / coverage-model:
+| Criterion | Treatment under this GO |
+| --- | --- |
+| Every public behavior substantive / `m0-ready` | **Waived for v0.1** via support-matrix exclusion A (7 signed N/A). `m0-ready` may still fail. |
+| Coverage-model + grammar | **Accepted for CORE-001…008 planning/implementation**; model `blocked_case_ids` remain for excluded fuzz/limit work |
+| `M1-MD-020` / `M1-TF-063` / `M1-TF-064` | **Explicitly excluded** by support matrix (not resolved) |
+| Go/no-go artifact | **This GO revision** |
+| Product compatibility evidence | **Must remain false** until CORE-010 case evidence |
 
-| Criterion | Required | Current | Met? |
-| --- | --- | --- | --- |
-| Every public behavior has a substantive planned case group | `m0-ready` / uncovered==0 **or** honest signed residual with exit approval | 7 signed-N/A unreviewed primaries remain | **NO** for m0-ready zero-gap; residual signed N/A accepted at program level only |
-| `validate.py --mode m0-ready` | pass | fails while gaps=7 (by design) | **NO** |
-| Coverage-model + grammar approved for M1 | approved contracts | contracts exist; model still has blocked_case_ids | **PARTIAL** — usable for planning, not full M1 approval |
-| `M1-MD-020` / `M1-TF-063` / `M1-TF-064` resolved **or** explicitly excluded | scope recorded | scoped in `m0-model-blocker-scope.md`; still blocked in contract | **SCOPED, NOT RESOLVED** |
-| Go/no-go artifact written | this file | written | **YES (artifact exists)** |
-| Product compatibility evidence | required for compatibility claims | false | **NO claim** |
-
-## Unresolved exceptions (carry into any future GO)
+## Unresolved exceptions (still open; excluded not closed)
 
 ### A. Behavior primary signed N/A (7)
 
-See `reviews/m0-residual-s5-signed-na.md`. Not hollow-closed.
-
-| Target |
-| --- |
-| `command.geninfo.option.compat-libtool` |
-| `command.lcov.option.compat-libtool` |
-| `command.perl2lcov.option.preserve` |
-| `lcovrc.rtl-file-extensions` |
-| `lcovrc.geninfo-compat-libtool` |
-| `lcovrc.geninfo-gcov-all-blocks` |
-| `lcovrc.geninfo-interval-update` |
+See residual S5. Listed in support matrix exclusion A.
 
 ### B. Diagnostics product-parity unbound (3)
-
-Oracle pairs bound in wave3; Ferricov parity IDs remain unbound by contract:
 
 - `PAR-GENINFO-CHILD-EXIT-FERRICOV-001`
 - `PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001`
@@ -95,49 +87,49 @@ Oracle pairs bound in wave3; Ferricov parity IDs remain unbound by contract:
 
 ### C. Model decision blockers (3)
 
-Scoped, not resolved — `reviews/m0-model-blocker-scope.md`:
+Remain in `blocked_case_ids`; deferred with CORE-009+ / product limits.
 
-- `M1-MD-020` — adversarial fuzz execution remains M1-only
-- `M1-TF-063` — Ferricov product resource boundary / parity
-- `M1-TF-064` — executable fuzz corpus + budgets
+### D. Product evidence
 
-### D. Product evidence gate
-
-No domain contract may set `product_compatibility_evidence=true` until
-Ferricov-vs-Oracle parity evidence exists for that domain.
+All domain `product_compatibility_evidence` flags stay false.
 
 ## What M0 programs closed successfully
 
 | Program | Result |
 | --- | --- |
-| Residual multi-agent S0–S5 | 31 sealed + 7 signed N/A @ metrics 524/7 |
-| Diagnostics wave3 S0–S5 | 9 Oracle PAR IDs bound (+11 obs); CI green `32018428585` |
+| Residual multi-agent S0–S5 | 31 sealed + 7 signed N/A @ 524/7 |
+| Diagnostics wave3 S0–S5 | 9 Oracle PAR IDs bound; CI green `32018428585` |
 | Resource `M0-RSRC-MEASURE-001` | 13-profile Oracle observation retained |
 | TF-030 numeric matrix | Oracle reference closed; product still false |
+| Model blocker scope | Documented; not resolved |
+| Support matrix | `m1-v0.1-support-matrix.md` |
 
-## Explicit non-authorization
+## Explicit authorizations and bans
 
-1. This NO-GO is **not** permission to implement `crates/{model,tracefile,ops,report,cli}`.
-2. This NO-GO is **not** a product compatibility claim.
-3. Writing this artifact removes only the process gap “no go/no-go file exists”;
-   it does **not** clear residual, model, diagnostics, or product blockers.
-4. A future **GO** requires a new signed revision of this document with
-   `result: GO`, tip SHA, and an explicit M1 support matrix that either
-   resolves or names exclusions for every remaining blocker.
+### Authorized
 
-## Future GO checklist (minimum)
+1. Implement `M1-CORE-001` … `M1-CORE-008` per agent spec + support matrix.
+2. Add focused tests/fixtures required by those tasks.
+3. Keep Oracle differentials fail-closed; no identity relaxation.
 
-- [ ] `uncovered_public_entries == 0` **or** inventory applicability program Critical-accepted for remaining 7
-- [ ] `python3 compat/behavior/validate.py --mode m0-ready` passes (or successor mode documenting signed residuals)
-- [ ] Model blockers resolved **or** M1 support matrix excludes them with owner + milestone
-- [ ] Diagnostics FERRICOV IDs bound under product parity **or** explicitly deferred with owner
-- [ ] At least one path to product evidence defined (still may stay false at M1 start if parity is the M1 goal)
-- [ ] Fresh CI green on the GO tip
-- [ ] New GO signature + SHA
+### Banned under this GO
+
+1. Setting any domain `product_compatibility_evidence=true` without CORE-010 review.
+2. Hollow-closing the 7 signed-N/A primaries or binding FERRICOV IDs with Oracle-only seals.
+3. Removing model blocked IDs without executable evidence.
+4. Starting `M1-CORE-009` / `M1-CORE-011` without matrix revision.
+5. Widening into CLI / lcovrc / report / capture / install ownership.
+6. Copying Perl internal object layout.
+
+## Supersession
+
+The 2026-08-17 **NO-GO** revision is superseded. Historical NO-GO text is retained
+in git history. Machine detection keys off the signature line below.
 
 ## Controller signature
 
-**Result: NO-GO for M1 activation.**  
-M0 residual + diagnostics wave3 programs: closed.  
-M1: remains gated.
+**Result: GO**
+
+Conditional M1 Tracefile Core activation for `M1-CORE-001`…`M1-CORE-008` under
+`m1-v0.1-support-matrix.md`. Product evidence remains false. Exclusions A–D remain open work, not closed work.
 

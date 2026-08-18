@@ -4,29 +4,48 @@
 
 This document is the implementation handoff for M1 / v0.1 Tracefile Core. It
 is a complete task and acceptance contract, but it is **activation-gated**.
-An agent MUST NOT start product implementation until the M0 exit review records
-all of the following:
+An agent MUST NOT start product implementation until the M0 exit review and
+support matrix authorize it. The current conditional GO records:
 
-- every public behavior has a substantive planned case group;
-- `python3 compat/behavior/validate.py --mode m0-ready --skip-regeneration`
-  passes;
-- the coverage-model and tracefile-grammar contracts are approved for M1;
-- `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` are resolved or explicitly
-  excluded from the declared M1 support matrix;
-- the M0 go/no-go decision is written to a review artifact and linked from
-  `specs/001-full-lcov-compatibility/tasks.md`.
+- `m0-go-no-go.md` signature **Result: GO** for CORE-001…008 only;
+- active [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md) with
+  exclusions A–D (7 signed N/A, 3 FERRICOV IDs, model blockers, product false);
+- `docs/ssot/m0-status.snapshot.json` `m1_authorized=true` with
+  `product_compatibility_evidence=false`;
+- coverage-model / tracefile-grammar accepted for CORE-001…008 planning and
+  implementation (model `blocked_case_ids` remain for excluded fuzz/limit work);
+- the decision is linked from `specs/001-full-lcov-compatibility/tasks.md`.
 
-As of the current planning snapshot in `docs/ssot/m0-status.snapshot.json`, M0
-is still open (live residual metrics in `docs/ssot/m0-status.snapshot.json`)
-and M1 remains blocked (`m1_authorized=false`). The M0 go/no-go artifact is
-[`m0-go-no-go.md`](m0-go-no-go.md) with result **NO-GO**. Model blockers are
-scoped in [`reviews/m0-model-blocker-scope.md`](reviews/m0-model-blocker-scope.md)
-but remain in `compat/model/v2.5.json` `blocked_case_ids`. Oracle evidence in `compat/` is
-reference evidence only. It MUST NOT be relabeled as Ferricov product
-compatibility evidence.
+`m0-ready` zero-gap is **waived** for v0.1 via matrix exclusion A; do not
+hollow-close those seven primaries. Do not start CORE-009/011 or widen into
+CLI/lcovrc/report/capture without a matrix revision.
+
+As of the conditional GO revision, `docs/ssot/m0-status.snapshot.json` records
+`m1_authorized=true` for **matrix-bounded** Tracefile Core work only. The M0
+go/no-go artifact is [`m0-go-no-go.md`](m0-go-no-go.md) with result **GO
+(conditional)**. The exclusion record is
+[`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md).
+
+Authorized now: `M1-CORE-001` … `M1-CORE-008` under `crates/model` +
+`crates/tracefile`. Still deferred / excluded (not closed):
+
+- 7 behavior primary signed-N/A gaps (matrix exclusion A; `m0-ready` may fail);
+- 3 `*-FERRICOV-001` diagnostics parity IDs (exclusion B);
+- `M1-MD-020` / `M1-TF-063` / `M1-TF-064` remain in
+  `compat/model/v2.5.json` `blocked_case_ids` (exclusion C; scoped in
+  [`reviews/m0-model-blocker-scope.md`](reviews/m0-model-blocker-scope.md));
+- all domain `product_compatibility_evidence` flags stay **false** until
+  CORE-010 parity review (exclusion D);
+- `M1-CORE-009` / `M1-CORE-011` stay gated until the matrix is revised.
+
+Oracle evidence in `compat/` remains reference evidence only. It MUST NOT be
+relabeled as Ferricov product compatibility evidence. Do not copy Perl
+internal object layout or relax Oracle differential identity rules.
 
 The governing documents are:
 
+- [M1 v0.1 support matrix](m1-v0.1-support-matrix.md)
+- [M0 go/no-go](m0-go-no-go.md)
 - [full compatibility plan](plan.md)
 - [full compatibility requirements](spec.md)
 - [coverage model](coverage-model.md)

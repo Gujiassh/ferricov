@@ -147,10 +147,12 @@ the M0 harness become the permanent integration boundary.
   owned by `docs/ssot/m0-status.snapshot.json` and must match
   `compat/behavior/contract.json` totals. The M1 Tracefile Core handoff is
   now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
-  but activation remains blocked by the M0 go/no-go result **NO-GO**
-  (`specs/001-full-lcov-compatibility/m0-go-no-go.md`), residual signed-N/A
-  gaps, diagnostics FERRICOV parity IDs, and unresolved
-  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` decisions (scoped in
+  and conditional GO is active: `m0-go-no-go.md` **Result: GO** plus
+  `m1-v0.1-support-matrix.md` authorize `M1-CORE-001`…`M1-CORE-008` with
+  `m1_authorized=true` and `product_compatibility_evidence=false`. Residual
+  signed-N/A gaps, diagnostics FERRICOV parity IDs, and
+  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` remain open exclusions (not closed;
+  scoped in
   `specs/001-full-lcov-compatibility/reviews/m0-model-blocker-scope.md`). The support-script planning suite
   covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
   suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
@@ -165,7 +167,8 @@ the M0 harness become the permanent integration boundary.
   Oracle-only coverage-model algebra contract with 157 cases across 27
   fixtures, binding rows `M1-MD-010..014`, `M1-MD-017`, and `M1-MD-019` through
   sealed independent observation facts. `M1-MD-020`, `M1-TF-063`, and
-  `M1-TF-064` remain blocked; this does not authorize Rust model/parser work.
+  `M1-TF-064` remain blocked in contract (matrix exclusion C). Conditional GO
+  authorizes Rust model/parser work for CORE-001…008 only; CORE-009/011 stay gated.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 is accepted and separates Oracle, compiler capture, and release

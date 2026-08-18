@@ -22,8 +22,12 @@ def main() -> int:
     # Fail closed if product evidence appeared.
     if snapshot["product_compatibility_evidence"] is True:
         raise SystemExit("refusing to write snapshot while product evidence is true")
-    if snapshot["m1_authorized"] is not False:
-        raise SystemExit("refusing to write snapshot while m1_authorized is not false")
+    if snapshot["m1_authorized"] not in (False, True):
+        raise SystemExit("refusing to write snapshot with non-boolean m1_authorized")
+    if snapshot["m1_authorized"] is True and snapshot["product_compatibility_evidence"] is True:
+        raise SystemExit(
+            "refusing to write snapshot: conditional GO forbids product evidence true"
+        )
     path = ROOT / "docs/ssot/m0-status.snapshot.json"
     path.write_text(
         json.dumps(snapshot, indent=2, sort_keys=True) + "\n",

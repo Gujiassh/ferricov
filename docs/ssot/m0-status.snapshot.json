@@ -26,27 +26,37 @@
   "kind": "m0_status_snapshot",
   "m1_activation_blockers": [
     {
+      "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_m1_core_001_008": false,
       "count": 7,
       "detail": "Unreviewed primary public-entry case groups remain in the behavior contract.",
       "id": "behavior_primary_gaps",
       "kind": "m0_residual"
     },
     {
+      "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_m1_core_001_008": false,
       "detail": "Coverage-model decision remains blocked in compat/model/v2.5.json.",
       "id": "M1-MD-020",
       "kind": "decision_blocker"
     },
     {
+      "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_m1_core_001_008": false,
       "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
       "id": "M1-TF-063",
       "kind": "decision_blocker"
     },
     {
+      "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_m1_core_001_008": false,
       "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
       "id": "M1-TF-064",
       "kind": "decision_blocker"
     },
     {
+      "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_m1_core_001_008": false,
       "count": 3,
       "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
       "id": "diagnostics_unbound_planned_cases",
@@ -58,17 +68,14 @@
       "kind": "m0_residual"
     },
     {
+      "activation_treatment": "required_false_under_conditional_go",
+      "blocks_m1_core_001_008": false,
       "detail": "No domain contract currently sets product_compatibility_evidence true.",
       "id": "product_compatibility_evidence_false",
       "kind": "gate"
-    },
-    {
-      "detail": "M0 go/no-go artifact records NO-GO for M1 activation; see specs/001-full-lcov-compatibility/m0-go-no-go.md.",
-      "id": "m0_exit_review_no_go",
-      "kind": "process"
     }
   ],
-  "m1_authorized": false,
+  "m1_authorized": true,
   "model_blocked_case_ids": [
     "M1-MD-020",
     "M1-TF-063",
@@ -90,6 +97,7 @@
     "diagnostics_contract": "compat/diagnostics/v2.5.json",
     "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
     "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
+    "m1_v0_1_support_matrix": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
     "model_contract": "compat/model/v2.5.json",
     "plan_bindings": "compat/behavior/plan-bindings.json"
   },

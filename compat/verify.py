@@ -163,6 +163,8 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         },
     ]
     go_no_go = root / "specs/001-full-lcov-compatibility/m0-go-no-go.md"
+    support_matrix = root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
+    m1_authorized = False
     if not go_no_go.is_file():
         blockers.append(
             {
@@ -176,9 +178,10 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         )
     else:
         go_text = go_no_go.read_text(encoding="utf-8")
-        # Presence of the artifact clears "missing". A recorded NO-GO is still
-        # an activation blocker until a future GO revision is signed.
-        if "NO-GO" in go_text and "Result: GO" not in go_text:
+        # Prefer the controller signature line.
+        has_go = "**Result: GO**" in go_text
+        has_no_go = "**Result: NO-GO" in go_text and not has_go
+        if has_no_go:
             blockers.append(
                 {
                     "id": "m0_exit_review_no_go",
@@ -186,6 +189,68 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
                     "detail": (
                         "M0 go/no-go artifact records NO-GO for M1 activation; "
                         "see specs/001-full-lcov-compatibility/m0-go-no-go.md."
+                    ),
+                }
+            )
+        elif has_go:
+            if not support_matrix.is_file():
+                blockers.append(
+                    {
+                        "id": "m1_support_matrix_missing",
+                        "kind": "process",
+                        "detail": (
+                            "Conditional GO requires "
+                            "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md."
+                        ),
+                    }
+                )
+            else:
+                matrix_text = support_matrix.read_text(encoding="utf-8")
+                if "Status: **ACTIVE**" not in matrix_text:
+                    blockers.append(
+                        {
+                            "id": "m1_support_matrix_inactive",
+                            "kind": "process",
+                            "detail": (
+                                "m1-v0.1-support-matrix.md exists but is not ACTIVE."
+                            ),
+                        }
+                    )
+                elif any_product:
+                    blockers.append(
+                        {
+                            "id": "product_compatibility_evidence_blocks_conditional_go",
+                            "kind": "gate",
+                            "detail": (
+                                "Conditional GO forbids product_compatibility_evidence=true "
+                                "until CORE-010 parity evidence is reviewed."
+                            ),
+                        }
+                    )
+                else:
+                    m1_authorized = True
+                    # Keep residual/model blockers visible, but mark them as
+                    # matrix-excluded deferred work rather than hard process stops.
+                    for blocker in blockers:
+                        if blocker.get("id") in {
+                            "behavior_primary_gaps",
+                            "diagnostics_unbound_planned_cases",
+                            "M1-MD-020",
+                            "M1-TF-063",
+                            "M1-TF-064",
+                        }:
+                            blocker["activation_treatment"] = "excluded_by_m1_v0_1_support_matrix"
+                            blocker["blocks_m1_core_001_008"] = False
+                        if blocker.get("id") == "product_compatibility_evidence_false":
+                            blocker["activation_treatment"] = "required_false_under_conditional_go"
+                            blocker["blocks_m1_core_001_008"] = False
+        else:
+            blockers.append(
+                {
+                    "id": "m0_exit_review_undecided",
+                    "kind": "process",
+                    "detail": (
+                        "M0 go/no-go artifact lacks a Result: GO or Result: NO-GO signature."
                     ),
                 }
             )
@@ -202,6 +267,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
             "model_contract": "compat/model/v2.5.json",
             "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
             "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
+            "m1_v0_1_support_matrix": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
         },
         "behavior": {
             "public_inventory_entries": totals["public_inventory_entries"],
@@ -224,7 +290,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         },
         "product_compatibility_evidence": False if not any_product else True,
         "product_compatibility_evidence_by_source": product_flags,
-        "m1_authorized": False,
+        "m1_authorized": m1_authorized,
         "m1_activation_blockers": blockers,
         "model_blocked_case_ids": list(model.get("blocked_case_ids") or []),
     }
@@ -238,8 +304,12 @@ def validate_m0_status_snapshot(root: Path) -> None:
             "product_compatibility_evidence is true in one or more domain contracts; "
             "update the status snapshot generation rules before claiming M0 hygiene"
         )
-    if expected["m1_authorized"] is not False:
-        raise RuntimeError("m1_authorized must remain false during M0")
+    if expected["m1_authorized"] not in (False, True):
+        raise RuntimeError("m1_authorized must be a boolean")
+    if expected["m1_authorized"] is True and expected["product_compatibility_evidence"] is True:
+        raise RuntimeError(
+            "conditional M1 authorization forbids product_compatibility_evidence=true"
+        )
 
     snapshot_path = root / "docs/ssot/m0-status.snapshot.json"
     committed = json.loads(snapshot_path.read_text(encoding="utf-8"))
@@ -303,7 +373,7 @@ def validate_m0_status_snapshot(root: Path) -> None:
     print(
         "M0_STATUS_OK "
         f"public={public_entries} reviewed_primary={reviewed} gaps={gaps} "
-        f"projections={projections} m1_authorized=false "
+        f"projections={projections} m1_authorized={str(expected['m1_authorized']).lower()} "
         f"product_compatibility_evidence=false"
     )
 

@@ -49,10 +49,12 @@ Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.m
 - [x] Lane E parallel/fork (6) — `m0-residual-lane-E-parallel-brief.md`
 - [x] Lane F misc (11) — `m0-residual-lane-F-misc-brief.md`
 - [x] Controller serial merge + regenerate pin after each lane
-- [x] M0 go/no-go artifact written (`m0-go-no-go.md`) — **NO-GO for M1**; 7 signed-N/A gaps + model blockers remain
+- [x] M0 go/no-go artifact written (`m0-go-no-go.md`) — 2026-08-17 **NO-GO** superseded by 2026-08-18 **conditional GO**
 - [x] Model blockers scoped (`reviews/m0-model-blocker-scope.md`) without clearing `blocked_case_ids`
 - [x] Wave3 worktrees removed; origin lane branches retained
-- [ ] Future GO when residual/model/product gates clear (see m0-go-no-go.md checklist)
+- [x] M1 v0.1 support matrix ACTIVE (`m1-v0.1-support-matrix.md`) with exclusions A–D
+- [x] Conditional GO wired: `m1_authorized=true`, `product_compatibility_evidence=false`
+- [ ] Post-v0.1: clear residual/model/product exclusions or revise matrix (see support matrix)
 
 ## M0 Current: Week 1 Contract Completion
 
@@ -225,7 +227,7 @@ does not unlock product parity.
   identity, and validates exact ordered samples-only output without changing
   canonical evidence.
 - [ ] Define M1 benchmark sizes and performance gates.
-- [x] Run the M0 go/no-go review (`m0-go-no-go.md`, controller review `reviews/m0-exit-go-no-go-review.md`) — result **NO-GO**.
+- [x] Run the M0 go/no-go review (`m0-go-no-go.md`; historical NO-GO review `reviews/m0-exit-go-no-go-review.md`; conditional GO review `reviews/m0-exit-go-conditional-review.md`) — current result **GO (conditional)**.
 
 ## M1 Ready When
 
@@ -240,20 +242,22 @@ does not unlock product parity.
 ## M1 Tracefile Core Agent Breakdown (Activation-Gated)
 
 The executable implementation handoff and acceptance matrix is
-[`m1-tracefile-core-agent-spec.md`](m1-tracefile-core-agent-spec.md). It is
-ready to give to an implementation agent, but the milestone remains blocked
-until the M0 exit review passes. The agent MUST NOT implement Rust parser/model
-behavior while the gate is closed.
+[`m1-tracefile-core-agent-spec.md`](m1-tracefile-core-agent-spec.md). Conditional
+GO is active under [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md):
+`m1_authorized=true` for CORE-001…008 only. The agent MAY implement Rust
+parser/model work inside `crates/model` + `crates/tracefile` for those tasks.
+Do not hollow-close residuals, bind FERRICOV IDs with Oracle-only seals, flip
+product evidence, or start CORE-009/011 without a matrix revision.
 
-Current activation blockers:
+Activation / exclusion ledger:
 
-- [ ] Reduce the remaining M0 behavior-planning gaps (see `docs/ssot/m0-status.snapshot.json`) to zero substantive
-  gaps and make `--mode m0-ready` pass (7 signed-N/A primaries remain).
-- [x] Explicitly scope `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` (`reviews/m0-model-blocker-scope.md`); still blocked in contract.
-- [ ] Approve the coverage-model and tracefile-grammar contracts for M1 (planning complete; M1 approval deferred with NO-GO).
-- [x] Record the M0 go/no-go decision and link it from this task ledger (`m0-go-no-go.md` — **NO-GO**).
+- [x] Explicit support-matrix exclusions for 7 signed-N/A gaps (A); `m0-ready` may still fail.
+- [x] Explicitly scope `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` (`reviews/m0-model-blocker-scope.md`); still blocked in contract; matrix exclusion C.
+- [x] Approve coverage-model / tracefile-grammar for CORE-001…008 under conditional GO (fuzz/limit rows remain blocked).
+- [x] Record the M0 go/no-go decision (`m0-go-no-go.md` — **GO conditional**) + support matrix + snapshot wiring.
+- [ ] Post-v0.1: resolve or revise exclusions A–D / product evidence for broader milestone claims.
 
-After activation, the agent tasks are:
+Authorized now:
 
 - [ ] `M1-CORE-001`: implement byte/source/testcase/numeric primitives.
 - [ ] `M1-CORE-002`: implement independent aggregate and testcase-family stores.
@@ -263,9 +267,12 @@ After activation, the agent tasks are:
 - [ ] `M1-CORE-006`: implement all record semantics, errors, and section commit.
 - [ ] `M1-CORE-007`: implement deterministic canonical serialization.
 - [ ] `M1-CORE-008`: implement semantic snapshots and equality.
+
+Still gated by matrix (not authorized yet):
+
 - [ ] `M1-CORE-009`: implement named properties, fuzz targets, budgets, and
   minimized regression retention.
-- [ ] `M1-CORE-010`: close Ferricov-vs-Oracle evidence for all applicable cases.
+- [ ] `M1-CORE-010`: begin differential closure; product evidence stays false until case-by-case review.
 - [ ] `M1-CORE-011`: run post-parity M1 performance qualification.
 
 The worker may not widen the ownership boundary into CLI, `lcovrc`, reports,
