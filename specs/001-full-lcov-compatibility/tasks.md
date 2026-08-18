@@ -260,7 +260,7 @@ Activation / exclusion ledger:
 Authorized now:
 
 - [x] `M1-CORE-001`: implement byte/source/testcase/numeric primitives (`crates/model`; review `reviews/m1-core-001-controller-review.md`).
-- [ ] `M1-CORE-002`: implement independent aggregate and testcase-family stores.
+- [x] `M1-CORE-002`: implement independent aggregate and testcase-family stores (`crates/model`; review `reviews/m1-core-002-controller-review.md`).
 - [ ] `M1-CORE-003`: implement function, branch, and MC/DC invariants/indexes.
 - [ ] `M1-CORE-004`: implement ordered union/intersection/difference algebra.
 - [ ] `M1-CORE-005`: implement logical-line processing and parser state.
