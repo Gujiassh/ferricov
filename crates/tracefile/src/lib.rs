@@ -1,6 +1,6 @@
 //! Streaming LCOV tracefile parsing and serialization.
 //!
-//! # M1-CORE-005 / M1-CORE-006
+//! # M1-CORE-005 / M1-CORE-006 / M1-CORE-007
 //!
 //! - byte-oriented line splitting (`\n` / `\r\n` / lone `\r`)
 //! - Perl-compatible chomp + trailing ASCII `\s` normalization
@@ -9,8 +9,7 @@
 //! - record apply for all 20 tags onto [`CoverageDatabase`](ferricov_model::CoverageDatabase)
 //! - section commit on `end_of_record` (line/function/branch union; MC/DC late-TN close)
 //! - streaming [`StreamingParser`](parser::StreamingParser) with `database()` / `into_database()`
-//!
-//! Canonical writing is CORE-007.
+//! - canonical writer [`write_info`] / [`write_database`] (current-form, non-mutating)
 
 #![forbid(unsafe_code)]
 
@@ -24,6 +23,8 @@ mod record_parse;
 mod records;
 mod section;
 mod state;
+mod write_order;
+mod writer;
 
 pub use classify::{
     classify_line, LineClass, MatchAnchor, RecordTag, TnPayload,
@@ -41,8 +42,11 @@ pub use section::{BranchCursor, OpenSection};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };
+pub use writer::{write_database, write_info, WriteOptions};
 
 #[cfg(test)]
 mod tests_core005;
 #[cfg(test)]
 mod tests_core006;
+#[cfg(test)]
+mod tests_core007;
