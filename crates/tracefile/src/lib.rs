@@ -23,6 +23,7 @@ mod policy;
 mod record_parse;
 mod records;
 mod section;
+mod snapshot;
 mod state;
 mod writer;
 
@@ -39,6 +40,7 @@ pub use parser::StreamingParser;
 pub use policy::IgnorePolicy;
 pub use records::{apply_event, ApplyContext, ApplyResult};
 pub use section::{BranchCursor, OpenSection};
+pub use snapshot::{SemanticSnapshot, Serializability};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };
@@ -50,3 +52,5 @@ mod tests_core005;
 mod tests_core006;
 #[cfg(test)]
 mod tests_core007;
+#[cfg(test)]
+mod tests_core008;

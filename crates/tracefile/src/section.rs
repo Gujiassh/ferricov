@@ -13,7 +13,7 @@ use std::collections::BTreeMap;
 use crate::state::SourceBinding;
 
 /// Working buffers for one open `SF`/`KF` section.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct OpenSection {
     /// Source binding captured at `SF`/`KF`.
     pub binding: SourceBinding,
