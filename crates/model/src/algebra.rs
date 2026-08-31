@@ -201,8 +201,7 @@ impl FunctionTable {
                 continue;
             }
             let (first_alias, first_count) = &common[0];
-            let mut rebuilt =
-                FunctionGroup::new(start.clone(), first_alias.clone(), end);
+            let mut rebuilt = FunctionGroup::new(start.clone(), first_alias.clone(), end);
             let mut map = BTreeMap::new();
             for (alias, sum) in &common {
                 map.insert(alias.clone(), sum.clone());
@@ -212,9 +211,7 @@ impl FunctionTable {
             let mut rep_len = crate::function::effective_alias_length(rep.as_bytes());
             for alias in map.keys() {
                 let len = crate::function::effective_alias_length(alias.as_bytes());
-                if len < rep_len
-                    || (len == rep_len && alias.as_bytes() < rep.as_bytes())
-                {
+                if len < rep_len || (len == rep_len && alias.as_bytes() < rep.as_bytes()) {
                     rep = alias.clone();
                     rep_len = len;
                 }
@@ -610,7 +607,7 @@ enum MergeVectorOutcome {
 }
 
 fn merge_mcdc_vectors(
-    left: &mut Vec<McdcExpression>,
+    left: &mut [McdcExpression],
     right: &[McdcExpression],
     line_key: &LineKey,
     group_key: &GroupSizeKey,
@@ -796,7 +793,10 @@ mod tests {
         let mut d_rev = right.clone();
         d_rev.difference(&left).unwrap();
         assert_eq!(d_rev.len(), 1);
-        assert_eq!(d_rev.get(&line_key("30")).unwrap().lexeme().as_bytes(), b"8");
+        assert_eq!(
+            d_rev.get(&line_key("30")).unwrap().lexeme().as_bytes(),
+            b"8"
+        );
         assert_ne!(d, d_rev);
     }
 
@@ -813,8 +813,12 @@ mod tests {
         left.set_group_end(&line_key("30"), Some(line_key("40")));
 
         let mut right = FunctionTable::new();
-        right.insert_alias_at(s10.clone(), "aa", count("7")).unwrap();
-        right.insert_alias_at(s10.clone(), "c", count("11")).unwrap();
+        right
+            .insert_alias_at(s10.clone(), "aa", count("7"))
+            .unwrap();
+        right
+            .insert_alias_at(s10.clone(), "c", count("11"))
+            .unwrap();
         right.set_group_end(&s10, Some(line_key("99")));
         right
             .insert_alias_at(line_key("50"), "right_only", count("13"))
@@ -825,10 +829,34 @@ mod tests {
         left.assert_indexes_coherent().unwrap();
 
         let g10 = left.get_by_start(&s10).unwrap();
-        assert_eq!(g10.end().map(|e| e.lexeme().as_bytes()), Some(b"20".as_slice())); // left-biased
-        assert_eq!(g10.aliases().get(&ByteString::from("aa")).unwrap().lexeme().as_bytes(), b"9");
-        assert_eq!(g10.aliases().get(&ByteString::from("b")).unwrap().lexeme().as_bytes(), b"3");
-        assert_eq!(g10.aliases().get(&ByteString::from("c")).unwrap().lexeme().as_bytes(), b"11");
+        assert_eq!(
+            g10.end().map(|e| e.lexeme().as_bytes()),
+            Some(b"20".as_slice())
+        ); // left-biased
+        assert_eq!(
+            g10.aliases()
+                .get(&ByteString::from("aa"))
+                .unwrap()
+                .lexeme()
+                .as_bytes(),
+            b"9"
+        );
+        assert_eq!(
+            g10.aliases()
+                .get(&ByteString::from("b"))
+                .unwrap()
+                .lexeme()
+                .as_bytes(),
+            b"3"
+        );
+        assert_eq!(
+            g10.aliases()
+                .get(&ByteString::from("c"))
+                .unwrap()
+                .lexeme()
+                .as_bytes(),
+            b"11"
+        );
         assert!(left.contains_alias(&ByteString::from("left_only")));
         assert!(left.contains_alias(&ByteString::from("right_only")));
         assert_eq!(left.group_len(), 3);
@@ -844,8 +872,12 @@ mod tests {
             .unwrap();
 
         let mut right = FunctionTable::new();
-        right.insert_alias_at(s10.clone(), "aa", count("7")).unwrap();
-        right.insert_alias_at(s10.clone(), "c", count("11")).unwrap();
+        right
+            .insert_alias_at(s10.clone(), "aa", count("7"))
+            .unwrap();
+        right
+            .insert_alias_at(s10.clone(), "c", count("11"))
+            .unwrap();
 
         left.difference(&right).unwrap();
         left.assert_indexes_coherent().unwrap();
@@ -1085,11 +1117,17 @@ mod tests {
         ba.union(&a).unwrap();
 
         assert_eq!(
-            ab.get_by_start(&s).unwrap().end().map(|e| e.lexeme().as_bytes()),
+            ab.get_by_start(&s)
+                .unwrap()
+                .end()
+                .map(|e| e.lexeme().as_bytes()),
             Some(b"20".as_slice())
         );
         assert_eq!(
-            ba.get_by_start(&s).unwrap().end().map(|e| e.lexeme().as_bytes()),
+            ba.get_by_start(&s)
+                .unwrap()
+                .end()
+                .map(|e| e.lexeme().as_bytes()),
             Some(b"99".as_slice())
         );
         // Same alias sums, different retained ranges → order matters.
@@ -1134,6 +1172,13 @@ mod tests {
         right.lines_mut().insert(line_key("2"), count("3"));
         left.apply_op(AlgebraOp::Union, &right).unwrap();
         assert_eq!(left.lines().len(), 2);
-        assert_eq!(left.lines().get(&line_key("1")).unwrap().lexeme().as_bytes(), b"3");
+        assert_eq!(
+            left.lines()
+                .get(&line_key("1"))
+                .unwrap()
+                .lexeme()
+                .as_bytes(),
+            b"3"
+        );
     }
 }

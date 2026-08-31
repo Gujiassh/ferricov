@@ -22,10 +22,7 @@ pub enum FunctionError {
     /// Count addition failed (unsupported operand class / promotion).
     CountAdd(AddError),
     /// Alias reverse index pointed at a missing start group.
-    OrphanAlias {
-        alias: ByteString,
-        start: LineKey,
-    },
+    OrphanAlias { alias: ByteString, start: LineKey },
     /// Start index and alias reverse index disagree.
     IndexIncoherent(String),
 }
@@ -190,8 +187,7 @@ impl FunctionGroup {
             let len = effective_alias_length(alias.as_bytes());
             if best.is_none()
                 || len < best_len
-                || (len == best_len
-                    && alias.as_bytes() < best.expect("checked").as_bytes())
+                || (len == best_len && alias.as_bytes() < best.expect("checked").as_bytes())
             {
                 best = Some(alias);
                 best_len = len;
@@ -207,9 +203,7 @@ impl FunctionGroup {
         let cur = &self.representative;
         let cur_len = effective_alias_length(cur.as_bytes());
         let new_len = effective_alias_length(new_alias.as_bytes());
-        if new_len < cur_len
-            || (new_len == cur_len && new_alias.as_bytes() < cur.as_bytes())
-        {
+        if new_len < cur_len || (new_len == cur_len && new_alias.as_bytes() < cur.as_bytes()) {
             self.representative = new_alias.clone();
         }
     }
@@ -236,7 +230,9 @@ pub fn effective_alias_length(alias: &[u8]) -> usize {
 }
 
 fn contains_slice(haystack: &[u8], needle: &[u8]) -> bool {
-    haystack.windows(needle.len()).any(|window| window == needle)
+    haystack
+        .windows(needle.len())
+        .any(|window| window == needle)
 }
 
 /// Function coverage with coherent start-location and alias reverse indexes.
@@ -384,12 +380,14 @@ impl FunctionTable {
             }
         }
 
-        if !self.by_alias.contains_key(&alias) {
+        if let std::collections::btree_map::Entry::Vacant(entry) =
+            self.by_alias.entry(alias.clone())
+        {
             let group = self.by_start.get_mut(&start).expect("contains_key");
             group
-                .add_alias(alias.clone(), CoverageCount::zero())
+                .add_alias(alias, CoverageCount::zero())
                 .map_err(FunctionError::CountAdd)?;
-            self.by_alias.insert(alias, start.clone());
+            entry.insert(start.clone());
         }
 
         Ok(self.by_start.get_mut(&start).expect("contains_key"))
@@ -415,13 +413,13 @@ impl FunctionTable {
                     requested_start: start,
                 });
             }
-            let group = self
-                .by_start
-                .get_mut(&start)
-                .ok_or_else(|| FunctionError::OrphanAlias {
-                    alias: alias.clone(),
-                    start: start.clone(),
-                })?;
+            let group =
+                self.by_start
+                    .get_mut(&start)
+                    .ok_or_else(|| FunctionError::OrphanAlias {
+                        alias: alias.clone(),
+                        start: start.clone(),
+                    })?;
             group
                 .add_alias(alias, count)
                 .map_err(FunctionError::CountAdd)?;
@@ -532,12 +530,13 @@ impl FunctionTable {
     /// table in a state that passes this check.
     pub fn assert_indexes_coherent(&self) -> Result<(), FunctionError> {
         for (alias, start) in &self.by_alias {
-            let group = self.by_start.get(start).ok_or_else(|| {
-                FunctionError::OrphanAlias {
+            let group = self
+                .by_start
+                .get(start)
+                .ok_or_else(|| FunctionError::OrphanAlias {
                     alias: alias.clone(),
                     start: start.clone(),
-                }
-            })?;
+                })?;
             if group.start() != start {
                 return Err(FunctionError::IndexIncoherent(format!(
                     "alias {} maps to start {} but group.start is {}",
@@ -593,12 +592,19 @@ impl FunctionTable {
         }
 
         if self.by_alias.len()
-            != self.by_start.values().map(FunctionGroup::alias_len).sum::<usize>()
+            != self
+                .by_start
+                .values()
+                .map(FunctionGroup::alias_len)
+                .sum::<usize>()
         {
             return Err(FunctionError::IndexIncoherent(format!(
                 "alias index len {} != sum of group aliases {}",
                 self.by_alias.len(),
-                self.by_start.values().map(FunctionGroup::alias_len).sum::<usize>()
+                self.by_start
+                    .values()
+                    .map(FunctionGroup::alias_len)
+                    .sum::<usize>()
             )));
         }
 
@@ -626,9 +632,7 @@ fn end_is_greater(candidate: &LineKey, current: &LineKey) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::{
-        effective_alias_length, is_lambda_alias, FunctionTable,
-    };
+    use super::{FunctionTable, effective_alias_length, is_lambda_alias};
     use crate::bytes::ByteString;
     use crate::keys::LineKey;
     use crate::numeric::CoverageCount;
@@ -699,11 +703,7 @@ mod tests {
         let mut lambda_table = FunctionTable::new();
         let start = LineKey::from_lexeme("4");
         lambda_table
-            .insert_alias_at(
-                start.clone(),
-                "ns::{lambda(int)#1}",
-                CoverageCount::zero(),
-            )
+            .insert_alias_at(start.clone(), "ns::{lambda(int)#1}", CoverageCount::zero())
             .unwrap();
         lambda_table
             .insert_alias_at(start.clone(), "longer_name_here", CoverageCount::zero())
@@ -765,7 +765,10 @@ mod tests {
             .unwrap();
         t2.set_group_end(&s, Some(LineKey::from_lexeme("1")));
         assert_eq!(
-            t2.get_by_start(&s).unwrap().end().map(|e| e.lexeme().as_bytes()),
+            t2.get_by_start(&s)
+                .unwrap()
+                .end()
+                .map(|e| e.lexeme().as_bytes()),
             Some(b"1".as_slice())
         );
     }
@@ -790,7 +793,10 @@ mod tests {
         let err = table
             .insert_alias_at(s2.clone(), "one", CoverageCount::zero())
             .expect_err("conflict");
-        assert!(matches!(err, super::FunctionError::AliasStartConflict { .. }));
+        assert!(matches!(
+            err,
+            super::FunctionError::AliasStartConflict { .. }
+        ));
         table.assert_indexes_coherent().unwrap();
 
         assert_eq!(

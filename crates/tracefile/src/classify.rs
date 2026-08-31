@@ -105,13 +105,9 @@ impl RecordTag {
             | Self::Lf
             | Self::Lh
             | Self::EndOfRecord => MatchAnchor::Prefix,
-            Self::Ver
-            | Self::Fn
-            | Self::Fnda
-            | Self::Fnl
-            | Self::Fna
-            | Self::Brda
-            | Self::Mcdc => MatchAnchor::Full,
+            Self::Ver | Self::Fn | Self::Fnda | Self::Fnl | Self::Fna | Self::Brda | Self::Mcdc => {
+                MatchAnchor::Full
+            }
         }
     }
 }
@@ -397,15 +393,16 @@ mod tests {
                 ..
             } => {
                 assert_eq!(tn.base.as_bytes(), b"name");
-                assert_eq!(tn.diff_suffix.as_ref().map(ByteString::as_bytes), Some(b",diff".as_slice()));
+                assert_eq!(
+                    tn.diff_suffix.as_ref().map(ByteString::as_bytes),
+                    Some(b",diff".as_slice())
+                );
                 assert!(tn.unconsumed.as_bytes().is_empty());
             }
             other => panic!("unexpected {other:?}"),
         }
         match classify_line(b"TN:foo,bar") {
-            LineClass::Record {
-                tn: Some(tn), ..
-            } => {
+            LineClass::Record { tn: Some(tn), .. } => {
                 assert_eq!(tn.base.as_bytes(), b"foo");
                 assert!(tn.diff_suffix.is_none());
                 assert_eq!(tn.unconsumed.as_bytes(), b",bar");

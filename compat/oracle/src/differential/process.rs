@@ -1285,17 +1285,17 @@ mod tests {
 
     #[test]
     fn local_identity_uses_path_override() {
-        let workdir = tempfile::TempDir::new().unwrap();
+        let _workdir = tempfile::TempDir::new().unwrap();
         #[cfg(unix)]
         {
-            let script = workdir.path().join("ferricov-test-helper");
+            let script = _workdir.path().join("ferricov-test-helper");
             fs::write(&script, "#!/bin/sh\ntrue\n").unwrap();
             make_executable(&script);
-            let override_path = Some(workdir.path().to_string_lossy().to_string());
+            let override_path = Some(_workdir.path().to_string_lossy().to_string());
             let exec = resolve_executable_in_context(
                 Path::new("."),
                 "ferricov-test-helper",
-                workdir.path(),
+                _workdir.path(),
                 &override_path,
             )
             .unwrap();
