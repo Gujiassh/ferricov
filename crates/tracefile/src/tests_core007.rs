@@ -1,4 +1,4 @@
-use crate::{SerializationContext, StreamingParser, write_canonical};
+use crate::{write_canonical, SerializationContext, StreamingParser};
 
 #[test]
 fn canonical_writer_orders_families_recomputes_totals_and_is_stable() {
@@ -29,4 +29,23 @@ fn sections_come_only_from_line_testcase_membership_and_flags_omit_families() {
         write_canonical(&database, &context),
         b"TN:t\nSF:x.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n"
     );
+}
+
+#[test]
+fn numeric_keys_sort_by_value_without_fixed_width_or_float_coercion() {
+    let database = StreamingParser::parse_database(
+        b"TN:t\nSF:x.c\nDA:10,1\nDA:2,1\nDA:9007199254740993,1\nDA:10000000000000000000,1\nend_of_record\n",
+    );
+    let context = SerializationContext {
+        function_coverage_enabled: false,
+        branch_coverage_enabled: false,
+        mcdc_coverage_enabled: false,
+        checksum_output_enabled: false,
+        output_comments: vec![],
+    };
+    let output = write_canonical(&database, &context);
+    let ordered = b"DA:2,1\nDA:10,1\nDA:9007199254740993,1\nDA:10000000000000000000,1";
+    assert!(output
+        .windows(ordered.len())
+        .any(|window| window == ordered));
 }
