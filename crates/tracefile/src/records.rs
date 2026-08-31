@@ -625,10 +625,10 @@ fn apply_brda(
 
     let open = ctx.open.as_mut().expect("checked");
     let block_token = ByteString::from_slice(block_tok);
-    let need_new_block = match &open.branch_cursor {
-        Some(cur) if cur.line == line_key && cur.block_token == block_token => false,
-        _ => true,
-    };
+    let need_new_block = !matches!(
+        &open.branch_cursor,
+        Some(cur) if cur.line == line_key && cur.block_token == block_token
+    );
     let bline = open.branches.entry_line(line_key.clone());
     if need_new_block || bline.is_empty() {
         bline.push_block();
