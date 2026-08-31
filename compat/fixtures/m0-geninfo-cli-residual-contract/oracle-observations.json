@@ -1,0 +1,166 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        ".",
+        "--output-filename",
+        "out.info"
+      ],
+      "case_id": "m0-geninfo-cli-residual-contract-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "602c7c883fb8f72e5d8cef419836dea1f3f6355dad1604cb1cc45a9a0c859a23",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 533,
+        "stdout_sha256": "eb93bf68fcabe91b5f2c9fccb14b2b8c3b0914d4df352bf9f2b35b823d7a0bb2"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--output-filename",
+        "custom.info"
+      ],
+      "case_id": "m0-geninfo-cli-residual-contract-output-filename",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "2fa3466172b50bb680a8be66883dea328af1b331f28cee4c92172615d9e57586",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 533,
+        "stdout_sha256": "a394d97fbeb9e6e67fc3a03b0e22a0180125113f43b077eee2a486855b9abc70"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--checksum",
+        "--output-filename",
+        "out.info"
+      ],
+      "case_id": "m0-geninfo-cli-residual-contract-checksum-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 601,
+        "file_tree_sha256": "adb7eb07e4ea21b3af7de8f7eb255e7f1c67b400d86182de69c998209cfaa5ce",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 533,
+        "stdout_sha256": "194d2b35b7ade35ee76b53410a4dacc100338ce78ab0d47c298812b83706c01b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--checksum",
+        "--no-checksum",
+        "--output-filename",
+        "out.info"
+      ],
+      "case_id": "m0-geninfo-cli-residual-contract-no-checksum",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "602c7c883fb8f72e5d8cef419836dea1f3f6355dad1604cb1cc45a9a0c859a23",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 533,
+        "stdout_sha256": "b5e57e3659e0fbbfd710752cd386ba558b7018647c7d77507be11c442ed70ad2"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "comparison_note": "stdout excluded: geninfo prints unstable temporary data directory paths",
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "suite_id": "m0-geninfo-cli-residual-contract"
+}

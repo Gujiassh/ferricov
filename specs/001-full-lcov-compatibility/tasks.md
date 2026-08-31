@@ -25,6 +25,37 @@
 - [x] Verify the harness with positive and intentional reverse cases.
 - [x] Define the milestone, release, risk, and quality-gate plan.
 
+## M0 Residual Closure (multi-agent)
+
+Baseline: `fa6820c`+ · gaps 38 · plan: `reviews/m0-residual-multi-agent-plan.md` · standards: `reviews/m0-residual-execution-standards.md`
+
+- [x] S0 independent Critical audit of residual multi-agent spec package (ACCEPT @5a769cb re-audit)
+- [x] S1–S3 residual multi-lane program: 31 sealed, 7 honest blocked; metrics 524/7
+- [x] S4 residual integration push (`d7420f1`)
+- [x] S5 residual signed N/A closeout + Critical audit (`m0-residual-s5-signed-na.md`, `m0-residual-s5-audit.md`)
+- [x] Residual multi-agent program S0–S5 closed (31 sealed + 7 signed N/A) @ `206d412`
+- [x] Residual lane worktrees A–F removed; origin residual branches retained
+- [x] Diagnostics wave3: bind Oracle-capable unbound PAR-* IDs (`m0-diagnostics-wave3-plan.md`, multi-agent plan)
+- [x] Wave3 S1: two lane worktrees from integration SHA `206d412` (A geninfo-child, B fault injectors)
+- [x] Wave3 S2: Lane A + Lane B capture and Critical audits (ACCEPT_WITH_NOTES)
+- [x] Wave3 S3: controller merge, contract hooks, status regenerate, review
+- [x] Wave3 S4: push integration + hosted CI (run 32018428585)
+- [x] Wave3 S5 program close note when CI green (FERRICOV residual floor remains 3)
+
+- [x] Lane A CLI hard (1 sealed / 3 blocked) — brief `m0-residual-lane-A-cli-hard-brief.md`
+- [x] Lane B language extensions (4 sealed / 1 blocked) — `m0-residual-lane-B-lang-ext-brief.md`
+- [x] Lane C filters (3) — `m0-residual-lane-C-filters-brief.md`
+- [x] Lane D geninfo success (6 sealed / 3 blocked) — `m0-residual-lane-D-geninfo-success-brief.md`
+- [x] Lane E parallel/fork (6) — `m0-residual-lane-E-parallel-brief.md`
+- [x] Lane F misc (11) — `m0-residual-lane-F-misc-brief.md`
+- [x] Controller serial merge + regenerate pin after each lane
+- [x] M0 go/no-go artifact written (`m0-go-no-go.md`) — 2026-08-17 **NO-GO** superseded by 2026-08-18 **conditional GO**
+- [x] Model blockers scoped (`reviews/m0-model-blocker-scope.md`) without clearing `blocked_case_ids`
+- [x] Wave3 worktrees removed; origin lane branches retained
+- [x] M1 v0.1 support matrix ACTIVE (`m1-v0.1-support-matrix.md`) with exclusions A–D
+- [x] Conditional GO wired: `m1_authorized=true`, `product_compatibility_evidence=false`
+- [ ] Post-v0.1: clear residual/model/product exclusions or revise matrix (see support matrix)
+
 ## M0 Current: Week 1 Contract Completion
 
 - [x] Add classification and source-reference fields to inventory entries.
@@ -38,7 +69,7 @@
   standalone fail-closed contract.
 - [x] Inventory all 20 tracefile record tags, two lexical rules, the complete
   reader/writer source closures, and all 21 per-record malformed fixtures in a
-  standalone fail-closed contract bound to 169 Oracle observations.
+  standalone fail-closed contract bound to 279 Oracle observations.
 - [x] Inventory all 32 shared error/warning classes, 399 symbol references,
   nine ignore/keep-going controls, four unclassified surfaces, and ten command
   exit policies in a standalone fail-closed contract.
@@ -50,11 +81,20 @@
 - [x] Define the four required critical interaction groups with reciprocal cases.
 - [x] Review the 40 public CLI primary entries exercised by the retained M0
   contract and bind their 154 exact suite cases without claiming product evidence.
+- [x] Review six command-owned `genhtml` CLI-output options and bind one shared
+  control plus six exact target cases without claiming product evidence.
+- [x] Review three command-owned `genhtml` metric/layout options (`--frames`,
+  `--precision 4`, and `--no-sort`) with two clean pinned Oracle runs and no
+  product evidence.
 - [x] Review the four retained-corpus `lcov` tracefile CLI primary targets while
   keeping Oracle references out of product evidence and compatibility suites.
 - [x] Prove two-build Oracle reproducibility and runtime-validate its execution manifest.
 - [x] Write the callback/runtime ADR.
 - [x] Write the initial compiler/platform matrix ADR.
+
+- [x] Review three residual genhtml command surfaces (`--preserve`,
+  `--synthesize-missing`, and multi-tracefile positional inputs) with two clean
+  pinned Oracle runs and no product evidence.
 
 Current contract metrics: all 584 inventory entries and all 205 upstream test
 mappings are reviewed. The inventory contains 394 command candidates, 9
@@ -72,44 +112,42 @@ Oracle cases only; all product evidence remains empty and the inventory schema
 is unchanged.
 
 The separate tracefile contract reviews 20 record tags, two lexical rules, all
-15 reader matcher lines, all 18 writer emission lines, 88 retained fixtures,
-and 21 per-record malformed fixtures. Its 169 Oracle observations are
-reference-only. Exact mappings cover `M1-TF-007`, `M1-TF-009`, `M1-TF-011`,
-`M1-TF-013`, `M1-TF-021`, `M1-TF-022`, `M1-TF-024`, `M1-TF-025`, `M1-TF-026`,
-and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains unmapped because
-the current corpus lacks its required cross-family exact atom matrix. The 19
-named tracefile blockers remain, so the complete grammar and M1 readiness tasks
-stay open.
+15 reader matcher lines, all 18 writer emission lines, 140 retained fixtures,
+and 21 per-record malformed fixtures. Its 279 Oracle observations are
+reference-only. Exact legacy/writer mappings now cover 26 cases for
+`M1-TF-010`, `M1-TF-041..045`, `046`, `050..052`, `060`, and `061`; the four
+TF-045 members now have true chained two-write Docker evidence. `M1-TF-063`
+and `064` remain blocked. Product compatibility evidence remains false and M1
+implementation remains unauthorized.
 
-The next bounded tracefile execution module is defined in
-`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md`. It starts from the
-controller-assigned clean `main` containing that brief and preserves
-`main@6a9a85d` as the 169-observation comparison base. It first extracts the
-oversized numeric corpus and validation responsibilities with byte-identical
-retained artifacts, then adds the complete 56-row matrix across the four
-`looks_like_number` families (12 exact upstream rows, four current-FNA mirrors,
-and 40 candidate rows), Perl/B scalar-flag projections, row-level semantic
-mutations, one final stabilized capture, and controller review. MC/DC remains
-outside this module under `M1-TF-031`. This is an approved development plan
-only: `M1-TF-030` remains unmapped, product evidence remains false, and M1
-implementation remains unauthorized until that brief is executed and accepted.
+The TF-030 exact numeric matrix module defined in
+`reviews/m0-tf030-exact-numeric-matrix-agent-brief.md` has been implemented on
+branch `test/m0-tf030-exact-numeric-matrix`. It preserved `main@6a9a85d` as the
+169-observation comparison base (common=169, changed=0, removed=0, added=15),
+split the numeric corpus modules, added the complete 56-row matrix, and
+synchronized generated contracts. A first controller pass added a six-snapshot
+semantic registry and all-row/cache mutation coverage, but the subsequent
+independent Critical audit found fail-open observation-byte, closed-JSON, and
+direct-upstream-provenance gaps. The audit rework is specified in
+`reviews/m0-tf030-audit-rework-spec.md`; M1 remains blocked.
 
 The separate diagnostics contract reviews all 32 shared classes, the complete
 399-reference symbol closure, nine control rules, four unclassified failure
-surfaces, and ten command exit policies. Its 112 retained observations are
-reference-only; the `geninfo` startup observation is explicitly classified as
-a read-only temporary-directory intercept. All 71 diagnostic and parallel
-case IDs remain planned, so ignore-two, warning promotion, converter traps,
-parallel behavior, and product compatibility remain open.
+surfaces, and ten command exit policies. Its 206 retained observations are
+reference-only; the previous 204 observations remain unchanged and two legacy
+unknown-function fatal references are added. Fifty-nine of 71 diagnostic and
+parallel case IDs have exact bindings; the remaining 12 stay planned and
+unbound, and product compatibility remains open.
 
 The separate installation contract binds all 321 retained tree entries to nine
 exhaustive groups and 15 pinned source closures. It preserves 320
 SHA-256-identified files, the exact legacy manpage symlink, canonical ordered
-paths, and exact mode counts while recording that directory entries are absent
-from the retained tree. All 13 installation cases remain planned. Four report
-samples bind their output trees through sample metadata and retain the same
-seven runtime assets as reference-only Oracle evidence; packaging and product
-compatibility remain open.
+paths, exact mode counts, and a separate 57-entry directory/mode companion.
+Wave2 retains replayable pinned-Docker envelopes for all 13 planned cases,
+both relative/space PATH parts, complete tree rows, observed clean env and live
+process provenance, timeout/signal/cleanup facts, and two runner qualifications.
+All cases remain Oracle reference-only and planned; packaging, installer
+implementation, and product compatibility remain open.
 
 The separate resource contract executes 13 controlled scale profiles against
 the immutable Oracle with branch and MC/DC summaries enabled. Every profile
@@ -127,21 +165,43 @@ single-run bounded observations rather than performance distributions. No
 Ferricov limit or compatibility evidence is selected; `M1-MD-020`,
 `M1-TF-063`, and `M1-TF-064` remain blocked.
 
-Behavior planning covers all 531 public entries with primary plans.
-One hundred seven public primary plans are reviewed, including 40 CLI entries bound
-to 154 exact suite cases while retaining planning-only evidence status. All four
-required critical interaction domains now have reviewed members and reciprocal
-cases. Eight configuration-semantic slices bind 67 exact cases and review six
-more primary targets. Four tracefile CLI primary plans cover add-tracefile,
-output-file, no-function-coverage, and mcdc-coverage from exact retained
-reference observations and reviewed upstream planning sources. They keep
-`evidence_status=none` with empty evidence and suite arrays. The current M0 gate
-also includes 17 source-bound small-tool CLI plans with no executable suite or
-product evidence. Seventeen source-bound `lcovrc` configuration plans also
-have no executable suite or product evidence. The current M0 gate reports 424
-gaps, all public entries without reviewed primary cases.
-The raw Oracle correctness baseline is complete and replayed, but it remains
-reference-only evidence and does not unlock product parity.
+Behavior planning covers all 531 public entries with primary plans. Live
+residual metrics are owned by `docs/ssot/m0-status.snapshot.json` (live residual metrics in `docs/ssot/m0-status.snapshot.json`). Forty CLI
+entries bind 154 exact suite cases, eight base configuration slices bind 67
+cases, three support-script entries bind executable planning cases, and
+thirty-two command entries bind six command-owned `genhtml` CLI-output cases,
+three command-owned metric/layout cases, plus `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`,
+`perl2lcov`, and trace-operation `lcov` cases. Separately, 32 `lcovrc`
+consumer plans bind two list-format cases and thirty fixed-epoch `genhtml`
+output/layout, metric-config, and report/differential cases. Owner and age field widths remain
+deferred pending annotation/date inputs. The true `perl2lcov --preserve` parallel path remains
+unbound because it retains a randomized temp tree without an approved
+normalizer. The tracefile and `lcovrc` slices remain planning-only. Product evidence stays
+empty and the current M0 readiness gate remains blocked. The raw Oracle
+correctness baseline is complete and replayed, but remains reference-only and
+does not unlock product parity.
+
+## M0 TF-030 Audit Rework
+
+- [x] Add independently contract-bound TF-030 stdout/stderr/output/exit
+  observation facts and reject refreshed self-hashes.
+- [x] Reject unknown semantic JSON keys and escaped duplicate numeric-plan keys.
+- [x] Bind `fixtures/numeric/format-atoms.info` directly to the pinned upstream
+  `tests/lcov/format/format.info` bytes.
+- [x] Remove the committed EOF whitespace and pass
+  `git diff --check origin/main...HEAD`.
+- [x] Re-run Oracle, contract, Rust, Perl, and mutation gates for the audit rework.
+- [x] Enforce type-sensitive JSON equality for TF-030 observation and
+  semantic registry comparisons (reject int/bool/float cross-type).
+- [x] Pin deterministic TF-030 Perl environment (`PERL_HASH_SEED=0`,
+  `PERL_PERTURB_KEYS=0`) on case defs, capture, observations, and registry.
+- [x] Harden TF-030 selective `--merge-into` against untrusted retained baseline
+  copies (canonical path + fixed baseline SHA-256 + exact 15 TF-030 ids).
+- [x] Move TF-030 `--merge-into` validation before Docker inspect and bind
+  merge parse to trusted baseline bytes; preserve ordered duplicate-free
+  `--case-id` selection.
+- [x] Sixth independent Critical audit completed: TF-030 M0 Oracle evidence
+  closure accepted; product compatibility remains false and M1 remains blocked.
 
 ## M0 Next: Week 2 Baselines And M1 Readiness
 
@@ -167,17 +227,57 @@ reference-only evidence and does not unlock product parity.
   identity, and validates exact ordered samples-only output without changing
   canonical evidence.
 - [ ] Define M1 benchmark sizes and performance gates.
-- [ ] Run the M0 go/no-go review.
+- [x] Run the M0 go/no-go review (`m0-go-no-go.md`; historical NO-GO review `reviews/m0-exit-go-no-go-review.md`; conditional GO review `reviews/m0-exit-go-conditional-review.md`) — current result **GO (conditional)**.
 
 ## M1 Ready When
 
 - [x] No candidate inventory entry remains unclassified.
 - [ ] Every public behavior has a planned case group.
-- [ ] Callback/runtime and compiler-matrix decisions are accepted.
+- [x] Callback/runtime and compiler-matrix decisions are accepted.
 - [x] Upstream correctness and performance baselines are reproducible from a
   clean checkout; the independent 148-case correctness replay passes semantic
   comparison.
 - [ ] The coverage model specification represents every inventoried record.
+
+## M1 Tracefile Core Agent Breakdown (Activation-Gated)
+
+The executable implementation handoff and acceptance matrix is
+[`m1-tracefile-core-agent-spec.md`](m1-tracefile-core-agent-spec.md). Conditional
+GO is active under [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md):
+`m1_authorized=true` for CORE-001…008 only. The agent MAY implement Rust
+parser/model work inside `crates/model` + `crates/tracefile` for those tasks.
+Do not hollow-close residuals, bind FERRICOV IDs with Oracle-only seals, flip
+product evidence, or start CORE-009/011 without a matrix revision.
+
+Activation / exclusion ledger:
+
+- [x] Explicit support-matrix exclusions for 7 signed-N/A gaps (A); `m0-ready` may still fail.
+- [x] Explicitly scope `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` (`reviews/m0-model-blocker-scope.md`); still blocked in contract; matrix exclusion C.
+- [x] Approve coverage-model / tracefile-grammar for CORE-001…008 under conditional GO (fuzz/limit rows remain blocked).
+- [x] Record the M0 go/no-go decision (`m0-go-no-go.md` — **GO conditional**) + support matrix + snapshot wiring.
+- [ ] Post-v0.1: resolve or revise exclusions A–D / product evidence for broader milestone claims.
+
+Authorized now:
+
+- [x] `M1-CORE-001`: implement byte/source/testcase/numeric primitives (`crates/model`; review `reviews/m1-core-001-controller-review.md`).
+- [x] `M1-CORE-002`: implement independent aggregate and testcase-family stores (`crates/model`; review `reviews/m1-core-002-controller-review.md`).
+- [x] `M1-CORE-003`: implement function, branch, and MC/DC invariants/indexes (`crates/model`; review `reviews/m1-core-003-controller-review.md`).
+- [x] `M1-CORE-004`: implement ordered union/intersection/difference algebra (`crates/model` algebra.rs; review `reviews/m1-core-004-controller-review.md`; ALG Oracle binding residual).
+- [x] `M1-CORE-005`: implement logical-line processing and parser state (`crates/tracefile`; review `reviews/m1-core-005-controller-review.md`).
+- [x] `M1-CORE-006`: implement all record semantics, errors, and section commit (`crates/tracefile`; review `reviews/m1-core-006-controller-review.md`; ignore-matrix residual).
+- [x] `M1-CORE-007`: implement deterministic canonical serialization (`crates/tracefile`; accepted Critical review at `6f04f44`; accepted-but-nonserializable classification remains owned by `M1-CORE-008`).
+- [x] `M1-CORE-008`: implement semantic snapshots and equality (`crates/tracefile`; independent Critical review accepted at `11d4d1d`; focused gates: tracefile 61, model 48).
+
+Still gated by matrix (not authorized yet):
+
+- [ ] `M1-CORE-009`: implement named properties, fuzz targets, budgets, and
+  minimized regression retention.
+- [ ] `M1-CORE-010`: begin differential closure; product evidence stays false until case-by-case review.
+- [ ] `M1-CORE-011`: run post-parity M1 performance qualification.
+
+The worker may not widen the ownership boundary into CLI, `lcovrc`, reports,
+capture, installation, callbacks, or release packaging. The controller owns
+activation, review, commit, push, and milestone status changes.
 
 Later milestone task breakdowns are opened before their milestone starts. The
 canonical scope, order, gates, and estimates remain in `plan.md`.

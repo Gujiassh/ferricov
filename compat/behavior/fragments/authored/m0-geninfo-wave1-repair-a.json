@@ -1,0 +1,1666 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.all as a source-bound cli-option boundary for geninfo: input form `--all` from parser/config text `\"all\"                 => \\$lcovutil::geninfo_captureAll,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.all",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 256,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 24,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 547,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 551,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 558,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 24,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.all",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.operations-and-packages"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.base-directory as a source-bound cli-option boundary for geninfo: input form `--base-directory <value>` from parser/config text `\"base-directory|b=s\"  => \\$base_directory,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/coverage/coverage.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.base-directory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 250,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 28,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 190,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 334,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 28,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.base-directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/coverage/coverage.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "coverage.mcdc",
+        "genhtml.diagnostics-and-config",
+        "genhtml.exception-differential",
+        "lcov.capture-and-filter",
+        "lcov.demangling",
+        "lcov.exception-branches"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.branch-coverage as a source-bound cli-option boundary for geninfo: input form `--branch-coverage` from parser/config text `\"branch-coverage\"      => \\$lcovutil::br_coverage,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/exception/exception.sh, tests/lcov/demangle/demangle.sh, tests/lcov/exception/exception.sh, tests/lcov/extract/extract.sh, tests/lcov/mcdc/mcdc.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.branch-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 30,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 84,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 239,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 32,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1253,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.branch-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/exception/exception.sh",
+        "tests/lcov/demangle/demangle.sh",
+        "tests/lcov/exception/exception.sh",
+        "tests/lcov/extract/extract.sh",
+        "tests/lcov/mcdc/mcdc.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.build-directory as a source-bound cli-option boundary for geninfo: input form `--build-directory <value>` from parser/config text `'build-directory=s' => \\@lcovutil::build_directory,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.build-directory",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 29,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 205,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 214,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 490,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 588,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 29,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1262,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.build-directory",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.checksum as a source-bound cli-option boundary for geninfo: input form `--checksum` from parser/config text `\"checksum\"    => \\$lcovutil::verify_checksum,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.checksum",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 32,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 253,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 256,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 34,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1242,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.checksum",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.comment as a source-bound cli-option boundary for geninfo: input form `--comment <value>` from parser/config text `'comment=s'   => \\@comments,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.comment",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 22,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 619,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1249,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.comment",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "geninfo.capture-cli"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.compat as a source-bound cli-option boundary for geninfo: input form `--compat <value>` from parser/config text `\"compat=s\"            => \\$lcovutil::geninfo_opt_compat,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/coverage/geninfo.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.compat",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 261,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 55,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 264,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 267,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 43,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.compat",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/coverage/geninfo.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Unbound source-bound plan for command.geninfo.option.compat-libtool: cli-option boundary `--compat-libtool` from `\"compat-libtool\"      => \\$lcovutil::opt_compat_libtool,`. Expected comparison dimensions are exit, stdout, stderr, and filesystem once an executable suite exists. No reviewed upstream public-behavior driver or compatibility suite currently binds this entry; this is not reviewed closure and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.compat-libtool",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "unreviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 252,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 34,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 285,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 299,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 302,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 35,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.compat-libtool",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.context-script as a source-bound cli-option boundary for geninfo: input form `--context-script <value>` from parser/config text `'context-script=s'     => \\@lcovutil::contextCallback,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.context-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 65,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 577,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1265,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.context-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.criteria-script as a source-bound cli-option boundary for geninfo: input form `--criteria-script <value>` from parser/config text `\"criteria-script=s\" =>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.criteria-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 66,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 582,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1239,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.criteria-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "lcov.demangling"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.demangle-cpp as a source-bound cli-option boundary for geninfo: input form `--demangle-cpp[=<value>]` from parser/config text `\"demangle-cpp:s\"         => \\@lcovutil::cpp_demangle,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/demangle/demangle.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.demangle-cpp",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 46,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 384,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 541,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 39,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1269,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.demangle-cpp",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/demangle/demangle.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.demangling"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.erase-functions as a source-bound cli-option boundary for geninfo: input form `--erase-functions <value>` from parser/config text `\"erase-functions=s\" => \\@lcovutil::exclude_function_patterns,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/demangle/demangle.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.erase-functions",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 59,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 383,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 718,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 47,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1280,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.erase-functions",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/demangle/demangle.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "coverage.mcdc",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.exclude as a source-bound cli-option boundary for geninfo: input form `--exclude <value>` from parser/config text `\"exclude=s\"         => \\@lcovutil::exclude_file_patterns,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh, tests/lcov/mcdc/mcdc.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.exclude",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 58,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 336,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 374,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 377,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 45,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1278,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.exclude",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh",
+        "tests/lcov/mcdc/mcdc.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.expect-message-count as a source-bound cli-option boundary for geninfo: input form `--expect-message-count <value>` from parser/config text `\"expect-message-count=s\" => \\@opt_expected_message_counts,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.expect-message-count",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 42,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 520,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1271,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.expect-message-count",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.fail-under-lines as a source-bound cli-option boundary for geninfo: input form `--fail-under-lines <value>` from parser/config text `\"fail-under-lines=s\"    => \\$fail_under_lines,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.fail-under-lines",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 63,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 530,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1258,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.fail-under-lines",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "coverage.mcdc",
+        "genhtml.diagnostics-and-config",
+        "geninfo.capture-cli",
+        "lcov.branch-coverage",
+        "lcov.capture-and-filter",
+        "lcov.demangling",
+        "lcov.exception-branches",
+        "lcov.initializer-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.filter as a source-bound cli-option boundary for geninfo: input form `--filter <value>` from parser/config text `\"filter=s\"               => \\@opt_filter,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/branch/branch.sh, tests/lcov/coverage/geninfo.sh, tests/lcov/demangle/demangle.sh, tests/lcov/exception/exception.sh, tests/lcov/extract/extract.sh, tests/lcov/initializer/initializer.sh, tests/lcov/mcdc/mcdc.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.filter",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 45,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 538,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 565,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 567,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 37,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1268,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.filter",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/branch/branch.sh",
+        "tests/lcov/coverage/geninfo.sh",
+        "tests/lcov/demangle/demangle.sh",
+        "tests/lcov/exception/exception.sh",
+        "tests/lcov/extract/extract.sh",
+        "tests/lcov/initializer/initializer.sh",
+        "tests/lcov/mcdc/mcdc.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.follow-symlinks"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.follow as a source-bound cli-option boundary for geninfo: input form `--follow` from parser/config text `\"follow|f\"            => \\$lcovutil::opt_follow,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/follow/follow.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.follow",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 251,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 27,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 334,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 340,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 341,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 27,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.follow",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/follow/follow.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.forget-test-names as a source-bound cli-option boundary for geninfo: input form `--forget-test-names` from parser/config text `\"forget-test-names\" => \\$TraceFile::ignore_testcase_name,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/function/function.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.forget-test-names",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 64,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 396,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 49,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1285,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.forget-test-names",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.function-coverage as a source-bound cli-option boundary for geninfo: input form `--function-coverage` from parser/config text `\"function-coverage\"    => \\$lcovutil::func_coverage,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.function-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "help_definition",
+          "line": 31,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1252,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.function-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "geninfo.capture-cli",
+        "lcov.gcov-tool"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.gcov-tool as a source-bound cli-option boundary for geninfo: input form `--gcov-tool <value>` from parser/config text `\"gcov-tool=s\"         => \\@gcov_tool,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/coverage/geninfo.sh, tests/lcov/gcov-tool/path.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.gcov-tool",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 254,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 36,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 76,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 95,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 346,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 349,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 351,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 357,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 358,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 36,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.gcov-tool",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/coverage/geninfo.sh",
+        "tests/lcov/gcov-tool/path.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "converter.llvm",
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.ignore-errors as a source-bound cli-option boundary for geninfo: input form `--ignore-errors <value>` from parser/config text `\"ignore-errors=s\"        => \\@opt_ignore_errors,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh, tests/llvm2lcov/llvm2lcov.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.ignore-errors",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 41,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 404,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 411,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 443,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 516,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 16,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1270,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.ignore-errors",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh",
+        "tests/llvm2lcov/llvm2lcov.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.exception-differential",
+        "lcov.exception-branches",
+        "lcov.initializer-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.include as a source-bound cli-option boundary for geninfo: input form `--include <value>` from parser/config text `\"include=s\"         => \\@lcovutil::include_file_patterns,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/exception/exception.sh, tests/lcov/exception/exception.sh, tests/lcov/initializer/initializer.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.include",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 57,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 336,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 367,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 370,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 379,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 44,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1279,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.include",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/exception/exception.sh",
+        "tests/lcov/exception/exception.sh",
+        "tests/lcov/initializer/initializer.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "geninfo.capture-cli",
+        "lcov.capture-and-filter",
+        "lcov.exception-branches",
+        "lcov.follow-symlinks",
+        "lcov.multi-directory"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.initial as a source-bound cli-option boundary for geninfo: input form `--initial` from parser/config text `\"initial|i\"           => \\$initial,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/coverage/geninfo.sh, tests/lcov/exception/exception.sh, tests/lcov/extract/extract.sh, tests/lcov/follow/follow.sh, tests/lcov/multiple/multiple.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.initial",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 255,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 23,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 93,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 544,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 549,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 556,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 558,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 23,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.initial",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/coverage/geninfo.sh",
+        "tests/lcov/exception/exception.sh",
+        "tests/lcov/extract/extract.sh",
+        "tests/lcov/follow/follow.sh",
+        "tests/lcov/multiple/multiple.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.geninfo.option.keep-going as a source-bound cli-option boundary for geninfo: input form `--keep-going` from parser/config text `\"keep-going\"             => \\$keepGoing,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.geninfo.option.keep-going",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 43,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 525,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 18,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1273,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.keep-going",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    }
+  ],
+  "description": "Reviewed and unbound source-bound geninfo primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 1.",
+  "fragment_id": "authored.m0-geninfo-wave1-repair-a",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

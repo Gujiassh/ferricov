@@ -1,0 +1,676 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.path-case",
+        "lcov.multi-directory"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.case-insensitive as a source-bound config-key boundary for lcovrc: input form `case_insensitive = <0|1>` from parser/config text `#case_insensitive = 0`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/insensitive/insensitive.sh, tests/lcov/multiple/multiple.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.case-insensitive",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 480,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1188,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.case-insensitive",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/insensitive/insensitive.sh",
+        "tests/lcov/multiple/multiple.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.path-case"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.check-existence-before-callback as a source-bound config-key boundary for lcovrc: input form `check_existence_before_callback = <0|1>` from parser/config text `#check_existence_before_callback = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/insensitive/insensitive.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.check-existence-before-callback",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 430,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1192,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.check-existence-before-callback",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/insensitive/insensitive.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "converter.perl",
+        "converter.python",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.checksum as a source-bound config-key boundary for lcovrc: input form `checksum = <0|1>` from parser/config text `#checksum = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh, tests/perl2lcov/perltest1.sh, tests/py2lcov/py2lcov.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.checksum",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 251,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1186,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.checksum",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh",
+        "tests/perl2lcov/perltest1.sh",
+        "tests/py2lcov/py2lcov.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.function-differential"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.compute-file-version as a source-bound config-key boundary for lcovrc: input form `compute_file_version = <value>` from parser/config text `# compute_file_version = 0 | 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/function/function.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.compute-file-version",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 437,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1187,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.compute-file-version",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/function/function.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.criteria-callback-data as a source-bound config-key boundary for lcovrc: input form `criteria_callback_data = <date,owner>` from parser/config text `#criteria_callback_data = date,owner`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.criteria-callback-data",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 354,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1179,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.criteria-callback-data",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.criteria-callback-levels as a source-bound config-key boundary for lcovrc: input form `criteria_callback_levels = <top,directory,file>` from parser/config text `#criteria_callback_levels = top,directory,file`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.criteria-callback-levels",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 357,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1181,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.criteria-callback-levels",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.lambda-display",
+        "genhtml.report-options",
+        "lcov.capture-and-filter",
+        "lcov.demangling",
+        "lcov.initializer-filter",
+        "shared.coverage-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.derive-function-end-line as a source-bound config-key boundary for lcovrc: input form `derive_function_end_line = <0|1>` from parser/config text `#derive_function_end_line = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/filter/filter.pl, tests/genhtml/lambda/lambda.sh, tests/genhtml/simple/script.sh, tests/lcov/demangle/demangle.sh, tests/lcov/extract/extract.sh, tests/lcov/initializer/initializer.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.derive-function-end-line",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 222,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1117,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.derive-function-end-line",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/filter/filter.pl",
+        "tests/genhtml/lambda/lambda.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/demangle/demangle.sh",
+        "tests/lcov/extract/extract.sh",
+        "tests/lcov/initializer/initializer.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.format"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.excessive-count-threshold as a source-bound config-key boundary for lcovrc: input form `excessive_count_threshold = <number>` from parser/config text `# excessive_count_threshold = number`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/format/format.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.excessive-count-threshold",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 233,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1196,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.excessive-count-threshold",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/format/format.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "converter.llvm",
+        "converter.python",
+        "genhtml.report-options",
+        "lcov.capture-and-filter",
+        "lcov.demangling",
+        "support-script.git-diff",
+        "support-script.p4-diff"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.exclude as a source-bound config-key boundary for lcovrc: input form `exclude = <your/files/*.c>` from parser/config text `#exclude = your/files/*.c`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh, tests/lcov/demangle/demangle.sh, tests/lcov/extract/extract.sh, tests/llvm2lcov/llvm2lcov.sh, tests/py2lcov/py2lcov.sh, tests/scripts/gitdiff_test.sh, tests/scripts/p4udiff_test.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.exclude",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 402,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 403,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1171,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.exclude",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/demangle/demangle.sh",
+        "tests/lcov/extract/extract.sh",
+        "tests/llvm2lcov/llvm2lcov.sh",
+        "tests/py2lcov/py2lcov.sh",
+        "tests/scripts/gitdiff_test.sh",
+        "tests/scripts/p4udiff_test.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.function-differential",
+        "genhtml.lambda-display",
+        "genhtml.relative-paths",
+        "genhtml.report-options",
+        "genhtml.tracefile-synthesis",
+        "lcov.branch-coverage",
+        "shared.coverage-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.filter as a source-bound config-key boundary for lcovrc: input form `filter = <value>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/filter/filter.pl, tests/genhtml/function/function.sh, tests/genhtml/lambda/lambda.sh, tests/genhtml/relative/relative.sh, tests/genhtml/simple/script.sh, tests/genhtml/synthesize/synthesize.sh, tests/lcov/branch/branch.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.filter",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1170,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.filter",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/filter/filter.pl",
+        "tests/genhtml/function/function.sh",
+        "tests/genhtml/lambda/lambda.sh",
+        "tests/genhtml/relative/relative.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/genhtml/synthesize/synthesize.sh",
+        "tests/lcov/branch/branch.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "converter.llvm"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.function-coverage as a source-bound config-key boundary for lcovrc: input form `function_coverage = <0|1>` from parser/config text `function_coverage = 1`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/llvm2lcov/llvm2lcov.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.function-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 314,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1125,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.function-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/llvm2lcov/llvm2lcov.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.genhtml-annotate-tooltip as a source-bound config-key boundary for lcovrc: input form `genhtml_annotate_tooltip = <value>` from parser/config text `#genhtml_annotate_tooltip = Commit ID: %C by %F on %D`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.genhtml-annotate-tooltip",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7203,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 347,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-annotate-tooltip",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan lcovrc.genhtml-branch-coverage as a source-bound config-key boundary for lcovrc: input form `genhtml_branch_coverage = <value>`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.lcovrc.genhtml-branch-coverage",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7174,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-branch-coverage",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    }
+  ],
+  "description": "Reviewed and unbound source-bound lcovrc primary plans with concrete key/value boundaries and upstream drivers where available; no product evidence. Part 1.",
+  "fragment_id": "authored.m0-lcovrc-wave1-repair-a",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

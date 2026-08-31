@@ -1,0 +1,145 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-geninfo-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--preserve",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-geninfo-preserve",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "50",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-geninfo-failbr-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--branch-coverage",
+        "--fail-under-branches",
+        "101",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-geninfo-fail-under-branches",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "src",
+        "--output-file",
+        "out.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-lcov-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "src",
+        "--preserve",
+        "--output-file",
+        "out.info"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-preserve-failbr-contract",
+      "id": "m0-cli-preserve-failbr-contract-lcov-preserve",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-cli-preserve-failbr-contract"
+}

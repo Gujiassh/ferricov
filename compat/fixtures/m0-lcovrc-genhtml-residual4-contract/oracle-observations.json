@@ -1,0 +1,217 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-genhtml-residual4-contract-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 19,
+        "file_tree_bytes": 46697,
+        "file_tree_sha256": "06a0a5d034115e0fb0d708eafc1386e61af7d7d5251c431368c7db497dc698ee",
+        "paths": [
+          "control.lcovrc",
+          "css.lcovrc",
+          "date-bins.lcovrc",
+          "input.info",
+          "owner-table.lcovrc",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "source.c"
+        ],
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "css.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-genhtml-residual4-contract-css",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 7,
+        "file_tree_bytes": 456,
+        "file_tree_sha256": "dc9d6e1153ab1e285ac8332b03c45763940ea7388183800c6e83de845e7c8152",
+        "paths": [
+          "control.lcovrc",
+          "css.lcovrc",
+          "date-bins.lcovrc",
+          "input.info",
+          "owner-table.lcovrc",
+          "report/cmd_line",
+          "source.c"
+        ],
+        "stderr_bytes": 433,
+        "stderr_sha256": "bfc4665fad2f034f5fc6a24ee5637677c2bc06e5e6d21ea4bb545048e8ff1ee3",
+        "stdout_bytes": 80,
+        "stdout_sha256": "145bfabfe8dd99bd6944837df49b9bc271e47488950e1762e2b2c61f341fac04"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "date-bins.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-genhtml-residual4-contract-date-bins",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 255,
+        "file_count": 6,
+        "file_tree_bytes": 386,
+        "file_tree_sha256": "84d9bf9824a24fa831a198ce0b5626e4e1ef89f8be05ce7ef50d55e62171c74f",
+        "paths": [
+          "control.lcovrc",
+          "css.lcovrc",
+          "date-bins.lcovrc",
+          "input.info",
+          "owner-table.lcovrc",
+          "source.c"
+        ],
+        "stderr_bytes": 99,
+        "stderr_sha256": "a99b23e9643fd0688dc23cd9337c69d5724d3d044611e9de94ae73a3196ff45a",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "owner-table.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-genhtml-residual4-contract-owner-table",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 255,
+        "file_count": 6,
+        "file_tree_bytes": 386,
+        "file_tree_sha256": "84d9bf9824a24fa831a198ce0b5626e4e1ef89f8be05ce7ef50d55e62171c74f",
+        "paths": [
+          "control.lcovrc",
+          "css.lcovrc",
+          "date-bins.lcovrc",
+          "input.info",
+          "owner-table.lcovrc",
+          "source.c"
+        ],
+        "stderr_bytes": 101,
+        "stderr_sha256": "b96b9c23dbb4b1383b5495f161a4bb0a3b4a3e9c958aabf840fe8c6dac061285",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "m0-lcovrc-genhtml-residual4-contract",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-genhtml-residual4-contract"
+}

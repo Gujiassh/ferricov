@@ -1,0 +1,62 @@
+{
+  "lcovrc.rtl-file-extensions": {
+    "probe_case": {
+      "arguments": [
+        "--config-file",
+        "rtl-file-extensions.lcovrc",
+        "-a",
+        "input.info",
+        "-o",
+        "out.info",
+        "--filter",
+        "region,brace,directive",
+        "--ignore-errors",
+        "source,unsupported,inconsistent,unused,empty"
+      ],
+      "case_id": "m0-residual-b-lang-ext-contract-rtl-file-extensions-probe",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 13,
+        "file_tree_bytes": 1719,
+        "file_tree_sha256": "8acb76b55c6fe7b4449461c6810f1d59a33737ac8610762923a95e48aad9cd85",
+        "paths": [
+          "c-file-extensions.lcovrc",
+          "control.lcovrc",
+          "input.info",
+          "java-file-extensions.lcovrc",
+          "out.info",
+          "perl-file-extensions.lcovrc",
+          "python-file-extensions.lcovrc",
+          "rtl-file-extensions.lcovrc",
+          "src/Sample.java",
+          "src/sample.c",
+          "src/sample.pl",
+          "src/sample.py",
+          "src/sample.v"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 408,
+        "stdout_sha256": "993b12b3821f829e75201126980662e0acc32d0bd43de77e9ff74a634989b17f"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    "reason": "rtl_file_extensions is accepted into languageExtensions but is_language('rtl', ...) is never called in LCOV v2.5 public tools; setting the key produces no exit/filesystem differential vs control (only cmd_line may differ under genhtml). Not a hollow cmd_line-only close."
+  }
+}

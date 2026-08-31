@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-list-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-lcovrc-list-control",
+      "surface": "config",
+      "command": "lcov",
+      "arguments": ["--config-file", "control.lcovrc", "--list", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-list-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcovrc-list-full-path",
+      "surface": "config",
+      "command": "lcov",
+      "arguments": ["--config-file", "full-path.lcovrc", "--list", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-list-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcovrc-list-width",
+      "surface": "config",
+      "command": "lcov",
+      "arguments": ["--config-file", "width-50.lcovrc", "--list", "input.info"],
+      "fixture": "compat/fixtures/m0-lcovrc-list-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

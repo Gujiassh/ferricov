@@ -1,0 +1,298 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan command.genpng.option.dark-mode as a source-bound cli-option boundary for genpng: input form `--dark-mode` from parser/config text `\"dark-mode\"         => \\$dark,`. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.command.genpng.option.dark-mode",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 85,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 24,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 62,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 11,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.dark-mode",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound plan for command.genpng.option.output-filename: cli-option boundary `--output-filename <value>` writes the generated image to the requested path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.option.output-filename",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 84,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 25,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 66,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 12,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-output-filename",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.output-filename",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound plan for command.genpng.option.tab-size: cli-option boundary `--tab-size <int>` controls tab expansion while rendering a committed source fixture. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.option.tab-size",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 82,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 22,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 49,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 9,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-tab-size",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.tab-size",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound plan for command.genpng.option.width: cli-option boundary `--width <int>` controls the generated image width for a committed source fixture. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.option.width",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 83,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 23,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 55,
+          "path": "docs/man/genpng.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 10,
+          "path": "help/genpng.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-width",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.option.width",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound plan for command.genpng.positional.sourcefile: cli-positional boundary `<sourcefile>` renders the named committed source fixture to the default output path. The exact suite compares exit, stdout, stderr, and filesystem state; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genpng.positional.sourcefile",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 93,
+          "path": "bin/genpng",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genpng-sourcefile-positional",
+          "suite_id": "m0-small-command-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genpng.positional.sourcefile",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed and unbound source-bound genpng primary plans with concrete argv boundaries and upstream drivers where available; no product evidence. Part 1.",
+  "fragment_id": "authored.m0-genpng-wave1-repair-a",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

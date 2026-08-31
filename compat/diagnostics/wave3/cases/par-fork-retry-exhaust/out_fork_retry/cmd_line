@@ -1,0 +1,1 @@
+genhtml lane-b/sample.info -o out_fork_retry --simplify-script ./lane-b/fork_kill.pm --synthesize-missing --parallel 2 --ignore-errors fork --rc max_fork_fails=2 --rc fork_fail_timeout=0

@@ -13,14 +13,15 @@
     "LANG": "C",
     "LC_ALL": "C",
     "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TMPDIR": "/work",
     "TZ": "UTC"
   },
   "runtime": {
     "kind": "docker_image",
-    "image": "ferricov/lcov-oracle:v2.5"
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
   },
   "environment": {
-    "image": "ferricov/lcov-oracle:v2.5",
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
     "operating_system": "Debian 12",
     "architecture": "x86_64",
     "compiler": "GCC 12.2.0",

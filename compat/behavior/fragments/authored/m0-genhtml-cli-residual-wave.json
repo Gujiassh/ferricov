@@ -1,0 +1,184 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.preserve: cli-option boundary `--preserve` uses shared `--config-file control.lcovrc` with the residual fixture. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `c4cc1497831cf14b5eb5dd51db83e32b631795247c1c2f6b0ca339b556e0c45a` (18 files, 6359 bytes); the option keeps intermediate cleanup disabled and changes the retained report/cmd_line capture relative to control. This is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.preserve",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 622,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                      CLEANUP => !defined($lcovutil::preserve_intermediates));"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1286,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "                  \"preserve\"          => \\$lcovutil::preserve_intermediates,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 10167,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5",
+          "text": "        !$lcovutil::preserve_intermediates) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-preserve",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.preserve",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.synthesize-missing: cli-option boundary `--synthesize-missing` uses shared `--config-file control.lcovrc` plus `--ignore-errors source,unsupported` on a missing-source tracefile. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `977a63d367b2c9edec60d514d8ef9f04d1bd63391c367926c4b011d8c0079590` (18 files, 6432 bytes); it synthesizes fake source content and completes a report for the missing path. This is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.synthesize-missing",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 5727,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "            !$main::synthesizeMissingFile) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 5832,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ($main::synthesizeMissingFile ||"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7237,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     'synthesize-missing'   => \\$synthesizeMissingFile,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-synthesize-missing",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.synthesize-missing",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.positional.tracefile-pattern limited to explicit multi-file positional aggregation: invocation/input boundary `input.info input2.info` uses shared `--config-file control.lcovrc` with two concrete tracefile path arguments (not shell/glob wildcards). The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `bba9c587b30ddb407492adffe550f8fbb2c09286a25b33ea2bf200ee3b46d63c` (18 files, 6359 bytes); the runner merges both explicit inputs before report generation. Glob expansion, unmatched patterns, match ordering, and duplicate matches remain separate M0 gaps and are not claimed by this plan. This is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.positional.tracefile-pattern",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7456,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "@info_filenames = AggregateTraces::find_from_glob(@ARGV);"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-control",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-residual-contract-multi",
+          "suite_id": "m0-genhtml-cli-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.positional.tracefile-pattern",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed suite-bound genhtml CLI residual plans for preserve, synthesize-missing, and explicit multi-file positional aggregation; glob pattern semantics remain M0 gaps; no product evidence.",
+  "fragment_id": "authored.m0-genhtml-cli-residual-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

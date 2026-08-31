@@ -1,0 +1,166 @@
+{
+  "ambiguous_generated_tokens": [
+    "command.genhtml.option.fail",
+    "command.genhtml.option.sort"
+  ],
+  "commands": {
+    "gendesc": 3,
+    "genhtml": 95,
+    "geninfo": 60,
+    "genpng": 6,
+    "lcov": 77,
+    "llvm2lcov": 46,
+    "perl2lcov": 46,
+    "py2lcov": 12,
+    "xml2lcov": 8,
+    "xml2lcovutil.py": 0
+  },
+  "generated_token_names": {
+    "genhtml": [
+      "--add-tracefile",
+      "--baseline-file-pattern",
+      "--capture",
+      "--compare",
+      "--diff",
+      "--erase-function",
+      "--fail",
+      "--highlight",
+      "--line",
+      "--no-source",
+      "--show-proportions",
+      "--sort"
+    ],
+    "geninfo": [
+      "--add-tracefile",
+      "--annotate-script",
+      "--capture",
+      "--coverage",
+      "--directory",
+      "--mcdc",
+      "--show-proportions"
+    ],
+    "lcov": [
+      "--annotate-script",
+      "--build-dir",
+      "--coverage",
+      "--diff",
+      "--diff-file",
+      "--history",
+      "--output-filename",
+      "--path",
+      "--substitution"
+    ],
+    "llvm2lcov": [
+      "--capture",
+      "--coverage",
+      "--gcov-tool",
+      "--ignore-error",
+      "--output",
+      "--sparse",
+      "--testname"
+    ],
+    "perl2lcov": [
+      "--ignore-error"
+    ],
+    "py2lcov": [
+      "--append",
+      "--baseline-file",
+      "--branch",
+      "--data-file",
+      "--filter"
+    ]
+  },
+  "policy_families": {
+    "gendesc": "direct_getopt_long",
+    "genhtml": "shared_getopt_long",
+    "geninfo": "shared_getopt_long",
+    "genpng": "direct_getopt_long",
+    "lcov": "shared_getopt_long",
+    "llvm2lcov": "shared_getopt_long",
+    "perl2lcov": "shared_getopt_long",
+    "py2lcov": "argparse",
+    "xml2lcov": "argparse",
+    "xml2lcovutil.py": "none"
+  },
+  "policy_source_paths": {
+    "gendesc": [
+      "bin/gendesc"
+    ],
+    "genhtml": [
+      "bin/genhtml",
+      "lib/lcovutil.pm"
+    ],
+    "geninfo": [
+      "bin/geninfo",
+      "lib/lcovutil.pm"
+    ],
+    "genpng": [
+      "bin/genpng"
+    ],
+    "lcov": [
+      "bin/lcov",
+      "lib/lcovutil.pm"
+    ],
+    "llvm2lcov": [
+      "bin/llvm2lcov",
+      "lib/lcovutil.pm"
+    ],
+    "perl2lcov": [
+      "bin/perl2lcov",
+      "lib/lcovutil.pm"
+    ],
+    "py2lcov": [
+      "bin/py2lcov"
+    ],
+    "xml2lcov": [
+      "bin/xml2lcov"
+    ],
+    "xml2lcovutil.py": [
+      "bin/xml2lcovutil.py"
+    ]
+  },
+  "positionals": {
+    "gendesc": [
+      "inputfile"
+    ],
+    "genhtml": [
+      "tracefile_pattern"
+    ],
+    "geninfo": [
+      "directory"
+    ],
+    "genpng": [
+      "sourcefile"
+    ],
+    "lcov": [
+      "operation_operands"
+    ],
+    "llvm2lcov": [
+      "json_file"
+    ],
+    "perl2lcov": [
+      "cover_db"
+    ],
+    "py2lcov": [
+      "inputs"
+    ],
+    "xml2lcov": [
+      "inputs"
+    ],
+    "xml2lcovutil.py": []
+  },
+  "schema_version": 1,
+  "unique_abbreviation_targets": {
+    "command.genhtml.option.diff": "command.genhtml.option.diff-file",
+    "command.genhtml.option.erase-function": "command.genhtml.option.erase-functions",
+    "command.genhtml.option.no-source": "command.genhtml.option.no-sourceview",
+    "command.geninfo.option.mcdc": "command.geninfo.option.mcdc-coverage",
+    "command.lcov.option.build-dir": "command.lcov.option.build-directory",
+    "command.lcov.option.history": "command.lcov.option.history-script",
+    "command.llvm2lcov.option.ignore-error": "command.llvm2lcov.option.ignore-errors",
+    "command.llvm2lcov.option.output": "command.llvm2lcov.option.output-filename",
+    "command.perl2lcov.option.ignore-error": "command.perl2lcov.option.ignore-errors"
+  },
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}

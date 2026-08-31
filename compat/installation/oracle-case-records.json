@@ -1,0 +1,1040 @@
+{
+  "case_count": 13,
+  "cases": [
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "7b15567bcfc06f2bf2366efaa113f302f12afb8828a01574c744c86d355b5f19",
+      "failure_contract_ids": [],
+      "family": "layout",
+      "id": "INST-LAYOUT-001",
+      "independent_facts": {
+        "bin_names": [
+          "gendesc",
+          "genhtml",
+          "geninfo",
+          "genpng",
+          "lcov",
+          "llvm2lcov",
+          "perl2lcov",
+          "py2lcov",
+          "xml2lcov",
+          "xml2lcovutil.py"
+        ],
+        "capture_artifact": {
+          "observation_sha256": "9e816cf6ae500d1dacb74815ecdb23ff15dab7ed298789a3998db8b65cef8414",
+          "path": "compat/installation/wave2/cases/INST-LAYOUT-001/capture.json",
+          "sha256": "926005131feb926b7d10a4d696afa00d4e280c7a5110f655f02a49d6134d8013",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e"
+        },
+        "directory_companion_entry_count": 57,
+        "directory_companion_mode": "755",
+        "directory_companion_path": "compat/installation/wave2/installed-directories.lock",
+        "directory_companion_retained": true,
+        "directory_companion_sha256": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+        "directory_entries_retained": false,
+        "file_count": 320,
+        "group_counts": {
+          "bin": 10,
+          "config": 1,
+          "example": 10,
+          "html": 60,
+          "legacy_man_symlink": 1,
+          "lib": 1,
+          "man": 10,
+          "support_scripts": 23,
+          "tests": 205
+        },
+        "legacy_symlink": {
+          "mode": "777",
+          "path": "/usr/local/man",
+          "target": "share/man"
+        },
+        "man_page_names": [
+          "gendesc.1",
+          "genhtml.1",
+          "geninfo.1",
+          "genpng.1",
+          "lcov.1",
+          "lcovrc.5",
+          "llvm2lcov.1",
+          "perl2lcov.1",
+          "py2lcov.1",
+          "spreadsheet.py.1"
+        ],
+        "manifest_sha256": "75edeea2799a5f13715df5dd119bc10614ee347aa5fc33e37fbeb21cafd8fd24",
+        "mode_counts": {
+          "644": 210,
+          "755": 110,
+          "777": 1
+        },
+        "oracle_execution_status": "captured",
+        "path_order": "lexicographic",
+        "path_root": "/usr/local",
+        "support_script_count": 23,
+        "support_script_names": [
+          "P4version.pm",
+          "analyzeInfoFiles",
+          "annotateutil.pm",
+          "batchGitVersion.pm",
+          "context.pm",
+          "criteria",
+          "criteria.pm",
+          "get_signature",
+          "getp4version",
+          "gitblame",
+          "gitblame.pm",
+          "gitdiff",
+          "gitversion",
+          "gitversion.pm",
+          "history.pm",
+          "p4annotate",
+          "p4annotate.pm",
+          "p4udiff",
+          "select.pm",
+          "simplify.pm",
+          "spreadsheet.py",
+          "threshold.pm",
+          "unreach.pm"
+        ],
+        "symlink_count": 1,
+        "tree_entry_count": 321
+      },
+      "layout_contract_ids": [
+        "INST-PATHS-001",
+        "INST-BIN-001",
+        "INST-SCRIPT-001",
+        "INST-LIB-001",
+        "INST-MAN-001",
+        "INST-HTML-001",
+        "INST-EXAMPLE-001",
+        "INST-CONFIG-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "installed_tree_partition",
+      "source_closure_ids": [
+        "installation.make-variables",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "ed8c8895c22c9946c720377f95cbebda79daf6d42037cf336eebc964e04d22e4",
+      "failure_contract_ids": [],
+      "family": "lifecycle",
+      "id": "INST-STAGE-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "80b9ed72e1d465d20d8283c32746f98147efd816977fee61e06a990cb405c98c",
+          "path": "compat/installation/wave2/cases/INST-STAGE-001/capture.json",
+          "sha256": "1482bca6d05137ceba7833bc65a0fa8e8046d8fc9cc0c597a943de0d3bf7e9b3",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "34c78bff707e0e956b39f2845519e78979b1c68bef4ad78c93884b91322b9e4e"
+        },
+        "compiled_paths_retain_prefix_without_destdir": true,
+        "oracle_execution_status": "captured",
+        "payload_under_destdir": true,
+        "requires_absolute_destdir_prefix": true,
+        "source_bindings": [
+          {
+            "line_count": 47,
+            "line_end": 84,
+            "line_start": 38,
+            "path": "Makefile",
+            "sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc",
+            "text_sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc"
+          },
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ]
+      },
+      "layout_contract_ids": [
+        "INST-PATHS-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "staged_root_versus_prefix",
+      "source_closure_ids": [
+        "installation.make-variables",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "8d884f3664799a0521d478ba446d2b30992e75d2e94eb89e03d8096dee3c23ed",
+      "failure_contract_ids": [
+        "INST-INTERP-001"
+      ],
+      "family": "failure",
+      "id": "INST-INTERP-001",
+      "independent_facts": {
+        "advertised_override_effective": false,
+        "capture_artifact": {
+          "observation_sha256": "5b844aed2d80681c692889c82702c9c8ffccc7563151f0b31d1cf737f6cc9494",
+          "path": "compat/installation/wave2/cases/INST-INTERP-001/capture.json",
+          "sha256": "d80f7ac10e68d298afdee113815e3b94605b9124f80abe86ae21b78ee8b33417",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "8ec59dcdae9493a815f7a3c6a10ac29ef94ab765845dba30c05849a4589c826a"
+        },
+        "env_shebang_excluded_from_rewrite": true,
+        "install_passes_fixinterp": false,
+        "oracle_execution_status": "captured",
+        "source_bindings": [
+          {
+            "line_count": 51,
+            "line_end": 139,
+            "line_start": 89,
+            "path": "bin/fix.pl",
+            "sha256": "47f30d96117f80ef1dd0c64757439cac537b7ac630734d56eb301deb586510c0",
+            "text_sha256": "47f30d96117f80ef1dd0c64757439cac537b7ac630734d56eb301deb586510c0"
+          },
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ]
+      },
+      "layout_contract_ids": [],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "interpreter_fixup_ineffective",
+      "source_closure_ids": [
+        "installation.fixup",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "2c3b76f9fbce0e6437efaa6b99de7737aac99ae24a0bb24d4c45591acc1c319b",
+      "failure_contract_ids": [
+        "INST-CONFIG-DISCOVERY-001"
+      ],
+      "family": "failure",
+      "id": "INST-CONFIG-DISCOVERY-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "8ac7f0873f05e2e272dba679edd137c34639247cad4ca5d72f0188f012613e07",
+          "path": "compat/installation/wave2/cases/INST-CONFIG-DISCOVERY-001/capture.json",
+          "sha256": "a02241140ff594323750e606eb6fd19041ca890abf582d322254e904035a93e6",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "370b73f4fa66265c73a96aa256ff91c82c552b688860de4b1b94190582ca7438"
+        },
+        "compiled_prefix_alone_selects_system_file": false,
+        "oracle_execution_status": "captured",
+        "search_order": [
+          "$HOME/.lcovrc",
+          "$LCOV_HOME/etc/lcovrc"
+        ],
+        "source_bindings": [
+          {
+            "line_count": 13,
+            "line_end": 1460,
+            "line_start": 1448,
+            "path": "lib/lcovutil.pm",
+            "sha256": "ae5a9d8ae32183c604e34f520c337bad806c2c3dc22a7bdbf4edd8a2dfabdf1d",
+            "text_sha256": "ae5a9d8ae32183c604e34f520c337bad806c2c3dc22a7bdbf4edd8a2dfabdf1d"
+          }
+        ],
+        "stops_after_first_readable": true
+      },
+      "layout_contract_ids": [
+        "INST-CONFIG-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "config_discovery_precedence",
+      "source_closure_ids": [
+        "installation.config-discovery"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "ba496e4da40754848a3619267c4b4dbc9375fbc342b882635cb21e115ad5e4cb",
+      "failure_contract_ids": [
+        "INST-UNINSTALL-001"
+      ],
+      "family": "failure",
+      "id": "INST-UNINSTALL-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "fad442b35d5b19ec0b49fa516ae3ffdeafb07f3564c7ee22a834cd9d482edfd4",
+          "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/capture.json",
+          "sha256": "59fdee753fae44726c64f58c4bbe9cfe573b2213db9659b841c7babafc259eb7",
+          "stderr_sha256": "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8",
+          "stdout_sha256": "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3"
+        },
+        "foreign_sentinels_removed": true,
+        "isolated_root_required": true,
+        "man_uninstall_enumerates_source_glob": true,
+        "oracle_execution_status": "captured",
+        "recursive_removal_targets": [
+          "lib/lcov",
+          "share/lcov"
+        ],
+        "source_bindings": [
+          {
+            "line_count": 12,
+            "line_end": 174,
+            "line_start": 163,
+            "path": "Makefile",
+            "sha256": "28cc0ac4356a57c253d0ea48865826558b074f05eb1e74fc7256745db57f5f44",
+            "text_sha256": "28cc0ac4356a57c253d0ea48865826558b074f05eb1e74fc7256745db57f5f44"
+          },
+          {
+            "line_count": 30,
+            "line_end": 223,
+            "line_start": 194,
+            "path": "Makefile",
+            "sha256": "a57b713bec7ad333c4ee71ef70c3f4b3daeee40683e57612d8076021c48ccca9",
+            "text_sha256": "a57b713bec7ad333c4ee71ef70c3f4b3daeee40683e57612d8076021c48ccca9"
+          }
+        ]
+      },
+      "layout_contract_ids": [
+        "INST-MAN-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "uninstall_residue_and_recursive_removal",
+      "source_closure_ids": [
+        "installation.make-uninstall",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "21309fc29a7d8c632625b6ce214105dd8d5c8a90d3152858f39fa640efd42dc3",
+      "failure_contract_ids": [
+        "INST-PARTIAL-001"
+      ],
+      "family": "failure",
+      "id": "INST-PARTIAL-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "0e352b30a9ac3e6129e7532af09f846c8ef37bf2b0e31cc5d640db00e7bb0dca",
+          "path": "compat/installation/wave2/cases/INST-PARTIAL-001/capture.json",
+          "sha256": "708a05c719aa8414f5908e1e1d69c52ae3f17bcebcd4e231610aa2604741862b",
+          "stderr_sha256": "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b",
+          "stdout_sha256": "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e"
+        },
+        "oracle_execution_status": "captured",
+        "partial_payload_possible": true,
+        "rollback": false,
+        "source_bindings": [
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ],
+        "transactional": false
+      },
+      "layout_contract_ids": [],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "non_transactional_install_loops",
+      "source_closure_ids": [
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "cf1bb580dc4d4438904b71a1be4f2792119436dacd4e3121bbc708859a233ef0",
+      "failure_contract_ids": [
+        "INST-DOC-FAIL-001"
+      ],
+      "family": "failure",
+      "id": "INST-DOC-FAIL-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "8bc2ac3c58cb2ada420a4dcc3253d3a06566f9722a4a1b75439a713f71d2c042",
+          "path": "compat/installation/wave2/cases/INST-DOC-FAIL-001/capture.json",
+          "sha256": "ec9904320b14d9a783eb0cd1bb72e9da6254dda51233d8a6418c4bfa1da9db18",
+          "stderr_sha256": "0d9f796b4835c9e01cff30ed23335a6cb682b2a897b00b2d08f0f0eeec9be0de",
+          "stdout_sha256": "23f07f060f3cb14c91561f1bbb69f4daac6830bd3b7afafa3cc61530d1ae5fa5"
+        },
+        "doc_finished_is_hard_prerequisite": true,
+        "install_cleans_source_example_and_tests": true,
+        "missing_sphinx_or_theme_fails_before_payload": true,
+        "oracle_execution_status": "captured",
+        "source_bindings": [
+          {
+            "line_count": 66,
+            "line_end": 190,
+            "line_start": 125,
+            "path": "Makefile",
+            "sha256": "2f8eab0c5f3fb3763015e863add91f7a587230c2f6ed50e6a247c480e45296ce",
+            "text_sha256": "2f8eab0c5f3fb3763015e863add91f7a587230c2f6ed50e6a247c480e45296ce"
+          },
+          {
+            "line_count": 19,
+            "line_end": 22,
+            "line_start": 4,
+            "path": "docs/Makefile",
+            "sha256": "59776c600d7a2757d5b33cfe2a1a699a877b7675fea15659072ad24bb521dd30",
+            "text_sha256": "59776c600d7a2757d5b33cfe2a1a699a877b7675fea15659072ad24bb521dd30"
+          },
+          {
+            "line_count": 30,
+            "line_end": 63,
+            "line_start": 34,
+            "path": "docs/conf.py",
+            "sha256": "e21fdbb819e73631141aaea7362c5f6a2e874422ceec98b193409140e8ebef84",
+            "text_sha256": "e21fdbb819e73631141aaea7362c5f6a2e874422ceec98b193409140e8ebef84"
+          }
+        ]
+      },
+      "layout_contract_ids": [],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "documentation_prerequisite_before_payload",
+      "source_closure_ids": [
+        "installation.make-doc-install",
+        "installation.docs-build",
+        "installation.docs-config"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "067926a66bf21723632076baa1f558132f581f64deb533ebdefdf920140f261e",
+      "failure_contract_ids": [
+        "INST-PATH-001"
+      ],
+      "family": "failure",
+      "id": "INST-PATH-001",
+      "independent_facts": {
+        "capture_artifacts": {
+          "relative": {
+            "observation_sha256": "c142599a35cdc03f82b18fa0b4f6758037b1531eba236515712a3f9c472c65a5",
+            "path": "compat/installation/wave2/cases/INST-PATH-001/relative/capture.json",
+            "sha256": "c2f8281633aadba4f8934043977aabe2d5db0e23e687daea74912f2762026f9b",
+            "stderr_sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732",
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "space": {
+            "observation_sha256": "5ab49e6d43734fd69c0f12269d07682371bb6c3af4a5e8b15b585affafa793b1",
+            "path": "compat/installation/wave2/cases/INST-PATH-001/space/capture.json",
+            "sha256": "233a5dfd0d0f9608b7ae6e32d90e5a14fa87e60dfadbd4c07f88a454faad8de0",
+            "stderr_sha256": "2e696725fb8a1dcccdec20855f94b38ee86c65d80ec754c277559f40b02840de",
+            "stdout_sha256": "9c1c2bc44beb089ff7103020c5b19be6da066add6f6edf8687779e3fc0cb9aa5"
+          }
+        },
+        "oracle_execution_status": "captured",
+        "relative_roots_rejected": true,
+        "requires_absolute_destdir_prefix": true,
+        "source_bindings": [
+          {
+            "line_count": 47,
+            "line_end": 84,
+            "line_start": 38,
+            "path": "Makefile",
+            "sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc",
+            "text_sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc"
+          },
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ],
+        "space_containing_paths_platform_sensitive": true
+      },
+      "layout_contract_ids": [
+        "INST-PATHS-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "install_root_path_variants",
+      "source_closure_ids": [
+        "installation.make-variables",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "87bab1a1da0fb8486155e33383ff155bc025f1d843d153ddf41775d298eaff14",
+      "failure_contract_ids": [
+        "INST-DIRTY-ASSET-001"
+      ],
+      "family": "failure",
+      "id": "INST-DIRTY-ASSET-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "63886a6be5008746d23cd236547a3f5946ef6d3797e9179cdad7436eb09dfc63",
+          "path": "compat/installation/wave2/cases/INST-DIRTY-ASSET-001/capture.json",
+          "sha256": "2f8822ca11f6ca241824df2c3b11b2998e72b06725d7275892af3bdef986bdd7",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "fd43b7b1eb74da0952f026b075c706cb0bea78b396d3cde437efb5080a07362d"
+        },
+        "examples_and_tests_from_working_tree": true,
+        "oracle_execution_status": "captured",
+        "retained_support_script_count": 23,
+        "retained_support_script_names": [
+          "P4version.pm",
+          "analyzeInfoFiles",
+          "annotateutil.pm",
+          "batchGitVersion.pm",
+          "context.pm",
+          "criteria",
+          "criteria.pm",
+          "get_signature",
+          "getp4version",
+          "gitblame",
+          "gitblame.pm",
+          "gitdiff",
+          "gitversion",
+          "gitversion.pm",
+          "history.pm",
+          "p4annotate",
+          "p4annotate.pm",
+          "p4udiff",
+          "select.pm",
+          "simplify.pm",
+          "spreadsheet.py",
+          "threshold.pm",
+          "unreach.pm"
+        ],
+        "scripts_from_dynamic_ls": true,
+        "source_bindings": [
+          {
+            "line_count": 47,
+            "line_end": 84,
+            "line_start": 38,
+            "path": "Makefile",
+            "sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc",
+            "text_sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc"
+          },
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ],
+        "untracked_ordinary_files_can_enter_install": true
+      },
+      "layout_contract_ids": [
+        "INST-SCRIPT-001",
+        "INST-EXAMPLE-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "dynamic_working_tree_enumeration",
+      "source_closure_ids": [
+        "installation.make-variables",
+        "installation.make-doc-install"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "aa3d4e4d13484bcb509e97693b7f8381ea8951fe5da04047b01a75d1eae47699",
+      "failure_contract_ids": [
+        "INST-TEST-RUN-001"
+      ],
+      "family": "failure",
+      "id": "INST-TEST-RUN-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "20d21303ff19b583d6e32850b4a48eb81b0b5ed1ffc74c5282e9b19e37ae4a6f",
+          "path": "compat/installation/wave2/cases/INST-TEST-RUN-001/capture.json",
+          "sha256": "4e0dc998b0e0176c45b685b0106ebcdf501f2fd5743af598c599fdf8c7fa0413",
+          "stderr_sha256": "fea70f3bac590f8e420ca2fb65d8395bb46b1beadbf93169c67214acf8898c8f",
+          "stdout_sha256": "279a529f3cfbb1149c1baa9e77baa4d47ffdddc6632b611e1912c0a18350fb25"
+        },
+        "explicit_lcov_home_required_for_installed_tests": true,
+        "oracle_execution_status": "captured",
+        "retained_test_entry_count": 205,
+        "source_bindings": [
+          {
+            "line_count": 17,
+            "line_end": 18,
+            "line_start": 2,
+            "path": "tests/common.mak",
+            "sha256": "5c67df33b42c0a90985c44424e8ccc62911599046a118067d48ee5c4045a1374",
+            "text_sha256": "5c67df33b42c0a90985c44424e8ccc62911599046a118067d48ee5c4045a1374"
+          },
+          {
+            "line_count": 8,
+            "line_end": 83,
+            "line_start": 76,
+            "path": "tests/common.mak",
+            "sha256": "a3468ccc261de0e5712659181a20e852fd590c093c15efc6119bb7af2fa9cad6",
+            "text_sha256": "a3468ccc261de0e5712659181a20e852fd590c093c15efc6119bb7af2fa9cad6"
+          },
+          {
+            "line_count": 6,
+            "line_end": 18,
+            "line_start": 13,
+            "path": "tests/README.md",
+            "sha256": "8da4299dce5668645f4af43904bf51a76c5afa36e75e33615bb3435cd1c1e62e",
+            "text_sha256": "8da4299dce5668645f4af43904bf51a76c5afa36e75e33615bb3435cd1c1e62e"
+          }
+        ],
+        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": true
+      },
+      "layout_contract_ids": [],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "installed_test_runtime_paths",
+      "source_closure_ids": [
+        "installation.test-runtime",
+        "installation.test-paths",
+        "installation.test-readme"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "e65f6c0c217afc83fb0758092f71ca9cde184331d6378b189352ba5e37b475c4",
+      "failure_contract_ids": [
+        "INST-DOC-PATH-001"
+      ],
+      "family": "failure",
+      "id": "INST-DOC-PATH-001",
+      "independent_facts": {
+        "actual_retained_roots": {
+          "bin": "/usr/local/bin",
+          "config": "/usr/local/etc/lcovrc",
+          "html": "/usr/local/share/lcov/html",
+          "lib": "/usr/local/lib/lcov",
+          "man": "/usr/local/share/man",
+          "scripts": "/usr/local/share/lcov/support-scripts",
+          "tests": "/usr/local/share/lcov/tests"
+        },
+        "capture_artifact": {
+          "observation_sha256": "00d4d887b9628755ef53c2bdd31bf03c3d505f1ae99715a9d6082533c1daef2c",
+          "path": "compat/installation/wave2/cases/INST-DOC-PATH-001/capture.json",
+          "sha256": "98f0f2a5c09a7b5abf03c5a372bd89abd79003fa308d6acb627e916d8e6eac0f",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "5ff7679291315f27f6ef621f97225fafc9829b52daedb10d4a8e87f20dc25ffa"
+        },
+        "documentation_mismatch_must_be_recorded": true,
+        "oracle_execution_status": "captured",
+        "source_bindings": [
+          {
+            "line_count": 15,
+            "line_end": 139,
+            "line_start": 125,
+            "path": "README.rst",
+            "sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1",
+            "text_sha256": "f6203a5b18e80b9e9710156c11ebd390fc2a741a1dfe4aaa0d82f424b341f6f1"
+          },
+          {
+            "line_count": 47,
+            "line_end": 84,
+            "line_start": 38,
+            "path": "Makefile",
+            "sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc",
+            "text_sha256": "8c5bf3b0a1cd199938441265ac763bdffed889d1d4d4f6809294269aafc109cc"
+          }
+        ],
+        "truth_source": "installed_tree_filesystem_evidence"
+      },
+      "layout_contract_ids": [
+        "INST-PATHS-001",
+        "INST-MAN-001"
+      ],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "documented_path_mismatch",
+      "source_closure_ids": [
+        "installation.readme-paths",
+        "installation.make-variables"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "b4c82cdc9a22800b3ac2878de56744a0f8a385d7589e83158283db1cc5137e15",
+      "failure_contract_ids": [],
+      "family": "asset",
+      "id": "INST-REPORT-ASSET-001",
+      "independent_facts": {
+        "asset_count": 7,
+        "assets_are_runtime_not_install_payload": true,
+        "capture_artifact": {
+          "observation_sha256": "b3e0b770562ac40feee8ad74e0a227d1f69d6d47a98a687ad01104d59627662e",
+          "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/capture.json",
+          "sha256": "9b29ecd5ad641767912d5fec9e70b97577bb5e643f6ec94218d8c707ebdbfdfc",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4"
+        },
+        "observation_count": 4,
+        "observations": [
+          {
+            "artifact_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-000/output-tree.json",
+            "artifact_sha256": "6b45e6e2c1f7a9f55df111c47045d6a68e69c7f5f8a1b9f23ce49cad96af83a7",
+            "asset_count": 7,
+            "assets": {
+              "amber.png": {
+                "bytes": 141,
+                "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb",
+                "status": "created"
+              },
+              "emerald.png": {
+                "bytes": 141,
+                "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83",
+                "status": "created"
+              },
+              "gcov.css": {
+                "bytes": 24155,
+                "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d",
+                "status": "created"
+              },
+              "glass.png": {
+                "bytes": 167,
+                "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5",
+                "status": "created"
+              },
+              "ruby.png": {
+                "bytes": 141,
+                "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be",
+                "status": "created"
+              },
+              "snow.png": {
+                "bytes": 141,
+                "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723",
+                "status": "created"
+              },
+              "updown.png": {
+                "bytes": 117,
+                "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c",
+                "status": "created"
+              }
+            },
+            "id": "installation.asset-observation.report-genhtml-default-measured-000",
+            "phase": "measured",
+            "sample_case_id": "report-genhtml-default",
+            "sample_id": "report-genhtml-default-measured-000",
+            "sample_metadata_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-000/sample.json",
+            "sample_metadata_sha256": "2ff8dcf8efc631462f8a9a97cead439449bcc8367fc1433942d0d37d25558aa5"
+          },
+          {
+            "artifact_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-001/output-tree.json",
+            "artifact_sha256": "c0c12cc0504942e99e2c5fa50dea8b053c16c0e2809987506626e6135b8fb01f",
+            "asset_count": 7,
+            "assets": {
+              "amber.png": {
+                "bytes": 141,
+                "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb",
+                "status": "created"
+              },
+              "emerald.png": {
+                "bytes": 141,
+                "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83",
+                "status": "created"
+              },
+              "gcov.css": {
+                "bytes": 24155,
+                "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d",
+                "status": "created"
+              },
+              "glass.png": {
+                "bytes": 167,
+                "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5",
+                "status": "created"
+              },
+              "ruby.png": {
+                "bytes": 141,
+                "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be",
+                "status": "created"
+              },
+              "snow.png": {
+                "bytes": 141,
+                "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723",
+                "status": "created"
+              },
+              "updown.png": {
+                "bytes": 117,
+                "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c",
+                "status": "created"
+              }
+            },
+            "id": "installation.asset-observation.report-genhtml-default-measured-001",
+            "phase": "measured",
+            "sample_case_id": "report-genhtml-default",
+            "sample_id": "report-genhtml-default-measured-001",
+            "sample_metadata_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-001/sample.json",
+            "sample_metadata_sha256": "0feefe681ad1f21aeb8c352adee36746e2d97f6b911b6477b920a876a8724b5c"
+          },
+          {
+            "artifact_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-002/output-tree.json",
+            "artifact_sha256": "f8e42c0433d562edc74210e69d64e959348851627b038f954ac78bb741a4c368",
+            "asset_count": 7,
+            "assets": {
+              "amber.png": {
+                "bytes": 141,
+                "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb",
+                "status": "created"
+              },
+              "emerald.png": {
+                "bytes": 141,
+                "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83",
+                "status": "created"
+              },
+              "gcov.css": {
+                "bytes": 24155,
+                "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d",
+                "status": "created"
+              },
+              "glass.png": {
+                "bytes": 167,
+                "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5",
+                "status": "created"
+              },
+              "ruby.png": {
+                "bytes": 141,
+                "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be",
+                "status": "created"
+              },
+              "snow.png": {
+                "bytes": 141,
+                "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723",
+                "status": "created"
+              },
+              "updown.png": {
+                "bytes": 117,
+                "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c",
+                "status": "created"
+              }
+            },
+            "id": "installation.asset-observation.report-genhtml-default-measured-002",
+            "phase": "measured",
+            "sample_case_id": "report-genhtml-default",
+            "sample_id": "report-genhtml-default-measured-002",
+            "sample_metadata_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-measured-002/sample.json",
+            "sample_metadata_sha256": "c65aed31ba534877c10ec17a60ca8a92f926e501e19ece9626b55a4f8d008cc4"
+          },
+          {
+            "artifact_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-warmup-000/output-tree.json",
+            "artifact_sha256": "6a457161384a125f32227957760a74109857fd28e1f29e59ee37159296641bab",
+            "asset_count": 7,
+            "assets": {
+              "amber.png": {
+                "bytes": 141,
+                "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb",
+                "status": "created"
+              },
+              "emerald.png": {
+                "bytes": 141,
+                "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83",
+                "status": "created"
+              },
+              "gcov.css": {
+                "bytes": 24155,
+                "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d",
+                "status": "created"
+              },
+              "glass.png": {
+                "bytes": 167,
+                "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5",
+                "status": "created"
+              },
+              "ruby.png": {
+                "bytes": 141,
+                "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be",
+                "status": "created"
+              },
+              "snow.png": {
+                "bytes": 141,
+                "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723",
+                "status": "created"
+              },
+              "updown.png": {
+                "bytes": 117,
+                "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c",
+                "status": "created"
+              }
+            },
+            "id": "installation.asset-observation.report-genhtml-default-warmup-000",
+            "phase": "warmup",
+            "sample_case_id": "report-genhtml-default",
+            "sample_id": "report-genhtml-default-warmup-000",
+            "sample_metadata_path": "compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-warmup-000/sample.json",
+            "sample_metadata_sha256": "f86f9774eba770f04da0c94f19caa24ef3730091040950bb811d20cee0d1b847"
+          }
+        ],
+        "optional_updown_and_html_reference_qualification_open": true,
+        "oracle_execution_status": "captured",
+        "runtime_assets": [
+          {
+            "bytes": 24155,
+            "id": "gcov-css",
+            "kind": "css",
+            "name": "gcov.css",
+            "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d"
+          },
+          {
+            "bytes": 141,
+            "id": "ruby-png",
+            "kind": "png",
+            "name": "ruby.png",
+            "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be"
+          },
+          {
+            "bytes": 141,
+            "id": "amber-png",
+            "kind": "png",
+            "name": "amber.png",
+            "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb"
+          },
+          {
+            "bytes": 141,
+            "id": "emerald-png",
+            "kind": "png",
+            "name": "emerald.png",
+            "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83"
+          },
+          {
+            "bytes": 141,
+            "id": "snow-png",
+            "kind": "png",
+            "name": "snow.png",
+            "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723"
+          },
+          {
+            "bytes": 167,
+            "id": "glass-png",
+            "kind": "png",
+            "name": "glass.png",
+            "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5"
+          },
+          {
+            "bytes": 117,
+            "id": "updown-png",
+            "kind": "png",
+            "name": "updown.png",
+            "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c"
+          }
+        ],
+        "source_bindings": [
+          {
+            "line_count": 1,
+            "line_end": 7128,
+            "line_start": 7128,
+            "path": "bin/genhtml",
+            "sha256": "bf89549580e0bf55fdb2c819b4673c35de3b523a0161c72b3517e47b666949b7",
+            "text_sha256": "bf89549580e0bf55fdb2c819b4673c35de3b523a0161c72b3517e47b666949b7"
+          },
+          {
+            "line_count": 1,
+            "line_end": 7952,
+            "line_start": 7952,
+            "path": "bin/genhtml",
+            "sha256": "63492766809050d21cbaf5e48b0357344153ec6484016601a1be26cfd1a06bc3",
+            "text_sha256": "63492766809050d21cbaf5e48b0357344153ec6484016601a1be26cfd1a06bc3"
+          },
+          {
+            "line_count": 225,
+            "line_end": 9046,
+            "line_start": 8822,
+            "path": "bin/genhtml",
+            "sha256": "2b17728fb893cc8cf9091959b6a6502cebb10d9345e43e04d6fbc91e7a7cea94",
+            "text_sha256": "2b17728fb893cc8cf9091959b6a6502cebb10d9345e43e04d6fbc91e7a7cea94"
+          }
+        ]
+      },
+      "layout_contract_ids": [
+        "INST-REPORT-ASSET-001"
+      ],
+      "observation_ids": [
+        "installation.asset-observation.report-genhtml-default-measured-000",
+        "installation.asset-observation.report-genhtml-default-measured-001",
+        "installation.asset-observation.report-genhtml-default-measured-002",
+        "installation.asset-observation.report-genhtml-default-warmup-000"
+      ],
+      "product_evidence": [],
+      "role": "runtime_report_assets",
+      "source_closure_ids": [
+        "installation.asset-names",
+        "installation.asset-generation",
+        "installation.asset-writers"
+      ]
+    },
+    {
+      "evidence_status": "oracle_reference",
+      "execution_status": "planned",
+      "facts_sha256": "615ffe11b0c8520b0581d43799ad21e9cba78eea3eb168c1ffbce611ed439277",
+      "failure_contract_ids": [
+        "INST-LICENSE-001"
+      ],
+      "family": "license",
+      "id": "INST-LICENSE-001",
+      "independent_facts": {
+        "capture_artifact": {
+          "observation_sha256": "e3ba641d2b5dbc2c399e30383d6f660a8814e4a195f699d2b88b92fd69057054",
+          "path": "compat/installation/wave2/cases/INST-LICENSE-001/capture.json",
+          "sha256": "2d9a45e0825c707816554c7b58bcd27f9ac05f8bbafd8c24a1fd75ebb9a122b8",
+          "stderr_sha256": "1c671c7e99ff530451311814bbfdab043a8e7bae8a97accf02ab194aa595a53c",
+          "stdout_sha256": "72b6c461f512ef6e7a0c8d2839f4e00c352c1ddd983fc11a5dd599d6269ff4b6"
+        },
+        "copying_in_install_payload": false,
+        "copying_in_source_archive_manifest": true,
+        "oracle_execution_status": "captured",
+        "retained_tree_contains_copying": false,
+        "source_bindings": [
+          {
+            "line_count": 2,
+            "line_end": 72,
+            "line_start": 71,
+            "path": "Makefile",
+            "sha256": "5dad04b9ccb5095ccecc6a3004781b2c4396589d79e0e03b483887044d6910c4",
+            "text_sha256": "5dad04b9ccb5095ccecc6a3004781b2c4396589d79e0e03b483887044d6910c4"
+          },
+          {
+            "line_count": 57,
+            "line_end": 190,
+            "line_start": 134,
+            "path": "Makefile",
+            "sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89",
+            "text_sha256": "44793faf80ac42b9424aab037c396943b4e05b62489285241062c9a0e3aeec89"
+          }
+        ],
+        "upstream_omission_is_not_permission_to_omit": true
+      },
+      "layout_contract_ids": [],
+      "observation_ids": [],
+      "product_evidence": [],
+      "role": "distribution_license_manifest",
+      "source_closure_ids": [
+        "installation.make-variables",
+        "installation.make-doc-install"
+      ]
+    }
+  ],
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+  "upstream_release": "v2.5"
+}

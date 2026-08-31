@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, and numeric/error/checksum probes.",
+  "description": "Pinned LCOV 2.5 executions for every fixture plus canonicalization, ignored-error recovery, state-ownership semantic snapshots, function-record probes, branch-record probes, numeric/error/checksum probes, wave-1 comment/TN/SF/MCDC/order/repeat/feature/summary probes, wave-2 framing/TN-diff/KF/DA/summary/terminator/unknown-tag probes, and writer/converter/transport probes.",
   "execution": {
     "working_directory": "/work",
     "input_name": "input.info",
@@ -948,6 +948,279 @@
         "input.info"
       ],
       "expected_exit": 0
+    },
+    {
+      "id": "wave1-comments-core.summary",
+      "fixture": "fixtures/wave1/comments-core.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-comments-core.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-comments-leading-space.summary",
+      "fixture": "fixtures/wave1/comments-leading-space.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-comments-leading-space.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave1-tn-names.summary",
+      "fixture": "fixtures/wave1/tn-names.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-tn-names.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-sf-paths.summary",
+      "fixture": "fixtures/wave1/sf-paths.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-sf-paths.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-sf-empty.summary",
+      "fixture": "fixtures/wave1/sf-empty.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-sf-empty.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave1-sf-whitespace.summary",
+      "fixture": "fixtures/wave1/sf-whitespace.info",
+      "requirement": "M1-TF-002/003/005/014/020/023/027/028",
+      "description": "Default summary observation for wave1-sf-whitespace.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-framing-blank.summary",
+      "fixture": "fixtures/wave2/framing-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-crlf-blank.summary",
+      "fixture": "fixtures/wave2/framing-crlf-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-crlf-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-no-final-newline-blank.summary",
+      "fixture": "fixtures/wave2/framing-no-final-newline-blank.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-no-final-newline-blank.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-trailing-ws.summary",
+      "fixture": "fixtures/wave2/framing-trailing-ws.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-framing-trailing-ws.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-tn-diff.summary",
+      "fixture": "fixtures/wave2/tn-diff.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-tn-diff.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-parity.summary",
+      "fixture": "fixtures/wave2/kf-parity.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-kf-parity.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-empty.summary",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-kf-empty.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-da-accumulate.summary",
+      "fixture": "fixtures/wave2/da-accumulate.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-da-accumulate.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-summary-forms.summary",
+      "fixture": "fixtures/wave2/summary-forms.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-summary-forms.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-suffix.summary",
+      "fixture": "fixtures/wave2/terminator-suffix.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-suffix.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-dup.summary",
+      "fixture": "fixtures/wave2/terminator-dup.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-dup.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-missing.summary",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-terminator-missing.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-unknown-tags.summary",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-unknown-tags.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-leading-ws-tag.summary",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-leading-ws-tag.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-case-change.summary",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-001/004/006/008/012/015/016",
+      "description": "Default summary observation for wave2-case-change.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
     },
     {
       "id": "scale-medium.summary",
@@ -2283,6 +2556,362 @@
       "expected_exit": 0
     },
     {
+      "id": "numeric-format-atoms.tf030.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 row-level semantic snapshot for the 12 upstream format-atoms without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative",
+        "--numeric-plan",
+        "tf030-format-atoms-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+      "fixture": "fixtures/numeric/format-atoms.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 row-level semantic snapshot for the 12 upstream format-atoms with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "format,negative,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-format-atoms-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-format-atoms-plan.json": "fixtures/numeric/tf030-format-atoms-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.default-stop",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Default stop on FNA -2 negative; output absent.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-stop-format",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative then stop on malformed exponent format; output absent.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative and format; coerce first two atoms to zero and retain 1.5e+20 and -0.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for four FNA mirror rows without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,format",
+        "--numeric-plan",
+        "tf030-fna-mirror-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-default-stop",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "With threshold 1000000 and negative/format ignored, stop on excessive 1.5e+20.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative/format/excessive with threshold; retain excessive value.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "negative,format,excessive",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for four FNA mirror rows with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,format,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-fna-mirror-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-fna-mirror-plan.json": "fixtures/numeric/tf030-fna-mirror-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.default-stop",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Without threshold, -Inf selects negative and default stop leaves output absent.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.ignore-negative.canonical",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative coerces only -Inf to zero and writes output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for all 40 candidate rows without threshold.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative",
+        "--numeric-plan",
+        "tf030-candidate-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-default-stop",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "With threshold 1000000, first positive infinity selects excessive before -Inf.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1,
+      "expected_output_exists": false,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-ignore-all.canonical",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "Ignore negative/excessive; retain infinities and NaNs; coerce -Inf to zero.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--ignore-errors",
+        "negative,excessive",
+        "--rc",
+        "excessive_count_threshold=1000000",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "expected_output_exists": true,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
+      "id": "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "requirement": "M1-TF-030",
+      "description": "TF-030 semantic snapshot for all 40 candidate rows with threshold 1000000.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "--ignore",
+        "negative,excessive",
+        "--excessive-threshold",
+        "1000000",
+        "--numeric-plan",
+        "tf030-candidate-plan.json",
+        "input.info"
+      ],
+      "additional_fixtures": {
+        "tf030-candidate-plan.json": "fixtures/numeric/tf030-candidate-plan.json"
+      },
+      "expected_exit": 0,
+      "environment": {
+        "PERL_HASH_SEED": "0",
+        "PERL_PERTURB_KEYS": "0"
+      }
+    },
+    {
       "id": "branches-forms-core.canonical",
       "fixture": "fixtures/branches/forms-core.info",
       "requirement": "M1-TF-013",
@@ -2529,6 +3158,1239 @@
       "argv": [
         "lcov",
         "--branch-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-comments-core.canonical",
+      "fixture": "fixtures/wave1/comments-core.info",
+      "requirement": "M1-TF-002",
+      "description": "Canonical rewrite drops all input column-zero comments.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-comments-leading-space.canonical",
+      "fixture": "fixtures/wave1/comments-leading-space.info",
+      "requirement": "M1-TF-002",
+      "description": "Write attempt for leading-space # hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave1-comments-leading-space.ignore-format",
+      "fixture": "fixtures/wave1/comments-leading-space.info",
+      "requirement": "M1-TF-002",
+      "description": "Ignore-format recovery skips the leading-space non-comment record.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-tn-names.canonical",
+      "fixture": "fixtures/wave1/tn-names.info",
+      "requirement": "M1-TF-003",
+      "description": "Canonical rewrite of empty TN, valid names, sanitization, and per-section TN emission.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-tn-forget.canonical",
+      "fixture": "fixtures/wave1/tn-forget.info",
+      "requirement": "M1-TF-003",
+      "description": "Forget-test-names merges named sections into empty TN with additive counts.",
+      "argv": [
+        "lcov",
+        "--forget-test-names",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-sf-paths.canonical",
+      "fixture": "fixtures/wave1/sf-paths.info",
+      "requirement": "M1-TF-005",
+      "description": "Canonical rewrite preserves SF path bytes and merges repeated source/test sections.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-sf-empty.canonical",
+      "fixture": "fixtures/wave1/sf-empty.info",
+      "requirement": "M1-TF-005",
+      "description": "Write attempt for empty SF payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave1-sf-whitespace.canonical",
+      "fixture": "fixtures/wave1/sf-whitespace.info",
+      "requirement": "M1-TF-005",
+      "description": "Write attempt for whitespace-only SF payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave1-mcdc-core.canonical",
+      "fixture": "fixtures/wave1/mcdc-core.info",
+      "requirement": "M1-TF-014",
+      "description": "Canonical rewrite of MCDC group sizes, indices, senses, comma expressions, and repeated counts.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-mcdc-core.semantic-snapshot",
+      "fixture": "fixtures/wave1/mcdc-core.info",
+      "requirement": "M1-TF-014",
+      "description": "Semantic snapshot for MCDC groups, senses, expressions, and additive sense counts.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-mcdc-u-modes.canonical",
+      "fixture": "fixtures/wave1/mcdc-u-modes.info",
+      "requirement": "M1-TF-014",
+      "description": "Canonical rewrite retaining U exclusion under default unreachable-flag mode.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-mcdc-u-modes.clear-unreachable",
+      "fixture": "fixtures/wave1/mcdc-u-modes.info",
+      "requirement": "M1-TF-014",
+      "description": "Canonical rewrite clearing U exclusion with ignore_unreachable_flag=1.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--rc",
+        "ignore_unreachable_flag=1",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-order-canonical.canonical",
+      "fixture": "fixtures/wave1/order-canonical.info",
+      "requirement": "M1-TF-020",
+      "description": "Canonical rewrite from writer-like cross-family order.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-order-canonical.semantic-snapshot",
+      "fixture": "fixtures/wave1/order-canonical.info",
+      "requirement": "M1-TF-020",
+      "description": "Semantic snapshot for writer-like cross-family order.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-order-permuted.canonical",
+      "fixture": "fixtures/wave1/order-permuted.info",
+      "requirement": "M1-TF-020",
+      "description": "Canonical rewrite from DA-first cross-family order permutation.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-order-permuted.semantic-snapshot",
+      "fixture": "fixtures/wave1/order-permuted.info",
+      "requirement": "M1-TF-020",
+      "description": "Semantic snapshot for DA-first order permutation; must match canonical order model.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-repeat-same-tn.canonical",
+      "fixture": "fixtures/wave1/repeat-same-tn.info",
+      "requirement": "M1-TF-023",
+      "description": "Canonical additive rewrite of repeated same-TN source sections for line/function/branch.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-repeat-same-tn.semantic-snapshot",
+      "fixture": "fixtures/wave1/repeat-same-tn.info",
+      "requirement": "M1-TF-023",
+      "description": "Semantic snapshot of additive same-TN repeated sections.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-repeat-diff-tn-mcdc.canonical",
+      "fixture": "fixtures/wave1/repeat-diff-tn-mcdc.info",
+      "requirement": "M1-TF-023",
+      "description": "Canonical rewrite of different-TN repeated source with MC/DC ownership and additive counts.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-repeat-diff-tn-mcdc.semantic-snapshot",
+      "fixture": "fixtures/wave1/repeat-diff-tn-mcdc.info",
+      "requirement": "M1-TF-023",
+      "description": "Semantic snapshot of different-TN MC/DC repeated source ownership.",
+      "runner": "inspect_model.pl",
+      "argv": [
+        "perl",
+        "inspect_model.pl",
+        "input.info"
+      ],
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.default-function-only",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "Default flags keep function coverage and drop branch/MC/DC records.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.all-enabled",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "Function, branch, and MC/DC all enabled retain all three families.",
+      "argv": [
+        "lcov",
+        "--function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.no-function-branch-mcdc",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "No-function with branch and MC/DC enabled drops only function records.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.branch-only",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "Branch enabled without MC/DC keeps branch and function, drops MC/DC.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.mcdc-only",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "MC/DC enabled without branch keeps MC/DC and function, drops branch.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-features-all.lines-only",
+      "fixture": "fixtures/wave1/features-all.info",
+      "requirement": "M1-TF-027",
+      "description": "No-function and no-branch drop function and branch; MC/DC still needs its flag.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--no-branch-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave1-summary-payloads.canonical",
+      "fixture": "fixtures/wave1/summary-payloads.info",
+      "requirement": "M1-TF-028",
+      "description": "Canonical rewrite recomputes totals and ignores junk/repeated summary payloads.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-blank.canonical",
+      "fixture": "fixtures/wave2/framing-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite collapses blank lines and emits LF records.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-crlf-blank.canonical",
+      "fixture": "fixtures/wave2/framing-crlf-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite normalizes CRLF blank-line framing to LF.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-no-final-newline-blank.canonical",
+      "fixture": "fixtures/wave2/framing-no-final-newline-blank.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite accepts no-final-newline input with blank lines.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-framing-trailing-ws.canonical",
+      "fixture": "fixtures/wave2/framing-trailing-ws.info",
+      "requirement": "M1-TF-001",
+      "description": "Canonical rewrite strips trailing Perl whitespace from records.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-tn-diff.canonical",
+      "fixture": "fixtures/wave2/tn-diff.info",
+      "requirement": "M1-TF-004",
+      "description": "Canonical rewrite of TN ,diff exact/suffix/other-comma and sanitization.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-parity.canonical",
+      "fixture": "fixtures/wave2/kf-parity.info",
+      "requirement": "M1-TF-006",
+      "description": "Canonical rewrite emits SF not KF and merges repeated KF source sections.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-kf-empty.canonical",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-006",
+      "description": "Write attempt for empty KF payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-kf-empty.ignore-format",
+      "fixture": "fixtures/wave2/kf-empty.info",
+      "requirement": "M1-TF-006",
+      "description": "Ignore-format recovery for empty KF yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-da-accumulate.canonical",
+      "fixture": "fixtures/wave2/da-accumulate.info",
+      "requirement": "M1-TF-008",
+      "description": "Canonical rewrite accumulates repeated DA counts and drops stored checksum without --checksum.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-da-checksum-store.canonical",
+      "fixture": "fixtures/wave2/da-checksum-store.info",
+      "requirement": "M1-TF-008",
+      "description": "Matching DA checksum is verified and rewritten under --checksum.",
+      "argv": [
+        "lcov",
+        "--checksum",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "additional_fixtures": {
+        "cs.c": "fixtures/numeric/cs.c"
+      }
+    },
+    {
+      "id": "wave2-da-checksum-store.no-verify.canonical",
+      "fixture": "fixtures/wave2/da-checksum-store.info",
+      "requirement": "M1-TF-008",
+      "description": "Without --checksum, stored DA checksums are not emitted.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-summary-forms.canonical",
+      "fixture": "fixtures/wave2/summary-forms.info",
+      "requirement": "M1-TF-012",
+      "description": "Canonical rewrite recomputes all eight summary tags and ignores junk forms.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-suffix.canonical",
+      "fixture": "fixtures/wave2/terminator-suffix.info",
+      "requirement": "M1-TF-015",
+      "description": "Canonical rewrite normalizes suffixed end_of_record.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-dup.canonical",
+      "fixture": "fixtures/wave2/terminator-dup.info",
+      "requirement": "M1-TF-015",
+      "description": "Canonical rewrite accepts duplicate terminator and later sections.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-terminator-missing.canonical",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-015",
+      "description": "Missing terminator hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-terminator-missing.ignore-empty",
+      "fixture": "fixtures/wave2/terminator-missing.info",
+      "requirement": "M1-TF-015",
+      "description": "Ignore-empty recovery for missing terminator yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-unknown-tags.canonical",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-016",
+      "description": "TD and unknown tags hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-unknown-tags.ignore-format",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips TD/unknown tags and retains DA data.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-leading-ws-tag.canonical",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-016",
+      "description": "Leading whitespace before known tag hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-leading-ws-tag.ignore-format",
+      "fixture": "fixtures/wave2/leading-ws-tag.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips leading-space tag and yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "wave2-case-change.canonical",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-016",
+      "description": "Case-changed known tag hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "wave2-case-change.ignore-format",
+      "fixture": "fixtures/wave2/case-change.info",
+      "requirement": "M1-TF-016",
+      "description": "Ignore-format skips case-changed tag and yields empty coverage DB.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format,empty",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-order-core.canonical",
+      "fixture": "fixtures/writer/order-core.info",
+      "requirement": "M1-TF-041",
+      "description": "Canonical writer sorts files/tests and renumbers function/branch/MC/DC fields.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-mcdc-groups.canonical",
+      "fixture": "fixtures/writer/mcdc-groups.info",
+      "requirement": "M1-TF-041",
+      "description": "MC/DC group-size lexical keys, U retention, t-before-f senses, and comma expressions.",
+      "argv": [
+        "lcov",
+        "--mcdc-coverage",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-summaries.canonical",
+      "fixture": "fixtures/writer/summaries.info",
+      "requirement": "M1-TF-042",
+      "description": "Canonical writer recomputes FNF/FNH, BRF/BRH, MCF/MCH, and LF/LH.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-comments.canonical",
+      "fixture": "fixtures/writer/comments.info",
+      "requirement": "M1-TF-043",
+      "description": "Input comments and ignored summaries/checksums are not blindly reproduced.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-forbidden.canonical",
+      "fixture": "fixtures/writer/forbidden.info",
+      "requirement": "M1-TF-044",
+      "description": "Canonical output never emits KF, FN, FNDA, or suffixed terminators.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-fixedpoint.canonical",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "observational-blocked-tf045",
+      "description": "Observational single-write fixedpoint capture for blocked M1-TF-045 (true two-write round-trip not bound).",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-fixedpoint.two-write",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write canonical fixedpoint: the second independent Docker write reads the first output.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-legacy.two-write",
+      "fixture": "fixtures/legacy.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write legacy parse/write round-trip after current-form rewrite.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-permissive.two-write",
+      "fixture": "fixtures/permissive-prefix.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write permissive parse/write round-trip.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-ignored-error.two-write",
+      "fixture": "fixtures/wave2/unknown-tags.info",
+      "requirement": "M1-TF-045",
+      "description": "True two-write ignored-error parse/write round-trip.",
+      "argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output2.info",
+      "expected_exit": 0,
+      "two_write": true,
+      "stage2_argv": [
+        "lcov",
+        "--ignore-errors",
+        "format",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "output.info",
+        "--output-file",
+        "output2.info"
+      ]
+    },
+    {
+      "id": "writer-legacy-comma.canonical",
+      "fixture": "fixtures/writer/legacy-comma-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Legacy comma-bearing FN/FNDA name is preserved in current-form FNA output.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-legacy-repeat.canonical",
+      "fixture": "fixtures/writer/legacy-repeated-definition.info",
+      "requirement": "M1-TF-010",
+      "description": "Repeated legacy FN definitions deduplicate and repeated FNDA counts accumulate.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "writer-legacy-unknown.summary",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Unknown legacy FNDA name fails with mismatch/corrupt diagnostics.",
+      "argv": [
+        "lcov",
+        "--summary",
+        "input.info"
+      ],
+      "expected_exit": 1
+    },
+    {
+      "id": "writer-legacy-unknown.canonical",
+      "fixture": "fixtures/writer/legacy-unknown-name.info",
+      "requirement": "M1-TF-010",
+      "description": "Unknown legacy FNDA name fails closed without a canonical output.",
+      "argv": [
+        "lcov",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 1
+    },
+    {
+      "id": "writer-fixedpoint.repeated-write",
+      "fixture": "fixtures/writer/fixedpoint.info",
+      "requirement": "M1-TF-046",
+      "description": "Repeated write of identical model/configuration inputs is byte-identical.",
+      "argv": [
+        "lcov",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info"
+      ],
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.xml2lcov",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-050",
+      "description": "xml2lcov direct converter record order, global TN, summaries, no MC/DC.",
+      "argv": [
+        "xml2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "xml",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.py2lcov-no-functions",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-051",
+      "description": "py2lcov direct conversion with derived functions disabled.",
+      "argv": [
+        "py2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "py",
+        "--no-functions",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "converter-coverage.py2lcov-with-functions",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-051",
+      "description": "py2lcov direct conversion with derived functions enabled and companion source.",
+      "argv": [
+        "py2lcov",
+        "-o",
+        "output.info",
+        "-t",
+        "py",
+        "input.xml"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0,
+      "additional_fixtures": {
+        "mod.py": "fixtures/writer/mod.py"
+      }
+    },
+    {
+      "id": "converter-coverage.canonical-rewrite",
+      "fixture": "fixtures/writer/coverage.xml",
+      "requirement": "M1-TF-052",
+      "description": "Converter output parsed and canonically rewritten without semantic loss (XML/Python source facts bound).",
+      "argv": [
+        "sh",
+        "-c",
+        "xml2lcov -o converted.info -t xml input.xml && lcov --branch-coverage --add-tracefile converted.info --output-file output.info"
+      ],
+      "input_name": "input.xml",
+      "output_file": "output.info",
+      "expected_exit": 0
+    },
+    {
+      "id": "gzip-valid.summary",
+      "fixture": "fixtures/writer/gzip-valid.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Valid gzip transport summary succeeds.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 0,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-plain.write-gz",
+      "fixture": "fixtures/writer/gzip-plain.info",
+      "requirement": "M1-TF-060",
+      "description": "Canonical writer emits a readable .gz transport file.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--add-tracefile",
+        "input.info",
+        "--output-file",
+        "output.info.gz"
+      ],
+      "output_file": "output.info.gz",
+      "expected_exit": 0
+    },
+    {
+      "id": "gzip-corrupt.summary",
+      "fixture": "fixtures/writer/gzip-corrupt.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Corrupt gzip payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 1,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-empty.summary",
+      "fixture": "fixtures/writer/gzip-empty.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Empty gzip payload hard failure.",
+      "argv": [
+        "lcov",
+        "--no-function-coverage",
+        "--summary",
+        "input.info.gz"
+      ],
+      "expected_exit": 1,
+      "input_name": "input.info.gz"
+    },
+    {
+      "id": "gzip-valid.missing-gzip",
+      "fixture": "fixtures/writer/gzip-valid.info.gz",
+      "requirement": "M1-TF-060",
+      "description": "Missing gzip utility fails gzip transport before parse.",
+      "argv": [
+        "sh",
+        "-c",
+        "mkdir -p /tmp/ng && ln -sf /usr/bin/perl /tmp/ng/perl && ln -sf /usr/bin/env /tmp/ng/env && export PATH=/tmp/ng:/usr/local/bin && lcov --no-function-coverage --summary input.info.gz"
+      ],
+      "input_name": "input.info.gz",
+      "expected_exit": 1
+    },
+    {
+      "id": "writer-non-utf8.canonical",
+      "fixture": "fixtures/writer/non-utf8.info",
+      "requirement": "observational-non-utf8-sf",
+      "description": "Observational SF invalid UTF-8 retention; not full M1-TF-061 field matrix.",
+      "argv": [
+        "lcov",
         "--no-function-coverage",
         "--add-tracefile",
         "input.info",

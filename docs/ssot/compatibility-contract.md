@@ -45,13 +45,14 @@ relationships where supported.
 | positional arguments | 9 parser-backed command forms; `xml2lcovutil.py` consumes none | not started | none |
 | `lcovrc` | all 158 reviewed: 153 public, 5 not applicable | not started | 22 Oracle configuration cases cover discovery, precedence, include, expansion, and selected diagnostics; no product evidence |
 | environment and discovery | 19 named variables, 1 dynamic input, 5 discovery paths, and all 36 direct `$ENV` lines reviewed in a separate contract | not started | 22 bindings to retained Oracle configuration cases; no product evidence |
-| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 169 retained Oracle observations across 88 fixtures, including VER, state-ownership, function, branch, numeric/error/checksum probes, and 17 semantic snapshots; reference-only, with 19 named tracefile blockers still open |
-| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 112 retained Oracle references; all 71 diagnostic/parallel cases remain planned and no product evidence exists |
+| tracefile formats | 20 record tags, 2 lexical rules, all 15 reader matcher lines, all 18 writer emission lines, and 21 per-record malformed fixtures reviewed in a separate contract | not started | 279 retained Oracle observations across 140 fixtures, including TF-030, reader/framing/state, writer/converter/transport, and semantic snapshots; 26 legacy/writer/converter cases exactly bind `M1-TF-010`, `M1-TF-041..045`, `046`, `050..052`, `060`, and `061`; `M1-TF-063` and `064` remain blocked; no product evidence |
+| diagnostics and exit control | 32 ordered shared classes, 399 symbol references, 9 control rules, 4 unclassified surfaces, and 10 command exit policies reviewed in a separate contract | not started | 206 retained Oracle references, including 26 wave1 and 32 wave2 Docker observations plus tracefile-derived error/recovery observations; the prior 204 objects remain unchanged and two legacy-function fatal references are added; 59 of 71 diagnostic/parallel identities have exact bindings, 12 remain planned and unbound, and no product evidence exists |
 | upstream test map | all 205 files mapped and reviewed | not started | planning sources only; no product evidence |
 | support scripts/callbacks | all 23 scripts reviewed and public; external runner and qualified `perl2lcov` adapter accepted, Perl host proposed in ADR 0002 | not started | 23 reviewed primary behavior plans; no product evidence |
-| behavior planning | primary plans cover all 531 public entries | not started | 107 reviewed primary plans, including 40 CLI parser entries, 8 configuration-semantic slices with 67 bindings, 4 reference-only tracefile CLI targets, 17 source-bound small-tool CLI targets, and 17 source-bound `lcovrc` targets; all 4 critical interaction domains reviewed; 424 primary reviews open |
+| behavior planning | primary plans cover all 531 public entries | not started | Live residual metrics are owned by `docs/ssot/m0-status.snapshot.json` (live residual metrics in `docs/ssot/m0-status.snapshot.json`). Executable suite bindings include support-script, command, and `lcovrc` waves such as command-owned `genhtml` CLI-output/metric/report/summary/context/metadata cases; deterministic `genhtml` captures use a fixed `SOURCE_DATE_EPOCH`, report-wave Perl hash seeds, and explicit baseline date; all product evidence remains empty |
 | GCC/LLVM matrix | Oracle lane has reproducible package/tree/key-file/smoke closures and a runtime-validated manifest; compiler capture and release matrices remain open | not started | Oracle environment evidence only |
-| installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | two-build tree reproduction plus 4 reference-only samples of 7 runtime assets; no product evidence |
+| installation layout | 321-entry tree partitioned into 9 exact payload groups with 15 pinned source closures; 13 install cases planned | not started | independent expected facts and replayable pinned-Docker envelopes bind 13 planned Oracle-reference cases plus 15 case/Path captures and 2 runner-qualification captures; observed env/argv/cwd/executable/wait/timeout/cleanup/raw streams/full tree rows, 57 directory-mode companion, and transactional replay checks are retained; no product evidence |
+| coverage-model algebra decisions | Oracle-only model contract for set algebra, parse-write-parse, and repeated-close decisions | not started | 157 pinned Oracle cases bind 7 rows (`M1-MD-010..014`, `017`, `019`); `M1-MD-020` and fuzz/product-boundary rows remain blocked |
 | Oracle resource observation | 13 controlled profiles with exact source-scoped input shapes, branch/MC/DC summaries, streams, raw metrics, cleanup, and runtime identity | not started | 13/13 exact Oracle inputs accepted in one bounded run; no product limit, compatibility evidence, or performance gate |
 
 The inventory is generated from pinned parser definitions, manuals, help output,
@@ -86,11 +87,63 @@ Getopt parser families. Their 154 exact suite-case bindings are planning links
 only: every entry remains `evidence_status=planned`, every evidence array is
 empty, and no product compatibility status changes.
 
-Eight additional configuration-semantic plans bind 67 exact suite cases and
-review six previously open primary targets. These plans separate CLI parser
-ownership from configuration discovery and precedence ownership. Their Oracle
-observations remain reference-only; all eight plans stay `planned` with empty
-evidence arrays.
+Eight base configuration-semantic plans bind 67 exact suite cases and review
+six previously open primary targets. They separate CLI parser ownership from
+configuration discovery and precedence ownership. Separately, `lcovrc`
+consumer waves bind 32 planning-only primary plans: two list-format plans,
+eight `genhtml` output plans, eleven `genhtml` layout plans, nine metric,
+threshold, and field-width plans, and two report/differential plans. Their Oracle observations remain
+reference-only; all of these plans stay `planned` with empty evidence arrays.
+Owner and age field widths remain deferred because annotation/date inputs are
+required to make their output observable.
+
+The command-owned `m0-genhtml-cli-output-contract` suite adds six reviewed
+planning links for `--html-epilog`, `--html-extension`, `--html-gzip`,
+`--html-prolog`, `--legend`, and `--num-spaces`. Each target is paired with a
+shared `--config-file control.lcovrc` control and compares exact exit, stdout,
+stderr, and filesystem results. The pinned reference cases exit 0 with
+337-byte stdout and empty stderr; gzip emits 27 files and the other targets
+emit 26. The reverse harness exits 23 for every case. These observations are
+Oracle characterization only, not Ferricov product evidence.
+
+The command-owned `m0-genhtml-cli-metric-layout-contract` suite adds three
+reviewed planning links for `--frames`, `--precision 4`, and `--no-sort`. Each
+target is paired with a shared function/branch/MC/DC metric control and compares
+exact exit, stdout, stderr, and filesystem results. Two clean pinned Oracle
+runs agree on the reference facts and the reverse harness exits 23. These are
+Oracle characterization only, not Ferricov product evidence.
+
+The command-owned `m0-genhtml-cli-report-contract` suite adds three reviewed
+planning links for `--footer CLI Footer`, `--no-checksum`, and `--no-html`. Each
+target is paired with a shared `--config-file control.lcovrc` control and compares
+exact exit, stdout, stderr, and filesystem results. Two clean pinned Oracle runs
+agree on the reference/output characterization and the reverse harness exits
+23. These are Oracle characterization only, not Ferricov product evidence.
+
+The command-owned `m0-genhtml-cli-summary-contract` suite adds three reviewed
+planning links for `--fail-under-branches 50`, `--show-zero-columns`, and
+`--sort-tables`. Each target is paired with a shared `--config-file control.lcovrc`
+control and compares exact exit, stdout, stderr, and filesystem results. Two clean
+pinned Oracle runs agree on the reference/output characterization and the reverse
+harness exits 23. A trial `--debug` case is excluded because its stderr contains
+run-specific temporary paths. These are Oracle characterization only, not Ferricov
+product evidence.
+
+The command-owned `m0-genhtml-cli-context-contract` suite adds three reviewed
+planning links for `--baseline-title Baseline CLI`, `--merge-aliases`, and
+`--suppress-aliases`. Each target is paired with a shared alias
+baseline/current/diff fixture and `--filter function`, then compares exact exit,
+stdout, stderr, and filesystem results. Two clean pinned Oracle runs agree on the
+reference/output characterization and the reverse harness exits 23. These are
+Oracle characterization only, not Ferricov product evidence.
+
+The command-owned `m0-genhtml-cli-metadata-contract` suite adds three reviewed
+planning links for `--css-file custom.css`, `--description-file descriptions.info`,
+and `--keep-descriptions`. Each target is paired with a named-testcase metadata
+fixture and compares exact exit, stdout, stderr, and filesystem results. Two clean
+pinned Oracle runs agree on the reference/output characterization and the reverse
+harness exits 23. These are Oracle characterization only, not Ferricov product
+evidence.
 
 Four additional `lcov` tracefile CLI primary plans cover `--add-tracefile`,
 `--output-file`, `--no-function-coverage`, and `--mcdc-coverage`. Their
@@ -111,31 +164,40 @@ observations do not provide Ferricov product compatibility evidence.
 The standalone tracefile contract is also independent of the public inventory.
 It closes the pinned source inventory over every reader matcher and canonical
 writer emission, distinguishes the three reader-only tags, and binds the
-retained corpus and Oracle baseline by exact hashes. Its 169 observations are
-Oracle references only across 88 fixtures. Exact structured mappings cover
-`M1-TF-007`, `M1-TF-009`, `M1-TF-011`, `M1-TF-013`, `M1-TF-021`, `M1-TF-022`,
-`M1-TF-024`, `M1-TF-025`, `M1-TF-026`, and `M1-TF-031` through `M1-TF-036`.
-`M1-TF-030` remains unmapped because the current corpus lacks its required
-cross-family exact atom matrix. The observations remain reference-only and do
-not provide Ferricov product compatibility evidence; the 19 named tracefile
-blockers remain open.
+retained corpus and Oracle baseline by exact hashes. Its 279 observations are
+Oracle references only across 140 fixtures, including the accepted TF-030
+matrix, reader/framing/state cases, and writer/converter/transport probes.
+Exact structured legacy/writer mappings cover 26 cases for `M1-TF-010`,
+`M1-TF-041..045`, `M1-TF-046`, `M1-TF-050..052`, `M1-TF-060`, and `M1-TF-061`.
+The four TF-045 members now have true two-write Docker evidence with chained
+stage input/output hashes and independent input-model semantic checks.
+`M1-TF-063` and `M1-TF-064` remain blocked. No tracefile observation provides
+Ferricov product compatibility evidence.
 
 The standalone diagnostics contract closes the M0 source inventory over the
 shared registry, symbol references, ignore/keep-going state machine, raw
-failure families, and command exit policies. Its 112 retained observations are
-Oracle references only. The retained `geninfo` startup case is marked as a
-read-only temporary-directory intercept rather than evidence for the true
-no-argument case. All 71 diagnostic and parallel acceptance identities remain
-planned and provide no Ferricov product evidence.
+failure families, and command exit policies. Its 206 retained observations
+are Oracle references only. Twenty-six wave1 and 32 wave2 cases retain clean
+environment, stdin, timeout/cleanup, executable/runtime, package, raw-stream,
+and filesystem provenance. Two legacy unknown-function failures extend the
+fatal set without changing any of the prior 204 observation objects. The
+retained `geninfo` startup case remains a read-only temporary-directory
+intercept rather than evidence for the true no-argument case. Fifty-nine of 71
+diagnostic/parallel acceptance identities have exact bindings; the remaining
+12 parallel lifecycle/corruption identities stay planned and unbound. No
+Ferricov product evidence is claimed.
 
 The standalone installation contract binds the complete 321-entry installed
 tree to nine exhaustive payload groups and 15 pinned source closures. It
-requires canonical, lexicographically ordered paths under `/usr/local`, SHA-256
-file identities, and the exact legacy manpage symlink, but records no
-directories. Its 13 installation identities remain planned. Four retained
-`genhtml` samples bind each output tree through sample metadata and contain the
-same seven runtime report assets, but those samples are Oracle references only
-and provide no Ferricov product evidence.
+requires canonical, lexicographically ordered paths under `/usr/local`,
+SHA-256 identities, the exact legacy manpage symlink, and the independent
+expected facts for all 13 planned case IDs. Wave2 retains replayable pinned
+Docker envelopes for all 13 cases, both relative/space `DESTDIR` parts, and
+separate signal/timeout runner qualifications. Each envelope binds observed
+clean environment, live argv/cwd/executable FD hash, subject wait and host
+Docker status, timeout/cleanup, raw streams, and complete filesystem rows;
+the 57 directory/mode companion is retained separately. These are still
+`oracle_reference` only, with planned status and no Ferricov product evidence.
 
 The standalone resource contract closes the reviewed 13-profile
 `M0-RSRC-MEASURE-001` observation against the immutable Oracle. It binds the

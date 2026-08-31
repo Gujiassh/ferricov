@@ -145,3 +145,112 @@ class InventoryRegenerationCommandTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class InventoryPinSourceTests(unittest.TestCase):
+    def test_committed_pins_match_loaded_constants(self) -> None:
+        pins = verify.load_inventory_pins()
+        self.assertEqual(pins["commands"], verify.EXPECTED_COMMANDS)
+        self.assertEqual(pins["policy_families"], verify.EXPECTED_POLICY_FAMILIES)
+        self.assertEqual(
+            {k: list(v) for k, v in verify.EXPECTED_GENERATED_TOKEN_NAMES.items()},
+            pins["generated_token_names"],
+        )
+
+    def test_pin_file_mutation_is_visible_to_loader(self) -> None:
+        original = Path(verify.PIN_PATH).read_text(encoding="utf-8")
+        try:
+            document = json.loads(original)
+            document["commands"]["lcov"] = int(document["commands"]["lcov"]) + 1
+            with tempfile.TemporaryDirectory(prefix="ferricov-pins-") as directory:
+                path = Path(directory) / "pins.json"
+                path.write_text(json.dumps(document), encoding="utf-8")
+                loaded = verify.load_inventory_pins(path)
+                self.assertEqual(loaded["commands"]["lcov"], document["commands"]["lcov"])
+                self.assertNotEqual(loaded["commands"]["lcov"], verify.EXPECTED_COMMANDS["lcov"])
+        finally:
+            Path(verify.PIN_PATH).write_text(original, encoding="utf-8")
+
+
+class M0StatusSnapshotTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.root = COMPAT_ROOT.parent
+
+    def test_committed_snapshot_matches_live_contracts(self) -> None:
+        verify.validate_m0_status_snapshot(self.root)
+
+    def test_stale_residual_prose_is_rejected(self) -> None:
+        target = self.root / "docs/ssot/compatibility-contract.md"
+        original = target.read_text(encoding="utf-8")
+        try:
+            # Inject a known stale residual phrase; live docs no longer contain
+            # the historical "88 explicit M0 gaps" literal used by older pins.
+            injected = original.rstrip() + "\n\n91 explicit M0 gaps remain as a stale phrase.\n"
+            target.write_text(injected, encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "stale M0 gap count 91"):
+                verify.validate_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_snapshot_drift_is_rejected(self) -> None:
+        target = self.root / "docs/ssot/m0-status.snapshot.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            document = json.loads(original)
+            document["behavior"]["uncovered_public_entries"] = (
+                int(document["behavior"]["uncovered_public_entries"]) + 1
+            )
+            target.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "out of date with live contracts"):
+                verify.validate_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_conditional_go_authorizes_m1_without_product_evidence(self) -> None:
+        snapshot = verify.build_m0_status_snapshot(self.root)
+        self.assertIs(snapshot["m1_authorized"], True)
+        self.assertIs(snapshot["product_compatibility_evidence"], False)
+        treatments = {
+            blocker["id"]: blocker.get("activation_treatment")
+            for blocker in snapshot["m1_activation_blockers"]
+        }
+        self.assertEqual(
+            treatments.get("behavior_primary_gaps"),
+            "excluded_by_m1_v0_1_support_matrix",
+        )
+        self.assertEqual(
+            treatments.get("diagnostics_unbound_planned_cases"),
+            "excluded_by_m1_v0_1_support_matrix",
+        )
+        self.assertEqual(
+            treatments.get("M1-MD-020"),
+            "excluded_by_m1_v0_1_support_matrix",
+        )
+        self.assertEqual(
+            treatments.get("product_compatibility_evidence_false"),
+            "required_false_under_conditional_go",
+        )
+        self.assertEqual(
+            snapshot["sources"].get("m1_v0_1_support_matrix"),
+            "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
+        )
+        # Process NO-GO / undecided blockers must be absent under active GO.
+        self.assertNotIn("m0_exit_review_no_go", treatments)
+        self.assertNotIn("m0_exit_review_undecided", treatments)
+        self.assertNotIn("m1_support_matrix_missing", treatments)
+
+    def test_conditional_go_fails_closed_without_active_matrix(self) -> None:
+        matrix = self.root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
+        original = matrix.read_text(encoding="utf-8")
+        try:
+            matrix.write_text(
+                original.replace("Status: **ACTIVE**", "Status: **DRAFT**", 1),
+                encoding="utf-8",
+            )
+            snapshot = verify.build_m0_status_snapshot(self.root)
+            self.assertIs(snapshot["m1_authorized"], False)
+            ids = {b["id"] for b in snapshot["m1_activation_blockers"]}
+            self.assertIn("m1_support_matrix_inactive", ids)
+        finally:
+            matrix.write_text(original, encoding="utf-8")
+

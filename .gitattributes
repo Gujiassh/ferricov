@@ -1,13 +1,38 @@
 # Help snapshots preserve upstream bytes, including trailing whitespace.
 compat/upstream/help/*.txt whitespace=-blank-at-eol,-blank-at-eof
 
-# Byte-boundary fixtures must not be decoded or line-ending normalized.
-compat/fixtures/m0-tracefiles/fixtures/bytes/* binary
+# Tracefile fixtures preserve raw LCOV bytes, including CRLF, tabs, and spaces.
+compat/fixtures/m0-tracefiles/fixtures/**/*.info binary
+compat/fixtures/m0-tracefiles/fixtures/**/*.info.gz binary
+compat/fixtures/m0-tracefiles/corpus_wave1.py whitespace=-blank-at-eol,-blank-at-eof
+
+# Devel::Cover database fixtures are opaque Storable evidence.
+compat/fixtures/m0-perl2lcov-contract/coverdb/** binary
 
 # Retained Oracle streams are byte evidence, not formatted text.
 compat/correctness/baselines/**/*.bin binary
 compat/resources/results/**/*.bin binary
+compat/diagnostics/wave1/**/reference/*.bin binary
+compat/diagnostics/wave2/**/reference/*.bin binary
+
+# Wave2 Oracle HTML/text captures retain generator whitespace as evidence.
+compat/diagnostics/wave2/**/reference/*.txt whitespace=-blank-at-eol,-blank-at-eof
+compat/diagnostics/wave2/**/*.html whitespace=-blank-at-eol,-blank-at-eof
 
 # Upstream format.info atoms retain trailing spaces on comment lines.
 compat/fixtures/m0-tracefiles/fixtures/numeric/format-atoms.info whitespace=-blank-at-eol,-blank-at-eof
 compat/fixtures/m0-tracefiles/fixtures/numeric/cs.c -text
+
+# Installation wave-2 Oracle raw streams and process envelopes are byte evidence.
+compat/installation/wave2/cases/**/*.bin binary
+compat/installation/wave2/cases/**/*.env -text
+compat/installation/wave2/cases/**/tree-effects.json -text
+compat/installation/wave2/cases/**/observed-argv.json -text
+compat/installation/wave2/cases/**/observed-children.json -text
+compat/installation/wave2/cases/**/cleanup.log -text
+compat/installation/wave2/cases/**/host-observer.txt -text
+compat/installation/wave2/cases/**/doc.log -text
+compat/installation/wave2/cases/**/install.log -text
+compat/installation/wave2/cases/**/observation.txt -text
+
+compat/installation/wave2/cases/_runner/**/*.bin binary

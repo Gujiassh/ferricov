@@ -1,0 +1,155 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      },
+      {
+        "bytes": 17,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/cleanup.log",
+        "sha256": "2e744442a3bc798fc378fc80b1a3d30e570cbb156283b45b33f1a058a1179925"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 71,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-argv.json",
+        "sha256": "12e40b7f8e84ba53e02ec53bfa25097e5b2c76cf9278eb654313020622dff5e5"
+      },
+      {
+        "bytes": 247,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/observed-children.json",
+        "sha256": "2696e07342516a58a2901965a66a6e6f20b42114a5e6fcd06a9978c487ec2206"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 242,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/status.env",
+        "sha256": "f23b7f19a2cd05739a72e7ec1f245a0201ba16910319616a94b14d46fa47d0b3"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-PATH-001/relative/run-meta.env",
+        "sha256": "d7488fe2ee27d391fd42f62dfc1d502b839c6e1772ebabf4725d353feaca4235"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 83,
+      "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stderr.bin",
+      "sha256": "b9e2ade6cc441be7cdafcbe666305f621445d0bf7a835f7f887b5ce1d3093732"
+    },
+    "stdout_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-PATH-001/relative/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "case_id": "INST-PATH-001:relative",
+  "environment": {
+    "mode": "clean_explicit",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 0,
+    "file_count": 0,
+    "paths_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "root": "/tmp/src/rel-dest",
+    "rows": [],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
+    "docker_runtime": "29.1.3",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=rel-dest",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "removed:/tmp/src"
+    ],
+    "fixture_setup": [
+      "relative DESTDIR=rel-dest"
+    ],
+    "timeout_seconds": 120,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "c142599a35cdc03f82b18fa0b4f6758037b1531eba236515712a3f9c472c65a5",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "argv": [
+          "make",
+          "install",
+          "DESTDIR=rel-dest",
+          "PREFIX=/usr/local"
+        ],
+        "command": "make install DESTDIR=rel-dest PREFIX=/usr/local",
+        "exit_status": 2,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
+    "exit_status": 2,
+    "host_observer_code": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

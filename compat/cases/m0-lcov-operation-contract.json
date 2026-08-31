@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-lcov-operation-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-lcov-checksum-control",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--checksum", "--add-tracefile", "input.info", "--output-file", "checksum.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcov-debug",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--debug", "--add-tracefile", "input.info", "--output-file", "debug.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcov-extract",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--extract", "input.info", "*/foo.c", "--output-file", "extract.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcov-history-script",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--history-script", "./HistoryProbe.pm", "--add-tracefile", "input.info", "--output-file", "history.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcov-no-checksum",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--checksum", "--no-checksum", "--add-tracefile", "input.info", "--output-file", "no-checksum.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-lcov-prune-tests",
+      "surface": "cli",
+      "command": "lcov",
+      "arguments": ["--prune-tests", "--add-tracefile", "input.info", "--output-file", "prune.info"],
+      "fixture": "compat/fixtures/m0-lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

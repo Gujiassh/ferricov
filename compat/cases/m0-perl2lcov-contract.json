@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-perl2lcov-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-perl2lcov-checksum-control",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--checksum",
+        "--output",
+        "checksum.info",
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-perl2lcov-cover-db-positional",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-perl2lcov-debug",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--debug",
+        "--output",
+        "debug.info",
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-perl2lcov-fail-under-branches",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--fail-under-branches",
+        "75",
+        "--output",
+        "threshold.info",
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-perl2lcov-history-script",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--history-script",
+        "./HistoryProbe.pm",
+        "--output",
+        "history.info",
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-perl2lcov-no-checksum",
+      "surface": "cli",
+      "command": "perl2lcov",
+      "arguments": [
+        "--checksum",
+        "--no-checksum",
+        "--output",
+        "no-checksum.info",
+        "coverdb"
+      ],
+      "fixture": "compat/fixtures/m0-perl2lcov-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

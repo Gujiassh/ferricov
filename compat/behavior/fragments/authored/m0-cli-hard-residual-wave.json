@@ -1,0 +1,208 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.debug: cli-option boundary `--debug` on a pinned hello capture fixture exits 0 with the same filesystem tree as control while emitting non-empty DEBUG stderr (stable under fixed /work paths and SOURCE_DATE_EPOCH). Compared dimensions are exit, stderr, and filesystem under exact-v1; stdout excluded. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.debug",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 21,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 616,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 13,
+          "path": "help/geninfo.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-debug-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.debug",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.geninfo.option.large-file: cli-option boundary `--large-file (` supplies an invalid regexp so Oracle geninfo dies during option parsing (exit 2) with no out.info, while control without the flag exits 0 and writes out.info. Compared dimensions are exit and filesystem under exact-v1. Honest Oracle failure surface; planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.geninfo.option.large-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 262,
+          "path": "bin/geninfo",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 38,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 627,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 631,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 632,
+          "path": "docs/man/geninfo.rst",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-geninfo-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.geninfo.option.large-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.lcov.option.large-file: cli-option boundary `--large-file (` is forwarded into geninfo and fails Oracle option parsing (exit 2) with no out.info, while control capture exits 0 and writes out.info. Compared dimensions are exit and filesystem under exact-v1. Honest Oracle failure surface; planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.lcov.option.large-file",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 211,
+          "path": "bin/lcov",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 57,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 896,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 899,
+          "path": "docs/man/lcov.rst",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-control",
+          "suite_id": "m0-cli-hard-residual-contract"
+        },
+        {
+          "case_id": "m0-cli-hard-residual-contract-lcov-large-file-invalid",
+          "suite_id": "m0-cli-hard-residual-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.lcov.option.large-file",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed geninfo/lcov large-file invalid-regexp and geninfo debug plans on a pinned hello capture fixture.",
+  "fragment_id": "m0-cli-hard-residual-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

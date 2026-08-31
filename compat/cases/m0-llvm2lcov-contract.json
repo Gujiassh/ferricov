@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-llvm2lcov-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-llvm2lcov-debug",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--no-function-coverage", "--debug", "--output-filename", "debug.info", "input.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-fail-under-branches",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--branch-coverage", "--fail-under-branches", "75", "--output-filename", "threshold.info", "branch.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-history-script",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--no-function-coverage", "--history-script", "./HistoryProbe.pm", "--output-filename", "history.info", "input.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-no-checksum",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--no-function-coverage", "--checksum", "--no-checksum", "--output-filename", "no-checksum.info", "input.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-output-filename",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--no-function-coverage", "--output-filename", "output.info", "input.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-preserve",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--branch-coverage", "--filter", "branch", "--parallel", "2", "--tempdir", ".", "--preserve", "--output-filename", "preserve.info", "branch.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-llvm2lcov-json-file-positional",
+      "surface": "cli",
+      "command": "llvm2lcov",
+      "arguments": ["--no-function-coverage", "input.json"],
+      "fixture": "compat/fixtures/m0-llvm2lcov-contract",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

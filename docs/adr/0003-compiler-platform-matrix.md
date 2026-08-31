@@ -1,8 +1,8 @@
 # ADR 0003: Initial Compiler And Platform Matrix
 
-- Status: proposed; M0 acceptance pending reproducible environment records and
-  an execution-manifest format
+- Status: accepted
 - Date: 2026-07-27
+- Accepted: 2026-08-09
 - Scope: LCOV 2.5 compatibility qualification
 
 ## Context
@@ -14,14 +14,15 @@ Ferricov must separate three different claims:
 2. the compiler matrix used to qualify coverage capture behavior;
 3. the operating-system and filesystem matrix used for release claims.
 
-The current Oracle Dockerfile pins the Debian 12 `bookworm-slim` base digest,
-the LCOV source commit, and the LCOV build date. Its `apt-get` step does not pin
-a Debian snapshot or package versions, however, so a clean rebuild at a later
-date is not guaranteed to produce the same installed runtime or image. The
-local image observed on 2026-07-27 had Docker image ID
-`sha256:de569b0afa0d3ffb6c9bb8116f6fc2ddee9f0837e1aab08bdf965df5744bc65e`.
-The tag `ferricov/lcov-oracle:v2.5` is only a mutable alias for an image; it is
-not an environment identity or a reproducibility record.
+The Oracle Dockerfile pins the Debian 12 `bookworm-slim` base digest, dated
+Debian snapshots, exact package closures, the LCOV source commit and archive,
+the LCOV build date, the intersphinx inventory, and a content-addressed
+snapshot CA bundle. The retained execution manifest records canonical image
+`sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7`
+and an independently rebuilt peer. Package, installed-tree, key-file, and
+smoke closures match across the two images. The tag
+`ferricov/lcov-oracle:v2.5` remains only a mutable convenience alias and is not
+an environment identity.
 
 The pinned upstream test workflow exercises GCC 9, GCC 10, and GCC 14. It
 states that GCC 10 through 14 are assumed to behave alike and therefore skips
@@ -44,7 +45,7 @@ The M0 correctness Oracle has the following required identity:
 | Dimension | Required value |
 | --- | --- |
 | Container base input | Debian 12 `bookworm-slim` at the digest in `compat/upstream/Dockerfile` |
-| Installed image | content-addressed OCI artifact digest or archive hash; pending |
+| Installed image | immutable image ID from the execution manifest; canonical retained Oracle `sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7` |
 | Architecture | `x86_64` |
 | LCOV source | commit `74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5` |
 | Perl | exact installed version recorded in the image manifest |
@@ -161,11 +162,15 @@ rationale; it is never converted to `pass`.
 
 ## Source Evidence
 
-- `compat/upstream/Dockerfile`: pinned Debian base digest and LCOV source
-  commit, plus the currently unpinned Debian package installation.
-- `compat/upstream/verification.md`: observed 10-command installation and
-  immutable LCOV source identity; it does not yet retain an OCI artifact
-  digest or a rebuild package manifest.
+- `compat/upstream/Dockerfile`, `packages.lock`, `packages.full.lock`, and
+  `build-inputs.lock`: pinned Debian base, dated snapshots, exact package and
+  installed-tree inputs, LCOV source archive, documentation inventory, and
+  snapshot CA bundle.
+- `compat/upstream/verification.md` and
+  `compat/manifests/oracle-lcov-v2.5-smoke.json`: two-build closure
+  reproducibility, immutable image IDs, executable hashes, package and tree
+  identities, runtime metadata, raw smoke outputs, and the execution-manifest
+  format.
 - LCOV v2.5 `.github/workflows/run_test_suite.yml`: upstream GCC 9, 10, and 14
   coverage plus the explicit GCC 10-14 equivalence assumption.
 - LCOV v2.5 `bin/geninfo:350-379`: JSON/intermediate selection and the
@@ -190,7 +195,8 @@ compatibility evidence. Adding a compiler or platform requires reviewed
 inventory applicability, fixtures, immutable execution manifests,
 differential evidence, and an update to this ADR or a superseding decision.
 
-This ADR remains proposed until the Oracle has either a retained
-content-addressed artifact or a clean reproducible rebuild definition, and the
-execution-manifest format is recorded for the required lanes. Those are M0
-acceptance prerequisites, not deferred release documentation.
+This ADR is accepted because the Oracle has both an immutable retained image
+identity and a clean reproducible rebuild definition, and the execution
+manifest format is recorded and validated. Compiler capture execution and
+release-platform qualification remain later milestone evidence gates; their
+open status does not reopen the M0 architecture decision.

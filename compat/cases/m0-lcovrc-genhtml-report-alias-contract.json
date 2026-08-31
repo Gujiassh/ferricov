@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-genhtml-report-alias-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-lcovrc-genhtml-report-alias-control",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    },
+    {
+      "id": "m0-lcovrc-genhtml-report-alias-merge-function-aliases",
+      "surface": "config",
+      "command": "genhtml",
+      "arguments": [
+        "--config-file",
+        "merge-function-aliases.lcovrc",
+        "--baseline-file",
+        "baseline.info",
+        "--baseline-date",
+        "2000-01-01",
+        "--diff-file",
+        "diff.txt",
+        "--ignore-errors",
+        "unsupported",
+        "--output-directory",
+        "report",
+        "current.info"
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-report-alias-contract",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ]
+    }
+  ]
+}

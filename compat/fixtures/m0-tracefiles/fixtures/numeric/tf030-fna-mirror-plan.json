@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "tf030_numeric_plan",
+  "rows": [
+    {
+      "id": "fna_mirror.fna.neg2",
+      "family": "FNA",
+      "lexeme": "-2",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "source": "src/tf030-fna-mirror.c",
+      "testcase": "tf030_fna_mirror",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:0,-2,fna_neg2",
+      "record_ordinal": 1,
+      "locator": {
+        "function_index": 0,
+        "alias": "fna_neg2"
+      }
+    },
+    {
+      "id": "fna_mirror.fna.malformed_eb",
+      "family": "FNA",
+      "lexeme": "1.5eb+20",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "source": "src/tf030-fna-mirror.c",
+      "testcase": "tf030_fna_mirror",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:1,1.5eb+20,fna_malformed_eb",
+      "record_ordinal": 2,
+      "locator": {
+        "function_index": 1,
+        "alias": "fna_malformed_eb"
+      }
+    },
+    {
+      "id": "fna_mirror.fna.one_point_five_e20",
+      "family": "FNA",
+      "lexeme": "1.5e+20",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "source": "src/tf030-fna-mirror.c",
+      "testcase": "tf030_fna_mirror",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:2,1.5e+20,fna_one_point_five_e20",
+      "record_ordinal": 3,
+      "locator": {
+        "function_index": 2,
+        "alias": "fna_one_point_five_e20"
+      }
+    },
+    {
+      "id": "fna_mirror.fna.neg0",
+      "family": "FNA",
+      "lexeme": "-0",
+      "fixture": "fixtures/numeric/tf030-fna-exact-mirror.info",
+      "source": "src/tf030-fna-mirror.c",
+      "testcase": "tf030_fna_mirror",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:3,-0,fna_neg0",
+      "record_ordinal": 4,
+      "locator": {
+        "function_index": 3,
+        "alias": "fna_neg0"
+      }
+    }
+  ]
+}

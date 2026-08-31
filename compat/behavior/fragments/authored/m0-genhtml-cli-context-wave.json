@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.baseline-title: cli-option boundary `--baseline-title Baseline CLI` uses shared `--config-file control.lcovrc` and `--filter function` with the pinned alias baseline/current/diff fixture. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `4f14051fc342b9aa796f326e98e06d338508e10923dcdf852378544d54a979a3`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.baseline-title",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7228,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"baseline-title=s\"     => \\$baseline_title,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12362,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if (defined($baseline_title)) {"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 12365,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "              [undef, \"headerValue\", $baseline_title]"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-baseline-title",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.baseline-title",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.merge-aliases: cli-option boundary `--merge-aliases` uses shared `--config-file control.lcovrc` and `--filter function` with the pinned alias baseline/current/diff fixture. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `e25b2f27f72a1e97462f0874a5332e9d78a2fca276b5f1a0496bd3a687ca6d7f`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.merge-aliases",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "command_implementation",
+          "line": 5243,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "    if ($main::merge_function_aliases) {"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 7271,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"merge-aliases\"     => \\$merge_function_aliases,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13912,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "         funcview_get_sorted($funcData, $type, $main::merge_function_aliases)) {"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-merge-aliases",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.merge-aliases",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.suppress-aliases: cli-option boundary `--suppress-aliases` uses shared `--config-file control.lcovrc` and `--filter function` with the pinned alias baseline/current/diff fixture. The pinned Oracle suite records exit, stdout, stderr, and filesystem reference/output characterization with reference file-tree SHA-256 `703fc37500b88cb830e46933a6b77da70476df2f7e20d210c061dfc291e16f00`; this is planning-only and claims no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.suppress-aliases",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7272,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "                     \"suppress-aliases\"  => \\$suppress_function_aliases,"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 7286,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "$merge_function_aliases = 1"
+        },
+        {
+          "kind": "command_implementation",
+          "line": 13998,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "        if ((!defined($main::suppress_function_aliases) ||"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-genhtml-cli-context-contract-control",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        },
+        {
+          "case_id": "m0-genhtml-cli-context-contract-suppress-aliases",
+          "suite_id": "m0-genhtml-cli-context-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.suppress-aliases",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed suite-bound genhtml CLI context and alias plans for three direct options; no product evidence.",
+  "fragment_id": "authored.m0-genhtml-cli-context-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

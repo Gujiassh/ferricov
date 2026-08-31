@@ -1,0 +1,388 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 22,
+        "file_tree_bytes": 46990,
+        "file_tree_sha256": "2bf829bb240cad3ba401aca9a35b1aac6a19e3c130ef4a625e789280dcaf50f2",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "annotate-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-annotate-script",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 26,
+        "file_tree_bytes": 80201,
+        "file_tree_sha256": "1a9b4030be0d0454a2a5d0d5f9d6ca1c09966002aced690338df68c4475963bd",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index-bin_date.html",
+          "report/index-date.html",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index-bin_date.html",
+          "report/work/index-date.html",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 1016,
+        "stderr_sha256": "6145cc05b4ca08b688711d706d5a7c76fc4353a3beef5e6e7a93c87d18d66ed0",
+        "stdout_bytes": 365,
+        "stdout_sha256": "11096ff4d6ba6768b41eaf62d5495e6f98cdbdf0b59bb56b97768f69826e6c67"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "context-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-context-script",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 22,
+        "file_tree_bytes": 47389,
+        "file_tree_sha256": "240f89eee05e3148dafb73c61d5116e0a48c41451fe157acce1399d85686fb11",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 634,
+        "stderr_sha256": "a312a4a0dae8601a6212499e055a414d4a1563fea02322f4a27aab84df6976be",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "criteria-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-criteria-script",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 20,
+        "file_tree_bytes": 37217,
+        "file_tree_sha256": "a3808e4ae827e873de0262f32953b529f8c78b2f6c5f94a7f5e892effda57679",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 714,
+        "stderr_sha256": "b4773657bf86088b837f3e7e29e52e2092a105c51b75d540c7dc3bb4b8017669",
+        "stdout_bytes": 173,
+        "stdout_sha256": "ab7a90a602303f894715513cb3d78cf7da54792c726d79bf108ac5b029b153de"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "simplify-function.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-simplify-function",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 1,
+        "file_count": 19,
+        "file_tree_bytes": 32752,
+        "file_tree_sha256": "d78cbc4b63b4b2cd983ae6aa6b0d5eaf3b181f15430ccb72ac990addab81e771",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 615,
+        "stderr_sha256": "5401479fd91276047eee2ea722d6d1bd1cefb2c65cd5f318b6a663184266bb5c",
+        "stdout_bytes": 173,
+        "stdout_sha256": "ab7a90a602303f894715513cb3d78cf7da54792c726d79bf108ac5b029b153de"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "unreachable-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-lcovrc-script-residual-contract-unreachable-script",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 22,
+        "file_tree_bytes": 47001,
+        "file_tree_sha256": "1686393a7f6462c218a3f1a37fc2c31352f51c9c40463286636eaf168d6625e7",
+        "paths": [
+          "ann.sh",
+          "annotate-script.lcovrc",
+          "context-script.lcovrc",
+          "control.lcovrc",
+          "criteria-script.lcovrc",
+          "input.info",
+          "report/amber.png",
+          "report/cmd_line",
+          "report/emerald.png",
+          "report/gcov.css",
+          "report/glass.png",
+          "report/index.html",
+          "report/ruby.png",
+          "report/snow.png",
+          "report/updown.png",
+          "report/work/index.html",
+          "report/work/source.c.func-c.html",
+          "report/work/source.c.func.html",
+          "report/work/source.c.gcov.html",
+          "simplify-function.lcovrc",
+          "source.c",
+          "unreachable-script.lcovrc"
+        ],
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 449,
+        "stdout_sha256": "e396b7a08cb6539b01251aed42aed1dc1fb8bffea66c9360fb6ed852640f0b4b"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "config"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "genhtml script residual surfaces",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-script-residual-contract"
+}

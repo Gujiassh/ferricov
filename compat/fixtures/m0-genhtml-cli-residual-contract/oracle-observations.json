@@ -1,0 +1,345 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-genhtml-cli-residual-contract-control",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SOURCE_DATE_EPOCH": "946684800",
+        "TMPDIR": "/work",
+        "TZ": "UTC"
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "compiler": "GCC 12.2.0",
+        "cpu": null,
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "operating_system": "Debian 12"
+      },
+      "fixture": "compat/fixtures/m0-genhtml-cli-residual-contract",
+      "oracle_identity": {
+        "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "executable_sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a",
+        "kind": "docker_image"
+      },
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "cleanup": {
+          "container_absent": true,
+          "direct_child_reaped": true,
+          "process_group_empty": null
+        },
+        "exit_code": 0,
+        "file_count": 18,
+        "file_tree_bytes": 6359,
+        "file_tree_sha256": "f8e60388d62a3f22fdf2efd1458249b4f8b0df5c4d0c51bbdb6b9ec0415dfa51",
+        "signal": null,
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637",
+        "timeout": {
+          "applied_seconds": 20,
+          "escalation_signal_sent": null,
+          "expired": false,
+          "termination_signal_sent": null
+        }
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--preserve",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "case_id": "m0-genhtml-cli-residual-contract-preserve",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SOURCE_DATE_EPOCH": "946684800",
+        "TMPDIR": "/work",
+        "TZ": "UTC"
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "compiler": "GCC 12.2.0",
+        "cpu": null,
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "operating_system": "Debian 12"
+      },
+      "fixture": "compat/fixtures/m0-genhtml-cli-residual-contract",
+      "oracle_identity": {
+        "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "executable_sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a",
+        "kind": "docker_image"
+      },
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "cleanup": {
+          "container_absent": true,
+          "direct_child_reaped": true,
+          "process_group_empty": null
+        },
+        "exit_code": 0,
+        "file_count": 18,
+        "file_tree_bytes": 6359,
+        "file_tree_sha256": "c4cc1497831cf14b5eb5dd51db83e32b631795247c1c2f6b0ca339b556e0c45a",
+        "signal": null,
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 349,
+        "stdout_sha256": "9e22948444a26097e310953d6df4d9d7bbecd1a77a5e4fd2df29393c63d1e637",
+        "timeout": {
+          "applied_seconds": 20,
+          "escalation_signal_sent": null,
+          "expired": false,
+          "termination_signal_sent": null
+        }
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--synthesize-missing",
+        "--ignore-errors",
+        "source,unsupported",
+        "--output-directory",
+        "report",
+        "missing.info"
+      ],
+      "case_id": "m0-genhtml-cli-residual-contract-synthesize-missing",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SOURCE_DATE_EPOCH": "946684800",
+        "TMPDIR": "/work",
+        "TZ": "UTC"
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "compiler": "GCC 12.2.0",
+        "cpu": null,
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "operating_system": "Debian 12"
+      },
+      "fixture": "compat/fixtures/m0-genhtml-cli-residual-contract",
+      "oracle_identity": {
+        "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "executable_sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a",
+        "kind": "docker_image"
+      },
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "cleanup": {
+          "container_absent": true,
+          "direct_child_reaped": true,
+          "process_group_empty": null
+        },
+        "exit_code": 0,
+        "file_count": 18,
+        "file_tree_bytes": 6432,
+        "file_tree_sha256": "977a63d367b2c9edec60d514d8ef9f04d1bd63391c367926c4b011d8c0079590",
+        "signal": null,
+        "stderr_bytes": 199,
+        "stderr_sha256": "2125d1ed1e54c171bd8660ce06d553697bb248a167c659b6c122187d1f0f8c21",
+        "stdout_bytes": 393,
+        "stdout_sha256": "7cf9e458a47298b20ff12144dd1a103f9d45474c9c61d4d3ac819bc468a64c8b",
+        "timeout": {
+          "applied_seconds": 20,
+          "escalation_signal_sent": null,
+          "expired": false,
+          "termination_signal_sent": null
+        }
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "input2.info"
+      ],
+      "case_id": "m0-genhtml-cli-residual-contract-multi",
+      "command": "genhtml",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "SOURCE_DATE_EPOCH": "946684800",
+        "TMPDIR": "/work",
+        "TZ": "UTC"
+      },
+      "environment": {
+        "architecture": "x86_64",
+        "compiler": "GCC 12.2.0",
+        "cpu": null,
+        "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "operating_system": "Debian 12"
+      },
+      "fixture": "compat/fixtures/m0-genhtml-cli-residual-contract",
+      "oracle_identity": {
+        "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+        "executable_sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a",
+        "kind": "docker_image"
+      },
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "cleanup": {
+          "container_absent": true,
+          "direct_child_reaped": true,
+          "process_group_empty": null
+        },
+        "exit_code": 0,
+        "file_count": 18,
+        "file_tree_bytes": 6359,
+        "file_tree_sha256": "bba9c587b30ddb407492adffe550f8fbb2c09286a25b33ea2bf200ee3b46d63c",
+        "signal": null,
+        "stderr_bytes": 317,
+        "stderr_sha256": "5c48e2cedb1cc61c0bea56bc7df4f6a31d233ca7c0ede3b755ed359c0f174dd8",
+        "stdout_bytes": 408,
+        "stdout_sha256": "8704922579e6f3a474d2cc944edba10b97ae28463f308604a8d9e7c2ea95d406",
+        "timeout": {
+          "applied_seconds": 20,
+          "escalation_signal_sent": null,
+          "expired": false,
+          "termination_signal_sent": null
+        }
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "execution": {
+    "network": "none",
+    "read_only": true,
+    "user": "1000:1000",
+    "working_directory": "/work"
+  },
+  "execution_manifest_sha256": "sha256:a15e953f5dfa176ac0d2f2b0c8668f190951f64e58a69bd9e63365e8eb3ea981",
+  "kind": "m0_planning_oracle_observations",
+  "launcher": {
+    "candidate": "compat/launchers/different-genhtml-oracle.json",
+    "candidate_sha256": "dbf332683768c480e68b51ea6c7b25bc5b4e9d30af2b7753a0dc8550b6e08593",
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "reference": "compat/launchers/lcov-v2.5-genhtml-oracle.json",
+    "reference_sha256": "3d47df2d0ee4bf1df443687f36799d9d5ecb73a424a836a1a469b9390f97f8c3"
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-residual-contract",
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

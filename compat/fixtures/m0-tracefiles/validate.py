@@ -7,77 +7,83 @@ import base64
 from collections import Counter
 import hashlib
 import json
+import os
 import re
 import tempfile
 from pathlib import Path
 
 import generate
-
-ROOT = Path(__file__).resolve().parent
-MODEL_INSPECTOR = ROOT / "inspect_model.pl"
-MODEL_INSPECTOR_NAME = "inspect_model.pl"
-EXPECTED_MODEL_INSPECTOR_SHA256 = "ede3ee7014a0623485381c29f0756e24251e4436ac8c99300c7febb85c742a0c"
-ALLOWED_ARGV_HEADS = {"lcov", "perl"}
-SEMANTIC_SNAPSHOT_CASE_IDS = (
-    "state-late-tn-mcdc.semantic-snapshot",
-    "state-cross-sf-mcdc-success.semantic-snapshot",
-    "functions-current-core.semantic-snapshot",
-    "functions-mixed-merge.semantic-snapshot",
-    "branches-forms-core.semantic-snapshot",
-    "branches-noncontiguous.semantic-snapshot",
-    "branches-expression-merge.semantic-snapshot",
-    "numeric-boundary.semantic-snapshot",
-    "numeric-extra-spellings.semantic-snapshot",
-    "numeric-format-atoms.ignore-format-negative.semantic-snapshot",
-    "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot",
-    "numeric-signed-zero.semantic-snapshot",
-    "numeric-negative-inf.semantic-snapshot",
-    "numeric-fna-nonnumeric.semantic-snapshot",
-    "numeric-zero-fn-end.semantic-snapshot",
-    "numeric-invalid-fnl-fields.semantic-snapshot",
-    "functions-zero-start.semantic-snapshot",
+from validation_common import (
+    ALLOWED_ARGV_HEADS,
+    MODEL_INSPECTOR,
+    MODEL_INSPECTOR_NAME,
+    ROOT,
+    SEMANTIC_SNAPSHOT_CASE_IDS,
+    SEMANTIC_STDERR_POLICIES,
+    assert_branch_store,
+    assert_converter_rewrite_observational,
+    assert_tf045_group_completeness,
+    assert_tf045_two_write_group_completeness,
+    assert_tf010_group_completeness,
+    assert_tf052_group_completeness,
+    assert_tf061_group_completeness,
+    assert_tf045_member_semantics,
+    assert_tf052_source_to_output_semantics,
+    assert_tf061_field_matrix,
+    assert_count_store,
+    assert_four_family_maps,
+    assert_function_store,
+    assert_identity_self_hash,
+    assert_mcdc_store,
+    assert_py2lcov_no_functions_semantics,
+    assert_py2lcov_with_functions_semantics,
+    assert_single_testcase_parity,
+    assert_writer_comment_semantics,
+    assert_writer_fixedpoint_semantics,
+    assert_writer_forbidden_semantics,
+    assert_writer_mcdc_group_semantics,
+    assert_writer_non_utf8_observational,
+    assert_writer_order_semantics,
+    assert_writer_summary_semantics,
+    assert_xml2lcov_semantics,
+    decode_identity,
+    require,
+    require_json_equal,
+    semantic_inputs_from_argv,
+    strict_json_file,
+    strict_json_loads_ascii,
+    validate_lcov_stderr,
+    validate_semantic_input_identity,
+    validate_semantic_stderr,
+    verify_identity,
 )
-SEMANTIC_STDERR_POLICIES: dict[str, tuple[tuple[str, str], ...]] = {
-    "state-late-tn-mcdc.semantic-snapshot": (),
-    "state-cross-sf-mcdc-success.semantic-snapshot": (),
-    "functions-current-core.semantic-snapshot": (("WARNING", "unsupported"),),
-    "functions-mixed-merge.semantic-snapshot": (),
-    "branches-forms-core.semantic-snapshot": (),
-    "branches-noncontiguous.semantic-snapshot": (),
-    "branches-expression-merge.semantic-snapshot": (),
-    "numeric-boundary.semantic-snapshot": (("WARNING", "format"),),
-    "numeric-extra-spellings.semantic-snapshot": (),
-    "numeric-format-atoms.ignore-format-negative.semantic-snapshot": (
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-    ),
-    "numeric-format-atoms.ignore-format-negative-excessive.semantic-snapshot": (
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-        ("WARNING", "excessive"),
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-        ("WARNING", "excessive"),
-        ("WARNING", "negative"),
-        ("WARNING", "format"),
-        ("WARNING", "excessive"),
-        ("WARNING", "excessive"),
-        ("WARNING", "excessive"),
-    ),
-    "numeric-signed-zero.semantic-snapshot": (),
-    "numeric-negative-inf.semantic-snapshot": (("WARNING", "negative"),),
-    "numeric-fna-nonnumeric.semantic-snapshot": (("WARNING", "format"),),
-    "numeric-zero-fn-end.semantic-snapshot": (("WARNING", "format"),),
-    "numeric-invalid-fnl-fields.semantic-snapshot": (
-        ("WARNING", "format"),
-        ("WARNING", "format"),
-    ),
-    "functions-zero-start.semantic-snapshot": (("WARNING", "inconsistent"),),
-}
+from corpus_tf030 import TF030_CASE_IDS, TF030_PERL_ENV
+from corpus_wave1 import WAVE1_CASE_IDS, WAVE1_FIXTURE_IDS
+from corpus_wave2 import WAVE2_CASE_IDS, WAVE2_FIXTURE_IDS
+from corpus_writer import WRITER_CASE_IDS, WRITER_FIXTURE_IDS
+from validation_numeric import (
+    ADDED_CASE_ARGV,
+    ADDED_OUTPUT_EXPECTATIONS,
+    CHECKSUM_MD5_BASE64,
+    CHECKSUM_SOURCE_BYTES,
+    CHECKSUM_SOURCE_SHA256,
+    NUMERIC_FIXTURE_IDS,
+    validate_added_numeric_case,
+    expected_tf030_observation,
+    validate_functions_zero_start_snapshot,
+    validate_numeric_boundary_snapshot,
+    validate_numeric_extra_spellings_snapshot,
+    validate_numeric_fna_nonnumeric_snapshot,
+    validate_numeric_format_atoms_snapshot,
+    validate_numeric_invalid_fnl_fields_snapshot,
+    validate_numeric_negative_inf_snapshot,
+    validate_numeric_signed_zero_snapshot,
+    validate_numeric_zero_fn_end_snapshot,
+    validate_tf030_numeric_rows,
+)
+
+EXPECTED_MODEL_INSPECTOR_SHA256 = "4aad74fb32b2976fdde85f7d0ab3476b230d9e27500158a2f2ca31d5e482972e"
+
 STATE_FIXTURE_IDS = (
     "state-late-tn-mcdc",
     "state-cross-sf-mcdc-success",
@@ -110,164 +116,28 @@ BRANCH_FIXTURE_IDS = (
     "branches-interleave",
     "branches-sort-signatures",
 )
-NUMERIC_FIXTURE_IDS = (
-    "numeric-boundary",
-    "numeric-extra-spellings",
-    "numeric-format-atoms",
-    "numeric-negative",
-    "numeric-nonnumeric",
-    "numeric-malformed-exponent",
-    "numeric-excessive",
-    "numeric-zero-line",
-    "numeric-negative-inf",
-    "numeric-signed-zero",
-    "numeric-fnda-negative",
-    "numeric-fnda-nonnumeric",
-    "numeric-fna-nonnumeric",
-    "numeric-fna-malformed-exponent",
-    "numeric-brda-nonnumeric",
-    "numeric-mcdc-nondigit",
-    "numeric-zero-brda",
-    "numeric-zero-mcdc",
-    "numeric-zero-fn",
-    "numeric-zero-fn-end",
-    "numeric-invalid-fnl-fields",
-    "numeric-inf-excessive",
-    "numeric-function-excessive",
-    "numeric-function-source",
-    "checksum-match",
-    "checksum-mismatch",
-    "checksum-missing",
-    "checksum-duplicate",
-    "checksum-source-cs",
-)
-CHECKSUM_SOURCE_SHA256 = "996137ced8354c0b4b3730a96a1480001118944458519ab2d63f519546de97a4"
-CHECKSUM_SOURCE_BYTES = b"int x = 1;\n"
-CHECKSUM_MD5_BASE64 = "AVO7Y115x231sZo9ymlVFA"
 
-
-def require(condition: bool, message: str) -> None:
-    if not condition:
-        raise ValueError(message)
-
-
-def reject_json_constant(value: str) -> None:
-    raise ValueError(f"non-RFC JSON constant: {value}")
-
-
-def reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
-    document: dict[str, object] = {}
-    for key, value in pairs:
-        if key in document:
-            raise ValueError(f"duplicate JSON object key: {key}")
-        document[key] = value
-    return document
-
-
-def strict_json_loads_ascii(raw: bytes, label: str) -> dict[str, object]:
-    try:
-        # Decode inside this helper so malformed bytes receive the same
-        # fail-closed diagnostic as RFC-invalid constants.
-        text = raw.decode("ascii")
-        document = json.loads(
-            text,
-            parse_constant=reject_json_constant,
-            object_pairs_hook=reject_duplicate_json_keys,
+def _validate_upstream_numeric_fixture(fixtures: dict[str, generate.Fixture]) -> None:
+    upstream_root = Path(
+        os.environ.get(
+            "LCOV_SOURCE_ROOT",
+            ROOT.parents[3] / "lcov-upstream-reference",
         )
-    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
-        raise ValueError(f"{label}: not strict ASCII JSON: {error}") from error
-    require(isinstance(document, dict), f"{label}: root must be object")
-    return document
-
-
-def strict_json_file(path: Path, label: str) -> dict[str, object]:
-    return strict_json_loads_ascii(path.read_bytes(), label)
-
-
-def semantic_inputs_from_argv(argv: list[object], label: str) -> list[str]:
-    require(argv[:2] == ["perl", MODEL_INSPECTOR_NAME], f"{label}: inspector argv drift")
-    inputs: list[str] = []
-    index = 2
-    while index < len(argv):
-        value = str(argv[index])
-        if value in {"--ignore", "--ignore-errors", "--excessive-threshold"}:
-            require(index + 1 < len(argv), f"{label}: option {value} lacks a value")
-            index += 2
-            continue
-        if value == "--":
-            inputs.extend(str(item) for item in argv[index + 1 :])
-            break
-        require(not value.startswith("-"), f"{label}: unexpected inspector option {value}")
-        inputs.append(value)
-        index += 1
-    require(inputs, f"{label}: inspector argv has no input")
-    return inputs
-
-
-def validate_semantic_input_identity(case: dict[str, object], document: dict[str, object]) -> None:
-    expected = semantic_inputs_from_argv(list(case["argv"]), str(case["id"]))
-    has_input = "input" in document
-    has_inputs = "inputs" in document
-    require(has_input != has_inputs, f"{case['id']}: exactly one of input/inputs is required")
-    if len(expected) == 1:
-        require(has_input and not has_inputs, f"{case['id']}: single input must use input")
-        require(document.get("input") == expected[0], f"{case['id']}: input identity drift")
-    else:
-        require(has_inputs and not has_input, f"{case['id']}: multiple inputs must use inputs")
-        require(document.get("inputs") == expected, f"{case['id']}: ordered inputs identity drift")
-
-
-def validate_semantic_stderr(case_id: str, raw: bytes) -> None:
-    require(case_id in SEMANTIC_STDERR_POLICIES, f"{case_id}: missing stderr policy")
-    text = raw.decode("utf-8", "strict")
-    actual: list[tuple[str, str]] = []
-    previous_was_header = False
-    for line in text.splitlines():
-        if not line:
-            continue
-        if line.startswith("\t"):
-            require(previous_was_header, f"{case_id}: orphan diagnostic continuation")
-            continue
-        match = re.match(rf"^{re.escape(MODEL_INSPECTOR_NAME)}: (WARNING|ERROR): \(([^)]+)\) ", line)
-        require(match is not None, f"{case_id}: unclassified diagnostic line")
-        actual.append((match.group(1), match.group(2)))
-        previous_was_header = True
-    require(
-        Counter(actual) == Counter(SEMANTIC_STDERR_POLICIES[case_id]),
-        f"{case_id}: stderr policy drift: {actual!r}",
     )
-
-
-def validate_lcov_stderr(case_id: str, raw: bytes, expected: tuple[tuple[str, str], ...]) -> None:
-    text = raw.decode("utf-8", "strict")
-    actual: list[tuple[str, str]] = []
-    previous_was_header = False
-    for line in text.splitlines():
-        if not line:
-            continue
-        if line.startswith("\t"):
-            require(previous_was_header, f"{case_id}: orphan diagnostic continuation")
-            continue
-        matches = list(re.finditer(r"(?<!\S)lcov: (WARNING|ERROR): \(([^)]+)\) ", line))
-        require(matches and line.startswith("lcov: "), f"{case_id}: unclassified diagnostic line")
-        actual.extend((match.group(1), match.group(2)) for match in matches)
-        previous_was_header = True
-    require(Counter(actual) == Counter(expected), f"{case_id}: stderr policy drift: {actual!r}")
-
-
-def verify_identity(identity: dict[str, object], label: str) -> None:
-    require(isinstance(identity.get("sha256"), str), f"{label}: missing sha256")
-    require(isinstance(identity.get("byte_size"), int), f"{label}: missing byte_size")
-    if "base64" in identity:
-        data = base64.b64decode(str(identity["base64"]), validate=True)
-        require(len(data) == identity["byte_size"], f"{label}: base64 size mismatch")
-        require(hashlib.sha256(data).hexdigest() == identity["sha256"], f"{label}: base64 hash mismatch")
-
-
-def decode_identity(identity: dict[str, object], label: str) -> bytes:
-    verify_identity(identity, label)
-    require("base64" in identity, f"{label}: raw identity required")
-    return base64.b64decode(str(identity["base64"]), validate=True)
+    upstream_path = upstream_root / "tests/lcov/format/format.info"
+    require(upstream_path.is_file(), f"missing pinned upstream fixture: {upstream_path}")
+    fixture = fixtures.get("fixtures/numeric/format-atoms.info")
+    require(fixture is not None, "numeric format-atoms fixture missing")
+    upstream_bytes = upstream_path.read_bytes()
+    require(
+        fixture.data == upstream_bytes,
+        "numeric format-atoms fixture differs from pinned upstream bytes",
+    )
+    require(
+        hashlib.sha256(upstream_bytes).hexdigest()
+        == "e42a8bd718d8d9aa90e952b99ab78044227b4d511ef13e1d3de78a8c75dd0041",
+        "pinned upstream format-atoms SHA-256 drift",
+    )
 
 
 def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]:
@@ -276,6 +146,7 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     generated_manifest = generate.build_manifest(fixtures)
     require(manifest == generated_manifest, "manifest.json is not the exact generator result")
     by_path = {fixture.path: fixture for fixture in fixtures}
+    _validate_upstream_numeric_fixture(by_path)
 
     tracked = {
         path.relative_to(ROOT).as_posix()
@@ -323,6 +194,7 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
         "branches-expression-merge-left", "branches-expression-merge-right",
         "branches-order-gaps", "branches-noncontiguous", "branches-interleave",
         "branches-sort-signatures",
+        *WAVE1_FIXTURE_IDS,
         "scale-medium", "scale-large",
     }
     by_id = {fixture.id: fixture for fixture in fixtures}
@@ -410,6 +282,54 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
     require(b"BRDA:10,0,e,1\n" in by_id["branches-noncontiguous"].data, "noncontiguous line reuse missing")
     require(b"BRDA:10,1,c,1\n" in by_id["branches-interleave"].data, "interleave second block missing")
     require(b"BRDA:10,e2,e0,1\n" in by_id["branches-sort-signatures"].data, "sort exception signature missing")
+    require(b"# leading column-zero comment\n" in by_id["wave1-comments-core"].data, "wave1 comments leading missing")
+    require(b"# trailing column-zero comment\n" in by_id["wave1-comments-core"].data, "wave1 comments trailing missing")
+    require(b" # leading-space hash is not a comment\n" in by_id["wave1-comments-leading-space"].data, "wave1 leading-space comment missing")
+    require(by_id["wave1-comments-leading-space"].oracle_default == "reject", "wave1 leading-space must reject")
+    require(b"TN:\n" in by_id["wave1-tn-names"].data, "wave1 empty TN missing")
+    require(b"TN:has space\n" in by_id["wave1-tn-names"].data, "wave1 space TN missing")
+    require(b"TN:one\n" in by_id["wave1-tn-forget"].data and b"TN:two\n" in by_id["wave1-tn-forget"].data, "wave1 forget TN missing")
+    require(b"SF:./src/sf-dot.c\n" in by_id["wave1-sf-paths"].data, "wave1 ./ SF path missing")
+    require(b"SF:/abs/src/sf-abs.c\n" in by_id["wave1-sf-paths"].data, "wave1 abs SF path missing")
+    require(by_id["wave1-sf-empty"].data == b"TN:sf_empty\nSF:\nDA:1,1\nend_of_record\n", "wave1 empty SF fixture drift")
+    require(by_id["wave1-sf-empty"].oracle_default == "reject", "wave1 empty SF must reject")
+    require(by_id["wave1-sf-whitespace"].oracle_default == "reject", "wave1 whitespace SF must reject")
+    require(b"MCDC:2,0,t,1,0,a && b\n" in by_id["wave1-mcdc-core"].data, "wave1 mcdc group2 missing")
+    require(b"MCDC:3,1,t,2,0,a,b\n" in by_id["wave1-mcdc-core"].data, "wave1 mcdc repeated sense missing")
+    require(b"MCDC:1,U1,t,1,0,cond\n" in by_id["wave1-mcdc-u-modes"].data, "wave1 mcdc U missing")
+    require(b"DA:1,1\nFNL:0,1,1\n" in by_id["wave1-order-permuted"].data, "wave1 order permutation missing")
+    require(by_id["wave1-repeat-same-tn"].data.count(b"TN:rep\n") == 2, "wave1 same-TN repeat missing")
+    require(b"TN:a\n" in by_id["wave1-repeat-diff-tn-mcdc"].data and b"TN:b\n" in by_id["wave1-repeat-diff-tn-mcdc"].data, "wave1 diff-TN mcdc missing")
+    require(b"FNL:0,1,1\n" in by_id["wave1-features-all"].data and b"BRDA:1,0,e,1\n" in by_id["wave1-features-all"].data, "wave1 features records missing")
+    require(b"FNF:999\n" in by_id["wave1-summary-payloads"].data and b"LF:333\n" in by_id["wave1-summary-payloads"].data, "wave1 summary junk missing")
+    require(b"\n\nSF:src/blank.c\n\n" in by_id["wave2-framing-blank"].data, "wave2 blank framing missing")
+    require(by_id["wave2-framing-crlf-blank"].data.count(b"\r\n") >= 6, "wave2 crlf blank framing missing")
+    require(not by_id["wave2-framing-no-final-newline-blank"].data.endswith(b"\n"), "wave2 no-final-newline blank must omit final newline")
+    require(b"TN:ws  \n" in by_id["wave2-framing-trailing-ws"].data, "wave2 trailing-ws TN missing")
+    require(b"TN:,diff\n" in by_id["wave2-tn-diff"].data and b"TN:name,diff,extra\n" in by_id["wave2-tn-diff"].data, "wave2 TN diff forms missing")
+    require(b"KF:src/kf.c\n" in by_id["wave2-kf-parity"].data, "wave2 KF parity missing")
+    require(by_id["wave2-kf-empty"].oracle_default == "reject", "wave2 empty KF must reject")
+    require(b"DA:1,3,chk\n" in by_id["wave2-da-accumulate"].data, "wave2 DA accumulate checksum missing")
+    require(b"DA:1,2,AVO7Y115x231sZo9ymlVFA\n" in by_id["wave2-da-checksum-store"].data, "wave2 DA checksum store missing")
+    require(b"BRF_without_colon\n" in by_id["wave2-summary-forms"].data and b"LF999\n" in by_id["wave2-summary-forms"].data, "wave2 summary forms missing")
+    require(b"end_of_record_and_ignored\n" in by_id["wave2-terminator-suffix"].data, "wave2 terminator suffix missing")
+    require(by_id["wave2-terminator-dup"].data.count(b"end_of_record\n") == 4, "wave2 terminator dup missing")
+    require(by_id["wave2-terminator-missing"].oracle_default == "reject", "wave2 missing terminator must reject")
+    require(b"TD:desc\nZZ:x\n" in by_id["wave2-unknown-tags"].data, "wave2 unknown tags missing")
+    require(b" DA:1,1\n" in by_id["wave2-leading-ws-tag"].data, "wave2 leading-ws tag missing")
+    require(b"da:1,1\n" in by_id["wave2-case-change"].data, "wave2 case-change tag missing")
+    require(b"TN:z\n" in by_id["writer-order-core"].data and b"TN:a\n" in by_id["writer-order-core"].data, "writer order TN missing")
+    require(b"MCDC:1,10,t,1,0,big\n" in by_id["writer-mcdc-groups"].data, "writer mcdc group10 missing")
+    require(b"MCDC:3,1,t,1,0,a,b,c\n" in by_id["writer-mcdc-groups"].data, "writer mcdc comma expression missing")
+    require(b"FNF:999\n" in by_id["writer-summaries"].data, "writer summary junk missing")
+    require(b"KF:src/k.c\n" in by_id["writer-forbidden"].data and b"FN:1,2,foo\n" in by_id["writer-forbidden"].data, "writer forbidden records missing")
+    require(b"# dropme\n" in by_id["writer-comments"].data, "writer comments fixture missing")
+    require(by_id["gzip-valid"].data[:2] == b"\x1f\x8b", "gzip-valid magic missing")
+    require(by_id["gzip-corrupt"].data == b"not-a-gzip-payload", "gzip-corrupt fixture drift")
+    require(by_id["gzip-empty"].data[:2] == b"\x1f\x8b", "gzip-empty magic missing")
+    require(b"\xff" in by_id["writer-non-utf8"].data, "writer non-utf8 fixture missing")
+    require(b"<coverage" in by_id["converter-coverage-xml"].data, "converter xml fixture missing")
+    require(b"def foo" in by_id["converter-mod-py"].data, "converter mod.py fixture missing")
     require(by_id["branches-malformed-tail"].oracle_default == "reject", "malformed-tail must reject")
     require(
         by_id["branches-malformed-tail-empty-taken"].oracle_default == "reject",
@@ -461,67 +381,6 @@ def validate_manifest() -> tuple[dict[str, object], dict[str, generate.Fixture]]
             for key, value in metadata.items():
                 require(entry[key] == value, f"manifest {key} mismatch: {fixture.id}")
     return manifest, by_path
-
-
-def assert_count_store(store: dict[str, object], label: str, *, allow_empty: bool = True) -> None:
-    require(isinstance(store, dict), f"{label}: store must be object")
-    require(isinstance(store.get("found"), int), f"{label}: missing found")
-    require(isinstance(store.get("hit"), int), f"{label}: missing hit")
-    require(isinstance(store.get("lines"), dict), f"{label}: missing lines")
-    if not allow_empty:
-        require(store["lines"], f"{label}: expected non-empty lines")
-
-
-def assert_function_store(store: dict[str, object], label: str) -> None:
-    require(isinstance(store, dict), f"{label}: store must be object")
-    require(isinstance(store.get("found"), int), f"{label}: missing found")
-    require(isinstance(store.get("hit"), int), f"{label}: missing hit")
-    require(isinstance(store.get("functions"), dict), f"{label}: missing functions")
-
-
-def assert_branch_store(store: dict[str, object], label: str) -> None:
-    require(isinstance(store, dict), f"{label}: store must be object")
-    require(isinstance(store.get("found"), int), f"{label}: missing found")
-    require(isinstance(store.get("hit"), int), f"{label}: missing hit")
-    require(isinstance(store.get("lines"), dict), f"{label}: missing lines")
-
-
-def assert_mcdc_store(store: dict[str, object], label: str) -> None:
-    require(isinstance(store, dict), f"{label}: store must be object")
-    require(isinstance(store.get("found"), int), f"{label}: missing found")
-    require(isinstance(store.get("hit"), int), f"{label}: missing hit")
-    require(isinstance(store.get("lines"), dict), f"{label}: missing lines")
-    for line, block in store["lines"].items():
-        require(isinstance(block, dict), f"{label}.{line}: block must be object")
-        require(isinstance(block.get("groups"), dict), f"{label}.{line}: missing groups")
-        for size, exprs in block["groups"].items():
-            require(isinstance(exprs, list), f"{label}.{line}.groups.{size}: must be list")
-            for expr in exprs:
-                require(isinstance(expr.get("expression"), str), f"{label}.{line}: missing expression")
-                require("true_count" in expr and "false_count" in expr, f"{label}.{line}: missing sense counts")
-                require("true_excluded" in expr and "false_excluded" in expr, f"{label}.{line}: missing excluded flags")
-
-
-def assert_four_family_maps(testcases: dict[str, object], label: str) -> None:
-    require(set(testcases) == {"line", "function", "branch", "mcdc"}, f"{label}: four family maps required")
-    for family in ("line", "function", "branch", "mcdc"):
-        require(isinstance(testcases[family], dict), f"{label}.{family}: map must be object")
-
-
-def assert_single_testcase_parity(source: dict[str, object], testcase: str, label: str) -> None:
-    aggregate = source.get("aggregate")
-    testcases = source.get("testcases")
-    require(isinstance(aggregate, dict), f"{label}: aggregate missing")
-    require(set(aggregate) == {"line", "function", "branch", "mcdc"}, f"{label}: aggregate families drift")
-    require(isinstance(testcases, dict), f"{label}: testcases missing")
-    assert_four_family_maps(testcases, f"{label}.testcases")
-    for family in ("line", "function", "branch", "mcdc"):
-        require(set(testcases[family]) == {testcase}, f"{label}: {family} testcase identity drift")
-        require(
-            testcases[family][testcase] == aggregate[family],
-            f"{label}: aggregate/testcase {family} parity drift",
-        )
-
 
 def validate_late_tn_snapshot(document: dict[str, object]) -> None:
     require(document.get("kind") == "semantic_model_snapshot", "late-TN snapshot kind mismatch")
@@ -799,382 +658,90 @@ def validate_branches_expression_merge_snapshot(document: dict[str, object]) -> 
 
 
 
-def _source_by_name(document: dict[str, object], filename: str) -> dict[str, object]:
+
+def validate_wave1_mcdc_core_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 mcdc snapshot kind")
     sources = document.get("sources")
-    require(isinstance(sources, list), "snapshot sources must be a list")
-    matches = [source for source in sources if source.get("filename") == filename]
-    require(len(matches) == 1, f"expected exactly one source {filename}")
-    return matches[0]
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 mcdc source count")
+    source = sources[0]
+    require(source.get("filename") == "src/mcdc-core.c", "wave1 mcdc filename")
+    mcdc = source["aggregate"]["mcdc"]
+    # Oracle counts each sense occupancy in found/hit for this fixture shape.
+    require(mcdc["found"] == 12 and mcdc["hit"] == 4, f"wave1 mcdc totals found={mcdc['found']} hit={mcdc['hit']}")
+    lines = mcdc["lines"]
+    require(set(lines) == {"1", "2", "3"}, f"wave1 mcdc lines {set(lines)}")
+    g1 = lines["1"]["groups"]["1"]
+    require(len(g1) == 1, "wave1 mcdc line1 group size")
+    require(g1[0]["expression"] == "x" and g1[0]["true_count"] == 1 and g1[0]["false_count"] == 0, "wave1 mcdc line1 counts")
+    # Group size is encoded as the groups map key; indices 0 and 1 both exist.
+    require(set(lines["2"]["groups"]) == {"0", "1"}, f"wave1 mcdc line2 group keys {set(lines['2']['groups'])}")
+    g2_0 = lines["2"]["groups"]["0"]
+    g2_1 = lines["2"]["groups"]["1"]
+    require(len(g2_0) == 2 and len(g2_1) == 2, "wave1 mcdc line2 group sizes")
+    require(g2_0[0]["expression"] == "a && b" and g2_0[1]["expression"] == "a && b", "wave1 mcdc line2 expressions")
+    g3 = lines["3"]["groups"]["1"]
+    require(len(g3) == 1 and g3[0]["expression"] == "a,b", "wave1 mcdc line3 expression")
+    require(g3[0]["true_count"] == 3 and g3[0]["false_count"] == 0, "wave1 mcdc line3 repeated sense")
 
 
-def _single_source_by_name(document: dict[str, object], filename: str) -> dict[str, object]:
+def validate_wave1_order_snapshot(document: dict[str, object], case_id: str) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", f"{case_id} kind")
     sources = document.get("sources")
-    require(isinstance(sources, list) and len(sources) == 1, f"expected one source {filename}")
-    return _source_by_name(document, filename)
+    require(isinstance(sources, list) and len(sources) == 1, f"{case_id} source count")
+    source = sources[0]
+    require(source.get("filename") == "src/order.c", f"{case_id} filename")
+    agg = source["aggregate"]
+    require(agg["line"]["lines"].get("1") == 1, f"{case_id} line count")
+    require(agg["function"]["found"] == 1 and agg["function"]["hit"] == 1, f"{case_id} function totals")
+    require(agg["branch"]["found"] == 2 and agg["branch"]["hit"] == 1, f"{case_id} branch totals")
+    require(agg["mcdc"]["found"] == 2 and agg["mcdc"]["hit"] == 1, f"{case_id} mcdc totals")
+    fn = agg["function"]["functions"]["1"]
+    require(fn["aliases"].get("f") == 1 and fn["start"] == 1 and fn["end"] == 1, f"{case_id} function shape")
+    br = agg["branch"]["lines"]["1"]["blocks"][0]["elements"]
+    require(len(br) == 2 and br[0]["expr"] == "e" and br[1]["expr"] == "e2", f"{case_id} branch exprs")
+    mcdc = agg["mcdc"]["lines"]["1"]["groups"]["1"][0]
+    require(mcdc["expression"] == "c" and mcdc["true_count"] == 1 and mcdc["false_count"] == 0, f"{case_id} mcdc shape")
 
 
-def _assert_json_number_value(value: object, label: str) -> None:
-    require(
-        isinstance(value, (int, float, str)) and not isinstance(value, bool),
-        f"{label}: value must be int/float/str JSON number encoding",
-    )
-    if isinstance(value, float):
-        require(value == value and value not in (float("inf"), float("-inf")), f"{label}: raw nonfinite float forbidden")
-
-
-def validate_numeric_boundary_snapshot(document: dict[str, object]) -> None:
-    require(document.get("kind") == "semantic_model_snapshot", "numeric-boundary snapshot kind mismatch")
-    require(document.get("schema_version") == 1, "numeric-boundary snapshot schema mismatch")
-    require(document.get("input") == "input.info", "numeric-boundary single-input identity must use input")
-    require("inputs" not in document, "numeric-boundary must not emit multi-input inputs field")
+def validate_wave1_repeat_same_tn_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 repeat-same kind")
     sources = document.get("sources")
-    require(isinstance(sources, list) and len(sources) == 15, "numeric-boundary must retain 15 sources")
-    expected = {
-        "src/numeric-00.c": 0,
-        "src/numeric-01.c": "+0",
-        "src/numeric-02.c": "-0",
-        "src/numeric-03.c": 1,
-        "src/numeric-04.c": 1.5,
-        "src/numeric-05.c": ".5",
-        "src/numeric-06.c": "1.",
-        "src/numeric-07.c": "1e3",
-        "src/numeric-08.c": "1E-3",
-        "src/numeric-09.c": "NaN",
-        "src/numeric-10.c": "Inf",
-        "src/numeric-11.c": "Infinity",
-        "src/numeric-12.c": " 1",
-        "src/numeric-13.c": 9007199254740993,
-        "src/numeric-14.c": 18446744073709551615,
-    }
-    expected_hits = {
-        filename: 0 if filename in {
-            "src/numeric-00.c",
-            "src/numeric-01.c",
-            "src/numeric-02.c",
-            "src/numeric-09.c",
-        } else 1
-        for filename in expected
-    }
-    categories = {
-        "finite_simple": {"src/numeric-00.c", "src/numeric-03.c", "src/numeric-04.c", "src/numeric-13.c", "src/numeric-14.c"},
-        "finite_string": {"src/numeric-01.c", "src/numeric-02.c", "src/numeric-05.c", "src/numeric-06.c", "src/numeric-07.c", "src/numeric-08.c", "src/numeric-12.c"},
-        "nan": {"src/numeric-09.c"},
-        "inf": {"src/numeric-10.c", "src/numeric-11.c"},
-    }
-    seen = set()
-    for source in sources:
-        filename = source["filename"]
-        seen.add(filename)
-        require(filename in expected, f"unexpected numeric-boundary source: {filename}")
-        testcase = filename.removeprefix("src/").removesuffix(".c").replace("-", "_")
-        assert_single_testcase_parity(source, testcase, f"numeric-boundary {filename}")
-        aggregate = source["aggregate"]
-        empty_function = {"found": 0, "hit": 0, "functions": {}}
-        empty_branch = {"found": 0, "hit": 0, "lines": {}}
-        empty_mcdc = {"found": 0, "hit": 0, "lines": {}}
-        value = expected[filename]
-        expected_line = {"found": 1, "hit": expected_hits[filename], "lines": {"1": value}}
-        require(
-            aggregate
-            == {
-                "line": expected_line,
-                "function": empty_function,
-                "branch": empty_branch,
-                "mcdc": empty_mcdc,
-            },
-            f"numeric-boundary {filename} aggregate/testcase state drift",
-        )
-        _assert_json_number_value(value, f"numeric-boundary {filename}")
-        require(value == expected[filename], f"numeric-boundary {filename} value mismatch: {value!r}")
-        if filename in categories["nan"] | categories["inf"]:
-            require(isinstance(value, str), f"{filename}: nonfinite must be JSON string")
-            require(value in {"NaN", "nan", "Inf", "+Inf", "Infinity", "-Inf"}, f"{filename}: unexpected nonfinite spelling {value!r}")
-        if filename in categories["finite_simple"]:
-            require(isinstance(value, (int, float)) and not isinstance(value, bool), f"{filename}: simple finite must stay numeric JSON")
-        if filename in categories["finite_string"]:
-            require(isinstance(value, str), f"{filename}: non-simple finite must stay string")
-    require(seen == set(expected), f"numeric-boundary source set drift: {sorted(seen ^ set(expected))}")
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 repeat-same source count")
+    source = sources[0]
+    require(source.get("filename") == "src/repeat.c", "wave1 repeat-same filename")
+    agg = source["aggregate"]
+    # Observed Oracle additive same-TN merge for this fixture shape.
+    require(agg["line"]["lines"].get("1") == 3 and agg["line"]["lines"].get("2") == 1, f"wave1 repeat-same line add {agg['line']['lines']}")
+    require(agg["function"]["functions"]["1"]["aliases"].get("f") == 4, f"wave1 repeat-same function add {agg['function']['functions']['1']['aliases']}")
+    blocks = agg["branch"]["lines"]["1"]["blocks"]
+    require(len(blocks) == 2, "wave1 repeat-same branch block count")
+    require(agg["branch"]["found"] == 4 and agg["branch"]["hit"] == 3, "wave1 repeat-same branch totals")
+    # first block retains e taken=2 / e2 taken=0 after additive merge of first section pair counts
+    e0 = blocks[0]["elements"]
+    require(e0[0]["expr"] == "e" and e0[0]["taken"] == 2 and e0[1]["expr"] == "e2" and e0[1]["taken"] == 0, "wave1 repeat-same block0")
 
 
-def validate_numeric_format_atoms_snapshot(document: dict[str, object], *, with_excessive_threshold: bool) -> None:
-    require(document.get("kind") == "semantic_model_snapshot", "format-atoms snapshot kind mismatch")
-    require(document.get("schema_version") == 1, "format-atoms snapshot schema mismatch")
-    require(document.get("input") == "input.info", "format-atoms single-input identity must use input")
-    require("inputs" not in document, "format-atoms must not emit multi-input inputs field")
-    source = _single_source_by_name(document, "a.cpp")
-    assert_single_testcase_parity(source, "", "format-atoms")
-    expected = {
-        "line": {
-            "found": 7,
-            "hit": 4,
-            "lines": {"1": 1, "2": 1, "3": 1, "4": 0, "10": 0, "11": 0, "12": "1.0e+19"},
-        },
-        "function": {
-            "found": 6,
-            "hit": 2,
-            "functions": {
-                "1": {
-                    "name": "fcn",
-                    "start": 1,
-                    "end": 2,
-                    "hit": 1.5e20,
-                    "aliases": {"alias": 0, "alias2": 0, "alias3": 1.5e20, "fcn": 0},
-                },
-                "3": {
-                    "name": "noCommonAlias",
-                    "start": 3,
-                    "end": 3,
-                    "hit": 1,
-                    "aliases": {"noCommonAlias": 1},
-                },
-                "11": {
-                    "name": "onlyA",
-                    "start": 11,
-                    "end": 11,
-                    "hit": 0,
-                    "aliases": {"onlyA": 0},
-                },
-            },
-        },
-        "branch": {
-            "found": 8,
-            "hit": 2,
-            "lines": {
-                "1": {
-                    "blocks": [
-                        {
-                            "idx": 0,
-                            "signature": "bbb",
-                            "elements": [
-                                {"id": 0, "taken": 1, "count": 1, "expr": None, "type": "", "excluded": False},
-                                {"id": 1, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
-                                {"id": 2, "taken": "-", "count": 0, "expr": None, "type": "", "excluded": False},
-                            ],
-                        },
-                        {
-                            "idx": 1,
-                            "signature": "bbb",
-                            "elements": [
-                                {"id": 0, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
-                                {"id": 1, "taken": 1.67e20, "count": 1.67e20, "expr": None, "type": "", "excluded": False},
-                                {"id": 2, "taken": 0, "count": 0, "expr": "1", "type": "", "excluded": False},
-                            ],
-                        },
-                    ]
-                },
-                "11": {
-                    "blocks": [
-                        {
-                            "idx": 0,
-                            "signature": "bb",
-                            "elements": [
-                                {"id": 0, "taken": 0, "count": 0, "expr": None, "type": "", "excluded": False},
-                                {"id": 1, "taken": "-0", "count": "-0", "expr": None, "type": "", "excluded": False},
-                            ],
-                        }
-                    ]
-                },
-            },
-        },
-        "mcdc": {"found": 0, "hit": 0, "lines": {}},
-    }
-    require(source["aggregate"] == expected, "format-atoms aggregate state drift")
-    # Threshold is recorded only by inspector argv/runtime; model values remain identical.
-    require(with_excessive_threshold in (True, False), "format-atoms threshold flag required")
-
-
-def validate_numeric_signed_zero_snapshot(document: dict[str, object]) -> None:
-    require(document.get("kind") == "semantic_model_snapshot", "signed-zero snapshot kind mismatch")
-    require(document.get("schema_version") == 1, "signed-zero snapshot schema mismatch")
-    require(document.get("input") == "input.info", "signed-zero single-input identity must use input")
-    require("inputs" not in document, "signed-zero must not emit multi-input inputs field")
-    source = _single_source_by_name(document, "src/numeric-signed-zero.c")
-    assert_single_testcase_parity(source, "numeric_signed_zero", "signed-zero")
-    require(
-        source["aggregate"]
-        == {
-            "line": {"found": 2, "hit": 1, "lines": {"1": "-0", "2": 1}},
-            "function": {"found": 0, "hit": 0, "functions": {}},
-            "branch": {
-                "found": 2,
-                "hit": 1,
-                "lines": {
-                    "2": {
-                        "blocks": [
-                            {
-                                "idx": 0,
-                                "signature": "bb",
-                                "elements": [
-                                    {"id": 0, "taken": "-0", "count": "-0", "expr": "expr", "type": "", "excluded": False},
-                                    {"id": 1, "taken": 1, "count": 1, "expr": "expr2", "type": "", "excluded": False},
-                                ],
-                            }
-                        ]
-                    }
-                },
-            },
-            "mcdc": {"found": 0, "hit": 0, "lines": {}},
-        },
-        "signed-zero aggregate state drift",
-    )
-
-
-
-def validate_numeric_extra_spellings_snapshot(document: dict[str, object]) -> None:
-    require(document.get("kind") == "semantic_model_snapshot", "extra-spellings snapshot kind mismatch")
-    require(document.get("schema_version") == 1, "extra-spellings snapshot schema mismatch")
-    require(document.get("input") == "input.info", "extra-spellings single-input identity must use input")
-    require("inputs" not in document, "extra-spellings must not emit multi-input inputs field")
+def validate_wave1_repeat_diff_tn_mcdc_snapshot(document: dict[str, object]) -> None:
+    require(document.get("kind") == "semantic_model_snapshot", "wave1 repeat-diff kind")
     sources = document.get("sources")
-    require(isinstance(sources, list) and len(sources) == 3, "extra-spellings must retain 3 sources")
-    expected = {
-        "src/extra-00.c": "+1",
-        "src/extra-01.c": "nan",
-        "src/extra-02.c": "+Inf",
-    }
-    seen: set[str] = set()
-    for source in sources:
-        filename = source["filename"]
-        require(filename in expected, f"unexpected extra-spellings source: {filename}")
-        seen.add(filename)
-        testcase = filename.removeprefix("src/").removesuffix(".c").replace("-", "_")
-        assert_single_testcase_parity(source, testcase, f"extra-spellings {filename}")
-        expected_hit = 0 if filename == "src/extra-01.c" else 1
-        value = expected[filename]
-        require(
-            source["aggregate"]
-            == {
-                "line": {"found": 1, "hit": expected_hit, "lines": {"1": value}},
-                "function": {"found": 0, "hit": 0, "functions": {}},
-                "branch": {"found": 0, "hit": 0, "lines": {}},
-                "mcdc": {"found": 0, "hit": 0, "lines": {}},
-            },
-            f"extra-spellings {filename} aggregate state drift",
-        )
-        _assert_json_number_value(value, f"extra-spellings {filename}")
-        if filename in {"src/extra-01.c", "src/extra-02.c"}:
-            require(isinstance(value, str), f"{filename}: nonfinite must be JSON string")
-        if filename == "src/extra-00.c":
-            require(isinstance(value, str), f"{filename}: +1 must stay string spelling")
-    require(seen == set(expected), f"extra-spellings source set drift: {sorted(seen ^ set(expected))}")
-
-
-def validate_numeric_negative_inf_snapshot(document: dict[str, object]) -> None:
-    require(document.get("kind") == "semantic_model_snapshot", "negative-inf snapshot kind mismatch")
-    require(document.get("schema_version") == 1, "negative-inf snapshot schema mismatch")
-    source = _single_source_by_name(document, "src/numeric-negative-inf.c")
-    assert_single_testcase_parity(source, "numeric_negative_inf", "negative-inf")
-    require(
-        source["aggregate"]
-        == {
-            "line": {"found": 2, "hit": 1, "lines": {"1": 0, "2": 1}},
-            "function": {"found": 0, "hit": 0, "functions": {}},
-            "branch": {"found": 0, "hit": 0, "lines": {}},
-            "mcdc": {"found": 0, "hit": 0, "lines": {}},
-        },
-        "negative-inf recovered aggregate state drift",
-    )
-
-
-def validate_recovered_function_snapshot(
-    document: dict[str, object],
-    *,
-    label: str,
-    filename: str,
-    testcase: str,
-    expected_lines: dict[str, int],
-    location: str,
-    name: str,
-    start: int,
-    end: int,
-    count: int,
-) -> None:
-    source = _single_source_by_name(document, filename)
-    assert_single_testcase_parity(source, testcase, label)
-    line = {"found": len(expected_lines), "hit": sum(value != 0 for value in expected_lines.values()), "lines": expected_lines}
-    function = {
-        "found": 1,
-        "hit": 1 if count else 0,
-        "functions": {
-            location: {
-                "name": name,
-                "start": start,
-                "end": end,
-                "hit": count,
-                "aliases": {name: count},
-            }
-        },
-    }
-    require(
-        source["aggregate"]
-        == {
-            "line": line,
-            "function": function,
-            "branch": {"found": 0, "hit": 0, "lines": {}},
-            "mcdc": {"found": 0, "hit": 0, "lines": {}},
-        },
-        f"{label}: recovered aggregate state drift",
-    )
-
-
-def validate_numeric_fna_nonnumeric_snapshot(document: dict[str, object]) -> None:
-    validate_recovered_function_snapshot(
-        document,
-        label="fna-nonnumeric",
-        filename="src/numeric-fna-nonnumeric.c",
-        testcase="numeric_fna_nonnumeric",
-        expected_lines={"1": 0},
-        location="1",
-        name="alias",
-        start=1,
-        end=1,
-        count=0,
-    )
-
-
-def validate_numeric_zero_fn_end_snapshot(document: dict[str, object]) -> None:
-    validate_recovered_function_snapshot(
-        document,
-        label="zero-fn-end",
-        filename="src/numeric-zero-fn-end.c",
-        testcase="numeric_zero_fn_end",
-        expected_lines={"1": 0},
-        location="1",
-        name="name",
-        start=1,
-        end=0,
-        count=0,
-    )
-
-
-def validate_numeric_invalid_fnl_fields_snapshot(document: dict[str, object]) -> None:
-    validate_recovered_function_snapshot(
-        document,
-        label="invalid-fnl-fields",
-        filename="src/numeric-invalid-fnl-fields.c",
-        testcase="numeric_invalid_fnl_fields",
-        expected_lines={"1": 0},
-        location="1",
-        name="valid",
-        start=1,
-        end=1,
-        count=0,
-    )
-
-
-def validate_functions_zero_start_snapshot(document: dict[str, object]) -> None:
-    validate_recovered_function_snapshot(
-        document,
-        label="functions-zero-start",
-        filename="src/fn-zero-start.c",
-        testcase="fn_zero_start",
-        expected_lines={"1": 1, "5": 1},
-        location="0",
-        name="zero_start",
-        start=0,
-        end=5,
-        count=1,
-    )
+    require(isinstance(sources, list) and len(sources) == 1, "wave1 repeat-diff source count")
+    source = sources[0]
+    require(source.get("filename") == "src/repeat-mcdc.c", "wave1 repeat-diff filename")
+    agg = source["aggregate"]
+    require(agg["line"]["lines"].get("1") == 2, "wave1 repeat-diff line add")
+    require(agg["mcdc"]["found"] == 4 and agg["mcdc"]["hit"] == 3, f"wave1 repeat-diff mcdc totals {agg['mcdc']['found']}/{agg['mcdc']['hit']}")
+    agg_m = agg["mcdc"]["lines"]["1"]["groups"]["1"][0]
+    require(agg_m["expression"] == "c" and agg_m["true_count"] == 2 and agg_m["false_count"] == 1, "wave1 repeat-diff aggregate mcdc")
+    tc_line = source["testcases"]["line"]
+    require(set(tc_line) == {"a", "b"}, f"wave1 repeat-diff testcases {set(tc_line)}")
+    require(tc_line["a"]["lines"].get("1") == 1 and tc_line["b"]["lines"].get("1") == 1, "wave1 repeat-diff per-tn lines")
+    tc_mcdc = source["testcases"]["mcdc"]
+    require(set(tc_mcdc) == {"a", "b"}, "wave1 repeat-diff mcdc testcases")
+    a = tc_mcdc["a"]["lines"]["1"]["groups"]["1"][0]
+    b = tc_mcdc["b"]["lines"]["1"]["groups"]["1"][0]
+    # Observed Oracle ownership: TN a keeps its counts; TN b reflects cumulative/additive ownership shape.
+    require(a["true_count"] == 1 and a["false_count"] == 0, f"wave1 repeat-diff TN a mcdc {a}")
+    require(b["true_count"] == 2 and b["false_count"] == 1, f"wave1 repeat-diff TN b mcdc {b}")
 
 
 def validate_semantic_snapshot_observation(case: dict[str, object], observation: dict[str, object]) -> None:
@@ -1226,6 +793,28 @@ def validate_semantic_snapshot_observation(case: dict[str, object], observation:
         validate_numeric_invalid_fnl_fields_snapshot(document)
     elif case["id"] == "functions-zero-start.semantic-snapshot":
         validate_functions_zero_start_snapshot(document)
+    elif case["id"] == "numeric-format-atoms.tf030.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=12, case_id=case["id"])
+    elif case["id"] == "numeric-format-atoms.tf030-threshold.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=12, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=4, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=4, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-candidates.ignore-negative.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
+    elif case["id"] == "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot":
+        validate_tf030_numeric_rows(document, expected_count=40, case_id=case["id"])
+    elif case["id"] == "wave1-mcdc-core.semantic-snapshot":
+        validate_wave1_mcdc_core_snapshot(document)
+    elif case["id"] == "wave1-order-canonical.semantic-snapshot":
+        validate_wave1_order_snapshot(document, case_id=case["id"])
+    elif case["id"] == "wave1-order-permuted.semantic-snapshot":
+        validate_wave1_order_snapshot(document, case_id=case["id"])
+    elif case["id"] == "wave1-repeat-same-tn.semantic-snapshot":
+        validate_wave1_repeat_same_tn_snapshot(document)
+    elif case["id"] == "wave1-repeat-diff-tn-mcdc.semantic-snapshot":
+        validate_wave1_repeat_diff_tn_mcdc_snapshot(document)
     else:
         raise ValueError(f"unexpected semantic snapshot case: {case['id']}")
 
@@ -1237,6 +826,41 @@ def validate_observation_binding(
 ) -> None:
     """Validate identity and side-effect bindings shared by every Oracle case."""
     label = str(case["id"])
+    expected_tf030 = expected_tf030_observation(label)
+    if expected_tf030 is not None:
+        for field in ("exit_status", "output_file", "stdout", "stderr", "output", "environment"):
+            require_json_equal(
+                observation.get(field),
+                expected_tf030[field],
+                f"{label}: independent TF-030 {field} identity drift",
+            )
+        require_json_equal(
+            case.get("expected_exit"),
+            expected_tf030["exit_status"],
+            f"{label}: TF-030 case expected_exit must type-sensitively equal registry exit_status",
+        )
+
+    if label in TF030_CASE_IDS:
+        require_json_equal(
+            case.get("environment"),
+            TF030_PERL_ENV,
+            f"{label}: TF-030 case environment must equal TF030_PERL_ENV",
+        )
+        require_json_equal(
+            observation.get("environment"),
+            TF030_PERL_ENV,
+            f"{label}: TF-030 observation environment must equal TF030_PERL_ENV",
+        )
+    else:
+        require(
+            "environment" not in case or case.get("environment") is None,
+            f"{label}: non-TF-030 cases must not declare environment",
+        )
+        require(
+            "environment" not in observation,
+            f"{label}: non-TF-030 observations must not retain environment",
+        )
+
     require(observation["fixture"] == case["fixture"], f"fixture mismatch: {label}")
     require(
         observation.get("fixture_sha256") == hashlib.sha256(fixtures[case["fixture"]].data).hexdigest(),
@@ -1255,7 +879,14 @@ def validate_observation_binding(
         f"additional fixture byte identity mismatch: {label}",
     )
     require(observation["argv"] == case["argv"], f"argv mismatch: {label}")
-    require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {label}")
+    if label in TF030_CASE_IDS:
+        require_json_equal(
+            observation.get("exit_status"),
+            case.get("expected_exit"),
+            f"unexpected exit status: {label}",
+        )
+    else:
+        require(observation["exit_status"] == case["expected_exit"], f"unexpected exit status: {label}")
     verify_identity(observation["stdout"], f"{label} stdout")
     verify_identity(observation["stderr"], f"{label} stderr")
     output = observation["output"]
@@ -1271,109 +902,16 @@ def validate_observation_binding(
         require(case.get("output_file") is None or output["exists"] is False, f"missing output bytes: {label}")
 
 
-ADDED_OUTPUT_EXPECTATIONS = {
-    "numeric-format-atoms.excessive-stop-on-error-0": True,
-    "numeric-format-atoms.excessive-stop-on-error-1": False,
-    "numeric-fna-malformed-exponent.ignore-format": True,
-    "numeric-zero-fn-end.ignore-format": True,
-    "numeric-invalid-fnl-fields.ignore-format": True,
-    "functions-zero-start.ignore-inconsistent-format": True,
-    "numeric-function-excessive.default-stop": False,
-    "numeric-function-excessive.erase-suppressed": True,
-}
-
-ADDED_CASE_ARGV = {
-    "numeric-format-atoms.excessive-stop-on-error-0": [
-        "lcov", "--branch-coverage", "--no-function-coverage", "--ignore-errors", "format,negative",
-        "--rc", "excessive_count_threshold=1000000", "--rc", "stop_on_error=0",
-        "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-format-atoms.excessive-stop-on-error-1": [
-        "lcov", "--branch-coverage", "--no-function-coverage", "--ignore-errors", "format,negative",
-        "--rc", "excessive_count_threshold=1000000", "--rc", "stop_on_error=1",
-        "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-negative-inf.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "negative", "input.info"],
-    "numeric-fna-nonnumeric.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
-    "numeric-fna-malformed-exponent.ignore-format": [
-        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-zero-fn-end.ignore-format": [
-        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-zero-fn-end.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
-    "numeric-invalid-fnl-fields.ignore-format": [
-        "lcov", "--ignore-errors", "format", "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-invalid-fnl-fields.semantic-snapshot": ["perl", "inspect_model.pl", "--ignore", "format", "input.info"],
-    "functions-zero-start.ignore-inconsistent-format": [
-        "lcov", "--ignore-errors", "inconsistent,format", "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "functions-zero-start.semantic-snapshot": [
-        "perl", "inspect_model.pl", "--ignore", "inconsistent,format", "input.info",
-    ],
-    "numeric-function-excessive.default-stop": [
-        "lcov", "--rc", "excessive_count_threshold=100", "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-    "numeric-function-excessive.erase-suppressed": [
-        "lcov", "--rc", "excessive_count_threshold=100", "--rc", "erase_functions=^suppress_me$",
-        "--add-tracefile", "input.info", "--output-file", "output.info",
-    ],
-}
-
-
-def validate_added_numeric_case(case: dict[str, object], observation: dict[str, object]) -> None:
-    case_id = str(case["id"])
-    if case_id in ADDED_CASE_ARGV:
-        require(case.get("argv") == ADDED_CASE_ARGV[case_id], f"{case_id}: argv policy drift")
-    if case_id not in ADDED_OUTPUT_EXPECTATIONS:
-        return
-    expected_exists = ADDED_OUTPUT_EXPECTATIONS[case_id]
-    require(case.get("expected_output_exists") is expected_exists, f"{case_id}: expected output policy missing")
-    if not expected_exists:
-        require(observation["output"]["exists"] is False, f"{case_id}: output must be absent")
-        return
-    output = decode_identity(observation["output"], f"{case_id} output")
-    exact_outputs = {
-        "numeric-fna-malformed-exponent.ignore-format": (
-            b"TN:numeric_fna_malformed_exponent\n"
-            b"SF:src/numeric-fna-malformed-exponent.c\n"
-            b"FNL:0,1,1\nFNA:0,0,alias\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
-        ),
-        "numeric-zero-fn-end.ignore-format": (
-            b"TN:numeric_zero_fn_end\nSF:src/numeric-zero-fn-end.c\n"
-            b"FNL:0,1,0\nFNA:0,0,name\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
-        ),
-        "numeric-invalid-fnl-fields.ignore-format": (
-            b"TN:numeric_invalid_fnl_fields\nSF:src/numeric-invalid-fnl-fields.c\n"
-            b"FNL:0,1,1\nFNA:0,0,valid\nFNF:1\nFNH:0\nDA:1,0\nLF:1\nLH:0\nend_of_record\n"
-        ),
-        "functions-zero-start.ignore-inconsistent-format": (
-            b"TN:fn_zero_start\nSF:src/fn-zero-start.c\nFNL:0,0,5\nFNA:0,1,zero_start\n"
-            b"FNF:1\nFNH:1\nDA:1,1\nDA:5,1\nLF:2\nLH:2\nend_of_record\n"
-        ),
-        "numeric-format-atoms.excessive-stop-on-error-0": (
-            b"TN:\nSF:a.cpp\nBRDA:1,0,0,1\nBRDA:1,0,1,0\nBRDA:1,0,2,-\n"
-            b"BRDA:1,1,0,0\nBRDA:1,1,1,1.67e+20\nBRDA:1,1,1,0\nBRDA:11,0,0,0\n"
-            b"BRDA:11,0,1,-0\nBRF:8\nBRH:2\nDA:1,1\nDA:2,1\nDA:3,1\nDA:4,0\n"
-            b"DA:10,0\nDA:11,0\nDA:12,1.0e+19\nLF:7\nLH:4\nend_of_record\n"
-        ),
-        "numeric-function-excessive.erase-suppressed": (
-            b"TN:function_excessive\nSF:function-excessive.c\nFNL:0,1,1\nFNA:0,99,below_fn\n"
-            b"FNL:1,2,2\nFNA:1,100,at_fn\nFNF:2\nFNH:2\nDA:1,1\nDA:2,1\nDA:4,1\n"
-            b"LF:3\nLH:3\nend_of_record\n"
-        ),
-    }
-    if case_id in exact_outputs:
-        require(output == exact_outputs[case_id], f"{case_id}: canonical output drift")
-
-
 def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.Fixture]) -> None:
     cases_path = ROOT / "oracle-cases.json"
     baseline_path = ROOT / "oracle-baseline.json"
     cases_document = strict_json_file(cases_path, "oracle-cases.json")
     expected_cases = generate.build_oracle_cases(generate.build_fixtures())
-    require(cases_document == expected_cases, "oracle-cases.json is not the exact generator result")
+    require_json_equal(
+        cases_document,
+        expected_cases,
+        "oracle-cases.json is not the exact generator result",
+    )
     baseline = strict_json_file(baseline_path, "oracle-baseline.json")
     require(cases_document["schema_version"] == 1, "unsupported oracle-cases schema")
     require(baseline["schema_version"] == 1, "unsupported Oracle baseline schema")
@@ -1391,7 +929,29 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             require(name not in {"input.info", MODEL_INSPECTOR_NAME}, f"reserved additional fixture name: {case['id']}")
             require(fixture in fixtures, f"Oracle case references unknown additional fixture: {case['id']}")
         require(case["argv"] and case["argv"][0] in ALLOWED_ARGV_HEADS, f"invalid Oracle argv head: {case['id']}")
-        require(isinstance(case["expected_exit"], int), f"missing expected_exit: {case['id']}")
+        # bool is a subclass of int; reject True/False as expected_exit.
+        require(
+            type(case.get("expected_exit")) is int,
+            f"missing expected_exit: {case['id']}",
+        )
+        if case["id"] in TF030_CASE_IDS:
+            require_json_equal(
+                case.get("environment"),
+                TF030_PERL_ENV,
+                f"{case['id']}: TF-030 case environment must equal TF030_PERL_ENV",
+            )
+            expected_tf030 = expected_tf030_observation(str(case["id"]))
+            require(expected_tf030 is not None, f"{case['id']}: TF-030 registry observation missing")
+            require_json_equal(
+                case.get("expected_exit"),
+                expected_tf030["exit_status"],
+                f"{case['id']}: TF-030 case expected_exit must type-sensitively equal registry exit_status",
+            )
+        else:
+            require(
+                "environment" not in case,
+                f"{case['id']}: non-TF-030 cases must not declare environment",
+            )
         output_file = case.get("output_file")
         if output_file is not None:
             require(output_file == Path(output_file).name, f"unsafe output_file: {case['id']}")
@@ -1407,7 +967,17 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             require(case["argv"][0] == "perl", f"inspector runner must use perl: {case['id']}")
             require(MODEL_INSPECTOR_NAME in case["argv"], f"inspector argv missing script: {case['id']}")
         else:
-            require(case["argv"][0] == "lcov", f"default runner must use lcov: {case['id']}")
+            require(
+                case["argv"][0] in {"lcov", "xml2lcov", "py2lcov", "sh"},
+                f"default runner must use lcov/xml2lcov/py2lcov/sh: {case['id']}",
+            )
+        if "input_name" in case:
+            require(
+                isinstance(case["input_name"], str)
+                and case["input_name"]
+                and Path(str(case["input_name"])).name == case["input_name"],
+                f"unsafe input_name: {case['id']}",
+            )
         # Fail closed against product evidence promotion fields.
         require(case.get("evidence_status") in (None, "oracle_reference"), f"product evidence claim: {case['id']}")
         require("product_compatibility" not in case, f"product compatibility claim: {case['id']}")
@@ -1746,8 +1316,8 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             validate_lcov_stderr(
                 case["id"],
                 decode_identity(observation["stderr"], f"{case['id']} stderr"),
-                (("WARNING", "negative"), ("WARNING", "negative"), ("WARNING", "format"), ("WARNING", "format"),
-                 ("ERROR", "excessive"), ("ERROR", "excessive"), ("ERROR", "excessive")),
+                (("WARNING", "negative"), ("WARNING", "format"), ("ERROR", "excessive"),
+                 ("WARNING", "negative"), ("WARNING", "format"), ("ERROR", "excessive"), ("ERROR", "excessive")),
             )
             require(observation["exit_status"] == 1, "stop_on_error=0 must exit nonzero")
         if case["id"] == "numeric-format-atoms.excessive-stop-on-error-1":
@@ -1972,6 +1542,271 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
         ],
         f"branch-records case closure drift: {branch_case_ids}",
     )
+    wave1_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "wave1-tracefile"]
+    require(
+        [fixture.id for fixture in wave1_fixtures] == list(WAVE1_FIXTURE_IDS),
+        f"wave1 fixture closure drift: {[fixture.id for fixture in wave1_fixtures]}",
+    )
+    wave1_case_ids = [case["id"] for case in cases if case["id"].startswith("wave1-")]
+    require(
+        wave1_case_ids == list(WAVE1_CASE_IDS),
+        f"wave1 case closure drift: {wave1_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        if not str(case["id"]).startswith("wave1-"):
+            continue
+        if case["id"] == "wave1-comments-core.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 comments canonical")
+            require(b"#" not in output_bytes, "wave1 comments must not be retained on write")
+            require(b"TN:comment_core\nSF:src/comment-core.c\nDA:1,1\n" in output_bytes, "wave1 comments body missing")
+        if case["id"] == "wave1-tn-names.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 tn names canonical")
+            require(b"TN:\n" in output_bytes, "wave1 empty TN rewrite missing")
+            require(b"TN:has_space\n" in output_bytes, "wave1 sanitized TN missing")
+            require(b"TN:has space\n" not in output_bytes, "wave1 unsanitized TN leaked")
+        if case["id"] == "wave1-tn-forget.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 forget canonical")
+            require(
+                output_bytes == b"TN:\nSF:src/tn-forget.c\nDA:1,3\nLF:1\nLH:1\nend_of_record\n",
+                "wave1 forget rewrite drift",
+            )
+        if case["id"] == "wave1-order-permuted.canonical":
+            right = decode_identity(observation["output"], "wave1 order permuted")
+            require(b"FNL:0,1,1\nFNA:0,1,f\n" in right, "wave1 order rewrite function missing")
+            require(b"BRDA:1,0,e,1\n" in right and b"MCDC:1,1,t,1,0,c\n" in right, "wave1 order rewrite branch/mcdc missing")
+            require(b"DA:1,1\n" in right, "wave1 order rewrite DA missing")
+        if case["id"] == "wave1-features-all.default-function-only":
+            output_bytes = decode_identity(observation["output"], "wave1 features default")
+            require(b"FNL:" in output_bytes and b"BRDA:" not in output_bytes and b"MCDC:" not in output_bytes, "wave1 default feature filter drift")
+        if case["id"] == "wave1-features-all.all-enabled":
+            output_bytes = decode_identity(observation["output"], "wave1 features all")
+            require(b"FNL:" in output_bytes and b"BRDA:" in output_bytes and b"MCDC:" in output_bytes, "wave1 all-enabled filter drift")
+        if case["id"] == "wave1-features-all.lines-only":
+            output_bytes = decode_identity(observation["output"], "wave1 features lines")
+            require(b"FNL:" not in output_bytes and b"BRDA:" not in output_bytes and b"MCDC:" not in output_bytes, "wave1 lines-only filter drift")
+            require(b"DA:1,1\n" in output_bytes, "wave1 lines-only DA missing")
+        if case["id"] == "wave1-summary-payloads.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 summary canonical")
+            require(b"FNF:999" not in output_bytes and b"LF:333" not in output_bytes, "wave1 junk summary retained")
+            require(b"BRF:2\nBRH:1\n" in output_bytes, "wave1 recomputed branch summary missing")
+            require(b"MCF:2\nMCH:1\n" in output_bytes, "wave1 recomputed mcdc summary missing")
+            require(b"LF:2\nLH:1\n" in output_bytes, "wave1 recomputed line summary missing")
+        if case["id"] == "wave1-mcdc-u-modes.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 mcdc U default")
+            require(b"MCDC:1,U1,t,1,0,cond\n" in output_bytes, "wave1 U retention missing")
+        if case["id"] == "wave1-mcdc-u-modes.clear-unreachable":
+            output_bytes = decode_identity(observation["output"], "wave1 mcdc U clear")
+            require(b"MCDC:1,1,t,1,0,cond\n" in output_bytes, "wave1 U clear rewrite missing")
+            require(b",U1," not in output_bytes, "wave1 U mark retained under clear mode")
+        if case["id"] == "wave1-repeat-same-tn.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 repeat same")
+            require(b"DA:1,2\n" in output_bytes and b"FNA:0,3,f\n" in output_bytes, "wave1 same-TN additive rewrite missing")
+        if case["id"] == "wave1-repeat-diff-tn-mcdc.canonical":
+            output_bytes = decode_identity(observation["output"], "wave1 repeat diff")
+            require(b"TN:a\n" in output_bytes and b"TN:b\n" in output_bytes, "wave1 diff-TN sections missing")
+
+    wave2_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "wave2-tracefile"]
+    require(
+        [fixture.id for fixture in wave2_fixtures] == list(WAVE2_FIXTURE_IDS),
+        f"wave2 fixture closure drift: {[fixture.id for fixture in wave2_fixtures]}",
+    )
+    wave2_case_ids = [case["id"] for case in cases if case["id"].startswith("wave2-")]
+    require(
+        wave2_case_ids == list(WAVE2_CASE_IDS),
+        f"wave2 case closure drift: {wave2_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        if not str(case["id"]).startswith("wave2-"):
+            continue
+        if case["id"] == "wave2-framing-blank.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 framing blank")
+            require(output_bytes == b"TN:blank\nSF:src/blank.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", "wave2 blank rewrite drift")
+        if case["id"] == "wave2-framing-crlf-blank.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 framing crlf")
+            require(b"\r" not in output_bytes, "wave2 crlf must normalize to LF")
+            require(b"TN:crlfblank\nSF:src/crlf-blank.c\nDA:1,1\n" in output_bytes, "wave2 crlf body missing")
+        if case["id"] == "wave2-framing-trailing-ws.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 trailing ws")
+            require(output_bytes == b"TN:ws\nSF:src/ws.c\nDA:1,1\nLF:1\nLH:1\nend_of_record\n", "wave2 trailing-ws rewrite drift")
+        if case["id"] == "wave2-tn-diff.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 tn diff")
+            require(b"TN:,diff\n" in output_bytes, "wave2 exact empty,diff missing")
+            require(b"TN:name,diff\n" in output_bytes, "wave2 name,diff retention missing")
+            require(b"TN:name\n" in output_bytes, "wave2 other-comma strip missing")
+            require(b"TN:has_space\n" in output_bytes, "wave2 sanitized space-diff missing")
+            require(b"TN:has space" not in output_bytes, "wave2 unsanitized space TN leaked")
+            require(b"TN:name,diff,extra\n" not in output_bytes, "wave2 suffix-after-diff leaked")
+            stderr_bytes = decode_identity(observation["stderr"], "wave2 tn diff stderr")
+            require(b"invalid characters removed from testname" in stderr_bytes, "wave2 sanitization warning missing")
+        if case["id"] == "wave2-kf-parity.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 kf parity")
+            require(b"KF:" not in output_bytes, "wave2 KF must rewrite to SF")
+            require(b"SF:src/kf.c\n" in output_bytes and b"SF:src/kf2.c\n" in output_bytes, "wave2 KF path rewrite missing")
+            require(b"DA:1,2\nDA:2,1\n" in output_bytes, "wave2 KF repeated-source additive missing")
+        if case["id"] == "wave2-da-accumulate.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da accumulate")
+            require(b"DA:1,6\nDA:2,0\n" in output_bytes, "wave2 DA accumulate rewrite missing")
+            require(b",chk" not in output_bytes, "wave2 stored checksum retained without --checksum")
+        if case["id"] == "wave2-da-checksum-store.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da checksum store")
+            require(
+                output_bytes == b"TN:chkstore\nSF:cs.c\nDA:1,3,AVO7Y115x231sZo9ymlVFA\nLF:1\nLH:1\nend_of_record\n",
+                "wave2 checksum store/rewrite drift",
+            )
+        if case["id"] == "wave2-da-checksum-store.no-verify.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 da checksum no-verify")
+            require(
+                output_bytes == b"TN:chkstore\nSF:cs.c\nDA:1,3\nLF:1\nLH:1\nend_of_record\n",
+                "wave2 no-verify checksum drop drift",
+            )
+        if case["id"] == "wave2-summary-forms.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 summary forms")
+            require(b"FNF:999" not in output_bytes and b"LF:333" not in output_bytes, "wave2 junk summary retained")
+            require(b"LF:2\nLH:1\n" in output_bytes, "wave2 recomputed line summary missing")
+            require(b"BRF_without_colon" not in output_bytes and b"LF999" not in output_bytes, "wave2 malformed summary retained")
+        if case["id"] == "wave2-terminator-suffix.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 terminator suffix")
+            require(b"end_of_record\n" in output_bytes and b"end_of_record_and_ignored" not in output_bytes, "wave2 terminator suffix rewrite drift")
+        if case["id"] == "wave2-terminator-dup.canonical":
+            output_bytes = decode_identity(observation["output"], "wave2 terminator dup")
+            require(b"TN:a\n" in output_bytes and b"TN:b\n" in output_bytes and b"TN:c\n" in output_bytes, "wave2 terminator-dup sections missing")
+        if case["id"] == "wave2-unknown-tags.ignore-format":
+            output_bytes = decode_identity(observation["output"], "wave2 unknown ignore")
+            require(b"TD:" not in output_bytes and b"ZZ:" not in output_bytes, "wave2 unknown tags retained")
+            require(b"DA:1,1\n" in output_bytes, "wave2 unknown ignore DA missing")
+
+    writer_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "writer-tracefile"]
+    require(
+        [fixture.id for fixture in writer_fixtures] == list(WRITER_FIXTURE_IDS),
+        f"writer fixture closure drift: {[fixture.id for fixture in writer_fixtures]}",
+    )
+    writer_case_ids = [
+        case["id"]
+        for case in cases
+        if str(case["id"]).startswith(("writer-", "gzip-", "converter-coverage."))
+    ]
+    require(
+        writer_case_ids == list(WRITER_CASE_IDS),
+        f"writer case closure drift: {writer_case_ids}",
+    )
+    for case, observation in zip(cases, observations):
+        case_id = str(case["id"])
+        if case_id not in WRITER_CASE_IDS:
+            continue
+        # every retained observation must keep self-consistent identity hashes
+        assert_identity_self_hash(observation["stdout"], f"{case_id} stdout")
+        assert_identity_self_hash(observation["stderr"], f"{case_id} stderr")
+        if observation.get("output", {}).get("exists"):
+            assert_identity_self_hash(observation["output"], f"{case_id} output")
+        if case_id == "writer-order-core.canonical":
+            assert_writer_order_semantics(decode_identity(observation["output"], "writer order"), "writer order")
+        if case_id == "writer-mcdc-groups.canonical":
+            assert_writer_mcdc_group_semantics(
+                decode_identity(observation["output"], "writer mcdc groups"),
+                "writer mcdc groups",
+            )
+        if case_id == "writer-summaries.canonical":
+            assert_writer_summary_semantics(
+                decode_identity(observation["output"], "writer summaries"),
+                "writer summaries",
+            )
+        if case_id == "writer-comments.canonical":
+            assert_writer_comment_semantics(
+                decode_identity(observation["output"], "writer comments"),
+                "writer comments",
+            )
+        if case_id == "writer-forbidden.canonical":
+            assert_writer_forbidden_semantics(
+                decode_identity(observation["output"], "writer forbidden"),
+                "writer forbidden",
+            )
+        if case_id in {"writer-fixedpoint.canonical", "writer-fixedpoint.repeated-write"}:
+            assert_writer_fixedpoint_semantics(
+                decode_identity(observation["output"], case_id),
+                case_id,
+            )
+        if case_id == "converter-coverage.xml2lcov":
+            assert_xml2lcov_semantics(decode_identity(observation["output"], "xml2lcov"), "xml2lcov")
+        if case_id == "converter-coverage.py2lcov-no-functions":
+            assert_py2lcov_no_functions_semantics(
+                decode_identity(observation["output"], "py2lcov no-functions"),
+                "py2lcov no-functions",
+            )
+        if case_id == "converter-coverage.py2lcov-with-functions":
+            assert_py2lcov_with_functions_semantics(
+                decode_identity(observation["output"], "py2lcov with-functions"),
+                "py2lcov with-functions",
+            )
+        if case_id == "converter-coverage.canonical-rewrite":
+            # Full M1-TF-052 source→output semantic no-loss (not substring-only).
+            assert_tf052_source_to_output_semantics(
+                decode_identity(observation["output"], "converter rewrite"),
+                "converter rewrite",
+            )
+            # Keep observational shape check as a nested defense.
+            assert_converter_rewrite_observational(
+                decode_identity(observation["output"], "converter rewrite shape"),
+                "converter rewrite shape",
+            )
+        if case_id == "gzip-plain.write-gz":
+            output = observation["output"]
+            require(output.get("exists") is True, "gzip write must create output")
+            raw = decode_identity(output, "gzip write")
+            require(raw[:2] == b"\x1f\x8b", "gzip write magic missing")
+            assert_identity_self_hash(output, "gzip write identity")
+        if case_id == "gzip-valid.summary":
+            require(observation["exit_status"] == 0, "gzip-valid summary must succeed")
+            stdout = decode_identity(observation["stdout"], "gzip-valid stdout")
+            require(b"source files: 1" in stdout, "gzip-valid summary identity missing")
+        if case_id in {"gzip-corrupt.summary", "gzip-empty.summary", "gzip-valid.missing-gzip"}:
+            require(observation["exit_status"] == 1, f"{case_id} must exit 1")
+            stderr = decode_identity(observation["stderr"], f"{case_id} stderr").decode("utf-8", "replace")
+            if case_id == "gzip-corrupt.summary":
+                require("integrity check failed for compressed file" in stderr, "gzip-corrupt diagnostic drift")
+            elif case_id == "gzip-empty.summary":
+                require("no valid records found in tracefile" in stderr or "empty" in stderr, "gzip-empty diagnostic drift")
+            else:
+                require("gzip command not available" in stderr, "missing-gzip diagnostic drift")
+        if case_id == "writer-non-utf8.canonical":
+            assert_writer_non_utf8_observational(
+                decode_identity(observation["output"], "writer non-utf8"),
+                "writer non-utf8",
+            )
+
+    observed_by_id = {str(observation["id"]): observation for observation in observations}
+    # Legacy FN/FNDA edge cases are source-bound exact evidence.
+    assert_tf010_group_completeness(observed_by_id, decode_identity, "M1-TF-010")
+    assert_tf045_group_completeness(observed_by_id, decode_identity, "M1-TF-045-observational")
+    assert_tf045_two_write_group_completeness(observed_by_id, decode_identity, "M1-TF-045")
+    assert_tf052_group_completeness(observed_by_id, decode_identity, "M1-TF-052")
+    assert_tf061_group_completeness(observed_by_id, decode_identity, "M1-TF-061")
+    # Per-member exact tables also cover non-writer cases used by TF-045/061.
+    assert_tf045_member_semantics(
+        decode_identity(observed_by_id["legacy.canonical"]["output"], "legacy.canonical"),
+        "legacy",
+        "legacy.canonical",
+    )
+    assert_tf045_member_semantics(
+        decode_identity(
+            observed_by_id["permissive-prefix.canonical"]["output"],
+            "permissive-prefix.canonical",
+        ),
+        "permissive",
+        "permissive-prefix.canonical",
+    )
+    assert_tf045_member_semantics(
+        decode_identity(
+            observed_by_id["wave2-unknown-tags.ignore-format"]["output"],
+            "wave2-unknown-tags.ignore-format",
+        ),
+        "ignored_error",
+        "wave2-unknown-tags.ignore-format",
+    )
+    assert_tf061_field_matrix(
+        decode_identity(observed_by_id["bytes-non-utf8.canonical"]["output"], "bytes-non-utf8"),
+        "bytes-non-utf8.canonical",
+    )
+
     numeric_fixtures = [fixture for fixture in generate.build_fixtures() if fixture.group == "numeric-boundary"]
     require(
         [fixture.id for fixture in numeric_fixtures] == list(NUMERIC_FIXTURE_IDS),
@@ -2060,6 +1895,21 @@ def validate_baseline(manifest: dict[str, object], fixtures: dict[str, generate.
             "checksum-duplicate.summary",
             "checksum-duplicate.ignore-version",
             "checksum-no-verify.canonical",
+            "numeric-format-atoms.tf030.semantic-snapshot",
+            "numeric-format-atoms.tf030-threshold.semantic-snapshot",
+            "numeric-tf030-fna-mirror.default-stop",
+            "numeric-tf030-fna-mirror.ignore-negative-stop-format",
+            "numeric-tf030-fna-mirror.ignore-negative-format.canonical",
+            "numeric-tf030-fna-mirror.ignore-negative-format.semantic-snapshot",
+            "numeric-tf030-fna-mirror.threshold-default-stop",
+            "numeric-tf030-fna-mirror.threshold-ignore-all.canonical",
+            "numeric-tf030-fna-mirror.threshold-ignore-all.semantic-snapshot",
+            "numeric-tf030-candidates.default-stop",
+            "numeric-tf030-candidates.ignore-negative.canonical",
+            "numeric-tf030-candidates.ignore-negative.semantic-snapshot",
+            "numeric-tf030-candidates.threshold-default-stop",
+            "numeric-tf030-candidates.threshold-ignore-all.canonical",
+            "numeric-tf030-candidates.threshold-ignore-all.semantic-snapshot",
         ],
         f"numeric/checksum case closure drift: {numeric_case_ids}",
     )

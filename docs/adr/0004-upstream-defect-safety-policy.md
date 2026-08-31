@@ -122,6 +122,9 @@ The following audited behaviors are compatibility traps, not deviations:
 - `llvm2lcov --keep-going` has the same exit-zero behavior;
 - raw Perl `die` paths have command- and phase-specific exit statuses;
 - Python converter errors can be written to stdout rather than stderr;
+- `py2lcov --tabwidth` stores `args.tabwidth` while function derivation reads
+  `args.tabWidth`; a tabbed source can therefore terminate with a bounded
+  `AttributeError` after writing a partial tracefile;
 - `xml2lcovutil.py` accepts arbitrary arguments and exits `0` without output;
 - a single ignored error becomes a warning while a duplicate ignored error is
   silent; and

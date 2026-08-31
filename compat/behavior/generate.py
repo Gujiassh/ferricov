@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import json
 import sys
 from collections import Counter
@@ -26,6 +27,7 @@ MAIN_SCHEMA_PATH = "compat/schema/behavior-contract.schema.json"
 SCHEMA_PATH = MAIN_SCHEMA_PATH
 FRAGMENT_SCHEMA_PATH = "compat/schema/behavior-contract-fragment.schema.json"
 CONTRACT_PATH = "compat/behavior/contract.json"
+PLAN_BINDINGS_PATH = "compat/behavior/plan-bindings.json"
 FRAGMENT_SCHEMA_ID = "https://ferricov.dev/schema/behavior-contract-fragment.schema.json"
 MAX_FRAGMENT_LINES = 2_000
 INVENTORY_BUCKETS = 8
@@ -58,6 +60,181 @@ CONTENT_FIELDS = (
 
 class GenerationError(Exception):
     """Raised when fragment authoring or deterministic generation is invalid."""
+
+
+
+def case_is_substantive_plan(case: dict[str, Any]) -> bool:
+    """Mirror validate.case_is_substantive_plan for deterministic totals."""
+    if case.get("review_status") != "reviewed":
+        return False
+    if case.get("applicability", {}).get("status") == "not_applicable":
+        return False
+    if case.get("suite_cases"):
+        return True
+    return bool(case.get("behavior_groups")) and bool(case.get("upstream_tests"))
+
+
+def source_fingerprint(sources: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Canonical source identity used by fixed plan bindings."""
+    rows: list[dict[str, Any]] = []
+    for source in sources:
+        row = {
+            "kind": source["kind"],
+            "line": source["line"],
+            "path": source["path"],
+            "repository": source["repository"],
+        }
+        if "text" in source and source["text"] is not None:
+            row["text"] = source["text"]
+        rows.append(row)
+    return sorted(
+        rows,
+        key=lambda item: (
+            item["repository"],
+            item["path"],
+            item["line"],
+            item["kind"],
+            item.get("text", ""),
+        ),
+    )
+
+
+_BOUNDARY_PATTERNS = (
+    re.compile(r"input form `([^`]+)`"),
+    re.compile(r"cli-option boundary `([^`]+)`"),
+    re.compile(r"config-key boundary `([^`]+)`"),
+    re.compile(r"invocation/input boundary `([^`]+)`"),
+    re.compile(r"boundary(?: for [^:]*)?: `([^`]+)`"),
+    re.compile(r"`(--[A-Za-z0-9][A-Za-z0-9_-]*(?: <value>)?)`"),
+    re.compile(r"`([A-Za-z0-9_.-]+ = [^`]+)`"),
+    re.compile(r"`(<[A-Za-z0-9_./-]+>)`"),
+)
+
+
+def planning_boundary_form(case: dict[str, Any]) -> str:
+    """Return the independently sealed boundary token for a primary plan."""
+    description = case["description"]
+    for pattern in _BOUNDARY_PATTERNS:
+        match = pattern.search(description)
+        if match:
+            return match.group(1)
+    # Plain-text option/config tokens used by older suite-bound or reference plans.
+    plain = re.search(
+        r"(?:Review|Plan)\s+(?:[a-z0-9_.-]+\s+)?(--[A-Za-z0-9][A-Za-z0-9_-]*)\b",
+        description,
+    )
+    if plain:
+        return plain.group(1)
+    if case.get("suite_cases"):
+        primary = sorted(
+            target["id"] for target in case["targets"] if target["role"] == "primary"
+        )
+        if not primary:
+            raise GenerationError(f"{case['id']}: suite-bound plan missing primary target")
+        return f"suite-bound:{primary[0]}"
+    primary = sorted(
+        target["id"] for target in case["targets"] if target["role"] == "primary"
+    )
+    if primary and (
+        primary[0].startswith("support-script.")
+        or "support-script" in case["id"]
+        or "installed " in description
+    ):
+        return f"support-script:{primary[0]}"
+    raise GenerationError(
+        f"{case['id']}: substantive primary plan description lacks a sealed boundary form"
+    )
+
+
+def build_plan_bindings(contract: dict[str, Any]) -> dict[str, Any]:
+    """Build fixed semantic/interaction plan bindings from a merged contract.
+
+    These bindings are independent trusted facts: regenerating contract bytes
+    cannot rewrite the expected SHA-256 constant checked by the validator.
+    """
+    primary_plans: list[dict[str, Any]] = []
+    for case in contract["case_groups"]:
+        if not case_is_substantive_plan(case):
+            continue
+        if case["case_class"] == "interaction":
+            continue
+        primary_targets = sorted(
+            target["id"] for target in case["targets"] if target["role"] == "primary"
+        )
+        primary_plans.append(
+            {
+                "id": case["id"],
+                "behavior_groups": list(case.get("behavior_groups") or []),
+                "boundary_form": planning_boundary_form(case),
+                "description_sha256": hashlib.sha256(
+                    case["description"].encode("utf-8")
+                ).hexdigest(),
+                "primary_targets": primary_targets,
+                "source_fingerprint": source_fingerprint(case["source_references"]),
+                "suite_cases": [
+                    {"case_id": item["case_id"], "suite_id": item["suite_id"]}
+                    for item in sorted(
+                        case.get("suite_cases") or [],
+                        key=lambda item: (item["suite_id"], item["case_id"]),
+                    )
+                ],
+                "upstream_tests": list(case.get("upstream_tests") or []),
+            }
+        )
+    primary_plans.sort(key=lambda item: item["id"])
+
+    case_by_id = {case["id"]: case for case in contract["case_groups"]}
+    critical_interactions: list[dict[str, Any]] = []
+    for group in contract["interaction_groups"]:
+        if not (group.get("critical") and group.get("review_status") == "reviewed"):
+            continue
+        case_contexts: list[dict[str, Any]] = []
+        for case_id in group["planned_cases"]:
+            case = case_by_id[case_id]
+            case_contexts.append(
+                {
+                    "id": case_id,
+                    "behavior_groups": list(case.get("behavior_groups") or []),
+                    "surface": case["surface"],
+                    "targets": sorted(
+                        [
+                            {"id": target["id"], "role": target["role"]}
+                            for target in case["targets"]
+                        ],
+                        key=lambda item: (item["id"], item["role"]),
+                    ),
+                    "upstream_tests": list(case.get("upstream_tests") or []),
+                }
+            )
+        case_contexts.sort(key=lambda item: item["id"])
+        critical_interactions.append(
+            {
+                "id": group["id"],
+                "case_contexts": case_contexts,
+                "domain": group["domain"],
+                "member_ids": sorted(member["id"] for member in group["members"]),
+                "planned_cases": list(group["planned_cases"]),
+                "source_fingerprint": source_fingerprint(group["source_references"]),
+            }
+        )
+    critical_interactions.sort(key=lambda item: item["id"])
+
+    return {
+        "schema_version": 1,
+        "kind": "behavior_plan_bindings",
+        "upstream": {
+            "release": contract["upstream"]["release"],
+            "commit": contract["upstream"]["commit"],
+        },
+        "primary_plans": primary_plans,
+        "critical_interactions": critical_interactions,
+        "totals": {
+            "critical_interactions": len(critical_interactions),
+            "primary_plans": len(primary_plans),
+        },
+    }
+
+
 
 
 def load_object(path: Path, label: str) -> dict[str, Any]:
@@ -400,8 +577,7 @@ def calculate_totals(contract: dict[str, Any], public_ids: set[str]) -> dict[str
     primary_reviewed = {
         target["id"]
         for case in cases
-        if case["review_status"] == "reviewed"
-        and case["applicability"]["status"] != "not_applicable"
+        if case_is_substantive_plan(case)
         for target in case["targets"]
         if target["role"] == "primary" and target["id"] in public_ids
     }
@@ -559,18 +735,30 @@ def main() -> int:
             fragment_validator,
         )
         rendered = canonical_bytes(contract)
+        plan_bindings = build_plan_bindings(contract)
+        plan_bindings_path = root / PLAN_BINDINGS_PATH
+        plan_rendered = canonical_bytes(plan_bindings)
         if args.check:
             verify_generated_files(fragments_root, generated)
             if not output.exists() or output.read_bytes() != rendered:
                 raise GenerationError(f"{output} differs from deterministic fragment merge")
+            if (
+                not plan_bindings_path.exists()
+                or plan_bindings_path.read_bytes() != plan_rendered
+            ):
+                raise GenerationError(
+                    f"{plan_bindings_path} differs from deterministic plan bindings"
+                )
             print(
                 f"behavior fragment regeneration is stable: fragments={len(generated)} "
-                f"contract={output}"
+                f"contract={output} plan_bindings={plan_bindings_path}"
             )
             return 0
         write_generated_files(fragments_root, generated)
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_bytes(rendered)
+        plan_bindings_path.parent.mkdir(parents=True, exist_ok=True)
+        plan_bindings_path.write_bytes(plan_rendered)
     except (GenerationError, OSError, KeyError, TypeError) as error:
         print(f"behavior contract generation failed: {error}", file=sys.stderr)
         return 1
@@ -579,7 +767,8 @@ def main() -> int:
         f"generated {output}: generated_fragments={len(generated)} "
         f"behavior_groups={len(contract['behavior_groups'])} "
         f"interaction_groups={len(contract['interaction_groups'])} "
-        f"case_groups={len(contract['case_groups'])}"
+        f"case_groups={len(contract['case_groups'])} "
+        f"plan_bindings={root / PLAN_BINDINGS_PATH}"
     )
     return 0
 

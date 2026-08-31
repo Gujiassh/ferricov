@@ -1,0 +1,40 @@
+if [ "x" != 'x' ] ; then                          \
+  if [ -d cover_db.d ] ; then                                \
+    rm -f cover_db.d/*.log ;                                 \
+    DBS=cover_db.d/* ;                                       \
+    cover -write  $DBS 2>&1 > cover.log ;        \
+    if [ "x" != 'x' ] ; then             \
+      mkdir -p  ;                        \
+              for db in $DBS ; do                                   \
+         echo ----- $db ------------- ;                     \
+         cover $db 2>&1 > $db.log ;                        \
+          /usr/local/share/lcov/bin/perl2lcov                                   \
+           -o /`basename $db`_cov.info $db \
+                   --version-script /usr/local/share/lcov/share/lcov/support-scripts/P4version.pm,--local-edit,/usr/local/share/lcov                \
+	    --exclude genError.pm  --exclude filter.pl  --exclude brokenCallback.pm  --exclude MsgContext.pm  --exclude missingRestore.pm  --exclude parallelFail.pm  --exclude '*/tmp*' --omit-lines 'ERROR_INTERNAL' --omit-lines '\bdie\b' --ignore unsupported,unused,inconsistent          \
+                   --filter region ;                                 \
+      done ;                                                 \
+      ( cd ;                             \
+         /usr/local/share/lcov/bin/lcov -o total.info                           \
+	  --branch --keep-going                              \
+	  --version-script /usr/local/share/lcov/share/lcov/support-scripts/P4version.pm,--local-edit,/usr/local/share/lcov                 \
+	             \
+      ) ;                                                    \
+    fi ;                                                     \
+  fi ;                                                       \
+  cover  ;                                        \
+   /usr/local/share/lcov/bin/perl2lcov -o perlcov.info               \
+               --version-script /usr/local/share/lcov/share/lcov/support-scripts/P4version.pm,--local-edit,/usr/local/share/lcov                    \
+        --exclude genError.pm  --exclude filter.pl  --exclude brokenCallback.pm  --exclude MsgContext.pm  --exclude missingRestore.pm  --exclude parallelFail.pm  --exclude '*/tmp*' --omit-lines 'ERROR_INTERNAL' --omit-lines '\bdie\b' --ignore unsupported,unused,inconsistent              \
+               --filter region ;                                     \
+  if [ -f  ] ; then                               \
+     /usr/local/share/lcov/bin/py2lcov -o pycov.info                 \
+                 --version-script /usr/local/share/lcov/share/lcov/support-scripts/P4version.pm,--local-edit,/usr/local/share/lcov ;                \
+  fi ;                                                       \
+  if [ "x" != 'x' ] ; then               \
+    cp perlcov.info  ;                   \
+    if [ -f  ] ; then                             \
+      cp pycov.info  ;                   \
+    fi                                                       \
+  fi                                                         \
+fi

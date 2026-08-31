@@ -1,0 +1,194 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      },
+      {
+        "bytes": 4431,
+        "name": "install.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/install.log",
+        "sha256": "f59b021f62f0f49ba8afcc8c70e38ba6a97d938ef2b2934f3cf1900d35084c96"
+      },
+      {
+        "bytes": 45,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/cleanup.log",
+        "sha256": "409c7b2802faf81bbced07db77c50bf81daae1fc0564012f4cd993e7bef32ed0"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 84,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-argv.json",
+        "sha256": "0fd741d1f5015373814d2dacdd7a2783e483120335db3c4298500977c25cef03"
+      },
+      {
+        "bytes": 273,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/observed-children.json",
+        "sha256": "0e8e01a4e29e44d07d16f3ab6cbce02aa3131d979dbb740abf13a7d7ad4e8d08"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 242,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/status.env",
+        "sha256": "41dd5638a146420fedca8df1c05fb974868b0333236f4db674ceabf4922bae37"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/run-meta.env",
+        "sha256": "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 158,
+      "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/stderr.bin",
+      "sha256": "c95bafeca4c411a290e362c035a77dc4c3d6d6ebe7dbd87b6b41a6cb702605a8"
+    },
+    "stdout_bin": {
+      "bytes": 948,
+      "path": "compat/installation/wave2/cases/INST-UNINSTALL-001/stdout.bin",
+      "sha256": "060277f3e5be19c2b0ddb4ecdb087a1a117d1ee6ff13e9e10737deee69e3c2f3"
+    }
+  },
+  "case_id": "INST-UNINSTALL-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 4,
+    "file_count": 1,
+    "paths_sha256": "28d1c4f04262e315efea725a97f6c87583f73b75f8e7bffb2405edb5c0031457",
+    "root": "/tmp/destdir-uninst",
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr/local"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/destdir-uninst/usr/local/etc"
+      },
+      {
+        "identity": "98f059308e647d8fe178114f3f6796e3408bb08ba05c25dc01b25fb7426810ee",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/destdir-uninst/usr/local/etc/foreign.conf"
+      }
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
+    "docker_runtime": "29.1.3",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "uninstall",
+      "DESTDIR=/tmp/destdir-uninst",
+      "PREFIX=/usr/local"
+    ],
+    "cleanup": [
+      "removed:/tmp/destdir-uninst",
+      "removed:/tmp/src"
+    ],
+    "fixture_setup": [
+      "install full payload into DESTDIR",
+      "add foreign sentinel files under etc and man"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "fad442b35d5b19ec0b49fa516ae3ffdeafb07f3564c7ee22a834cd9d482edfd4",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "argv": [
+          "make",
+          "uninstall",
+          "DESTDIR=/tmp/destdir-uninst",
+          "PREFIX=/usr/local"
+        ],
+        "command": "make uninstall DESTDIR=/tmp/destdir-uninst PREFIX=/usr/local",
+        "exit_status": 0,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
+    "exit_status": 0,
+    "host_observer_code": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

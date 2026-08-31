@@ -1,0 +1,493 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-branch-field-width: config-key boundary `genhtml_branch_field_width = 24` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 7823ad34d555f1f00bb1afad0c9ee312ff58efe9038b12c367c8a8281ae20b79. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-branch-field-width",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7185,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_field_width\"  => \\$br_field_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 122,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_branch_field_width = 16"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-field-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-branch-field-width",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-branch-hi-limit: config-key boundary `genhtml_branch_hi_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 070b92948b371c0fad92b928914557686fba1a8b70abc7d2288b622fe736f569. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-branch-hi-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7181,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_hi_limit\"     => \\$br_hi_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 58,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_branch_hi_limit = 90"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-branch-hi-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-branch-med-limit: config-key boundary `genhtml_branch_med_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is da570d74666f2a3e6846e078dffd14b306b2736ac41787c4d701d9d60f5ad011. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-branch-med-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7182,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_branch_med_limit\"    => \\$br_med_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 59,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_branch_med_limit = 75"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-branch-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-branch-med-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-function-hi-limit: config-key boundary `genhtml_function_hi_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 69b2560b1db4856d4975c283beb9d5cdbb3a79a9d4bfa154080dc4fbe9bce635. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-function-hi-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7179,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_function_hi_limit\"   => \\$fn_hi_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 51,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_function_hi_limit = 90"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-function-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-function-hi-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-function-med-limit: config-key boundary `genhtml_function_med_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 36c4f066bd5b4b962aa4f4321ba022fe7b3685e6cfa41bead0c2e9dba6079498. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-function-med-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7180,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_function_med_limit\"  => \\$fn_med_limit,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 52,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "# genhtml_function_med_limit = 75"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-function-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-function-med-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-mcdc-field-width: config-key boundary `genhtml_mcdc_field_width = 24` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is b1978269b3d6b2aedb644efcdabf9be5f603b75dc4143f08a72163545d10d11f. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-field-width",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7186,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_field_width\"    => \\$mcdc_field_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 125,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_mcdc_field_width = 16"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-field-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-mcdc-field-width",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-mcdc-hi-limit: config-key boundary `genhtml_mcdc_hi_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 3f2483e06cf60d8a19e71992155f14f284102879486989ff6818ca1de30ff8da. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-hi-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7183,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_hi_limit\"       => \\$mcdc_hi_limit,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-hi-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-mcdc-hi-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-mcdc-med-limit: config-key boundary `genhtml_mcdc_med_limit = 50` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 5228f6011246b0f25381c6f9779ec56e01c34d6588efddd2717882fb79437ce6. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-mcdc-med-limit",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7184,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_mcdc_med_limit\"      => \\$mcdc_med_limit,"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-mcdc-med-limit",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-mcdc-med-limit",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed suite-bound config boundary plan for case.acceptance.lcovrc.genhtml-overview-width: config-key boundary `genhtml_overview_width = 40` is compared with the shared fixed-epoch control; pinned reference file-tree SHA-256 is 500a999149e02683c025816099cd72b435380d1b03c0d8dc1012eeee9d279eea. Exit, stdout, stderr, and filesystem state are exact; no Ferricov product evidence is claimed. The shared argv includes `--frames`, so the overview width reaches frame and PNG output.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.genhtml-overview-width",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7159,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5",
+          "text": "               \"genhtml_overview_width\"      => \\$overview_width,"
+        },
+        {
+          "kind": "config_definition",
+          "line": 134,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5",
+          "text": "genhtml_overview_width = 80"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-control",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        },
+        {
+          "case_id": "m0-lcovrc-genhtml-metric-overview-width",
+          "suite_id": "m0-lcovrc-genhtml-metric-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.genhtml-overview-width",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Suite-bound genhtml metric-threshold, source-field-width, and frame-overview-width lcovrc primary plans. owner-field-width and age-field-width remain explicitly deferred because they require annotation and date inputs. No Ferricov product evidence is claimed.",
+  "fragment_id": "authored.m0-lcovrc-genhtml-metric-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

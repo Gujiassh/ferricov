@@ -1,0 +1,332 @@
+{
+  "argv": [
+    "genhtml",
+    "sample.info",
+    "-o",
+    "out_finalize",
+    "--simplify-script",
+    "./parallelFail.pm,start,save,restore",
+    "--synthesize-missing"
+  ],
+  "case_id": "diag-callback-finalize-fail",
+  "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+  "cleanup_outcome": {
+    "container_absent": true,
+    "container_name": "ferricov-diag-wave2-diag-callback-finalize-fail",
+    "direct_child_reaped": true,
+    "named_container_removed": true,
+    "policy": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "process_group_empty": null
+  },
+  "command": "genhtml",
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "TZ": "UTC"
+  },
+  "environment_policy": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "declared_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "inherits_host_environment": false,
+    "mode": "in_container_env_dash_i_clean",
+    "reviewed_exclusions": [
+      "host process environment is not inherited by docker CLI or Oracle command",
+      "Oracle command environment is produced by in-container env -i with only declared_variables",
+      "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+      "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+    ]
+  },
+  "evidence_status": "oracle_reference",
+  "execution_environment": {
+    "cleanup": "remove_case_workdir_before_capture_and_force_remove_named_container",
+    "docker_cli_host_env": {
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "TZ": "UTC"
+    },
+    "docker_image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "env": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "environment_policy": {
+      "command_wrapper": [
+        "env",
+        "-i"
+      ],
+      "declared_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "effective_environment_variables": {
+        "HOME": "/work",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TZ": "UTC"
+      },
+      "inherits_host_environment": false,
+      "mode": "in_container_env_dash_i_clean",
+      "reviewed_exclusions": [
+        "host process environment is not inherited by docker CLI or Oracle command",
+        "Oracle command environment is produced by in-container env -i with only declared_variables",
+        "Docker-injected variables such as HOSTNAME do not remain because env -i replaces the environment",
+        "case-local env extras are still declared clean-env variables, never ambient host inheritance"
+      ]
+    },
+    "network": "none",
+    "stdin": "subprocess.DEVNULL",
+    "timeout_seconds": 30,
+    "tmpfs": [
+      "/tmp:rw,exec,mode=1777"
+    ],
+    "user": "1000:1000",
+    "workdir": "/work"
+  },
+  "execution_manifest": {
+    "command_wrapper": [
+      "env",
+      "-i"
+    ],
+    "effective_environment_variables": {
+      "HOME": "/work",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "TZ": "UTC"
+    },
+    "executables": {
+      "gendesc": {
+        "availability": "available",
+        "path": "/usr/local/bin/gendesc",
+        "sha256": "sha256:f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e"
+      },
+      "genhtml": {
+        "availability": "available",
+        "path": "/usr/local/bin/genhtml",
+        "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+      },
+      "geninfo": {
+        "availability": "available",
+        "path": "/usr/local/bin/geninfo",
+        "sha256": "sha256:e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8"
+      },
+      "genpng": {
+        "availability": "available",
+        "path": "/usr/local/bin/genpng",
+        "sha256": "sha256:13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c"
+      },
+      "lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/lcov",
+        "sha256": "sha256:d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252"
+      },
+      "llvm2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/llvm2lcov",
+        "sha256": "sha256:79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654"
+      },
+      "perl": {
+        "availability": "available",
+        "path": "/usr/bin/perl",
+        "sha256": "sha256:f01fa7776dc21c9e4b5f60b2d231ca4d96dab958b8d06aff611cb1c16f871574"
+      },
+      "perl2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/perl2lcov",
+        "sha256": "sha256:f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b"
+      },
+      "py2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/py2lcov",
+        "sha256": "sha256:3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da"
+      },
+      "xml2lcov": {
+        "availability": "available",
+        "path": "/usr/local/bin/xml2lcov",
+        "sha256": "sha256:8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae"
+      }
+    },
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "invoked_argv": [
+      "genhtml",
+      "sample.info",
+      "-o",
+      "out_finalize",
+      "--simplify-script",
+      "./parallelFail.pm,start,save,restore",
+      "--synthesize-missing"
+    ],
+    "invoked_command": "genhtml",
+    "invoked_executable": {
+      "name": "genhtml",
+      "path": "/usr/local/bin/genhtml",
+      "sha256": "sha256:8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a"
+    },
+    "lc_all": "C",
+    "locale": "C",
+    "package_availability": {
+      "g++": "available:4:12.2.0-3",
+      "gcc": "available:4:12.2.0-3",
+      "llvm": "not_applicable",
+      "perl": "available:5.36.0-7+deb12u3",
+      "python3": "available:3.11.2-1+b1"
+    },
+    "runtime_versions": {
+      "compiler": "gcc (Debian 12.2.0-14+deb12u1) 12.2.0",
+      "perl": "v5.36.0",
+      "python": "3.11.2"
+    },
+    "schema_version": 1,
+    "stdin": "subprocess.DEVNULL",
+    "timezone": "UTC",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+  },
+  "exit_status": 25,
+  "file_tree": [
+    {
+      "bytes": 141,
+      "path": "out_finalize/amber.png",
+      "sha256": "dff576889b1ebdb619eeb69f12d503f7c431d5ff321838624b804ea5bda86fcb"
+    },
+    {
+      "bytes": 112,
+      "path": "out_finalize/cmd_line",
+      "sha256": "0d635f1f95b7932101bef8049874ca5cc3f8b1114ab325975b27d8bbd6c46819"
+    },
+    {
+      "bytes": 141,
+      "path": "out_finalize/emerald.png",
+      "sha256": "8479273af3556e10f0feb96d8ac24fbd9615b0d887437c0f85f8ef6638e56b83"
+    },
+    {
+      "bytes": 24155,
+      "path": "out_finalize/gcov.css",
+      "sha256": "a302edd3a3f0ec66ffb0c1c41946ea9f6d6c14856906ebdcf5d8f8d81f03fa5d"
+    },
+    {
+      "bytes": 167,
+      "path": "out_finalize/glass.png",
+      "sha256": "936a969e16ba5de4db2c9bcacd197b22a276e3d636335ba7f347da4009fc9cc5"
+    },
+    {
+      "bytes": 4796,
+      "path": "out_finalize/index.html",
+      "sha256": "2710fbfde5a3a1f2342eb0a8e2ce38ec33fa4e30dd9b498504718acfad44c9e5"
+    },
+    {
+      "bytes": 141,
+      "path": "out_finalize/ruby.png",
+      "sha256": "a2332ef8c44727042b0ab36628aaf562b0d5b0df43c6fa73c5191dfac50ec7be"
+    },
+    {
+      "bytes": 141,
+      "path": "out_finalize/snow.png",
+      "sha256": "53c50fc490fcf2ad290819b05f8033b1cbdad698e230bdcbac63564942c34723"
+    },
+    {
+      "bytes": 117,
+      "path": "out_finalize/updown.png",
+      "sha256": "a851165a175f4ca2649a4e30291192dd71131ea02a93cf46464953e74c1c5f0c"
+    },
+    {
+      "bytes": 4898,
+      "path": "out_finalize/work/index.html",
+      "sha256": "dac808d93ddf0a91f809163dea6230dc05f6d092e8d683fe352a97a4323a472e"
+    },
+    {
+      "bytes": 3826,
+      "path": "out_finalize/work/sample.c.func-c.html",
+      "sha256": "d20cf8b5e33373f2a8272808fab6a96929928753e10469b5dfecbcf8962e6128"
+    },
+    {
+      "bytes": 3828,
+      "path": "out_finalize/work/sample.c.func.html",
+      "sha256": "e2bfb6db87d9e3444e42a94b792d45f6e713d03afb459a84de1454c0fc9ad88b"
+    },
+    {
+      "bytes": 3236,
+      "path": "out_finalize/work/sample.c.gcov.html",
+      "sha256": "1e3a5dba4b74253631edc347bbe516f25efbf612522b01c1f801969b90801a0b"
+    },
+    {
+      "bytes": 800,
+      "path": "parallelFail.pm",
+      "sha256": "c4bb661b601d703a0435be85708af6aee127d452db8fe6231fed862f5846de68"
+    },
+    {
+      "bytes": 29,
+      "path": "sample.c",
+      "sha256": "2ad75d95660563887d8d3f1d0ae1dcf18c2379cbd83a5c72f5ab276351ee6949"
+    },
+    {
+      "bytes": 87,
+      "path": "sample.info",
+      "sha256": "4500c1bcc5d674500078f6160165c9118bcaad2287a2b1b9cf6f4c32c0093897"
+    }
+  ],
+  "file_tree_semantics": "workspace_including_inputs",
+  "file_tree_sha256": "c38b78f8dcde8bbce64418b69703d827ec89d0659bec0f659adb4303ac41d289",
+  "fixture_bindings": [
+    {
+      "bytes": 87,
+      "path": "sample.info",
+      "sha256": "4500c1bcc5d674500078f6160165c9118bcaad2287a2b1b9cf6f4c32c0093897"
+    },
+    {
+      "bytes": 29,
+      "path": "sample.c",
+      "sha256": "2ad75d95660563887d8d3f1d0ae1dcf18c2379cbd83a5c72f5ab276351ee6949"
+    },
+    {
+      "bytes": 800,
+      "path": "parallelFail.pm",
+      "sha256": "c4bb661b601d703a0435be85708af6aee127d452db8fe6231fed862f5846de68"
+    }
+  ],
+  "fixtures": [
+    "sample.info",
+    "sample.c",
+    "parallelFail.pm"
+  ],
+  "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+  "kind": "callback_finalize",
+  "notes": "",
+  "planned_case_ids": [
+    "DIAG-CALLBACK-FINALIZE-FAIL-001"
+  ],
+  "product_compatibility_evidence": false,
+  "stderr_bytes": 478,
+  "stderr_sha256": "03020746bd6cd6fbdb3fd94612471db45ccff09c3a74af0c21d45e66dfa3f650",
+  "stdout_bytes": 350,
+  "stdout_sha256": "e43d73dde28b3d1853e2ece9a8d8f57ccd46024ba4d274e6ab649016602102bd",
+  "timed_out": false,
+  "timeout_seconds": 30,
+  "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+}

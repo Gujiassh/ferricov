@@ -1,0 +1,555 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.check-data-consistency: config-key boundary `check_data_consistency = 1` \u2014 genhtml on inconsistent.info fails (exit 1) when function is hit but all contained lines are unhit; control exit 0. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.check-data-consistency",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1148,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-check-data-consistency",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.check-data-consistency",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.demangle-cpp: config-key boundary `demangle_cpp = c++filt` \u2014 genhtml demangles C++ FN symbols via c++filt producing a distinct report tree vs mangled control symbols. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.demangle-cpp",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 238,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1195,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-demangle-cpp",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.demangle-cpp",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.derive-function-end-line-all-files: config-key boundary `derive_function_end_line_all_files = 1` \u2014 lcov derives FNL end lines for non-C source.py (FNL:0,1,3) when all-files is enabled. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.derive-function-end-line-all-files",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1118,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-derive-function-end-line-all-files",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.derive-function-end-line-all-files",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.expected-message-count: config-key boundary `expected_message_count = unsupported:0` \u2014 legal type:count form expects zero unsupported messages but Oracle emits one, failing with exit 1 COUNT. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.expected-message-count",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 1144,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-expected-message-count",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.expected-message-count",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.forget-testcase-names: config-key boundary `forget_testcase_names = 1` \u2014 lcov collapses multi-TN input into a single unnamed TN record producing distinct out.info. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.forget-testcase-names",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 247,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1189,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-forget-testcase-names",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.forget-testcase-names",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.info-file-pattern: config-key boundary `info_file_pattern = *.nomatch` \u2014 directory aggregation finds no files matching the pattern and yields empty coverage DB vs control report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.info-file-pattern",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 89,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1154,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-info-file-pattern",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.info-file-pattern",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.lcov-json-module: config-key boundary `lcov_json_module = Bogus::NoModule` \u2014 genhtml --profile dies loading a missing JSON module (exit 2). Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.lcov-json-module",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 443,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1122,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-lcov-json-module",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.lcov-json-module",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.select-script: config-key boundary `select_script = /work/select_none.pm` \u2014 select callback rejects all coverpoints, shrinking the HTML report tree vs control. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.select-script",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7204,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 361,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-select-script",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.select-script",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.split-char: config-key boundary `split_char = @` \u2014 with split_char=@, CLI --ignore-errors source,unsupported is not split on comma and fails (exit 255); matching @-separated tokens remain legal. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.split-char",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 476,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1190,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-split-char",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.split-char",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.suppress-function-aliases: config-key boundary `suppress_function_aliases = 1` \u2014 genhtml with merge aliases omits alias rows in function tables producing a distinct report tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.suppress-function-aliases",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 7193,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 219,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-suppress-function-aliases",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.suppress-function-aliases",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.trivial-function-threshold: config-key boundary `trivial_function_threshold = 5` \u2014 with filter=trivial, threshold 5 erases empty-body functions from out.info (FNF:1) vs unfiltered control tree. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.trivial-function-threshold",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 229,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1120,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-f-misc-contract-control",
+          "suite_id": "m0-residual-f-misc-contract"
+        },
+        {
+          "case_id": "m0-residual-f-misc-contract-trivial-function-threshold",
+          "suite_id": "m0-residual-f-misc-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.trivial-function-threshold",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed residual misc lcovrc plans for consistency, demangle, derive, expected-message-count, forget-testcase-names, info-file-pattern, json-module, select-script, split-char, suppress-function-aliases, and trivial-function-threshold.",
+  "fragment_id": "m0-residual-f-misc-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

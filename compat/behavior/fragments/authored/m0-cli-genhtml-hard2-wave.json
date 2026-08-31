@@ -1,0 +1,138 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.debug: cli-option boundary `--debug` on a pinned genhtml residual fixture exits 0 and changes the sealed report tree via `report/cmd_line` relative to control. Compared dimensions are exit and filesystem under exact-v1; stderr excluded because DEBUG memory counters are not stable under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.debug",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "manual_candidate",
+          "line": 20,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 519,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 12,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "parser_definition",
+          "line": 1246,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-debug-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.debug",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for command.genhtml.option.new-file-as-baseline: cli-option boundary `--new-file-as-baseline` with `--baseline-file input.info` and current `input2.info` changes the sealed report tree relative to the baseline-only control on the same inputs. Compared dimensions are exit and filesystem under exact-v1. Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.command.genhtml.option.new-file-as-baseline",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "parser_definition",
+          "line": 7235,
+          "path": "bin/genhtml",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 69,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "manual_candidate",
+          "line": 906,
+          "path": "docs/man/genhtml.rst",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "help_definition",
+          "line": 34,
+          "path": "help/genhtml.txt",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-baseline-control",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        },
+        {
+          "case_id": "m0-cli-genhtml-hard2-contract-new-file-as-baseline",
+          "suite_id": "m0-cli-genhtml-hard2-contract"
+        }
+      ],
+      "surface": "cli",
+      "targets": [
+        {
+          "id": "command.genhtml.option.new-file-as-baseline",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "Reviewed genhtml debug and new-file-as-baseline plans on residual genhtml inputs.",
+  "fragment_id": "m0-cli-genhtml-hard2-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

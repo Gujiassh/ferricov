@@ -24,14 +24,18 @@ Human-reviewed decisions live under `fragments/authored/`:
 - `m0-tracefile-cli-primary.json`: reviewed reference-only primary plans for
   `lcov` add/output and function/MC/DC coverage controls observed by the retained
   tracefile corpus
+- `m0-*-wave1-repair-*.json`: source-bound primary plans for residual public
+  inventory entries. Reviewed only when a concrete argv/config boundary is
+  paired with behavior_groups plus reviewed public-behavior upstream drivers;
+  otherwise kept unreviewed/unbound. No product evidence is claimed.
 
 Machine-generated imports and inventory skeletons live under
 `fragments/generated/`. The generator places inventory entries into eight stable
 hash buckets per command/config/support responsibility domain. Generated files
-are not authoring surfaces and are rewritten from the current inventory.
+are not authoring surfaces and are rewritten from the current inventory. When every public entry has an authored primary case, inventory buckets remain as empty deterministic placeholders so the generator file set stays stable.
 Every fragment is canonical JSON, validates against
 `behavior-contract-fragment.schema.json`, and is limited to 2,000 lines. The
-current largest authored fragment is 1,666 lines, below that limit.
+The current largest authored fragment stays under the 2,000-line fragment limit.
 
 The baseline imports the stable test-map behavior registry, imports reviewed
 callback/install/converter planning from the normative contract, and creates one
@@ -111,9 +115,12 @@ The three M0 CLI primary fragments review 40 public entries and bind them to
 154 exact cases in the core, default parser-policy, and POSIX parser-policy
 suites. These cases use `evidence_status=planned` and retain empty evidence
 arrays because the retained Oracle observations are reference baselines, not
-Ferricov differential results. The configuration fragment adds eight semantic
-slices with 67 exact bindings and reviews six additional primary targets. It
-also retains `planned` status and empty evidence arrays. The tracefile CLI
+Ferricov differential results. The base configuration fragment adds eight
+semantic slices with 67 exact bindings and reviews six additional primary
+targets. The `lcovrc` consumer waves separately bind 32 planning-only primary
+plans: two list-format, eight `genhtml` output, eleven `genhtml` layout, nine
+metric/threshold and field-width plans, and two report/differential plans. Owner and age field widths remain
+deferred pending annotation/date inputs. All retain `planned` status and empty evidence arrays. The tracefile CLI
 fragment reviews four additional primary targets from eight exact canonical
 rewrite observations plus reviewed upstream planning sources. Those four cases
 stay `evidence_status=none` with empty evidence and suite arrays; the related
@@ -126,8 +133,59 @@ The configuration-key fragment reviews 17 additional `lcovrc` value boundaries
 from exact pinned definitions. These cases also stay `evidence_status=none`
 with empty suite and evidence arrays; downstream command effects, precedence,
 and runtime semantics remain unexecuted.
-`m0-ready` now rejects the remaining 424 public entries without reviewed
-primary case groups.
+Wave 1 repair rebuilds residual public entries into substantive planned cases
+or explicit unbound drafts. A reviewed primary plan now requires suite bindings
+or both behavior_groups and reviewed public-behavior upstream drivers; hollow
+status-only reviews no longer satisfy `m0-ready`. Current honest debt remains
+for entries without exact executable or upstream public-behavior binding. The
+`m0-genhtml-cli-output-contract` wave adds six command-owned `genhtml` option
+plans (`html-epilog`, `html-extension`, `html-gzip`, `html-prolog`, `legend`,
+and `num-spaces`) with one shared control and six target cases. Its fixed
+Oracle output characterization is planning-only; every plan remains
+`evidence_status=planned` with an empty evidence array.
+Product compatibility evidence remains false/absent.
+
+The `m0-genhtml-cli-metric-layout-contract` wave adds three command-owned
+`genhtml` option plans (`--frames`, `--precision 4`, and `--no-sort`) with one
+shared metric control and three target cases. Its two clean pinned Oracle runs
+agree on exact reference facts; every plan remains `evidence_status=planned`
+with an empty evidence array and no product compatibility evidence.
+
+The `m0-genhtml-cli-report-contract` wave adds three command-owned `genhtml`
+option plans (`--footer CLI Footer`, `--no-checksum`, and `--no-html`) with one
+shared control and three target cases. Its two clean pinned Oracle runs agree on
+exact reference/output facts; every plan remains `evidence_status=planned` with
+an empty evidence array and no product compatibility evidence.
+
+The `m0-genhtml-cli-summary-contract` wave adds three command-owned `genhtml`
+option plans (`--fail-under-branches 50`, `--show-zero-columns`, and
+`--sort-tables`) with one shared control and three target cases. Its two clean
+pinned Oracle runs agree on exact reference/output facts; the trial `--debug`
+case is excluded because stderr contains run-specific temporary paths. Every
+plan remains `evidence_status=planned` with an empty evidence array and no
+product compatibility evidence.
+
+The `m0-genhtml-cli-context-contract` wave adds three command-owned `genhtml`
+option plans (`--baseline-title Baseline CLI`, `--merge-aliases`, and
+`--suppress-aliases`) with one shared alias baseline/current/diff control and
+three target cases using `--filter function`. Its two clean pinned Oracle runs
+agree on exact reference/output facts; every plan remains `evidence_status=planned`
+with an empty evidence array and no product compatibility evidence.
+
+The `m0-genhtml-cli-metadata-contract` wave adds three command-owned `genhtml`
+option plans (`--css-file custom.css`, `--description-file descriptions.info`,
+and `--keep-descriptions`) with one metadata fixture and one control case. Its
+two clean pinned Oracle runs agree on exact reference/output facts; every plan
+remains `evidence_status=planned` with an empty evidence array and no product
+compatibility evidence.
+
+## Fixed plan bindings
+
+`plan-bindings.json` seals substantive primary-plan semantics and critical
+interaction member/context identities. The validator hard-codes the trusted
+SHA-256 for that file, so regenerating bindings after a silent source/driver/
+boundary or interaction-member swap still fails closed. Product compatibility
+evidence remains false/absent.
 
 ## Evidence Rules
 

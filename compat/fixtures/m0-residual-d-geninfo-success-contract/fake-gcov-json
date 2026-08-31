@@ -1,0 +1,27 @@
+#!/bin/bash
+if [[ "$*" == *--version* ]]; then exec /usr/bin/gcov --version; fi
+if [[ "$*" == *--help* ]]; then exec /usr/bin/gcov --help; fi
+python3 - <<'PY'
+import gzip, json
+data = {
+  "gcc_version": "12.2.0",
+  "format_version": "1",
+  "current_working_directory": "/work/ub",
+  "data_file": "hello.gcda",
+  "files": [{
+    "file": "/work/ub/hello.c",
+    "functions": [{
+      "name": "main", "demangled_name": "main",
+      "start_line": 1, "end_line": 1, "execution_count": 1,
+      "blocks": 1, "blocks_executed": 1, "start_column": 1, "end_column": 1
+    }],
+    "lines": [
+      {"line_number": 1, "count": 5, "unexecuted_block": True, "branches": [], "function_name": "main"}
+    ]
+  }]
+}
+for n in ["hello.gcda.gcov.json.gz", "hello.c.gcov.json.gz"]:
+  with gzip.open(n, "wt") as f:
+    json.dump(data, f)
+PY
+exit 0

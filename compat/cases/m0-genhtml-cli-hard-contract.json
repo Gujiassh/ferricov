@@ -1,0 +1,71 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-genhtml-cli-hard-contract",
+      "id": "m0-genhtml-cli-hard-contract-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--history-script",
+        "./history.sh",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-genhtml-cli-hard-contract",
+      "id": "m0-genhtml-cli-hard-contract-history-script",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-hard-contract"
+}

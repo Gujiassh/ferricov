@@ -65,7 +65,7 @@ test commands.
 The standalone [`tracefile/v2.5.json`](tracefile/v2.5.json) contract reviews 20
 known record tags, two lexical framing rules, the complete 15-line reader
 matcher closure, and the complete 18-line canonical writer emission closure.
-It binds all 42 retained fixtures, all 21 per-record malformed fixtures, and 63
+It binds all 140 retained fixtures, all 21 per-record malformed fixtures, and 279
 pinned Oracle observations by exact artifact and stream/output hashes, including
 VER semantics and state-ownership probes for `M1-TF-007`, `M1-TF-021`,
 `M1-TF-022`, and `M1-TF-026`.
@@ -84,11 +84,14 @@ reference closure, nine ignore/keep-going/message-control rules, four
 unclassified failure surfaces, and ten command exit policies. The `branch`
 class remains accepted but has no production emitter.
 
-Its 53 retained observations bind exact startup, parser, configuration, fatal,
-and one-ignore outcomes without claiming product evidence. The retained
+Its 206 retained observations bind exact startup, parser, configuration, fatal,
+and one-ignore outcomes without claiming product evidence. This includes 26
+wave1 and 32 wave2 Docker observations plus two legacy unknown-function fatal
+references; the prior 204 observations remain unchanged. The retained
 `geninfo` startup observation is explicitly an environment intercept because a
-read-only `/tmp` blocks the true no-argument path. All 71 diagnostic and
-parallel case identities remain planned. See
+read-only `/tmp` blocks the true no-argument path. Fifty-nine of 71 diagnostic
+and parallel case identities have exact bindings; the remaining 12 stay
+planned and unbound. See
 [`diagnostics/README.md`](diagnostics/README.md) for regeneration and mutation
 test commands.
 
@@ -99,15 +102,18 @@ binds the complete 321-entry Oracle installed-tree lock to nine exhaustive
 payload groups and 15 pinned source closures. It requires canonical,
 lexicographically ordered absolute paths under `/usr/local`, SHA-256 file
 identities, the exact `/usr/local/man -> share/man` symlink, and 13 planned
-installation case identities. Directory entries are not retained by the tree
-recorder and remain an explicit gap.
+installation case identities. Wave2 retains replayable pinned-Docker envelopes
+for all 13 cases, complete tree rows, both relative/space PATH parts, observed
+clean env and live process provenance, timeout/signal/cleanup facts, and two
+runner qualifications. The 57 directory/mode companion is retained separately.
 
 Four retained `genhtml` benchmark samples contain the same seven generated CSS
 and PNG assets with exact byte counts and hashes. Each output tree is bound
 through its retained sample metadata, and duplicate runtime asset paths are
-rejected. These observations remain `oracle_reference`; they do not prove report
-rendering or Ferricov product compatibility. See [`installation/README.md`](installation/README.md) for
-regeneration and mutation test commands.
+rejected. All installation observations remain `oracle_reference` and planned;
+they do not prove report rendering, an installer implementation, or Ferricov
+product compatibility. See [`installation/README.md`](installation/README.md)
+for regeneration and mutation test commands.
 
 ## Oracle Correctness Baseline
 
@@ -158,8 +164,10 @@ cargo run -p ferricov-oracle --bin differential -- \
 This suite is marked `harness_self_test` and cannot count as compatibility
 evidence. A suite marked `compatibility` rejects reference and candidate
 launchers that resolve to the same executable SHA-256, even when the launcher
-name or container image differs. Each run uses a fresh working directory,
-receives an independent fixture copy, and retains actual implementation
+name or container image differs. Docker launchers keep the container root
+read-only and set `TMPDIR=/work`, the fresh per-case writable mount, so tools
+that initialize temporary files can run without inheriting host storage. Each
+run receives an independent fixture copy and retains actual implementation
 identities, raw stdout, stderr, exit status, timings, and a file tree with
 content hashes, raw path bytes, Unix metadata, and hardlink relationships.
 

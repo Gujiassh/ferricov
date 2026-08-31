@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "suite_id": "m0-small-command-contract",
+  "evidence_scope": "compatibility",
+  "cases": [
+    {
+      "id": "m0-gendesc-output-filename",
+      "surface": "cli",
+      "command": "gendesc",
+      "arguments": ["--output-filename", "output.desc", "input.txt"],
+      "fixture": "compat/fixtures/m0-small-command-contract/gendesc",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-py2lcov-tabwidth",
+      "surface": "cli",
+      "command": "py2lcov",
+      "arguments": ["--tabwidth", "4", "--output", "output.info", "coverage.xml"],
+      "fixture": "compat/fixtures/m0-small-command-contract/py2lcov",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genpng-output-filename",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": ["--output-filename", "output.png", "source.txt"],
+      "fixture": "compat/fixtures/m0-small-command-contract/genpng",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genpng-tab-size",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": ["--tab-size", "8", "--output-filename", "tab.png", "source.txt"],
+      "fixture": "compat/fixtures/m0-small-command-contract/genpng",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genpng-width",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": ["--width", "160", "--output-filename", "width.png", "source.txt"],
+      "fixture": "compat/fixtures/m0-small-command-contract/genpng",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    },
+    {
+      "id": "m0-genpng-sourcefile-positional",
+      "surface": "cli",
+      "command": "genpng",
+      "arguments": ["source.txt"],
+      "fixture": "compat/fixtures/m0-small-command-contract/genpng",
+      "comparisons": [
+        {"dimension": "exit", "normalizer": "exact-v1"},
+        {"dimension": "stdout", "normalizer": "exact-v1"},
+        {"dimension": "stderr", "normalizer": "exact-v1"},
+        {"dimension": "filesystem", "normalizer": "exact-v1"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,616 @@
+{
+  "schema_version": 1,
+  "kind": "tf030_numeric_plan",
+  "rows": [
+    {
+      "id": "candidate.da.zero",
+      "family": "DA",
+      "lexeme": "0",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:1,0",
+      "record_ordinal": 1,
+      "locator": {
+        "line": 1
+      }
+    },
+    {
+      "id": "candidate.da.plus_one",
+      "family": "DA",
+      "lexeme": "+1",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:2,+1",
+      "record_ordinal": 2,
+      "locator": {
+        "line": 2
+      }
+    },
+    {
+      "id": "candidate.da.one_point_five",
+      "family": "DA",
+      "lexeme": "1.5",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:3,1.5",
+      "record_ordinal": 3,
+      "locator": {
+        "line": 3
+      }
+    },
+    {
+      "id": "candidate.da.one_e3",
+      "family": "DA",
+      "lexeme": "1e3",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:4,1e3",
+      "record_ordinal": 4,
+      "locator": {
+        "line": 4
+      }
+    },
+    {
+      "id": "candidate.da.inf",
+      "family": "DA",
+      "lexeme": "Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:5,Inf",
+      "record_ordinal": 5,
+      "locator": {
+        "line": 5
+      }
+    },
+    {
+      "id": "candidate.da.plus_inf",
+      "family": "DA",
+      "lexeme": "+Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:6,+Inf",
+      "record_ordinal": 6,
+      "locator": {
+        "line": 6
+      }
+    },
+    {
+      "id": "candidate.da.infinity",
+      "family": "DA",
+      "lexeme": "Infinity",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:7,Infinity",
+      "record_ordinal": 7,
+      "locator": {
+        "line": 7
+      }
+    },
+    {
+      "id": "candidate.da.nan_upper",
+      "family": "DA",
+      "lexeme": "NaN",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:8,NaN",
+      "record_ordinal": 8,
+      "locator": {
+        "line": 8
+      }
+    },
+    {
+      "id": "candidate.da.nan_lower",
+      "family": "DA",
+      "lexeme": "nan",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:9,nan",
+      "record_ordinal": 9,
+      "locator": {
+        "line": 9
+      }
+    },
+    {
+      "id": "candidate.da.neg_inf",
+      "family": "DA",
+      "lexeme": "-Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-da.c",
+      "testcase": "tf030_candidate_da",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "DA:10,-Inf",
+      "record_ordinal": 10,
+      "locator": {
+        "line": 10
+      }
+    },
+    {
+      "id": "candidate.fnda.zero",
+      "family": "FNDA",
+      "lexeme": "0",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:0,fn_zero",
+      "record_ordinal": 1,
+      "locator": {
+        "function_name": "fn_zero",
+        "alias": "fn_zero"
+      }
+    },
+    {
+      "id": "candidate.fnda.plus_one",
+      "family": "FNDA",
+      "lexeme": "+1",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:+1,fn_plus_one",
+      "record_ordinal": 2,
+      "locator": {
+        "function_name": "fn_plus_one",
+        "alias": "fn_plus_one"
+      }
+    },
+    {
+      "id": "candidate.fnda.one_point_five",
+      "family": "FNDA",
+      "lexeme": "1.5",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:1.5,fn_one_point_five",
+      "record_ordinal": 3,
+      "locator": {
+        "function_name": "fn_one_point_five",
+        "alias": "fn_one_point_five"
+      }
+    },
+    {
+      "id": "candidate.fnda.one_e3",
+      "family": "FNDA",
+      "lexeme": "1e3",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:1e3,fn_one_e3",
+      "record_ordinal": 4,
+      "locator": {
+        "function_name": "fn_one_e3",
+        "alias": "fn_one_e3"
+      }
+    },
+    {
+      "id": "candidate.fnda.inf",
+      "family": "FNDA",
+      "lexeme": "Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:Inf,fn_inf",
+      "record_ordinal": 5,
+      "locator": {
+        "function_name": "fn_inf",
+        "alias": "fn_inf"
+      }
+    },
+    {
+      "id": "candidate.fnda.plus_inf",
+      "family": "FNDA",
+      "lexeme": "+Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:+Inf,fn_plus_inf",
+      "record_ordinal": 6,
+      "locator": {
+        "function_name": "fn_plus_inf",
+        "alias": "fn_plus_inf"
+      }
+    },
+    {
+      "id": "candidate.fnda.infinity",
+      "family": "FNDA",
+      "lexeme": "Infinity",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:Infinity,fn_infinity",
+      "record_ordinal": 7,
+      "locator": {
+        "function_name": "fn_infinity",
+        "alias": "fn_infinity"
+      }
+    },
+    {
+      "id": "candidate.fnda.nan_upper",
+      "family": "FNDA",
+      "lexeme": "NaN",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:NaN,fn_nan_upper",
+      "record_ordinal": 8,
+      "locator": {
+        "function_name": "fn_nan_upper",
+        "alias": "fn_nan_upper"
+      }
+    },
+    {
+      "id": "candidate.fnda.nan_lower",
+      "family": "FNDA",
+      "lexeme": "nan",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:nan,fn_nan_lower",
+      "record_ordinal": 9,
+      "locator": {
+        "function_name": "fn_nan_lower",
+        "alias": "fn_nan_lower"
+      }
+    },
+    {
+      "id": "candidate.fnda.neg_inf",
+      "family": "FNDA",
+      "lexeme": "-Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fnda.c",
+      "testcase": "tf030_candidate_fnda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNDA:-Inf,fn_neg_inf",
+      "record_ordinal": 10,
+      "locator": {
+        "function_name": "fn_neg_inf",
+        "alias": "fn_neg_inf"
+      }
+    },
+    {
+      "id": "candidate.fna.zero",
+      "family": "FNA",
+      "lexeme": "0",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:0,0,alias_zero",
+      "record_ordinal": 1,
+      "locator": {
+        "function_index": 0,
+        "alias": "alias_zero"
+      }
+    },
+    {
+      "id": "candidate.fna.plus_one",
+      "family": "FNA",
+      "lexeme": "+1",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:1,+1,alias_plus_one",
+      "record_ordinal": 2,
+      "locator": {
+        "function_index": 1,
+        "alias": "alias_plus_one"
+      }
+    },
+    {
+      "id": "candidate.fna.one_point_five",
+      "family": "FNA",
+      "lexeme": "1.5",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:2,1.5,alias_one_point_five",
+      "record_ordinal": 3,
+      "locator": {
+        "function_index": 2,
+        "alias": "alias_one_point_five"
+      }
+    },
+    {
+      "id": "candidate.fna.one_e3",
+      "family": "FNA",
+      "lexeme": "1e3",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:3,1e3,alias_one_e3",
+      "record_ordinal": 4,
+      "locator": {
+        "function_index": 3,
+        "alias": "alias_one_e3"
+      }
+    },
+    {
+      "id": "candidate.fna.inf",
+      "family": "FNA",
+      "lexeme": "Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:4,Inf,alias_inf",
+      "record_ordinal": 5,
+      "locator": {
+        "function_index": 4,
+        "alias": "alias_inf"
+      }
+    },
+    {
+      "id": "candidate.fna.plus_inf",
+      "family": "FNA",
+      "lexeme": "+Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:5,+Inf,alias_plus_inf",
+      "record_ordinal": 6,
+      "locator": {
+        "function_index": 5,
+        "alias": "alias_plus_inf"
+      }
+    },
+    {
+      "id": "candidate.fna.infinity",
+      "family": "FNA",
+      "lexeme": "Infinity",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:6,Infinity,alias_infinity",
+      "record_ordinal": 7,
+      "locator": {
+        "function_index": 6,
+        "alias": "alias_infinity"
+      }
+    },
+    {
+      "id": "candidate.fna.nan_upper",
+      "family": "FNA",
+      "lexeme": "NaN",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:7,NaN,alias_nan_upper",
+      "record_ordinal": 8,
+      "locator": {
+        "function_index": 7,
+        "alias": "alias_nan_upper"
+      }
+    },
+    {
+      "id": "candidate.fna.nan_lower",
+      "family": "FNA",
+      "lexeme": "nan",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:8,nan,alias_nan_lower",
+      "record_ordinal": 9,
+      "locator": {
+        "function_index": 8,
+        "alias": "alias_nan_lower"
+      }
+    },
+    {
+      "id": "candidate.fna.neg_inf",
+      "family": "FNA",
+      "lexeme": "-Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-fna.c",
+      "testcase": "tf030_candidate_fna",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "FNA:9,-Inf,alias_neg_inf",
+      "record_ordinal": 10,
+      "locator": {
+        "function_index": 9,
+        "alias": "alias_neg_inf"
+      }
+    },
+    {
+      "id": "candidate.brda.zero",
+      "family": "BRDA",
+      "lexeme": "0",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,0,0",
+      "record_ordinal": 1,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 0,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.plus_one",
+      "family": "BRDA",
+      "lexeme": "+1",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,1,+1",
+      "record_ordinal": 2,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 1,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.one_point_five",
+      "family": "BRDA",
+      "lexeme": "1.5",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,2,1.5",
+      "record_ordinal": 3,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 2,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.one_e3",
+      "family": "BRDA",
+      "lexeme": "1e3",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,3,1e3",
+      "record_ordinal": 4,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 3,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.inf",
+      "family": "BRDA",
+      "lexeme": "Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,4,Inf",
+      "record_ordinal": 5,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 4,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.plus_inf",
+      "family": "BRDA",
+      "lexeme": "+Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,5,+Inf",
+      "record_ordinal": 6,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 5,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.infinity",
+      "family": "BRDA",
+      "lexeme": "Infinity",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,6,Infinity",
+      "record_ordinal": 7,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 6,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.nan_upper",
+      "family": "BRDA",
+      "lexeme": "NaN",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,7,NaN",
+      "record_ordinal": 8,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 7,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.nan_lower",
+      "family": "BRDA",
+      "lexeme": "nan",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,8,nan",
+      "record_ordinal": 9,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 8,
+        "expression": null
+      }
+    },
+    {
+      "id": "candidate.brda.neg_inf",
+      "family": "BRDA",
+      "lexeme": "-Inf",
+      "fixture": "fixtures/numeric/tf030-candidate-matrix.info",
+      "source": "src/tf030-candidate-brda.c",
+      "testcase": "tf030_candidate_brda",
+      "reader_match_kind": "looks_like_number",
+      "raw_record": "BRDA:1,0,9,-Inf",
+      "record_ordinal": 10,
+      "locator": {
+        "line": 1,
+        "block": 0,
+        "branch": 9,
+        "expression": null
+      }
+    }
+  ]
+}

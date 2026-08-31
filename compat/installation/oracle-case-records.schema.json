@@ -1,0 +1,2143 @@
+{
+  "$defs": {
+    "assetIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "const": "created"
+        }
+      },
+      "required": [
+        "bytes",
+        "sha256",
+        "status"
+      ],
+      "type": "object"
+    },
+    "captureArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "observation_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stderr_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "observation_sha256"
+      ],
+      "type": "object"
+    },
+    "caseRecord": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/case_INST_LAYOUT_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_STAGE_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_INTERP_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_CONFIG_DISCOVERY_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_UNINSTALL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_PARTIAL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DOC_FAIL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_PATH_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DIRTY_ASSET_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_TEST_RUN_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DOC_PATH_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_REPORT_ASSET_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_LICENSE_001"
+        }
+      ]
+    },
+    "caseRecordBase": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_status": {
+          "const": "oracle_reference"
+        },
+        "execution_status": {
+          "const": "planned"
+        },
+        "facts_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "failure_contract_ids": {
+          "items": {
+            "pattern": "^INST-[A-Z0-9-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "family": {
+          "enum": [
+            "layout",
+            "lifecycle",
+            "failure",
+            "asset",
+            "license"
+          ]
+        },
+        "id": {
+          "enum": [
+            "INST-LAYOUT-001",
+            "INST-STAGE-001",
+            "INST-INTERP-001",
+            "INST-CONFIG-DISCOVERY-001",
+            "INST-UNINSTALL-001",
+            "INST-PARTIAL-001",
+            "INST-DOC-FAIL-001",
+            "INST-PATH-001",
+            "INST-DIRTY-ASSET-001",
+            "INST-TEST-RUN-001",
+            "INST-DOC-PATH-001",
+            "INST-REPORT-ASSET-001",
+            "INST-LICENSE-001"
+          ]
+        },
+        "independent_facts": {
+          "minProperties": 1,
+          "type": "object"
+        },
+        "layout_contract_ids": {
+          "items": {
+            "pattern": "^INST-[A-Z0-9-]+$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "observation_ids": {
+          "items": {
+            "pattern": "^installation\\.asset-observation\\.",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_closure_ids": {
+          "items": {
+            "pattern": "^installation\\.",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "role",
+        "evidence_status",
+        "execution_status",
+        "product_evidence",
+        "source_closure_ids",
+        "layout_contract_ids",
+        "failure_contract_ids",
+        "observation_ids",
+        "independent_facts",
+        "facts_sha256"
+      ],
+      "type": "object"
+    },
+    "case_INST_CONFIG_DISCOVERY_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-CONFIG-DISCOVERY-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-CONFIG-DISCOVERY-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/configFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-CONFIG-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "config_discovery_precedence"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "installation.config-discovery"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_DIRTY_ASSET_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-DIRTY-ASSET-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-DIRTY-ASSET-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/dirtyFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "INST-SCRIPT-001"
+                },
+                {
+                  "const": "INST-EXAMPLE-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "dynamic_working_tree_enumeration"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-variables"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_DOC_FAIL_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-DOC-FAIL-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-DOC-FAIL-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/docFailFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "documentation_prerequisite_before_payload"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "const": "installation.make-doc-install"
+                },
+                {
+                  "const": "installation.docs-build"
+                },
+                {
+                  "const": "installation.docs-config"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_DOC_PATH_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-DOC-PATH-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-DOC-PATH-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/docPathFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "INST-PATHS-001"
+                },
+                {
+                  "const": "INST-MAN-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "documented_path_mismatch"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.readme-paths"
+                },
+                {
+                  "const": "installation.make-variables"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_INTERP_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-INTERP-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-INTERP-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/interpFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "interpreter_fixup_ineffective"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.fixup"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_LAYOUT_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "family": {
+              "const": "layout"
+            },
+            "id": {
+              "const": "INST-LAYOUT-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/layoutFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 8,
+              "minItems": 8,
+              "prefixItems": [
+                {
+                  "const": "INST-PATHS-001"
+                },
+                {
+                  "const": "INST-BIN-001"
+                },
+                {
+                  "const": "INST-SCRIPT-001"
+                },
+                {
+                  "const": "INST-LIB-001"
+                },
+                {
+                  "const": "INST-MAN-001"
+                },
+                {
+                  "const": "INST-HTML-001"
+                },
+                {
+                  "const": "INST-EXAMPLE-001"
+                },
+                {
+                  "const": "INST-CONFIG-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "installed_tree_partition"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-variables"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_LICENSE_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-LICENSE-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "license"
+            },
+            "id": {
+              "const": "INST-LICENSE-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/licenseFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "distribution_license_manifest"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-variables"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_PARTIAL_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-PARTIAL-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-PARTIAL-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/partialFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "non_transactional_install_loops"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_PATH_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-PATH-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-PATH-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/pathFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-PATHS-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "install_root_path_variants"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-variables"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_REPORT_ASSET_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "family": {
+              "const": "asset"
+            },
+            "id": {
+              "const": "INST-REPORT-ASSET-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/reportFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-REPORT-ASSET-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "const": "installation.asset-observation.report-genhtml-default-measured-000"
+                },
+                {
+                  "const": "installation.asset-observation.report-genhtml-default-measured-001"
+                },
+                {
+                  "const": "installation.asset-observation.report-genhtml-default-measured-002"
+                },
+                {
+                  "const": "installation.asset-observation.report-genhtml-default-warmup-000"
+                }
+              ],
+              "type": "array"
+            },
+            "role": {
+              "const": "runtime_report_assets"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "const": "installation.asset-names"
+                },
+                {
+                  "const": "installation.asset-generation"
+                },
+                {
+                  "const": "installation.asset-writers"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_STAGE_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "family": {
+              "const": "lifecycle"
+            },
+            "id": {
+              "const": "INST-STAGE-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/stageFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-PATHS-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "staged_root_versus_prefix"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-variables"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_TEST_RUN_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-TEST-RUN-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-TEST-RUN-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/testRunFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "installed_test_runtime_paths"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "const": "installation.test-runtime"
+                },
+                {
+                  "const": "installation.test-paths"
+                },
+                {
+                  "const": "installation.test-readme"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "case_INST_UNINSTALL_001": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/caseRecordBase"
+        },
+        {
+          "properties": {
+            "failure_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-UNINSTALL-001"
+                }
+              ],
+              "type": "array"
+            },
+            "family": {
+              "const": "failure"
+            },
+            "id": {
+              "const": "INST-UNINSTALL-001"
+            },
+            "independent_facts": {
+              "$ref": "#/$defs/uninstallFacts"
+            },
+            "layout_contract_ids": {
+              "items": false,
+              "maxItems": 1,
+              "minItems": 1,
+              "prefixItems": [
+                {
+                  "const": "INST-MAN-001"
+                }
+              ],
+              "type": "array"
+            },
+            "observation_ids": {
+              "items": false,
+              "maxItems": 0,
+              "type": "array"
+            },
+            "role": {
+              "const": "uninstall_residue_and_recursive_removal"
+            },
+            "source_closure_ids": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "const": "installation.make-uninstall"
+                },
+                {
+                  "const": "installation.make-doc-install"
+                }
+              ],
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "family",
+            "role",
+            "source_closure_ids",
+            "layout_contract_ids",
+            "failure_contract_ids",
+            "observation_ids",
+            "independent_facts"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "configFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "compiled_prefix_alone_selects_system_file": {
+          "const": false
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "search_order": {
+          "const": [
+            "$HOME/.lcovrc",
+            "$LCOV_HOME/etc/lcovrc"
+          ]
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "stops_after_first_readable": {
+          "const": true
+        }
+      },
+      "required": [
+        "compiled_prefix_alone_selects_system_file",
+        "oracle_execution_status",
+        "search_order",
+        "source_bindings",
+        "stops_after_first_readable",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "dirtyFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "examples_and_tests_from_working_tree": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "retained_support_script_count": {
+          "const": 23
+        },
+        "retained_support_script_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 23,
+          "minItems": 23,
+          "type": "array"
+        },
+        "scripts_from_dynamic_ls": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "untracked_ordinary_files_can_enter_install": {
+          "const": true
+        }
+      },
+      "required": [
+        "examples_and_tests_from_working_tree",
+        "oracle_execution_status",
+        "retained_support_script_count",
+        "retained_support_script_names",
+        "scripts_from_dynamic_ls",
+        "source_bindings",
+        "untracked_ordinary_files_can_enter_install",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "docFailFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "doc_finished_is_hard_prerequisite": {
+          "const": true
+        },
+        "install_cleans_source_example_and_tests": {
+          "const": true
+        },
+        "missing_sphinx_or_theme_fails_before_payload": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "doc_finished_is_hard_prerequisite",
+        "install_cleans_source_example_and_tests",
+        "missing_sphinx_or_theme_fails_before_payload",
+        "oracle_execution_status",
+        "source_bindings",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "docPathFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_retained_roots": {
+          "additionalProperties": false,
+          "properties": {
+            "bin": {
+              "const": "/usr/local/bin"
+            },
+            "config": {
+              "const": "/usr/local/etc/lcovrc"
+            },
+            "html": {
+              "const": "/usr/local/share/lcov/html"
+            },
+            "lib": {
+              "const": "/usr/local/lib/lcov"
+            },
+            "man": {
+              "const": "/usr/local/share/man"
+            },
+            "scripts": {
+              "const": "/usr/local/share/lcov/support-scripts"
+            },
+            "tests": {
+              "const": "/usr/local/share/lcov/tests"
+            }
+          },
+          "required": [
+            "bin",
+            "config",
+            "html",
+            "lib",
+            "man",
+            "scripts",
+            "tests"
+          ],
+          "type": "object"
+        },
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "documentation_mismatch_must_be_recorded": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "truth_source": {
+          "const": "installed_tree_filesystem_evidence"
+        }
+      },
+      "required": [
+        "actual_retained_roots",
+        "documentation_mismatch_must_be_recorded",
+        "oracle_execution_status",
+        "source_bindings",
+        "truth_source",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "interpFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "advertised_override_effective": {
+          "const": false
+        },
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "env_shebang_excluded_from_rewrite": {
+          "const": true
+        },
+        "install_passes_fixinterp": {
+          "const": false
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "advertised_override_effective",
+        "env_shebang_excluded_from_rewrite",
+        "install_passes_fixinterp",
+        "oracle_execution_status",
+        "source_bindings",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "layoutFacts": {
+      "additionalProperties": false,
+      "description": "INST-LAYOUT-001 installed-tree partition exception: nested source_bindings are intentionally absent. Source identity is bound only through top-level source_closure_ids plus tree partition facts regenerated from the pinned installed-tree lock.",
+      "properties": {
+        "bin_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "type": "array"
+        },
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "directory_companion_entry_count": {
+          "const": 57
+        },
+        "directory_companion_mode": {
+          "const": "755"
+        },
+        "directory_companion_path": {
+          "const": "compat/installation/wave2/installed-directories.lock"
+        },
+        "directory_companion_retained": {
+          "const": true
+        },
+        "directory_companion_sha256": {
+          "const": "da6eb48da728b53821c6aa3fca632006b29c5bf3fad6b32fc2296ccc22f3c32e",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "directory_entries_retained": {
+          "const": false
+        },
+        "file_count": {
+          "const": 320
+        },
+        "group_counts": {
+          "additionalProperties": false,
+          "properties": {
+            "bin": {
+              "const": 10
+            },
+            "config": {
+              "const": 1
+            },
+            "example": {
+              "const": 10
+            },
+            "html": {
+              "const": 60
+            },
+            "legacy_man_symlink": {
+              "const": 1
+            },
+            "lib": {
+              "const": 1
+            },
+            "man": {
+              "const": 10
+            },
+            "support_scripts": {
+              "const": 23
+            },
+            "tests": {
+              "const": 205
+            }
+          },
+          "required": [
+            "bin",
+            "config",
+            "lib",
+            "man",
+            "support_scripts",
+            "html",
+            "example",
+            "tests",
+            "legacy_man_symlink"
+          ],
+          "type": "object"
+        },
+        "legacy_symlink": {
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "const": "777"
+            },
+            "path": {
+              "const": "/usr/local/man"
+            },
+            "target": {
+              "const": "share/man"
+            }
+          },
+          "required": [
+            "path",
+            "target",
+            "mode"
+          ],
+          "type": "object"
+        },
+        "man_page_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 10,
+          "type": "array"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mode_counts": {
+          "additionalProperties": false,
+          "properties": {
+            "644": {
+              "const": 210
+            },
+            "755": {
+              "const": 110
+            },
+            "777": {
+              "const": 1
+            }
+          },
+          "required": [
+            "644",
+            "755",
+            "777"
+          ],
+          "type": "object"
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "path_order": {
+          "const": "lexicographic"
+        },
+        "path_root": {
+          "const": "/usr/local"
+        },
+        "support_script_count": {
+          "const": 23
+        },
+        "support_script_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 23,
+          "minItems": 23,
+          "type": "array"
+        },
+        "symlink_count": {
+          "const": 1
+        },
+        "tree_entry_count": {
+          "const": 321
+        }
+      },
+      "required": [
+        "bin_names",
+        "directory_entries_retained",
+        "file_count",
+        "group_counts",
+        "legacy_symlink",
+        "man_page_names",
+        "manifest_sha256",
+        "mode_counts",
+        "path_order",
+        "path_root",
+        "support_script_count",
+        "support_script_names",
+        "symlink_count",
+        "tree_entry_count",
+        "directory_companion_retained",
+        "directory_companion_entry_count",
+        "directory_companion_mode",
+        "directory_companion_path",
+        "directory_companion_sha256",
+        "capture_artifact",
+        "oracle_execution_status"
+      ],
+      "type": "object"
+    },
+    "licenseFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "copying_in_install_payload": {
+          "const": false
+        },
+        "copying_in_source_archive_manifest": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "retained_tree_contains_copying": {
+          "const": false
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "upstream_omission_is_not_permission_to_omit": {
+          "const": true
+        }
+      },
+      "required": [
+        "copying_in_install_payload",
+        "copying_in_source_archive_manifest",
+        "oracle_execution_status",
+        "retained_tree_contains_copying",
+        "source_bindings",
+        "upstream_omission_is_not_permission_to_omit",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "partialFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "partial_payload_possible": {
+          "const": true
+        },
+        "rollback": {
+          "const": false
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        },
+        "transactional": {
+          "const": false
+        }
+      },
+      "required": [
+        "oracle_execution_status",
+        "partial_payload_possible",
+        "rollback",
+        "source_bindings",
+        "transactional",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "pathCaptureArtifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "relative": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "space": {
+          "$ref": "#/$defs/captureArtifact"
+        }
+      },
+      "required": [
+        "relative",
+        "space"
+      ],
+      "type": "object"
+    },
+    "pathFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifacts": {
+          "$ref": "#/$defs/pathCaptureArtifacts"
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "relative_roots_rejected": {
+          "const": true
+        },
+        "requires_absolute_destdir_prefix": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "space_containing_paths_platform_sensitive": {
+          "const": true
+        }
+      },
+      "required": [
+        "oracle_execution_status",
+        "relative_roots_rejected",
+        "requires_absolute_destdir_prefix",
+        "source_bindings",
+        "space_containing_paths_platform_sensitive",
+        "capture_artifacts"
+      ],
+      "type": "object"
+    },
+    "productEvidence": {
+      "maxItems": 0,
+      "type": "array"
+    },
+    "reportFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "asset_count": {
+          "const": 7
+        },
+        "assets_are_runtime_not_install_payload": {
+          "const": true
+        },
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "observation_count": {
+          "const": 4
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/reportObservation"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "optional_updown_and_html_reference_qualification_open": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "runtime_assets": {
+          "items": {
+            "$ref": "#/$defs/runtimeAsset"
+          },
+          "maxItems": 7,
+          "minItems": 7,
+          "type": "array"
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "asset_count",
+        "assets_are_runtime_not_install_payload",
+        "observation_count",
+        "observations",
+        "optional_updown_and_html_reference_qualification_open",
+        "runtime_assets",
+        "source_bindings",
+        "oracle_execution_status",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "reportObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_path": {
+          "pattern": "^compat/benchmarks/results/oracle-x86_64-linux-20260728/samples/report-genhtml-default-(measured|warmup)-[0-9]{3}/output-tree\\.json$",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asset_count": {
+          "const": 7
+        },
+        "assets": {
+          "additionalProperties": false,
+          "properties": {
+            "amber.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "emerald.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "gcov.css": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "glass.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "ruby.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "snow.png": {
+              "$ref": "#/$defs/assetIdentity"
+            },
+            "updown.png": {
+              "$ref": "#/$defs/assetIdentity"
+            }
+          },
+          "required": [
+            "gcov.css",
+            "ruby.png",
+            "amber.png",
+            "emerald.png",
+            "snow.png",
+            "glass.png",
+            "updown.png"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "pattern": "^installation\\.asset-observation\\.",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "measured",
+            "warmup"
+          ]
+        },
+        "sample_case_id": {
+          "const": "report-genhtml-default"
+        },
+        "sample_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sample_metadata_path": {
+          "pattern": "/sample\\.json$",
+          "type": "string"
+        },
+        "sample_metadata_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "artifact_path",
+        "artifact_sha256",
+        "sample_metadata_path",
+        "sample_metadata_sha256",
+        "sample_case_id",
+        "sample_id",
+        "phase",
+        "assets",
+        "asset_count"
+      ],
+      "type": "object"
+    },
+    "runtimeAsset": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "pattern": "^[a-z0-9-]+$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "css",
+            "png"
+          ]
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "sourceBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "line_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line_end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line_start": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "text_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "line_start",
+        "line_end",
+        "line_count",
+        "sha256",
+        "text_sha256"
+      ],
+      "type": "object"
+    },
+    "stageFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "compiled_paths_retain_prefix_without_destdir": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "payload_under_destdir": {
+          "const": true
+        },
+        "requires_absolute_destdir_prefix": {
+          "const": true
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "compiled_paths_retain_prefix_without_destdir",
+        "oracle_execution_status",
+        "payload_under_destdir",
+        "requires_absolute_destdir_prefix",
+        "source_bindings",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "testRunFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "explicit_lcov_home_required_for_installed_tests": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "retained_test_entry_count": {
+          "const": 205
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        },
+        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin": {
+          "const": true
+        }
+      },
+      "required": [
+        "explicit_lcov_home_required_for_installed_tests",
+        "oracle_execution_status",
+        "retained_test_entry_count",
+        "source_bindings",
+        "unset_lcov_home_can_resolve_nonexistent_share_lcov_bin",
+        "capture_artifact"
+      ],
+      "type": "object"
+    },
+    "uninstallFacts": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_artifact": {
+          "$ref": "#/$defs/captureArtifact"
+        },
+        "foreign_sentinels_removed": {
+          "const": true
+        },
+        "isolated_root_required": {
+          "const": true
+        },
+        "man_uninstall_enumerates_source_glob": {
+          "const": true
+        },
+        "oracle_execution_status": {
+          "const": "captured"
+        },
+        "recursive_removal_targets": {
+          "const": [
+            "lib/lcov",
+            "share/lcov"
+          ]
+        },
+        "source_bindings": {
+          "items": {
+            "$ref": "#/$defs/sourceBinding"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "foreign_sentinels_removed",
+        "isolated_root_required",
+        "man_uninstall_enumerates_source_glob",
+        "oracle_execution_status",
+        "recursive_removal_targets",
+        "source_bindings",
+        "capture_artifact"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/Gujiassh/ferricov/compat/installation/oracle-case-records.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Ferricov LCOV 2.5 installation Oracle case records. Each case id is positionally bound to an exact independent_facts variant. INST-LAYOUT-001 intentionally omits nested source_bindings and uses top-level source_closure_ids plus tree partition facts only.",
+  "properties": {
+    "case_count": {
+      "const": 13
+    },
+    "cases": {
+      "items": false,
+      "maxItems": 13,
+      "minItems": 13,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/case_INST_LAYOUT_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_STAGE_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_INTERP_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_CONFIG_DISCOVERY_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_UNINSTALL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_PARTIAL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DOC_FAIL_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_PATH_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DIRTY_ASSET_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_TEST_RUN_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_DOC_PATH_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_REPORT_ASSET_001"
+        },
+        {
+          "$ref": "#/$defs/case_INST_LICENSE_001"
+        }
+      ],
+      "type": "array"
+    },
+    "evidence_status": {
+      "const": "oracle_reference"
+    },
+    "execution_status": {
+      "const": "planned"
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "upstream_commit": {
+      "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    }
+  },
+  "required": [
+    "schema_version",
+    "upstream_release",
+    "upstream_commit",
+    "evidence_status",
+    "execution_status",
+    "product_compatibility_evidence",
+    "case_count",
+    "cases"
+  ],
+  "title": "Ferricov LCOV 2.5 Installation Oracle Case Records",
+  "type": "object"
+}

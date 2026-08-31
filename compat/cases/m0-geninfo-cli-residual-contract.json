@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        ".",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-geninfo-cli-residual-contract",
+      "id": "m0-geninfo-cli-residual-contract-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--output-filename",
+        "custom.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-geninfo-cli-residual-contract",
+      "id": "m0-geninfo-cli-residual-contract-output-filename",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--checksum",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-geninfo-cli-residual-contract",
+      "id": "m0-geninfo-cli-residual-contract-checksum-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        ".",
+        "--checksum",
+        "--no-checksum",
+        "--output-filename",
+        "out.info"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-geninfo-cli-residual-contract",
+      "id": "m0-geninfo-cli-residual-contract-no-checksum",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-geninfo-cli-residual-contract"
+}

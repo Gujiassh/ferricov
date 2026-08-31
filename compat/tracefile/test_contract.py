@@ -260,22 +260,27 @@ class TracefileContractTests(unittest.TestCase):
             ["branches-expression-merge-right"],
         )
 
-    def test_numeric_mapping_keeps_incomplete_exact_atoms_blocked(self) -> None:
+    def test_numeric_mapping_includes_exact_tf030_matrix(self) -> None:
         targets = {
             case["id"]: case
             for case in self.committed["oracle_cases"]
             if case["id"].startswith(("numeric-", "checksum-"))
         }
-        self.assertNotIn("M1-TF-030", {
+        mapped = {
             requirement
             for case in targets.values()
             for requirement in case.get("requirement_ids", [])
-        })
+        }
+        self.assertIn("M1-TF-030", mapped)
         for requirement in ("M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"):
             with self.subTest(requirement=requirement):
-                self.assertTrue(
-                    any(requirement in case.get("requirement_ids", []) for case in targets.values())
-                )
+                self.assertIn(requirement, mapped)
+        exact_upstream = targets["numeric-format-atoms.tf030.semantic-snapshot"]
+        self.assertEqual(exact_upstream["requirement_ids"], ["M1-TF-030"])
+        self.assertEqual(exact_upstream["m0_decision_ids"], ["M0-TF-NUMERIC-001"])
+        candidate = targets["numeric-tf030-candidates.ignore-negative.semantic-snapshot"]
+        self.assertEqual(candidate["requirement_ids"], ["M1-TF-030"])
+        self.assertNotIn("m0_decision_ids", candidate)
 
     def test_semantic_snapshot_runner_drift_is_rejected(self) -> None:
         document = copy.deepcopy(self.committed)
@@ -324,6 +329,140 @@ class TracefileContractTests(unittest.TestCase):
         with self.assertRaises(contract.TracefileContractError):
             self.validate(document)
 
+
+
+    def test_wave2_mapping_is_exact_and_source_scoped(self) -> None:
+        expected = {
+            "wave2-framing-blank.summary": ["M1-TF-001"],
+            "wave2-framing-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-crlf-blank.summary": ["M1-TF-001"],
+            "wave2-framing-crlf-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-no-final-newline-blank.summary": ["M1-TF-001"],
+            "wave2-framing-no-final-newline-blank.canonical": ["M1-TF-001"],
+            "wave2-framing-trailing-ws.summary": ["M1-TF-001"],
+            "wave2-framing-trailing-ws.canonical": ["M1-TF-001"],
+            "wave2-tn-diff.summary": ["M1-TF-004"],
+            "wave2-tn-diff.canonical": ["M1-TF-004"],
+            "wave2-kf-parity.summary": ["M1-TF-006"],
+            "wave2-kf-parity.canonical": ["M1-TF-006"],
+            "wave2-kf-empty.summary": ["M1-TF-006"],
+            "wave2-kf-empty.canonical": ["M1-TF-006"],
+            "wave2-kf-empty.ignore-format": ["M1-TF-006"],
+            "wave2-da-accumulate.summary": ["M1-TF-008"],
+            "wave2-da-accumulate.canonical": ["M1-TF-008"],
+            "wave2-da-checksum-store.canonical": ["M1-TF-008"],
+            "wave2-da-checksum-store.no-verify.canonical": ["M1-TF-008"],
+            "wave2-summary-forms.summary": ["M1-TF-012"],
+            "wave2-summary-forms.canonical": ["M1-TF-012"],
+            "wave2-terminator-suffix.summary": ["M1-TF-015"],
+            "wave2-terminator-suffix.canonical": ["M1-TF-015"],
+            "wave2-terminator-dup.summary": ["M1-TF-015"],
+            "wave2-terminator-dup.canonical": ["M1-TF-015"],
+            "wave2-terminator-missing.summary": ["M1-TF-015"],
+            "wave2-terminator-missing.canonical": ["M1-TF-015"],
+            "wave2-terminator-missing.ignore-empty": ["M1-TF-015"],
+            "wave2-unknown-tags.summary": ["M1-TF-016"],
+            "wave2-unknown-tags.canonical": ["M1-TF-016"],
+            "wave2-unknown-tags.ignore-format": ["M1-TF-016"],
+            "wave2-leading-ws-tag.summary": ["M1-TF-016"],
+            "wave2-leading-ws-tag.canonical": ["M1-TF-016"],
+            "wave2-leading-ws-tag.ignore-format": ["M1-TF-016"],
+            "wave2-case-change.summary": ["M1-TF-016"],
+            "wave2-case-change.canonical": ["M1-TF-016"],
+            "wave2-case-change.ignore-format": ["M1-TF-016"],
+        }
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith("wave2-")
+        }
+        self.assertEqual(set(targets), set(expected))
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+
+
+
+    def test_writer_mapping_is_exact_and_source_scoped(self) -> None:
+        expected = {
+            "legacy.summary": ["M1-TF-010"],
+            "legacy.canonical": ["M1-TF-010"],
+            "writer-order-core.canonical": ["M1-TF-041"],
+            "writer-mcdc-groups.canonical": ["M1-TF-041"],
+            "writer-summaries.canonical": ["M1-TF-042"],
+            "writer-comments.canonical": ["M1-TF-043"],
+            "writer-forbidden.canonical": ["M1-TF-044"],
+            "writer-legacy-comma.canonical": ["M1-TF-010"],
+            "writer-legacy-repeat.canonical": ["M1-TF-010"],
+            "writer-legacy-unknown.summary": ["M1-TF-010"],
+            "writer-legacy-unknown.canonical": ["M1-TF-010"],
+            "writer-fixedpoint.two-write": ["M1-TF-045"],
+            "writer-legacy.two-write": ["M1-TF-045"],
+            "writer-permissive.two-write": ["M1-TF-045"],
+            "writer-ignored-error.two-write": ["M1-TF-045"],
+            "writer-fixedpoint.repeated-write": ["M1-TF-046"],
+            "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
+            "converter-coverage.py2lcov-no-functions": ["M1-TF-051"],
+            "converter-coverage.py2lcov-with-functions": ["M1-TF-051"],
+            "converter-coverage.canonical-rewrite": ["M1-TF-052"],
+            "gzip-valid.summary": ["M1-TF-060"],
+            "gzip-plain.write-gz": ["M1-TF-060"],
+            "gzip-corrupt.summary": ["M1-TF-060"],
+            "gzip-empty.summary": ["M1-TF-060"],
+            "gzip-valid.missing-gzip": ["M1-TF-060"],
+        }
+        observational_only = {
+            "writer-fixedpoint.canonical",
+            "writer-non-utf8.canonical",
+        }
+        targets = {
+            case["id"]: case
+            for case in self.committed["oracle_cases"]
+            if case["id"].startswith(("writer-", "gzip-", "converter-coverage."))
+            or case["id"] in {"legacy.summary", "legacy.canonical"}
+        }
+        self.assertEqual(set(targets), set(expected) | observational_only)
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+        for case_id in observational_only:
+            with self.subTest(case_id=case_id):
+                self.assertNotIn("requirement_ids", targets[case_id])
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+
+    def test_wave3_semantic_mappings_are_exact_and_group_scoped(self) -> None:
+        expected = {
+            "converter-coverage.xml2lcov": ["M1-TF-050", "M1-TF-052"],
+            "converter-coverage.canonical-rewrite": ["M1-TF-052"],
+            "bytes-non-utf8.canonical": ["M1-TF-061"],
+        }
+        targets = {case["id"]: case for case in self.committed["oracle_cases"]}
+        for case_id, requirement_ids in expected.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(targets[case_id]["requirement_ids"], requirement_ids)
+                self.assertNotIn("m0_decision_ids", targets[case_id])
+        # M1-TF-045 is exact only through the four true two-write cases.
+        for case_id in (
+            "writer-fixedpoint.canonical",
+            "permissive-prefix.canonical",
+        ):
+            self.assertNotIn("requirement_ids", targets[case_id])
+        self.assertEqual(
+            targets["wave2-unknown-tags.ignore-format"]["requirement_ids"],
+            ["M1-TF-016"],
+        )
+        exact = self.committed["totals"]["exact_executable_requirement_ids"]
+        self.assertIn("M1-TF-045", exact)
+        self.assertIn("M1-TF-010", exact)
+        # SF-only writer non-utf8 remains observational; matrix is on bytes-non-utf8.
+        writer_non_utf8 = targets["writer-non-utf8.canonical"]
+        self.assertNotIn("requirement_ids", writer_non_utf8)
+        self.assertIn("M1-TF-052", exact)
+        self.assertIn("M1-TF-061", exact)
+        self.assertEqual(len(exact), 43)
+        self.assertFalse(self.committed["product_compatibility_evidence"])
 
 
 if __name__ == "__main__":

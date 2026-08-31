@@ -1,0 +1,105 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-genhtml-hard2-contract",
+      "id": "m0-cli-genhtml-hard2-contract-debug-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--debug",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-genhtml-hard2-contract",
+      "id": "m0-cli-genhtml-hard2-contract-debug",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-file",
+        "input.info",
+        "--output-directory",
+        "report",
+        "input2.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-genhtml-hard2-contract",
+      "id": "m0-cli-genhtml-hard2-contract-baseline-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--baseline-file",
+        "input.info",
+        "--new-file-as-baseline",
+        "--output-directory",
+        "report",
+        "input2.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-cli-genhtml-hard2-contract",
+      "id": "m0-cli-genhtml-hard2-contract-new-file-as-baseline",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-cli-genhtml-hard2-contract"
+}

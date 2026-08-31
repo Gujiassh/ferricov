@@ -146,6 +146,7 @@ differential execution, and retained artifact rules.
 | Document | Purpose |
 | --- | --- |
 | [Project source of truth](docs/ssot/project.md) | Objective, baseline, scope, architecture, and current decisions |
+| [M0 status snapshot](docs/ssot/m0-status.snapshot.json) | Live residual metrics and M1 activation blockers |
 | [Compatibility contract](docs/ssot/compatibility-contract.md) | Observable behavior and evidence required for compatibility |
 | [Performance contract](docs/ssot/performance-contract.md) | Benchmark method and release thresholds |
 | [Execution plan](specs/001-full-lcov-compatibility/plan.md) | Milestones, dependencies, risks, and release gates |

@@ -1,0 +1,259 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "control.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "capture-all.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-capture-all",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "follow-symlinks.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-follow-symlinks",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "src",
+        "--config-file",
+        "compat.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-compat",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ab/obj",
+        "--config-file",
+        "auto-base-on.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-auto-base-on",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ab/obj",
+        "--config-file",
+        "auto-base.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-auto-base",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ub",
+        "--config-file",
+        "unexecuted-blocks-off.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,inconsistent"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks-off",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ub",
+        "--config-file",
+        "unexecuted-blocks.lcovrc",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,inconsistent"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-unexecuted-blocks",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ex",
+        "--config-file",
+        "exception-control.lcovrc",
+        "--branch-coverage",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-exception-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "ex",
+        "--config-file",
+        "no-exception-branch.lcovrc",
+        "--branch-coverage",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "geninfo",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-d-geninfo-success-contract",
+      "id": "m0-residual-d-geninfo-success-contract-no-exception-branch",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-residual-d-geninfo-success-contract"
+}

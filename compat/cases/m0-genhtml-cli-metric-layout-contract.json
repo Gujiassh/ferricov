@@ -1,0 +1,147 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "id": "m0-genhtml-cli-metric-layout-control",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--config-file",
+        "control.lcovrc",
+        "--frames",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "id": "m0-genhtml-cli-metric-layout-frames",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--config-file",
+        "control.lcovrc",
+        "--precision",
+        "4",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "id": "m0-genhtml-cli-metric-layout-precision",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--function-coverage",
+        "--branch-coverage",
+        "--mcdc-coverage",
+        "--config-file",
+        "control.lcovrc",
+        "--no-sort",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stdout",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-metric-contract",
+      "id": "m0-genhtml-cli-metric-layout-no-sort",
+      "surface": "cli"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-genhtml-cli-metric-layout-contract"
+}

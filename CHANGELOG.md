@@ -6,10 +6,29 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Ferricov remains pre-alpha and does not yet publish replacement binaries or
 compatibility releases.
 
+## Unreleased
+
+### Fixed
+
+- Centralize live M0 residual metrics in `docs/ssot/m0-status.snapshot.json` and
+  fail closed when operational docs or the snapshot drift from
+  `compat/behavior/contract.json` totals.
+- Load inventory verification pins from
+  `compat/inventory/expected-pins.v2.5.json` so fail-closed dual-control is a
+  single committed pin source rather than inline constants.
+- Prune stale missing `/tmp/ferricov-*` worktrees; canonical checkout remains
+  `/home/cc/code1/ferricov`.
+
 ## [Unreleased]
 
 ### Added
 
+- Reviewed residual genhtml CLI plans for `--preserve`, `--synthesize-missing`,
+  and multi-tracefile positional inputs with a dedicated Oracle suite and no
+  product evidence.
+- A gated M1 Tracefile Core agent specification with task IDs, module
+  ownership, semantic/property/fuzz acceptance, Oracle evidence requirements,
+  performance gates, and controller handoff rules.
 - M0 tracefile VER and state-ownership Oracle evidence: six committed fixtures,
   `inspect_model.pl` semantic snapshots, and exact mappings for
   `M1-TF-007`, `M1-TF-021`, `M1-TF-022`, and `M1-TF-026` (63 observations / 42

@@ -1,0 +1,296 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "src",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-geninfo-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "b551a3a4ed5062fb2b83caa57fe353928cffc5a2298ecd4ba56bb3647f202406",
+        "paths": [
+          "out.info",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 539,
+        "stdout_sha256": "061fdefebfce1d93c18de7f20303b7466d814e498363d56be133a5c801c9bbe7"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--large-file",
+        "(",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-geninfo-large-file-invalid",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 3,
+        "file_tree_bytes": 427,
+        "file_tree_sha256": "80c3f38c5974cea05d0b92b13c8ecd7744bea0d7a2ad65b8429806182f3b7f3b",
+        "paths": [
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 120,
+        "stderr_sha256": "17ccfe9c48e70be8b916e98f4a626931cad1cac5aea87b05bd648a8f36a6b08c",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "src",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-lcov-control",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "b551a3a4ed5062fb2b83caa57fe353928cffc5a2298ecd4ba56bb3647f202406",
+        "paths": [
+          "out.info",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 725,
+        "stdout_sha256": "69c910109b70f7dbd45df5b02bc472df936d63ca2ff1e1ef626ba08eb42f7fb0"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "--capture",
+        "--directory",
+        "src",
+        "--large-file",
+        "(",
+        "--output-file",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-lcov-large-file-invalid",
+      "command": "lcov",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 2,
+        "file_count": 3,
+        "file_tree_bytes": 427,
+        "file_tree_sha256": "80c3f38c5974cea05d0b92b13c8ecd7744bea0d7a2ad65b8429806182f3b7f3b",
+        "paths": [
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 114,
+        "stderr_sha256": "aeec91a3dabc10bdc8070916cff6b16683f1c2a4433927798055f30ce0d06aca",
+        "stdout_bytes": 201,
+        "stdout_sha256": "fae7d941f75bc7212d25826e72e714b6ad7c2742d97930a907f2c67112f46929"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-geninfo-debug-control",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "b551a3a4ed5062fb2b83caa57fe353928cffc5a2298ecd4ba56bb3647f202406",
+        "paths": [
+          "out.info",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 539,
+        "stdout_sha256": "77452d26dfdf423d13ff33bf94005d333e553273a81f43adc2ce6f2a92c4fe24"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    },
+    {
+      "arguments": [
+        "src",
+        "--debug",
+        "--output-filename",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "case_id": "m0-cli-hard-residual-contract-geninfo-debug",
+      "command": "geninfo",
+      "comparison_contract": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "stderr",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "product_compatibility_evidence": false,
+      "reference_run": {
+        "exit_code": 0,
+        "file_count": 4,
+        "file_tree_bytes": 532,
+        "file_tree_sha256": "b551a3a4ed5062fb2b83caa57fe353928cffc5a2298ecd4ba56bb3647f202406",
+        "paths": [
+          "out.info",
+          "src/hello.c",
+          "src/hello.gcda",
+          "src/hello.gcno"
+        ],
+        "stderr_bytes": 1025,
+        "stderr_sha256": "133f428c3e393eb50ca1ff79691f0320a6371007f642b1b9795ca0a1e40c6334",
+        "stdout_bytes": 539,
+        "stdout_sha256": "9ea0ad652e231511f115de609453f1658104433fde39c1d14874f97faf8b2f20"
+      },
+      "reverse_run": {
+        "exit_code": 23
+      },
+      "status": "observed",
+      "surface": "cli"
+    }
+  ],
+  "effective_environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PERL_HASH_SEED": "0",
+    "PERL_PERTURB_KEYS": "0",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "oracle_identity": {
+    "container_image_sha256": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "kind": "docker_image"
+  },
+  "product_compatibility_evidence": false,
+  "runtime_note": "hello capture fixture; large-file invalid regexp exits before out.info; debug pins stderr under fixed /work paths",
+  "schema_version": 1,
+  "suite_id": "m0-cli-hard-residual-contract"
+}

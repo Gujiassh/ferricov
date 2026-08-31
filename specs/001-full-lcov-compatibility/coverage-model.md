@@ -964,9 +964,9 @@ execution or pass status. Each case MUST retain the evidence required by the
 | `M1-MD-012` | Branch union/intersection/difference for repeated signatures and `-` taken state | `M1-ALG-BRANCH-001`, `M1-ALG-BRANCH-CACHE-001`, `M1-FZ-BRANCH-ALGEBRA-001` |
 | `M1-MD-013` | MC/DC union/intersection/difference granularity, counts, compatibility, and exclusions | `M1-ALG-MCDC-001`, `M1-ALG-MCDC-VECTOR-001`, `M1-ALG-MCDC-EXPR-001`, `M1-FZ-MCDC-ALGEBRA-001` |
 | `M1-MD-014` | Left-only and right-only testcase behavior under all set operations, including empty lazy maps | `M1-ALG-TESTCASE-LINE-001`, `M1-ALG-TESTCASE-FUNCTION-001`, `M1-ALG-TESTCASE-BRANCH-001`, `M1-ALG-TESTCASE-MCDC-001` |
-| `M1-MD-015` | Complete writer projection, total views, lexical/numeric ordering, fixed point, and immutability | `M1-TF-040`, `M1-TF-041`, `M1-TF-042`, `M1-TF-043`, `M1-TF-044`, `M1-TF-045`, `M1-TF-046` |
+| `M1-MD-015` | Complete writer projection, total views, lexical/numeric ordering, fixed point, and immutability | `M1-TF-040`, `M1-TF-041`, `M1-TF-042`, `M1-TF-043`, `M1-TF-044`, `M1-TF-046` |
 | `M1-MD-016` | Semantic snapshots after every categorized ignored error and hard-failure boundary | `M1-TF-016`, `M1-TF-024`, `M1-TF-026`, `M1-TF-031`, `M1-TF-032`, `M1-TF-033`, `M1-TF-034`, `M1-TF-035`, `M1-TF-036` |
-| `M1-MD-017` | Parse-write-parse equality across canonical, legacy, permissive, and ignored-error corpora | `M1-TF-045`, `M1-TF-052` |
+| `M1-MD-017` | Parse-write-parse equality across canonical, legacy, permissive, and ignored-error corpora | `M1-TF-052` |
 | `M1-MD-018` | Perl lexical ordering and character-class behavior across locale, platform, and byte inputs | `M1-TF-001`, `M1-TF-004`, `M1-TF-041`, `M1-TF-061` |
 | `M1-MD-019` | Repeated terminator totals, cumulative aggregate addition, MC/DC cross-test clone bleed, and duplicate-line hard failure | `M1-TF-015`, `M1-TF-023`, `M1-TF-026`, `M1-TF-042` |
 | `M1-MD-020` | Adversarial size, allocation, malformed nesting, and model invariant fuzzing | `M1-TF-062`, `M1-TF-063`, `M1-TF-064`; `M0-RSRC-MEASURE-001`; `M1-FZ-LEX-001`, `M1-FZ-STATEFUL-001`, `M1-FZ-WRITER-001`, `M1-FZ-ROUNDTRIP-001`, `M1-FZ-NUMERIC-001`, `M1-FZ-LINE-ALGEBRA-001`, `M1-FZ-FUNCTION-ALGEBRA-001`, `M1-FZ-BRANCH-ALGEBRA-001`, `M1-FZ-MCDC-ALGEBRA-001` |
@@ -978,18 +978,28 @@ snapshot.
 
 ### Case And Evidence Manifest Boundary
 
-The canonical executable manifest is planned at
-`compat/cases/m1-model.json`. It MUST bind each `M1-MD-*` decision and every
-listed property/algebra/fuzz case to an exact runner, operand fixture hashes,
-command, environment, source anchors, expected semantic snapshot schema, status,
-and evidence directory. That manifest does not yet exist, so all model rows
-remain `blocked`.
+The canonical executable catalog is retained at
+`compat/model/m1-model.json`, with the fail-closed contract at
+`compat/model/v2.5.json` and the owned corpus under
+`compat/fixtures/m0-algebra/`. It binds each Oracle-executed `M1-MD-*` decision
+and every listed algebra/property case to an exact runner, operand fixture
+hashes, command/argv, environment, expected exit, stream/output identities, and
+independent expected facts. Product-compatibility evidence remains false.
 
-The current `compat/fixtures/m0-tracefiles/oracle-cases.json` contains
-free-form `requirement` labels and CLI stream/output captures. It has no
-executable `M1-MD-*` definitions, does not validate compound requirement
-coverage, and does not retain aggregate plus four independent testcase-family
-semantic snapshots. It is useful source evidence but cannot close a model row.
+M0 Oracle baseline status for the algebra/property rows is:
+
+- Oracle-bound: `M1-MD-010`, `M1-MD-011`, `M1-MD-012`, `M1-MD-013`,
+  `M1-MD-014`, `M1-MD-017`, `M1-MD-019` (157 cases, 27 fixtures).
+- Blocked: `M1-MD-020` with `M1-TF-063` and `M1-TF-064`
+  (`fuzz_execution_phase=M1-only`).
+- Intentionally rejected Oracle outcomes are retained for
+  `M1-ALG-MCDC-VECTOR-001`: long-then-short MC/DC vector union/intersect hard
+  fails with `Can't call method "expression" on an undefined value` (CLI exit
+  `1`, in-process/semantic exit `255`); reverse order succeeds; difference
+  succeeds.
+
+The current `compat/fixtures/m0-tracefiles/oracle-cases.json` remains useful
+tracefile source evidence but does not own the algebra/property rows above.
 
 Each manifest entry has two independent phase states:
 

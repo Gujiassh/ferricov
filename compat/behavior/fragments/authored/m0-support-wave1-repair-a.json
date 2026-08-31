@@ -1,0 +1,607 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed compatibility plan for the support-script.analyzeinfofiles boundary: the invocation/input boundary runs the installed `analyzeInfoFiles` utility over two tracefile inputs and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.support-script.analyzeinfofiles",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/analyzeInfoFiles",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-analyze-info-files",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.analyzeinfofiles",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed compatibility plan for the support-script.annotateutil-pm boundary: the invocation/input boundary invokes the installed Perl module through its exported `compute_md5` helper and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.support-script.annotateutil-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/annotateutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-annotateutil-compute-md5",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.annotateutil-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.context-pm as a source-bound support-script boundary for support: input form `context.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.context-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/context.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.context-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.criteria as a source-bound support-script boundary for support: input form `criteria` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.criteria",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/criteria",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.criteria",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.criteria-pm as a source-bound support-script boundary for support: input form `criteria.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.criteria-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/criteria.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.criteria-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Reviewed compatibility plan for the support-script.get-signature boundary: the invocation/input boundary runs the installed MD5 version callback against a committed source fixture and compare process exit, stdout, stderr, and filesystem state. The suite case is Oracle/Ferricov planning only; no product compatibility evidence is claimed.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.support-script.get-signature",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/get_signature",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-support-get-signature",
+          "suite_id": "m0-support-script-contract"
+        }
+      ],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.get-signature",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.history-pm as a source-bound support-script boundary for support: input form `history.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.history-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/history.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.history-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.select-pm as a source-bound support-script boundary for support: input form `select.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.select-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/select.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.select-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "lcov.demangling"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.simplify-pm as a source-bound support-script boundary for support: input form `simplify.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/lcov/demangle/demangle.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.simplify-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/simplify.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.simplify-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/lcov/demangle/demangle.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.function-differential"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.spreadsheet-py as a source-bound support-script boundary for support: input form `spreadsheet.py` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/function/function.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.spreadsheet-py",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/spreadsheet.py",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.spreadsheet-py",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/function/function.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.threshold-pm as a source-bound support-script boundary for support: input form `threshold.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.threshold-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/threshold.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.threshold-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/lcov/extract/extract.sh"
+      ]
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [
+        "genhtml.diagnostics-and-config",
+        "genhtml.report-options",
+        "lcov.capture-and-filter"
+      ],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem",
+        "stderr",
+        "stdout"
+      ],
+      "description": "Plan support-script.unreach-pm as a source-bound support-script boundary for support: input form `unreach.pm` invocation/input boundary. Expected observable outcome dimensions are exit, stdout, stderr, and filesystem. Linked reviewed upstream public-behavior drivers provide planning identity only: tests/genhtml/errs/msgtest.sh, tests/genhtml/simple/script.sh, tests/lcov/extract/extract.sh. No Ferricov suite binding, differential evidence, or product compatibility is claimed.",
+      "evidence": [],
+      "evidence_status": "none",
+      "id": "case.acceptance.support-script.unreach-pm",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "install_manifest",
+          "line": 80,
+          "path": "Makefile",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "support_script",
+          "line": 1,
+          "path": "scripts/unreach.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [],
+      "surface": "installation",
+      "targets": [
+        {
+          "id": "support-script.unreach-pm",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": [
+        "tests/genhtml/errs/msgtest.sh",
+        "tests/genhtml/simple/script.sh",
+        "tests/lcov/extract/extract.sh"
+      ]
+    }
+  ],
+  "description": "Reviewed and unbound source-bound support-script primary plans with concrete invocation boundaries and upstream drivers where available; no product evidence. Part 1.",
+  "fragment_id": "authored.m0-support-wave1-repair-a",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

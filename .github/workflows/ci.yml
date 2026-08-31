@@ -88,6 +88,15 @@ jobs:
       - name: Install JSON Schema validator
         run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
 
+      - name: Install host Perl deps for model inspector unit tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libcapture-tiny-perl \
+            libdatetime-perl \
+            libdevel-stacktrace-perl \
+            libjson-pp-perl
+
       - name: Check generated behavior contract
         run: python3 compat/behavior/generate.py --check
 
@@ -149,10 +158,15 @@ jobs:
     name: Oracle Evidence
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      LCOV_SOURCE_ROOT: /tmp/lcov-upstream-reference
 
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Check out pinned LCOV source
+        run: git clone --depth 1 --branch v2.5 https://github.com/linux-test-project/lcov.git "$LCOV_SOURCE_ROOT"
 
       - name: Install Rust 1.85.0
         run: rustup toolchain install 1.85.0 --profile minimal --component clippy,rustfmt
@@ -164,6 +178,15 @@ jobs:
 
       - name: Install JSON Schema validator
         run: python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
+
+      - name: Install host Perl deps for model inspector unit tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            libcapture-tiny-perl \
+            libdatetime-perl \
+            libdevel-stacktrace-perl \
+            libjson-pp-perl
 
       - name: Build and verify pinned Oracle
         run: python3 compat/verify.py
@@ -182,20 +205,50 @@ jobs:
           differential::tests::docker_clean_environment_and_posixly_correct_change_behavior
           -- --exact
 
+      - name: Materialize rebuilt Oracle launchers for harness self-tests
+        run: |
+          # Historical launchers pin the original capture digest (b02cc...).
+          # CI rebuilds a content-locked image with a new layer ID and tags it
+          # as ferricov/lcov-oracle:v2.5. Harness integrity tests only need a
+          # local runnable Oracle image, so rewrite temporary launchers to that
+          # rebuilt image ID (not the historical capture digest).
+          mkdir -p /tmp/ferricov-ci-launchers
+          IMAGE_ID="$(docker image inspect --format '{{.Id}}' ferricov/lcov-oracle:v2.5)"
+          test -n "$IMAGE_ID"
+          export IMAGE_ID
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          image = os.environ["IMAGE_ID"]
+          src_dir = Path("compat/launchers")
+          dst_dir = Path("/tmp/ferricov-ci-launchers")
+          for name in ("lcov-v2.5-oracle.json", "different-oracle.json"):
+              data = json.loads((src_dir / name).read_text(encoding="utf-8"))
+              data["runtime"]["image"] = image
+              data["environment"]["image"] = image
+              (dst_dir / name).write_text(
+                  json.dumps(data, indent=2) + "\n",
+                  encoding="utf-8",
+              )
+          print(f"HARNESS_LAUNCHERS_OK image={image}")
+          PY
+
       - name: Run positive harness self-test
         run: |
           cargo +1.85.0 run --locked -p ferricov-oracle --bin differential -- \
             compat/cases/harness-self-test.json \
-            compat/launchers/lcov-v2.5-oracle.json \
-            compat/launchers/lcov-v2.5-oracle.json \
+            /tmp/ferricov-ci-launchers/lcov-v2.5-oracle.json \
+            /tmp/ferricov-ci-launchers/lcov-v2.5-oracle.json \
             /tmp/ferricov-harness-self-test
 
       - name: Run intentional reverse harness test
         run: |
           if cargo +1.85.0 run --locked -p ferricov-oracle --bin differential -- \
             compat/cases/harness-reverse-test.json \
-            compat/launchers/lcov-v2.5-oracle.json \
-            compat/launchers/different-oracle.json \
+            /tmp/ferricov-ci-launchers/lcov-v2.5-oracle.json \
+            /tmp/ferricov-ci-launchers/different-oracle.json \
             /tmp/ferricov-harness-reverse-test; then
             echo 'Reverse harness test unexpectedly passed' >&2
             exit 1

@@ -17,8 +17,14 @@ content-identified image and executable recorded in `manifest.json`.
   checks their prefixes.
 - `fixtures/numeric-boundary.info` and `fixtures/numeric/` pin the Perl numeric
   acceptance, negative/zero, malformed-field, threshold, suppression, checksum,
-  and stop-on-error boundaries used by counts. The exact cross-family atom matrix
-  required by `M1-TF-030` remains a follow-up gap.
+  and stop-on-error boundaries used by counts. The TF-030 exact cross-family atom
+  matrix required by `M1-TF-030` is retained through
+  `tf030-format-atoms-plan.json`, `tf030-fna-exact-mirror.info`,
+  `tf030-candidate-matrix.info`, and the companion numeric plans, with 15 added
+  Oracle cases and row-level semantic validators. The retained
+  `tf030-semantic-registry.json` binds all six TF-030 semantic snapshots,
+  including every numeric row and aggregate/testcase cache map, to its exact
+  SHA-256 through the tracefile contract.
 - `fixtures/bytes/` pins CRLF, no final newline, invalid UTF-8, and NUL input.
 - `fixtures/state/` pins late-TN MC/DC ownership, cross-SF MC/DC success, and
   the cross-SF return-to-line1 duplicate hard failure. Success ownership is
@@ -77,3 +83,17 @@ python3 validate.py
 and byte size. Small canonical outputs are stored the same way. Scale cases
 use summary commands, so repeated multi-megabyte canonical outputs are never
 committed.
+
+TF-030 numeric plans bind every matrix row to fixture bytes with section-local
+`record_ordinal` values among `DA`/`FNDA`/`FNA`/`BRDA` records. Validators and
+`inspect_model.pl --numeric-plan` fail closed on plan/fixture/record drift. The
+six-snapshot `tf030-semantic-registry.json` additionally fixes every row field,
+Perl/B scalar projection, stored aggregate/testcase value, and source cache
+fact; its contract-bound SHA-256 is
+`bf89058735cb801ebc46f78e37da1585f2cbe292bd63290361354563cca8e58c`.
+
+All 15 TF-030 Oracle cases pin a deterministic Perl environment via
+`environment = {PERL_HASH_SEED=0, PERL_PERTURB_KEYS=0}` on the case
+definition, Docker capture, observation, and independent registry binding.
+Non-TF-030 cases must not declare this field.
+Product compatibility evidence remains false; M1 remains blocked.

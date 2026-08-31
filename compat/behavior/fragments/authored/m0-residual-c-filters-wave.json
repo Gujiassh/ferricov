@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ferricov.dev/schema/behavior-contract-fragment.schema.json",
+  "behavior_groups": [],
+  "case_groups": [
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.filter-bitwise-conditional: config-key boundary `filter_bitwise_conditional = 1` with `lcov --filter branch,blank` on crafted C edges keeps BRDA coverpoints on the bitwise expression line, while control `filter_bitwise_conditional = 0` filters them out. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.filter-bitwise-conditional",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 112,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1156,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-bitwise-conditional",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.filter-bitwise-conditional",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.filter-blank-aggressive: config-key boundary `filter_blank_aggressive = 1` with `lcov --filter branch,blank` removes a hit comment-only (blank-after-removeComments) DA line from out.info, while control `filter_blank_aggressive = 0` retains non-zero-hit blank lines. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.filter-blank-aggressive",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 116,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1158,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-blank-aggressive",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.filter-blank-aggressive",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    },
+    {
+      "applicability": {
+        "conditions": [],
+        "status": "all_supported_environments"
+      },
+      "behavior_groups": [],
+      "case_class": "acceptance",
+      "comparison_dimensions": [
+        "exit",
+        "filesystem"
+      ],
+      "description": "Reviewed source-bound plan for lcovrc.filter-lookahead: config-key boundary `filter_lookahead = 2` with `lcov --filter branch,blank` retains BRDA coverpoints on a multi-line call start when lookahead cannot close parentheses, while control `filter_lookahead = 10` filters the bogus branch after balanced-paren analysis. Compared dimensions are exit and filesystem under exact-v1 (out.info tree delta). Planning-only; no Ferricov product evidence.",
+      "evidence": [],
+      "evidence_status": "planned",
+      "id": "case.acceptance.lcovrc.filter-lookahead",
+      "interaction_groups": [],
+      "origin": "manually_curated",
+      "review_status": "reviewed",
+      "source_references": [
+        {
+          "kind": "config_definition",
+          "line": 109,
+          "path": "lcovrc",
+          "repository": "lcov-v2.5"
+        },
+        {
+          "kind": "config_definition",
+          "line": 1155,
+          "path": "lib/lcovutil.pm",
+          "repository": "lcov-v2.5"
+        }
+      ],
+      "suite_cases": [
+        {
+          "case_id": "m0-residual-c-filters-contract-control",
+          "suite_id": "m0-residual-c-filters-contract"
+        },
+        {
+          "case_id": "m0-residual-c-filters-contract-lookahead",
+          "suite_id": "m0-residual-c-filters-contract"
+        }
+      ],
+      "surface": "config",
+      "targets": [
+        {
+          "id": "lcovrc.filter-lookahead",
+          "role": "primary"
+        }
+      ],
+      "upstream_tests": []
+    }
+  ],
+  "description": "M0 residual lane C reviewed planned plans for lcovrc filter_bitwise_conditional, filter_blank_aggressive, and filter_lookahead; product_compatibility_evidence=false.",
+  "fragment_id": "authored.m0-residual-c-filters-wave",
+  "fragment_type": "authored",
+  "interaction_groups": [],
+  "schema_version": 1,
+  "subjects": []
+}

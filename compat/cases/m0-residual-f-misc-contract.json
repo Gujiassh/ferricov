@@ -1,0 +1,313 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "check-data-consistency.lcovrc",
+        "--output-directory",
+        "report",
+        "inconsistent.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-check-data-consistency",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "demangle-cpp.lcovrc",
+        "--output-directory",
+        "report",
+        "mangled.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-demangle-cpp",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "derive-function-end-line-all-files.lcovrc",
+        "-a",
+        "nonc.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-derive-function-end-line-all-files",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "expected-message-count.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-expected-message-count",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "forget-testcase-names.lcovrc",
+        "-a",
+        "multi_tn.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-forget-testcase-names",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "info-file-pattern.lcovrc",
+        "-a",
+        "data",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported,empty"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-info-file-pattern",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "lcov-json-module.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported",
+        "--profile",
+        "/work/prof.json"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-lcov-json-module",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "select-script.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-select-script",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "split-char.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-split-char",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "suppress-function-aliases.lcovrc",
+        "--output-directory",
+        "report",
+        "aliases.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-suppress-function-aliases",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "trivial-function-threshold.lcovrc",
+        "-a",
+        "trivial_empty.info",
+        "-o",
+        "out.info",
+        "--ignore-errors",
+        "source,unsupported"
+      ],
+      "command": "lcov",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-residual-f-misc-contract",
+      "id": "m0-residual-f-misc-contract-trivial-function-threshold",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-residual-f-misc-contract"
+}

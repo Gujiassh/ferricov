@@ -1,0 +1,312 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 2226,
+        "name": "doc.log",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/doc.log",
+        "sha256": "6cdf2032487927db0e185a61ff11909412c8f37ed97cb01062b4f111e84b97ad"
+      },
+      {
+        "bytes": 91,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/cleanup.log",
+        "sha256": "4f50cb4eea17217ad7038d685850cf9b161a648196b139cb6ccc6612b5d90df4"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 106,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/observed-argv.json",
+        "sha256": "99e01ffaabc29b9dab4e2784d90ce569a0107b59304590e4626b6cbcc1acc87e"
+      },
+      {
+        "bytes": 316,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/observed-children.json",
+        "sha256": "94351781c5d31e69f4f1b2a22c8cea4b7704f20bfff635ea034815eb7ba7a410"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 242,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/status.env",
+        "sha256": "654c6aed9436fe01b73d12d1791c62d2d32d4f6a22f513c25d279eb7727dbe87"
+      },
+      {
+        "bytes": 190,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-PARTIAL-001/run-meta.env",
+        "sha256": "8e78366ead726dd176744db1dbd4790d7ed07bce522a3a140555b335731cd089"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 3588,
+      "path": "compat/installation/wave2/cases/INST-PARTIAL-001/stderr.bin",
+      "sha256": "e24a0f470fb8d5f9556632143a7b2700280b573979afad5c3da14689ef73773b"
+    },
+    "stdout_bin": {
+      "bytes": 3142,
+      "path": "compat/installation/wave2/cases/INST-PARTIAL-001/stdout.bin",
+      "sha256": "dc8e9504d8e2a4a3681c867b4c49f4280ab4111a879259c566fb83aa7164977e"
+    }
+  },
+  "case_id": "INST-PARTIAL-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 7,
+    "file_count": 18,
+    "paths_sha256": "d1dec26423b316e209de114dfc186a8e16a1267fb6714bee1ea8844d97aca1b8",
+    "root": "/tmp/partial",
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin"
+      },
+      {
+        "identity": "f47a0f6ee3a91b3cfeff72dfcfc4f8df4cdee5f570f51f1184c61e3096abd59e",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/gendesc"
+      },
+      {
+        "identity": "8ef84c95ce3970f6ba4743e81dd91e4dacca71266478801982179362204b2b6a",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/genhtml"
+      },
+      {
+        "identity": "e879e813a4d5016fbcd0f1c3b0034be14d944c435b340ca6d4956bed8e9352c8",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/geninfo"
+      },
+      {
+        "identity": "13f1fc69aabe993244cc559b26c0c9d2501ecb0ce0c8262a9b502b693d807c8c",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/genpng"
+      },
+      {
+        "identity": "d99e675e9a076eea47b7861ccb6fa148aba08da8ed1718c002c40ec554c07252",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/lcov"
+      },
+      {
+        "identity": "79bc64fe17ce38989358fef49e1ca75c726f20bbd8c0552db8662c4f7d48d654",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/llvm2lcov"
+      },
+      {
+        "identity": "f8448ef0bb4befed9aadca178d4cf52a719dae5ab5ab241be1a5167e230a666b",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/perl2lcov"
+      },
+      {
+        "identity": "3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/py2lcov"
+      },
+      {
+        "identity": "8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/xml2lcov"
+      },
+      {
+        "identity": "70d7fb5dccc63b7369416ddb46be5c7bae86ff1a46018e78b3ddab1c0550cac9",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/bin/xml2lcovutil.py"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov"
+      },
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts"
+      },
+      {
+        "identity": "c1eefd2fa37f3fec876219f9a2faaa3cf03b0d1f6fb0f33762c0968a9b72b163",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/P4version.pm"
+      },
+      {
+        "identity": "288cbb56fbdfaa18d396f5a72866e93e714a21ce0aa0a38c1805c7435a7afb42",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/analyzeInfoFiles"
+      },
+      {
+        "identity": "b8ffbf03e4b56eb3c36f244053731c4fc24e2faaa8cc6c9920430f95fe9953fe",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/annotateutil.pm"
+      },
+      {
+        "identity": "298a92ada1f2613d8921622460fb428e638864963fbc3696cd3cf9946120fcbe",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/batchGitVersion.pm"
+      },
+      {
+        "identity": "2eb2d385cf63846bfdd3ec5f9b514cefe0ab86619a8d6844fd4a5fc094e9614c",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/context.pm"
+      },
+      {
+        "identity": "467222d83146dc2f0255339c9308fa9d044b4b6d815145b98e4bd0a71f3c28b5",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/criteria"
+      },
+      {
+        "identity": "b82a006a9875b9d1096ae4b968bd33968fced60cf6960a48000973f20989960f",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/criteria.pm"
+      },
+      {
+        "identity": "b6bf91a18d2b11a7976ffdc31b74aa7d32e1a5451a834e60d8dfd83f06e82e81",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/partial/usr/local/share/lcov/support-scripts/get_signature"
+      }
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
+    "docker_runtime": "29.1.3",
+    "executable_path": "/usr/bin/make",
+    "executable_sha256": "00b2c2071bf57aa52559a91bf8a4ddcd0fcfd4718da2f83100593a45896c1fec",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "make",
+      "install",
+      "DESTDIR=/tmp/partial",
+      "PREFIX=/usr/local",
+      "INSTALL=/tmp/fake-install"
+    ],
+    "cleanup": [
+      "removed:/tmp/partial",
+      "removed:/tmp/src",
+      "removed:/tmp/fake-install",
+      "removed:/tmp/install-count"
+    ],
+    "fixture_setup": [
+      "build docs",
+      "install fake install wrapper that fails after count>20"
+    ],
+    "timeout_seconds": 600,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "0e352b30a9ac3e6129e7532af09f846c8ef37bf2b0e31cc5d640db00e7bb0dca",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "argv": [
+          "make",
+          "install",
+          "DESTDIR=/tmp/partial",
+          "PREFIX=/usr/local",
+          "INSTALL=/tmp/fake-install"
+        ],
+        "command": "make install DESTDIR=/tmp/partial PREFIX=/usr/local INSTALL=/tmp/fake-install",
+        "exit_status": 2,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
+    "exit_status": 2,
+    "host_observer_code": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

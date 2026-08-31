@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import hashlib
 import json
 import os
@@ -15,124 +16,368 @@ from pathlib import Path, PurePosixPath
 from jsonschema import Draft202012Validator
 
 
-EXPECTED_COMMANDS = {
-    "lcov": 77,
-    "genhtml": 95,
-    "geninfo": 60,
-    "genpng": 6,
-    "gendesc": 3,
-    "perl2lcov": 46,
-    "py2lcov": 12,
-    "xml2lcov": 8,
-    "xml2lcovutil.py": 0,
-    "llvm2lcov": 46,
-}
+PIN_PATH = Path(__file__).resolve().parent / "inventory" / "expected-pins.v2.5.json"
+STATUS_SNAPSHOT_PATH = (
+    Path(__file__).resolve().parents[1] / "docs" / "ssot" / "m0-status.snapshot.json"
+)
+OPERATIONAL_STATUS_DOCUMENTS = (
+    Path("docs/ssot/project.md"),
+    Path("docs/ssot/compatibility-contract.md"),
+    Path("docs/ssot/m0-status.snapshot.json"),
+    Path("specs/001-full-lcov-compatibility/tasks.md"),
+    Path("specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md"),
+    Path("specs/001-full-lcov-compatibility/plan.md"),
+)
 
+
+def load_inventory_pins(path: Path = PIN_PATH) -> dict[str, object]:
+    document = json.loads(path.read_text(encoding="utf-8"))
+    required = {
+        "schema_version",
+        "commands",
+        "policy_families",
+        "positionals",
+        "generated_token_names",
+        "unique_abbreviation_targets",
+        "ambiguous_generated_tokens",
+        "policy_source_paths",
+    }
+    missing = sorted(required - set(document))
+    if missing:
+        raise RuntimeError(f"inventory pin file missing fields: {missing}")
+    if document.get("schema_version") != 1:
+        raise RuntimeError(
+            f"unsupported inventory pin schema_version: {document.get('schema_version')}"
+        )
+    return document
+
+
+_PINS = load_inventory_pins()
+EXPECTED_COMMANDS = {str(k): int(v) for k, v in _PINS["commands"].items()}
 EXPECTED_POLICY_FAMILIES = {
-    "lcov": "shared_getopt_long",
-    "genhtml": "shared_getopt_long",
-    "geninfo": "shared_getopt_long",
-    "genpng": "direct_getopt_long",
-    "gendesc": "direct_getopt_long",
-    "perl2lcov": "shared_getopt_long",
-    "py2lcov": "argparse",
-    "xml2lcov": "argparse",
-    "xml2lcovutil.py": "none",
-    "llvm2lcov": "shared_getopt_long",
+    str(k): str(v) for k, v in _PINS["policy_families"].items()
 }
-
 EXPECTED_POSITIONALS = {
-    "lcov": ["operation_operands"],
-    "genhtml": ["tracefile_pattern"],
-    "geninfo": ["directory"],
-    "genpng": ["sourcefile"],
-    "gendesc": ["inputfile"],
-    "perl2lcov": ["cover_db"],
-    "py2lcov": ["inputs"],
-    "xml2lcov": ["inputs"],
-    "xml2lcovutil.py": [],
-    "llvm2lcov": ["json_file"],
+    str(k): [str(item) for item in v] for k, v in _PINS["positionals"].items()
 }
-
 EXPECTED_GENERATED_TOKEN_NAMES = {
-    "lcov": (
-        "--annotate-script",
-        "--build-dir",
-        "--coverage",
-        "--diff",
-        "--diff-file",
-        "--history",
-        "--output-filename",
-        "--path",
-        "--substitution",
-    ),
-    "genhtml": (
-        "--add-tracefile",
-        "--baseline-file-pattern",
-        "--capture",
-        "--compare",
-        "--diff",
-        "--erase-function",
-        "--fail",
-        "--highlight",
-        "--line",
-        "--no-source",
-        "--show-proportions",
-        "--sort",
-    ),
-    "geninfo": (
-        "--add-tracefile",
-        "--annotate-script",
-        "--capture",
-        "--coverage",
-        "--directory",
-        "--mcdc",
-        "--show-proportions",
-    ),
-    "perl2lcov": ("--ignore-error",),
-    "py2lcov": (
-        "--append",
-        "--baseline-file",
-        "--branch",
-        "--data-file",
-        "--filter",
-    ),
-    "llvm2lcov": (
-        "--capture",
-        "--coverage",
-        "--gcov-tool",
-        "--ignore-error",
-        "--output",
-        "--sparse",
-        "--testname",
-    ),
+    str(command): tuple(str(token) for token in tokens)
+    for command, tokens in _PINS["generated_token_names"].items()
 }
-
 EXPECTED_UNIQUE_ABBREVIATION_TARGETS = {
-    "command.lcov.option.build-dir": "command.lcov.option.build-directory",
-    "command.lcov.option.history": "command.lcov.option.history-script",
-    "command.genhtml.option.diff": "command.genhtml.option.diff-file",
-    "command.genhtml.option.erase-function": "command.genhtml.option.erase-functions",
-    "command.genhtml.option.no-source": "command.genhtml.option.no-sourceview",
-    "command.geninfo.option.mcdc": "command.geninfo.option.mcdc-coverage",
-    "command.perl2lcov.option.ignore-error": "command.perl2lcov.option.ignore-errors",
-    "command.llvm2lcov.option.ignore-error": "command.llvm2lcov.option.ignore-errors",
-    "command.llvm2lcov.option.output": "command.llvm2lcov.option.output-filename",
+    str(k): str(v) for k, v in _PINS["unique_abbreviation_targets"].items()
 }
-
 EXPECTED_AMBIGUOUS_GENERATED_TOKENS = {
-    "command.genhtml.option.fail",
-    "command.genhtml.option.sort",
+    str(item) for item in _PINS["ambiguous_generated_tokens"]
+}
+EXPECTED_POLICY_SOURCE_PATHS = {
+    str(command): {str(path) for path in paths}
+    for command, paths in _PINS["policy_source_paths"].items()
 }
 
-EXPECTED_POLICY_SOURCE_PATHS = {
-    command: (
-        {f"bin/{command}", "lib/lcovutil.pm"}
-        if family == "shared_getopt_long"
-        else {f"bin/{command}"}
+
+def build_m0_status_snapshot(root: Path) -> dict[str, object]:
+    behavior = json.loads(
+        (root / "compat/behavior/contract.json").read_text(encoding="utf-8")
     )
-    for command, family in EXPECTED_POLICY_FAMILIES.items()
-}
+    bindings = json.loads(
+        (root / "compat/behavior/plan-bindings.json").read_text(encoding="utf-8")
+    )
+    diagnostics = json.loads(
+        (root / "compat/diagnostics/v2.5.json").read_text(encoding="utf-8")
+    )
+    model = json.loads((root / "compat/model/v2.5.json").read_text(encoding="utf-8"))
+    totals = behavior["totals"]
+    planned = set(diagnostics.get("planned_case_ids") or [])
+    bound: set[str] = set()
+    for observation in diagnostics.get("oracle_observations") or []:
+        for case_id in observation.get("planned_case_ids") or []:
+            bound.add(str(case_id))
+    unbound = sorted(planned - bound)
+
+    product_evidence_paths = [
+        "compat/environment/v2.5.json",
+        "compat/tracefile/v2.5.json",
+        "compat/diagnostics/v2.5.json",
+        "compat/installation/v2.5.json",
+        "compat/resources/v2.5.json",
+        "compat/model/v2.5.json",
+        "compat/fixtures/m0-cli-contract/oracle-baseline-status.json",
+    ]
+    product_flags: dict[str, bool] = {}
+    for rel in product_evidence_paths:
+        document = json.loads((root / rel).read_text(encoding="utf-8"))
+        if "product_compatibility_evidence" in document:
+            product_flags[rel] = bool(document["product_compatibility_evidence"])
+            continue
+        found: list[bool] = []
+
+        def walk(node: object) -> None:
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    if key == "product_compatibility_evidence":
+                        found.append(bool(value))
+                    else:
+                        walk(value)
+            elif isinstance(node, list):
+                for item in node:
+                    walk(item)
+
+        walk(document)
+        product_flags[rel] = any(found)
+
+    any_product = any(product_flags.values())
+    blockers: list[dict[str, object]] = [
+        {
+            "id": "behavior_primary_gaps",
+            "kind": "m0_residual",
+            "count": totals["uncovered_public_entries"],
+            "detail": "Unreviewed primary public-entry case groups remain in the behavior contract.",
+        },
+        {
+            "id": "M1-MD-020",
+            "kind": "decision_blocker",
+            "detail": "Coverage-model decision remains blocked in compat/model/v2.5.json.",
+        },
+        {
+            "id": "M1-TF-063",
+            "kind": "decision_blocker",
+            "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
+        },
+        {
+            "id": "M1-TF-064",
+            "kind": "decision_blocker",
+            "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
+        },
+        {
+            "id": "diagnostics_unbound_planned_cases",
+            "kind": "m0_residual",
+            "count": len(unbound),
+            "ids": unbound,
+            "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
+        },
+        {
+            "id": "product_compatibility_evidence_false",
+            "kind": "gate",
+            "detail": "No domain contract currently sets product_compatibility_evidence true.",
+        },
+    ]
+    go_no_go = root / "specs/001-full-lcov-compatibility/m0-go-no-go.md"
+    support_matrix = root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
+    m1_authorized = False
+    if not go_no_go.is_file():
+        blockers.append(
+            {
+                "id": "m0_exit_review_missing",
+                "kind": "process",
+                "detail": (
+                    "M0 go/no-go review artifact required before M1 activation "
+                    "(expected specs/001-full-lcov-compatibility/m0-go-no-go.md)."
+                ),
+            }
+        )
+    else:
+        go_text = go_no_go.read_text(encoding="utf-8")
+        # Prefer the controller signature line.
+        has_go = "**Result: GO**" in go_text
+        has_no_go = "**Result: NO-GO" in go_text and not has_go
+        if has_no_go:
+            blockers.append(
+                {
+                    "id": "m0_exit_review_no_go",
+                    "kind": "process",
+                    "detail": (
+                        "M0 go/no-go artifact records NO-GO for M1 activation; "
+                        "see specs/001-full-lcov-compatibility/m0-go-no-go.md."
+                    ),
+                }
+            )
+        elif has_go:
+            if not support_matrix.is_file():
+                blockers.append(
+                    {
+                        "id": "m1_support_matrix_missing",
+                        "kind": "process",
+                        "detail": (
+                            "Conditional GO requires "
+                            "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md."
+                        ),
+                    }
+                )
+            else:
+                matrix_text = support_matrix.read_text(encoding="utf-8")
+                if "Status: **ACTIVE**" not in matrix_text:
+                    blockers.append(
+                        {
+                            "id": "m1_support_matrix_inactive",
+                            "kind": "process",
+                            "detail": (
+                                "m1-v0.1-support-matrix.md exists but is not ACTIVE."
+                            ),
+                        }
+                    )
+                elif any_product:
+                    blockers.append(
+                        {
+                            "id": "product_compatibility_evidence_blocks_conditional_go",
+                            "kind": "gate",
+                            "detail": (
+                                "Conditional GO forbids product_compatibility_evidence=true "
+                                "until CORE-010 parity evidence is reviewed."
+                            ),
+                        }
+                    )
+                else:
+                    m1_authorized = True
+                    # Keep residual/model blockers visible, but mark them as
+                    # matrix-excluded deferred work rather than hard process stops.
+                    for blocker in blockers:
+                        if blocker.get("id") in {
+                            "behavior_primary_gaps",
+                            "diagnostics_unbound_planned_cases",
+                            "M1-MD-020",
+                            "M1-TF-063",
+                            "M1-TF-064",
+                        }:
+                            blocker["activation_treatment"] = "excluded_by_m1_v0_1_support_matrix"
+                            blocker["blocks_m1_core_001_008"] = False
+                        if blocker.get("id") == "product_compatibility_evidence_false":
+                            blocker["activation_treatment"] = "required_false_under_conditional_go"
+                            blocker["blocks_m1_core_001_008"] = False
+        else:
+            blockers.append(
+                {
+                    "id": "m0_exit_review_undecided",
+                    "kind": "process",
+                    "detail": (
+                        "M0 go/no-go artifact lacks a Result: GO or Result: NO-GO signature."
+                    ),
+                }
+            )
+    return {
+        "schema_version": 1,
+        "kind": "m0_status_snapshot",
+        "upstream_release": "v2.5",
+        "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+        "canonical_worktree": "/home/cc/code1/ferricov",
+        "sources": {
+            "behavior_contract": "compat/behavior/contract.json",
+            "plan_bindings": "compat/behavior/plan-bindings.json",
+            "diagnostics_contract": "compat/diagnostics/v2.5.json",
+            "model_contract": "compat/model/v2.5.json",
+            "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
+            "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
+            "m1_v0_1_support_matrix": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
+        },
+        "behavior": {
+            "public_inventory_entries": totals["public_inventory_entries"],
+            "primary_case_coverage": totals["primary_case_coverage"],
+            "reviewed_primary_coverage": totals["reviewed_primary_coverage"],
+            "uncovered_public_entries": totals["uncovered_public_entries"],
+            "case_groups_reviewed": totals["case_review_status"]["reviewed"],
+            "case_groups_unreviewed": totals["case_review_status"]["unreviewed"],
+            "required_interaction_domains": totals["required_interaction_domains"],
+            "reviewed_interaction_domains": totals["reviewed_interaction_domains"],
+            "fixed_source_interaction_projections": bindings["totals"]["primary_plans"],
+            "critical_interactions": bindings["totals"]["critical_interactions"],
+        },
+        "diagnostics": {
+            "planned_cases": diagnostics["totals"]["planned_cases"],
+            "exact_bound_planned_cases": len(planned & bound),
+            "unbound_planned_cases": len(unbound),
+            "unbound_planned_case_ids": unbound,
+            "oracle_observations": diagnostics["totals"]["oracle_observations"],
+        },
+        "product_compatibility_evidence": False if not any_product else True,
+        "product_compatibility_evidence_by_source": product_flags,
+        "m1_authorized": m1_authorized,
+        "m1_activation_blockers": blockers,
+        "model_blocked_case_ids": list(model.get("blocked_case_ids") or []),
+    }
+
+
+def validate_m0_status_snapshot(root: Path) -> None:
+    expected = build_m0_status_snapshot(root)
+    # Fail closed if any product evidence is true while snapshot claims false.
+    if expected["product_compatibility_evidence"] is True:
+        raise RuntimeError(
+            "product_compatibility_evidence is true in one or more domain contracts; "
+            "update the status snapshot generation rules before claiming M0 hygiene"
+        )
+    if expected["m1_authorized"] not in (False, True):
+        raise RuntimeError("m1_authorized must be a boolean")
+    if expected["m1_authorized"] is True and expected["product_compatibility_evidence"] is True:
+        raise RuntimeError(
+            "conditional M1 authorization forbids product_compatibility_evidence=true"
+        )
+
+    snapshot_path = root / "docs/ssot/m0-status.snapshot.json"
+    committed = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    # Compare canonical JSON to avoid key-order noise after sort_keys generation.
+    expected_text = json.dumps(expected, indent=2, sort_keys=True) + "\n"
+    committed_text = json.dumps(committed, indent=2, sort_keys=True) + "\n"
+    if committed_text != expected_text:
+        raise RuntimeError(
+            "docs/ssot/m0-status.snapshot.json is out of date with live contracts; "
+            "run: python3 compat/status/generate_m0_status.py"
+        )
+
+    behavior = expected["behavior"]
+    reviewed = behavior["reviewed_primary_coverage"]
+    gaps = behavior["uncovered_public_entries"]
+    projections = behavior["fixed_source_interaction_projections"]
+    public_entries = behavior["public_inventory_entries"]
+
+    # Operational docs must not present a conflicting residual triple.
+    # Historical review files under reviews/ are excluded.
+    stale_patterns = [
+        (
+            re.compile(r"440\s+substantive\s+reviewed\s+primary"),
+            "stale reviewed-primary count 440",
+        ),
+        (
+            re.compile(r"91\s+explicit\s+M0\s+gaps"),
+            "stale M0 gap count 91",
+        ),
+        (
+            re.compile(r"442\s+fixed\s+source\s+and\s+interaction\s+projections"),
+            "stale projection count 442",
+        ),
+        (
+            re.compile(r"with\s+91\s+behavior-planning\s+gaps"),
+            "stale M1 handoff gap count 91",
+        ),
+    ]
+    for rel in OPERATIONAL_STATUS_DOCUMENTS:
+        path = root / rel
+        text = path.read_text(encoding="utf-8")
+        for pattern, label in stale_patterns:
+            if pattern.search(text):
+                raise RuntimeError(f"{rel}: {label}; live totals are reviewed={reviewed} gaps={gaps} projections={projections}")
+
+        # If a document quotes the live residual numbers, require exact current triple.
+        if "reviewed primary" in text.lower() or "m0 gaps remain" in text.lower() or "behavior-planning gaps" in text.lower():
+            # Accept either the live numbers or an explicit pointer to the snapshot.
+            has_live = (
+                str(reviewed) in text
+                and str(gaps) in text
+                and str(public_entries) in text
+            )
+            has_pointer = "m0-status.snapshot.json" in text
+            if not (has_live or has_pointer):
+                raise RuntimeError(
+                    f"{rel}: operational status prose must cite docs/ssot/m0-status.snapshot.json "
+                    f"or include live residual metrics public={public_entries} reviewed={reviewed} gaps={gaps}"
+                )
+
+    print(
+        "M0_STATUS_OK "
+        f"public={public_entries} reviewed_primary={reviewed} gaps={gaps} "
+        f"projections={projections} m1_authorized={str(expected['m1_authorized']).lower()} "
+        f"product_compatibility_evidence=false"
+    )
+
+
 
 
 def validate_documents(schema_path: Path, documents: list[Path]) -> None:
@@ -757,6 +1002,44 @@ def run(
     subprocess.run(command, cwd=cwd, env=environment, check=True)
 
 
+def resolve_upstream_root(root: Path, *, allow_clone: bool) -> Path:
+    """Return a usable LCOV v2.5 source tree for fixture byte-pin checks.
+
+    Prefer an explicit LCOV_SOURCE_ROOT, then the sibling workspace checkout,
+    then (when Oracle work is enabled) a temporary shallow clone of v2.5.
+    """
+    candidates: list[Path] = []
+    env_root = os.environ.get("LCOV_SOURCE_ROOT")
+    if env_root:
+        candidates.append(Path(env_root))
+    candidates.append(root.parent / "lcov-upstream-reference")
+    for candidate in candidates:
+        marker = candidate / "tests/lcov/format/format.info"
+        if marker.is_file():
+            return candidate.resolve()
+    if not allow_clone:
+        raise RuntimeError(
+            "missing pinned LCOV upstream tree; set LCOV_SOURCE_ROOT to a v2.5 "
+            "checkout containing tests/lcov/format/format.info"
+        )
+    directory = Path(tempfile.mkdtemp(prefix="ferricov-upstream-"))
+    subprocess.run(
+        [
+            "git",
+            "clone",
+            "--branch",
+            "v2.5",
+            "--depth",
+            "1",
+            "https://github.com/linux-test-project/lcov.git",
+            str(directory),
+        ],
+        check=True,
+    )
+    return directory.resolve()
+
+
+
 def oracle_build_environment(
     base: dict[str, str], upstream_root: Path, manifest_path: Path
 ) -> dict[str, str]:
@@ -809,12 +1092,24 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
+    # Fixture pin checks (TF-030 format-atoms) need the pinned upstream tree
+    # before any Oracle image build. Resolve early so hosted CI Oracle Evidence
+    # does not depend on a sibling workspace checkout.
+    upstream_root_for_fixtures = resolve_upstream_root(
+        root, allow_clone=not args.skip_oracle
+    )
+    os.environ["LCOV_SOURCE_ROOT"] = str(upstream_root_for_fixtures)
+    fixture_env = dict(os.environ)
     run(
         [sys.executable, str(root / "compat/cases/m0-cli-contract.py")],
         root,
     )
     run(
         [sys.executable, str(root / "compat/cases/m0_config_contract.py")],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/cases/m0_genhtml_cli_residual_contract.py")],
         root,
     )
     run(
@@ -826,6 +1121,7 @@ def main() -> int:
         [root / "compat/inventory/v2.5.json"],
     )
     validate_inventory_semantics(root / "compat/inventory/v2.5.json")
+    validate_m0_status_snapshot(root)
     validate_documents(
         root / "compat/schema/environment-contract.schema.json",
         [root / "compat/environment/v2.5.json"],
@@ -849,6 +1145,10 @@ def main() -> int:
     validate_documents(
         root / "compat/schema/resource-result.schema.json",
         [root / "compat/resources/results/oracle-x86_64-linux-20260729/result.json"],
+    )
+    validate_documents(
+        root / "compat/schema/model-contract.schema.json",
+        [root / "compat/model/v2.5.json"],
     )
     validate_documents(
         root / "compat/schema/upstream-test-map.schema.json",
@@ -879,6 +1179,7 @@ def main() -> int:
     run(
         [sys.executable, str(root / "compat/fixtures/m0-tracefiles/validate.py")],
         root,
+        environment=fixture_env,
     )
     run(
         [
@@ -888,6 +1189,7 @@ def main() -> int:
             str(root / "compat/fixtures/m0-tracefiles/test_validate.py"),
         ],
         root,
+        environment=fixture_env,
     )
     run(
         [sys.executable, str(root / "compat/resources/contract.py")],
@@ -899,6 +1201,32 @@ def main() -> int:
             str(root / "compat/resources/validate.py"),
             "--result",
             str(root / "compat/resources/results/oracle-x86_64-linux-20260729/result.json"),
+        ],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/model/contract.py")],
+        root,
+    )
+    run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            str(root / "compat/model/test_contract.py"),
+        ],
+        root,
+    )
+    run(
+        [sys.executable, str(root / "compat/fixtures/m0-algebra/validate.py")],
+        root,
+    )
+    run(
+        [
+            sys.executable,
+            "-m",
+            "unittest",
+            str(root / "compat/fixtures/m0-algebra/test_validate.py"),
         ],
         root,
     )

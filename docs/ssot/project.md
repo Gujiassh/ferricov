@@ -67,9 +67,12 @@ the M0 harness become the permanent integration boundary.
 
 ## Sources Of Truth
 
+- live M0 residual status: `m0-status.snapshot.json` (generated from contracts;
+  regenerate with `python3 compat/status/generate_m0_status.py`)
 - compatibility definition: `compatibility-contract.md`
 - performance gates: `performance-contract.md`
 - requirements and acceptance: `specs/001-full-lcov-compatibility/`
+- M1 implementation handoff: `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`
 - upstream behavior: pinned LCOV executable and its fixtures
 - implementation status: generated compatibility inventory and evidence
 
@@ -96,26 +99,32 @@ the M0 harness become the permanent integration boundary.
   inventory schema remains unchanged.
 - `compat/tracefile/v2.5.json` separately records 20 known record tags, two
   lexical rules, all 15 reader matcher lines, all 18 canonical writer
-  emission lines, 88 fixtures, 21 per-record malformed inputs, and 169 retained
-  Oracle observations, including VER, state-ownership, function, branch,
-  numeric/error/checksum probes, and 17 semantic snapshots. Exact structured
-  mappings cover `M1-TF-007`/`M1-TF-009`/`M1-TF-011`/`M1-TF-013`/`M1-TF-021`/`M1-TF-022`/`M1-TF-024`/`M1-TF-025`/`M1-TF-026`
-  and `M1-TF-031` through `M1-TF-036`. `M1-TF-030` remains blocked because
-  the current numeric corpus lacks its required cross-family exact atom matrix.
-  Product compatibility evidence remains false; all observations remain
-  reference-only and M1 implementation remains unauthorized.
+  emission lines, 140 fixtures, 21 per-record malformed inputs, and 279
+  retained Oracle observations. Reader/framing/state and
+  writer/converter mappings include 26 exact legacy/writer cases for
+  `M1-TF-010`, `M1-TF-041..045`, `M1-TF-046`, `M1-TF-050..052`, `M1-TF-060`,
+  and `M1-TF-061`; the four-member TF-045 two-write Docker group is now bound.
+  `M1-TF-063` and `M1-TF-064` remain blocked, product compatibility evidence
+  remains false, and M1 implementation remains unauthorized.
 - `compat/diagnostics/v2.5.json` separately records all 32 ordered shared
   message classes, the complete 399-reference symbol closure, nine control
-  rules, four unclassified failure surfaces, ten command exit policies, and 112
-  retained Oracle references. All 71 diagnostic/parallel case IDs remain
-  planned and product evidence remains empty.
+  rules, four unclassified surfaces, ten command exit policies, and 206
+  retained Oracle observations. Twenty-six wave1 and 32 wave2 cases retain
+  full capture provenance; two legacy unknown-function failures extend the
+  fatal set without changing the prior 204 observations. Sixty-eight of 71
+  diagnostic/parallel identities have exact bindings (wave1+wave2+wave3); the
+  residual unbound floor is the three `*-FERRICOV-001` parity IDs, and product
+  evidence remains empty.
 - `compat/installation/v2.5.json` separately binds the complete 321-entry
   installed tree to nine exhaustive payload groups and 15 pinned source
-  closures. Paths, file SHA-256 identities, and the legacy man symlink fail
-  closed. Thirteen installation cases remain planned. Four retained report
-  samples bind their output trees through sample metadata and contain the same
-  seven runtime assets, but all observations remain reference-only and product
-  evidence remains empty.
+  closures. Paths, file SHA-256 identities, the legacy man symlink, and the
+  13 case-record ID/facts schema bind fail closed. Wave2 adds replayable
+  pinned-Docker Oracle-reference envelopes for all 13 cases, both relative and
+  space PATH parts, complete tree rows, live executable/argv/cwd/wait facts,
+  clean env, timeout/signal/cleanup, and two runner qualifications. The
+  57-entry directory/mode companion is retained separately. All cases remain
+  planned with product evidence empty; this does not authorize an installer
+  implementation.
 - `compat/resources/v2.5.json` defines 13 controlled scale profiles for the
   immutable Oracle. It binds exact source-scoped input shape, branch/MC/DC
   summary semantics and stream hashes, six harness/schema artifacts, raw
@@ -133,16 +142,38 @@ the M0 harness become the permanent integration boundary.
   validates the 13 ordered samples-only trees without emitting retained
   evidence.
 - `compat/behavior/contract.json` creates a primary plan for every one of the
-  531 public inventory entries. One hundred seven primary plans and all four
-  required critical interaction domains are reviewed. The callback,
-  error-control, option-config, and option-option groups have explicit members
-  and reciprocal planning cases; 424 public primary reviews remain open. The
-  latest 17 source-bound `lcovrc` configuration plans remain planning-only with
-  no suite or product evidence.
+  531 public inventory entries. Live residual metrics (reviewed primary
+  coverage, fixed source/interaction projections, and explicit M0 gaps) are
+  owned by `docs/ssot/m0-status.snapshot.json` and must match
+  `compat/behavior/contract.json` totals. The M1 Tracefile Core handoff is
+  now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
+  and conditional GO is active: `m0-go-no-go.md` **Result: GO** plus
+  `m1-v0.1-support-matrix.md` authorize `M1-CORE-001`…`M1-CORE-008` with
+  `m1_authorized=true` and `product_compatibility_evidence=false`. Residual
+  signed-N/A gaps, diagnostics FERRICOV parity IDs, and
+  `M1-MD-020`/`M1-TF-063`/`M1-TF-064` remain open exclusions (not closed;
+  scoped in
+  `specs/001-full-lcov-compatibility/reviews/m0-model-blocker-scope.md`). The support-script planning suite
+  covers `analyzeInfoFiles`, `annotateutil.pm`, and `get_signature`; command
+  suites cover the former `gendesc`, `py2lcov`, `genpng`, `llvm2lcov`, and
+  `perl2lcov` residuals, five trace-operation `lcov` cases, two `lcovrc`
+  list-format cases, six command-owned `genhtml` CLI-output cases, three
+  command-owned `genhtml` CLI-summary cases, three command-owned `genhtml` CLI-context cases, three command-owned `genhtml` CLI-metadata cases, and thirty deterministic `genhtml` output/layout-config,
+  metric-config, and report/differential cases. The report wave pins
+  `SOURCE_DATE_EPOCH`, Perl hash seeds, and an explicit baseline date in its
+  dedicated launcher pair; all argv is executable on the pinned Oracle. Product
+  evidence remains empty and no compatibility claim is made.
+- `compat/model/v2.5.json` and `compat/model/m1-model.json` provide an
+  Oracle-only coverage-model algebra contract with 157 cases across 27
+  fixtures, binding rows `M1-MD-010..014`, `M1-MD-017`, and `M1-MD-019` through
+  sealed independent observation facts. `M1-MD-020`, `M1-TF-063`, and
+  `M1-TF-064` remain blocked in contract (matrix exclusion C). Conditional GO
+  authorizes Rust model/parser work for CORE-001…008 only; CORE-009/011 stay gated.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
-- ADR 0003 separates Oracle, compiler capture, and release platform matrices.
-  The Oracle lane now has a two-build no-cache reproducibility check, locked
+- ADR 0003 is accepted and separates Oracle, compiler capture, and release
+  platform matrices. The Oracle lane has a two-build no-cache reproducibility
+  check, locked
   package and installed-tree closures, and a runtime-validated execution
   manifest. The portable verifier binds all post-build probes to the immutable
   image ID in that run's manifest; the `v2.5` tag is only a convenience alias.
@@ -176,15 +207,57 @@ the M0 harness become the permanent integration boundary.
   shared Getopt primary entries already exercised by the retained M0 contract.
   They bind 154 exact suite cases but remain `evidence_status=planned` with no
   product evidence until a distinct Ferricov candidate executes them.
-- The authored configuration fragment adds eight config-semantic planning
+- The authored configuration fragment adds eight base config-semantic planning
   slices with 67 exact suite bindings and reviews six additional public primary
-  targets. Exit, branch-summary, and diagnostic expectations are validated
-  against raw Oracle artifacts, but all product evidence remains empty.
+  targets. The `lcovrc` consumer waves add 32 planning-only primary plans: two
+  list-format plans, eight `genhtml` output plans, eleven `genhtml` layout plans,
+  nine metric/threshold and field-width plans, and two report/differential plans
+  for function alias merging and differential source context. Owner and age field widths
+  remain deferred pending annotation/date inputs. Exit, branch-summary, diagnostic, and fixed-epoch report expectations
+  are Oracle-reference facts; all product evidence remains empty.
 - The authored tracefile CLI fragment reviews the four primary targets for
   `lcov` add-tracefile, output-file, no-function-coverage, and mcdc-coverage.
   It is limited to exact retained argv, zero-exit, named-output, output-hash,
   and reviewed upstream planning references. All four cases remain
   `evidence_status=none` with empty evidence and suite arrays; related
   diagnostic recovery observations remain reference-only.
+- The `m0-genhtml-cli-output-contract` suite binds six command-owned option
+  plans to a shared `control.lcovrc` invocation plus one direct-option target
+  each. Its pinned reference runs all exit 0 with 337-byte stdout and empty
+  stderr; output trees differ per target, with 27 files for gzip and 26 for
+  the other cases. The reverse harness exits 23 in every case. These are
+  reference/output planning facts only; no Ferricov candidate evidence exists.
+- The `m0-genhtml-cli-metric-layout-contract` suite binds three command-owned
+  options (`--frames`, `--precision 4`, and `--no-sort`) to a shared metric
+  trace/config control and one direct-option target each. Two clean pinned
+  Oracle runs agree on the reference facts; the reverse harness exits 23.
+  These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-report-contract` suite binds three command-owned options
+  (`--footer CLI Footer`, `--no-checksum`, and `--no-html`) to a shared
+  `control.lcovrc` invocation and one direct-option target each. Two clean pinned
+  Oracle runs agree on exact reference/output characterization; the reverse
+  harness exits 23. These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-summary-contract` suite binds three command-owned options
+  (`--fail-under-branches 50`, `--show-zero-columns`, and `--sort-tables`) to a
+  shared `control.lcovrc` invocation and one direct-option target each. Two clean
+  pinned Oracle runs agree on exact reference/output characterization; the reverse
+  harness exits 23. A trial `--debug` case remains excluded because its stderr
+  contains run-specific temporary paths. These are planning facts only, with
+  product evidence empty.
+- The `m0-genhtml-cli-context-contract` suite binds three command-owned options
+  (`--baseline-title Baseline CLI`, `--merge-aliases`, and `--suppress-aliases`)
+  to a shared alias baseline/current/diff fixture with `--filter function`. Two clean
+  pinned Oracle runs agree on exact reference/output characterization; the reverse
+  harness exits 23. These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-metadata-contract` suite binds three command-owned options
+  (`--css-file custom.css`, `--description-file descriptions.info`, and
+  `--keep-descriptions`) to a named-testcase metadata fixture. Two clean pinned
+  Oracle runs agree on exact reference/output characterization; the reverse
+  harness exits 23. These are planning facts only, with product evidence empty.
+- The `m0-genhtml-cli-residual-contract` suite binds three residual command-owned
+  surfaces (`--preserve`, `--synthesize-missing`, and multi-tracefile positional
+  inputs) to a dedicated fixture with shared control. Two clean pinned Oracle runs
+  agree on exact reference/output characterization; the reverse harness exits 23.
+  These are planning facts only, with product evidence empty.
 - M1 parser/model implementation remains gated on completion of M0 review,
   interaction groups, baselines, and the model/grammar specification.

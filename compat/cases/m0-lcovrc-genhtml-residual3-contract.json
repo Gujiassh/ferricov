@@ -1,0 +1,122 @@
+{
+  "cases": [
+    {
+      "arguments": [
+        "--config-file",
+        "control.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-residual3-contract",
+      "id": "m0-lcovrc-genhtml-residual3-contract-control",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "compact-summary-tables.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-residual3-contract",
+      "id": "m0-lcovrc-genhtml-residual3-contract-compact-summary-tables",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "fail-under-lines.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-residual3-contract",
+      "id": "m0-lcovrc-genhtml-residual3-contract-fail-under-lines",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "fail-under-branches.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-residual3-contract",
+      "id": "m0-lcovrc-genhtml-residual3-contract-fail-under-branches",
+      "surface": "config"
+    },
+    {
+      "arguments": [
+        "--config-file",
+        "list-truncate-max.lcovrc",
+        "--output-directory",
+        "report",
+        "input.info"
+      ],
+      "command": "genhtml",
+      "comparisons": [
+        {
+          "dimension": "exit",
+          "normalizer": "exact-v1"
+        },
+        {
+          "dimension": "filesystem",
+          "normalizer": "exact-v1"
+        }
+      ],
+      "fixture": "compat/fixtures/m0-lcovrc-genhtml-residual3-contract",
+      "id": "m0-lcovrc-genhtml-residual3-contract-list-truncate-max",
+      "surface": "config"
+    }
+  ],
+  "evidence_scope": "compatibility",
+  "schema_version": 1,
+  "suite_id": "m0-lcovrc-genhtml-residual3-contract"
+}

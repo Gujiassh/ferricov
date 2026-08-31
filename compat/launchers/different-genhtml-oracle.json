@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "name": "intentionally-different-genhtml-harness-launcher",
+  "program": "sh",
+  "arguments": [
+    "-c",
+    "printf 'intentionally different output for harness reverse test: %s\\n' \"$1\"; exit 23",
+    "sh",
+    "{command}"
+  ],
+  "environment_variables": {
+    "HOME": "/work",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "SOURCE_DATE_EPOCH": "946684800",
+    "TMPDIR": "/work",
+    "TZ": "UTC"
+  },
+  "runtime": {
+    "kind": "docker_image",
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7"
+  },
+  "environment": {
+    "image": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "operating_system": "Debian 12",
+    "architecture": "x86_64",
+    "compiler": "GCC 12.2.0",
+    "cpu": null
+  }
+}

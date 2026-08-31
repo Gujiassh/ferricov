@@ -1,0 +1,243 @@
+{
+  "artifacts": {
+    "extra": [
+      {
+        "bytes": 53,
+        "name": "cleanup.log",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/cleanup.log",
+        "sha256": "d181bae991149dbfd99212ae0e1e43fa28ca483d16b93c0a33be617985955826"
+      },
+      {
+        "bytes": 229,
+        "name": "observed-env.env",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-env.env",
+        "sha256": "8a4893a5f071b396d547d5b3d10357dbfbb61178ada1f0972fabfe8c9688fb4c"
+      },
+      {
+        "bytes": 49,
+        "name": "observed-argv.json",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-argv.json",
+        "sha256": "eb26c367b6f9930c211dd75f179dba72138c16f72ee83c8c9f7e6df945a2772b"
+      },
+      {
+        "bytes": 205,
+        "name": "observed-children.json",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/observed-children.json",
+        "sha256": "606445e53ece487a0b3a723d790e627642d2b632027725f41386d2bb6603229e"
+      },
+      {
+        "bytes": 20,
+        "name": "host-observer.txt",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/host-observer.txt",
+        "sha256": "5a09a06817f7773e8f2f272c32999e91ee576b28b3b5f507706ad2a63b922ef1"
+      },
+      {
+        "bytes": 247,
+        "name": "status.env",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/status.env",
+        "sha256": "2459252f005e6907e1e2cb2d1dce9f57108f6cae0996e9e80ea16e5dd0f88a03"
+      },
+      {
+        "bytes": 201,
+        "name": "run-meta.env",
+        "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/run-meta.env",
+        "sha256": "62a8ea19e931c8b7cf601cc056d9660ab6b7fa3e88f31d683a0636cbb7e54a53"
+      }
+    ],
+    "stderr_bin": {
+      "bytes": 0,
+      "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout_bin": {
+      "bytes": 132,
+      "path": "compat/installation/wave2/cases/INST-REPORT-ASSET-001/stdout.bin",
+      "sha256": "22592f7ccb2935c3dca33c61970a2cfb3f7ecdd74c7975875d35a4b58e226ba4"
+    }
+  },
+  "case_id": "INST-REPORT-ASSET-001",
+  "environment": {
+    "mode": "clean_explicit",
+    "observed_variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    },
+    "variables": {
+      "BUILD_DATE": "2026-07-06",
+      "HOME": "/tmp",
+      "LANG": "C",
+      "LCOV_BUILD_DATE": "2026-07-06",
+      "LC_ALL": "C",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PYTHONHASHSEED": "0",
+      "RELEASE": "beta",
+      "SOURCE_DATE_EPOCH": "1783375223",
+      "TERM": "dumb",
+      "TZ": "UTC",
+      "VERSION": "2.5"
+    }
+  },
+  "evidence_status": "oracle_reference",
+  "execution_status": "planned",
+  "file_tree_effects": {
+    "directory_count": 1,
+    "file_count": 15,
+    "paths_sha256": "82bd5bbaaa83a10f2f3026ebda54048e468583df4e1bb1a08f90ffd973ba1784",
+    "root": "/tmp/src/bin",
+    "rows": [
+      {
+        "identity": ".",
+        "kind": "directory",
+        "mode": "755",
+        "path": "/tmp/src/bin"
+      },
+      {
+        "identity": "1f8b4f41c766cb7fe7fe03ad2407da7a7d0df04f04c600d48e776b4ecb9a51c7",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/checkstyle.sh"
+      },
+      {
+        "identity": "d3069951ddca720879c17b2649bca10504ea82e9be653f4e81c8e6061735d771",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/copy_dates.sh"
+      },
+      {
+        "identity": "b21f441745851ef6dd0414b1f002fdfa725c4fbba20fa4f88b7ed15986a0fdf8",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/fix.pl"
+      },
+      {
+        "identity": "b94655477ea7ce9aaca184a1634464a219f274968a371e40deb7de7062a573e0",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/gendesc"
+      },
+      {
+        "identity": "3871dbf74d78fb023571b709512032eb71706ac9e8e70bb37d7ae9c0d0adefd3",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/genhtml"
+      },
+      {
+        "identity": "c973fa1e61fbeb0213fd52b66ce38e8bc31e8bf218dc2c497673b5bd62dd1e39",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/geninfo"
+      },
+      {
+        "identity": "78d90269234963d93ef3fe164761a07cd9a23dcc8c277258f643081f2e7d2c3f",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/genpng"
+      },
+      {
+        "identity": "f1fb2c2735453f7d2b1f5b8200e3039474d5ccda6068c818a7e06cd2f62cc583",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/get_changes.sh"
+      },
+      {
+        "identity": "36d6629f589a9136f023d7bd28c41793eb2e358255be9c9c3c35865c420292dd",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/get_version.sh"
+      },
+      {
+        "identity": "09a7b426663c73cfe73ce4aee263cd89ff42a3847ee40575e22293852da5b1af",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/lcov"
+      },
+      {
+        "identity": "3ae567fb7d2fe861d0b0990470e642faa9ca0b8463560faf3ef222adaec23435",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/llvm2lcov"
+      },
+      {
+        "identity": "e04a94a77a6d3da06a84b3ec18ef71883fe125db73dd7af8dd209dced28699b9",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/perl2lcov"
+      },
+      {
+        "identity": "3892e5c70aa1d891009e48f35df2e97955e8340ab1902650928c06515c8639da",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/py2lcov"
+      },
+      {
+        "identity": "8625a1066fc33e8c65023f64e195ed4fc27fda7d037f8df22f91d0d84414d7ae",
+        "kind": "file",
+        "mode": "755",
+        "path": "/tmp/src/bin/xml2lcov"
+      },
+      {
+        "identity": "70d7fb5dccc63b7369416ddb46be5c7bae86ff1a46018e78b3ddab1c0550cac9",
+        "kind": "file",
+        "mode": "644",
+        "path": "/tmp/src/bin/xml2lcovutil.py"
+      }
+    ],
+    "symlink_count": 0
+  },
+  "identity": {
+    "capture_host_tool": "compat/installation/wave2/process-observer.py",
+    "docker_runtime": "29.1.3",
+    "executable_path": "/usr/bin/python3.11",
+    "executable_sha256": "6d972cf21be56fe3c947ab6ba257ff8d08c342dd2714442986791bd9a6dfabfe",
+    "oracle_image_id": "sha256:b02cc645313ff5b0a09adc6d6ddeb5e670e48d64ac376b6b29b34b9d56eb80b7",
+    "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
+    "upstream_release": "v2.5"
+  },
+  "invocation": {
+    "argv": [
+      "python3",
+      "/tmp/scan_genhtml_assets.py"
+    ],
+    "cleanup": [
+      "removed:/tmp/src",
+      "removed:/tmp/scan_genhtml_assets.py"
+    ],
+    "fixture_setup": [
+      "scan bin/genhtml for retained report assets"
+    ],
+    "timeout_seconds": 60,
+    "working_directory": "/tmp/src"
+  },
+  "observation_sha256": "b3e0b770562ac40feee8ad74e0a227d1f69d6d47a98a687ad01104d59627662e",
+  "oracle_execution_status": "captured",
+  "process": {
+    "child_processes_observed": [
+      {
+        "argv": [
+          "python3",
+          "/tmp/scan_genhtml_assets.py"
+        ],
+        "command": "python3 /tmp/scan_genhtml_assets.py",
+        "exit_status": 0,
+        "signal": null,
+        "timed_out": false
+      }
+    ],
+    "exit_status": 0,
+    "host_observer_code": 0,
+    "signal": null,
+    "timed_out": false
+  },
+  "product_compatibility_evidence": false,
+  "schema_version": 1
+}

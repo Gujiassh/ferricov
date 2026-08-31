@@ -20,51 +20,76 @@
     "product_compatibility_evidence"
   ],
   "properties": {
-    "schema_version": { "const": 1 },
-    "upstream_release": { "const": "v2.5" },
+    "schema_version": {
+      "const": 1
+    },
+    "upstream_release": {
+      "const": "v2.5"
+    },
     "upstream_commit": {
       "const": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5"
     },
-    "scope": { "type": "string", "minLength": 1 },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
     "artifact_bindings": {
       "type": "array",
       "minItems": 4,
-      "maxItems": 4,
-      "items": { "$ref": "#/$defs/artifactBinding" }
+      "maxItems": 5,
+      "items": {
+        "$ref": "#/$defs/artifactBinding"
+      }
     },
     "lexical_rules": {
       "type": "array",
       "minItems": 2,
       "maxItems": 2,
-      "items": { "$ref": "#/$defs/lexicalRule" }
+      "items": {
+        "$ref": "#/$defs/lexicalRule"
+      }
     },
     "records": {
       "type": "array",
       "minItems": 20,
       "maxItems": 20,
-      "items": { "$ref": "#/$defs/record" }
+      "items": {
+        "$ref": "#/$defs/record"
+      }
     },
-    "fallback_behavior": { "$ref": "#/$defs/fallbackBehavior" },
+    "fallback_behavior": {
+      "$ref": "#/$defs/fallbackBehavior"
+    },
     "fixtures": {
       "type": "array",
-      "minItems": 88,
-      "maxItems": 88,
-      "items": { "$ref": "#/$defs/fixture" }
+      "minItems": 140,
+      "maxItems": 140,
+      "items": {
+        "$ref": "#/$defs/fixture"
+      }
     },
     "malformed_behaviors": {
       "type": "array",
       "minItems": 21,
       "maxItems": 21,
-      "items": { "$ref": "#/$defs/malformedBehavior" }
+      "items": {
+        "$ref": "#/$defs/malformedBehavior"
+      }
     },
     "oracle_cases": {
       "type": "array",
-      "minItems": 169,
-      "maxItems": 169,
-      "items": { "$ref": "#/$defs/oracleCase" }
+      "minItems": 279,
+      "maxItems": 279,
+      "items": {
+        "$ref": "#/$defs/oracleCase"
+      }
     },
-    "totals": { "$ref": "#/$defs/totals" },
-    "product_compatibility_evidence": { "const": false }
+    "totals": {
+      "$ref": "#/$defs/totals"
+    },
+    "product_compatibility_evidence": {
+      "const": false
+    }
   },
   "$defs": {
     "sha256": {
@@ -78,23 +103,48 @@
     "sourceReference": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "line", "role", "text"],
+      "required": [
+        "path",
+        "line",
+        "role",
+        "text"
+      ],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "line": { "type": "integer", "minimum": 1 },
-        "role": {
-          "enum": ["reader", "writer", "manual"]
+        "path": {
+          "type": "string",
+          "minLength": 1
         },
-        "text": { "type": "string" }
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "role": {
+          "enum": [
+            "reader",
+            "writer",
+            "manual"
+          ]
+        },
+        "text": {
+          "type": "string"
+        }
       }
     },
     "artifactBinding": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "sha256"],
+      "required": [
+        "path",
+        "sha256"
+      ],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "sha256": { "$ref": "#/$defs/sha256" }
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "lexicalRule": {
@@ -110,17 +160,37 @@
         "product_evidence"
       ],
       "properties": {
-        "id": { "type": "string", "pattern": "^tracefile\\.lexical\\." },
-        "parser_expression": { "type": "string", "minLength": 1 },
-        "match_mode": { "enum": ["start", "full"] },
-        "behavior": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "pattern": "^tracefile\\.lexical\\."
+        },
+        "parser_expression": {
+          "type": "string",
+          "minLength": 1
+        },
+        "match_mode": {
+          "enum": [
+            "start",
+            "full"
+          ]
+        },
+        "behavior": {
+          "type": "string",
+          "minLength": 1
+        },
         "source_references": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/sourceReference" }
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          }
         },
-        "review_status": { "const": "reviewed" },
-        "product_evidence": { "$ref": "#/$defs/productEvidence" }
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        }
       }
     },
     "record": {
@@ -141,8 +211,14 @@
         "product_evidence"
       ],
       "properties": {
-        "id": { "type": "string", "pattern": "^tracefile\\.record\\." },
-        "tag": { "type": "string", "minLength": 2 },
+        "id": {
+          "type": "string",
+          "pattern": "^tracefile\\.record\\."
+        },
+        "tag": {
+          "type": "string",
+          "minLength": 2
+        },
         "category": {
           "enum": [
             "test",
@@ -156,8 +232,16 @@
             "terminator"
           ]
         },
-        "parser_expression": { "type": "string", "minLength": 1 },
-        "match_mode": { "enum": ["start", "full"] },
+        "parser_expression": {
+          "type": "string",
+          "minLength": 1
+        },
+        "match_mode": {
+          "enum": [
+            "start",
+            "full"
+          ]
+        },
         "input_behavior": {
           "enum": [
             "semantic",
@@ -166,8 +250,16 @@
             "ignored_summary"
           ]
         },
-        "writer_behavior": { "enum": ["emitted", "not_emitted"] },
-        "canonical_form": { "type": "string", "minLength": 1 },
+        "writer_behavior": {
+          "enum": [
+            "emitted",
+            "not_emitted"
+          ]
+        },
+        "canonical_form": {
+          "type": "string",
+          "minLength": 1
+        },
         "malformed_fixture_id": {
           "type": "string",
           "pattern": "^malformed-"
@@ -175,10 +267,16 @@
         "source_references": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/sourceReference" }
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          }
         },
-        "review_status": { "const": "reviewed" },
-        "product_evidence": { "$ref": "#/$defs/productEvidence" }
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        }
       }
     },
     "fallbackBehavior": {
@@ -193,16 +291,29 @@
         "product_evidence"
       ],
       "properties": {
-        "id": { "const": "tracefile.fallback.unknown-nonblank-record" },
-        "behavior": { "type": "string", "minLength": 1 },
-        "malformed_fixture_id": { "const": "malformed-unknown" },
+        "id": {
+          "const": "tracefile.fallback.unknown-nonblank-record"
+        },
+        "behavior": {
+          "type": "string",
+          "minLength": 1
+        },
+        "malformed_fixture_id": {
+          "const": "malformed-unknown"
+        },
         "source_references": {
           "type": "array",
           "minItems": 2,
-          "items": { "$ref": "#/$defs/sourceReference" }
+          "items": {
+            "$ref": "#/$defs/sourceReference"
+          }
         },
-        "review_status": { "const": "reviewed" },
-        "product_evidence": { "$ref": "#/$defs/productEvidence" }
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        }
       }
     },
     "fixture": {
@@ -216,8 +327,14 @@
         "sha256"
       ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "path": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
         "group": {
           "enum": [
             "current-all-records",
@@ -230,11 +347,21 @@
             "ver-semantics",
             "function-records",
             "branch-records",
-            "deterministic-scale"
+            "deterministic-scale",
+            "wave1-tracefile",
+            "wave2-tracefile",
+            "writer-tracefile"
           ]
         },
-        "oracle_default": { "enum": ["accept", "reject"] },
-        "sha256": { "$ref": "#/$defs/sha256" }
+        "oracle_default": {
+          "enum": [
+            "accept",
+            "reject"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
     "malformedBehavior": {
@@ -252,22 +379,49 @@
         "product_evidence"
       ],
       "properties": {
-        "id": { "type": "string", "pattern": "^tracefile\\.malformed\\." },
-        "fixture_id": { "type": "string", "pattern": "^malformed-" },
+        "id": {
+          "type": "string",
+          "pattern": "^tracefile\\.malformed\\."
+        },
+        "fixture_id": {
+          "type": "string",
+          "pattern": "^malformed-"
+        },
         "target_record_id": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^tracefile\\.record\\."
         },
-        "oracle_default": { "enum": ["accept", "reject"] },
-        "default_case_id": { "type": "string", "minLength": 1 },
-        "default_exit": { "type": "integer", "minimum": 0 },
+        "oracle_default": {
+          "enum": [
+            "accept",
+            "reject"
+          ]
+        },
+        "default_case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "default_exit": {
+          "type": "integer",
+          "minimum": 0
+        },
         "recovery_case_ids": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "uniqueItems": true
         },
-        "review_status": { "const": "reviewed" },
-        "product_evidence": { "$ref": "#/$defs/productEvidence" }
+        "review_status": {
+          "const": "reviewed"
+        },
+        "product_evidence": {
+          "$ref": "#/$defs/productEvidence"
+        }
       }
     },
     "oracleCase": {
@@ -284,8 +438,14 @@
         "evidence_status"
       ],
       "properties": {
-        "id": { "type": "string", "minLength": 1 },
-        "fixture_id": { "type": "string", "minLength": 1 },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixture_id": {
+          "type": "string",
+          "minLength": 1
+        },
         "kind": {
           "enum": [
             "default_parse",
@@ -301,7 +461,10 @@
         "additional_fixture_ids": {
           "type": "array",
           "minItems": 1,
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "uniqueItems": true
         },
         "requirement_ids": {
@@ -313,6 +476,9 @@
           },
           "uniqueItems": true
         },
+        "two_write": {
+          "const": true
+        },
         "m0_decision_ids": {
           "type": "array",
           "minItems": 1,
@@ -322,16 +488,29 @@
           },
           "uniqueItems": true
         },
-        "exit_status": { "type": "integer", "minimum": 0 },
-        "stdout_sha256": { "$ref": "#/$defs/sha256" },
-        "stderr_sha256": { "$ref": "#/$defs/sha256" },
+        "exit_status": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stderr_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
         "output_sha256": {
           "oneOf": [
-            { "$ref": "#/$defs/sha256" },
-            { "type": "null" }
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
-        "evidence_status": { "const": "oracle_reference" }
+        "evidence_status": {
+          "const": "oracle_reference"
+        }
       }
     },
     "totals": {
@@ -355,26 +534,100 @@
         "exact_executable_m0_decision_ids"
       ],
       "properties": {
-        "records": { "const": 20 },
-        "lexical_rules": { "const": 2 },
-        "reader_matcher_lines": { "const": 15 },
-        "canonical_writer_lines": { "const": 18 },
-        "fixtures": { "const": 88 },
-        "malformed_fixtures": { "const": 21 },
-        "oracle_cases": { "const": 169 },
-        "default_parse_cases": { "const": 86 },
-        "canonical_rewrite_cases": { "const": 37 },
-        "ignore_recovery_cases": { "const": 29 },
-        "semantic_snapshot_cases": { "const": 17 },
-        "oracle_exit_zero": { "const": 110 },
-        "oracle_exit_nonzero": { "const": 59 },
+        "records": {
+          "const": 20
+        },
+        "lexical_rules": {
+          "const": 2
+        },
+        "reader_matcher_lines": {
+          "const": 15
+        },
+        "canonical_writer_lines": {
+          "const": 18
+        },
+        "fixtures": {
+          "const": 140
+        },
+        "malformed_fixtures": {
+          "const": 21
+        },
+        "oracle_cases": {
+          "const": 279
+        },
+        "default_parse_cases": {
+          "const": 116
+        },
+        "canonical_rewrite_cases": {
+          "const": 99
+        },
+        "ignore_recovery_cases": {
+          "const": 36
+        },
+        "semantic_snapshot_cases": {
+          "const": 28
+        },
+        "oracle_exit_zero": {
+          "const": 194
+        },
+        "oracle_exit_nonzero": {
+          "const": 85
+        },
         "exact_executable_requirement_ids": {
           "type": "array",
-          "const": ["M1-TF-007", "M1-TF-009", "M1-TF-011", "M1-TF-013", "M1-TF-021", "M1-TF-022", "M1-TF-024", "M1-TF-025", "M1-TF-026", "M1-TF-031", "M1-TF-032", "M1-TF-033", "M1-TF-034", "M1-TF-035", "M1-TF-036"]
+          "const": [
+            "M1-TF-001",
+            "M1-TF-002",
+            "M1-TF-003",
+            "M1-TF-004",
+            "M1-TF-005",
+            "M1-TF-006",
+            "M1-TF-007",
+            "M1-TF-008",
+            "M1-TF-009",
+            "M1-TF-010",
+            "M1-TF-011",
+            "M1-TF-012",
+            "M1-TF-013",
+            "M1-TF-014",
+            "M1-TF-015",
+            "M1-TF-016",
+            "M1-TF-020",
+            "M1-TF-021",
+            "M1-TF-022",
+            "M1-TF-023",
+            "M1-TF-024",
+            "M1-TF-025",
+            "M1-TF-026",
+            "M1-TF-027",
+            "M1-TF-028",
+            "M1-TF-030",
+            "M1-TF-031",
+            "M1-TF-032",
+            "M1-TF-033",
+            "M1-TF-034",
+            "M1-TF-035",
+            "M1-TF-036",
+            "M1-TF-041",
+            "M1-TF-042",
+            "M1-TF-043",
+            "M1-TF-044",
+            "M1-TF-045",
+            "M1-TF-046",
+            "M1-TF-050",
+            "M1-TF-051",
+            "M1-TF-052",
+            "M1-TF-060",
+            "M1-TF-061"
+          ]
         },
         "exact_executable_m0_decision_ids": {
           "type": "array",
-          "const": ["M0-TF-MCDC-SF-001", "M0-TF-TN-MCDC-001"]
+          "const": [
+            "M0-TF-MCDC-SF-001",
+            "M0-TF-NUMERIC-001",
+            "M0-TF-TN-MCDC-001"
+          ]
         }
       }
     }
