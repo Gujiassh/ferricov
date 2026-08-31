@@ -46,6 +46,19 @@ pub enum FuzzTarget {
     McdcAlgebra,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum HarnessFailure {
+    BudgetExceeded {
+        dimension: &'static str,
+        observed: usize,
+        limit: usize,
+    },
+    DeadlineExceeded {
+        elapsed: Duration,
+        limit: Duration,
+    },
+}
+
 /// Stable seed required by the CORE-009 contract.
 #[must_use]
 pub fn derive_seed(target_id: &str, case_id: &str, fixture_sha256: &str) -> u64 {
@@ -59,10 +72,24 @@ pub fn derive_seed(target_id: &str, case_id: &str, fixture_sha256: &str) -> u64 
 }
 
 /// Execute one input after fail-closed structural budget validation.
-pub fn run(target: FuzzTarget, input: &[u8], budget: HarnessBudget) {
-    if !within_budget(input, budget) {
-        return;
+pub fn run(target: FuzzTarget, input: &[u8], budget: HarnessBudget) -> Result<(), HarnessFailure> {
+    run_with_cardinality(target, input, 0, budget)
+}
+
+pub fn run_with_cardinality(
+    target: FuzzTarget,
+    input: &[u8],
+    family_cardinality: usize,
+    budget: HarnessBudget,
+) -> Result<(), HarnessFailure> {
+    if family_cardinality > budget.family_cardinality {
+        return Err(HarnessFailure::BudgetExceeded {
+            dimension: "family_cardinality",
+            observed: family_cardinality,
+            limit: budget.family_cardinality,
+        });
     }
+    validate_budget(input, budget)?;
     let started = Instant::now();
     match target {
         FuzzTarget::Lex => lexical(input),
@@ -75,31 +102,56 @@ pub fn run(target: FuzzTarget, input: &[u8], budget: HarnessBudget) {
         FuzzTarget::BranchAlgebra => algebra(input, AlgebraOp::Difference),
         FuzzTarget::McdcAlgebra => algebra(input, AlgebraOp::Union),
     }
-    assert!(
-        started.elapsed() <= budget.per_case,
-        "CORE-009 per-case deadline exceeded"
-    );
+    let elapsed = started.elapsed();
+    if elapsed > budget.per_case {
+        return Err(HarnessFailure::DeadlineExceeded {
+            elapsed,
+            limit: budget.per_case,
+        });
+    }
+    Ok(())
 }
 
-fn within_budget(input: &[u8], budget: HarnessBudget) -> bool {
+fn validate_budget(input: &[u8], budget: HarnessBudget) -> Result<(), HarnessFailure> {
     if input.len() > budget.input_bytes {
-        return false;
+        return Err(HarnessFailure::BudgetExceeded {
+            dimension: "input_bytes",
+            observed: input.len(),
+            limit: budget.input_bytes,
+        });
     }
     let mut records = 0usize;
     let mut sections = 0usize;
     for line in input.split(|byte| *byte == b'\n') {
         records += 1;
-        if line.len() > budget.field_bytes || records > budget.records {
-            return false;
+        for field in line.split(|byte| *byte == b',') {
+            if field.len() > budget.field_bytes {
+                return Err(HarnessFailure::BudgetExceeded {
+                    dimension: "field_bytes",
+                    observed: field.len(),
+                    limit: budget.field_bytes,
+                });
+            }
+        }
+        if records > budget.records {
+            return Err(HarnessFailure::BudgetExceeded {
+                dimension: "records",
+                observed: records,
+                limit: budget.records,
+            });
         }
         if line.starts_with(b"end_of_record") {
             sections += 1;
             if sections > budget.sections {
-                return false;
+                return Err(HarnessFailure::BudgetExceeded {
+                    dimension: "sections",
+                    observed: sections,
+                    limit: budget.sections,
+                });
             }
         }
     }
-    true
+    Ok(())
 }
 
 fn parser(input: &[u8]) -> StreamingParser {
@@ -153,7 +205,13 @@ fn roundtrip(input: &[u8]) {
     match classify_contract(&parsed, &context) {
         ContractClassification::Serializable => writer(input),
         ContractClassification::NonSerializable(_)
-        | ContractClassification::BlockedOracleUnknown => {}
+        | ContractClassification::BlockedOracleUnknown => {
+            let evidence = EvidenceSnapshot::capture(&parsed, &context);
+            assert!(
+                evidence.attempted_output.is_none(),
+                "writer invoked for preclassified model"
+            );
+        }
     }
 }
 
@@ -174,9 +232,27 @@ fn numeric(input: &[u8]) {
     }
 }
 
-fn algebra(input: &[u8], operation: AlgebraOp) {
-    let left = parser(input).database().clone();
-    let right = parser(input).database().clone();
+fn algebra(input: &[u8], default_operation: AlgebraOp) {
+    let Some((&opcode, payload)) = input.split_first() else {
+        return;
+    };
+    let split = payload
+        .iter()
+        .position(|byte| *byte == 0)
+        .unwrap_or(payload.len() / 2);
+    let left = parser(&payload[..split]).database().clone();
+    let right_bytes = if split < payload.len() {
+        &payload[split + 1..]
+    } else {
+        &payload[split..]
+    };
+    let right = parser(right_bytes).database().clone();
+    let operation = match opcode % 4 {
+        0 => AlgebraOp::Union,
+        1 => AlgebraOp::Intersect,
+        2 => AlgebraOp::Difference,
+        _ => default_operation,
+    };
     for (_, source) in left.iter() {
         let mut store: CoverageStore = source.aggregate().clone();
         let rhs = right

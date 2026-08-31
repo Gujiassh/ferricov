@@ -26,7 +26,21 @@ This work does not execute Ferricov-vs-Oracle differential cases, select
 product resource limits, or close `M1-MD-020`, `M1-TF-063`, or `M1-TF-064`.
 CORE-010 and CORE-011 remain unauthorized.
 
+## Critical Rework
+
+The first Critical audit rejected determinism-only assertions and silent budget
+skips. Rework now adds exact accepted-input, numeric, round-trip, ordered
+algebra, testcase-map, index-coherence, inverse-corruption, unequal MC/DC, and
+writer-not-invoked assertions. Budget violations are typed failures; the stable
+campaign is ignored in the ordinary suite and invoked by CI under a subprocess
+deadline and RSS cap. Corpus and failure metadata now have fail-closed machine
+validation, mutation tests, fixed seeds, and raw/minimized provenance hashes.
+
 ## Verification
 
-Final local fmt/check/test/clippy and hosted nightly fuzz smoke results are to
-be recorded by the controller after review.
+- model tests: 48 passed;
+- tracefile tests: 71 passed, one watchdog-only campaign ignored in the normal run;
+- watchdog campaign replay: 1 passed;
+- workspace Clippy with `-D warnings`: passed;
+- all nine fuzz binaries: stable compile check passed;
+- hosted nightly fuzz smoke remains required before controller acceptance.

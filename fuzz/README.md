@@ -10,14 +10,20 @@ timeout, a 512 MiB RSS limit, and a 60-second target ceiling. These are harness
 safety caps from the activation contract, not product limits. Scheduled runs
 may use the separately recorded scheduled caps.
 
-libFuzzer writes a raw failure artifact. Minimize it under the same caps with
-`cargo +nightly fuzz tmin TARGET ARTIFACT`, replay the minimized bytes without
-minimizer instrumentation, and retain it under `fuzz/corpus/TARGET/` together
+libFuzzer uses the fixed seed `12648430` in CI and writes a raw failure artifact.
+Run `fuzz/scripts/minimize_and_replay.sh TARGET ARTIFACT` to minimize under the
+same caps and then replay the minimized bytes without minimizer instrumentation.
+Retain it under `fuzz/corpus/TARGET/` together
 with a JSON sidecar containing target ID, seed, raw SHA-256, first failing
 operation, semantic snapshots, streams/status, runtime manifest, and links to
 the originating `M1-MD-*`, `M1-TF-*`, `M1-PROP-*`, and `M1-FZ-*` IDs. Corpus
 entries may be removed only when redundant coverage is demonstrated; every
 bug-derived minimized entry is permanent.
+
+`python3 fuzz/scripts/validate_artifacts.py` validates every manifest pattern,
+corpus SHA-256, target/case binding, and any retained sidecar/artifact pair.
+The sidecar must conform to `fuzz/failure-sidecar.schema.json`; mutation tests
+for fail-closed hash handling run in CI.
 
 This campaign does not execute the LCOV Oracle, close `M1-MD-020`,
 `M1-TF-063`, or `M1-TF-064`, or provide product compatibility evidence.
