@@ -1,6 +1,6 @@
-# M1-CORE-008 Controller Critical Review Draft
+# M1-CORE-008 Controller Critical Review
 
-Status: **DRAFT — independent Critical re-review required**
+Status: **ACCEPTED — independent Critical audit at `11d4d1d`**
 Risk: **Critical**
 
 ## Semantic Oracle
@@ -56,4 +56,9 @@ absent branch expressions remain typed writer failures with no bytes.
 
 This is a stable Rust schema, not a persisted JSON/public wire contract. A future
 artifact encoder must preserve the schema split and cannot substitute debug text.
-Independent Critical re-review remains required before task acceptance or push.
+## Independent Audit Result
+
+The independent Critical audit accepted M1-CORE-008 at `11d4d1d`. The final
+focused gates are `cargo test -p ferricov-tracefile` with 61 passing tests and
+`cargo test -p ferricov-model` with 48 passing tests. Workspace check and diff
+check also pass; product compatibility evidence remains false.

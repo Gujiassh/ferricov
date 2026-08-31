@@ -1,6 +1,6 @@
 # M1-CORE-008 Progress — Semantic Snapshots And Equality
 
-Status: **REWORKED — CRITICAL RE-REVIEW PENDING**
+Status: **COMPLETE — independent Critical audit accepted at `11d4d1d`**
 Date: 2026-08-31
 Base: `feat/m1-core-007-canonical-writer@ec72681`
 Branch: `feat/m1-core-008-semantic-snapshots`
@@ -71,3 +71,10 @@ by ordinary model-shape classification.
 
 Product evidence remains false. Existing host fmt/clippy/Python/CRLF/Docker
 limitations remain nonblocking and unchanged.
+
+## Acceptance
+
+The independent Critical audit accepted the completed CORE-008 implementation
+at `11d4d1d`. The task checklist is closed with the exact focused results of 61
+passing tracefile tests and 48 passing model tests. No product compatibility
+claim is created by this implementation acceptance.
