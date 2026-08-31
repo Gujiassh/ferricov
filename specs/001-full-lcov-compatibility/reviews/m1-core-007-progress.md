@@ -1,47 +1,40 @@
 # M1-CORE-007 Progress — Deterministic Canonical Writer
 
-Status: **IMPLEMENTED**  
-Date: 2026-08-31  
-Base: `integration/m1-current@f781a0d`  
+Status: **IMPLEMENTED — CRITICAL RE-REVIEW PENDING**
+Date: 2026-08-31
+Base: `integration/m1-current@f781a0d`
 Branch: `feat/m1-core-007-canonical-writer`
 
 ## Delivered
 
-- Added a pure `write_canonical` projection and explicit `SerializationContext`.
-- Sections are selected only from testcase line-map membership.
-- Output order is comments, `TN`, `SF`, optional `VER`, current functions and
-  recomputed totals, branches and totals, MC/DC and totals, lines and totals,
-  then exact `end_of_record`.
-- Function aliases and source/test maps use their deterministic byte-key order.
-- Function indexes and branch block numbers are reassigned for output.
-- Branch blocks use signature length, signature bytes, then model position.
-- MC/DC groups preserve Perl-lexical key order and emit true before false.
-- Legacy and permissive input records are never reproduced.
-- Stored checksums are optional by context; comments are explicit context only.
-- Repeated writes are byte-identical and model state is not mutated.
+`write_canonical` is a pure model projection with explicit feature flags,
+comments, source-path projection, and optional checksum provider. Projected
+source bytes determine source order. Stored checksums take precedence over a
+provider; disabling checksums calls neither output path. Sections originate
+only from line-testcase membership and test names sort by bytes.
+
+The writer emits current functions, branches, MC/DC, lines, recomputed summaries,
+and exact terminators in U-WRITE order. Numeric locations sort without fixed-width
+or float coercion. Function and branch indexes are reassigned. MC/DC group keys
+sort lexically and senses emit t then f. Numeric branch identifiers reconstruct
+an absent expression, preserving canonical parse-write-parse semantics. Legacy
+FN/FNDA input serializes as FNL/FNA. Serialization never mutates the model.
 
 ## Verification
 
-```text
-cargo test -p ferricov-tracefile
-cargo test -p ferricov-model
-cargo fmt --all --check
-cargo check --workspace --all-targets --locked
-cargo clippy --workspace --all-targets --locked -- -D warnings
-```
+- `cargo test -p ferricov-tracefile`: 46 passed
+- `cargo test -p ferricov-model`: 48 passed
+- `cargo check --workspace --all-targets --locked`: passed with pre-existing warnings
+- `git diff --check`: passed
 
-Focused tests cover the complete family sequence, exact bytes, alias ordering,
-branch renumbering, MC/DC sense ordering, recomputed totals, checksum mode,
-feature omission, line-map section selection, and repeated-write determinism.
+Focused tests cover inverse projected source and testcase ordering, multiple
+branch blocks, MC/DC lexical 10-before-2 groups, t/f order, missing senses and
+exclusions, non-UTF8 paths, checksum disabled/stored/provider modes, deep model
+nonmutation, repeated writes, fixed-point parse-write-parse, and legacy rewrite.
 
-## Boundaries And Residuals
+## Blocked Host Gates
 
-- Source path projection and external checksum computation stay outside the
-  semantic model. This slice emits the retained display path and can emit only
-  model-stored checksums; pure provider integration belongs at the later
-  runtime/CLI boundary.
-- Product evidence remains false. This implementation does not claim Oracle
-  differential parity and does not modify CLI, ops, or report crates.
-- Docker Oracle execution is unavailable on this Windows host; retained Oracle
-  bytes and repository contracts remain the behavioral reference.
-
+- Workspace fmt/clippy are blocked by pre-existing unrelated formatting/lints.
+- Python contracts are blocked by missing `jsonschema` and Windows CRLF drift.
+- Docker Oracle comparison is unavailable on this Windows host.
+- Product evidence remains false; CLI, ops, and report are unchanged.

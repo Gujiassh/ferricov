@@ -4,7 +4,7 @@
 //! matrices and every malformed continuation quirk remain residual.
 
 use ferricov_model::{
-    BranchEdge, BranchKind, BranchTaken, ByteString, CoverageCount, CoverageDatabase,
+    BranchEdge, BranchTaken, ByteString, CoverageCount, CoverageDatabase,
     GroupSizeKey, LineKey, NumericAtom,
 };
 
@@ -600,7 +600,10 @@ fn apply_brda(
     // Split tail at last comma → expression, taken
     let (expr, taken_tok) = split_at_last_comma(tail);
     let taken = BranchTaken::from_token(taken_tok);
-    let expression = if expr.is_empty() {
+    // The canonical writer substitutes the derived numeric branch id when no
+    // Verilog expression is stored. Reading that canonical spelling must
+    // reconstruct `None`, not invent an expression string.
+    let expression = if expr.is_empty() || is_digits(expr) {
         None
     } else {
         Some(ByteString::from_slice(expr))

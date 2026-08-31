@@ -265,7 +265,7 @@ Authorized now:
 - [x] `M1-CORE-004`: implement ordered union/intersection/difference algebra (`crates/model` algebra.rs; review `reviews/m1-core-004-controller-review.md`; ALG Oracle binding residual).
 - [x] `M1-CORE-005`: implement logical-line processing and parser state (`crates/tracefile`; review `reviews/m1-core-005-controller-review.md`).
 - [x] `M1-CORE-006`: implement all record semantics, errors, and section commit (`crates/tracefile`; review `reviews/m1-core-006-controller-review.md`; ignore-matrix residual).
-- [x] `M1-CORE-007`: implement deterministic canonical serialization (`crates/tracefile`; review `reviews/m1-core-007-controller-review.md`; external checksum/path providers remain a later runtime-boundary integration).
+- [ ] `M1-CORE-007`: implement deterministic canonical serialization (`crates/tracefile`; implementation complete, independent Critical re-review pending).
 - [ ] `M1-CORE-008`: implement semantic snapshots and equality.
 
 Still gated by matrix (not authorized yet):

@@ -866,3 +866,8 @@ observations, and hashed approval record are complete. The 13-profile
 summary semantics and raw single-run metrics, but `M1-TF-063` still lacks
 Ferricov boundary/parity evidence and `M1-TF-064` still lacks an executable fuzz
 corpus. Both remain blockers, not implied limits or passes.
+
+### M1-CORE-007 implementation status
+
+The canonical writer now uses a pure explicit serialization context. Projected source bytes determine source order; stored checksums override optional provider results; numeric branch IDs round-trip as absent expressions. Product evidence remains false and independent Critical acceptance is pending.
+

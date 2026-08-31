@@ -1,41 +1,40 @@
 # M1-CORE-007 Controller Review Draft
 
-Status: **DRAFT — independent controller acceptance required**  
+Status: **DRAFT — independent Critical re-review required**
 Risk: **Critical**
 
 ## Semantic Oracle
 
-For an identical database and serialization context, output bytes are stable;
-sections originate only from testcase line membership; record families and
-summary pairs follow `U-WRITE`; summaries are recomputed; legacy/permissive
-syntax is omitted; serialization does not mutate the database.
+Identical model/context/provider results produce identical bytes. Projected
+source bytes and testcase bytes determine section order. Only line-testcase
+membership creates sections. U-WRITE family/field order is exact, summaries are
+recomputed, legacy/permissive syntax is omitted, and the model is unchanged.
 
-## Review Checklist
+## Checklist
 
 | Area | Result | Evidence |
 | --- | --- | --- |
-| Goal alignment | pass | writer-only tracefile slice |
-| Architecture boundary | pass | pure model projection; no filesystem/CLI |
-| Section and family ordering | pass | exact-byte focused test |
-| Function/branch/MC/DC ordering | pass | focused mixed-family fixture |
-| Summary recomputation | pass | deliberately false input summaries ignored |
-| Checksum/comments modes | pass | context-controlled output |
-| Determinism and mutation safety | pass | repeated write equality; immutable borrow |
-| Product evidence | pass | remains false; no evidence files changed |
-| Oracle runtime comparison | blocked | Docker unavailable on Windows host |
+| Goal and architecture | pass | pure tracefile projection, no filesystem/CLI |
+| Projected source/test ordering | pass | inverse-order regression |
+| Family and numeric ordering | pass | exact mixed and large-number tests |
+| Branch/MC/DC ordering | pass | multi-block and lexical-group regressions |
+| Checksums/comments | pass | stored precedence, provider fill, disabled mode |
+| Round-trip/nonmutation | pass | fixed point plus deep equality |
+| Focused Rust gates | pass | tracefile 46, model 48, workspace check |
+| Workspace fmt/clippy | blocked | pre-existing unrelated failures |
+| Python contracts | blocked | missing `jsonschema`; Windows CRLF drift |
+| Docker Oracle | blocked | Docker unavailable on host |
+| Product evidence | pass | remains false |
 
 ## Reverse Review
 
-If a family moves, a block number is not reassigned, an input summary leaks,
-or a repeated write differs, the exact full-byte assertion fails. If a
-function-only or MC/DC-only testcase accidentally creates a section, the
-line-membership test fails. Independent review should additionally compare the
-mixed fixture against retained canonical Oracle bytes on Linux CI.
+Exact-byte assertions catch family/order/index/summary drift. Inverse projection
+catches lookup-key ordering. Stored/provider tests catch precedence and path/line
+arguments. Deep equality catches mutation. Fixed-point output catches numeric
+branch-expression invention and other canonical semantic drift.
 
 ## Residual Risk
 
-External checksum providers and source-path projection are intentionally not
-invented in the semantic writer. Their later runtime integration needs its own
-Oracle-backed tests. The current parser's documented CORE-006 residuals can
-also constrain parse-write-parse parity outside this writer's happy-path slice.
-
+Filesystem-backed provider implementations still need runtime Oracle tests.
+Broader parser CORE-006 malformed/ignore residuals constrain corpus-wide parity,
+but are not hidden by this writer review.

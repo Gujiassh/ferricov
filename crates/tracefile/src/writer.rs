@@ -7,23 +7,44 @@ use ferricov_model::{
     McdcCoverage,
 };
 
+pub trait SourcePathProjection {
+    fn project(&self, source: &[u8]) -> Vec<u8>;
+}
+impl<F: Fn(&[u8]) -> Vec<u8>> SourcePathProjection for F {
+    fn project(&self, source: &[u8]) -> Vec<u8> {
+        self(source)
+    }
+}
+
+pub trait ChecksumProvider {
+    fn checksum(&self, emitted_source: &[u8], line: &[u8]) -> Option<Vec<u8>>;
+}
+impl<F: Fn(&[u8], &[u8]) -> Option<Vec<u8>>> ChecksumProvider for F {
+    fn checksum(&self, source: &[u8], line: &[u8]) -> Option<Vec<u8>> {
+        self(source, line)
+    }
+}
+
 /// Explicit, side-effect-free canonical serialization configuration.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct SerializationContext {
+pub struct SerializationContext<'a> {
     pub function_coverage_enabled: bool,
     pub branch_coverage_enabled: bool,
     pub mcdc_coverage_enabled: bool,
     pub checksum_output_enabled: bool,
+    pub source_path_projection: Option<&'a dyn SourcePathProjection>,
+    pub optional_checksum_provider: Option<&'a dyn ChecksumProvider>,
     pub output_comments: Vec<ByteString>,
 }
 
-impl Default for SerializationContext {
+impl Default for SerializationContext<'_> {
     fn default() -> Self {
         Self {
             function_coverage_enabled: true,
             branch_coverage_enabled: true,
             mcdc_coverage_enabled: true,
             checksum_output_enabled: true,
+            source_path_projection: None,
+            optional_checksum_provider: None,
             output_comments: Vec::new(),
         }
     }
@@ -31,22 +52,29 @@ impl Default for SerializationContext {
 
 /// Serialize `database` without mutating it.
 #[must_use]
-pub fn write_canonical(database: &CoverageDatabase, context: &SerializationContext) -> Vec<u8> {
+pub fn write_canonical(database: &CoverageDatabase, context: &SerializationContext<'_>) -> Vec<u8> {
     let mut out = Vec::new();
     for comment in &context.output_comments {
         push(&mut out, b"#");
         push(&mut out, comment.as_bytes());
         push(&mut out, b"\n");
     }
-    for (_, source) in database.iter() {
+    let mut sources: Vec<_> = database
+        .iter()
+        .map(|(_, source)| {
+            let display = source.identity().display_path().as_bytes();
+            let emitted = context
+                .source_path_projection
+                .map_or_else(|| display.to_vec(), |p| p.project(display));
+            (emitted, source)
+        })
+        .collect();
+    sources.sort_by(|(left, _), (right, _)| left.cmp(right));
+    for (emitted_source, source) in sources {
         // The Oracle selects sections exclusively from line-testcase membership.
         for (test, lines) in source.testcases().lines() {
             push_record(&mut out, b"TN:", test.as_bytes());
-            push_record(
-                &mut out,
-                b"SF:",
-                source.identity().display_path().as_bytes(),
-            );
+            push_record(&mut out, b"SF:", &emitted_source);
             if let Some(version) = source.version() {
                 push_record(&mut out, b"VER:", version.as_bytes());
             }
@@ -130,9 +158,18 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
                 push(&mut out, b",");
                 push(&mut out, &count_bytes(count));
                 if context.checksum_output_enabled {
-                    if let Some(checksum) = source.checksums().get(line) {
+                    let checksum = source
+                        .checksums()
+                        .get(line)
+                        .map(|value| value.as_bytes().to_vec())
+                        .or_else(|| {
+                            context.optional_checksum_provider.and_then(|provider| {
+                                provider.checksum(&emitted_source, line.lexeme().as_bytes())
+                            })
+                        });
+                    if let Some(checksum) = checksum.filter(|value| !value.is_empty()) {
                         push(&mut out, b",");
-                        push(&mut out, checksum.as_bytes());
+                        push(&mut out, &checksum);
                     }
                 }
                 push(&mut out, b"\n");
