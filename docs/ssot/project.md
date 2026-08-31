@@ -148,7 +148,7 @@ the M0 harness become the permanent integration boundary.
   `compat/behavior/contract.json` totals. The M1 Tracefile Core handoff is
   now documented in `specs/001-full-lcov-compatibility/m1-tracefile-core-agent-spec.md`,
   and conditional GO is active: `m0-go-no-go.md` **Result: GO** plus
-  `m1-v0.1-support-matrix.md` authorize `M1-CORE-001`…`M1-CORE-008` with
+  `m1-v0.1-support-matrix.md` authorize `M1-CORE-001`…`M1-CORE-009` with
   `m1_authorized=true` and `product_compatibility_evidence=false`. Residual
   signed-N/A gaps, diagnostics FERRICOV parity IDs, and
   `M1-MD-020`/`M1-TF-063`/`M1-TF-064` remain open exclusions (not closed;
@@ -167,8 +167,7 @@ the M0 harness become the permanent integration boundary.
   Oracle-only coverage-model algebra contract with 157 cases across 27
   fixtures, binding rows `M1-MD-010..014`, `M1-MD-017`, and `M1-MD-019` through
   sealed independent observation facts. `M1-MD-020`, `M1-TF-063`, and
-  `M1-TF-064` remain blocked in contract (matrix exclusion C). Conditional GO
-  authorizes Rust model/parser work for CORE-001…008 only; CORE-009/011 stay gated.
+  `M1-TF-064` remain blocked in contract (matrix exclusion C). Conditional GO authorizes Rust model/parser/property/fuzz work for CORE-001…009 only. CORE-009 uses deterministic seeds and hard harness safety budgets and does not resolve blocked IDs. CORE-010/011 stay gated.
 - ADR 0002 accepts native external callback execution and a qualified
   `perl2lcov` adapter. The on-demand Perl compatibility host remains proposed.
 - ADR 0003 is accepted and separates Oracle, compiler capture, and release

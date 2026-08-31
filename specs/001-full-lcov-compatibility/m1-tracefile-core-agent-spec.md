@@ -7,17 +7,17 @@ is a complete task and acceptance contract, but it is **activation-gated**.
 An agent MUST NOT start product implementation until the M0 exit review and
 support matrix authorize it. The current conditional GO records:
 
-- `m0-go-no-go.md` signature **Result: GO** for CORE-001…008 only;
+- `m0-go-no-go.md` signature **Result: GO** for CORE-001…009 only;
 - active [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md) with
   exclusions A–D (7 signed N/A, 3 FERRICOV IDs, model blockers, product false);
 - `docs/ssot/m0-status.snapshot.json` `m1_authorized=true` with
   `product_compatibility_evidence=false`;
-- coverage-model / tracefile-grammar accepted for CORE-001…008 planning and
+- coverage-model / tracefile-grammar accepted for CORE-001…009 bounded planning and
   implementation (model `blocked_case_ids` remain for excluded fuzz/limit work);
 - the decision is linked from `specs/001-full-lcov-compatibility/tasks.md`.
 
 `m0-ready` zero-gap is **waived** for v0.1 via matrix exclusion A; do not
-hollow-close those seven primaries. Do not start CORE-009/011 or widen into
+hollow-close those seven primaries. Do not start CORE-010/011 or widen into
 CLI/lcovrc/report/capture without a matrix revision.
 
 As of the conditional GO revision, `docs/ssot/m0-status.snapshot.json` records
@@ -26,7 +26,7 @@ go/no-go artifact is [`m0-go-no-go.md`](m0-go-no-go.md) with result **GO
 (conditional)**. The exclusion record is
 [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md).
 
-Authorized now: `M1-CORE-001` … `M1-CORE-008` under `crates/model` +
+Authorized now: `M1-CORE-001` … `M1-CORE-009` under `crates/model` +
 `crates/tracefile`. Still deferred / excluded (not closed):
 
 - 7 behavior primary signed-N/A gaps (matrix exclusion A; `m0-ready` may fail);
@@ -36,7 +36,7 @@ Authorized now: `M1-CORE-001` … `M1-CORE-008` under `crates/model` +
   [`reviews/m0-model-blocker-scope.md`](reviews/m0-model-blocker-scope.md));
 - all domain `product_compatibility_evidence` flags stay **false** until
   CORE-010 parity review (exclusion D);
-- `M1-CORE-009` / `M1-CORE-011` stay gated until the matrix is revised.
+- `M1-CORE-009` is authorized only for deterministic, budgeted properties/fuzzing and does not close blocked IDs by activation; `M1-CORE-010` / `M1-CORE-011` stay gated.
 
 Oracle evidence in `compat/` remains reference evidence only. It MUST NOT be
 relabeled as Ferricov product compatibility evidence. Do not copy Perl

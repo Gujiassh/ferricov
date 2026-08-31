@@ -16,7 +16,7 @@ Related diagnostics: [`reviews/m0-diagnostics-wave3-review.md`](reviews/m0-diagn
 **Result: GO**
 
 Authorize **conditional** activation of M1 Tracefile Core for tasks
-`M1-CORE-001` … `M1-CORE-008` only, under
+`M1-CORE-001` … `M1-CORE-009` only, under
 [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md).
 
 This GO:
@@ -26,7 +26,8 @@ This GO:
 - **does not** hollow-close the 7 signed-N/A primaries,
 - **does not** bind the 3 `*-FERRICOV-001` diagnostics IDs,
 - **does not** clear `M1-MD-020` / `M1-TF-063` / `M1-TF-064` from `blocked_case_ids`,
-- **does not** authorize `M1-CORE-009` / `M1-CORE-011` until the matrix is revised.
+- **does** authorize bounded `M1-CORE-009` property/fuzz work without resolving blocked rows,
+- **does not** authorize `M1-CORE-010` / `M1-CORE-011`.
 
 ## Oracle and contract identity
 
@@ -68,7 +69,7 @@ This GO:
 | Criterion | Treatment under this GO |
 | --- | --- |
 | Every public behavior substantive / `m0-ready` | **Waived for v0.1** via support-matrix exclusion A (7 signed N/A). `m0-ready` may still fail. |
-| Coverage-model + grammar | **Accepted for CORE-001…008 planning/implementation**; model `blocked_case_ids` remain for excluded fuzz/limit work |
+| Coverage-model + grammar | **Accepted for CORE-001…009 bounded implementation**; blocked IDs remain open |
 | `M1-MD-020` / `M1-TF-063` / `M1-TF-064` | **Explicitly excluded** by support matrix (not resolved) |
 | Go/no-go artifact | **This GO revision** |
 | Product compatibility evidence | **Must remain false** until CORE-010 case evidence |
@@ -108,7 +109,7 @@ All domain `product_compatibility_evidence` flags stay false.
 
 ### Authorized
 
-1. Implement `M1-CORE-001` … `M1-CORE-008` per agent spec + support matrix.
+1. Implement `M1-CORE-001` … `M1-CORE-009` per agent spec + support matrix; CORE-009 uses deterministic seeds and hard safety budgets.
 2. Add focused tests/fixtures required by those tasks.
 3. Keep Oracle differentials fail-closed; no identity relaxation.
 
@@ -117,7 +118,7 @@ All domain `product_compatibility_evidence` flags stay false.
 1. Setting any domain `product_compatibility_evidence=true` without CORE-010 review.
 2. Hollow-closing the 7 signed-N/A primaries or binding FERRICOV IDs with Oracle-only seals.
 3. Removing model blocked IDs without executable evidence.
-4. Starting `M1-CORE-009` / `M1-CORE-011` without matrix revision.
+4. Starting `M1-CORE-010` / `M1-CORE-011` without a later matrix revision.
 5. Widening into CLI / lcovrc / report / capture / install ownership.
 6. Copying Perl internal object layout.
 
@@ -130,6 +131,10 @@ in git history. Machine detection keys off the signature line below.
 
 **Result: GO**
 
-Conditional M1 Tracefile Core activation for `M1-CORE-001`…`M1-CORE-008` under
-`m1-v0.1-support-matrix.md`. Product evidence remains false. Exclusions A–D remain open work, not closed work.
+Conditional M1 Tracefile Core activation for `M1-CORE-001`…`M1-CORE-009` under
+`m1-v0.1-support-matrix.md`. CORE-009 is deterministic and budgeted. Product evidence remains false, CORE-010/011 remain unauthorized, and exclusions A–D remain open.
 
+
+## 2026-08-31 CORE-009 Amendment
+
+`reviews/m1-core-009-activation-review.md` authorizes CORE-009 only. No blocked ID, product-evidence flag, product resource boundary, differential gate, or performance gate changes.

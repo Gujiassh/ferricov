@@ -27,6 +27,7 @@
   "m1_activation_blockers": [
     {
       "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "count": 7,
       "detail": "Unreviewed primary public-entry case groups remain in the behavior contract.",
@@ -35,6 +36,7 @@
     },
     {
       "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "detail": "Coverage-model decision remains blocked in compat/model/v2.5.json.",
       "id": "M1-MD-020",
@@ -42,6 +44,7 @@
     },
     {
       "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
       "id": "M1-TF-063",
@@ -49,6 +52,7 @@
     },
     {
       "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "detail": "Tracefile decision remains blocked in model contract blocked_case_ids.",
       "id": "M1-TF-064",
@@ -56,6 +60,7 @@
     },
     {
       "activation_treatment": "excluded_by_m1_v0_1_support_matrix",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "count": 3,
       "detail": "Planned diagnostic/parallel case IDs without exact Oracle bindings.",
@@ -69,6 +74,7 @@
     },
     {
       "activation_treatment": "required_false_under_conditional_go",
+      "blocks_authorized_m1_core_tasks": false,
       "blocks_m1_core_001_008": false,
       "detail": "No domain contract currently sets product_compatibility_evidence true.",
       "id": "product_compatibility_evidence_false",
@@ -76,6 +82,17 @@
     }
   ],
   "m1_authorized": true,
+  "m1_authorized_task_ids": [
+    "M1-CORE-001",
+    "M1-CORE-002",
+    "M1-CORE-003",
+    "M1-CORE-004",
+    "M1-CORE-005",
+    "M1-CORE-006",
+    "M1-CORE-007",
+    "M1-CORE-008",
+    "M1-CORE-009"
+  ],
   "model_blocked_case_ids": [
     "M1-MD-020",
     "M1-TF-063",
@@ -91,12 +108,13 @@
     "compat/resources/v2.5.json": false,
     "compat/tracefile/v2.5.json": false
   },
-  "schema_version": 1,
+  "schema_version": 2,
   "sources": {
     "behavior_contract": "compat/behavior/contract.json",
     "diagnostics_contract": "compat/diagnostics/v2.5.json",
     "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
     "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
+    "m1_v0_1_activation_contract": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.activation.json",
     "m1_v0_1_support_matrix": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
     "model_contract": "compat/model/v2.5.json",
     "plan_bindings": "compat/behavior/plan-bindings.json"
