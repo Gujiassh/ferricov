@@ -24,6 +24,7 @@ mod record_parse;
 mod records;
 mod section;
 mod state;
+mod writer;
 
 pub use classify::{
     classify_line, LineClass, MatchAnchor, RecordTag, TnPayload,
@@ -41,8 +42,11 @@ pub use section::{BranchCursor, OpenSection};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };
+pub use writer::{write_canonical, SerializationContext};
 
 #[cfg(test)]
 mod tests_core005;
 #[cfg(test)]
 mod tests_core006;
+#[cfg(test)]
+mod tests_core007;
