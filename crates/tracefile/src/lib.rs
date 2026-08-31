@@ -34,13 +34,13 @@ pub use commit::{close_mcdc_block, commit_section, CommitOutcome};
 pub use diag::{DiagClass, DiagKind, ParseDiag};
 pub use line::{
     is_perl_ascii_ws, normalize_logical_line, strip_line_terminator, trim_trailing_perl_ws,
-    LineEnding, LineSplitter, RawLogicalLine, PERL_ASCII_WS,
+    LineEnding, LineSplitter, LineSplitterSnapshot, RawLogicalLine, PERL_ASCII_WS,
 };
 pub use parser::StreamingParser;
 pub use policy::IgnorePolicy;
 pub use records::{apply_event, ApplyContext, ApplyResult};
 pub use section::{BranchCursor, OpenSection};
-pub use snapshot::{SemanticSnapshot, Serializability};
+pub use snapshot::{EvidenceSnapshot, ProcessEvidence, SemanticSnapshot, Serializability, SourceProvenance};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };

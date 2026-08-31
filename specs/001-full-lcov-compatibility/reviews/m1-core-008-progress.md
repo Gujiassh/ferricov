@@ -1,40 +1,38 @@
 # M1-CORE-008 Progress — Semantic Snapshots And Equality
 
-Status: **IMPLEMENTED — CRITICAL REVIEW PENDING**
+Status: **REWORKED — CRITICAL RE-REVIEW PENDING**
 Date: 2026-08-31
 Base: `feat/m1-core-007-canonical-writer@ec72681`
 Branch: `feat/m1-core-008-semantic-snapshots`
 
-## Delivered
+## API Boundary
 
-`SemanticSnapshot::capture` clones the complete committed database, parser
-provenance/state, in-flight open section and indexes, ignore policy, stopped
-state, diagnostics, and canonical serializability result. `Serializability`
-contains either exact canonical bytes or the typed CORE-007 error. Snapshot
-equality is structural and byte-exact.
+`SemanticSnapshot` is the model-semantic projection only. Its equality compares
+only `CoverageDatabase`: source lookup/display identity, versions/checksums,
+aggregate and independent testcase-family maps (including absent/empty), totals,
+indexes/order, raw numeric atoms, signed zero, nonfinite classes, and exclusions.
+It intentionally ignores parser diagnostics, raw provenance, policy/stopped
+state, open section, buffered transport bytes, and canonical evidence.
 
-The database component includes source lookup/display identities, version and
-checksums, aggregate stores, every independent testcase-family map (including
-absent versus explicitly empty values), observable totals, function dual
-indexes, branch model order/signatures/indexes, MC/DC group/expression/sense
-order, exclusions, raw numeric lexemes, nonfinite classes, and signed zero.
-No filesystem, CLI, ops, report, or product-evidence dependency was added.
+`EvidenceSnapshot` is the separate full evidence/run envelope. Derived equality
+includes the semantic snapshot, parser state and diagnostics, in-flight open
+section/indexes, ignore policy/stopped, LineSplitter buffer and pending-CR state,
+source diagnostic-path provenance excluded from model identity, and canonical
+bytes or typed nonserializability. `ProcessEvidence` explicitly models optional
+stdout/stderr/exit status; in-process capture truthfully leaves it `None`.
 
 ## Verification
 
-- `cargo test -p ferricov-tracefile`: 51 passed
+- `cargo test -p ferricov-tracefile`: 53 passed
 - `cargo test -p ferricov-model`: 48 passed
 - `cargo check --workspace --all-targets --locked`: passed with existing warning
 - `git diff --check`: passed
 
-Reverse tests distinguish equal-looking counts (`0`/`-0`), diagnostics with an
-identical database, family-map/index/order differences, arbitrary non-UTF8
-provenance, NaN/infinity, in-flight state and stop policy, canonical output,
-and serializable numeric expressions versus accepted absent expressions.
+Reverse tests prove diagnostic-only runs are semantic-equal but evidence-unequal,
+unfinished splitter bytes differ from untouched evidence and finish
+deterministically, diagnostic paths remain evidence-distinct despite semantic
+identity equality, signed-zero/nonfinite/arbitrary bytes survive, family/index
+changes are unequal, and absent branch expressions retain typed classification.
 
-## Residual Host Gates
-
-Workspace fmt/clippy, Python contracts, Windows CRLF artifact validation, and
-Docker Oracle execution retain the nonblocking host limitations documented by
-CORE-007. Product evidence remains false.
-
+Product evidence remains false. Existing host fmt/clippy/Python/CRLF/Docker
+limitations remain nonblocking and unchanged.
