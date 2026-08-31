@@ -253,6 +253,33 @@ fn lexical(input: &[u8]) {
         EvidenceSnapshot::capture(&first, &SerializationContext::default()),
         EvidenceSnapshot::capture(&second, &SerializationContext::default())
     );
+    const TAGS: &[(&[u8], crate::RecordTag)] = &[
+        (b"TN:", crate::RecordTag::Tn),
+        (b"SF:", crate::RecordTag::Sf),
+        (b"KF:", crate::RecordTag::Kf),
+        (b"DA:", crate::RecordTag::Da),
+        (b"FNDA:", crate::RecordTag::Fnda),
+        (b"FNA:", crate::RecordTag::Fna),
+        (b"BRDA:", crate::RecordTag::Brda),
+        (b"MCDC:", crate::RecordTag::Mcdc),
+    ];
+    for line in input.split(|byte| *byte == b'\n') {
+        for (prefix, expected) in TAGS {
+            if line.starts_with(prefix) {
+                if let crate::LineClass::Record { tag, .. } = crate::classify_line(line) {
+                    assert_eq!(tag, *expected, "structured lexical tag oracle");
+                }
+            }
+        }
+        if let Some(suffix) = line.strip_prefix(b"end_of_record") {
+            match crate::classify_line(line) {
+                crate::LineClass::Terminator { unconsumed } => {
+                    assert_eq!(unconsumed.as_bytes(), suffix)
+                }
+                other => panic!("terminator reference mismatch: {other:?}"),
+            }
+        }
+    }
 }
 
 fn stateful(input: &[u8]) {
@@ -267,6 +294,15 @@ fn stateful(input: &[u8]) {
             EvidenceSnapshot::capture(&chunked, &SerializationContext::default())
         );
     }
+    let mut hard = StreamingParser::with_policy(crate::IgnorePolicy::Stop);
+    hard.parse_all(b"TN:t\nSF:x\nVER:a\nVER:b\nDA:1,9\nend_of_record\n");
+    assert!(hard.stopped());
+    assert!(
+        hard.database()
+            .iter()
+            .all(|(_, source)| source.aggregate().lines().is_empty()),
+        "hard failure partially committed post-failure coverage"
+    );
 }
 
 fn writer(input: &[u8]) {
@@ -283,6 +319,15 @@ fn writer(input: &[u8]) {
                 .semantically_equal(&EvidenceSnapshot::capture(&reparsed, &context).semantic)
         );
     }
+    let generated = parser(b"TN:t-\xff\nSF:s-\xfe\nFNL:0,1,2\nFNA:0,3,f-\xfd\nBRDA:1,0,e-\xfc,1\nMCDC:1,1,t,1,0,c-\xfb\nMCDC:1,1,f,0,0,c-\xfb\nDA:1,2,sum-\xfa\nend_of_record\n");
+    let before = generated.database().clone();
+    let bytes = crate::write_canonical(generated.database(), &SerializationContext::default())
+        .expect("generated model serializable");
+    assert_eq!(
+        bytes,
+        crate::write_canonical(generated.database(), &SerializationContext::default()).unwrap()
+    );
+    assert_eq!(before, *generated.database());
 }
 
 fn roundtrip(input: &[u8]) {
@@ -315,6 +360,16 @@ fn numeric(input: &[u8]) {
             .iter()
             .try_fold(first.clone(), |left, right| left.add(right));
         assert_eq!(one, two);
+    }
+    for (left, right, expected) in [
+        ("1", "2", "3"),
+        ("9007199254740993", "7", "9007199254741000"),
+        ("-0", "0", "0"),
+    ] {
+        let value = ferricov_model::CoverageCount::from_lexeme(left)
+            .add(&ferricov_model::CoverageCount::from_lexeme(right))
+            .expect("finite decimal reference");
+        assert_eq!(value.lexeme().as_bytes(), expected.as_bytes());
     }
 }
 
