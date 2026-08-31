@@ -19,9 +19,7 @@ impl SourceLookupKey {
     /// Create a lookup key from exact path bytes (case-sensitive mode).
     #[must_use]
     pub fn from_path_bytes(path: impl Into<ByteString>) -> Self {
-        Self {
-            bytes: path.into(),
-        }
+        Self { bytes: path.into() }
     }
 
     /// Create an ASCII case-insensitive lookup key by folding `A-Z` to `a-z`.
@@ -254,7 +252,10 @@ mod tests {
         let identity = SourceIdentity::ascii_case_insensitive(display.clone());
         assert_eq!(identity.display_path(), &display);
         assert_eq!(identity.lookup_key().as_bytes(), b"src/foo.c");
-        assert_ne!(identity.lookup_key().as_bytes(), identity.display_path().as_bytes());
+        assert_ne!(
+            identity.lookup_key().as_bytes(),
+            identity.display_path().as_bytes()
+        );
     }
 
     #[test]
@@ -266,8 +267,8 @@ mod tests {
 
     #[test]
     fn diagnostic_path_is_optional_and_non_identity() {
-        let left = SourceIdentity::from_display_path("/build/a.c")
-            .with_diagnostic_path("/resolved/a.c");
+        let left =
+            SourceIdentity::from_display_path("/build/a.c").with_diagnostic_path("/resolved/a.c");
         let right = SourceIdentity::from_display_path("/build/a.c");
         assert_eq!(left.lookup_key(), right.lookup_key());
         assert_eq!(left.display_path(), right.display_path());

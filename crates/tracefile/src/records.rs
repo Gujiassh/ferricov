@@ -4,12 +4,12 @@
 //! matrices and every malformed continuation quirk remain residual.
 
 use ferricov_model::{
-    BranchEdge, BranchKind, BranchTaken, ByteString, CoverageCount, CoverageDatabase,
-    GroupSizeKey, LineKey, NumericAtom,
+    BranchEdge, BranchTaken, ByteString, CoverageCount, CoverageDatabase, GroupSizeKey, LineKey,
+    NumericAtom,
 };
 
 use crate::classify::RecordTag;
-use crate::commit::{commit_section, ensure_source, CommitOutcome};
+use crate::commit::{CommitOutcome, commit_section, ensure_source};
 use crate::diag::{DiagClass, ParseDiag};
 use crate::policy::IgnorePolicy;
 use crate::record_parse::{
@@ -354,13 +354,10 @@ fn accumulate_line(
         open.lines.insert(line_key.clone(), count);
     }
     if let Some(chk) = checksum {
-        open.checksums
-            .entry(line_key.clone())
-            .or_insert(chk);
+        open.checksums.entry(line_key.clone()).or_insert(chk);
     }
     Ok(())
 }
-
 
 fn apply_fn(
     ctx: &mut ApplyContext,
@@ -493,9 +490,7 @@ fn apply_fnl(
     }
     let index = parse_u64_digits(parts[0]).unwrap_or(0);
     let start = LineKey::from_lexeme(parts[1].to_vec());
-    let end = parts
-        .get(2)
-        .map(|p| LineKey::from_lexeme(p.to_vec()));
+    let end = parts.get(2).map(|p| LineKey::from_lexeme(p.to_vec()));
     let open = ctx.open.as_mut().expect("checked");
     if open.fnl_index.contains_key(&index) {
         return Err(ParseDiag::duplicate_fnl(
@@ -608,10 +603,10 @@ fn apply_brda(
 
     let open = ctx.open.as_mut().expect("checked");
     let block_token = ByteString::from_slice(block_tok);
-    let need_new_block = match &open.branch_cursor {
-        Some(cur) if cur.line == line_key && cur.block_token == block_token => false,
-        _ => true,
-    };
+    let need_new_block = !matches!(
+        &open.branch_cursor,
+        Some(cur) if cur.line == line_key && cur.block_token == block_token
+    );
     let bline = open.branches.entry_line(line_key.clone());
     if need_new_block || bline.is_empty() {
         bline.push_block();
@@ -634,7 +629,6 @@ fn apply_brda(
     }
     Ok(())
 }
-
 
 fn apply_mcdc(
     ctx: &mut ApplyContext,
@@ -773,17 +767,12 @@ fn apply_mcdc(
     let mline = open.mcdc_open.entry_line(line_key.clone());
 
     // Find existing by declared index lexeme (immutable probe).
-    let existing_pos = mline
-        .get_group(&group_key)
-        .and_then(|group| {
-            group
-                .iter()
-                .position(|e| e.declared_index().lexeme().as_bytes() == index_tok)
-        });
-    let next_pos = mline
-        .get_group(&group_key)
-        .map(|g| g.len())
-        .unwrap_or(0);
+    let existing_pos = mline.get_group(&group_key).and_then(|group| {
+        group
+            .iter()
+            .position(|e| e.declared_index().lexeme().as_bytes() == index_tok)
+    });
+    let next_pos = mline.get_group(&group_key).map(|g| g.len()).unwrap_or(0);
     let mut gap_diag: Option<ParseDiag> = None;
     if let Some(pos) = existing_pos {
         let group = mline.entry_group(group_key.clone());
@@ -804,9 +793,7 @@ fn apply_mcdc(
     } else {
         // Contiguity: first new index must be 0; later contiguous. Gap → format.
         let idx_num = parse_u64_digits(index_tok).unwrap_or(u64::MAX);
-        if (next_pos == 0 && idx_num != 0)
-            || (next_pos > 0 && idx_num != next_pos as u64)
-        {
+        if (next_pos == 0 && idx_num != 0) || (next_pos > 0 && idx_num != next_pos as u64) {
             gap_diag = Some(ParseDiag::error_format(
                 line_no,
                 if next_pos == 0 {
@@ -820,9 +807,7 @@ fn apply_mcdc(
         let expr_ref = mline.append_expression(group_key, declared, expr_bs);
         expr_ref
             .set_sense(true_sense, count, excluded)
-            .map_err(|err| {
-                ParseDiag::error_format(line_no, format!("MCDC sense: {err}"), None)
-            })?;
+            .map_err(|err| ParseDiag::error_format(line_no, format!("MCDC sense: {err}"), None))?;
     }
 
     if line_numerically_non_positive(line_tok) {

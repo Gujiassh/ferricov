@@ -96,8 +96,7 @@ impl LineKey {
             return false;
         };
         let trimmed = text.trim();
-        !trimmed.is_empty()
-            && trimmed.bytes().all(|b| b == b'0')
+        !trimmed.is_empty() && trimmed.bytes().all(|b| b == b'0')
     }
 }
 

@@ -138,7 +138,10 @@ mod tests {
         let left = ByteString::from("Foo");
         let right = ByteString::from("foo");
         assert_ne!(left, right);
-        assert_eq!(ByteString::from(b"a\0b".as_slice()), ByteString::from(b"a\0b".as_slice()));
+        assert_eq!(
+            ByteString::from(b"a\0b".as_slice()),
+            ByteString::from(b"a\0b".as_slice())
+        );
     }
 
     #[test]

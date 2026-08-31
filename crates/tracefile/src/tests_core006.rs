@@ -1,8 +1,6 @@
 //! Focused M1-CORE-006 acceptance tests (record apply + section commit).
 
-use ferricov_model::{
-    BranchTaken, CoverageCount, LineKey, SourceLookupKey, TestName,
-};
+use ferricov_model::{BranchTaken, CoverageCount, LineKey, SourceLookupKey, TestName};
 
 use crate::diag::DiagKind;
 use crate::parser::StreamingParser;
@@ -67,20 +65,28 @@ end_of_record\n";
     );
 
     // Aggregate received the same line union.
-    assert!(src.aggregate().lines().contains_key(&LineKey::from_lexeme("10")));
+    assert!(
+        src.aggregate()
+            .lines()
+            .contains_key(&LineKey::from_lexeme("10"))
+    );
 
     let tc_fn = src.testcases().functions().get(&tn).expect("functions");
     assert!(tc_fn.contains_alias(&ferricov_model::ByteString::from_slice(b"main")));
     assert_eq!(tc_fn.group_len(), 1);
 
     let tc_br = src.testcases().branches().get(&tn).expect("branches");
-    let bline = tc_br.get_line(&LineKey::from_lexeme("10")).expect("br line");
+    let bline = tc_br
+        .get_line(&LineKey::from_lexeme("10"))
+        .expect("br line");
     assert_eq!(bline.blocks().len(), 1);
     assert_eq!(bline.blocks()[0].edges().len(), 2);
     assert!(bline.blocks()[0].edges()[1].taken().is_never_evaluated());
 
     let tc_mcdc = src.testcases().mcdc().get(&tn).expect("mcdc");
-    let mline = tc_mcdc.get_line(&LineKey::from_lexeme("10")).expect("mcdc line");
+    let mline = tc_mcdc
+        .get_line(&LineKey::from_lexeme("10"))
+        .expect("mcdc line");
     let group = mline
         .get_group(&ferricov_model::GroupSizeKey::from_lexeme("1"))
         .expect("group");
@@ -186,7 +192,11 @@ end_of_record\n";
     assert!(
         src.testcases().mcdc().contains_key(&b),
         "expected MC/DC under B, keys={:?}",
-        src.testcases().mcdc().keys().map(|k| k.as_bytes().to_vec()).collect::<Vec<_>>()
+        src.testcases()
+            .mcdc()
+            .keys()
+            .map(|k| k.as_bytes().to_vec())
+            .collect::<Vec<_>>()
     );
     // A may be absent from MC/DC family (empty A is allowed but not required
     // when no MC/DC was closed under A).
@@ -269,11 +279,12 @@ end_of_record\n";
     let mut p = StreamingParser::new();
     let _ = p.parse_all(input);
     assert!(!p.stopped());
-    assert!(p
-        .state()
-        .diagnostics()
-        .iter()
-        .any(|d| matches!(d.kind, DiagKind::ErrorFormat)));
+    assert!(
+        p.state()
+            .diagnostics()
+            .iter()
+            .any(|d| matches!(d.kind, DiagKind::ErrorFormat))
+    );
     let src = source_of(p.database(), "u.c");
     assert_eq!(src.aggregate().lines().len(), 2);
 }

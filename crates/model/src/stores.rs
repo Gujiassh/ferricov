@@ -221,11 +221,7 @@ impl TestcaseStores {
     }
 
     /// Insert a line-family value (including an explicit empty map).
-    pub fn insert_lines(
-        &mut self,
-        name: TestName,
-        coverage: LineCoverage,
-    ) -> Option<LineCoverage> {
+    pub fn insert_lines(&mut self, name: TestName, coverage: LineCoverage) -> Option<LineCoverage> {
         self.lines.insert(name, coverage)
     }
 
@@ -248,11 +244,7 @@ impl TestcaseStores {
     }
 
     /// Insert an MC/DC-family value (including an explicit empty store).
-    pub fn insert_mcdc(
-        &mut self,
-        name: TestName,
-        coverage: McdcCoverage,
-    ) -> Option<McdcCoverage> {
+    pub fn insert_mcdc(&mut self, name: TestName, coverage: McdcCoverage) -> Option<McdcCoverage> {
         self.mcdc.insert(name, coverage)
     }
 }
@@ -421,9 +413,7 @@ impl CoverageDatabase {
 
 #[cfg(test)]
 mod tests {
-    use super::{
-        CoverageDatabase, CoverageStore, SourceCoverage, TestcaseStores, TotalState,
-    };
+    use super::{CoverageDatabase, CoverageStore, SourceCoverage, TestcaseStores, TotalState};
     use crate::branch::BranchTaken;
     use crate::branch_store::BranchCoverage;
     use crate::bytes::ByteString;
@@ -543,10 +533,22 @@ mod tests {
             .insert_mcdc(mcdc_only.clone(), McdcCoverage::new());
 
         let tc = source.testcases();
-        assert_eq!(tc.lines().keys().cloned().collect::<Vec<_>>(), vec![line_only]);
-        assert_eq!(tc.functions().keys().cloned().collect::<Vec<_>>(), vec![fn_only]);
-        assert_eq!(tc.branches().keys().cloned().collect::<Vec<_>>(), vec![br_only]);
-        assert_eq!(tc.mcdc().keys().cloned().collect::<Vec<_>>(), vec![mcdc_only]);
+        assert_eq!(
+            tc.lines().keys().cloned().collect::<Vec<_>>(),
+            vec![line_only]
+        );
+        assert_eq!(
+            tc.functions().keys().cloned().collect::<Vec<_>>(),
+            vec![fn_only]
+        );
+        assert_eq!(
+            tc.branches().keys().cloned().collect::<Vec<_>>(),
+            vec![br_only]
+        );
+        assert_eq!(
+            tc.mcdc().keys().cloned().collect::<Vec<_>>(),
+            vec![mcdc_only]
+        );
     }
 
     #[test]
@@ -583,7 +585,10 @@ mod tests {
         assert!(source.observable_totals().is_empty());
         source.set_observable_totals(TotalState::from_payload("cached-lf=99"));
         assert_eq!(
-            source.observable_totals().payload().map(ByteString::as_bytes),
+            source
+                .observable_totals()
+                .payload()
+                .map(ByteString::as_bytes),
             Some(b"cached-lf=99".as_slice())
         );
 
@@ -593,9 +598,15 @@ mod tests {
         assert_eq!(source.aggregate().lines().len(), 1);
 
         source.observable_totals_mut().set_payload("again");
-        source.aggregate_mut().lines_mut().remove(&LineKey::from_lexeme("1"));
+        source
+            .aggregate_mut()
+            .lines_mut()
+            .remove(&LineKey::from_lexeme("1"));
         assert_eq!(
-            source.observable_totals().payload().map(ByteString::as_bytes),
+            source
+                .observable_totals()
+                .payload()
+                .map(ByteString::as_bytes),
             Some(b"again".as_slice())
         );
         assert!(source.aggregate().lines().is_empty());

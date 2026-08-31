@@ -6,10 +6,10 @@
 
 use ferricov_model::CoverageDatabase;
 
-use crate::classify::{classify_line, LineClass};
-use crate::line::{normalize_logical_line, LineSplitter, RawLogicalLine};
+use crate::classify::{LineClass, classify_line};
+use crate::line::{LineSplitter, RawLogicalLine, normalize_logical_line};
 use crate::policy::IgnorePolicy;
-use crate::records::{apply_event, ApplyContext, ApplyResult};
+use crate::records::{ApplyContext, ApplyResult, apply_event};
 use crate::state::{ParseEvent, ParserState};
 
 /// Streaming LCOV logical-line parser (CORE-005 binding + CORE-006 apply).
@@ -138,9 +138,9 @@ impl StreamingParser {
                 // on state; callers inspect `stopped()` / diagnostics.
                 ParseEvent::Malformed {
                     kind: diag.kind,
-                    line: diag.related.unwrap_or_else(|| {
-                        ferricov_model::ByteString::from_slice(b"")
-                    }),
+                    line: diag
+                        .related
+                        .unwrap_or_else(|| ferricov_model::ByteString::from_slice(b"")),
                 }
             }
         }
@@ -175,16 +175,17 @@ end_of_record\n";
             e,
             ParseEvent::SourceBound(b) if b.raw_path.as_bytes() == b"/m0/first.c"
         )));
-        assert!(events.iter().any(|e| matches!(e, ParseEvent::Terminator { .. })));
+        assert!(
+            events
+                .iter()
+                .any(|e| matches!(e, ParseEvent::Terminator { .. }))
+        );
         assert_eq!(p.state().test_name().as_bytes(), b"B");
         assert_eq!(
             p.state().source().unwrap().raw_path.as_bytes(),
             b"/m0/next.c"
         );
-        assert_eq!(
-            p.state().source().unwrap().bound_test_name.as_bytes(),
-            b"B"
-        );
+        assert_eq!(p.state().source().unwrap().bound_test_name.as_bytes(), b"B");
         // DA lines are applied in CORE-006.
         assert!(events.iter().any(|e| matches!(
             e,
@@ -205,8 +206,15 @@ end_of_record\n";
         let events = p.feed(chunk2);
         let _ = p.finish();
         assert_eq!(p.state().test_name().as_bytes(), b"name");
-        assert_eq!(p.state().source().unwrap().raw_path.as_bytes(), b"path/\xff");
-        assert!(events.iter().any(|e| matches!(e, ParseEvent::Terminator { .. })));
+        assert_eq!(
+            p.state().source().unwrap().raw_path.as_bytes(),
+            b"path/\xff"
+        );
+        assert!(
+            events
+                .iter()
+                .any(|e| matches!(e, ParseEvent::Terminator { .. }))
+        );
     }
 
     #[test]
