@@ -28,23 +28,17 @@ jobs:
           cargo +nightly install cargo-fuzz --version 0.13.1 --locked
       - name: Validate permanent corpus and artifact metadata
         run: |
+          python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
           python3 fuzz/scripts/validate_artifacts.py
           python3 -m unittest fuzz/scripts/test_validate_artifacts.py
       - name: Replay permanent corpus with bounded libFuzzer smoke
         shell: bash
         run: |
           set -euo pipefail
-          targets=(
-            m1_fz_lex_001 m1_fz_stateful_001 m1_fz_writer_001
-            m1_fz_roundtrip_001 m1_fz_numeric_001 m1_fz_line_algebra_001
-            m1_fz_function_algebra_001 m1_fz_branch_algebra_001
-            m1_fz_mcdc_algebra_001
-          )
-          for target in "${targets[@]}"; do
-            seed="$(python3 fuzz/scripts/validate_artifacts.py --seed-for "$target")"
+          python3 fuzz/scripts/validate_artifacts.py --list-tuples |
+          while IFS=$'\t' read -r target case_id seed corpus; do
             timeout --signal=KILL 60s cargo +nightly fuzz run "$target" \
-              "fuzz/corpus/$target" -- \
-              -seed="$seed" -runs=64 -timeout=2 -rss_limit_mb=512 -max_len=1048576
+              "$corpus" -- -seed="$seed" -runs=1 -timeout=2 -rss_limit_mb=512 -max_len=1048576
           done
 
   rust:

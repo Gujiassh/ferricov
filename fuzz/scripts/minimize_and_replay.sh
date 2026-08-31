@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 2 ]]; then
-  echo "usage: $0 TARGET RAW_ARTIFACT" >&2
+if [[ $# -ne 3 ]]; then
+  echo "usage: $0 TARGET CASE_ID RAW_ARTIFACT" >&2
   exit 2
 fi
 target=$1
-raw=$2
+case_id=$2
+raw=$3
 test -f "$raw"
 out="${raw}.minimized"
-seed="$(python3 fuzz/scripts/validate_artifacts.py --seed-for "$target")"
+seed="$(python3 fuzz/scripts/validate_artifacts.py --seed-for "$target" --case-id "$case_id")"
 common=(-seed="$seed" -timeout=2 -rss_limit_mb=512 -max_len=1048576)
 
 # tmin must reproduce the finding under the same resource and deterministic

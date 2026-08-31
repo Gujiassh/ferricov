@@ -2,6 +2,7 @@
 """Fail-closed validator for the permanent CORE-009 corpus and sidecars."""
 from __future__ import annotations
 import argparse, glob, hashlib, json, pathlib, re, sys
+import jsonschema
 
 TARGETS = {"M1-FZ-LEX-001", "M1-FZ-STATEFUL-001", "M1-FZ-WRITER-001", "M1-FZ-ROUNDTRIP-001", "M1-FZ-NUMERIC-001", "M1-FZ-LINE-ALGEBRA-001", "M1-FZ-FUNCTION-ALGEBRA-001", "M1-FZ-BRANCH-ALGEBRA-001", "M1-FZ-MCDC-ALGEBRA-001"}
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
@@ -13,6 +14,8 @@ def load(path: pathlib.Path):
 def validate_manifest(root: pathlib.Path) -> None:
     manifest = load(root / "corpus/manifest.json")
     if manifest.get("schema_version") != 1: fail("unsupported corpus schema_version")
+    failures = manifest.get("known_failures")
+    if not isinstance(failures, list): fail("known_failures must be explicit")
     seen_cases, covered, referenced = set(), set(), set()
     for entry in manifest.get("entries", []):
         case = entry.get("case_id")
@@ -43,6 +46,7 @@ def validate_manifest(root: pathlib.Path) -> None:
 
 def validate_sidecar(path: pathlib.Path) -> None:
     value = load(path)
+    jsonschema.validate(value, load(pathlib.Path(__file__).resolve().parents[1] / "failure-sidecar.schema.json"))
     required = {"schema_version", "target_id", "case_id", "seed", "raw_sha256", "minimized_sha256", "raw_artifact", "first_failing_operation", "semantic_snapshots", "process", "runtime_manifest", "origin_ids"}
     if set(value) != required or value["schema_version"] != 1: fail(f"sidecar shape: {path}")
     if value["target_id"] not in TARGETS: fail(f"sidecar target: {path}")
@@ -61,14 +65,23 @@ def validate_sidecar(path: pathlib.Path) -> None:
     if not origins or len(origins) != len(set(origins)) or not all(re.match(r"^M1-(MD|TF|PROP|FZ)-", x) for x in origins): fail(f"sidecar origins: {path}")
 
 def main() -> int:
-    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); parser.add_argument("--seed-for"); args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); parser.add_argument("--seed-for"); parser.add_argument("--case-id"); parser.add_argument("--list-tuples", action="store_true"); args=parser.parse_args()
     try:
         validate_manifest(args.root)
+        if args.list_tuples:
+            manifest = load(args.root / "corpus/manifest.json")
+            for entry in manifest["entries"]:
+                for target, seed in entry["derived_seeds"].items():
+                    binary = target.lower().replace("-", "_")
+                    for path in sorted((args.root / "corpus").glob(entry["file_pattern"])):
+                        if binary in str(path.parent.name): print(binary, entry["case_id"], seed, path, sep="\t")
+            return 0
         if args.seed_for:
             target = args.seed_for.upper().replace("_", "-")
             target = target.replace("M1-FZ-", "M1-FZ-")
             manifest = load(args.root / "corpus/manifest.json")
             for entry in manifest["entries"]:
+                if args.case_id and entry["case_id"] != args.case_id: continue
                 if target in entry.get("derived_seeds", {}):
                     print(entry["derived_seeds"][target]); return 0
             fail(f"no seed for target {target}")
