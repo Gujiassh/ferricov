@@ -2,13 +2,15 @@
 
 use std::time::{Duration, Instant};
 
-use ferricov_model::{AlgebraOp, CoverageStore};
 use sha2::{Digest, Sha256};
 
 use crate::{
     ContractClassification, EvidenceSnapshot, SerializationContext, StreamingParser,
     classify_contract,
 };
+
+#[path = "fuzzing/reference_oracle.rs"]
+mod reference_oracle;
 
 /// The activation contract's CI-smoke safety caps. These are harness caps, not
 /// product input limits.
@@ -57,6 +59,26 @@ pub enum HarnessFailure {
         elapsed: Duration,
         limit: Duration,
     },
+}
+
+/// Evidence envelope produced by the process-isolation controller.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FailureArtifact {
+    pub target_id: String,
+    pub case_id: String,
+    pub seed: u64,
+    pub input_sha256: String,
+    pub outcome: WorkerOutcome,
+    pub stdout: Vec<u8>,
+    pub stderr: Vec<u8>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum WorkerOutcome {
+    Exit(i32),
+    Signal(i32),
+    Timeout,
+    RssLimit,
 }
 
 /// Stable seed required by the CORE-009 contract.
@@ -176,10 +198,10 @@ pub fn run_with_cardinality(
         FuzzTarget::Writer => writer(input),
         FuzzTarget::Roundtrip => roundtrip(input),
         FuzzTarget::Numeric => numeric(input),
-        FuzzTarget::LineAlgebra => algebra(input, AlgebraOp::Union),
-        FuzzTarget::FunctionAlgebra => algebra(input, AlgebraOp::Intersect),
-        FuzzTarget::BranchAlgebra => algebra(input, AlgebraOp::Difference),
-        FuzzTarget::McdcAlgebra => algebra(input, AlgebraOp::Union),
+        FuzzTarget::LineAlgebra => reference_oracle::run_line_program(input),
+        FuzzTarget::FunctionAlgebra => reference_oracle::run_function_program(input),
+        FuzzTarget::BranchAlgebra => reference_oracle::run_branch_program(input),
+        FuzzTarget::McdcAlgebra => reference_oracle::run_mcdc_program(input),
     }
     let elapsed = started.elapsed();
     if elapsed > budget.per_case {
@@ -370,57 +392,5 @@ fn numeric(input: &[u8]) {
             .add(&ferricov_model::CoverageCount::from_lexeme(right))
             .expect("finite decimal reference");
         assert_eq!(value.lexeme().as_bytes(), expected.as_bytes());
-    }
-}
-
-fn algebra(input: &[u8], default_operation: AlgebraOp) {
-    let Some((&opcode, payload)) = input.split_first() else {
-        return;
-    };
-    let split = payload
-        .iter()
-        .position(|byte| *byte == 0)
-        .unwrap_or(payload.len() / 2);
-    let left = parser(&payload[..split]).database().clone();
-    let right_bytes = if split < payload.len() {
-        &payload[split + 1..]
-    } else {
-        &payload[split..]
-    };
-    let right = parser(right_bytes).database().clone();
-    let operation = match opcode % 4 {
-        0 => AlgebraOp::Union,
-        1 => AlgebraOp::Intersect,
-        2 => AlgebraOp::Difference,
-        _ => default_operation,
-    };
-    let keys = left
-        .iter()
-        .map(|(key, _)| key.clone())
-        .chain(right.iter().map(|(key, _)| key.clone()))
-        .collect::<std::collections::BTreeSet<_>>();
-    for key in keys {
-        let mut store = left
-            .get(&key)
-            .map_or_else(CoverageStore::new, |source| source.aggregate().clone());
-        let empty = CoverageStore::new();
-        let rhs = right.get(&key).map_or(&empty, |source| source.aggregate());
-        let result = match operation {
-            AlgebraOp::Union => store.union(rhs),
-            AlgebraOp::Intersect => store.intersect(rhs),
-            AlgebraOp::Difference => store.difference(rhs),
-        };
-        if result.is_ok() {
-            assert!(store.lines().len() <= HarnessBudget::CI_SMOKE.family_cardinality);
-            store
-                .functions()
-                .assert_indexes_coherent()
-                .expect("function indexes");
-            store
-                .branches()
-                .assert_invariants()
-                .expect("branch indexes");
-            store.mcdc().assert_invariants().expect("mcdc indexes");
-        }
     }
 }

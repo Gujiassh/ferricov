@@ -96,6 +96,15 @@ jobs:
           -p ferricov-tracefile tests_core009::deterministic_64_case_campaign_replays_all_named_targets
           -- --ignored --exact'
 
+      - name: Qualify CORE-009 worker timeout and RSS isolation
+        env:
+          TOOLCHAIN: ${{ matrix.toolchain }}
+        run: |
+          cargo +"$TOOLCHAIN" build --locked -p ferricov-tracefile --bin core009_worker
+          printf 'TN:t\nSF:x\nDA:1,1\nend_of_record\n' | timeout 2s target/debug/core009_worker normal
+          if timeout 2s target/debug/core009_worker sleep; then exit 1; else status=$?; test "$status" -eq 124 -o "$status" -eq 137; fi
+          if bash -c 'ulimit -v 524288; exec target/debug/core009_worker allocate 805306368'; then exit 1; fi
+
       - name: Run Clippy
         env:
           TOOLCHAIN: ${{ matrix.toolchain }}
