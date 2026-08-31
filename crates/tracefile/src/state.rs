@@ -37,7 +37,7 @@ pub struct SourceBinding {
 }
 
 /// Mutable parser binding state.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ParserState {
     /// Current test name (initial empty string).
     test_name: TestName,

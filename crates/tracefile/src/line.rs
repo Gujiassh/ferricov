@@ -113,11 +113,25 @@ pub struct LineSplitter {
     pending_cr: bool,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LineSplitterSnapshot {
+    pub buffered: Vec<u8>,
+    pub pending_cr: bool,
+}
+
 impl LineSplitter {
     /// Create an empty splitter.
     #[must_use]
     pub fn new() -> Self {
         Self::default()
+    }
+
+    #[must_use]
+    pub fn snapshot(&self) -> LineSplitterSnapshot {
+        LineSplitterSnapshot {
+            buffered: self.buf.clone(),
+            pending_cr: self.pending_cr,
+        }
     }
 
     /// Feed more input bytes and return completed raw lines (terminator excluded).

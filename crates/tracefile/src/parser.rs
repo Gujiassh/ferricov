@@ -7,7 +7,7 @@
 use ferricov_model::CoverageDatabase;
 
 use crate::classify::{LineClass, classify_line};
-use crate::line::{LineSplitter, RawLogicalLine, normalize_logical_line};
+use crate::line::{LineSplitter, LineSplitterSnapshot, RawLogicalLine, normalize_logical_line};
 use crate::policy::IgnorePolicy;
 use crate::records::{ApplyContext, ApplyResult, apply_event};
 use crate::state::{ParseEvent, ParserState};
@@ -27,6 +27,10 @@ impl Default for StreamingParser {
 }
 
 impl StreamingParser {
+    #[must_use]
+    pub fn splitter_snapshot(&self) -> LineSplitterSnapshot {
+        self.splitter.snapshot()
+    }
     /// Create a new parser with empty binding state and continue-on-error policy.
     #[must_use]
     pub fn new() -> Self {
@@ -58,6 +62,11 @@ impl StreamingParser {
     #[must_use]
     pub fn database(&self) -> &CoverageDatabase {
         self.apply.database()
+    }
+
+    /// Mutable model access for controlled transforms and semantic tests.
+    pub fn database_mut(&mut self) -> &mut CoverageDatabase {
+        &mut self.apply.db
     }
 
     /// Consume the parser and return the coverage database.
