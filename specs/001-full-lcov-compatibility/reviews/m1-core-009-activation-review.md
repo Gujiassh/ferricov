@@ -68,3 +68,27 @@ budget, it is outside this authorization.
 **GO** for `M1-CORE-009` only under the amended support matrix. Exclusions A–D
 remain open, all three model/tracefile IDs remain blocked, product evidence
 remains false, and CORE-010/011 remain unauthorized.
+
+## Independent Critical Acceptance
+
+Status: **ACCEPTED**
+Accepted activation commit: `b5a3a0f`
+Date: 2026-08-31
+
+The independent Critical re-audit accepted the activation contract after the
+machine JSON became the single normative authority, the Markdown projection
+became byte-exact and generated, and exclusions A-D were bound to live contract
+state.
+
+Acceptance evidence:
+
+- `python -m unittest compat.test_verify.M0StatusSnapshotTests`: 14 passed.
+- `python -m py_compile compat/verify.py compat/test_verify.py compat/status/generate_m1_activation_block.py`: passed.
+- `python compat/status/generate_m1_activation_block.py`: passed; immediate second generation was SHA-256 stable.
+- `python compat/status/generate_m0_status.py`: passed; immediate second generation was SHA-256 stable.
+- `git diff --check origin/main`: passed with no trailing whitespace.
+- Branch worktree at acceptance: clean.
+
+This acceptance authorizes only bounded `M1-CORE-009`. It does not clear
+`M1-MD-020`, `M1-TF-063`, or `M1-TF-064`; does not authorize CORE-010/011; and
+does not change `product_compatibility_evidence=false`.
