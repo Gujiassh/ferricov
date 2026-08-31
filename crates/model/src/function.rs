@@ -369,12 +369,10 @@ impl FunctionTable {
             let group = self.by_start.get_mut(&start).expect("contains_key");
             match (&group.end, end) {
                 (None, Some(new_end)) => group.end = Some(new_end),
-                (Some(cur), Some(new_end)) => {
+                (Some(cur), Some(new_end)) if end_is_greater(&new_end, cur) => {
                     // Retain greatest accepted end by numeric-ish lexeme compare
                     // when both look like plain integers; otherwise keep current.
-                    if end_is_greater(&new_end, cur) {
-                        group.end = Some(new_end);
-                    }
+                    group.end = Some(new_end);
                 }
                 _ => {}
             }
