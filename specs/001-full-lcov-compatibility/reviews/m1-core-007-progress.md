@@ -21,7 +21,7 @@ FN/FNDA input serializes as FNL/FNA. Serialization never mutates the model.
 
 ## Verification
 
-- `cargo test -p ferricov-tracefile`: 46 passed
+- `cargo test -p ferricov-tracefile`: 47 passed
 - `cargo test -p ferricov-model`: 48 passed
 - `cargo check --workspace --all-targets --locked`: passed with pre-existing warnings
 - `git diff --check`: passed
