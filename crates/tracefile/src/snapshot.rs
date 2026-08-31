@@ -4,11 +4,32 @@ use crate::{
     SerializationContext, SerializationError, StreamingParser,
 };
 use ferricov_model::{ByteString, CoverageDatabase};
+use ferricov_model::{AlgebraOp, CoverageStore, TestName};
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ContractNonSerializableReason {
+    AggregateTestcaseDivergence,
+    FamilyWithoutLineMembership,
+    ObservableTotals,
+    AlgebraFailure,
+    DisabledFamily,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ContractClassification {
+    Serializable,
+    NonSerializable(ContractNonSerializableReason),
+    BlockedOracleUnknown,
+}
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum NonSerializableReason {
+    Contract(ContractNonSerializableReason),
     Writer(SerializationError),
+    CanonicalParseRejected,
     RoundTripSemanticMismatch,
+    SecondWriter(SerializationError),
+    WriterFixedPointMismatch,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -56,6 +77,36 @@ pub struct SourceBindingProvenance {
     pub diagnostic_path: Option<ByteString>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TestNameProvenance {
+    pub identity: ByteString,
+    pub unsanitized: Option<ByteString>,
+}
+
+impl From<&TestName> for TestNameProvenance {
+    fn from(name: &TestName) -> Self {
+        Self {
+            identity: name.as_byte_string().clone(),
+            unsanitized: name.unsanitized().cloned(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TestcaseFamily {
+    Lines,
+    Functions,
+    Branches,
+    Mcdc,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TestcaseNameProvenance {
+    pub source_lookup_key: ByteString,
+    pub family: TestcaseFamily,
+    pub test_name: TestNameProvenance,
+}
+
 impl From<&crate::SourceBinding> for SourceBindingProvenance {
     fn from(binding: &crate::SourceBinding) -> Self {
         Self {
@@ -85,27 +136,20 @@ pub struct EvidenceSnapshot {
     pub source_provenance: Vec<SourceProvenance>,
     pub active_source_provenance: Option<SourceBindingProvenance>,
     pub open_source_provenance: Option<SourceBindingProvenance>,
+    pub current_test_name_provenance: TestNameProvenance,
+    pub active_test_name_provenance: Option<TestNameProvenance>,
+    pub open_test_name_provenance: Option<TestNameProvenance>,
+    pub testcase_name_provenance: Vec<TestcaseNameProvenance>,
+    /// Bytes produced by the first writer attempt. This remains present when
+    /// reparse, semantic equality, or fixed-point validation later fails.
+    pub attempted_output: Option<ByteString>,
     pub serializability: Serializability,
     pub process: Option<ProcessEvidence>,
 }
 impl EvidenceSnapshot {
     #[must_use]
     pub fn capture(parser: &StreamingParser, context: &SerializationContext<'_>) -> Self {
-        let serializability = match write_canonical(parser.database(), context) {
-            Ok(bytes) => {
-                let reconstructed = StreamingParser::parse_database(&bytes);
-                if SemanticSnapshot::capture(&reconstructed)
-                    .semantically_equal(&SemanticSnapshot::capture(parser.database()))
-                {
-                    Serializability::Serializable(ByteString::new(bytes))
-                } else {
-                    Serializability::NonSerializable(
-                        NonSerializableReason::RoundTripSemanticMismatch,
-                    )
-                }
-            }
-            Err(error) => Serializability::NonSerializable(NonSerializableReason::Writer(error)),
-        };
+        let (serializability, attempted_output) = classify_and_validate(parser, context);
         let source_provenance = parser
             .database()
             .iter()
@@ -114,6 +158,20 @@ impl EvidenceSnapshot {
                 diagnostic_path: source.identity().diagnostic_path().cloned(),
             })
             .collect();
+        let mut testcase_name_provenance = Vec::new();
+        for (source_key, source) in parser.database().iter() {
+            let mut push = |family, name: &TestName| {
+                testcase_name_provenance.push(TestcaseNameProvenance {
+                    source_lookup_key: ByteString::from_slice(source_key.as_bytes()),
+                    family,
+                    test_name: name.into(),
+                });
+            };
+            for name in source.testcases().lines().keys() { push(TestcaseFamily::Lines, name); }
+            for name in source.testcases().functions().keys() { push(TestcaseFamily::Functions, name); }
+            for name in source.testcases().branches().keys() { push(TestcaseFamily::Branches, name); }
+            for name in source.testcases().mcdc().keys() { push(TestcaseFamily::Mcdc, name); }
+        }
         Self {
             semantic: SemanticSnapshot::capture(parser.database()),
             parser_state: parser.state().clone(),
@@ -128,6 +186,18 @@ impl EvidenceSnapshot {
                 .open
                 .as_ref()
                 .map(|open| (&open.binding).into()),
+            current_test_name_provenance: parser.state().test_name().into(),
+            active_test_name_provenance: parser
+                .state()
+                .source()
+                .map(|binding| (&binding.bound_test_name).into()),
+            open_test_name_provenance: parser
+                .apply_context()
+                .open
+                .as_ref()
+                .map(|open| open.bound_test_name().into()),
+            testcase_name_provenance,
+            attempted_output,
             serializability,
             process: None,
         }
@@ -135,5 +205,130 @@ impl EvidenceSnapshot {
     #[must_use]
     pub fn semantically_equal(&self, other: &Self) -> bool {
         self.semantic.semantically_equal(&other.semantic)
+    }
+}
+
+/// Classify model/lifecycle shape without invoking the canonical writer.
+#[must_use]
+pub fn classify_contract(
+    parser: &StreamingParser,
+    context: &SerializationContext<'_>,
+) -> ContractClassification {
+    if parser.apply_context().repeated_close_observed {
+        return ContractClassification::BlockedOracleUnknown;
+    }
+    for (_, source) in parser.database().iter() {
+        if !source.observable_totals().is_empty() {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::ObservableTotals,
+            );
+        }
+        let line_names = source.testcases().lines();
+        if (!context.function_coverage_enabled
+            && (!source.aggregate().functions().is_empty()
+                || source.testcases().functions().values().any(|value| !value.is_empty())))
+            || (!context.branch_coverage_enabled
+                && (!source.aggregate().branches().is_empty()
+                    || source.testcases().branches().values().any(|value| !value.is_empty())))
+            || (!context.mcdc_coverage_enabled
+                && (!source.aggregate().mcdc().is_empty()
+                    || source.testcases().mcdc().values().any(|value| !value.is_empty())))
+        {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::DisabledFamily,
+            );
+        }
+        if source.testcases().functions().keys().any(|name| !line_names.contains_key(name))
+            || source.testcases().branches().keys().any(|name| !line_names.contains_key(name))
+            || source.testcases().mcdc().keys().any(|name| !line_names.contains_key(name))
+        {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::FamilyWithoutLineMembership,
+            );
+        }
+        let mut reconstructed = CoverageStore::new();
+        for coverage in source.testcases().lines().values() {
+            if reconstructed.lines_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
+                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            }
+        }
+        for coverage in source.testcases().functions().values() {
+            if reconstructed.functions_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
+                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            }
+        }
+        for coverage in source.testcases().branches().values() {
+            if reconstructed.branches_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
+                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            }
+        }
+        for coverage in source.testcases().mcdc().values() {
+            if reconstructed.mcdc_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
+                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            }
+        }
+        if &reconstructed != source.aggregate() {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::AggregateTestcaseDivergence,
+            );
+        }
+    }
+    ContractClassification::Serializable
+}
+
+fn classify_and_validate(
+    parser: &StreamingParser,
+    context: &SerializationContext<'_>,
+) -> (Serializability, Option<ByteString>) {
+    match classify_contract(parser, context) {
+        ContractClassification::BlockedOracleUnknown => {
+            (Serializability::BlockedOracleUnknown, None)
+        }
+        ContractClassification::NonSerializable(reason) => (
+            Serializability::NonSerializable(NonSerializableReason::Contract(reason)),
+            None,
+        ),
+        ContractClassification::Serializable => {
+            let bytes = match write_canonical(parser.database(), context) {
+                Ok(bytes) => bytes,
+                Err(error) => return (
+                    Serializability::NonSerializable(NonSerializableReason::Writer(error)),
+                    None,
+                ),
+            };
+            let attempted = ByteString::new(bytes.clone());
+            let mut reconstructed = StreamingParser::new();
+            let _ = reconstructed.parse_all(&bytes);
+            let clean = !reconstructed.stopped()
+                && reconstructed.state().diagnostics().is_empty()
+                && reconstructed.apply_context().open.is_none()
+                && reconstructed.splitter_snapshot().buffered.is_empty()
+                && !reconstructed.splitter_snapshot().pending_cr;
+            if !clean {
+                return (
+                    Serializability::NonSerializable(NonSerializableReason::CanonicalParseRejected),
+                    Some(attempted),
+                );
+            }
+            if !SemanticSnapshot::capture(reconstructed.database())
+                .semantically_equal(&SemanticSnapshot::capture(parser.database()))
+            {
+                return (
+                    Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch),
+                    Some(attempted),
+                );
+            }
+            match write_canonical(reconstructed.database(), context) {
+                Err(error) => (
+                    Serializability::NonSerializable(NonSerializableReason::SecondWriter(error)),
+                    Some(attempted),
+                ),
+                Ok(second) if second != bytes => (
+                    Serializability::NonSerializable(NonSerializableReason::WriterFixedPointMismatch),
+                    Some(attempted),
+                ),
+                Ok(_) => (Serializability::Serializable(attempted.clone()), Some(attempted)),
+            }
+        }
     }
 }

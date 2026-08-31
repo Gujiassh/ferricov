@@ -39,8 +39,10 @@ pub use policy::IgnorePolicy;
 pub use records::{apply_event, ApplyContext, ApplyResult};
 pub use section::{BranchCursor, OpenSection};
 pub use snapshot::{
-    EvidenceSnapshot, NonSerializableReason, ProcessEvidence, SemanticSnapshot, Serializability,
-    SourceBindingProvenance, SourceProvenance,
+    classify_contract, ContractClassification, ContractNonSerializableReason, EvidenceSnapshot,
+    NonSerializableReason, ProcessEvidence, SemanticSnapshot, Serializability,
+    SourceBindingProvenance, SourceProvenance, TestNameProvenance, TestcaseFamily,
+    TestcaseNameProvenance,
 };
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,

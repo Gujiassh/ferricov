@@ -1,7 +1,7 @@
 use crate::{
-    EvidenceSnapshot, IgnorePolicy, NonSerializableReason, Serializability, SerializationContext,
-    SerializationError, SourceBinding, SourceBindingProvenance, SourceProvenance, SourceTag,
-    StreamingParser,
+    ContractClassification, ContractNonSerializableReason, EvidenceSnapshot, IgnorePolicy,
+    NonSerializableReason, Serializability, SerializationContext, SerializationError,
+    SourceBinding, SourceBindingProvenance, SourceProvenance, SourceTag, StreamingParser,
 };
 use ferricov_model::{
     ByteString, CoverageCount, FunctionTable, LineKey, SourceIdentity, TestName, TotalState,
@@ -24,6 +24,13 @@ fn snapshot_is_stable_and_covers_arbitrary_numeric_and_provenance_bytes() {
         first.serializability,
         Serializability::Serializable(_)
     ));
+    assert_eq!(
+        first.attempted_output.as_ref(),
+        match &first.serializability {
+            Serializability::Serializable(bytes) => Some(bytes),
+            _ => None,
+        }
+    );
     assert!(!first.parser_state.diagnostics().is_empty());
 }
 
@@ -83,6 +90,7 @@ fn accepted_absent_branch_expression_has_typed_non_serializable_classification()
             SerializationError::BranchExpressionAbsent { edge_index: 0, .. }
         ))
     ));
+    assert!(snapshot.attempted_output.is_none());
     let numeric_expression = EvidenceSnapshot::capture(
         &parsed(b"TN:t\nSF:x\nBRDA:1,0,0,1\nDA:1,1\nend_of_record\n"),
         &SerializationContext::default(),
@@ -143,14 +151,26 @@ fn evidence_provenance_distinguishes_diagnostic_path_ignored_by_model_identity()
     );
 }
 
-fn assert_roundtrip_mismatch(case: &str, parser: &StreamingParser) {
+fn assert_contract_non_serializable(
+    case: &str,
+    parser: &StreamingParser,
+    expected: ContractNonSerializableReason,
+) {
+    assert_eq!(
+        crate::classify_contract(parser, &SerializationContext::default()),
+        ContractClassification::NonSerializable(expected),
+        "{case} declarative classifier"
+    );
     assert!(
         matches!(
             EvidenceSnapshot::capture(parser, &SerializationContext::default()).serializability,
-            Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
+            Serializability::NonSerializable(NonSerializableReason::Contract(reason))
+                if reason == expected
         ),
         "{case}"
     );
+    let snapshot = EvidenceSnapshot::capture(parser, &SerializationContext::default());
+    assert!(snapshot.attempted_output.is_none(), "{case} forced through writer");
 }
 
 #[test]
@@ -170,7 +190,11 @@ fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
         .aggregate_mut()
         .lines_mut()
         .insert(LineKey::from_lexeme("9"), CoverageCount::from_lexeme("7"));
-    assert_roundtrip_mismatch("aggregate divergence", &aggregate_divergence);
+    assert_contract_non_serializable(
+        "aggregate divergence",
+        &aggregate_divergence,
+        ContractNonSerializableReason::AggregateTestcaseDivergence,
+    );
 
     let mut lazy_family = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
     let key = lazy_family.database().iter().next().unwrap().0.clone();
@@ -180,7 +204,11 @@ fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
         .unwrap()
         .testcases_mut()
         .insert_functions(TestName::new("function-only"), FunctionTable::new());
-    assert_roundtrip_mismatch("lazy family", &lazy_family);
+    assert_contract_non_serializable(
+        "lazy family",
+        &lazy_family,
+        ContractNonSerializableReason::FamilyWithoutLineMembership,
+    );
 
     let mut populated_family = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
     let key = populated_family.database().iter().next().unwrap().0.clone();
@@ -198,9 +226,10 @@ fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
         .unwrap()
         .testcases_mut()
         .insert_functions(TestName::new("function-only"), functions);
-    assert_roundtrip_mismatch(
+    assert_contract_non_serializable(
         "populated family omitted without line membership",
         &populated_family,
+        ContractNonSerializableReason::FamilyWithoutLineMembership,
     );
 
     let mut totals = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
@@ -210,19 +239,44 @@ fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
         .get_mut(&key)
         .unwrap()
         .set_observable_totals(TotalState::from_payload("cached"));
-    assert_roundtrip_mismatch("observable totals", &totals);
+    assert_contract_non_serializable(
+        "observable totals",
+        &totals,
+        ContractNonSerializableReason::ObservableTotals,
+    );
 
     let late_tn = parsed(b"TN:A\nSF:x\nDA:1,1\nMCDC:2,1,t,1,0,a\nTN:B\nend_of_record\n");
-    assert_roundtrip_mismatch("late TN MC/DC", &late_tn);
+    assert_contract_non_serializable(
+        "late TN MC/DC",
+        &late_tn,
+        ContractNonSerializableReason::FamilyWithoutLineMembership,
+    );
 
     let repeated_close = parsed(
         b"TN:t\nSF:x\nDA:10,1\nDA:20,2\nend_of_record\nTN:t\nSF:x\nDA:10,3\nDA:30,4\nend_of_record\n",
     );
+    assert_eq!(
+        crate::classify_contract(&repeated_close, &SerializationContext::default()),
+        ContractClassification::BlockedOracleUnknown
+    );
+    let repeated = EvidenceSnapshot::capture(&repeated_close, &SerializationContext::default());
+    assert_eq!(repeated.serializability, Serializability::BlockedOracleUnknown);
+    assert!(repeated.attempted_output.is_none());
+}
+
+#[test]
+fn attempted_output_survives_post_write_semantic_rejection() {
+    let parser = parsed(b"TN:t\nSF:x\n");
+    assert_eq!(
+        crate::classify_contract(&parser, &SerializationContext::default()),
+        ContractClassification::Serializable
+    );
+    let evidence = EvidenceSnapshot::capture(&parser, &SerializationContext::default());
     assert!(matches!(
-        EvidenceSnapshot::capture(&repeated_close, &SerializationContext::default())
-            .serializability,
-        Serializability::Serializable(_)
+        evidence.serializability,
+        Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
     ));
+    assert_eq!(evidence.attempted_output.unwrap().as_bytes(), b"");
 }
 
 #[test]
@@ -235,4 +289,41 @@ fn blocked_oracle_unknown_is_distinct_from_decided_classifications() {
         Serializability::BlockedOracleUnknown,
         Serializability::Serializable(ByteString::from_slice(b""))
     );
+}
+
+#[test]
+fn tn_provenance_is_explicit_for_current_active_open_and_testcase_contexts() {
+    let open = parsed(b"TN:a-b\nSF:x\nDA:1,1\n");
+    let evidence = EvidenceSnapshot::capture(&open, &SerializationContext::default());
+    assert_eq!(evidence.current_test_name_provenance.identity.as_bytes(), b"a_b");
+    assert_eq!(
+        evidence.current_test_name_provenance.unsanitized.as_ref().map(ByteString::as_bytes),
+        Some(b"a-b".as_slice())
+    );
+    assert_eq!(
+        evidence.active_test_name_provenance.as_ref().unwrap().unsanitized.as_ref().map(ByteString::as_bytes),
+        Some(b"a-b".as_slice())
+    );
+    assert_eq!(
+        evidence.open_test_name_provenance.as_ref().unwrap().unsanitized.as_ref().map(ByteString::as_bytes),
+        Some(b"a-b".as_slice())
+    );
+
+    let closed = EvidenceSnapshot::capture(
+        &parsed(b"TN:a-b\nSF:x\nDA:1,1\nend_of_record\n"),
+        &SerializationContext::default(),
+    );
+    assert!(closed.testcase_name_provenance.iter().all(|entry| {
+        entry.test_name.identity.as_bytes() == b"a_b"
+            && entry.test_name.unsanitized.as_ref().map(ByteString::as_bytes)
+                == Some(b"a-b".as_slice())
+    }));
+
+    let clean = EvidenceSnapshot::capture(
+        &parsed(b"TN:a_b\nSF:x\nDA:1,1\nend_of_record\n"),
+        &SerializationContext::default(),
+    );
+    assert!(closed.semantically_equal(&clean));
+    assert_ne!(closed.current_test_name_provenance, clean.current_test_name_provenance);
+    assert_ne!(closed.testcase_name_provenance, clean.testcase_name_provenance);
 }

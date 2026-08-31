@@ -21,33 +21,39 @@ section/indexes, ignore policy/stopped state, line-splitter buffer and pending-C
 state, source diagnostic-path provenance excluded from model identity, and
 canonical bytes or typed nonserializability. Active parser bindings and open
 section bindings retain both raw path bytes and optional `diagnostic_path`.
+Current parser, active binding, open-section binding, and every stored testcase
+family key also carry an explicit `TestNameProvenance` projection containing the
+semantic name plus optional raw unsanitized `TN` bytes.
+The envelope stores `attempted_output: Option<ByteString>` independently from
+classification, so bytes remain inspectable after post-write rejection.
 `ProcessEvidence` explicitly models optional stdout/stderr/exit status;
 in-process capture truthfully leaves it `None`.
 
 ## Serializability Classification
 
-Writer success is necessary but not sufficient. Evidence capture writes the
-canonical bytes, parses those bytes into a fresh `CoverageDatabase`, and compares
-the reconstructed `SemanticSnapshot` with the original. Only semantic equality
-produces `Serializability::Serializable(bytes)`. Writer failures retain their
-typed `SerializationError`; a successful write that loses semantics produces
-`NonSerializable(RoundTripSemanticMismatch)`.
+`classify_contract` is an independent, declarative pre-writer gate. It compares
+aggregate stores with testcase-family reconstruction, rejects family keys that
+cannot be emitted without line membership, rejects opaque observable totals and
+context-disabled populated families, and uses retained close history to return
+`BlockedOracleUnknown` for repeated-close lifecycle cases. A contract-level
+`NonSerializable` or blocked model is never passed to the writer and therefore
+has no attempted output bytes.
 
-`BlockedOracleUnknown` is a third, explicit contract-corpus outcome for a case
-whose governing Oracle behavior has not been qualified. Evidence capture never
-guesses this result from writer success or failure: decided models are always
-classified by write, fresh parse, and exact semantic equality. This keeps a
-blocked case distinct from a proven lossy model.
+Only a provisionally `Serializable` model reaches the writer. The produced bytes
+are retained immediately, then parsed through a fresh full `StreamingParser`.
+Acceptance requires no stop, diagnostics, open section, buffered bytes, or
+pending CR; exact semantic database equality; and a byte-identical second write.
+Parse rejection, semantic mismatch, second-writer failure, and fixed-point
+mismatch are separately typed without erasing the first attempted bytes.
 
 Focused inverse coverage includes aggregate/testcase divergence, family presence
 without line membership (both populated and lazy empty function maps), late-`TN` MC/DC,
 observable totals, and the repeated-close lifecycle fixture. The repeated-close
-fixture is explicitly accepted as serializable only because the reconstructed
-model is equal; it is not inferred from writer success.
+fixture is explicitly `BlockedOracleUnknown` before writer invocation.
 
 ## Verification
 
-- `cargo test -p ferricov-tracefile`: 55 passed
+- `cargo test -p ferricov-tracefile`: 57 passed
 - `cargo test -p ferricov-model`: 48 passed
 - `cargo check --workspace --all-targets --locked`: passed with the existing
   unused `workdir` warning in the Oracle test target

@@ -5,8 +5,9 @@
 
 use ferricov_model::{
     BranchEdge, BranchTaken, ByteString, CoverageCount, CoverageDatabase, GroupSizeKey, LineKey,
-    NumericAtom,
+    NumericAtom, SourceLookupKey, TestName,
 };
+use std::collections::BTreeSet;
 
 use crate::classify::RecordTag;
 use crate::commit::{commit_section, ensure_source, CommitOutcome};
@@ -38,6 +39,11 @@ pub struct ApplyContext {
     pub policy: IgnorePolicy,
     /// Stopped after hard-fail or Stop-policy ignorable.
     pub stopped: bool,
+    /// Successfully closed source/test bindings, retained for contract
+    /// classification of lifecycle-dependent repeated-close models.
+    pub closed_bindings: BTreeSet<(SourceLookupKey, TestName)>,
+    /// At least one source/test binding was committed more than once.
+    pub repeated_close_observed: bool,
 }
 
 impl Default for ApplyContext {
@@ -55,6 +61,8 @@ impl ApplyContext {
             open: None,
             policy,
             stopped: false,
+            closed_bindings: BTreeSet::new(),
+            repeated_close_observed: false,
         }
     }
 
@@ -137,6 +145,13 @@ fn apply_terminator(
     let line_no = state.line_no();
     match commit_section(&mut ctx.db, &mut open, &current_tn, line_no) {
         CommitOutcome::Committed | CommitOutcome::Noop => {
+            let close_key = (
+                open.identity().lookup_key().clone(),
+                open.bound_test_name().clone(),
+            );
+            if !ctx.closed_bindings.insert(close_key) {
+                ctx.repeated_close_observed = true;
+            }
             // Oracle does not fully clear source binding; keep last binding on
             // ParserState but drop working buffers. Re-open is not automatic.
             ctx.open = None;

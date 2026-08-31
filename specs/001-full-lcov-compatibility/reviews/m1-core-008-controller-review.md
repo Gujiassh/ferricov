@@ -10,12 +10,12 @@ separately compares parser/run facts. No diagnostic, raw provenance, policy,
 transport buffer, output bytes, or serializability fact silently changes model
 semantic equality.
 
-Serializability is fail-closed: canonical writer success is followed by parsing
-the canonical bytes into a fresh database and comparing the reconstructed model
-with the original semantic snapshot. Only an equal reconstruction is
-`Serializable`; writer errors and round-trip semantic mismatch are distinct typed
-non-serializable reasons. `BlockedOracleUnknown` is a separate representable
-contract-corpus outcome and is never guessed from a decided round trip.
+Serializability is fail-closed in two stages. First, a declarative contract table
+classifies model shape and retained close lifecycle before any writer call;
+non-serializable and repeated-close/Oracle-unknown states skip the writer. Second,
+provisional serializable states require clean full-parser acceptance, exact
+semantic equality, and byte-identical second-write fixed point. The first output
+bytes remain explicit evidence even when a post-write check fails.
 
 ## Checklist
 
@@ -24,12 +24,12 @@ contract-corpus outcome and is never guessed from a decided round trip.
 | Semantic/evidence schema split | pass | distinct public snapshot types |
 | Aggregate/testcase/empty identity | pass | structural database equality and inverse classification tests |
 | Index/order/totals/numeric bytes | pass | database internals plus reverse tests |
-| Diagnostic/provenance envelope | pass | parser state plus database, active-binding, and open-binding provenance |
+| Diagnostic/provenance envelope | pass | source plus current/active/open/testcase `TN` provenance |
 | Streaming in-flight state | pass | splitter buffer and pending CR captured |
 | Process ownership | pass | optional explicit process evidence; capture leaves it `None` |
-| Output classification | pass | write → parse → semantic compare; typed writer/mismatch outcomes |
+| Output classification | pass | contract pre-gate → write → clean parse → semantic compare → fixed point |
 | Product evidence | pass | unchanged and false |
-| Focused gates | pass | tracefile 55, model 48, workspace check, diff check |
+| Focused gates | pass | tracefile 57, model 48, workspace check, diff check |
 | Hosted gates | residual | unchanged Windows/Docker limitations |
 
 ## Reverse Review
@@ -40,12 +40,12 @@ splitter buffer, then finish deterministically. Two `SourceIdentity` values with
 different diagnostic paths remain semantically equal while source provenance is
 unequal; active and open `SourceBinding` provenance is retained independently.
 
-Classification tests force semantic losses after successful canonical writing:
+Classification tests reject before canonical writing:
 aggregate/testcase divergence, populated function-family presence without line
-membership, lazy empty family state, observable totals, and late-`TN` MC/DC must report
-`RoundTripSemanticMismatch`. The repeated-close lifecycle fixture must be decided
-by the same round-trip comparison and is serializable only when reconstruction is
-actually equal. Absent branch expressions remain typed writer failures.
+membership, lazy empty family state, observable totals, and late-`TN` MC/DC.
+Repeated close reaches `BlockedOracleUnknown` and has no attempted output.
+Provisional post-write semantic rejection retains its exact attempted bytes;
+absent branch expressions remain typed writer failures with no bytes.
 
 ## Residual Risk
 
