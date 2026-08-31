@@ -60,7 +60,9 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
                     let mut found = 0usize;
                     let mut hit = 0usize;
                     let mut branch_lines: Vec<_> = branches.lines().collect();
-                    branch_lines.sort_by(|(left, _), (right, _)| numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes()));
+                    branch_lines.sort_by(|(left, _), (right, _)| {
+                        numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes())
+                    });
                     for (line, branch_line) in branch_lines {
                         let mut blocks: Vec<_> = branch_line.blocks().iter().enumerate().collect();
                         blocks.sort_by(|(ai, a), (bi, b)| {
@@ -119,7 +121,9 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
             }
             let mut hit = 0usize;
             let mut ordered_lines: Vec<_> = lines.iter().collect();
-            ordered_lines.sort_by(|(left, _), (right, _)| numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes()));
+            ordered_lines.sort_by(|(left, _), (right, _)| {
+                numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes())
+            });
             for (line, count) in ordered_lines {
                 push(&mut out, b"DA:");
                 push(&mut out, line.lexeme().as_bytes());
@@ -146,7 +150,9 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
 
 fn write_functions(out: &mut Vec<u8>, functions: &FunctionTable) {
     let mut groups: Vec<_> = functions.groups().collect();
-    groups.sort_by(|(left, _), (right, _)| numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes()));
+    groups.sort_by(|(left, _), (right, _)| {
+        numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes())
+    });
     for (index, (_, group)) in groups.into_iter().enumerate() {
         push(out, b"FNL:");
         push(out, index.to_string().as_bytes());
@@ -175,7 +181,9 @@ fn write_mcdc(out: &mut Vec<u8>, mcdc: &McdcCoverage) {
     let mut found = 0usize;
     let mut hit = 0usize;
     let mut lines: Vec<_> = mcdc.lines().collect();
-    lines.sort_by(|(left, _), (right, _)| numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes()));
+    lines.sort_by(|(left, _), (right, _)| {
+        numeric_bytes_cmp(left.lexeme().as_bytes(), right.lexeme().as_bytes())
+    });
     for (line, data) in lines {
         for (size, expressions) in data.iter_groups() {
             for (index, expression) in expressions.iter().enumerate() {
@@ -234,4 +242,88 @@ fn push_record(out: &mut Vec<u8>, tag: &[u8], value: &[u8]) {
 fn push(out: &mut Vec<u8>, bytes: &[u8]) {
     out.extend_from_slice(bytes);
 }
-\n#[derive(Debug)]\nstruct DecimalOrder { negative: bool, digits: Vec<u8>, integer_digits: i64 }\n\nfn numeric_bytes_cmp(left: &[u8], right: &[u8]) -> Ordering {\n    match (decimal_order(left), decimal_order(right)) {\n        (Some(l), Some(r)) => compare_decimal_order(&l, &r),\n        _ => left.cmp(right),\n    }\n}\n\nfn decimal_order(raw: &[u8]) -> Option<DecimalOrder> {\n    let text = std::str::from_utf8(raw).ok()?.trim();\n    let (negative, unsigned) = if let Some(rest) = text.strip_prefix('-') { (true, rest) }\n        else if let Some(rest) = text.strip_prefix('+') { (false, rest) } else { (false, text) };\n    let (mantissa, exponent) = if let Some(index) = unsigned.find(['e', 'E']) {\n        (&unsigned[..index], unsigned[index + 1..].parse::<i64>().ok()?)\n    } else { (unsigned, 0) };\n    let (whole, fraction) = mantissa.split_once('.').unwrap_or((mantissa, ""));\n    if whole.is_empty() && fraction.is_empty() || !whole.bytes().chain(fraction.bytes()).all(|b| b.is_ascii_digit()) { return None; }\n    let mut digits: Vec<u8> = whole.bytes().chain(fraction.bytes()).collect();\n    let leading = digits.iter().position(|b| *b != b'0').unwrap_or(digits.len());\n    digits.drain(..leading);\n    if digits.is_empty() { return Some(DecimalOrder { negative: false, digits: vec![b'0'], integer_digits: 1 }); }\n    Some(DecimalOrder { negative, digits, integer_digits: i64::try_from(whole.len()).ok()? + exponent - i64::try_from(leading).ok()? })\n}\n\nfn compare_decimal_order(left: &DecimalOrder, right: &DecimalOrder) -> Ordering {\n    if left.negative != right.negative { return if left.negative { Ordering::Less } else { Ordering::Greater }; }\n    let magnitude = left.integer_digits.cmp(&right.integer_digits).then_with(|| {\n        let length = left.digits.len().max(right.digits.len());\n        (0..length).map(|i| *left.digits.get(i).unwrap_or(&b'0')).cmp((0..length).map(|i| *right.digits.get(i).unwrap_or(&b'0')))\n    });\n    if left.negative { magnitude.reverse() } else { magnitude }\n}\n
+
+#[derive(Debug)]
+struct DecimalOrder {
+    negative: bool,
+    digits: Vec<u8>,
+    integer_digits: i64,
+}
+
+fn numeric_bytes_cmp(left: &[u8], right: &[u8]) -> Ordering {
+    match (decimal_order(left), decimal_order(right)) {
+        (Some(l), Some(r)) => compare_decimal_order(&l, &r),
+        _ => left.cmp(right),
+    }
+}
+
+fn decimal_order(raw: &[u8]) -> Option<DecimalOrder> {
+    let text = std::str::from_utf8(raw).ok()?.trim();
+    let (negative, unsigned) = if let Some(rest) = text.strip_prefix('-') {
+        (true, rest)
+    } else if let Some(rest) = text.strip_prefix('+') {
+        (false, rest)
+    } else {
+        (false, text)
+    };
+    let (mantissa, exponent) = if let Some(index) = unsigned.find(['e', 'E']) {
+        (
+            &unsigned[..index],
+            unsigned[index + 1..].parse::<i64>().ok()?,
+        )
+    } else {
+        (unsigned, 0)
+    };
+    let (whole, fraction) = mantissa.split_once('.').unwrap_or((mantissa, ""));
+    if whole.is_empty() && fraction.is_empty()
+        || !whole
+            .bytes()
+            .chain(fraction.bytes())
+            .all(|b| b.is_ascii_digit())
+    {
+        return None;
+    }
+    let mut digits: Vec<u8> = whole.bytes().chain(fraction.bytes()).collect();
+    let leading = digits
+        .iter()
+        .position(|b| *b != b'0')
+        .unwrap_or(digits.len());
+    digits.drain(..leading);
+    if digits.is_empty() {
+        return Some(DecimalOrder {
+            negative: false,
+            digits: vec![b'0'],
+            integer_digits: 1,
+        });
+    }
+    Some(DecimalOrder {
+        negative,
+        digits,
+        integer_digits: i64::try_from(whole.len()).ok()? + exponent
+            - i64::try_from(leading).ok()?,
+    })
+}
+
+fn compare_decimal_order(left: &DecimalOrder, right: &DecimalOrder) -> Ordering {
+    if left.negative != right.negative {
+        return if left.negative {
+            Ordering::Less
+        } else {
+            Ordering::Greater
+        };
+    }
+    let magnitude = left
+        .integer_digits
+        .cmp(&right.integer_digits)
+        .then_with(|| {
+            let length = left.digits.len().max(right.digits.len());
+            (0..length)
+                .map(|i| *left.digits.get(i).unwrap_or(&b'0'))
+                .cmp((0..length).map(|i| *right.digits.get(i).unwrap_or(&b'0')))
+        });
+    if left.negative {
+        magnitude.reverse()
+    } else {
+        magnitude
+    }
+}
