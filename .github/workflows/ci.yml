@@ -15,6 +15,33 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  core-009-fuzz-smoke:
+    name: CORE-009 Fuzz Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Install nightly fuzz toolchain
+        run: |
+          rustup toolchain install nightly --profile minimal
+          cargo +nightly install cargo-fuzz --version 0.13.1 --locked
+      - name: Replay permanent corpus with bounded libFuzzer smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          targets=(
+            m1_fz_lex_001 m1_fz_stateful_001 m1_fz_writer_001
+            m1_fz_roundtrip_001 m1_fz_numeric_001 m1_fz_line_algebra_001
+            m1_fz_function_algebra_001 m1_fz_branch_algebra_001
+            m1_fz_mcdc_algebra_001
+          )
+          for target in "${targets[@]}"; do
+            timeout --signal=KILL 60s cargo +nightly fuzz run "$target" \
+              "fuzz/corpus/$target" -- \
+              -runs=64 -timeout=2 -rss_limit_mb=512 -max_len=1048576
+          done
+
   rust:
     name: Rust ${{ matrix.toolchain }}
     runs-on: ubuntu-latest

@@ -17,6 +17,7 @@
 mod classify;
 mod commit;
 mod diag;
+pub mod fuzzing;
 mod line;
 mod parser;
 mod policy;
@@ -59,3 +60,5 @@ mod tests_core006;
 mod tests_core007;
 #[cfg(test)]
 mod tests_core008;
+#[cfg(test)]
+mod tests_core009;

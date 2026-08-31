@@ -268,7 +268,7 @@ Authorized now:
 
 Authorized next:
 
-- [ ] `M1-CORE-009`: implement named deterministic properties, bounded fuzz targets, hard safety budgets, and minimized regressions without closing the blocked IDs by activation alone.
+- [ ] `M1-CORE-009`: implementation complete on `feat/m1-core-009-properties-fuzzing`; Critical review pending. Seven deterministic properties, nine bounded libFuzzer targets, permanent seed corpus, and hosted smoke integration are present. Blocked IDs remain open.
 
 Still gated:
 

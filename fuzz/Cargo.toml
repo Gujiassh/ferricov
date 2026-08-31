@@ -1,0 +1,75 @@
+[package]
+name = "ferricov-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+ferricov-tracefile = { path = "../crates/tracefile" }
+
+[[bin]]
+name = "m1_fz_lex_001"
+path = "fuzz_targets/m1_fz_lex_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_stateful_001"
+path = "fuzz_targets/m1_fz_stateful_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_writer_001"
+path = "fuzz_targets/m1_fz_writer_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_roundtrip_001"
+path = "fuzz_targets/m1_fz_roundtrip_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_numeric_001"
+path = "fuzz_targets/m1_fz_numeric_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_line_algebra_001"
+path = "fuzz_targets/m1_fz_line_algebra_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_function_algebra_001"
+path = "fuzz_targets/m1_fz_function_algebra_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_branch_algebra_001"
+path = "fuzz_targets/m1_fz_branch_algebra_001.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "m1_fz_mcdc_algebra_001"
+path = "fuzz_targets/m1_fz_mcdc_algebra_001.rs"
+test = false
+doc = false
+bench = false
