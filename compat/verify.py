@@ -76,6 +76,155 @@ EXPECTED_POLICY_SOURCE_PATHS = {
 }
 
 
+
+_REQUIRED_MODEL_BLOCKED_CASE_IDS = ["M1-MD-020", "M1-TF-063", "M1-TF-064"]
+_REQUIRED_AUTHORIZED_TASKS = [
+    *[{"id": f"M1-CORE-{index:03d}", "state": "completed"} for index in range(1, 9)],
+    {"id": "M1-CORE-009", "state": "authorized_bounded"},
+]
+_REQUIRED_UNAUTHORIZED_TASKS = [
+    {"id": "M1-CORE-010", "state": "unauthorized"},
+    {"id": "M1-CORE-011", "state": "unauthorized"},
+]
+_REQUIRED_EXCLUSIONS = {
+    "A": [
+        "command.geninfo.option.compat-libtool",
+        "command.lcov.option.compat-libtool",
+        "command.perl2lcov.option.preserve",
+        "lcovrc.rtl-file-extensions",
+        "lcovrc.geninfo-compat-libtool",
+        "lcovrc.geninfo-gcov-all-blocks",
+        "lcovrc.geninfo-interval-update",
+    ],
+    "B": [
+        "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
+        "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
+        "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001",
+    ],
+    "C": _REQUIRED_MODEL_BLOCKED_CASE_IDS,
+    "D": ["product_compatibility_evidence_false"],
+}
+_REQUIRED_NON_NEGOTIABLES = [
+    "signed_na_not_hollow_closed",
+    "ferricov_ids_not_oracle_bound",
+    "blocked_case_ids_retained",
+    "oracle_identity_not_relaxed",
+    "ownership_not_widened",
+    "deterministic_budgets_required",
+    "core_010_011_unauthorized",
+]
+_REQUIRED_ACTIVATION_SIGNATURE = (
+    "conditional-m1-core-001-through-009-only;core-009-bounded;"
+    "exclusions-a-d-open;core-010-011-unauthorized;product-evidence-false"
+)
+_REQUIRED_BUDGETS = {
+    "classification": "harness_safety_only_not_product_limits",
+    "ci_smoke": {
+        "input_bytes": 1_048_576, "field_bytes": 262_144, "records": 65_536,
+        "sections": 65_536, "family_cardinality": 65_536,
+        "per_case_seconds": 2, "worker_rss_bytes": 536_870_912,
+        "per_target_seconds": 60,
+    },
+    "scheduled": {
+        "input_bytes": 16_777_216, "field_bytes": 1_048_576,
+        "records": 1_000_000, "sections": 65_536,
+        "family_cardinality": 1_000_000, "per_case_seconds": 10,
+        "worker_rss_bytes": 1_073_741_824, "per_target_seconds": 900,
+    },
+}
+_ACTIVATION_BLOCK_START = "<!-- BEGIN GENERATED M1 ACTIVATION CONTRACT -->"
+_ACTIVATION_BLOCK_END = "<!-- END GENERATED M1 ACTIVATION CONTRACT -->"
+
+
+def _render_m1_activation_block(document: dict[str, object]) -> str:
+    lines = [
+        _ACTIVATION_BLOCK_START,
+        "## Generated normative activation contract",
+        "",
+        "This block is generated from `m1-v0.1-support-matrix.activation.json`.",
+        "No authorization claim outside this block is normative.",
+        "",
+        f"- Status: `{document['status']}`",
+        f"- Signature: `{document['signature']}`",
+        "- Product compatibility evidence: `false`",
+        "- Budgets: harness safety controls only; never product limits",
+        "",
+        "### Authorized tasks",
+    ]
+    lines.extend(
+        f"- `{task['id']}`: `{task['state']}`"
+        for task in document["authorized_tasks"]
+    )
+    lines.extend(["", "### Unauthorized tasks"])
+    lines.extend(
+        f"- `{task['id']}`: `{task['state']}`"
+        for task in document["unauthorized_tasks"]
+    )
+    lines.extend(["", "### Exclusions A-D"])
+    for group, ids in document["exclusions"].items():
+        lines.append(f"- {group}: " + ", ".join(f"`{case_id}`" for case_id in ids))
+    lines.extend(["", "### Non-negotiables"])
+    lines.extend(f"- `{item}`" for item in document["non_negotiables"])
+    lines.extend(["", "### Deterministic harness budgets"])
+    for lane in ("ci_smoke", "scheduled"):
+        values = document["budgets"][lane]
+        rendered = ", ".join(f"{key}={value}" for key, value in values.items())
+        lines.append(f"- `{lane}`: {rendered}")
+    lines.append(_ACTIVATION_BLOCK_END)
+    return "\n".join(lines)
+
+
+def _load_m1_activation_contract(root: Path, markdown_text: str) -> dict[str, object]:
+    relative = "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.activation.json"
+    required_link = (
+        "Machine authority: "
+        "[`m1-v0.1-support-matrix.activation.json`]"
+        "(m1-v0.1-support-matrix.activation.json)"
+    )
+    if markdown_text.count(required_link) != 1:
+        raise RuntimeError("support matrix must bind exactly one machine activation contract")
+    path = root / relative
+    if not path.is_file():
+        raise RuntimeError("support matrix machine activation contract is missing")
+    raw = path.read_text(encoding="utf-8")
+    document = json.loads(raw)
+    if raw != json.dumps(document, indent=2, sort_keys=True) + "\n":
+        raise RuntimeError("support matrix activation contract is not canonical JSON")
+    expected_scalars = {
+        "schema_version": 1,
+        "kind": "m1_v0_1_support_matrix_activation",
+        "status": "active",
+        "markdown": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
+        "signature": _REQUIRED_ACTIVATION_SIGNATURE,
+    }
+    for key, expected in expected_scalars.items():
+        if document.get(key) != expected:
+            raise RuntimeError(f"support matrix activation contract has invalid {key}")
+    expected_keys = {
+        "schema_version", "kind", "status", "markdown", "authorized_tasks",
+        "unauthorized_tasks", "exclusions", "non_negotiables", "budgets", "signature",
+    }
+    if set(document) != expected_keys:
+        raise RuntimeError("support matrix activation contract has unexpected or missing keys")
+    if document.get("authorized_tasks") != _REQUIRED_AUTHORIZED_TASKS:
+        raise RuntimeError("support matrix must authorize exactly CORE-001 through CORE-009")
+    if document.get("unauthorized_tasks") != _REQUIRED_UNAUTHORIZED_TASKS:
+        raise RuntimeError("support matrix must explicitly keep CORE-010 and CORE-011 unauthorized")
+    if document.get("exclusions") != _REQUIRED_EXCLUSIONS:
+        raise RuntimeError("support matrix exclusions A-D are missing, duplicated, or changed")
+    if document.get("non_negotiables") != _REQUIRED_NON_NEGOTIABLES:
+        raise RuntimeError("support matrix non-negotiables are missing, duplicated, or changed")
+    if document.get("budgets") != _REQUIRED_BUDGETS:
+        raise RuntimeError("support matrix deterministic budgets are missing or changed")
+    if markdown_text.count(_ACTIVATION_BLOCK_START) != 1 or markdown_text.count(_ACTIVATION_BLOCK_END) != 1:
+        raise RuntimeError("support matrix must contain exactly one generated activation block")
+    start = markdown_text.index(_ACTIVATION_BLOCK_START)
+    end = markdown_text.index(_ACTIVATION_BLOCK_END) + len(_ACTIVATION_BLOCK_END)
+    actual_block = markdown_text[start:end]
+    if actual_block != _render_m1_activation_block(document):
+        raise RuntimeError("support matrix generated activation block differs from machine contract")
+    return document
+
 def build_m0_status_snapshot(root: Path) -> dict[str, object]:
     behavior = json.loads(
         (root / "compat/behavior/contract.json").read_text(encoding="utf-8")
@@ -165,6 +314,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
     go_no_go = root / "specs/001-full-lcov-compatibility/m0-go-no-go.md"
     support_matrix = root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
     m1_authorized = False
+    m1_authorized_task_ids: list[str] = []
     if not go_no_go.is_file():
         blockers.append(
             {
@@ -206,17 +356,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
                 )
             else:
                 matrix_text = support_matrix.read_text(encoding="utf-8")
-                if "Status: **ACTIVE**" not in matrix_text:
-                    blockers.append(
-                        {
-                            "id": "m1_support_matrix_inactive",
-                            "kind": "process",
-                            "detail": (
-                                "m1-v0.1-support-matrix.md exists but is not ACTIVE."
-                            ),
-                        }
-                    )
-                elif any_product:
+                if any_product:
                     blockers.append(
                         {
                             "id": "product_compatibility_evidence_blocks_conditional_go",
@@ -229,6 +369,39 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
                     )
                 else:
                     m1_authorized = True
+                    activation = _load_m1_activation_contract(root, matrix_text)
+                    live_behavior_gap_ids: list[str] = []
+                    for case_group in behavior.get("case_groups") or []:
+                        if case_group.get("review_status") == "reviewed":
+                            continue
+                        primary = [
+                            str(target["id"])
+                            for target in case_group.get("targets") or []
+                            if target.get("role") == "primary"
+                        ]
+                        if len(primary) != 1:
+                            raise RuntimeError(
+                                "each live unreviewed behavior gap must have one primary ID"
+                            )
+                        live_behavior_gap_ids.extend(primary)
+                    live_behavior_gap_ids.sort()
+                    if sorted(activation["exclusions"]["A"]) != live_behavior_gap_ids:
+                        raise RuntimeError(
+                            "support matrix exclusion A must equal exact live behavior gap IDs"
+                        )
+                    if sorted(activation["exclusions"]["B"]) != unbound:
+                        raise RuntimeError(
+                            "support matrix exclusion B must equal exact live unbound diagnostics IDs"
+                        )
+                    live_blocked_case_ids = list(model.get("blocked_case_ids") or [])
+                    if live_blocked_case_ids != _REQUIRED_MODEL_BLOCKED_CASE_IDS:
+                        raise RuntimeError(
+                            "conditional CORE-009 authorization requires exact live "
+                            "blocked_case_ids M1-MD-020/M1-TF-063/M1-TF-064"
+                        )
+                    m1_authorized_task_ids = [
+                        str(task["id"]) for task in activation["authorized_tasks"]
+                    ]
                     # Keep residual/model blockers visible, but mark them as
                     # matrix-excluded deferred work rather than hard process stops.
                     for blocker in blockers:
@@ -241,9 +414,11 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
                         }:
                             blocker["activation_treatment"] = "excluded_by_m1_v0_1_support_matrix"
                             blocker["blocks_m1_core_001_008"] = False
+                            blocker["blocks_authorized_m1_core_tasks"] = False
                         if blocker.get("id") == "product_compatibility_evidence_false":
                             blocker["activation_treatment"] = "required_false_under_conditional_go"
                             blocker["blocks_m1_core_001_008"] = False
+                            blocker["blocks_authorized_m1_core_tasks"] = False
         else:
             blockers.append(
                 {
@@ -255,7 +430,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
                 }
             )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "kind": "m0_status_snapshot",
         "upstream_release": "v2.5",
         "upstream_commit": "74c8eabbb36d7cf2454d3f0ea37bf1337641cbc5",
@@ -268,6 +443,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
             "inventory_pins": "compat/inventory/expected-pins.v2.5.json",
             "m0_go_no_go": "specs/001-full-lcov-compatibility/m0-go-no-go.md",
             "m1_v0_1_support_matrix": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
+            "m1_v0_1_activation_contract": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.activation.json",
         },
         "behavior": {
             "public_inventory_entries": totals["public_inventory_entries"],
@@ -291,6 +467,7 @@ def build_m0_status_snapshot(root: Path) -> dict[str, object]:
         "product_compatibility_evidence": False if not any_product else True,
         "product_compatibility_evidence_by_source": product_flags,
         "m1_authorized": m1_authorized,
+        "m1_authorized_task_ids": m1_authorized_task_ids,
         "m1_activation_blockers": blockers,
         "model_blocked_case_ids": list(model.get("blocked_case_ids") or []),
     }

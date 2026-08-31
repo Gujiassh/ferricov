@@ -1,0 +1,111 @@
+{
+  "authorized_tasks": [
+    {
+      "id": "M1-CORE-001",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-002",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-003",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-004",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-005",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-006",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-007",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-008",
+      "state": "completed"
+    },
+    {
+      "id": "M1-CORE-009",
+      "state": "authorized_bounded"
+    }
+  ],
+  "budgets": {
+    "ci_smoke": {
+      "family_cardinality": 65536,
+      "field_bytes": 262144,
+      "input_bytes": 1048576,
+      "per_case_seconds": 2,
+      "per_target_seconds": 60,
+      "records": 65536,
+      "sections": 65536,
+      "worker_rss_bytes": 536870912
+    },
+    "classification": "harness_safety_only_not_product_limits",
+    "scheduled": {
+      "family_cardinality": 1000000,
+      "field_bytes": 1048576,
+      "input_bytes": 16777216,
+      "per_case_seconds": 10,
+      "per_target_seconds": 900,
+      "records": 1000000,
+      "sections": 65536,
+      "worker_rss_bytes": 1073741824
+    }
+  },
+  "exclusions": {
+    "A": [
+      "command.geninfo.option.compat-libtool",
+      "command.lcov.option.compat-libtool",
+      "command.perl2lcov.option.preserve",
+      "lcovrc.rtl-file-extensions",
+      "lcovrc.geninfo-compat-libtool",
+      "lcovrc.geninfo-gcov-all-blocks",
+      "lcovrc.geninfo-interval-update"
+    ],
+    "B": [
+      "PAR-GENINFO-CHILD-EXIT-FERRICOV-001",
+      "PAR-GENINFO-CHILD-IGNORE1-FERRICOV-001",
+      "PAR-GENINFO-CHILD-IGNORE2-FERRICOV-001"
+    ],
+    "C": [
+      "M1-MD-020",
+      "M1-TF-063",
+      "M1-TF-064"
+    ],
+    "D": [
+      "product_compatibility_evidence_false"
+    ]
+  },
+  "kind": "m1_v0_1_support_matrix_activation",
+  "markdown": "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md",
+  "non_negotiables": [
+    "signed_na_not_hollow_closed",
+    "ferricov_ids_not_oracle_bound",
+    "blocked_case_ids_retained",
+    "oracle_identity_not_relaxed",
+    "ownership_not_widened",
+    "deterministic_budgets_required",
+    "core_010_011_unauthorized"
+  ],
+  "schema_version": 1,
+  "signature": "conditional-m1-core-001-through-009-only;core-009-bounded;exclusions-a-d-open;core-010-011-unauthorized;product-evidence-false",
+  "status": "active",
+  "unauthorized_tasks": [
+    {
+      "id": "M1-CORE-010",
+      "state": "unauthorized"
+    },
+    {
+      "id": "M1-CORE-011",
+      "state": "unauthorized"
+    }
+  ]
+}

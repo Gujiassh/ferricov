@@ -210,6 +210,14 @@ class M0StatusSnapshotTests(unittest.TestCase):
         snapshot = verify.build_m0_status_snapshot(self.root)
         self.assertIs(snapshot["m1_authorized"], True)
         self.assertIs(snapshot["product_compatibility_evidence"], False)
+        self.assertEqual(
+            snapshot["m1_authorized_task_ids"],
+            [f"M1-CORE-{index:03d}" for index in range(1, 10)],
+        )
+        self.assertEqual(
+            snapshot["model_blocked_case_ids"],
+            ["M1-MD-020", "M1-TF-063", "M1-TF-064"],
+        )
         treatments = {
             blocker["id"]: blocker.get("activation_treatment")
             for blocker in snapshot["m1_activation_blockers"]
@@ -239,18 +247,149 @@ class M0StatusSnapshotTests(unittest.TestCase):
         self.assertNotIn("m0_exit_review_undecided", treatments)
         self.assertNotIn("m1_support_matrix_missing", treatments)
 
-    def test_conditional_go_fails_closed_without_active_matrix(self) -> None:
-        matrix = self.root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
-        original = matrix.read_text(encoding="utf-8")
+    def _mutate_activation_contract(self, mutate, expected_error: str) -> None:
+        target = self.root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.activation.json"
+        original = target.read_text(encoding="utf-8")
         try:
-            matrix.write_text(
-                original.replace("Status: **ACTIVE**", "Status: **DRAFT**", 1),
+            document = json.loads(original)
+            mutate(document)
+            target.write_text(
+                json.dumps(document, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
             )
-            snapshot = verify.build_m0_status_snapshot(self.root)
-            self.assertIs(snapshot["m1_authorized"], False)
-            ids = {b["id"] for b in snapshot["m1_activation_blockers"]}
-            self.assertIn("m1_support_matrix_inactive", ids)
+            with self.assertRaisesRegex(RuntimeError, expected_error):
+                verify.build_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_activation_contract_rejects_core_010_or_011_authorization(self) -> None:
+        for task_id in ("M1-CORE-010", "M1-CORE-011"):
+            with self.subTest(task_id=task_id):
+                def mutate(document, task_id=task_id):
+                    document["unauthorized_tasks"] = [
+                        task for task in document["unauthorized_tasks"]
+                        if task["id"] != task_id
+                    ]
+                    document["authorized_tasks"].append(
+                        {"id": task_id, "state": "authorized_bounded"}
+                    )
+                self._mutate_activation_contract(mutate, "authorize exactly CORE-001 through CORE-009")
+
+    def test_activation_contract_rejects_missing_or_duplicate_task(self) -> None:
+        mutations = (
+            lambda document: document["authorized_tasks"].pop(0),
+            lambda document: document["authorized_tasks"].append(
+                dict(document["authorized_tasks"][0])
+            ),
+        )
+        for mutate in mutations:
+            with self.subTest(mutation=mutate):
+                self._mutate_activation_contract(mutate, "authorize exactly CORE-001 through CORE-009")
+
+    def test_activation_contract_rejects_deleted_exclusion(self) -> None:
+        self._mutate_activation_contract(
+            lambda document: document["exclusions"]["C"].pop(),
+            "exclusions A-D",
+        )
+
+    def test_activation_contract_rejects_changed_signature(self) -> None:
+        self._mutate_activation_contract(
+            lambda document: document.__setitem__("signature", "broadened"),
+            "invalid signature",
+        )
+
+    def test_activation_contract_rejects_deleted_non_negotiable(self) -> None:
+        self._mutate_activation_contract(
+            lambda document: document["non_negotiables"].pop(),
+            "non-negotiables",
+        )
+
+    def test_activation_contract_rejects_noncanonical_json(self) -> None:
+        target = self.root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.activation.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            target.write_text(json.dumps(json.loads(original)), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "not canonical JSON"):
+                verify.build_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_activation_requires_exact_live_model_blocked_case_ids(self) -> None:
+        target = self.root / "compat/model/v2.5.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            for blocked_ids in (
+                ["M1-MD-020", "M1-TF-063"],
+                ["M1-MD-020", "M1-TF-063", "M1-TF-064", "M1-EXTRA-001"],
+            ):
+                with self.subTest(blocked_ids=blocked_ids):
+                    document = json.loads(original)
+                    document["blocked_case_ids"] = blocked_ids
+                    target.write_text(
+                        json.dumps(document, indent=2, sort_keys=True) + "\n",
+                        encoding="utf-8",
+                    )
+                    with self.assertRaisesRegex(RuntimeError, "requires exact live blocked_case_ids"):
+                        verify.build_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_generated_markdown_block_rejects_every_authority_drift(self) -> None:
+        matrix = self.root / "specs/001-full-lcov-compatibility/m1-v0.1-support-matrix.md"
+        original = matrix.read_text(encoding="utf-8")
+        mutations = (
+            ("- Status: `active`", "- Status: `draft`"),
+            ("- `M1-CORE-009`: `authorized_bounded`", "- `M1-CORE-009`: `unauthorized`"),
+            ("- `M1-CORE-010`: `unauthorized`", "- `M1-CORE-010`: `authorized_bounded`"),
+            ("- A: `command.geninfo.option.compat-libtool`", "- A: `deleted`"),
+            ("- `signed_na_not_hollow_closed`", "- `deleted_non_negotiable`"),
+            ("- Budgets: harness safety controls only; never product limits", "- Budgets: product limits"),
+            ("- Signature: `conditional-m1-core", "- Signature: `broadened-conditional-m1-core"),
+        )
+        try:
+            for old, new in mutations:
+                with self.subTest(old=old):
+                    self.assertIn(old, original)
+                    matrix.write_text(original.replace(old, new, 1), encoding="utf-8")
+                    with self.assertRaisesRegex(RuntimeError, "generated activation block differs"):
+                        verify.build_m0_status_snapshot(self.root)
+                    matrix.write_text(original, encoding="utf-8")
         finally:
             matrix.write_text(original, encoding="utf-8")
+
+    def test_activation_exclusion_a_is_live_bound_to_behavior_gaps(self) -> None:
+        target = self.root / "compat/behavior/contract.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            for mutation in ("remove", "add"):
+                with self.subTest(mutation=mutation):
+                    document = json.loads(original)
+                    if mutation == "remove":
+                        group = next(item for item in document["case_groups"] if item["review_status"] != "reviewed")
+                        group["review_status"] = "reviewed"
+                    else:
+                        group = next(item for item in document["case_groups"] if item["review_status"] == "reviewed" and len([target for target in item.get("targets") or [] if target.get("role") == "primary"]) == 1)
+                        group["review_status"] = "unreviewed"
+                    target.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+                    with self.assertRaisesRegex(RuntimeError, "exclusion A must equal exact live behavior gap IDs"):
+                        verify.build_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
+
+    def test_activation_exclusion_b_is_live_bound_to_unbound_diagnostics(self) -> None:
+        target = self.root / "compat/diagnostics/v2.5.json"
+        original = target.read_text(encoding="utf-8")
+        try:
+            for mutation in ("remove", "add"):
+                with self.subTest(mutation=mutation):
+                    document = json.loads(original)
+                    if mutation == "remove":
+                        document["planned_case_ids"].remove("PAR-GENINFO-CHILD-EXIT-FERRICOV-001")
+                    else:
+                        document["planned_case_ids"].append("PAR-FERRICOV-EXTRA-001")
+                    target.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+                    with self.assertRaisesRegex(RuntimeError, "exclusion B must equal exact live unbound diagnostics IDs"):
+                        verify.build_m0_status_snapshot(self.root)
+        finally:
+            target.write_text(original, encoding="utf-8")
 

@@ -244,16 +244,14 @@ does not unlock product parity.
 The executable implementation handoff and acceptance matrix is
 [`m1-tracefile-core-agent-spec.md`](m1-tracefile-core-agent-spec.md). Conditional
 GO is active under [`m1-v0.1-support-matrix.md`](m1-v0.1-support-matrix.md):
-`m1_authorized=true` for CORE-001…008 only. The agent MAY implement Rust
-parser/model work inside `crates/model` + `crates/tracefile` for those tasks.
-Do not hollow-close residuals, bind FERRICOV IDs with Oracle-only seals, flip
-product evidence, or start CORE-009/011 without a matrix revision.
+`m1_authorized=true` for CORE-001…009 only. The agent MAY implement Rust
+parser/model work inside `crates/model` + `crates/tracefile` for those tasks. CORE-009 is deterministic and budgeted. Do not hollow-close residuals, bind FERRICOV IDs with Oracle-only seals, flip product evidence, or start CORE-010/011.
 
 Activation / exclusion ledger:
 
 - [x] Explicit support-matrix exclusions for 7 signed-N/A gaps (A); `m0-ready` may still fail.
 - [x] Explicitly scope `M1-MD-020`, `M1-TF-063`, and `M1-TF-064` (`reviews/m0-model-blocker-scope.md`); still blocked in contract; matrix exclusion C.
-- [x] Approve coverage-model / tracefile-grammar for CORE-001…008 under conditional GO (fuzz/limit rows remain blocked).
+- [x] Approve coverage-model / tracefile-grammar for CORE-001…009 under conditional GO (blocked fuzz/product-limit rows remain open).
 - [x] Record the M0 go/no-go decision (`m0-go-no-go.md` — **GO conditional**) + support matrix + snapshot wiring.
 - [ ] Post-v0.1: resolve or revise exclusions A–D / product evidence for broader milestone claims.
 
@@ -268,10 +266,12 @@ Authorized now:
 - [x] `M1-CORE-007`: implement deterministic canonical serialization (`crates/tracefile`; accepted Critical review at `6f04f44`; accepted-but-nonserializable classification remains owned by `M1-CORE-008`).
 - [x] `M1-CORE-008`: implement semantic snapshots and equality (`crates/tracefile`; independent Critical review accepted at `11d4d1d`; focused gates: tracefile 61, model 48).
 
-Still gated by matrix (not authorized yet):
+Authorized next:
 
-- [ ] `M1-CORE-009`: implement named properties, fuzz targets, budgets, and
-  minimized regression retention.
+- [ ] `M1-CORE-009`: implement named deterministic properties, bounded fuzz targets, hard safety budgets, and minimized regressions without closing the blocked IDs by activation alone.
+
+Still gated:
+
 - [ ] `M1-CORE-010`: begin differential closure; product evidence stays false until case-by-case review.
 - [ ] `M1-CORE-011`: run post-parity M1 performance qualification.
 
