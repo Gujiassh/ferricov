@@ -40,6 +40,20 @@ def validate_manifest(root: pathlib.Path) -> None:
             # manifest ambiguity even though the numeric seed need not be stored.
             expected = int.from_bytes(hashlib.sha256(target.encode()+b"\0"+case.encode()+b"\0"+digest.encode()).digest()[:8], "big")
             if seeds[target] != expected: fail(f"derived seed mismatch for {case}/{target}")
+    seen_failures = set()
+    for failure in failures:
+        required = {"case_id", "target_id", "seed", "raw_sha256", "minimized_sha256", "sidecar"}
+        if not isinstance(failure, dict) or set(failure) != required: fail("known failure shape")
+        key = (failure["target_id"], failure["case_id"])
+        if key in seen_failures or failure["target_id"] not in TARGETS: fail("duplicate/invalid known failure")
+        seen_failures.add(key)
+        sidecar = root / failure["sidecar"]
+        if not sidecar.is_file(): fail(f"known failure sidecar absent: {sidecar}")
+        validate_sidecar(sidecar)
+        value = load(sidecar)
+        if any(value[name] != failure[name] for name in ("case_id","target_id","seed","raw_sha256","minimized_sha256")): fail("known failure/sidecar drift")
+        referenced.update({sidecar.with_suffix("").resolve(), (sidecar.parent/value["raw_artifact"]).resolve()})
+    if failures != sorted(failures, key=lambda x: (x["target_id"], x["case_id"])): fail("known failures not canonical")
     if covered != TARGETS: fail(f"target coverage mismatch: {sorted(TARGETS-covered)}")
     actual = {p.resolve() for p in (root / "corpus").glob("m1_fz_*/*") if p.is_file() and not p.name.endswith(".json")}
     if actual != referenced: fail("unreferenced or missing corpus files")
@@ -65,8 +79,10 @@ def validate_sidecar(path: pathlib.Path) -> None:
     if not origins or len(origins) != len(set(origins)) or not all(re.match(r"^M1-(MD|TF|PROP|FZ)-", x) for x in origins): fail(f"sidecar origins: {path}")
 
 def main() -> int:
-    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); parser.add_argument("--seed-for"); parser.add_argument("--case-id"); parser.add_argument("--list-tuples", action="store_true"); args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); parser.add_argument("--seed-for"); parser.add_argument("--case-id"); parser.add_argument("--sidecar", type=pathlib.Path); parser.add_argument("--list-tuples", action="store_true"); args=parser.parse_args()
     try:
+        if args.sidecar:
+            validate_sidecar(args.sidecar); print("CORE-009 artifact validation passed"); return 0
         validate_manifest(args.root)
         if args.list_tuples:
             manifest = load(args.root / "corpus/manifest.json")

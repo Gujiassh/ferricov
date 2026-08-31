@@ -11,8 +11,10 @@ safety caps from the activation contract, not product limits. Scheduled runs
 may use the separately recorded scheduled caps.
 
 libFuzzer uses the fixed seed `12648430` in CI and writes a raw failure artifact.
-Run `fuzz/scripts/minimize_and_replay.sh TARGET ARTIFACT` to minimize under the
-same caps and then replay the minimized bytes without minimizer instrumentation.
+Run `python3 fuzz/scripts/retain_finding.py TARGET CASE_ID ARTIFACT
+--runtime-manifest RUNTIME.json --origin M1-PROP-...` to minimize under the
+same caps, replay without minimizer instrumentation, validate the staged
+sidecar, and atomically install the finding plus canonical manifest entry.
 Retain it under `fuzz/corpus/TARGET/` together
 with a JSON sidecar containing target ID, seed, raw SHA-256, first failing
 operation, semantic snapshots, streams/status, runtime manifest, and links to
@@ -27,3 +29,9 @@ for fail-closed hash handling run in CI.
 
 This campaign does not execute the LCOV Oracle, close `M1-MD-020`,
 `M1-TF-063`, or `M1-TF-064`, or provide product compatibility evidence.
+
+The stable parent watchdog uses an authoritative Unix `prlimit` address-space
+limit, a two-second wall deadline with kill and reap, and `/proc` peak-RSS
+sampling. Windows stable qualification records the absence of an address-space
+limit; Windows Job Object enforcement is deferred to the release-platform
+qualification matrix and is not claimed by CORE-009.

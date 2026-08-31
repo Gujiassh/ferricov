@@ -24,7 +24,18 @@ fn main() {
             io::stdin()
                 .read_to_end(&mut input)
                 .expect("read case bytes");
-            if let Err(failure) = run(FuzzTarget::Stateful, &input, HarnessBudget::CI_SMOKE) {
+            let target = match std::env::args().nth(2).as_deref() {
+                Some("M1-FZ-LEX-001") => FuzzTarget::Lex,
+                Some("M1-FZ-WRITER-001") => FuzzTarget::Writer,
+                Some("M1-FZ-ROUNDTRIP-001") => FuzzTarget::Roundtrip,
+                Some("M1-FZ-NUMERIC-001") => FuzzTarget::Numeric,
+                Some("M1-FZ-LINE-ALGEBRA-001") => FuzzTarget::LineAlgebra,
+                Some("M1-FZ-FUNCTION-ALGEBRA-001") => FuzzTarget::FunctionAlgebra,
+                Some("M1-FZ-BRANCH-ALGEBRA-001") => FuzzTarget::BranchAlgebra,
+                Some("M1-FZ-MCDC-ALGEBRA-001") => FuzzTarget::McdcAlgebra,
+                _ => FuzzTarget::Stateful,
+            };
+            if let Err(failure) = run(target, &input, HarnessBudget::CI_SMOKE) {
                 eprintln!("CORE009_WORKER_FAILURE kind={failure:?}");
                 std::process::exit(2);
             }
