@@ -1,6 +1,6 @@
 # M1-CORE-007 Progress — Deterministic Canonical Writer
 
-Status: **IMPLEMENTED — CRITICAL RE-REVIEW PENDING**
+Status: **ACCEPTED — CRITICAL REVIEW PASS AT `6f04f44`**
 Date: 2026-08-31
 Base: `integration/m1-current@f781a0d`
 Branch: `feat/m1-core-007-canonical-writer`
