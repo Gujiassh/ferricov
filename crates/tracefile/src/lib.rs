@@ -42,7 +42,7 @@ pub use section::{BranchCursor, OpenSection};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };
-pub use writer::{write_canonical, ChecksumProvider, SerializationContext, SourcePathProjection};
+pub use writer::{write_canonical, ChecksumProvider, SerializationContext, SerializationError, SourcePathProjection};
 
 #[cfg(test)]
 mod tests_core005;

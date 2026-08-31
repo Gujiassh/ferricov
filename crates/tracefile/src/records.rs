@@ -600,10 +600,7 @@ fn apply_brda(
     // Split tail at last comma → expression, taken
     let (expr, taken_tok) = split_at_last_comma(tail);
     let taken = BranchTaken::from_token(taken_tok);
-    // The canonical writer substitutes the derived numeric branch id when no
-    // Verilog expression is stored. Reading that canonical spelling must
-    // reconstruct `None`, not invent an expression string.
-    let expression = if expr.is_empty() || is_digits(expr) {
+    let expression = if expr.is_empty() {
         None
     } else {
         Some(ByteString::from_slice(expr))

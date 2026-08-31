@@ -38,3 +38,5 @@ branch-expression invention and other canonical semantic drift.
 Filesystem-backed provider implementations still need runtime Oracle tests.
 Broader parser CORE-006 malformed/ignore residuals constrain corpus-wide parity,
 but are not hidden by this writer review.
+
+Typed serialization failure for absent branch expressions is intentional: the numeric fallback would collapse a genuine numeric expression. CORE-008 owns classification of accepted but nonserializable states.

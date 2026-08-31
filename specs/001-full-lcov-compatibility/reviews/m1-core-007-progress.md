@@ -16,8 +16,7 @@ only from line-testcase membership and test names sort by bytes.
 The writer emits current functions, branches, MC/DC, lines, recomputed summaries,
 and exact terminators in U-WRITE order. Numeric locations sort without fixed-width
 or float coercion. Function and branch indexes are reassigned. MC/DC group keys
-sort lexically and senses emit t then f. Numeric branch identifiers reconstruct
-an absent expression, preserving canonical parse-write-parse semantics. Legacy
+sort lexically and senses emit t then f. Genuine numeric branch expressions remain exact. Accepted absent-expression branch states fail with a typed serialization error because the upstream numeric fallback is lexically indistinguishable; CORE-008 owns nonserializable-state classification. Legacy
 FN/FNDA input serializes as FNL/FNA. Serialization never mutates the model.
 
 ## Verification

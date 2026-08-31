@@ -1,6 +1,7 @@
 //! Deterministic canonical LCOV serialization.
 
 use std::cmp::Ordering;
+use std::fmt;
 
 use ferricov_model::{
     BranchKind, BranchTaken, ByteString, CoverageCount, CoverageDatabase, FunctionTable,
@@ -36,6 +37,27 @@ pub struct SerializationContext<'a> {
     pub output_comments: Vec<ByteString>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SerializationError {
+    /// Upstream's numeric fallback is indistinguishable from a genuine numeric
+    /// expression when reparsed. CORE-008 must classify this accepted state.
+    BranchExpressionAbsent { line: ByteString, edge_index: usize },
+}
+
+impl fmt::Display for SerializationError {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::BranchExpressionAbsent { line, edge_index } => write!(
+                formatter,
+                "branch at line {} edge {edge_index} has no lossless canonical expression",
+                line.to_string_lossy()
+            ),
+        }
+    }
+}
+
+impl std::error::Error for SerializationError {}
+
 impl Default for SerializationContext<'_> {
     fn default() -> Self {
         Self {
@@ -52,7 +74,10 @@ impl Default for SerializationContext<'_> {
 
 /// Serialize `database` without mutating it.
 #[must_use]
-pub fn write_canonical(database: &CoverageDatabase, context: &SerializationContext<'_>) -> Vec<u8> {
+pub fn write_canonical(
+    database: &CoverageDatabase,
+    context: &SerializationContext<'_>,
+) -> Result<Vec<u8>, SerializationError> {
     let mut out = Vec::new();
     for comment in &context.output_comments {
         push(&mut out, b"#");
@@ -119,11 +144,13 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
                                 push(&mut out, b",");
                                 push(&mut out, &block_token);
                                 push(&mut out, b",");
-                                if let Some(expression) = edge.expression() {
-                                    push(&mut out, expression.as_bytes());
-                                } else {
-                                    push(&mut out, edge_index.to_string().as_bytes());
-                                }
+                                let expression = edge.expression().ok_or_else(|| {
+                                    SerializationError::BranchExpressionAbsent {
+                                        line: line.lexeme().clone(),
+                                        edge_index,
+                                    }
+                                })?;
+                                push(&mut out, expression.as_bytes());
                                 push(&mut out, b",");
                                 push(&mut out, &taken);
                                 push(&mut out, b"\n");
@@ -182,7 +209,7 @@ pub fn write_canonical(database: &CoverageDatabase, context: &SerializationConte
             push(&mut out, b"end_of_record\n");
         }
     }
-    out
+    Ok(out)
 }
 
 fn write_functions(out: &mut Vec<u8>, functions: &FunctionTable) {
