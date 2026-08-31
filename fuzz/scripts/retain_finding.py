@@ -1,18 +1,31 @@
 #!/usr/bin/env python3
 """Transactionally minimize, replay, and retain one real libFuzzer finding."""
 from __future__ import annotations
-import argparse, contextlib, hashlib, json, os, pathlib, shutil, subprocess, tempfile
+import argparse, contextlib, hashlib, json, os, pathlib, shutil, subprocess, tempfile, time
 
 def sha(path: pathlib.Path) -> str: return hashlib.sha256(path.read_bytes()).hexdigest()
 def outcome(result: subprocess.CompletedProcess) -> tuple[str, int]:
     return ("signal", -result.returncode) if result.returncode < 0 else ("exit", result.returncode)
 
+def _owner_alive(pid: int) -> bool:
+    try: os.kill(pid, 0); return True
+    except ProcessLookupError: return False
+    except PermissionError: return True
+
 @contextlib.contextmanager
-def exclusive_lock(path: pathlib.Path):
-    try: fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
-    except FileExistsError as exc: raise RuntimeError(f"retention lock held: {path}") from exc
+def exclusive_lock(path: pathlib.Path, stale_after: int = 600):
+    for attempt in range(2):
+        try: fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600); break
+        except FileExistsError as exc:
+            try:
+                facts=json.loads(path.read_text(encoding="utf-8")); pid=int(facts["pid"]); created=float(facts["created"])
+            except (OSError, ValueError, KeyError, json.JSONDecodeError):
+                pid,created=-1,0
+            if attempt or (_owner_alive(pid) and time.time()-created <= stale_after):
+                raise RuntimeError(f"retention lock held: {path}") from exc
+            with contextlib.suppress(FileNotFoundError): path.unlink()
     try:
-        os.write(fd, f"pid={os.getpid()}\n".encode()); os.close(fd); yield
+        os.write(fd, (json.dumps({"pid":os.getpid(),"created":time.time()})+"\n").encode()); os.close(fd); yield
     finally:
         with contextlib.suppress(FileNotFoundError): path.unlink()
 
@@ -36,14 +49,15 @@ def retain(root: pathlib.Path, target: str, case_id: str, raw: pathlib.Path,
         stage = pathlib.Path(temp); staged_raw = stage / f"{case_id}.raw"; minimized = stage / f"{case_id}.minimized"
         shutil.copyfile(raw, staged_raw)
         common = [f"-seed={seed}", "-timeout=2", "-rss_limit_mb=512", "-max_len=1048576"]
-        tmin = run(["cargo", "+nightly", "fuzz", "tmin", target_bin, str(staged_raw), "--output", str(minimized), "--", *common])
+        cargo=os.environ.get("FERRICOV_CARGO_FUZZ","cargo")
+        tmin = run([cargo, "+nightly", "fuzz", "tmin", target_bin, str(staged_raw), "--output", str(minimized), "--", *common])
         if tmin.returncode == 0 or not minimized.is_file(): raise RuntimeError("tmin did not reproduce a failing outcome")
-        replay = run(["cargo", "+nightly", "fuzz", "run", target_bin, str(minimized), "--", *common, "-runs=1"])
+        replay = run([cargo, "+nightly", "fuzz", "run", target_bin, str(minimized), "--", *common, "-runs=1"])
         if replay.returncode == 0 or outcome(replay) != outcome(tmin): raise RuntimeError("plain replay outcome drift")
         sidecar = pathlib.Path(str(minimized) + ".json")
         value = {"schema_version":1,"target_id":target,"case_id":case_id,"seed":seed,
             "raw_sha256":sha(staged_raw),"minimized_sha256":sha(minimized),"raw_artifact":staged_raw.name,
-            "first_failing_operation":"libFuzzer replay","semantic_snapshots":{},
+            "first_failing_operation":"decoded by retained target replay","semantic_snapshots":{"replay_input_sha256":sha(minimized)},
             "process":{"exit_code":replay.returncode if replay.returncode >= 0 else None,
                        "signal":-replay.returncode if replay.returncode < 0 else None,"timed_out":False,
                        "stdout":replay.stdout.decode("utf-8","replace"),"stderr":replay.stderr.decode("utf-8","replace")},

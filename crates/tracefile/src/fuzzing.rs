@@ -104,6 +104,7 @@ pub fn run_with_cardinality(
     family_cardinality: usize,
     budget: HarnessBudget,
 ) -> Result<(), HarnessFailure> {
+    let started = Instant::now();
     if family_cardinality > budget.family_cardinality {
         return Err(HarnessFailure::BudgetExceeded {
             dimension: "family_cardinality",
@@ -116,6 +117,10 @@ pub fn run_with_cardinality(
     let mut cardinality = preview.database().len();
     for (_, source) in preview.database().iter() {
         cardinality += source.aggregate().lines().len();
+        cardinality += source.testcases().lines().len()
+            + source.testcases().functions().len()
+            + source.testcases().branches().len()
+            + source.testcases().mcdc().len();
         cardinality += source
             .aggregate()
             .functions()
@@ -184,6 +189,7 @@ pub fn run_with_cardinality(
             })
             .sum::<usize>();
     }
+    cardinality += preview.state().diagnostics().len();
     if cardinality > budget.family_cardinality {
         return Err(HarnessFailure::BudgetExceeded {
             dimension: "actual_family_cardinality",
@@ -191,7 +197,6 @@ pub fn run_with_cardinality(
             limit: budget.family_cardinality,
         });
     }
-    let started = Instant::now();
     match target {
         FuzzTarget::Lex => lexical(input),
         FuzzTarget::Stateful => stateful(input),
@@ -225,14 +230,7 @@ fn validate_budget(input: &[u8], budget: HarnessBudget) -> Result<(), HarnessFai
     let mut sections = 0usize;
     for line in input.split(|byte| *byte == b'\n') {
         records += 1;
-        let payload = line
-            .iter()
-            .position(|byte| *byte == b':')
-            .map_or(line, |index| &line[index + 1..]);
-        let opaque = [b"TN:".as_slice(), b"SF:", b"KF:", b"VER:"]
-            .iter()
-            .any(|prefix| line.starts_with(prefix));
-        for field in payload.split(|byte| !opaque && *byte == b',') {
+        for field in framed_fields(line) {
             if field.len() > budget.field_bytes {
                 return Err(HarnessFailure::BudgetExceeded {
                     dimension: "field_bytes",
@@ -262,6 +260,33 @@ fn validate_budget(input: &[u8], budget: HarnessBudget) -> Result<(), HarnessFai
     Ok(())
 }
 
+/// Conservatively frame only fields whose delimiters are unambiguously
+/// structural.  The final field of name/expression/checksum records is allowed
+/// to contain commas and therefore remains one field.
+fn framed_fields(line: &[u8]) -> Vec<&[u8]> {
+    let Some(colon) = line.iter().position(|byte| *byte == b':') else {
+        return vec![line];
+    };
+    let tag = &line[..colon];
+    let payload = &line[colon + 1..];
+    let structural = match tag {
+        b"DA" => 2,
+        b"FN" => 2,
+        b"FNDA" => 1,
+        b"FNL" => 2,
+        b"FNA" => 2,
+        b"BRDA" => 3,
+        b"MCDC" => 5,
+        _ => 0,
+    };
+    if structural == 0 {
+        return vec![payload];
+    }
+    payload
+        .splitn(structural + 1, |byte| *byte == b',')
+        .collect()
+}
+
 fn parser(input: &[u8]) -> StreamingParser {
     let mut parser = StreamingParser::new();
     parser.parse_all(input);
@@ -284,6 +309,17 @@ fn lexical(input: &[u8]) {
         (b"FNA:", crate::RecordTag::Fna),
         (b"BRDA:", crate::RecordTag::Brda),
         (b"MCDC:", crate::RecordTag::Mcdc),
+        (b"VER:", crate::RecordTag::Ver),
+        (b"FN:", crate::RecordTag::Fn),
+        (b"FNL:", crate::RecordTag::Fnl),
+        (b"FNF:", crate::RecordTag::Fnf),
+        (b"FNH:", crate::RecordTag::Fnh),
+        (b"BRF:", crate::RecordTag::Brf),
+        (b"BRH:", crate::RecordTag::Brh),
+        (b"MCF:", crate::RecordTag::Mcf),
+        (b"MCH:", crate::RecordTag::Mch),
+        (b"LF:", crate::RecordTag::Lf),
+        (b"LH:", crate::RecordTag::Lh),
     ];
     for line in input.split(|byte| *byte == b'\n') {
         for (prefix, expected) in TAGS {
@@ -341,7 +377,26 @@ fn writer(input: &[u8]) {
                 .semantically_equal(&EvidenceSnapshot::capture(&reparsed, &context).semantic)
         );
     }
-    let generated = parser(b"TN:t-\xff\nSF:s-\xfe\nFNL:0,1,2\nFNA:0,3,f-\xfd\nBRDA:1,0,e-\xfc,1\nMCDC:1,1,t,1,0,c-\xfb\nMCDC:1,1,f,0,0,c-\xfb\nDA:1,2,sum-\xfa\nend_of_record\n");
+    let byte = |index: usize| input.get(index).copied().unwrap_or(index as u8) | 0x80;
+    let generated_bytes = [
+        b"TN:t-".as_slice(),
+        &[byte(0)],
+        b"\nSF:s-",
+        &[byte(1)],
+        b"\nFNL:0,1,2\nFNA:0,3,f-",
+        &[byte(2)],
+        b"\nBRDA:1,0,e-",
+        &[byte(3)],
+        b",1\nMCDC:1,1,t,1,0,c-",
+        &[byte(4)],
+        b"\nMCDC:1,1,f,0,0,c-",
+        &[byte(4)],
+        b"\nDA:1,2,sum-",
+        &[byte(5)],
+        b"\nend_of_record\n",
+    ]
+    .concat();
+    let generated = parser(&generated_bytes);
     let before = generated.database().clone();
     let bytes = crate::write_canonical(generated.database(), &SerializationContext::default())
         .expect("generated model serializable");
@@ -369,19 +424,39 @@ fn roundtrip(input: &[u8]) {
 }
 
 fn numeric(input: &[u8]) {
-    let atoms: Vec<_> = input
-        .split(|b| *b == b',')
+    // Decode a bounded integer program and calculate its result without using
+    // CoverageCount.  This avoids the tautological "same fold twice" oracle.
+    let values: Vec<i64> = input
+        .chunks(2)
         .take(8)
-        .map(ferricov_model::CoverageCount::from_lexeme)
+        .map(|chunk| {
+            let magnitude = i64::from(chunk[0] % 100);
+            if chunk.get(1).is_some_and(|byte| byte & 1 != 0) {
+                -magnitude
+            } else {
+                magnitude
+            }
+        })
         .collect();
-    if let Some((first, rest)) = atoms.split_first() {
-        let one = rest
+    if let Some((first, rest)) = values.split_first() {
+        let expected = rest.iter().fold(*first, |sum, value| sum + value);
+        let observed = rest
             .iter()
-            .try_fold(first.clone(), |left, right| left.add(right));
-        let two = rest
-            .iter()
-            .try_fold(first.clone(), |left, right| left.add(right));
-        assert_eq!(one, two);
+            .map(|value| ferricov_model::CoverageCount::from_lexeme(value.to_string()))
+            .try_fold(
+                ferricov_model::CoverageCount::from_lexeme(first.to_string()),
+                |sum, value| sum.add(&value),
+            )
+            .expect("generated integer program is finite");
+        assert_eq!(
+            observed.lexeme().as_bytes(),
+            expected.to_string().as_bytes()
+        );
+        assert_eq!(
+            observed.compare_threshold("0"),
+            Some(expected.cmp(&0)),
+            "independent threshold comparison"
+        );
     }
     for (left, right, expected) in [
         ("1", "2", "3"),
@@ -392,5 +467,27 @@ fn numeric(input: &[u8]) {
             .add(&ferricov_model::CoverageCount::from_lexeme(right))
             .expect("finite decimal reference");
         assert_eq!(value.lexeme().as_bytes(), expected.as_bytes());
+    }
+}
+
+#[cfg(test)]
+mod budget_tests {
+    use super::*;
+
+    #[test]
+    fn comma_bearing_suffix_is_one_bounded_field() {
+        let budget = HarnessBudget {
+            field_bytes: 4,
+            ..HarnessBudget::CI_SMOKE
+        };
+        assert!(matches!(
+            validate_budget(b"FNA:0,1,a,b,c\n", budget),
+            Err(HarnessFailure::BudgetExceeded {
+                dimension: "field_bytes",
+                observed: 5,
+                ..
+            })
+        ));
+        assert!(validate_budget(b"FNA:0,1,a,b\n", budget).is_ok());
     }
 }

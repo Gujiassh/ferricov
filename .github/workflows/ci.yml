@@ -101,12 +101,13 @@ jobs:
           TOOLCHAIN: ${{ matrix.toolchain }}
         run: |
           cargo +"$TOOLCHAIN" build --locked -p ferricov-tracefile --bin core009_worker --bin core009_runner
-          printf 'TN:t\nSF:x\nDA:1,1\nend_of_record\n' > /tmp/core009.input
+          cp fuzz/corpus/m1_fz_lex_001/canonical.trace /tmp/core009.input
           runner=target/debug/core009_runner
           worker=target/debug/core009_worker
-          "$runner" "$worker" normal M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/normal.json
-          "$runner" "$worker" sleep M1-FZ-STATEFUL-001 CORE009-WATCHDOG-SLEEP-001 1 /tmp/core009.input /tmp/sleep.json
-          "$runner" "$worker" allocate M1-FZ-STATEFUL-001 CORE009-WATCHDOG-RSS-001 1 /tmp/core009.input /tmp/allocate.json
+          manifest=fuzz/corpus/manifest.json
+          "$runner" "$worker" normal M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/normal.json "$manifest"
+          "$runner" "$worker" sleep M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/sleep.json "$manifest"
+          "$runner" "$worker" allocate M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/allocate.json "$manifest"
           jq -e '.outcome.kind == "exit" and .outcome.code == 0 and .address_space_limit_bytes == 536870912' /tmp/normal.json
           jq -e '.outcome.kind == "timeout" and .wall_ms >= 2000 and .wall_ms < 3000' /tmp/sleep.json
           jq -e '.outcome.kind == "rss_limit" and .address_space_limit_bytes == 536870912' /tmp/allocate.json

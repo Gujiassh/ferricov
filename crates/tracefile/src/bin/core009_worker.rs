@@ -33,7 +33,15 @@ fn main() {
                 Some("M1-FZ-FUNCTION-ALGEBRA-001") => FuzzTarget::FunctionAlgebra,
                 Some("M1-FZ-BRANCH-ALGEBRA-001") => FuzzTarget::BranchAlgebra,
                 Some("M1-FZ-MCDC-ALGEBRA-001") => FuzzTarget::McdcAlgebra,
-                _ => FuzzTarget::Stateful,
+                Some("M1-FZ-STATEFUL-001") => FuzzTarget::Stateful,
+                Some(other) => {
+                    eprintln!("CORE009_WORKER_REJECT kind=unknown_target target={other}");
+                    std::process::exit(64);
+                }
+                None => {
+                    eprintln!("CORE009_WORKER_REJECT kind=missing_target");
+                    std::process::exit(64);
+                }
             };
             if let Err(failure) = run(target, &input, HarnessBudget::CI_SMOKE) {
                 eprintln!("CORE009_WORKER_FAILURE kind={failure:?}");

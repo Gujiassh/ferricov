@@ -30,8 +30,19 @@ for fail-closed hash handling run in CI.
 This campaign does not execute the LCOV Oracle, close `M1-MD-020`,
 `M1-TF-063`, or `M1-TF-064`, or provide product compatibility evidence.
 
-The stable parent watchdog uses an authoritative Unix `prlimit` address-space
-limit, a two-second wall deadline with kill and reap, and `/proc` peak-RSS
-sampling. Windows stable qualification records the absence of an address-space
-limit; Windows Job Object enforcement is deferred to the release-platform
+The stable parent watchdog accepts only an exact
+`target/case/seed/input-SHA-256` tuple from `fuzz/corpus/manifest.json`, drains
+both child streams concurrently, uses an authoritative Unix `prlimit`
+address-space limit, applies a two-second wall deadline with kill and reap, and
+samples `/proc` peak RSS. Resource-limit classification is based on observed
+RSS or allocation-failure output rather than a requested worker mode. Unknown
+targets and unknown or drifting manifest tuples are typed runner errors.
+Windows stable qualification records the absence of an address-space limit;
+Windows Job Object enforcement is deferred to the release-platform
 qualification matrix and is not claimed by CORE-009.
+
+The stable deterministic campaign is 64 generated inputs for each of the nine
+named targets (576 bounded cases total). Parsing, semantic-cardinality
+accounting, and the target assertion all run inside the per-case deadline.
+Field accounting is tag-aware and retains legal comma-bearing final fields as
+one bounded field.
