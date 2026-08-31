@@ -23,6 +23,8 @@ def validate_manifest(root: pathlib.Path) -> None:
         targets = set(entry.get("targets", []))
         if not targets or not targets <= TARGETS: fail(f"invalid targets for {case}")
         covered |= targets
+        seeds = entry.get("derived_seeds")
+        if not isinstance(seeds, dict) or set(seeds) != targets: fail(f"derived seed coverage for {case}")
         matches = sorted(glob.glob(str(root / "corpus" / entry.get("file_pattern", ""))))
         if not matches: fail(f"pattern has no files for {case}")
         for raw in matches:
@@ -33,7 +35,8 @@ def validate_manifest(root: pathlib.Path) -> None:
         for target in targets:
             # Derive every target/case/corpus tuple; duplicate tuples indicate a
             # manifest ambiguity even though the numeric seed need not be stored.
-            hashlib.sha256(target.encode()+b"\0"+case.encode()+b"\0"+digest.encode()).digest()
+            expected = int.from_bytes(hashlib.sha256(target.encode()+b"\0"+case.encode()+b"\0"+digest.encode()).digest()[:8], "big")
+            if seeds[target] != expected: fail(f"derived seed mismatch for {case}/{target}")
     if covered != TARGETS: fail(f"target coverage mismatch: {sorted(TARGETS-covered)}")
     actual = {p.resolve() for p in (root / "corpus").glob("m1_fz_*/*") if p.is_file() and not p.name.endswith(".json")}
     if actual != referenced: fail("unreferenced or missing corpus files")
@@ -58,9 +61,17 @@ def validate_sidecar(path: pathlib.Path) -> None:
     if not origins or len(origins) != len(set(origins)) or not all(re.match(r"^M1-(MD|TF|PROP|FZ)-", x) for x in origins): fail(f"sidecar origins: {path}")
 
 def main() -> int:
-    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); args=parser.parse_args()
+    parser=argparse.ArgumentParser(); parser.add_argument("--root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[1]); parser.add_argument("--seed-for"); args=parser.parse_args()
     try:
         validate_manifest(args.root)
+        if args.seed_for:
+            target = args.seed_for.upper().replace("_", "-")
+            target = target.replace("M1-FZ-", "M1-FZ-")
+            manifest = load(args.root / "corpus/manifest.json")
+            for entry in manifest["entries"]:
+                if target in entry.get("derived_seeds", {}):
+                    print(entry["derived_seeds"][target]); return 0
+            fail(f"no seed for target {target}")
         for sidecar in (args.root / "corpus").glob("m1_fz_*/*.json"): validate_sidecar(sidecar)
     except (ValueError, OSError, json.JSONDecodeError) as error:
         print(f"CORE-009 artifact validation failed: {error}", file=sys.stderr); return 1

@@ -41,9 +41,10 @@ jobs:
             m1_fz_mcdc_algebra_001
           )
           for target in "${targets[@]}"; do
+            seed="$(python3 fuzz/scripts/validate_artifacts.py --seed-for "$target")"
             timeout --signal=KILL 60s cargo +nightly fuzz run "$target" \
               "fuzz/corpus/$target" -- \
-              -seed=12648430 -runs=64 -timeout=2 -rss_limit_mb=512 -max_len=1048576
+              -seed="$seed" -runs=64 -timeout=2 -rss_limit_mb=512 -max_len=1048576
           done
 
   rust:

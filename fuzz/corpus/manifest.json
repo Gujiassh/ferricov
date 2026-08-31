@@ -8,32 +8,71 @@
       "file_pattern": "m1_fz_*/canonical.trace",
       "sha256": "85267961e048efc54c94f384efe8ef5f611aab198d17c9150cb1cf42954eadc6",
       "targets": [
-        "M1-FZ-LEX-001", "M1-FZ-STATEFUL-001", "M1-FZ-WRITER-001",
-        "M1-FZ-ROUNDTRIP-001", "M1-FZ-NUMERIC-001", "M1-FZ-LINE-ALGEBRA-001",
-        "M1-FZ-FUNCTION-ALGEBRA-001", "M1-FZ-BRANCH-ALGEBRA-001",
+        "M1-FZ-LEX-001",
+        "M1-FZ-STATEFUL-001",
+        "M1-FZ-WRITER-001",
+        "M1-FZ-ROUNDTRIP-001",
+        "M1-FZ-NUMERIC-001",
+        "M1-FZ-LINE-ALGEBRA-001",
+        "M1-FZ-FUNCTION-ALGEBRA-001",
+        "M1-FZ-BRANCH-ALGEBRA-001",
         "M1-FZ-MCDC-ALGEBRA-001"
       ],
-      "origin_ids": ["M1-CORE-009", "M1-PROP-ROUNDTRIP-001"],
-      "status": "authored_seed"
+      "origin_ids": [
+        "M1-CORE-009",
+        "M1-PROP-ROUNDTRIP-001"
+      ],
+      "status": "authored_seed",
+      "derived_seeds": {
+        "M1-FZ-LEX-001": 6430721954537852804,
+        "M1-FZ-STATEFUL-001": 15269154973870394997,
+        "M1-FZ-WRITER-001": 12751135081232095951,
+        "M1-FZ-ROUNDTRIP-001": 6878098907689505786,
+        "M1-FZ-NUMERIC-001": 15457828142162530898,
+        "M1-FZ-LINE-ALGEBRA-001": 4765268377258307140,
+        "M1-FZ-FUNCTION-ALGEBRA-001": 17482250827201391493,
+        "M1-FZ-BRANCH-ALGEBRA-001": 6215214876409943127,
+        "M1-FZ-MCDC-ALGEBRA-001": 15939322640513571961
+      }
     },
     {
       "case_id": "CORE009-SEED-RECORD-PREFIXES-001",
       "file_pattern": "m1_fz_lex_001/all-record-prefixes.trace",
       "sha256": "49b5c6f24424b3b311da7bafe279432603b7aec9257fff667e4d6f9f050e6fc8",
-      "targets": ["M1-FZ-LEX-001"],
-      "origin_ids": ["M1-CORE-009", "M1-PROP-ACCEPTED-INPUT-001"],
-      "status": "authored_seed_all_20_record_prefixes"
+      "targets": [
+        "M1-FZ-LEX-001"
+      ],
+      "origin_ids": [
+        "M1-CORE-009",
+        "M1-PROP-ACCEPTED-INPUT-001"
+      ],
+      "status": "authored_seed_all_20_record_prefixes",
+      "derived_seeds": {
+        "M1-FZ-LEX-001": 1120927450937745674
+      }
     },
     {
       "case_id": "CORE009-SEED-ALGEBRA-BYTECODE-001",
       "file_pattern": "m1_fz_*_algebra_001/operation-bytecode.bin",
       "sha256": "e746581fe9a7e1013d92c2860791b10eca66ee69b1152686d5d54c93c98bff84",
       "targets": [
-        "M1-FZ-LINE-ALGEBRA-001", "M1-FZ-FUNCTION-ALGEBRA-001",
-        "M1-FZ-BRANCH-ALGEBRA-001", "M1-FZ-MCDC-ALGEBRA-001"
+        "M1-FZ-LINE-ALGEBRA-001",
+        "M1-FZ-FUNCTION-ALGEBRA-001",
+        "M1-FZ-BRANCH-ALGEBRA-001",
+        "M1-FZ-MCDC-ALGEBRA-001"
       ],
-      "origin_ids": ["M1-CORE-009", "M1-PROP-ALGEBRA-001", "M1-PROP-INDEX-001"],
-      "status": "authored_distinct_operands_and_operation_bytecode"
+      "origin_ids": [
+        "M1-CORE-009",
+        "M1-PROP-ALGEBRA-001",
+        "M1-PROP-INDEX-001"
+      ],
+      "status": "authored_distinct_operands_and_operation_bytecode",
+      "derived_seeds": {
+        "M1-FZ-LINE-ALGEBRA-001": 11499914041447370974,
+        "M1-FZ-FUNCTION-ALGEBRA-001": 16008477107682504021,
+        "M1-FZ-BRANCH-ALGEBRA-001": 1160800847757891884,
+        "M1-FZ-MCDC-ALGEBRA-001": 430852656714586043
+      }
     }
   ]
 }

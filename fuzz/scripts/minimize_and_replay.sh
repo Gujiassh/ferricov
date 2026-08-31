@@ -9,7 +9,8 @@ target=$1
 raw=$2
 test -f "$raw"
 out="${raw}.minimized"
-common=(-seed=12648430 -timeout=2 -rss_limit_mb=512 -max_len=1048576)
+seed="$(python3 fuzz/scripts/validate_artifacts.py --seed-for "$target")"
+common=(-seed="$seed" -timeout=2 -rss_limit_mb=512 -max_len=1048576)
 
 # tmin must reproduce the finding under the same resource and deterministic
 # seed envelope as CI. The final command is a plain one-run replay, so the

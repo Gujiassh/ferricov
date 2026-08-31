@@ -90,6 +90,85 @@ pub fn run_with_cardinality(
         });
     }
     validate_budget(input, budget)?;
+    let preview = parser(input);
+    let mut cardinality = preview.database().len();
+    for (_, source) in preview.database().iter() {
+        cardinality += source.aggregate().lines().len();
+        cardinality += source
+            .aggregate()
+            .functions()
+            .groups()
+            .map(|(_, group)| group.aliases().len())
+            .sum::<usize>();
+        cardinality += source
+            .aggregate()
+            .branches()
+            .lines()
+            .map(|(_, line)| {
+                line.blocks()
+                    .iter()
+                    .map(|block| block.edges().len())
+                    .sum::<usize>()
+            })
+            .sum::<usize>();
+        cardinality += source
+            .aggregate()
+            .mcdc()
+            .lines()
+            .map(|(_, line)| line.groups().values().map(Vec::len).sum::<usize>())
+            .sum::<usize>();
+        cardinality += source
+            .testcases()
+            .lines()
+            .values()
+            .map(|family| family.len())
+            .sum::<usize>();
+        cardinality += source
+            .testcases()
+            .functions()
+            .values()
+            .map(|family| {
+                family
+                    .groups()
+                    .map(|(_, group)| group.aliases().len())
+                    .sum::<usize>()
+            })
+            .sum::<usize>();
+        cardinality += source
+            .testcases()
+            .branches()
+            .values()
+            .map(|family| {
+                family
+                    .lines()
+                    .map(|(_, line)| {
+                        line.blocks()
+                            .iter()
+                            .map(|block| block.edges().len())
+                            .sum::<usize>()
+                    })
+                    .sum::<usize>()
+            })
+            .sum::<usize>();
+        cardinality += source
+            .testcases()
+            .mcdc()
+            .values()
+            .map(|family| {
+                family
+                    .lines()
+                    .map(|(_, line)| line.groups().values().map(Vec::len).sum::<usize>())
+                    .sum::<usize>()
+            })
+            .sum::<usize>();
+    }
+    if cardinality > budget.family_cardinality {
+        return Err(HarnessFailure::BudgetExceeded {
+            dimension: "actual_family_cardinality",
+            observed: cardinality,
+            limit: budget.family_cardinality,
+        });
+    }
     let started = Instant::now();
     match target {
         FuzzTarget::Lex => lexical(input),
@@ -124,7 +203,14 @@ fn validate_budget(input: &[u8], budget: HarnessBudget) -> Result<(), HarnessFai
     let mut sections = 0usize;
     for line in input.split(|byte| *byte == b'\n') {
         records += 1;
-        for field in line.split(|byte| *byte == b',') {
+        let payload = line
+            .iter()
+            .position(|byte| *byte == b':')
+            .map_or(line, |index| &line[index + 1..]);
+        let opaque = [b"TN:".as_slice(), b"SF:", b"KF:", b"VER:"]
+            .iter()
+            .any(|prefix| line.starts_with(prefix));
+        for field in payload.split(|byte| !opaque && *byte == b',') {
             if field.len() > budget.field_bytes {
                 return Err(HarnessFailure::BudgetExceeded {
                     dimension: "field_bytes",
@@ -253,12 +339,17 @@ fn algebra(input: &[u8], default_operation: AlgebraOp) {
         2 => AlgebraOp::Difference,
         _ => default_operation,
     };
-    for (_, source) in left.iter() {
-        let mut store: CoverageStore = source.aggregate().clone();
-        let rhs = right
-            .get(source.identity().lookup_key())
-            .expect("cloned source")
-            .aggregate();
+    let keys = left
+        .iter()
+        .map(|(key, _)| key.clone())
+        .chain(right.iter().map(|(key, _)| key.clone()))
+        .collect::<std::collections::BTreeSet<_>>();
+    for key in keys {
+        let mut store = left
+            .get(&key)
+            .map_or_else(CoverageStore::new, |source| source.aggregate().clone());
+        let empty = CoverageStore::new();
+        let rhs = right.get(&key).map_or(&empty, |source| source.aggregate());
         let result = match operation {
             AlgebraOp::Union => store.union(rhs),
             AlgebraOp::Intersect => store.intersect(rhs),
@@ -266,6 +357,15 @@ fn algebra(input: &[u8], default_operation: AlgebraOp) {
         };
         if result.is_ok() {
             assert!(store.lines().len() <= HarnessBudget::CI_SMOKE.family_cardinality);
+            store
+                .functions()
+                .assert_indexes_coherent()
+                .expect("function indexes");
+            store
+                .branches()
+                .assert_invariants()
+                .expect("branch indexes");
+            store.mcdc().assert_invariants().expect("mcdc indexes");
         }
     }
 }
