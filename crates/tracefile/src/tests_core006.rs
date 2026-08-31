@@ -65,10 +65,11 @@ end_of_record\n";
     );
 
     // Aggregate received the same line union.
-    assert!(src
-        .aggregate()
-        .lines()
-        .contains_key(&LineKey::from_lexeme("10")));
+    assert!(
+        src.aggregate()
+            .lines()
+            .contains_key(&LineKey::from_lexeme("10"))
+    );
 
     let tc_fn = src.testcases().functions().get(&tn).expect("functions");
     assert!(tc_fn.contains_alias(&ferricov_model::ByteString::from_slice(b"main")));
@@ -278,11 +279,12 @@ end_of_record\n";
     let mut p = StreamingParser::new();
     let _ = p.parse_all(input);
     assert!(!p.stopped());
-    assert!(p
-        .state()
-        .diagnostics()
-        .iter()
-        .any(|d| matches!(d.kind, DiagKind::ErrorFormat)));
+    assert!(
+        p.state()
+            .diagnostics()
+            .iter()
+            .any(|d| matches!(d.kind, DiagKind::ErrorFormat))
+    );
     let src = source_of(p.database(), "u.c");
     assert_eq!(src.aggregate().lines().len(), 2);
 }

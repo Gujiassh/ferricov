@@ -1,4 +1,4 @@
-use crate::{write_canonical, SerializationContext, SerializationError, StreamingParser};
+use crate::{SerializationContext, SerializationError, StreamingParser, write_canonical};
 
 #[test]
 fn canonical_writer_orders_families_recomputes_totals_and_is_stable() {
@@ -50,9 +50,11 @@ fn numeric_keys_sort_by_value_without_fixed_width_or_float_coercion() {
     };
     let output = write_canonical(&database, &context).expect("serializable");
     let ordered = b"DA:2,1\nDA:10,1\nDA:9007199254740993,1\nDA:10000000000000000000,1";
-    assert!(output
-        .windows(ordered.len())
-        .any(|window| window == ordered));
+    assert!(
+        output
+            .windows(ordered.len())
+            .any(|window| window == ordered)
+    );
 }
 
 #[test]
@@ -91,12 +93,16 @@ fn projection_controls_source_sort_and_provider_fills_only_missing_checksums() {
                 .windows(b"TN:a\nSF:z-out.c".len())
                 .any(|w| w == b"TN:a\nSF:z-out.c")
     );
-    assert!(output
-        .windows(b"DA:1,1,stored".len())
-        .any(|w| w == b"DA:1,1,stored"));
-    assert!(output
-        .windows(b"DA:2,1,z-out.c-2".len())
-        .any(|w| w == b"DA:2,1,z-out.c-2"));
+    assert!(
+        output
+            .windows(b"DA:1,1,stored".len())
+            .any(|w| w == b"DA:1,1,stored")
+    );
+    assert!(
+        output
+            .windows(b"DA:2,1,z-out.c-2".len())
+            .any(|w| w == b"DA:2,1,z-out.c-2")
+    );
     assert_eq!(database, before);
     assert_eq!(
         write_canonical(&database, &context).expect("serializable"),
@@ -107,10 +113,12 @@ fn projection_controls_source_sort_and_provider_fills_only_missing_checksums() {
         source_path_projection: Some(&projection),
         ..Default::default()
     };
-    assert!(!write_canonical(&database, &disabled)
-        .expect("serializable")
-        .windows(b",stored".len())
-        .any(|w| w == b",stored"));
+    assert!(
+        !write_canonical(&database, &disabled)
+            .expect("serializable")
+            .windows(b",stored".len())
+            .any(|w| w == b",stored")
+    );
 }
 
 #[test]
@@ -119,12 +127,16 @@ fn branch_mcdc_non_utf8_and_round_trip_boundaries_are_canonical() {
     let database = StreamingParser::parse_database(input);
     let output =
         write_canonical(&database, &SerializationContext::default()).expect("serializable");
-    assert!(output
-        .windows(b"SF:x\xff.c".len())
-        .any(|w| w == b"SF:x\xff.c"));
-    assert!(output
-        .windows(b"BRDA:10,0,0,1\nBRDA:10,1,0,1\nBRDA:10,1,1,0".len())
-        .any(|w| w == b"BRDA:10,0,0,1\nBRDA:10,1,0,1\nBRDA:10,1,1,0"));
+    assert!(
+        output
+            .windows(b"SF:x\xff.c".len())
+            .any(|w| w == b"SF:x\xff.c")
+    );
+    assert!(
+        output
+            .windows(b"BRDA:10,0,0,1\nBRDA:10,1,0,1\nBRDA:10,1,1,0".len())
+            .any(|w| w == b"BRDA:10,0,0,1\nBRDA:10,1,0,1\nBRDA:10,1,1,0")
+    );
     assert!(
         output
             .windows(
@@ -147,9 +159,11 @@ fn legacy_functions_serialize_only_as_current_records() {
     );
     let output =
         write_canonical(&database, &SerializationContext::default()).expect("serializable");
-    assert!(output
-        .windows(b"FNL:0,4,8\nFNA:0,3,legacy".len())
-        .any(|w| w == b"FNL:0,4,8\nFNA:0,3,legacy"));
+    assert!(
+        output
+            .windows(b"FNL:0,4,8\nFNA:0,3,legacy".len())
+            .any(|w| w == b"FNL:0,4,8\nFNA:0,3,legacy")
+    );
     assert!(!output.windows(3).any(|w| w == b"FN:"));
     assert!(!output.windows(5).any(|w| w == b"FNDA:"));
 }
@@ -171,9 +185,11 @@ fn numeric_expression_is_preserved_but_absent_expression_fails_closed() {
     );
     let output = write_canonical(&numeric, &SerializationContext::default())
         .expect("numeric expression is serializable");
-    assert!(output
-        .windows(b"BRDA:1,0,0,1".len())
-        .any(|window| window == b"BRDA:1,0,0,1"));
+    assert!(
+        output
+            .windows(b"BRDA:1,0,0,1".len())
+            .any(|window| window == b"BRDA:1,0,0,1")
+    );
 
     let absent =
         StreamingParser::parse_database(b"TN:t\nSF:absent.c\nBRDA:1,0,,1\nDA:1,1\nend_of_record\n");

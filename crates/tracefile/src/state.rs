@@ -334,10 +334,12 @@ mod tests {
         let mut state = ParserState::new();
         state.apply_classified(classify_line(b"TN:a-b,diff"));
         assert_eq!(state.test_name().as_bytes(), b"a_b,diff");
-        assert!(state
-            .diagnostics()
-            .iter()
-            .any(|d| { matches!(d.kind, crate::diag::DiagKind::TestNameSanitized) }));
+        assert!(
+            state
+                .diagnostics()
+                .iter()
+                .any(|d| { matches!(d.kind, crate::diag::DiagKind::TestNameSanitized) })
+        );
     }
 
     #[test]

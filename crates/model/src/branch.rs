@@ -106,14 +106,8 @@ mod tests {
         let never = BranchTaken::NeverEvaluated;
         let taken = BranchTaken::evaluated(CoverageCount::from_lexeme("2"));
 
-        assert_eq!(
-            never.merge_with(&taken).expect("replace"),
-            taken.clone()
-        );
-        assert_eq!(
-            taken.merge_with(&never).expect("identity"),
-            taken.clone()
-        );
+        assert_eq!(never.merge_with(&taken).expect("replace"), taken.clone());
+        assert_eq!(taken.merge_with(&never).expect("identity"), taken.clone());
         assert_eq!(
             never.merge_with(&never).expect("never+never"),
             BranchTaken::NeverEvaluated
@@ -126,7 +120,10 @@ mod tests {
         let right = BranchTaken::evaluated(CoverageCount::from_lexeme("3"));
         let merged = left.merge_with(&right).expect("add");
         assert_eq!(
-            merged.as_evaluated().map(CoverageCount::lexeme).map(|b| b.as_bytes()),
+            merged
+                .as_evaluated()
+                .map(CoverageCount::lexeme)
+                .map(|b| b.as_bytes()),
             Some(b"5".as_slice())
         );
         assert!(merged.contributes_hit());

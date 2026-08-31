@@ -6,10 +6,10 @@
 
 use ferricov_model::CoverageDatabase;
 
-use crate::classify::{classify_line, LineClass};
-use crate::line::{normalize_logical_line, LineSplitter, LineSplitterSnapshot, RawLogicalLine};
+use crate::classify::{LineClass, classify_line};
+use crate::line::{LineSplitter, LineSplitterSnapshot, RawLogicalLine, normalize_logical_line};
 use crate::policy::IgnorePolicy;
-use crate::records::{apply_event, ApplyContext, ApplyResult};
+use crate::records::{ApplyContext, ApplyResult, apply_event};
 use crate::state::{ParseEvent, ParserState};
 
 /// Streaming LCOV logical-line parser (CORE-005 binding + CORE-006 apply).
@@ -184,9 +184,11 @@ end_of_record\n";
             e,
             ParseEvent::SourceBound(b) if b.raw_path.as_bytes() == b"/m0/first.c"
         )));
-        assert!(events
-            .iter()
-            .any(|e| matches!(e, ParseEvent::Terminator { .. })));
+        assert!(
+            events
+                .iter()
+                .any(|e| matches!(e, ParseEvent::Terminator { .. }))
+        );
         assert_eq!(p.state().test_name().as_bytes(), b"B");
         assert_eq!(
             p.state().source().unwrap().raw_path.as_bytes(),
@@ -217,9 +219,11 @@ end_of_record\n";
             p.state().source().unwrap().raw_path.as_bytes(),
             b"path/\xff"
         );
-        assert!(events
-            .iter()
-            .any(|e| matches!(e, ParseEvent::Terminator { .. })));
+        assert!(
+            events
+                .iter()
+                .any(|e| matches!(e, ParseEvent::Terminator { .. }))
+        );
     }
 
     #[test]

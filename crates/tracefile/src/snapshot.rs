@@ -1,7 +1,7 @@
 //! Model-semantic snapshots and parser/run evidence envelopes.
 use crate::{
-    write_canonical, IgnorePolicy, LineSplitterSnapshot, OpenSection, ParserState,
-    SerializationContext, SerializationError, StreamingParser,
+    IgnorePolicy, LineSplitterSnapshot, OpenSection, ParserState, SerializationContext,
+    SerializationError, StreamingParser, write_canonical,
 };
 use ferricov_model::{AlgebraOp, CoverageStore, TestName};
 use ferricov_model::{ByteString, CoverageDatabase};
@@ -359,7 +359,7 @@ fn classify_and_validate(
                     return (
                         Serializability::NonSerializable(NonSerializableReason::Writer(error)),
                         None,
-                    )
+                    );
                 }
             };
             let attempted = ByteString::new(bytes.clone());

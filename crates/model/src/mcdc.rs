@@ -259,9 +259,7 @@ impl McdcLine {
     }
 
     /// Mutable groups map (algebra helpers).
-    pub fn groups_mut_for_algebra(
-        &mut self,
-    ) -> &mut BTreeMap<GroupSizeKey, Vec<McdcExpression>> {
+    pub fn groups_mut_for_algebra(&mut self) -> &mut BTreeMap<GroupSizeKey, Vec<McdcExpression>> {
         &mut self.groups
     }
 
@@ -421,11 +419,7 @@ mod tests {
         let mut line = McdcLine::new();
         let size = GroupSizeKey::from_lexeme("2");
         {
-            let expr = line.append_expression(
-                size.clone(),
-                NumericAtom::from_lexeme("0"),
-                "a",
-            );
+            let expr = line.append_expression(size.clone(), NumericAtom::from_lexeme("0"), "a");
             assert!(!expr.false_sense().is_excluded());
             assert!(!expr.true_sense().is_excluded());
             assert!(expr.false_sense().count().is_zero());
@@ -472,8 +466,16 @@ mod tests {
         let size = GroupSizeKey::from_lexeme("2");
         // declared indexes may have a gap; stored positions are contiguous
         line.append_expression(size.clone(), NumericAtom::from_lexeme("0"), "first");
-        line.append_expression(size.clone(), NumericAtom::from_lexeme("2"), "third-declared");
-        line.append_expression(size.clone(), NumericAtom::from_lexeme("1"), "second-declared");
+        line.append_expression(
+            size.clone(),
+            NumericAtom::from_lexeme("2"),
+            "third-declared",
+        );
+        line.append_expression(
+            size.clone(),
+            NumericAtom::from_lexeme("1"),
+            "second-declared",
+        );
 
         let exprs = coverage.get_line(&key).unwrap().get_group(&size).unwrap();
         assert_eq!(exprs.len(), 3);

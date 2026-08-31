@@ -73,7 +73,6 @@ impl Default for SerializationContext<'_> {
 }
 
 /// Serialize `database` without mutating it.
-#[must_use]
 pub fn write_canonical(
     database: &CoverageDatabase,
     context: &SerializationContext<'_>,

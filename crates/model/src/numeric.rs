@@ -79,7 +79,12 @@ impl NumericAtom {
     pub fn from_lexeme(lexeme: impl Into<ByteString>) -> Self {
         let lexeme = lexeme.into();
         let Some(text) = lexeme.as_utf8() else {
-            return Self::new(lexeme, NumericClass::NonNumeric, NumericKind::NotApplicable, false);
+            return Self::new(
+                lexeme,
+                NumericClass::NonNumeric,
+                NumericKind::NotApplicable,
+                false,
+            );
         };
 
         let trimmed = text.trim();
@@ -105,7 +110,12 @@ impl NumericAtom {
         }
 
         if !looks_like_number_ascii(trimmed) {
-            return Self::new(lexeme, NumericClass::NonNumeric, NumericKind::NotApplicable, false);
+            return Self::new(
+                lexeme,
+                NumericClass::NonNumeric,
+                NumericKind::NotApplicable,
+                false,
+            );
         }
 
         let signed_zero = is_signed_zero_lexeme(trimmed);
@@ -420,7 +430,7 @@ fn looks_like_number_ascii(text: &str) -> bool {
             _ => return false,
         }
     }
-    if !saw_digit && !(saw_dot && start < i) {
+    if !(saw_digit || saw_dot && start < i) {
         // Require at least one digit somewhere in the mantissa (".5" / "1.").
         if !(saw_dot && bytes[start..i].iter().any(u8::is_ascii_digit)) {
             return false;
@@ -607,11 +617,7 @@ fn compare_normalized(left: &NormalizedDecimal, right: &NormalizedDecimal) -> Or
     } else {
         left_digits.len().cmp(&right_digits.len())
     };
-    if left.negative {
-        cmp.reverse()
-    } else {
-        cmp
-    }
+    if left.negative { cmp.reverse() } else { cmp }
 }
 
 fn pad_fraction(digits: &str, scale: usize, max_scale: usize) -> String {
@@ -685,7 +691,7 @@ fn sub_digit_strings(left: &str, right: &str) -> String {
     let mut j = right.len();
     while i > 0 {
         i -= 1;
-        let mut digit = i16::from(left[i] - b'0') - i16::from(borrow);
+        let mut digit = i16::from(left[i] - b'0') - borrow;
         let sub = if j > 0 {
             j -= 1;
             i16::from(right[j] - b'0')
@@ -754,8 +760,8 @@ fn format_normalized(negative: bool, digits: &str, scale: usize) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
-        ordering_from_i8, AddError, CountValidation, CoverageCount, NumericAtom, NumericClass,
-        NumericKind,
+        AddError, CountValidation, CoverageCount, NumericAtom, NumericClass, NumericKind,
+        ordering_from_i8,
     };
     use crate::bytes::ByteString;
 
@@ -816,10 +822,7 @@ mod tests {
         assert_eq!(negative.validate(None), CountValidation::CoerceToZero);
 
         let large = CoverageCount::from_lexeme("1000");
-        assert_eq!(
-            large.validate(Some("100")),
-            CountValidation::Excessive
-        );
+        assert_eq!(large.validate(Some("100")), CountValidation::Excessive);
         assert!(large.is_positive());
     }
 

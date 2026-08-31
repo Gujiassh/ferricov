@@ -1,9 +1,9 @@
 //! Focused M1-CORE-005 acceptance tests (logical-line pipeline).
 
-use crate::classify::{classify_line, LineClass, RecordTag};
-use crate::line::{normalize_logical_line, LineEnding, LineSplitter};
+use crate::classify::{LineClass, RecordTag, classify_line};
+use crate::line::{LineEnding, LineSplitter, normalize_logical_line};
 use crate::parser::StreamingParser;
-use crate::state::{sanitize_tn_base, ParseEvent, ParserState, SourceTag};
+use crate::state::{ParseEvent, ParserState, SourceTag, sanitize_tn_base};
 
 #[test]
 fn chomp_crlf_lf_byte_preservation() {
@@ -103,12 +103,16 @@ end_of_record\n";
     // Late TN does not rebind the SF-bound test name.
     assert_eq!(src.bound_test_name.as_bytes(), b"A");
     assert!(p.state().source_open());
-    assert!(events
-        .iter()
-        .any(|e| matches!(e, ParseEvent::Terminator { .. })));
-    assert!(events
-        .iter()
-        .any(|e| matches!(e, ParseEvent::IgnoredComment)));
+    assert!(
+        events
+            .iter()
+            .any(|e| matches!(e, ParseEvent::Terminator { .. }))
+    );
+    assert!(
+        events
+            .iter()
+            .any(|e| matches!(e, ParseEvent::IgnoredComment))
+    );
     assert!(events.iter().any(|e| matches!(
         e,
         ParseEvent::RecordApplied {

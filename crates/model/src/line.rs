@@ -105,7 +105,10 @@ mod tests {
         lines.insert(key.clone(), CoverageCount::from_lexeme("3"));
         assert!(lines.contains_key(&key));
         assert_eq!(
-            lines.get(&key).map(CoverageCount::lexeme).map(|b| b.as_bytes()),
+            lines
+                .get(&key)
+                .map(CoverageCount::lexeme)
+                .map(|b| b.as_bytes()),
             Some(b"3".as_slice())
         );
     }

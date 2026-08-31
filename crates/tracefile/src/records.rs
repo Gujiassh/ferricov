@@ -10,7 +10,7 @@ use ferricov_model::{
 use std::collections::BTreeSet;
 
 use crate::classify::RecordTag;
-use crate::commit::{commit_section, ensure_source, CommitOutcome};
+use crate::commit::{CommitOutcome, commit_section, ensure_source};
 use crate::diag::{DiagClass, ParseDiag};
 use crate::policy::IgnorePolicy;
 use crate::record_parse::{

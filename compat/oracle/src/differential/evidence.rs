@@ -302,10 +302,10 @@ fn os_bytes(value: &OsStr) -> Vec<u8> {
     #[cfg(windows)]
     {
         use std::os::windows::ffi::OsStrExt;
-        return value
+        value
             .encode_wide()
             .flat_map(u16::to_le_bytes)
-            .collect::<Vec<_>>();
+            .collect::<Vec<_>>()
     }
     #[cfg(not(windows))]
     value.to_string_lossy().as_bytes().to_vec()

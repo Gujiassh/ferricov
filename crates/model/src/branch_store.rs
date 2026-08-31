@@ -159,10 +159,7 @@ impl BranchBlock {
     /// Signature as Oracle letter bytes (`b`/`e`/`f`).
     #[must_use]
     pub fn signature_bytes(&self) -> Vec<u8> {
-        self.signature
-            .iter()
-            .map(|k| k.signature_byte())
-            .collect()
+        self.signature.iter().map(|k| k.signature_byte()).collect()
     }
 
     /// Borrow edges in derived-index order.

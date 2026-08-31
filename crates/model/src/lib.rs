@@ -34,17 +34,13 @@ pub use branch_store::{
 };
 pub use bytes::ByteString;
 pub use function::{
-    effective_alias_length, is_lambda_alias, FunctionError, FunctionGroup, FunctionTable,
+    FunctionError, FunctionGroup, FunctionTable, effective_alias_length, is_lambda_alias,
 };
 pub use identity::{SourceIdentity, SourceLookupKey, TestName};
 pub use keys::LineKey;
 pub use line::LineCoverage;
-pub use mcdc::{
-    GroupSizeKey, McdcCoverage, McdcError, McdcExpression, McdcLine, SenseCoverage,
-};
+pub use mcdc::{GroupSizeKey, McdcCoverage, McdcError, McdcExpression, McdcLine, SenseCoverage};
 pub use numeric::{
     AddError, CountValidation, CoverageCount, NumericAtom, NumericClass, NumericKind,
 };
-pub use stores::{
-    CoverageDatabase, CoverageStore, SourceCoverage, TestcaseStores, TotalState,
-};
+pub use stores::{CoverageDatabase, CoverageStore, SourceCoverage, TestcaseStores, TotalState};

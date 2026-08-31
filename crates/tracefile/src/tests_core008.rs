@@ -288,12 +288,14 @@ fn attempted_output_survives_post_write_semantic_rejection() {
         evidence.serializability,
         Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
     ));
-    assert!(evidence
-        .attempted_output
-        .unwrap()
-        .as_bytes()
-        .windows(b"SF:projected.c".len())
-        .any(|window| window == b"SF:projected.c"));
+    assert!(
+        evidence
+            .attempted_output
+            .unwrap()
+            .as_bytes()
+            .windows(b"SF:projected.c".len())
+            .any(|window| window == b"SF:projected.c")
+    );
 }
 
 #[test]
@@ -330,17 +332,19 @@ fn disabled_families_reject_even_explicit_empty_testcase_entries() {
         .unwrap()
         .testcases_mut()
         .insert_mcdc(TestName::new("t"), McdcCoverage::new());
-    assert!(parser
-        .database()
-        .iter()
-        .next()
-        .unwrap()
-        .1
-        .testcases()
-        .functions()
-        .get(&TestName::new("t"))
-        .unwrap()
-        .is_empty());
+    assert!(
+        parser
+            .database()
+            .iter()
+            .next()
+            .unwrap()
+            .1
+            .testcases()
+            .functions()
+            .get(&TestName::new("t"))
+            .unwrap()
+            .is_empty()
+    );
     for context in [
         SerializationContext {
             function_coverage_enabled: false,
@@ -375,9 +379,11 @@ fn disabled_checksum_output_rejects_stored_checksum_before_writer() {
         crate::classify_contract(&parser, &context),
         ContractClassification::NonSerializable(ContractNonSerializableReason::DisabledChecksum)
     );
-    assert!(EvidenceSnapshot::capture(&parser, &context)
-        .attempted_output
-        .is_none());
+    assert!(
+        EvidenceSnapshot::capture(&parser, &context)
+            .attempted_output
+            .is_none()
+    );
 }
 
 #[test]
