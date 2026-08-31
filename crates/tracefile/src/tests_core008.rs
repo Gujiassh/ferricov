@@ -4,7 +4,8 @@ use crate::{
     SourceBinding, SourceBindingProvenance, SourceProvenance, SourceTag, StreamingParser,
 };
 use ferricov_model::{
-    ByteString, CoverageCount, FunctionTable, LineKey, SourceIdentity, TestName, TotalState,
+    ByteString, CoverageCount, FunctionTable, LineKey, McdcCoverage, SourceIdentity, TestName,
+    TotalState,
 };
 
 fn parsed(bytes: &[u8]) -> StreamingParser {
@@ -170,7 +171,10 @@ fn assert_contract_non_serializable(
         "{case}"
     );
     let snapshot = EvidenceSnapshot::capture(parser, &SerializationContext::default());
-    assert!(snapshot.attempted_output.is_none(), "{case} forced through writer");
+    assert!(
+        snapshot.attempted_output.is_none(),
+        "{case} forced through writer"
+    );
 }
 
 #[test]
@@ -260,23 +264,134 @@ fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
         ContractClassification::BlockedOracleUnknown
     );
     let repeated = EvidenceSnapshot::capture(&repeated_close, &SerializationContext::default());
-    assert_eq!(repeated.serializability, Serializability::BlockedOracleUnknown);
+    assert_eq!(
+        repeated.serializability,
+        Serializability::BlockedOracleUnknown
+    );
     assert!(repeated.attempted_output.is_none());
 }
 
 #[test]
 fn attempted_output_survives_post_write_semantic_rejection() {
-    let parser = parsed(b"TN:t\nSF:x\n");
+    let parser = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let projection = |_source: &[u8]| b"projected.c".to_vec();
+    let context = SerializationContext {
+        source_path_projection: Some(&projection),
+        ..Default::default()
+    };
     assert_eq!(
-        crate::classify_contract(&parser, &SerializationContext::default()),
+        crate::classify_contract(&parser, &context),
         ContractClassification::Serializable
     );
-    let evidence = EvidenceSnapshot::capture(&parser, &SerializationContext::default());
+    let evidence = EvidenceSnapshot::capture(&parser, &context);
     assert!(matches!(
         evidence.serializability,
         Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
     ));
-    assert_eq!(evidence.attempted_output.unwrap().as_bytes(), b"");
+    assert!(evidence
+        .attempted_output
+        .unwrap()
+        .as_bytes()
+        .windows(b"SF:projected.c".len())
+        .any(|window| window == b"SF:projected.c"));
+}
+
+#[test]
+fn classifier_rejects_unreachable_source_and_checksum_state_before_writer() {
+    let empty_source = parsed(b"TN:t\nSF:x\n");
+    assert_contract_non_serializable(
+        "empty source",
+        &empty_source,
+        ContractNonSerializableReason::EmptySource,
+    );
+
+    let mut orphan_checksum = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = orphan_checksum.database().iter().next().unwrap().0.clone();
+    orphan_checksum
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .checksums_mut()
+        .insert(LineKey::from_lexeme("9"), ByteString::from_slice(b"orphan"));
+    assert_contract_non_serializable(
+        "checksum without emitted DA line",
+        &orphan_checksum,
+        ContractNonSerializableReason::ChecksumWithoutLineMembership,
+    );
+}
+
+#[test]
+fn disabled_families_reject_even_explicit_empty_testcase_entries() {
+    let mut parser = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = parser.database().iter().next().unwrap().0.clone();
+    parser
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .testcases_mut()
+        .insert_mcdc(TestName::new("t"), McdcCoverage::new());
+    assert!(parser
+        .database()
+        .iter()
+        .next()
+        .unwrap()
+        .1
+        .testcases()
+        .functions()
+        .get(&TestName::new("t"))
+        .unwrap()
+        .is_empty());
+    for context in [
+        SerializationContext {
+            function_coverage_enabled: false,
+            ..Default::default()
+        },
+        SerializationContext {
+            branch_coverage_enabled: false,
+            ..Default::default()
+        },
+        SerializationContext {
+            mcdc_coverage_enabled: false,
+            ..Default::default()
+        },
+    ] {
+        assert_eq!(
+            crate::classify_contract(&parser, &context),
+            ContractClassification::NonSerializable(ContractNonSerializableReason::DisabledFamily)
+        );
+        let evidence = EvidenceSnapshot::capture(&parser, &context);
+        assert!(evidence.attempted_output.is_none());
+    }
+}
+
+#[test]
+fn disabled_checksum_output_rejects_stored_checksum_before_writer() {
+    let parser = parsed(b"TN:t\nSF:x\nDA:1,1,abc\nend_of_record\n");
+    let context = SerializationContext {
+        checksum_output_enabled: false,
+        ..Default::default()
+    };
+    assert_eq!(
+        crate::classify_contract(&parser, &context),
+        ContractClassification::NonSerializable(ContractNonSerializableReason::DisabledChecksum)
+    );
+    assert!(EvidenceSnapshot::capture(&parser, &context)
+        .attempted_output
+        .is_none());
+}
+
+#[test]
+fn repeated_empty_sections_do_not_create_a_lifecycle_blocker() {
+    let empty = parsed(b"TN:t\nSF:x\nend_of_record\nTN:t\nSF:x\nend_of_record\n");
+    assert!(!empty.apply_context().repeated_close_observed);
+    assert_eq!(
+        crate::classify_contract(&empty, &SerializationContext::default()),
+        ContractClassification::Serializable
+    );
+    assert!(matches!(
+        EvidenceSnapshot::capture(&empty, &SerializationContext::default()).serializability,
+        Serializability::Serializable(_)
+    ));
 }
 
 #[test]
@@ -295,17 +410,36 @@ fn blocked_oracle_unknown_is_distinct_from_decided_classifications() {
 fn tn_provenance_is_explicit_for_current_active_open_and_testcase_contexts() {
     let open = parsed(b"TN:a-b\nSF:x\nDA:1,1\n");
     let evidence = EvidenceSnapshot::capture(&open, &SerializationContext::default());
-    assert_eq!(evidence.current_test_name_provenance.identity.as_bytes(), b"a_b");
     assert_eq!(
-        evidence.current_test_name_provenance.unsanitized.as_ref().map(ByteString::as_bytes),
+        evidence.current_test_name_provenance.identity.as_bytes(),
+        b"a_b"
+    );
+    assert_eq!(
+        evidence
+            .current_test_name_provenance
+            .unsanitized
+            .as_ref()
+            .map(ByteString::as_bytes),
         Some(b"a-b".as_slice())
     );
     assert_eq!(
-        evidence.active_test_name_provenance.as_ref().unwrap().unsanitized.as_ref().map(ByteString::as_bytes),
+        evidence
+            .active_test_name_provenance
+            .as_ref()
+            .unwrap()
+            .unsanitized
+            .as_ref()
+            .map(ByteString::as_bytes),
         Some(b"a-b".as_slice())
     );
     assert_eq!(
-        evidence.open_test_name_provenance.as_ref().unwrap().unsanitized.as_ref().map(ByteString::as_bytes),
+        evidence
+            .open_test_name_provenance
+            .as_ref()
+            .unwrap()
+            .unsanitized
+            .as_ref()
+            .map(ByteString::as_bytes),
         Some(b"a-b".as_slice())
     );
 
@@ -315,7 +449,11 @@ fn tn_provenance_is_explicit_for_current_active_open_and_testcase_contexts() {
     );
     assert!(closed.testcase_name_provenance.iter().all(|entry| {
         entry.test_name.identity.as_bytes() == b"a_b"
-            && entry.test_name.unsanitized.as_ref().map(ByteString::as_bytes)
+            && entry
+                .test_name
+                .unsanitized
+                .as_ref()
+                .map(ByteString::as_bytes)
                 == Some(b"a-b".as_slice())
     }));
 
@@ -324,6 +462,12 @@ fn tn_provenance_is_explicit_for_current_active_open_and_testcase_contexts() {
         &SerializationContext::default(),
     );
     assert!(closed.semantically_equal(&clean));
-    assert_ne!(closed.current_test_name_provenance, clean.current_test_name_provenance);
-    assert_ne!(closed.testcase_name_provenance, clean.testcase_name_provenance);
+    assert_ne!(
+        closed.current_test_name_provenance,
+        clean.current_test_name_provenance
+    );
+    assert_ne!(
+        closed.testcase_name_provenance,
+        clean.testcase_name_provenance
+    );
 }

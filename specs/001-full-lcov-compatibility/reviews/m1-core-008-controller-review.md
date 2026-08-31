@@ -23,13 +23,14 @@ bytes remain explicit evidence even when a post-write check fails.
 | --- | --- | --- |
 | Semantic/evidence schema split | pass | distinct public snapshot types |
 | Aggregate/testcase/empty identity | pass | structural database equality and inverse classification tests |
+| Writer reachability | pass | empty sources, orphan checksums, and disabled empty-family keys pre-rejected |
 | Index/order/totals/numeric bytes | pass | database internals plus reverse tests |
 | Diagnostic/provenance envelope | pass | source plus current/active/open/testcase `TN` provenance |
 | Streaming in-flight state | pass | splitter buffer and pending CR captured |
 | Process ownership | pass | optional explicit process evidence; capture leaves it `None` |
 | Output classification | pass | contract pre-gate → write → clean parse → semantic compare → fixed point |
 | Product evidence | pass | unchanged and false |
-| Focused gates | pass | tracefile 57, model 48, workspace check, diff check |
+| Focused gates | pass | tracefile 61, model 48, workspace check, diff check |
 | Hosted gates | residual | unchanged Windows/Docker limitations |
 
 ## Reverse Review
@@ -44,6 +45,10 @@ Classification tests reject before canonical writing:
 aggregate/testcase divergence, populated function-family presence without line
 membership, lazy empty family state, observable totals, and late-`TN` MC/DC.
 Repeated close reaches `BlockedOracleUnknown` and has no attempted output.
+Repeated empty sections do not set populated-close history and therefore do not
+produce a false lifecycle blocker. Context-disabled function, branch, and MC/DC
+families reject key presence even for explicit empty values; disabled checksum output rejects stored checksums; empty sources and
+checksums without an emitted `DA` line are likewise rejected before writing.
 Provisional post-write semantic rejection retains its exact attempted bytes;
 absent branch expressions remain typed writer failures with no bytes.
 

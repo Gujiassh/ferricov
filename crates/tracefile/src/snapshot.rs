@@ -3,16 +3,19 @@ use crate::{
     write_canonical, IgnorePolicy, LineSplitterSnapshot, OpenSection, ParserState,
     SerializationContext, SerializationError, StreamingParser,
 };
-use ferricov_model::{ByteString, CoverageDatabase};
 use ferricov_model::{AlgebraOp, CoverageStore, TestName};
+use ferricov_model::{ByteString, CoverageDatabase};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ContractNonSerializableReason {
+    EmptySource,
     AggregateTestcaseDivergence,
     FamilyWithoutLineMembership,
+    ChecksumWithoutLineMembership,
     ObservableTotals,
     AlgebraFailure,
     DisabledFamily,
+    DisabledChecksum,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -167,10 +170,18 @@ impl EvidenceSnapshot {
                     test_name: name.into(),
                 });
             };
-            for name in source.testcases().lines().keys() { push(TestcaseFamily::Lines, name); }
-            for name in source.testcases().functions().keys() { push(TestcaseFamily::Functions, name); }
-            for name in source.testcases().branches().keys() { push(TestcaseFamily::Branches, name); }
-            for name in source.testcases().mcdc().keys() { push(TestcaseFamily::Mcdc, name); }
+            for name in source.testcases().lines().keys() {
+                push(TestcaseFamily::Lines, name);
+            }
+            for name in source.testcases().functions().keys() {
+                push(TestcaseFamily::Functions, name);
+            }
+            for name in source.testcases().branches().keys() {
+                push(TestcaseFamily::Branches, name);
+            }
+            for name in source.testcases().mcdc().keys() {
+                push(TestcaseFamily::Mcdc, name);
+            }
         }
         Self {
             semantic: SemanticSnapshot::capture(parser.database()),
@@ -224,47 +235,100 @@ pub fn classify_contract(
             );
         }
         let line_names = source.testcases().lines();
-        if (!context.function_coverage_enabled
-            && (!source.aggregate().functions().is_empty()
-                || source.testcases().functions().values().any(|value| !value.is_empty())))
-            || (!context.branch_coverage_enabled
-                && (!source.aggregate().branches().is_empty()
-                    || source.testcases().branches().values().any(|value| !value.is_empty())))
-            || (!context.mcdc_coverage_enabled
-                && (!source.aggregate().mcdc().is_empty()
-                    || source.testcases().mcdc().values().any(|value| !value.is_empty())))
+        if line_names.is_empty() {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::EmptySource,
+            );
+        }
+        if (!context.function_coverage_enabled && !source.testcases().functions().is_empty())
+            || (!context.branch_coverage_enabled && !source.testcases().branches().is_empty())
+            || (!context.mcdc_coverage_enabled && !source.testcases().mcdc().is_empty())
         {
             return ContractClassification::NonSerializable(
                 ContractNonSerializableReason::DisabledFamily,
             );
         }
-        if source.testcases().functions().keys().any(|name| !line_names.contains_key(name))
-            || source.testcases().branches().keys().any(|name| !line_names.contains_key(name))
-            || source.testcases().mcdc().keys().any(|name| !line_names.contains_key(name))
+        if !context.checksum_output_enabled && !source.checksums().is_empty() {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::DisabledChecksum,
+            );
+        }
+        if source
+            .testcases()
+            .functions()
+            .keys()
+            .any(|name| !line_names.contains_key(name))
+            || source
+                .testcases()
+                .branches()
+                .keys()
+                .any(|name| !line_names.contains_key(name))
+            || source
+                .testcases()
+                .mcdc()
+                .keys()
+                .any(|name| !line_names.contains_key(name))
         {
             return ContractClassification::NonSerializable(
                 ContractNonSerializableReason::FamilyWithoutLineMembership,
             );
         }
+        let emitted_lines: std::collections::BTreeSet<_> = line_names
+            .values()
+            .flat_map(|coverage| coverage.iter().map(|(line, _)| line.clone()))
+            .collect();
+        if source
+            .checksums()
+            .keys()
+            .any(|line| !emitted_lines.contains(line))
+        {
+            return ContractClassification::NonSerializable(
+                ContractNonSerializableReason::ChecksumWithoutLineMembership,
+            );
+        }
         let mut reconstructed = CoverageStore::new();
         for coverage in source.testcases().lines().values() {
-            if reconstructed.lines_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
-                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            if reconstructed
+                .lines_mut()
+                .apply_op(AlgebraOp::Union, coverage)
+                .is_err()
+            {
+                return ContractClassification::NonSerializable(
+                    ContractNonSerializableReason::AlgebraFailure,
+                );
             }
         }
         for coverage in source.testcases().functions().values() {
-            if reconstructed.functions_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
-                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            if reconstructed
+                .functions_mut()
+                .apply_op(AlgebraOp::Union, coverage)
+                .is_err()
+            {
+                return ContractClassification::NonSerializable(
+                    ContractNonSerializableReason::AlgebraFailure,
+                );
             }
         }
         for coverage in source.testcases().branches().values() {
-            if reconstructed.branches_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
-                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            if reconstructed
+                .branches_mut()
+                .apply_op(AlgebraOp::Union, coverage)
+                .is_err()
+            {
+                return ContractClassification::NonSerializable(
+                    ContractNonSerializableReason::AlgebraFailure,
+                );
             }
         }
         for coverage in source.testcases().mcdc().values() {
-            if reconstructed.mcdc_mut().apply_op(AlgebraOp::Union, coverage).is_err() {
-                return ContractClassification::NonSerializable(ContractNonSerializableReason::AlgebraFailure);
+            if reconstructed
+                .mcdc_mut()
+                .apply_op(AlgebraOp::Union, coverage)
+                .is_err()
+            {
+                return ContractClassification::NonSerializable(
+                    ContractNonSerializableReason::AlgebraFailure,
+                );
             }
         }
         if &reconstructed != source.aggregate() {
@@ -291,10 +355,12 @@ fn classify_and_validate(
         ContractClassification::Serializable => {
             let bytes = match write_canonical(parser.database(), context) {
                 Ok(bytes) => bytes,
-                Err(error) => return (
-                    Serializability::NonSerializable(NonSerializableReason::Writer(error)),
-                    None,
-                ),
+                Err(error) => {
+                    return (
+                        Serializability::NonSerializable(NonSerializableReason::Writer(error)),
+                        None,
+                    )
+                }
             };
             let attempted = ByteString::new(bytes.clone());
             let mut reconstructed = StreamingParser::new();
@@ -314,7 +380,9 @@ fn classify_and_validate(
                 .semantically_equal(&SemanticSnapshot::capture(parser.database()))
             {
                 return (
-                    Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch),
+                    Serializability::NonSerializable(
+                        NonSerializableReason::RoundTripSemanticMismatch,
+                    ),
                     Some(attempted),
                 );
             }
@@ -324,10 +392,15 @@ fn classify_and_validate(
                     Some(attempted),
                 ),
                 Ok(second) if second != bytes => (
-                    Serializability::NonSerializable(NonSerializableReason::WriterFixedPointMismatch),
+                    Serializability::NonSerializable(
+                        NonSerializableReason::WriterFixedPointMismatch,
+                    ),
                     Some(attempted),
                 ),
-                Ok(_) => (Serializability::Serializable(attempted.clone()), Some(attempted)),
+                Ok(_) => (
+                    Serializability::Serializable(attempted.clone()),
+                    Some(attempted),
+                ),
             }
         }
     }

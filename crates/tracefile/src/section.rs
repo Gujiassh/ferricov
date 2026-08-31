@@ -78,4 +78,15 @@ impl OpenSection {
     pub fn identity(&self) -> &SourceIdentity {
         &self.binding.identity
     }
+
+    /// Whether this section carries any semantic payload beyond its binding.
+    #[must_use]
+    pub fn has_semantic_payload(&self) -> bool {
+        self.version.is_some()
+            || !self.checksums.is_empty()
+            || !self.lines.is_empty()
+            || !self.functions.is_empty()
+            || !self.branches.is_empty()
+            || !self.mcdc_open.is_empty()
+    }
 }

@@ -143,17 +143,24 @@ fn apply_terminator(
 
     let current_tn = state.test_name().clone();
     let line_no = state.line_no();
+    let populated = open.has_semantic_payload();
     match commit_section(&mut ctx.db, &mut open, &current_tn, line_no) {
-        CommitOutcome::Committed | CommitOutcome::Noop => {
-            let close_key = (
-                open.identity().lookup_key().clone(),
-                open.bound_test_name().clone(),
-            );
-            if !ctx.closed_bindings.insert(close_key) {
-                ctx.repeated_close_observed = true;
+        CommitOutcome::Committed => {
+            if populated {
+                let close_key = (
+                    open.identity().lookup_key().clone(),
+                    open.bound_test_name().clone(),
+                );
+                if !ctx.closed_bindings.insert(close_key) {
+                    ctx.repeated_close_observed = true;
+                }
             }
             // Oracle does not fully clear source binding; keep last binding on
             // ParserState but drop working buffers. Re-open is not automatic.
+            ctx.open = None;
+            ApplyResult::Ok(ParseEvent::Terminator { unconsumed })
+        }
+        CommitOutcome::Noop => {
             ctx.open = None;
             ApplyResult::Ok(ParseEvent::Terminator { unconsumed })
         }
