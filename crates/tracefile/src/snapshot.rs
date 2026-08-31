@@ -6,9 +6,23 @@ use crate::{
 use ferricov_model::{ByteString, CoverageDatabase};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+pub enum NonSerializableReason {
+    Writer(SerializationError),
+    RoundTripSemanticMismatch,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Serializability {
     Serializable(ByteString),
-    Nonserializable(SerializationError),
+    NonSerializable(NonSerializableReason),
+    /// The model is retained, but its classification depends on an Oracle
+    /// behavior that is not qualified by the active compatibility contract.
+    ///
+    /// CORE-008 does not infer this outcome from writer success or failure.
+    /// Callers that build contract corpora use it to represent an explicitly
+    /// blocked case rather than collapsing that case into either of the two
+    /// decided outcomes above.
+    BlockedOracleUnknown,
 }
 
 /// Stable semantic model projection; parser/run evidence is deliberately absent.
@@ -36,6 +50,21 @@ pub struct SourceProvenance {
     pub diagnostic_path: Option<ByteString>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SourceBindingProvenance {
+    pub raw_path: ByteString,
+    pub diagnostic_path: Option<ByteString>,
+}
+
+impl From<&crate::SourceBinding> for SourceBindingProvenance {
+    fn from(binding: &crate::SourceBinding) -> Self {
+        Self {
+            raw_path: binding.raw_path.clone(),
+            diagnostic_path: binding.identity.diagnostic_path().cloned(),
+        }
+    }
+}
+
 /// Optional process-owned evidence; in-process parser capture leaves this absent.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ProcessEvidence {
@@ -54,6 +83,8 @@ pub struct EvidenceSnapshot {
     pub ignore_policy: IgnorePolicy,
     pub stopped: bool,
     pub source_provenance: Vec<SourceProvenance>,
+    pub active_source_provenance: Option<SourceBindingProvenance>,
+    pub open_source_provenance: Option<SourceBindingProvenance>,
     pub serializability: Serializability,
     pub process: Option<ProcessEvidence>,
 }
@@ -61,8 +92,19 @@ impl EvidenceSnapshot {
     #[must_use]
     pub fn capture(parser: &StreamingParser, context: &SerializationContext<'_>) -> Self {
         let serializability = match write_canonical(parser.database(), context) {
-            Ok(bytes) => Serializability::Serializable(ByteString::new(bytes)),
-            Err(error) => Serializability::Nonserializable(error),
+            Ok(bytes) => {
+                let reconstructed = StreamingParser::parse_database(&bytes);
+                if SemanticSnapshot::capture(&reconstructed)
+                    .semantically_equal(&SemanticSnapshot::capture(parser.database()))
+                {
+                    Serializability::Serializable(ByteString::new(bytes))
+                } else {
+                    Serializability::NonSerializable(
+                        NonSerializableReason::RoundTripSemanticMismatch,
+                    )
+                }
+            }
+            Err(error) => Serializability::NonSerializable(NonSerializableReason::Writer(error)),
         };
         let source_provenance = parser
             .database()
@@ -80,6 +122,12 @@ impl EvidenceSnapshot {
             ignore_policy: parser.apply_context().policy,
             stopped: parser.stopped(),
             source_provenance,
+            active_source_provenance: parser.state().source().map(Into::into),
+            open_source_provenance: parser
+                .apply_context()
+                .open
+                .as_ref()
+                .map(|open| (&open.binding).into()),
             serializability,
             process: None,
         }

@@ -5,8 +5,7 @@
 //! name (`U-MCDC-LATE-TN`), not the SF-bound name.
 
 use ferricov_model::{
-    BranchCoverage, ByteString, FunctionTable, LineCoverage, McdcCoverage, SourceIdentity,
-    TestName,
+    BranchCoverage, ByteString, FunctionTable, LineCoverage, McdcCoverage, SourceIdentity, TestName,
 };
 use std::collections::BTreeMap;
 

@@ -103,8 +103,12 @@ end_of_record\n";
     // Late TN does not rebind the SF-bound test name.
     assert_eq!(src.bound_test_name.as_bytes(), b"A");
     assert!(p.state().source_open());
-    assert!(events.iter().any(|e| matches!(e, ParseEvent::Terminator { .. })));
-    assert!(events.iter().any(|e| matches!(e, ParseEvent::IgnoredComment)));
+    assert!(events
+        .iter()
+        .any(|e| matches!(e, ParseEvent::Terminator { .. })));
+    assert!(events
+        .iter()
+        .any(|e| matches!(e, ParseEvent::IgnoredComment)));
     assert!(events.iter().any(|e| matches!(
         e,
         ParseEvent::RecordApplied {

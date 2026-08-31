@@ -10,7 +10,7 @@
 //! owns so CORE-006 can dispatch records onto them.
 
 use crate::classify::{LineClass, RecordTag, TnPayload};
-use crate::diag::{ParseDiag};
+use crate::diag::ParseDiag;
 use crate::line::is_perl_ascii_ws;
 use ferricov_model::{ByteString, SourceIdentity, TestName};
 
@@ -167,10 +167,7 @@ impl ParserState {
             LineClass::Unclassified { line } => {
                 self.diags.push(ParseDiag::error_format(
                     self.line_no,
-                    format!(
-                        "unexpected .info file record '{}'",
-                        line.to_string_lossy()
-                    ),
+                    format!("unexpected .info file record '{}'", line.to_string_lossy()),
                     Some(line.clone()),
                 ));
                 ParseEvent::Malformed {
@@ -219,10 +216,7 @@ impl ParserState {
             self.source_open = false;
             self.diags
                 .push(ParseDiag::empty_source_path(self.line_no, payload.clone()));
-            return ParseEvent::SourceSkippedEmpty {
-                tag,
-                payload,
-            };
+            return ParseEvent::SourceSkippedEmpty { tag, payload };
         }
 
         let identity = SourceIdentity::from_display_path(payload.clone());
@@ -254,14 +248,9 @@ pub enum ParseEvent {
     /// `SF`/`KF` bound a source path under the current test name.
     SourceBound(SourceBinding),
     /// Empty/whitespace `SF`/`KF` payload; section marked skipped.
-    SourceSkippedEmpty {
-        tag: SourceTag,
-        payload: ByteString,
-    },
+    SourceSkippedEmpty { tag: SourceTag, payload: ByteString },
     /// `end_of_record` detected (section commit applied by StreamingParser).
-    Terminator {
-        unconsumed: ByteString,
-    },
+    Terminator { unconsumed: ByteString },
     /// Known tag classified but not yet semantically applied.
     ///
     /// Emitted by [`ParserState::apply_classified`] for non-binding tags.
@@ -345,9 +334,10 @@ mod tests {
         let mut state = ParserState::new();
         state.apply_classified(classify_line(b"TN:a-b,diff"));
         assert_eq!(state.test_name().as_bytes(), b"a_b,diff");
-        assert!(state.diagnostics().iter().any(|d| {
-            matches!(d.kind, crate::diag::DiagKind::TestNameSanitized)
-        }));
+        assert!(state
+            .diagnostics()
+            .iter()
+            .any(|d| { matches!(d.kind, crate::diag::DiagKind::TestNameSanitized) }));
     }
 
     #[test]

@@ -1,8 +1,11 @@
 use crate::{
-    EvidenceSnapshot, IgnorePolicy, Serializability, SerializationContext, SerializationError,
-    SourceProvenance, StreamingParser,
+    EvidenceSnapshot, IgnorePolicy, NonSerializableReason, Serializability, SerializationContext,
+    SerializationError, SourceBinding, SourceBindingProvenance, SourceProvenance, SourceTag,
+    StreamingParser,
 };
-use ferricov_model::{ByteString, SourceIdentity};
+use ferricov_model::{
+    ByteString, CoverageCount, FunctionTable, LineKey, SourceIdentity, TestName, TotalState,
+};
 
 fn parsed(bytes: &[u8]) -> StreamingParser {
     let mut parser = StreamingParser::new();
@@ -71,15 +74,14 @@ fn snapshot_retains_inflight_indexes_order_and_stop_policy() {
 }
 
 #[test]
-fn accepted_absent_branch_expression_has_typed_nonserializable_classification() {
+fn accepted_absent_branch_expression_has_typed_non_serializable_classification() {
     let parser = parsed(b"TN:t\nSF:x\nBRDA:1,0,,1\nDA:1,1\nend_of_record\n");
     let snapshot = EvidenceSnapshot::capture(&parser, &SerializationContext::default());
     assert!(matches!(
         snapshot.serializability,
-        Serializability::Nonserializable(SerializationError::BranchExpressionAbsent {
-            edge_index: 0,
-            ..
-        })
+        Serializability::NonSerializable(NonSerializableReason::Writer(
+            SerializationError::BranchExpressionAbsent { edge_index: 0, .. }
+        ))
     ));
     let numeric_expression = EvidenceSnapshot::capture(
         &parsed(b"TN:t\nSF:x\nBRDA:1,0,0,1\nDA:1,1\nend_of_record\n"),
@@ -125,4 +127,112 @@ fn evidence_provenance_distinguishes_diagnostic_path_ignored_by_model_identity()
         diagnostic_path: right.diagnostic_path().cloned(),
     };
     assert_ne!(left_evidence, right_evidence);
+
+    let binding = SourceBinding {
+        tag: SourceTag::Sf,
+        identity: left,
+        raw_path: ByteString::from_slice(b"raw-input"),
+        bound_test_name: TestName::new("t"),
+    };
+    assert_eq!(
+        SourceBindingProvenance::from(&binding),
+        SourceBindingProvenance {
+            raw_path: ByteString::from_slice(b"raw-input"),
+            diagnostic_path: Some(ByteString::from_slice(b"raw-a")),
+        }
+    );
+}
+
+fn assert_roundtrip_mismatch(case: &str, parser: &StreamingParser) {
+    assert!(
+        matches!(
+            EvidenceSnapshot::capture(parser, &SerializationContext::default()).serializability,
+            Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
+        ),
+        "{case}"
+    );
+}
+
+#[test]
+fn classification_rejects_semantics_not_reconstructed_by_canonical_output() {
+    let mut aggregate_divergence = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = aggregate_divergence
+        .database()
+        .iter()
+        .next()
+        .unwrap()
+        .0
+        .clone();
+    aggregate_divergence
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .aggregate_mut()
+        .lines_mut()
+        .insert(LineKey::from_lexeme("9"), CoverageCount::from_lexeme("7"));
+    assert_roundtrip_mismatch("aggregate divergence", &aggregate_divergence);
+
+    let mut lazy_family = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = lazy_family.database().iter().next().unwrap().0.clone();
+    lazy_family
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .testcases_mut()
+        .insert_functions(TestName::new("function-only"), FunctionTable::new());
+    assert_roundtrip_mismatch("lazy family", &lazy_family);
+
+    let mut populated_family = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = populated_family.database().iter().next().unwrap().0.clone();
+    let mut functions = FunctionTable::new();
+    functions
+        .insert_alias_at(
+            LineKey::from_lexeme("8"),
+            "omitted",
+            CoverageCount::from_lexeme("3"),
+        )
+        .unwrap();
+    populated_family
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .testcases_mut()
+        .insert_functions(TestName::new("function-only"), functions);
+    assert_roundtrip_mismatch(
+        "populated family omitted without line membership",
+        &populated_family,
+    );
+
+    let mut totals = parsed(b"TN:t\nSF:x\nDA:1,1\nend_of_record\n");
+    let key = totals.database().iter().next().unwrap().0.clone();
+    totals
+        .database_mut()
+        .get_mut(&key)
+        .unwrap()
+        .set_observable_totals(TotalState::from_payload("cached"));
+    assert_roundtrip_mismatch("observable totals", &totals);
+
+    let late_tn = parsed(b"TN:A\nSF:x\nDA:1,1\nMCDC:2,1,t,1,0,a\nTN:B\nend_of_record\n");
+    assert_roundtrip_mismatch("late TN MC/DC", &late_tn);
+
+    let repeated_close = parsed(
+        b"TN:t\nSF:x\nDA:10,1\nDA:20,2\nend_of_record\nTN:t\nSF:x\nDA:10,3\nDA:30,4\nend_of_record\n",
+    );
+    assert!(matches!(
+        EvidenceSnapshot::capture(&repeated_close, &SerializationContext::default())
+            .serializability,
+        Serializability::Serializable(_)
+    ));
+}
+
+#[test]
+fn blocked_oracle_unknown_is_distinct_from_decided_classifications() {
+    assert_ne!(
+        Serializability::BlockedOracleUnknown,
+        Serializability::NonSerializable(NonSerializableReason::RoundTripSemanticMismatch)
+    );
+    assert_ne!(
+        Serializability::BlockedOracleUnknown,
+        Serializability::Serializable(ByteString::from_slice(b""))
+    );
 }

@@ -27,9 +27,7 @@ mod snapshot;
 mod state;
 mod writer;
 
-pub use classify::{
-    classify_line, LineClass, MatchAnchor, RecordTag, TnPayload,
-};
+pub use classify::{classify_line, LineClass, MatchAnchor, RecordTag, TnPayload};
 pub use commit::{close_mcdc_block, commit_section, CommitOutcome};
 pub use diag::{DiagClass, DiagKind, ParseDiag};
 pub use line::{
@@ -40,11 +38,17 @@ pub use parser::StreamingParser;
 pub use policy::IgnorePolicy;
 pub use records::{apply_event, ApplyContext, ApplyResult};
 pub use section::{BranchCursor, OpenSection};
-pub use snapshot::{EvidenceSnapshot, ProcessEvidence, SemanticSnapshot, Serializability, SourceProvenance};
+pub use snapshot::{
+    EvidenceSnapshot, NonSerializableReason, ProcessEvidence, SemanticSnapshot, Serializability,
+    SourceBindingProvenance, SourceProvenance,
+};
 pub use state::{
     is_perl_word_byte, sanitize_tn_base, ParseEvent, ParserState, SourceBinding, SourceTag,
 };
-pub use writer::{write_canonical, ChecksumProvider, SerializationContext, SerializationError, SourcePathProjection};
+pub use writer::{
+    write_canonical, ChecksumProvider, SerializationContext, SerializationError,
+    SourcePathProjection,
+};
 
 #[cfg(test)]
 mod tests_core005;

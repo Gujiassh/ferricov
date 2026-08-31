@@ -60,7 +60,11 @@ pub struct ParseDiag {
 impl ParseDiag {
     /// Construct an ignorable `ERROR_FORMAT` diagnostic.
     #[must_use]
-    pub fn error_format(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+    pub fn error_format(
+        line_no: u64,
+        message: impl Into<String>,
+        related: Option<ByteString>,
+    ) -> Self {
         Self {
             kind: DiagKind::ErrorFormat,
             class: DiagClass::Ignorable,
@@ -100,7 +104,11 @@ impl ParseDiag {
 
     /// Hard-fail: conflicting second version for a source.
     #[must_use]
-    pub fn version_conflict(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+    pub fn version_conflict(
+        line_no: u64,
+        message: impl Into<String>,
+        related: Option<ByteString>,
+    ) -> Self {
         Self {
             kind: DiagKind::VersionConflict,
             class: DiagClass::HardFail,
@@ -136,7 +144,11 @@ impl ParseDiag {
 
     /// Ignorable function mismatch (`ERROR_MISMATCH`).
     #[must_use]
-    pub fn function_mismatch(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+    pub fn function_mismatch(
+        line_no: u64,
+        message: impl Into<String>,
+        related: Option<ByteString>,
+    ) -> Self {
         Self {
             kind: DiagKind::FunctionMismatch,
             class: DiagClass::Ignorable,
@@ -160,7 +172,11 @@ impl ParseDiag {
 
     /// Ignorable inconsistent-data diagnostic.
     #[must_use]
-    pub fn inconsistent_data(line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+    pub fn inconsistent_data(
+        line_no: u64,
+        message: impl Into<String>,
+        related: Option<ByteString>,
+    ) -> Self {
         Self {
             kind: DiagKind::InconsistentData,
             class: DiagClass::Ignorable,
@@ -172,7 +188,12 @@ impl ParseDiag {
 
     /// Generic hard-fail helper.
     #[must_use]
-    pub fn hard_fail(kind: DiagKind, line_no: u64, message: impl Into<String>, related: Option<ByteString>) -> Self {
+    pub fn hard_fail(
+        kind: DiagKind,
+        line_no: u64,
+        message: impl Into<String>,
+        related: Option<ByteString>,
+    ) -> Self {
         Self {
             kind,
             class: DiagClass::HardFail,

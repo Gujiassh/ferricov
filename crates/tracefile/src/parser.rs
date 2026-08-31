@@ -64,6 +64,11 @@ impl StreamingParser {
         self.apply.database()
     }
 
+    /// Mutable model access for controlled transforms and semantic tests.
+    pub fn database_mut(&mut self) -> &mut CoverageDatabase {
+        &mut self.apply.db
+    }
+
     /// Consume the parser and return the coverage database.
     #[must_use]
     pub fn into_database(self) -> CoverageDatabase {

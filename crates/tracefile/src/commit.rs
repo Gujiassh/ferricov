@@ -7,9 +7,7 @@
 //! - source-scoped version / checksums merge into [`SourceCoverage`];
 //! - terminator does not fully clear the source binding (Oracle residual).
 
-use ferricov_model::{
-    AlgebraOp, CoverageDatabase, McdcCoverage, SourceCoverage, TestName,
-};
+use ferricov_model::{AlgebraOp, CoverageDatabase, McdcCoverage, SourceCoverage, TestName};
 
 use crate::diag::{DiagClass, DiagKind, ParseDiag};
 use crate::section::OpenSection;
@@ -126,7 +124,10 @@ pub fn commit_section(
 
     // Checksums: first-wins for a line key (verification is residual).
     for (line, chk) in &open.checksums {
-        source.checksums_mut().entry(line.clone()).or_insert_with(|| chk.clone());
+        source
+            .checksums_mut()
+            .entry(line.clone())
+            .or_insert_with(|| chk.clone());
     }
 
     let bound = open.bound_test_name().clone();
@@ -136,7 +137,9 @@ pub fn commit_section(
     {
         let tc = source.testcases_mut();
         let lines_map = tc.lines_mut();
-        let entry = lines_map.entry(bound.clone()).or_insert_with(ferricov_model::LineCoverage::new);
+        let entry = lines_map
+            .entry(bound.clone())
+            .or_insert_with(ferricov_model::LineCoverage::new);
         if let Err(err) = entry.apply_op(AlgebraOp::Union, &open.lines) {
             return CommitOutcome::HardFail(ParseDiag::hard_fail(
                 DiagKind::Deferred,
