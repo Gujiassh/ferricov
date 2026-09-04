@@ -15,6 +15,32 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  core-009-fuzz-smoke:
+    name: CORE-009 Fuzz Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Install nightly fuzz toolchain
+        run: |
+          rustup toolchain install nightly --profile minimal
+          cargo +nightly install cargo-fuzz --version 0.13.2 --locked
+      - name: Validate permanent corpus and artifact metadata
+        run: |
+          python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
+          python3 fuzz/scripts/validate_artifacts.py
+          python3 -m unittest fuzz/scripts/test_validate_artifacts.py
+      - name: Replay permanent corpus with bounded libFuzzer smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 fuzz/scripts/validate_artifacts.py --list-tuples |
+          while IFS=$'\t' read -r target case_id seed corpus; do
+            timeout --signal=KILL 60s cargo +nightly fuzz run "$target" \
+              "$corpus" -- -seed="$seed" -runs=1 -timeout=2 -rss_limit_mb=512 -max_len=1048576
+          done
+
   rust:
     name: Rust ${{ matrix.toolchain }}
     runs-on: ubuntu-latest
@@ -60,6 +86,31 @@ jobs:
           FERRICOV_SKIP_DOCKER_E2E: '1'
           TOOLCHAIN: ${{ matrix.toolchain }}
         run: cargo +"$TOOLCHAIN" test --workspace --all-targets --locked
+
+      - name: Run stable CORE-009 campaign under deadline and RSS watchdog
+        env:
+          TOOLCHAIN: ${{ matrix.toolchain }}
+        run: >-
+          timeout --signal=KILL 60s bash -c
+          'ulimit -v 524288; cargo +"$TOOLCHAIN" test --locked
+          -p ferricov-tracefile tests_core009::deterministic_64_case_campaign_replays_all_named_targets
+          -- --ignored --exact'
+
+      - name: Qualify CORE-009 worker timeout and RSS isolation
+        env:
+          TOOLCHAIN: ${{ matrix.toolchain }}
+        run: |
+          cargo +"$TOOLCHAIN" build --locked -p ferricov-tracefile --bin core009_worker --bin core009_runner
+          cp fuzz/corpus/m1_fz_lex_001/canonical.trace /tmp/core009.input
+          runner=target/debug/core009_runner
+          worker=target/debug/core009_worker
+          manifest=fuzz/corpus/manifest.json
+          "$runner" "$worker" normal M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/normal.json "$manifest"
+          "$runner" "$worker" sleep M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/sleep.json "$manifest"
+          "$runner" "$worker" allocate M1-FZ-STATEFUL-001 CORE009-SEED-CANONICAL-001 15269154973870394997 /tmp/core009.input /tmp/allocate.json "$manifest"
+          jq -e '.outcome.kind == "exit" and .outcome.code == 0 and .address_space_limit_bytes == 536870912' /tmp/normal.json
+          jq -e '.outcome.kind == "timeout" and .wall_ms >= 2000 and .wall_ms < 3000' /tmp/sleep.json
+          jq -e '.outcome.kind == "rss_limit" and .address_space_limit_bytes == 536870912' /tmp/allocate.json
 
       - name: Run Clippy
         env:
