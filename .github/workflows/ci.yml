@@ -25,7 +25,7 @@ jobs:
       - name: Install nightly fuzz toolchain
         run: |
           rustup toolchain install nightly --profile minimal
-          cargo +nightly install cargo-fuzz --version 0.13.1 --locked
+          cargo +nightly install cargo-fuzz --version 0.13.2 --locked
       - name: Validate permanent corpus and artifact metadata
         run: |
           python3 -m pip install --disable-pip-version-check jsonschema==4.25.1
